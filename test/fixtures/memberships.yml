@@ -1,0 +1,13 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  membership_type_id: 1
+  activity_period_id: 1
+  price: 9.99
+  members_count: 1
+
+two:
+  membership_type_id: 1
+  activity_period_id: 1
+  price: 9.99
+  members_count: 1

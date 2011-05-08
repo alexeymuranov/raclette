@@ -1,0 +1,21 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  person_id: 
+  birthday: 2011-05-08
+  accept_email_announcements: false
+  volunteer: false
+  volunteer_as: MyString
+  preferred_language: MyString
+  occupation: MyString
+  remark: MyString
+
+two:
+  person_id: 
+  birthday: 2011-05-08
+  accept_email_announcements: false
+  volunteer: false
+  volunteer_as: MyString
+  preferred_language: MyString
+  occupation: MyString
+  remark: MyString

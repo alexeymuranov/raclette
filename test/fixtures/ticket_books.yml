@@ -1,0 +1,11 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  membership_type_id: 1
+  tickets_number: 1
+  price: 9.99
+
+two:
+  membership_type_id: 1
+  tickets_number: 1
+  price: 9.99

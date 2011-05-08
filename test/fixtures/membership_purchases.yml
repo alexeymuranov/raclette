@@ -1,0 +1,15 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  member_id: 1
+  membership_type: MyString
+  membership_expiration_date: 2011-05-08
+  membership_id: 1
+  purchase_date: 2011-05-08
+
+two:
+  member_id: 1
+  membership_type: MyString
+  membership_expiration_date: 2011-05-08
+  membership_id: 1
+  purchase_date: 2011-05-08

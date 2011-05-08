@@ -1,0 +1,23 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  payable_type: MyString
+  payable_id: 1
+  date: 2011-05-08
+  amount: 9.99
+  method: MyString
+  payer_person_id: 1
+  cancelled_and_reimbursed: false
+  cancelled_on: 2011-05-08
+  note: MyString
+
+two:
+  payable_type: MyString
+  payable_id: 1
+  date: 2011-05-08
+  amount: 9.99
+  method: MyString
+  payer_person_id: 1
+  cancelled_and_reimbursed: false
+  cancelled_on: 2011-05-08
+  note: MyString

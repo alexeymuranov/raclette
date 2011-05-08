@@ -1,0 +1,21 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  first_name: MyString
+  last_name: MyString
+  inviting_member_id: 1
+  previous_entry_id: 1
+  toward_membership_purchase_id: 1
+  email: MyString
+  phone: MyString
+  note: MyString
+
+two:
+  first_name: MyString
+  last_name: MyString
+  inviting_member_id: 1
+  previous_entry_id: 1
+  toward_membership_purchase_id: 1
+  email: MyString
+  phone: MyString
+  note: MyString

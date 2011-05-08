@@ -1,0 +1,11 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  unique_names: MyString
+  instructors_count: 1
+  comment: MyString
+
+two:
+  unique_names: MyString
+  instructors_count: 1
+  comment: MyString

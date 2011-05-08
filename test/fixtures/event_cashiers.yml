@@ -1,0 +1,15 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  event_id: 1
+  name: MyString
+  person_id: 1
+  started_at: 2011-05-08 22:32:00
+  finished_at: 2011-05-08 22:32:00
+
+two:
+  event_id: 1
+  name: MyString
+  person_id: 1
+  started_at: 2011-05-08 22:32:00
+  finished_at: 2011-05-08 22:32:00

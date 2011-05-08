@@ -1,0 +1,35 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  event_type: MyString
+  title: MyString
+  lesson: false
+  week_day: 1
+  start_time: MyString
+  duration_minutes: 1
+  end_time: MyString
+  start_on: 2011-05-08
+  end_on: 2011-05-08
+  location: MyString
+  address_id: 1
+  lesson_supervision_id: 1
+  entry_fee_tickets: 1
+  over: false
+  description: MyString
+
+two:
+  event_type: MyString
+  title: MyString
+  lesson: false
+  week_day: 1
+  start_time: MyString
+  duration_minutes: 1
+  end_time: MyString
+  start_on: 2011-05-08
+  end_on: 2011-05-08
+  location: MyString
+  address_id: 1
+  lesson_supervision_id: 1
+  entry_fee_tickets: 1
+  over: false
+  description: MyString

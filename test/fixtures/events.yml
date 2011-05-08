@@ -1,0 +1,55 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  event_type: MyString
+  title: MyString
+  locked: false
+  lesson: false
+  date: 2011-05-08
+  start_time: MyString
+  duration_minutes: 1
+  end_time: MyString
+  location: MyString
+  address_id: 1
+  weekly: false
+  weekly_event_id: 1
+  supervisors: MyString
+  lesson_supervision_id: 1
+  entry_fee_tickets: 1
+  member_entry_fee: 9.99
+  couple_entry_fee: 9.99
+  common_entry_fee: 9.99
+  over: false
+  reservations_count: 1
+  entries_count: 1
+  member_entries_count: 1
+  tickets_collected: 1
+  entry_fees_collected: 9.99
+  description: MyString
+
+two:
+  event_type: MyString
+  title: MyString
+  locked: false
+  lesson: false
+  date: 2011-05-08
+  start_time: MyString
+  duration_minutes: 1
+  end_time: MyString
+  location: MyString
+  address_id: 1
+  weekly: false
+  weekly_event_id: 1
+  supervisors: MyString
+  lesson_supervision_id: 1
+  entry_fee_tickets: 1
+  member_entry_fee: 9.99
+  couple_entry_fee: 9.99
+  common_entry_fee: 9.99
+  over: false
+  reservations_count: 1
+  entries_count: 1
+  member_entries_count: 1
+  tickets_collected: 1
+  entry_fees_collected: 9.99
+  description: MyString

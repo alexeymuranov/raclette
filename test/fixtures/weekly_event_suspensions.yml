@@ -1,0 +1,13 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  weekly_event_id: 1
+  suspend_from: 2011-05-08
+  suspend_until: 2011-05-08
+  explanation: MyString
+
+two:
+  weekly_event_id: 1
+  suspend_from: 2011-05-08
+  suspend_until: 2011-05-08
+  explanation: MyString

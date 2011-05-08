@@ -1,0 +1,17 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  person_id: 1
+  function: MyString
+  start_date: 2011-05-08
+  end_date: 2011-05-08
+  quit: false
+  comment: MyString
+
+two:
+  person_id: 1
+  function: MyString
+  start_date: 2011-05-08
+  end_date: 2011-05-08
+  quit: false
+  comment: MyString

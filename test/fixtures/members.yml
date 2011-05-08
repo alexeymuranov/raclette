@@ -1,0 +1,33 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  person_id: 
+  been_member_by: 2011-05-08
+  shares_tickets_with_member_id: 1
+  account_deactivated: false
+  latest_membership_obtained_on: 2011-05-08
+  latest_membership_expiration_date: 2011-05-08
+  latest_membership_type: MyString
+  latest_membership_duration_months: 1
+  last_card_printed_on: 2011-05-08
+  last_card_delivered: false
+  last_payment_date: 2011-05-08
+  last_entry_date: 2011-05-08
+  payed_tickets_count: 1
+  free_tickets_count: 1
+
+two:
+  person_id: 
+  been_member_by: 2011-05-08
+  shares_tickets_with_member_id: 1
+  account_deactivated: false
+  latest_membership_obtained_on: 2011-05-08
+  latest_membership_expiration_date: 2011-05-08
+  latest_membership_type: MyString
+  latest_membership_duration_months: 1
+  last_card_printed_on: 2011-05-08
+  last_card_delivered: false
+  last_payment_date: 2011-05-08
+  last_entry_date: 2011-05-08
+  payed_tickets_count: 1
+  free_tickets_count: 1

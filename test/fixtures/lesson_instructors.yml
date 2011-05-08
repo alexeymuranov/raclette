@@ -1,0 +1,15 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  lesson_supervision_id: 1
+  instructor_id: 1
+  invited: false
+  volunteer: false
+  assistant: false
+
+two:
+  lesson_supervision_id: 1
+  instructor_id: 1
+  invited: false
+  volunteer: false
+  assistant: false

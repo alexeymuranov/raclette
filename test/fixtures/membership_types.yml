@@ -1,0 +1,17 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  unique_title: MyString
+  active: false
+  reduced: false
+  unlimited: false
+  duration_months: 1
+  description: MyString
+
+two:
+  unique_title: MyString
+  active: false
+  reduced: false
+  unlimited: false
+  duration_months: 1
+  description: MyString
