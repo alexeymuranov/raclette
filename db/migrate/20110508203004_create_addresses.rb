@@ -10,6 +10,12 @@ class CreateAddresses < ActiveRecord::Migration
 
       t.timestamps
     end
+
+    add_index :addresses, :names
+    add_index :addresses, :address_type
+    add_index :addresses, :country
+    add_index :addresses, [ :city, :country ]
+    add_index :addresses, [ :post_code, :country ]
   end
 
   def self.down

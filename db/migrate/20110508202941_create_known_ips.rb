@@ -6,6 +6,9 @@ class CreateKnownIps < ActiveRecord::Migration
 
       t.timestamps
     end
+
+    add_index :known_ips, :ip,
+                  :unique => true
   end
 
   def self.down

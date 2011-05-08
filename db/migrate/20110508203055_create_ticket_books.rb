@@ -7,6 +7,9 @@ class CreateTicketBooks < ActiveRecord::Migration
 
       t.timestamps
     end
+
+    add_index :ticket_books, [ :membership_type_id, :tickets_number ],
+                  :unique => true
   end
 
   def self.down

@@ -1,18 +1,25 @@
 class CreatePayments < ActiveRecord::Migration
   def self.up
     create_table :payments do |t|
-      t.string :payable_type
+      t.string  :payable_type
       t.integer :payable_id
-      t.date :date
+      t.date    :date
       t.decimal :amount
-      t.string :method
+      t.string  :method
       t.integer :payer_person_id
       t.boolean :cancelled_and_reimbursed
-      t.date :cancelled_on
-      t.string :note
+      t.date    :cancelled_on
+      t.string  :note
 
       t.timestamps
     end
+
+    add_index :payments, [ :payable_type, :payable_id ],
+                  :unique => true
+    add_index :payments, [ :payable_type, :date ]
+    add_index :payments, :date
+    add_index :payments, :payer_person_id
+    add_index :payments, [ :cancelled_and_reimbursed, :cancelled_on ]
   end
 
   def self.down

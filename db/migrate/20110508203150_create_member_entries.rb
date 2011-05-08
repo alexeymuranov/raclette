@@ -7,6 +7,8 @@ class CreateMemberEntries < ActiveRecord::Migration
 
       t.timestamps
     end
+
+    add_index :member_entries, [ :member_id, :guests_invited ]
   end
 
   def self.down

@@ -9,6 +9,15 @@ class CreateLessonInstructors < ActiveRecord::Migration
 
       t.timestamps
     end
+
+    add_index :lesson_instructors, [ :lesson_supervision_id, :instructor_id ],
+                  :name   => 'index_lesson_instructors_on'\
+                             '_lesson_supervision_id_and_i_id',
+                  :unique => true
+    add_index :lesson_instructors, :instructor_id
+    add_index :lesson_instructors, :invited
+    add_index :lesson_instructors, :volunteer
+    add_index :lesson_instructors, :assistant
   end
 
   def self.down
