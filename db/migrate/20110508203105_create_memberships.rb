@@ -1,10 +1,10 @@
 class CreateMemberships < ActiveRecord::Migration
   def self.up
     create_table :memberships do |t|
-      t.integer :membership_type_id
-      t.integer :activity_period_id
-      t.decimal :price
-      t.integer :members_count
+      t.integer :membership_type_id,                  :null => false
+      t.integer :activity_period_id,                  :null => false
+      t.decimal :price, :scale => 1, :precision => 4
+      t.integer :members_count, :default => 0
 
       t.timestamps
     end

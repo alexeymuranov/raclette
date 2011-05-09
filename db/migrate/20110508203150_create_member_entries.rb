@@ -1,9 +1,9 @@
 class CreateMemberEntries < ActiveRecord::Migration
   def self.up
     create_table :member_entries do |t|
-      t.integer :member_id
-      t.integer :guests_invited
-      t.integer :tickets_used
+      t.integer :member_id,                                :null => false
+      t.integer :guests_invited,            :default => 0
+      t.integer :tickets_used, :limit => 1, :default => 0, :null => false
 
       t.timestamps
     end

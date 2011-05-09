@@ -1,11 +1,11 @@
 class CreateLessonInstructors < ActiveRecord::Migration
   def self.up
     create_table :lesson_instructors do |t|
-      t.integer :lesson_supervision_id
-      t.integer :instructor_id
-      t.boolean :invited
-      t.boolean :volunteer
-      t.boolean :assistant
+      t.integer :lesson_supervision_id,        :null => false
+      t.integer :instructor_id,                :null => false
+      t.boolean :invited,   :default => false, :null => false
+      t.boolean :volunteer, :default => false, :null => false
+      t.boolean :assistant, :default => false, :null => false
 
       t.timestamps
     end

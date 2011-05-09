@@ -3,9 +3,10 @@ class CreateMemberShortHistories < ActiveRecord::Migration
     create_table :member_short_histories, :primary_key => :member_id do |t|
       t.primary_key :member_id
       t.date        :last_active_membership_expiration_date
-      t.date        :prev_membership_expiration_date
-      t.string      :prev_membership_type
-      t.integer     :prev_membership_duration_months
+      t.date        :prev_membership_expiration_date,    :null => false
+      t.string      :prev_membership_type, :limit => 32, :null => false
+      t.integer     :prev_membership_duration_months,
+                        :default => 12,    :limit =>  1, :null => false
 
       t.timestamps
     end

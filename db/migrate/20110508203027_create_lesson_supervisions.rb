@@ -1,9 +1,10 @@
 class CreateLessonSupervisions < ActiveRecord::Migration
   def self.up
     create_table :lesson_supervisions do |t|
-      t.string  :unique_names
-      t.integer :instructors_count
-      t.string  :comment
+      t.string  :unique_names,      :limit => 128, :null => false
+      t.integer :instructors_count, :limit =>   1,
+                    :default => 1,                 :null => false
+      t.string  :comment,           :limit => 255
 
       t.timestamps
     end

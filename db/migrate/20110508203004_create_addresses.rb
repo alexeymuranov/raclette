@@ -1,12 +1,12 @@
 class CreateAddresses < ActiveRecord::Migration
   def self.up
     create_table :addresses do |t|
-      t.string :names
-      t.string :address_type
-      t.string :country
-      t.string :city
-      t.string :post_code
-      t.string :street_address
+      t.string :names,          :limit =>  64, :null => false
+      t.string :address_type,   :limit =>  32
+      t.string :country,        :limit =>  32, :null => false
+      t.string :city,           :limit =>  32
+      t.string :post_code,      :limit =>  16
+      t.string :street_address, :limit => 255
 
       t.timestamps
     end

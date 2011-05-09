@@ -1,10 +1,10 @@
 class CreateWeeklyEventSuspensions < ActiveRecord::Migration
   def self.up
     create_table :weekly_event_suspensions do |t|
-      t.integer :weekly_event_id
-      t.date    :suspend_from
-      t.date    :suspend_until
-      t.string  :explanation
+      t.integer :weekly_event_id, :null => false
+      t.date    :suspend_from,    :null => false
+      t.date    :suspend_until,   :null => false
+      t.string  :explanation, :limit => 255
 
       t.timestamps
     end

@@ -3,12 +3,12 @@ class CreatePersonalStatements < ActiveRecord::Migration
     create_table :personal_statements, :primary_key => :person_id do |t|
       t.primary_key :person_id
       t.date        :birthday
-      t.boolean     :accept_email_announcements
-      t.boolean     :volunteer
-      t.string      :volunteer_as
-      t.string      :preferred_language
-      t.string      :occupation
-      t.string      :remark
+      t.boolean     :accept_email_announcements, :default => false
+      t.boolean     :volunteer,                  :default => false
+      t.string      :volunteer_as,       :limit => 255
+      t.string      :preferred_language, :limit =>  32
+      t.string      :occupation,         :limit =>  64
+      t.string      :remark,             :limit => 255
 
       t.timestamps
     end

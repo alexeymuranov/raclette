@@ -1,12 +1,13 @@
 class CreateMembershipTypes < ActiveRecord::Migration
   def self.up
     create_table :membership_types do |t|
-      t.string  :unique_title
-      t.boolean :active
-      t.boolean :reduced
-      t.boolean :unlimited
-      t.integer :duration_months
-      t.string  :description
+      t.string  :unique_title,        :limit =>  32, :null => false
+      t.boolean :active,    :default => false,       :null => false
+      t.boolean :reduced,   :default => false,       :null => false
+      t.boolean :unlimited, :default => false,       :null => false
+      t.integer :duration_months,     :limit =>   1,
+                            :default => 12,          :null => false
+      t.string  :description,         :limit => 255
 
       t.timestamps
     end

@@ -1,9 +1,9 @@
 class CreateMemberMemberships < ActiveRecord::Migration
   def self.up
     create_table :member_memberships do |t|
-      t.integer :member_id
-      t.integer :membership_id
-      t.date    :obtained_on
+      t.integer :member_id,     :null => false
+      t.integer :membership_id, :null => false
+      t.date    :obtained_on,   :null => false
 
       t.timestamps
     end

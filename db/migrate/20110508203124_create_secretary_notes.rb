@@ -1,11 +1,11 @@
 class CreateSecretaryNotes < ActiveRecord::Migration
   def self.up
     create_table :secretary_notes do |t|
-      t.string   :note_type
-      t.string   :message
-      t.string   :something_type
+      t.string   :note_type,      :limit =>  32, :null => false
+      t.string   :message,        :limit => 255
+      t.string   :something_type, :limit =>  32, :null => false
       t.integer  :something_id
-      t.datetime :message_updated_at
+      t.datetime :message_updated_at,            :null => false
 
       t.timestamps
     end

@@ -1,15 +1,16 @@
 class CreatePeople < ActiveRecord::Migration
   def self.up
     create_table :people do |t|
-      t.string  :last_name
-      t.string  :first_name
-      t.string  :name_title
-      t.string  :nickname_or_other
-      t.integer :birthyear
-      t.string  :email
-      t.string  :mobile_phone
-      t.string  :home_phone
-      t.string  :work_phone
+      t.string  :last_name,         :limit =>  32, :null => false
+      t.string  :first_name,        :limit =>  32, :null => false
+      t.string  :name_title,        :limit =>  16
+      t.string  :nickname_or_other, :limit =>  32,
+                    :default => '',                :null => false
+      t.integer :birthyear,         :limit =>   2
+      t.string  :email,             :limit => 255
+      t.string  :mobile_phone,      :limit =>  32
+      t.string  :home_phone,        :limit =>  32
+      t.string  :work_phone,        :limit =>  32
       t.integer :primary_address_id
 
       t.timestamps

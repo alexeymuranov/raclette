@@ -1,8 +1,8 @@
 class CreateKnownIps < ActiveRecord::Migration
   def self.up
     create_table :known_ips do |t|
-      t.string :ip
-      t.string :description
+      t.string :ip,          :limit =>  15, :null => false
+      t.string :description, :limit => 255
 
       t.timestamps
     end

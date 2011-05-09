@@ -1,10 +1,10 @@
 class CreateEventEntries < ActiveRecord::Migration
   def self.up
     create_table :event_entries do |t|
-      t.string  :participant_entry_type
+      t.string  :participant_entry_type, :limit => 32, :null => false
       t.integer :participant_entry_id
-      t.string  :event_title
-      t.date    :date
+      t.string  :event_title,            :limit => 64, :null => false
+      t.date    :date,                                 :null => false
       t.integer :event_id
       t.integer :person_id
 

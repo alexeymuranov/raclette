@@ -2,8 +2,8 @@ class CreateInstructors < ActiveRecord::Migration
   def self.up
     create_table :instructors, :primary_key => :person_id do |t|
       t.primary_key :person_id
-      t.text        :presentation
-      t.binary      :photo
+      t.text        :presentation, :limit => 32*1024
+      t.binary      :photo,        :limit => 2.megabytes
       t.date        :employed_from
       t.date        :employed_until
 

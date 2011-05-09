@@ -1,21 +1,22 @@
 class CreateWeeklyEvents < ActiveRecord::Migration
   def self.up
     create_table :weekly_events do |t|
-      t.string  :event_type
-      t.string  :title
-      t.boolean :lesson
-      t.integer :week_day
-      t.string  :start_time
-      t.integer :duration_minutes
-      t.string  :end_time
-      t.date    :start_on
+      t.string  :event_type,        :limit =>  32, :null => false
+      t.string  :title,             :limit =>  64, :null => false
+      t.boolean :lesson,                           :null => false
+      t.integer :week_day,          :limit =>   1, :null => false
+      t.string  :start_time,        :limit =>   8
+      t.integer :duration_minutes,  :limit =>   2,
+                         :default => 60
+      t.string  :end_time,          :limit =>   8
+      t.date    :start_on,                         :null => false
       t.date    :end_on
-      t.string  :location
+      t.string  :location,          :limit =>  64
       t.integer :address_id
       t.integer :lesson_supervision_id
-      t.integer :entry_fee_tickets
-      t.boolean :over
-      t.string  :description
+      t.integer :entry_fee_tickets, :limit =>   1
+      t.boolean :over,   :default => false,        :null => false
+      t.string  :description,       :limit => 255
 
       t.timestamps
     end
