@@ -16,6 +16,9 @@ class ActivityPeriod < ActiveRecord::Base
                          :inverse_of => :activity_period
 
   has_many :membership_types, :through => :memberships
+  
+  has_many :revenue_accounts, :dependent  => :nullify,
+                              :inverse_of => :activity_period
 
   # Validations:
   validates :unique_title, :start_date, :duration_months, :end_date,

@@ -1,0 +1,23 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  unique_title: MyString
+  locked: false
+  activity_period_id: 1
+  opened_on: 2011-05-08
+  closed_on: 2011-05-08
+  main: false
+  amount: 9.99
+  amount_updated_on: 2011-05-08
+  description: MyString
+
+two:
+  unique_title: MyString
+  locked: false
+  activity_period_id: 1
+  opened_on: 2011-05-08
+  closed_on: 2011-05-08
+  main: false
+  amount: 9.99
+  amount_updated_on: 2011-05-08
+  description: MyString

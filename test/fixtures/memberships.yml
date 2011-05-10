@@ -3,11 +3,15 @@
 one:
   membership_type_id: 1
   activity_period_id: 1
-  price: 9.99
+  initial_price: 9.99
+  current_price: 9.99
+  tickets_count_limit: 1
   members_count: 1
 
 two:
   membership_type_id: 1
   activity_period_id: 1
-  price: 9.99
+  initial_price: 9.99
+  current_price: 9.99
+  tickets_count_limit: 1
   members_count: 1

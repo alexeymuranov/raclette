@@ -1,11 +1,13 @@
 class Membership < ActiveRecord::Base
 
-  attr_readonly :id, :membership_type_id, :activity_period_id
+  attr_readonly :id, :membership_type_id, :activity_period_id, :initial_price
 
   # attr_accessible( # :id,
                    # :membership_type_id,
                    # :activity_period_id,
-                   # :price,
+                   # :initial_price,
+                   # :current_price,
+                   # :tickets_count_limit,
                    # :members_count
                  # )  ## all attributes listed here
 
@@ -25,13 +27,12 @@ class Membership < ActiveRecord::Base
                     :inverse_of  => :memberships
 
   # Validations:
-  validates :membership_type_id, :activity_period_id, :price,
+  validates :membership_type_id, :activity_period_id, :initial_price,
                 :presence => true
 
-  validates :price, :numericality => { :greater_than_or_equal_to => 0 },
-                    :allow_nil    => true
+  validates :initial_price, :numericality => { :greater_than_or_equal_to => 0 }
 
-  validates :members_count,
+  validates :current_price, :tickets_count_limit, :members_count,
                 :numericality => { :greater_than_or_equal_to => 0 },
                 :allow_nil    => true
 

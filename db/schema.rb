@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110508203209) do
+ActiveRecord::Schema.define(:version => 20110510194633) do
 
   create_table "activity_periods", :force => true do |t|
     t.string   "unique_title",    :limit => 64,                    :null => false
@@ -320,10 +320,12 @@ ActiveRecord::Schema.define(:version => 20110508203209) do
   add_index "membership_types", ["unique_title"], :name => "index_membership_types_on_unique_title", :unique => true
 
   create_table "memberships", :force => true do |t|
-    t.integer  "membership_type_id",                                              :null => false
-    t.integer  "activity_period_id",                                              :null => false
-    t.decimal  "price",              :precision => 4, :scale => 1
-    t.integer  "members_count",                                    :default => 0
+    t.integer  "membership_type_id",                                               :null => false
+    t.integer  "activity_period_id",                                               :null => false
+    t.decimal  "initial_price",       :precision => 4, :scale => 1
+    t.decimal  "current_price",       :precision => 4, :scale => 1
+    t.integer  "tickets_count_limit"
+    t.integer  "members_count",                                     :default => 0
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -337,6 +339,7 @@ ActiveRecord::Schema.define(:version => 20110508203209) do
     t.date     "date",                                                                                    :null => false
     t.decimal  "amount",                                 :precision => 4, :scale => 1,                    :null => false
     t.string   "method",                   :limit => 32,                                                  :null => false
+    t.integer  "revenue_account_id"
     t.integer  "payer_person_id"
     t.boolean  "cancelled_and_reimbursed",                                             :default => false, :null => false
     t.date     "cancelled_on"
@@ -350,6 +353,7 @@ ActiveRecord::Schema.define(:version => 20110508203209) do
   add_index "payments", ["payable_type", "date"], :name => "index_payments_on_payable_type_and_date"
   add_index "payments", ["payable_type", "payable_id"], :name => "index_payments_on_payable_type_and_payable_id", :unique => true
   add_index "payments", ["payer_person_id"], :name => "index_payments_on_payer_person_id"
+  add_index "payments", ["revenue_account_id"], :name => "index_payments_on_revenue_account_id"
 
   create_table "people", :force => true do |t|
     t.string   "last_name",          :limit => 32,                 :null => false
@@ -387,6 +391,27 @@ ActiveRecord::Schema.define(:version => 20110508203209) do
 
   add_index "personal_statements", ["accept_email_announcements"], :name => "index_personal_statements_on_accept_email_announcements"
   add_index "personal_statements", ["volunteer"], :name => "index_personal_statements_on_volunteer"
+
+  create_table "revenue_accounts", :force => true do |t|
+    t.string   "unique_title",       :limit => 64,                                                  :null => false
+    t.boolean  "locked",                                                         :default => false, :null => false
+    t.integer  "activity_period_id"
+    t.date     "opened_on"
+    t.date     "closed_on"
+    t.boolean  "main",                                                           :default => false, :null => false
+    t.decimal  "amount",                           :precision => 7, :scale => 2, :default => 0.0,   :null => false
+    t.date     "amount_updated_on"
+    t.string   "description"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "revenue_accounts", ["activity_period_id"], :name => "index_revenue_accounts_on_activity_period_id"
+  add_index "revenue_accounts", ["closed_on"], :name => "index_revenue_accounts_on_closed_on"
+  add_index "revenue_accounts", ["locked", "closed_on"], :name => "index_revenue_accounts_on_locked_and_closed_on"
+  add_index "revenue_accounts", ["locked", "opened_on"], :name => "index_revenue_accounts_on_locked_and_opened_on"
+  add_index "revenue_accounts", ["opened_on"], :name => "index_revenue_accounts_on_opened_on"
+  add_index "revenue_accounts", ["unique_title"], :name => "index_revenue_accounts_on_unique_title", :unique => true
 
   create_table "safe_user_ips", :force => true do |t|
     t.integer  "known_ip_id",       :null => false

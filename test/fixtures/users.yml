@@ -9,9 +9,9 @@ one:
   admin: false
   manager: false
   secretary: false
-  password_or_encrypted_password: MyString
-  salt: MyString
-  last_connected_at: 2011-05-08 22:29:33
+  password_or_password_hash: MyString
+  password_salt: MyString
+  last_signed_in_at: 2011-05-08 22:29:33
   comments: MyText
 
 two:
@@ -23,7 +23,7 @@ two:
   admin: false
   manager: false
   secretary: false
-  password_or_encrypted_password: MyString
-  salt: MyString
-  last_connected_at: 2011-05-08 22:29:33
+  password_or_password_hash: MyString
+  password_salt: MyString
+  last_signed_in_at: 2011-05-08 22:29:33
   comments: MyText

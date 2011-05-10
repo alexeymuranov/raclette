@@ -8,6 +8,7 @@ class Payment < ActiveRecord::Base
                    # :date,
                    # :amount,
                    # :method,
+                   # :revenue_account_id,
                    # :payer_person_id,
                    # :cancelled_and_reimbursed,
                    # :cancelled_on,
@@ -17,6 +18,8 @@ class Payment < ActiveRecord::Base
   # Associations:
   belongs_to :purchase, :foreign_key => :payable_id,
                         :polymorphic => true
+
+  belongs_to :revenue_account, :inverse_of  => :payments
 
   belongs_to :payer, :foreign_key => :payer_person_id,
                      :class_name  => :Person,
