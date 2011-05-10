@@ -1,6 +1,25 @@
 class Member < ActiveRecord::Base
   set_primary_key :person_id
 
+  attr_readonly :id, :person_id, :been_member_by
+
+  # attr_accessible( # :id,
+                   # :person_id,
+                   # :been_member_by,
+                   # :shares_tickets_with_member_id,
+                   # :account_deactivated,
+                   # :latest_membership_obtained_on,
+                   # :latest_membership_expiration_date,
+                   # :latest_membership_type,
+                   # :latest_membership_duration_months,
+                   # :last_card_printed_on,
+                   # :last_card_delivered,
+                   # :last_payment_date,
+                   # :last_entry_date,
+                   # :payed_tickets_count,
+                   # :free_tickets_count
+                 # )  ## all attributes listed here
+
   has_one :tickets_lender, :foreign_key => :shares_tickets_with_member_id,
                            :class_name  => :Member,
                            :dependent   => :nullify,

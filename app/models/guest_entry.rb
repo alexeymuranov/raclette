@@ -1,5 +1,18 @@
 class GuestEntry < ActiveRecord::Base
 
+  attr_readonly :id, :first_name
+
+  # attr_accessible( # :id,
+                   # :first_name,
+                   # :last_name,
+                   # :inviting_member_id,
+                   # :previous_entry_id,
+                   # :toward_membership_purchase_id,
+                   # :email,
+                   # :phone,
+                   # :note
+                 # )  ## all attributes listed here
+
   has_one :event_entry, :as        => :participant_entry,
                         :dependent => :nullify
 

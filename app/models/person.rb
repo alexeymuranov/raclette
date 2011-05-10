@@ -1,5 +1,20 @@
 class Person < ActiveRecord::Base
 
+  attr_readonly :id, :last_name
+
+  # attr_accessible( # :id,
+                   # :last_name,
+                   # :first_name,
+                   # :name_title,
+                   # :nickname_or_other,
+                   # :birthyear
+                   # :email,
+                   # :mobile_phone,
+                   # :home_phone,
+                   # :work_phone,
+                   # :primary_address_id,
+                 # )  ## all attributes listed here
+
   has_many :users, :dependent  => :nullify,
                    :inverse_of => :person
 

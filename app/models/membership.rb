@@ -1,5 +1,14 @@
 class Membership < ActiveRecord::Base
 
+  attr_readonly :id, :membership_type_id, :activity_period_id
+
+  # attr_accessible( # :id,
+                   # :membership_type_id,
+                   # :activity_period_id,
+                   # :price,
+                   # :members_count
+                 # )  ## all attributes listed here
+
   has_many :member_memberships, :dependent  => :nullify,
                                 :inverse_of => :membership
 
