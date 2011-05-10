@@ -9,6 +9,7 @@ class Membership < ActiveRecord::Base
                    # :members_count
                  # )  ## all attributes listed here
 
+  # Associations:
   has_many :member_memberships, :dependent  => :nullify,
                                 :inverse_of => :membership
 
@@ -22,4 +23,18 @@ class Membership < ActiveRecord::Base
   belongs_to :type, :foreign_key => :membership_type_id,
                     :class_name  => :MembershipType,
                     :inverse_of  => :memberships
+
+  # Validations:
+  validates :membership_type_id, :activity_period_id, :price,
+                :presence => true
+
+  validates :price, :numericality => { :greater_than_or_equal_to => 0 },
+                    :allow_nil    => true
+
+  validates :members_count,
+                :numericality => { :greater_than_or_equal_to => 0 },
+                :allow_nil    => true
+
+  validates :membership_type_id,
+                :uniqueness => { :scope => :activity_period_id }
 end

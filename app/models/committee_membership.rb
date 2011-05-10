@@ -11,5 +11,15 @@ class CommitteeMembership < ActiveRecord::Base
                    # :comment
                  # )  ## all attributes listed here
 
+  # Associations:
   belongs_to :person, :inverse_of => :committee_membership
+
+  # Validations:
+  validates :person_id, :function, :start_date,
+                :presence => true
+
+  validates :function, :length => 1..64
+
+  validates :comment, :length    => { :maximum => 255 },
+                      :allow_nil => true
 end

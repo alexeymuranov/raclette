@@ -11,10 +11,22 @@ class Instructor < ActiveRecord::Base
                    # :employed_until
                  # )  ## all attributes listed here
 
+  # Associations:
   has_many :lesson_instructors, :dependent  => :destroy,
                                 :inverse_of => :instructor
 
   has_many :lesson_supervisons, :through => :lesson_instructors
 
   belongs_to :person, :inverse_of => :instructor
+
+  # Validations:
+  validates :person_id, :presence => true
+
+  validates :presentation, :length    => { :maximum => 32*1024 },
+                           :allow_nil => true
+
+  validates :photo, :length    => { :maximum => 2.megabytes },
+                    :allow_nil => true
+
+  validates :person_id, :uniqueness => true
 end

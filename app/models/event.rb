@@ -30,6 +30,7 @@ class Event < ActiveRecord::Base
                    # :description
                  # )  ## all attributes listed here
 
+  # Associations:
   has_many :event_entry_reservations, :dependent  => :nullify,
                                       :inverse_of => :event
 
@@ -45,4 +46,50 @@ class Event < ActiveRecord::Base
   belongs_to :weekly_event, :inverse_of => :events
 
   belongs_to :lesson_supervision, :inverse_of => :events
+
+  # Validations:
+  validates :event_type, :presence => true
+
+  validates :event_type, :length    => { :maximum => 32 },
+                         :inclusion => %w[ Cours
+                                           Atelier
+                                           Practica
+                                           SoiréeSpécial
+                                           Initiation ]
+
+  validates :title, :location,
+                :length    => { :maximum => 64 },
+                :allow_nil => true
+
+  validates :start_time, :end_time,
+                :length    => { :maximum => 8 },
+                :allow_nil => true
+
+  validates :duration_minutes, :inclusion => 5..(24*60),
+                               :allow_nil => true
+
+  validates :supervisors, :length    => { :maximum => 255 },
+                          :allow_nil => true
+
+  validates :entry_fee_tickets, :inclusion => 0..100,
+                                :allow_nil => true
+
+  validates :member_entry_fee, :couple_entry_fee, :common_entry_fee,
+                :numericality => { :greater_than_or_equal_to => 0 },
+                :allow_nil    => true
+
+  validates :entries_count, :member_entries_count,
+                :inclusion => 0..10000,
+                :allow_nil => true
+
+  validates :tickets_collected,
+                :numericality => { :greater_than_or_equal_to => 0 },
+                :allow_nil    => true
+
+  validates :entry_fees_collected,
+                :numericality => { :greater_than_or_equal_to => 0 },
+                :allow_nil    => true
+
+  validates :description, :length    => { :maximum => 255 },
+                          :allow_nil => true
 end

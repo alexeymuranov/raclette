@@ -8,6 +8,7 @@ class LessonSupervision < ActiveRecord::Base
                    # :comment
                  # )  ## all attributes listed here
 
+  # Associations:
   has_many :lesson_instructors, :dependent  => :destroy,
                                 :inverse_of => :lesson_supervision
 
@@ -18,4 +19,17 @@ class LessonSupervision < ActiveRecord::Base
 
   has_many :events, :dependent  => :nullify,
                     :inverse_of => :lesson_supervision
+
+  # Validations:
+  validates :unique_names, :instructors_count,
+                :presence => true
+
+  validates :unique_names, :length => 1..128
+
+  validates :instructors_count, :inclusion => 1..4
+
+  validates :comment, :length    => { :maximum => 255 },
+                      :allow_nil => true
+
+  validates :unique_names, :uniqueness => { :case_sensitive => false }
 end

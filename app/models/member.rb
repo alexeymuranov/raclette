@@ -20,6 +20,7 @@ class Member < ActiveRecord::Base
                    # :free_tickets_count
                  # )  ## all attributes listed here
 
+  # Associations:
   has_one :tickets_lender, :foreign_key => :shares_tickets_with_member_id,
                            :class_name  => :Member,
                            :dependent   => :nullify,
@@ -59,4 +60,24 @@ class Member < ActiveRecord::Base
                  :foreign_key => :shares_tickets_with_member_id,
                  :class_name  => :Member,
                  :inverse_of  => :tickets_lender
+
+  # Validations:
+  validates :person_id, :been_member_by,
+            :payed_tickets_count, :free_tickets_count,
+                :presence => true
+
+  validates :latest_membership_type, :length    => { :maximum => 32 },
+                                     :allow_nil => true
+
+  validates :latest_membership_duration_months, :inclusion => 1..12,
+                                                :allow_nil => true
+
+  validates :payed_tickets_count, :inclusion => -100..1000
+
+  validates :free_tickets_count, :inclusion => 0..100
+
+  validates :shares_tickets_with_member_id, :uniqueness => true,
+                                            :allow_nil  => true
+
+  validates :person_id, :uniqueness => true
 end

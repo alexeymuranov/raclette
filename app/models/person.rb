@@ -15,6 +15,7 @@ class Person < ActiveRecord::Base
                    # :primary_address_id,
                  # )  ## all attributes listed here
 
+  # Associations:
   has_many :users, :dependent  => :nullify,
                    :inverse_of => :person
 
@@ -43,4 +44,28 @@ class Person < ActiveRecord::Base
 
   belongs_to :primary_address, :class_name => :Address,
                                :inverse_of => :people
+
+  # Validations:
+  validates :last_name, :first_name,
+                :presence => true
+
+  validates :last_name, :first_name, :nickname_or_other,
+                :length   => { :maximum => 32 }
+
+  validates :name_title, :length    => { :maximum => 16 },
+                         :allow_nil => true
+
+  validates :birthyear, :inclusion => 1900..2099,
+                        :allow_nil => true
+
+  validates :email, :length    => { :maximum => 255 },
+                    :format    => ACCEPTABLE_EMAIL_ADDRESS_FORMAT,
+                    :allow_nil => true
+
+  validates :mobile_phone, :home_phone, :work_phone,
+                :length    => { :maximum => 32 },
+                :allow_nil => true
+
+  validates :nickname_or_other,
+                :uniqueness => { :scope => [ :last_name, :first_name ] }
 end

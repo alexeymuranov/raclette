@@ -13,6 +13,7 @@ class GuestEntry < ActiveRecord::Base
                    # :note
                  # )  ## all attributes listed here
 
+  # Associations:
   has_one :event_entry, :as        => :participant_entry,
                         :dependent => :nullify
 
@@ -33,4 +34,20 @@ class GuestEntry < ActiveRecord::Base
   belongs_to :membership_purchase,
                  :foreign_key => :toward_membership_purchase_id,
                  :inverse_of  => :accounted_guest_entries
+
+  # Validations:
+  validates :first_name, :presence => true
+
+  validates :first_name, :length => { :maximum => 32 }
+
+  validates :last_name, :phone,
+                :length    => { :maximum => 32 },
+                :allow_nil => true
+
+  validates :email, :note,
+                :length    => { :maximum => 255 },
+                :allow_nil => true
+
+  validates :previous_entry_id, :uniqueness => true,
+                                :allow_nil  => true
 end

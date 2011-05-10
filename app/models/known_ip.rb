@@ -8,6 +8,7 @@ class KnownIP < ActiveRecord::Base  ## note the class name! (capital IP)
                    # :description
                  # )  ## all attributes listed here
 
+  # Associations:
   has_many :safe_user_ips, :foreign_key => :known_ip_id,
                            :class_name  => :SafeUserIP,
                            :dependent   => :destroy,
@@ -15,4 +16,9 @@ class KnownIP < ActiveRecord::Base  ## note the class name! (capital IP)
 
   has_many :safe_users, :through => :safe_user_ips,
                         :source  => :user
+
+  # Validations:
+  validates :ip, :presence   => true,
+                 :format     => /\A\d{1,3}(\.\d{1,3}){3}\z/,
+                 :uniqueness => true
 end

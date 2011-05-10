@@ -9,10 +9,17 @@ class TicketsPurchase < ActiveRecord::Base
                    # :purchase_date
                  # )  ## all attributes listed here
 
+  # Associations:
   has_one :payment, :as        => :payable,
                     :dependent => :nullify
 
   belongs_to :member, :inverse_of => :tickets_purchases
 
   belongs_to :ticket_book, :inverse_of => :tickets_purchases
+
+  # Validations:
+  validates :member_id, :tickets_number, :purchase_date,
+                :presence  => true
+
+  validates :tickets_number, :inclusion => 1..1000
 end

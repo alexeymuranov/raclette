@@ -11,6 +11,7 @@ class EventEntry < ActiveRecord::Base
                    # :person_id
                  # )  ## all attributes listed here
 
+  # Associations:
   has_one :payment, :as        => :payable,
                     :dependent => :nullify
 
@@ -20,4 +21,17 @@ class EventEntry < ActiveRecord::Base
 
   belongs_to :participant_entry, :polymorphic => true,
                                  :dependent   => :destroy
+
+  # Validations:
+  validates :participant_entry_type, :event_title, :date,
+                :presence => true
+
+  validates :participant_entry_type, :length => { :maximum => 32 }
+
+  validates :event_title, :length => { :maximum => 64 }
+
+  validates :participant_entry_id,
+                :uniqueness => { :scope => :participant_entry_type }
+
+  validates :person_id, :uniqueness => { :scope => :event_id }
 end
