@@ -2,4 +2,73 @@
 # See http://github.com/svenfuchs/rails-i18n/tree/master/rails%2Flocale for starting points.
 
 en:
-  hello: "Hello world"
+  hello: "hello"
+  "yes": "yes"
+  "no": "no"
+
+  buttons:
+    save: "Save"  
+  
+  questions:
+    are_you_sure: "Are you sure?"
+    
+  application_layout:
+    navigation_links:
+      monitor: "Monitor"
+      entry_register: "Entry register"
+      secretary_tools: "Secretary tools"
+      manager_tools: "Manager tools"
+      admin_tools: "Admin tools"
+      sign_out: "Sign out"
+      tangueando_site: "Site Tangueando"
+
+  admin:
+    users:
+      index:
+        title: "All users"
+        header: "Listing users"
+      show:
+        title: "%{username}"
+        links:
+          update: "Update the user"
+      new:
+        title: "New user"
+        header: "New user"
+      edit:
+        title: "Edit %{username}"
+        header: "Editing user %{username}"
+        links:
+          show: "Show the user"
+      create:
+        flash:
+          success: "User %{username} was successfully created."
+          failure: "User was not created."
+      update:
+        flash:
+          success: "User %{username} was successfully updated."
+          failure: "User was not updated."
+          wrong_password: "Password is invalid, the user was not updated."
+        
+      links:
+        all: "Show all users"
+        show: "Show"
+        new: "New user"
+        update: "Edit"
+        delete: "Delete"
+      labels:
+        username: "Username:"
+        full_name: "Full name:"
+        person_id: "Personal ID:"
+        email: "E-mail address:"
+        admin: "Administrator?"
+        manager: "Manager?"
+        secretary: "Secretary?"
+        person: "Person?"
+        last_signed_in_at: "Last signed in at:"
+        comments: "Comments:"
+        password: "Password:"
+        current_password: "Current password (only if changing):"
+        new_password: "New password:"
+        password_confirmation: "Confirmation:"
+        new_password_confirmation: "Confirmation of new password:"
+      

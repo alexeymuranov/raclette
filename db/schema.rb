@@ -46,13 +46,60 @@ ActiveRecord::Schema.define(:version => 20110510194633) do
   add_index "addresses", ["names"], :name => "index_addresses_on_names"
   add_index "addresses", ["post_code", "country"], :name => "index_addresses_on_post_code_and_country"
 
+  create_table "admin_known_ips", :force => true do |t|
+    t.string   "ip",          :limit => 15, :null => false
+    t.string   "description"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "admin_known_ips", ["ip"], :name => "index_admin_known_ips_on_ip", :unique => true
+
+  create_table "admin_safe_user_ips", :force => true do |t|
+    t.integer  "known_ip_id",       :null => false
+    t.integer  "user_id",           :null => false
+    t.datetime "last_signed_in_at"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "admin_safe_user_ips", ["known_ip_id"], :name => "index_admin_safe_user_ips_on_known_ip_id"
+  add_index "admin_safe_user_ips", ["user_id", "known_ip_id"], :name => "index_admin_safe_user_ips_on_user_id_and_known_ip_id", :unique => true
+
+  create_table "admin_users", :force => true do |t|
+    t.string   "username",                  :limit => 32,                    :null => false
+    t.string   "full_name",                 :limit => 64,                    :null => false
+    t.boolean  "a_person"
+    t.integer  "person_id"
+    t.string   "email"
+    t.boolean  "account_deactivated",                     :default => false, :null => false
+    t.boolean  "admin",                                   :default => false, :null => false
+    t.boolean  "manager",                                 :default => false, :null => false
+    t.boolean  "secretary",                               :default => false, :null => false
+    t.string   "password_or_password_hash",               :default => "",    :null => false
+    t.string   "password_salt"
+    t.datetime "last_signed_in_at"
+    t.text     "comments"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "admin_users", ["a_person"], :name => "index_admin_users_on_a_person"
+  add_index "admin_users", ["admin"], :name => "index_admin_users_on_admin"
+  add_index "admin_users", ["email"], :name => "index_admin_users_on_email", :unique => true
+  add_index "admin_users", ["full_name"], :name => "index_admin_users_on_full_name"
+  add_index "admin_users", ["person_id"], :name => "index_admin_users_on_person_id"
+  add_index "admin_users", ["username"], :name => "index_admin_users_on_username", :unique => true
+
   create_table "application_journal", :force => true do |t|
-    t.string   "username",     :limit => 32
+    t.string   "action",         :limit => 64, :null => false
+    t.string   "username",       :limit => 32, :null => false
     t.integer  "user_id"
-    t.string   "ip",           :limit => 15
-    t.string   "action",       :limit => 64
+    t.string   "ip",             :limit => 15, :null => false
+    t.string   "something_type", :limit => 32, :null => false
+    t.integer  "something_id"
     t.string   "details"
-    t.datetime "generated_at",               :null => false
+    t.datetime "generated_at",                 :null => false
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -167,8 +214,8 @@ ActiveRecord::Schema.define(:version => 20110510194633) do
   add_index "guest_entries", ["toward_membership_purchase_id"], :name => "index_guest_entries_on_toward_membership_purchase_id"
 
   create_table "instructors", :primary_key => "person_id", :force => true do |t|
-    t.text     "presentation",   :limit => 32768
-    t.binary   "photo",          :limit => 2097152
+    t.text     "presentation"
+    t.binary   "photo"
     t.date     "employed_from"
     t.date     "employed_until"
     t.datetime "created_at"
@@ -177,15 +224,6 @@ ActiveRecord::Schema.define(:version => 20110510194633) do
 
   add_index "instructors", ["employed_from"], :name => "index_instructors_on_employed_from"
   add_index "instructors", ["employed_until"], :name => "index_instructors_on_employed_until"
-
-  create_table "known_ips", :force => true do |t|
-    t.string   "ip",          :limit => 15, :null => false
-    t.string   "description"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  add_index "known_ips", ["ip"], :name => "index_known_ips_on_ip", :unique => true
 
   create_table "lesson_instructors", :force => true do |t|
     t.integer  "lesson_supervision_id",                    :null => false
@@ -237,9 +275,9 @@ ActiveRecord::Schema.define(:version => 20110510194633) do
   add_index "member_memberships", ["obtained_on"], :name => "index_member_memberships_on_obtained_on"
 
   create_table "member_messages", :force => true do |t|
-    t.integer  "member_id",                  :null => false
-    t.text     "content",    :limit => 1024, :null => false
-    t.date     "created_on",                 :null => false
+    t.integer  "member_id",  :null => false
+    t.text     "content",    :null => false
+    t.date     "created_on", :null => false
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -351,7 +389,7 @@ ActiveRecord::Schema.define(:version => 20110510194633) do
   add_index "payments", ["cancelled_and_reimbursed", "cancelled_on"], :name => "index_payments_on_cancelled_and_reimbursed_and_cancelled_on"
   add_index "payments", ["date"], :name => "index_payments_on_date"
   add_index "payments", ["payable_type", "date"], :name => "index_payments_on_payable_type_and_date"
-  add_index "payments", ["payable_type", "payable_id"], :name => "index_payments_on_payable_type_and_payable_id", :unique => true
+  add_index "payments", ["payable_type", "payable_id"], :name => "index_payments_on_payable_type_and_payable_id"
   add_index "payments", ["payer_person_id"], :name => "index_payments_on_payer_person_id"
   add_index "payments", ["revenue_account_id"], :name => "index_payments_on_revenue_account_id"
 
@@ -413,27 +451,18 @@ ActiveRecord::Schema.define(:version => 20110510194633) do
   add_index "revenue_accounts", ["opened_on"], :name => "index_revenue_accounts_on_opened_on"
   add_index "revenue_accounts", ["unique_title"], :name => "index_revenue_accounts_on_unique_title", :unique => true
 
-  create_table "safe_user_ips", :force => true do |t|
-    t.integer  "known_ip_id",       :null => false
-    t.integer  "user_id",           :null => false
-    t.datetime "last_signed_in_at"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  add_index "safe_user_ips", ["known_ip_id"], :name => "index_safe_user_ips_on_known_ip_id"
-  add_index "safe_user_ips", ["user_id", "known_ip_id"], :name => "index_safe_user_ips_on_user_id_and_known_ip_id", :unique => true
-
   create_table "secretary_notes", :force => true do |t|
     t.string   "note_type",          :limit => 32, :null => false
-    t.string   "message"
     t.string   "something_type",     :limit => 32, :null => false
     t.integer  "something_id"
+    t.date     "created_on",                       :null => false
+    t.text     "message"
     t.datetime "message_updated_at",               :null => false
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
+  add_index "secretary_notes", ["created_on"], :name => "index_secretary_notes_on_created_on"
   add_index "secretary_notes", ["message_updated_at"], :name => "index_secretary_notes_on_message_updated_at"
   add_index "secretary_notes", ["note_type", "message_updated_at"], :name => "index_secretary_notes_on_note_type_and_message_updated_at"
   add_index "secretary_notes", ["note_type", "something_type", "something_id"], :name => "index_secretary_notes_on_note_type_and_s_type_and_s_id", :unique => true
@@ -471,30 +500,6 @@ ActiveRecord::Schema.define(:version => 20110510194633) do
   add_index "tickets_purchases", ["member_id"], :name => "index_tickets_purchases_on_member_id"
   add_index "tickets_purchases", ["purchase_date"], :name => "index_tickets_purchases_on_purchase_date"
   add_index "tickets_purchases", ["ticket_book_id"], :name => "index_tickets_purchases_on_ticket_book_id"
-
-  create_table "users", :force => true do |t|
-    t.string   "username",                  :limit => 32,                      :null => false
-    t.string   "full_name",                 :limit => 64,                      :null => false
-    t.boolean  "a_person"
-    t.integer  "person_id"
-    t.string   "email"
-    t.boolean  "admin",                                     :default => false, :null => false
-    t.boolean  "manager",                                   :default => false, :null => false
-    t.boolean  "secretary",                                 :default => false, :null => false
-    t.string   "password_or_password_hash",                 :default => "",    :null => false
-    t.string   "password_salt"
-    t.datetime "last_signed_in_at"
-    t.text     "comments",                  :limit => 4096
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  add_index "users", ["a_person"], :name => "index_users_on_a_person"
-  add_index "users", ["admin"], :name => "index_users_on_admin"
-  add_index "users", ["email"], :name => "index_users_on_email", :unique => true
-  add_index "users", ["full_name"], :name => "index_users_on_full_name"
-  add_index "users", ["person_id"], :name => "index_users_on_person_id"
-  add_index "users", ["username"], :name => "index_users_on_username", :unique => true
 
   create_table "weekly_event_suspensions", :force => true do |t|
     t.integer  "weekly_event_id", :null => false

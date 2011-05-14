@@ -1,17 +1,21 @@
 # Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
 
 one:
+  action: MyString
   username: MyString
   user_id: 1
   ip: MyString
-  action: MyString
+  something_type: MyString
+  something_id: 1
   details: MyString
   generated_at: 2011-05-08 22:32:05
 
 two:
+  action: MyString
   username: MyString
   user_id: 1
+  something_type: MyString
+  something_id: 1
   ip: MyString
-  action: MyString
   details: MyString
   generated_at: 2011-05-08 22:32:05

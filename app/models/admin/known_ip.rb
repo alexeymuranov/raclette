@@ -1,5 +1,5 @@
-class KnownIP < ActiveRecord::Base  ## note the class name! (capital IP)
-  set_table_name :known_ips
+class Admin::KnownIP < ActiveRecord::Base  ## note the class name! (capital IP)
+  set_table_name :admin_known_ips
 
   attr_readonly :id, :ip
 

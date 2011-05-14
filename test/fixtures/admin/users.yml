@@ -6,6 +6,7 @@ one:
   a_person: false
   person_id: 1
   email: MyString
+  account_deactivated: false
   admin: false
   manager: false
   secretary: false
@@ -20,6 +21,7 @@ two:
   a_person: false
   person_id: 1
   email: MyString
+  account_deactivated: false
   admin: false
   manager: false
   secretary: false

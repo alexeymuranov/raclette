@@ -32,7 +32,7 @@ class Person < ActiveRecord::Base
   has_one :member, :dependent  => :destroy,
                    :inverse_of => :person
 
-  has_many :payments, :foreign_key => :payer_person_id
+  has_many :payments, :foreign_key => :payer_person_id,
                       :dependent   => :nullify,
                       :inverse_of  => :payer
 
@@ -58,9 +58,9 @@ class Person < ActiveRecord::Base
   validates :birthyear, :inclusion => 1900..2099,
                         :allow_nil => true
 
-  validates :email, :length    => { :maximum => 255 },
-                    :format    => ACCEPTABLE_EMAIL_ADDRESS_FORMAT,
-                    :allow_nil => true
+  validates :email, :length       => { :maximum => 255 },
+                    :email_format => true,
+                    :allow_nil    => true
 
   validates :mobile_phone, :home_phone, :work_phone,
                 :length    => { :maximum => 32 },

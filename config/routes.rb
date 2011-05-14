@@ -1,9 +1,19 @@
 Raclette::Application.routes.draw do
 
-  get "pages/home"
+  get "monitor/overview"
 
-  root :to => 'pages#home'
-  
+  namespace :admin do
+
+    resources :users do
+
+      resources :safe_user_ips
+    end
+
+    resources :known_ips
+  end
+
+  root :to => 'monitor#overview'
+    
   # The priority is based upon order of creation:
   # first created -> highest priority.
 

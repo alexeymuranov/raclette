@@ -44,9 +44,12 @@ class GuestEntry < ActiveRecord::Base
                 :length    => { :maximum => 32 },
                 :allow_nil => true
 
-  validates :email, :note,
-                :length    => { :maximum => 255 },
-                :allow_nil => true
+  validates :email, :length       => { :maximum => 255 },
+                    :email_format => true,
+                    :allow_nil    => true
+
+  validates :note, :length    => { :maximum => 255 },
+                   :allow_nil => true
 
   validates :previous_entry_id, :uniqueness => true,
                                 :allow_nil  => true

@@ -6,6 +6,76 @@
 #  - Tsutomu Kuroda - http://github.com/kuroda (t-kuroda@oiax.jp)
 
 fr:
+  hello: "bonjour"
+  "yes": "oui"
+  "no": "non"
+
+  buttons:
+    save: "Enregistrer"
+
+  questions:
+    are_you_sure: "Vous êtes sûr ?"
+
+  application_layout:
+    navigation_links:
+      monitor: "Écran de contrôle"
+      entry_register: "Caisse d'entrée"
+      secretary_tools: "Outils de secrétare"
+      manager_tools: "Outils de gestion"
+      admin_tools: "Outils d'administration"
+      sign_out: "Se deconnecter"
+      tangueando_site: "Site Tangueando"
+
+  admin:
+    users:
+      index:
+        title: "Tous utilisateurs"
+        header: "Liste des utilisateurs"
+      show:
+        title: "%{username}"
+        links:
+          update: "Mettre l'utilisateur à jour"
+      new:
+        title: "Nouveau utilisateur"
+        header: "Nouveau utilisateur"
+      edit:
+        title: "%{username} - mise à jour"
+        header: "Mise à jour de l'utilisateur « %{username} »"
+        links:
+          show: "Montrer l'utilisateur"
+      create:
+        flash:
+          success: "Utilisateur « %{username} » a été enregistré."
+          failure: "Utilisateur n'a pas été enregistré."
+      update:
+        flash:
+          success: "Utilisateur « %{username} » a été mis à jour."
+          failure: "Utilisateur n'a pas été mis à jour."
+          wrong_password: "Le mot de passe est invalide, l'utilisateur n'a pas été mis à jour."
+
+      links:
+        all: "Montrer tous les utilisateurs"
+        show: "Montrer"
+        new: "Ajouter un utilisateur"
+        update: "Mettre à jour"
+        delete: "Supprimer"
+      labels:
+        username: "Nom d'utilisateur :"
+        full_name: "Nom complet :"
+        person_id: "Id personnelle :"
+        email: "Adresse e-mail :"
+        admin: "Administrateur ?"
+        manager: "Gestionnaire ?"
+        secretary: "Secrétaire ?"
+        person: "Personne ?"
+        last_signed_in_at: "S'est inscrit la dernière fois à :"
+        comments: "Des remarques :"
+        password: "Mot de passe :"
+        current_password: "Mot de passe actuel (seulement s'il change) :"
+        new_password: "Nouveau mot de passe :"
+        password_confirmation: "Confirmation du mot de passe :"
+        new_password_confirmation: "Confirmation du nouveau mot de passe :"
+
   date:
     formats:
       default: "%d/%m/%Y"

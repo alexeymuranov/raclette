@@ -15,8 +15,7 @@ class CreatePayments < ActiveRecord::Migration
       t.timestamps
     end
 
-    add_index :payments, [ :payable_type, :payable_id ],
-                  :unique => true
+    add_index :payments, [ :payable_type, :payable_id ]
     add_index :payments, [ :payable_type, :date ]
     add_index :payments, :date
     add_index :payments, :revenue_account_id

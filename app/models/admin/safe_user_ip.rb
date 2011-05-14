@@ -1,5 +1,5 @@
-class SafeUserIP < ActiveRecord::Base  ## note the class name! (capital IP)
-  set_table_name :safe_user_ips
+class Admin::SafeUserIP < ActiveRecord::Base  ## note the class name! (capital IP)
+  set_table_name :admin_safe_user_ips
 
   attr_readonly :id, :known_ip_id, :user_id
 

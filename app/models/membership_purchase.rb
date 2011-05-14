@@ -12,8 +12,8 @@ class MembershipPurchase < ActiveRecord::Base
                  # )  ## all attributes listed here
 
   # Associations:
-  has_one :payment, :as        => :payable,
-                    :dependent => :nullify
+  has_many :payments, :as        => :payable,
+                      :dependent => :nullify
 
   has_many :accounted_guest_entries, :dependent  => :nullify,
                                      :inverse_of => :membership_purchase

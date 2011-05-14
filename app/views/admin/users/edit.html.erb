@@ -1,0 +1,6 @@
+<h1><%= t '.header', :username => @user.username %></h1>
+
+<%= render 'edit_form' %>
+
+<%= link_to t('admin.users.edit.links.show'), @user %> |
+<%= link_to t('admin.users.links.all'), admin_users_path %>

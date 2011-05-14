@@ -10,8 +10,8 @@ class TicketsPurchase < ActiveRecord::Base
                  # )  ## all attributes listed here
 
   # Associations:
-  has_one :payment, :as        => :payable,
-                    :dependent => :nullify
+  has_many :payments, :as        => :payable,
+                      :dependent => :nullify
 
   belongs_to :member, :inverse_of => :tickets_purchases
 

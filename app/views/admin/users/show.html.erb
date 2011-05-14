@@ -1,0 +1,56 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b><%= t('admin.users.labels.username') %></b>
+  <%= @user.username %>
+</p>
+
+<p>
+  <b><%= t('admin.users.labels.full_name') %></b>
+  <%= @user.full_name %>
+</p>
+
+<p>
+  <b><%= t('admin.users.labels.email') %></b>
+  <%= @user.email %>
+</p>
+
+<p>
+  <b><%= t('admin.users.labels.admin') %></b>
+  <%= @user.admin? ? t(:yes) : t(:no) %>
+</p>
+
+<p>
+  <b><%= t('admin.users.labels.manager') %></b>
+  <%= @user.manager? ? t(:yes) : t(:no) %>
+</p>
+
+<p>
+  <b><%= t('admin.users.labels.secretary') %></b>
+  <%= @user.secretary? ? t(:yes) : t(:no) %>
+</p>
+
+<p>
+  <b><%= t('admin.users.labels.person') %></b>
+  <%= @user.a_person? ? t(:yes) : t(:no) %>
+</p>
+
+<p>
+  <b><%= t('admin.users.labels.person_id') %></b>
+  <%= @user.person_id %>
+</p>
+
+<p>
+  <b><%= t('admin.users.labels.last_signed_in_at') %></b>
+  <%= @user.last_signed_in_at %>
+</p>
+
+<p>
+  <b><%= t('admin.users.labels.comments') %></b>
+  <%= @user.comments %>
+</p>
+
+
+<%= link_to t('admin.users.show.links.update'), edit_admin_user_path(@user),
+            :class => 'modify' %> |
+<%= link_to t('admin.users.links.all'), admin_users_path %>

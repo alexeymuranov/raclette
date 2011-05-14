@@ -1,9 +1,9 @@
 class CreateMemberMessages < ActiveRecord::Migration
   def self.up
     create_table :member_messages do |t|
-      t.integer :member_id,               :null => false
-      t.text    :content, :limit => 1024, :null => false
-      t.date    :created_on,              :null => false
+      t.integer :member_id,  :null => false
+      t.text    :content,    :null => false
+      t.date    :created_on, :null => false
 
       t.timestamps
     end

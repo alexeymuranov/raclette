@@ -1,11 +1,12 @@
 class CreateSecretaryNotes < ActiveRecord::Migration
   def self.up
     create_table :secretary_notes do |t|
-      t.string   :note_type,      :limit =>  32, :null => false
-      t.string   :message,        :limit => 255
-      t.string   :something_type, :limit =>  32, :null => false
+      t.string   :note_type,      :limit => 32, :null => false
+      t.string   :something_type, :limit => 32, :null => false
       t.integer  :something_id
-      t.datetime :message_updated_at,            :null => false
+      t.date     :created_on,                   :null => false
+      t.text     :message
+      t.datetime :message_updated_at,           :null => false
 
       t.timestamps
     end
@@ -17,6 +18,7 @@ class CreateSecretaryNotes < ActiveRecord::Migration
                   :name   => 'index_secretary_notes_on'\
                              '_note_type_and_s_type_and_s_id',
                   :unique => true
+    add_index :secretary_notes, :created_on
     add_index :secretary_notes, :message_updated_at
   end
 
