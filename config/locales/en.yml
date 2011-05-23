@@ -12,6 +12,11 @@ en:
   questions:
     are_you_sure: "Are you sure?"
     
+  errors:
+    format: "%{attribute} %{message}"
+    messages: &errors_messages
+      email_format: "is not formatted properly"
+
   application_layout:
     navigation_links:
       monitor: "Monitor"

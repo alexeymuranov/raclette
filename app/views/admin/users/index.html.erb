@@ -19,22 +19,40 @@
     <td><%= user.username %></td>
     <td><%= user.full_name %></td>
     <td><%= user.email %></td>
-    <td><%= user.admin? ? t(:yes) : t(:no) %></td>
-    <td><%= user.manager? ? t(:yes) : t(:no)  %></td>
-    <td><%= user.secretary? ? t(:yes) : t(:no)  %></td>
-    <td><%= user.a_person? ? t(:yes) : t(:no) %></td>
-    <td><%= link_to t('admin.users.links.show'), user %></td>
-    <td><%= link_to t('admin.users.links.update'), edit_admin_user_path(user),
-                    :class => 'modify' %></td>
-    <td><%= link_to t('admin.users.links.delete'), user,
-                      :confirm => t(:are_you_sure, :scope => :questions),
-                    :method => :delete,
-                    :class  => 'modify' %></td>
+    <td style='text-align:center;'>
+      <%= user.admin? ? yes_icon : t(:no) %>
+    </td>
+    <td style='text-align:center;'>
+      <%= user.manager? ? yes_icon : t(:no)  %>
+    </td>
+    <td style='text-align:center;'>
+      <%= user.secretary? ? yes_icon : t(:no)  %>
+    </td>
+    <td style='text-align:center;'>
+      <%= user.a_person? ? yes_icon : t(:no) %>
+    </td>
+    <td>
+      <%= link_to show_icon, user,
+                  :title => t('admin.users.links.show') %>
+    </td>
+    <td>
+      <%= link_to edit_icon, edit_admin_user_path(user),
+                  :title => t('admin.users.links.update'),
+                  :class => 'modify' %>
+    </td>
+    <td>
+      <%= link_to delete_icon, user,
+                  :confirm => t(:are_you_sure, :scope => :questions),
+                  :method => :delete,
+                  :title  => t('admin.users.links.delete'),
+                  :class  => 'modify' %>
+    </td>
   </tr>
 <% end %>
 </table>
 
 <br />
 
-<%= link_to t('admin.users.links.new'), new_admin_user_path,
+<%= link_to add_icon(2)+t('admin.users.links.new'), new_admin_user_path,
+            :title  => t('admin.users.links.new'),
             :class => 'modify' %>
