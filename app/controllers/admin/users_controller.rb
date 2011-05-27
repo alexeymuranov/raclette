@@ -1,6 +1,6 @@
 ## encoding: UTF-8
 
-class Admin::UsersController < ApplicationController
+class Admin::UsersController < AdminController
   # GET /users
   # GET /users.xml
   def index
@@ -53,17 +53,26 @@ class Admin::UsersController < ApplicationController
   def create
     @user = Admin::User.new(params[:admin_user])
 
+    params[:admin_user].delete(:email)\
+        if params[:admin_user][:email].blank?
+
+    params[:admin_user].delete(:password)\
+        if params[:admin_user][:password].blank?
+        
     respond_to do |format|
       if @user.save
         flash[:success] = t('admin.users.create.flash.success',
                                 :username => @user.username)
         format.html { redirect_to(@user) }
-        format.xml  { render :xml => @user, :status => :created, :location => @user }
+        format.xml  { render :xml => @user,
+                             :status => :created,
+                             :location => @user }
       else
         flash[:error] = t('admin.users.create.flash.failure')
         @title = t('admin.users.new.title')
         format.html { render :action => :new }
-        format.xml  { render :xml => @user.errors, :status => :unprocessable_entity }
+        format.xml  { render :xml => @user.errors,
+                             :status => :unprocessable_entity }
       end
     end
   end
@@ -72,6 +81,9 @@ class Admin::UsersController < ApplicationController
   # PUT /users/1.xml
   def update
     @user = Admin::User.find(params[:id])
+
+    params[:admin_user].delete(:email)\
+        if params[:admin_user][:email].blank?
 
     params[:admin_user].delete(:password)\
         if params[:admin_user][:password].blank?
@@ -95,7 +107,8 @@ class Admin::UsersController < ApplicationController
           flash.now[:error] = t('admin.users.update.flash.failure')
           @title =  t('admin.users.edit.title', :username => @user.username)
           format.html { render :action => 'edit' }
-          format.xml  { render :xml => @user.errors, :status => :unprocessable_entity }
+          format.xml  { render :xml => @user.errors,
+                               :status => :unprocessable_entity }
         end
       end
     else
@@ -103,7 +116,8 @@ class Admin::UsersController < ApplicationController
       @title =  t('admin.users.edit.title', :username => @user.username)
       respond_to do |format|
         format.html { render :action => 'edit' }
-        format.xml  { render :xml => @user.errors, :status => :unprocessable_entity }
+        format.xml  { render :xml => @user.errors,
+                             :status => :unprocessable_entity }
       end
     end
   end

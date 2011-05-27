@@ -1,7 +1,10 @@
 <%= form_for(@user) do |f| %>
   <% if @user.errors.any? %>
     <div id="error_explanation">
-      <h2><%= pluralize(@user.errors.count, "error") %> prohibited this user from being saved:</h2>
+      <h2>
+        <%= pluralize(@user.errors.count, "error") %>
+        prohibited this user from being saved:
+      </h2>
 
       <ul>
       <% @user.errors.full_messages.each do |msg| %>
@@ -11,7 +14,7 @@
     </div>
   <% end %>
 
-  <%= render 'common_fields', :f => f %>
+  <%= render 'common_form_fields', :f => f %>
 
   <div class="field">
     <%= f.label :password, t('admin.users.labels.current_password') %><br />
@@ -22,7 +25,9 @@
     <%= f.password_field :new_password %>
   </div>
   <div class="field">
-    <%= f.label :password_confirmation, t('admin.users.labels.new_password_confirmation') %><br />
+    <%= f.label :password_confirmation,
+                t('admin.users.labels.new_password_confirmation') %>
+    <br />
     <%= f.password_field :new_password_confirmation %>
   </div>
   <div class="field">

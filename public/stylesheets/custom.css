@@ -5,7 +5,7 @@
 }
 
 body {
-  background-color: #008;
+  background-color: #009;
 }
 
 /* Header */
@@ -42,15 +42,15 @@ header nav ul li.logout {
 }
 
 header nav ul li a:link.logout {
-  color: #061;
+  color: #063;
 }
 
 header nav ul li a:visited.logout {
-  color: #061;
+  color: #063;
 }
 
 header nav ul li a:hover.logout {
-  color: #0c2;
+  color: #0c6;
 }
 
 header nav ul li a:link.disabled {
@@ -99,16 +99,16 @@ section table th {
 }
 
 section a:link {
-  color: #061;
+  color: #063;
   text-decoration: none;
 }
 
 section a:visited {
-  color: #061;
+  color: #063;
 }
 
 section a:hover {
-  color: #0c2;
+  color: #0c6;
   text-decoration: underline;
   -moz-border-radius:    5px;
   -webkit-border-radius: 5px;
@@ -117,16 +117,16 @@ section a:hover {
 }
 
 section a:link.modify {
-  color: #701;
+  color: #603;
   text-decoration: none;
 }
 
 section a:visited.modify {
-  color: #701;
+  color: #603;
 }
 
 section a:hover.modify {
-  color: #e02;
+  color: #c06;
   text-decoration: underline;
 }
 
@@ -162,13 +162,13 @@ nav ul li {
 
 nav ul li a:link {
   padding: 0 5px;
-  color: #008;
+  color: #009;
   font-weight: bold;
   text-decoration: none;
 }
 
 nav ul li a:visited {
-  color: #008;
+  color: #009;
 }
 
 nav ul li a:hover {
@@ -207,13 +207,13 @@ div.field, div.actions {
 }
   
 .field_with_errors .message {  
-  color: #D00;  
+  color: #c00;  
   padding-left: 5px;  
 }  
 
 #error_explanation {
   border: 2px solid red;
-  background-color: #eee;
+  background-color: #ccc;
   margin-bottom: 20px;
 }
 

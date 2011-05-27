@@ -3,5 +3,4 @@
 class MonitorController < ApplicationController
   def overview
   end
-
 end

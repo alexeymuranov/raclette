@@ -1,15 +1,19 @@
 Raclette::Application.routes.draw do
 
+  get "login" => "sessions#new"
+  delete "logout" => "sessions#destroy"
+  resources :sessions, :only => [ :create ]
+  
   get "monitor/overview"
 
+  # scope :module => :admin do
   namespace :admin do
 
-    resources :users do
+    resources :users
 
-      resources :safe_user_ips
-    end
-
-    resources :known_ips
+    resources :known_ips, :controller => :KnownIPs
+    
+    resources :safe_user_ips, :controller => :SafeUserIPs
   end
 
   root :to => 'monitor#overview'

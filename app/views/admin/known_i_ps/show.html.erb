@@ -1,0 +1,15 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>IP:</b>
+  <%= @known_ip.ip %>
+</p>
+
+<p>
+  <b>Description:</b>
+  <%= @known_ip.description %>
+</p>
+
+
+<%= link_to 'Edit', edit_admin_known_ip_path(@known_ip) %> |
+<%= link_to 'Back', admin_known_ips_path %>

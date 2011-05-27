@@ -16,7 +16,7 @@ class Admin::User < ActiveRecord::Base
                    :a_person,
                    # :person_id,
                    :email,
-                   # :account_deactivated
+                   # :account_deactivated,
                    :admin,
                    :manager,
                    :secretary,
@@ -76,11 +76,8 @@ class Admin::User < ActiveRecord::Base
 
   # Public methods:
   def has_password?(submitted_password)
-    if password_salt.nil?
-      password_or_password_hash == submitted_password
-    else
-      password_or_password_hash == hash_with_salt(submitted_password)
-    end
+    (password_or_password_hash == submitted_password) ||
+        (password_or_password_hash == hash_with_salt(submitted_password))
   end
 
   def self.authenticate(username, submitted_password)

@@ -1,13 +1,13 @@
-class Admin::SafeUserIP < ActiveRecord::Base  ## note the class name! (capital IP)
+class Admin::SafeUserIP < ActiveRecord::Base
   set_table_name :admin_safe_user_ips
 
   attr_readonly :id, :known_ip_id, :user_id
 
-  # attr_accessible( # :id,
-                   # :known_ip_id,
-                   # :user_id,
+  attr_accessible( # :id,
+                   :known_ip_id,
+                   :user_id#,
                    # :last_signed_in_at
-                 # )  ## all attributes listed here
+                 )  ## all attributes listed here
 
   # Associations:
   belongs_to :user, :inverse_of => :safe_user_ips

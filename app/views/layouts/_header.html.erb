@@ -1,6 +1,14 @@
 <header>
-  <div id="main_logo">
-    <%= link_to logo, root_path %>
-  </div>
-  <%= render 'layouts/main_menu' %>
+  <% if current_user %>
+    <div id="main_logo">
+      <%= link_to logo, root_path %>
+    </div>
+    <%= render 'layouts/main_menu' %>
+  <% else %>
+    <nav class="round">
+      <ul>
+        <li><%= link_to 'Log in please', login_path %></li>
+      </ul>
+    </nav>
+  <% end %>
 </header>

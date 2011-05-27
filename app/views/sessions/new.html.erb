@@ -1,0 +1,33 @@
+<div style="text-align:center;" >
+<%= form_tag sessions_path do %>
+  <table style="width:auto;margin:auto;border-bottom:1px solid #ccc;" >
+    <caption style="text-align:center;" >Log in</caption>
+    <tr>
+      <td>
+        <%= label_tag :username, 'Username:' %>
+      </td>
+      <td>
+        <%= text_field_tag :username %>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <%= label_tag :password, 'Password:' %>
+      </td>
+      <td>
+        <%= password_field_tag :password %>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <%= 'Your IP address:' %>
+      </td>
+      <td style="text-align:center;" >
+        <%= @client_ip %>
+      </td>
+    </tr>
+  </table>
+  <p class="button" ><%= submit_tag "Log in" %></p>
+<% end %>
+<%= logo(2) %>
+</div>

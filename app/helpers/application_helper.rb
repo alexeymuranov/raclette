@@ -7,7 +7,7 @@ module ApplicationHelper
 
   LOGO_PICTURE_FILE_NAMES = [ 'logos/raclette-w65.png',
                               'logos/raclette-w130.png',
-                              'logos/raclette-w160.png' ]
+                              'logos/raclette-w260.png' ]
 
   def logo(size=1)
     image_tag LOGO_PICTURE_FILE_NAMES[size], :alt => 'raclette'
