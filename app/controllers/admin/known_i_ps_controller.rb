@@ -1,90 +1,57 @@
 ## encoding: UTF-8
 
 class Admin::KnownIPsController < AdminController
-  # GET /admin/known_ips
-  # GET /admin/known_ips.xml
+
   def index
+    @title = 'All known IPs'
     @known_ips = Admin::KnownIP.all
-
-    respond_to do |format|
-      format.html # index.html.erb
-      format.xml  { render :xml => @known_ips }
-    end
   end
 
-  # GET /admin/known_ips/1
-  # GET /admin/known_ips/1.xml
-  def show
+  def show #get
+    @title = 'Known IP'
     @known_ip = Admin::KnownIP.find(params[:id])
-
-    respond_to do |format|
-      format.html # show.html.erb
-      format.xml  { render :xml => @known_ip }
-    end
   end
 
-  # GET /admin/known_ips/new
-  # GET /admin/known_ips/new.xml
   def new
+    @title = 'Create known IP'
     @known_ip = Admin::KnownIP.new
-
-    respond_to do |format|
-      format.html # new.html.erb
-      format.xml  { render :xml => @known_ip }
-    end
   end
 
-  # GET /admin/known_ips/1/edit
-  def edit
+  def edit #get
+    @title = 'Update known IP'
     @known_ip = Admin::KnownIP.find(params[:id])
   end
 
-  # POST /admin/known_ips
-  # POST /admin/known_ips.xml
   def create
     @known_ip = Admin::KnownIP.new(params[:admin_known_ip])
 
-    respond_to do |format|
-      if @known_ip.save
-        format.html { redirect_to(@known_ip, 
-                        :notice => 'Known IP was successfully created.') }
-        format.xml  { render :xml => @known_ip, 
-                             :status => :created,
-                             :location => @known_ip }
-      else
-        format.html { render :action => "new" }
-        format.xml  { render :xml => @known_ip.errors, :status => :unprocessable_entity }
-      end
+    if @known_ip.save
+      flash[:success] = 'Known IP was successfully created.'
+      redirect_to @known_ip
+    else
+      flash.now[:error] = 'Known IP was not created.'
+      @title = 'Create known IP'
+      render 'new'
     end
   end
 
-  # PUT /admin/known_ips/1
-  # PUT /admin/known_ips/1.xml
   def update
     @known_ip = Admin::KnownIP.find(params[:id])
 
-    respond_to do |format|
-      if @known_ip.update_attributes(params[:admin_known_ip])
-        format.html { redirect_to(@known_ip,
-                        :notice => 'Known IP was successfully updated.') }
-        format.xml  { head :ok }
-      else
-        format.html { render :action => "edit" }
-        format.xml  { render :xml => @known_ip.errors,
-                             :status => :unprocessable_entity }
-      end
+    if @known_ip.update_attributes(params[:admin_known_ip])
+      flash[:notice] = 'Known IP was successfully updated.'
+      redirect_to @known_ip
+    else
+      flash.now[:error] = 'Known IP was not updated.'
+      @title = 'Update known IP'
+      render 'edit'
     end
   end
 
-  # DELETE /admin/known_ips/1
-  # DELETE /admin/known_ips/1.xml
   def destroy
     @known_ip = Admin::KnownIP.find(params[:id])
     @known_ip.destroy
-
-    respond_to do |format|
-      format.html { redirect_to(admin_known_ips_url) }
-      format.xml  { head :ok }
-    end
+    flash[:notice] = 'Known IP deleted'
+    redirect_to admin_known_ips_url
   end
 end

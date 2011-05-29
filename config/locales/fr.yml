@@ -26,6 +26,15 @@ fr:
       sign_out: "Se deconnecter"
       tangueando_site: "Site Tangueando"
 
+  sessions:
+    new:
+      log_in: "Se connecter"
+      log_in_please: "Connectez-vous, s'il vous plaît"
+    labels:
+      username: "Nom d'utilisateur :"
+      password: "Mot de passe :"
+      your_ip_address: "Votre adresse IP :"
+      
   admin:
     users:
       index:
@@ -69,9 +78,9 @@ fr:
         secretary: "Secrétaire ?"
         person: "Personne ?"
         last_signed_in_at: "S'est inscrit la dernière fois à :"
-        comments: "Des remarques :"
+        comments: "Remarques :"
         password: "Mot de passe :"
-        current_password: "Mot de passe actuel (seulement s'il change) :"
+        your_password: "Votre mot de passe (seulement pour changer le mot de passe de l'utilisateur) :"
         new_password: "Nouveau mot de passe :"
         password_confirmation: "Confirmation du mot de passe :"
         new_password_confirmation: "Confirmation du nouveau mot de passe :"

@@ -41,8 +41,7 @@ class Admin::User < ActiveRecord::Base
   validates :username, :full_name,
                 :presence => true
 
-  validates :password, :presence     => true,
-                       :confirmation => true,
+  validates :password, :confirmation => true,
                        :length       => { :maximum => 128 },
                        :format       => /\A[\x21-\x7E]*\z/,
                        :on           => :create
@@ -66,13 +65,12 @@ class Admin::User < ActiveRecord::Base
   validates :comments, :length    => { :maximum => 4*1024 },
                        :allow_nil => true
 
-  validates :username, :email,
-                :uniqueness => { :case_sensitive => false }
+  validates :username, :uniqueness => { :case_sensitive => false }
                 
   # Callbacks:
   before_create :hash_password_with_salt
 
-  before_update :hash_new_password_with_salt_unless_blank
+  before_update :hash_new_password_with_salt_unless_nil
 
   # Public methods:
   def has_password?(submitted_password)
@@ -93,8 +91,8 @@ class Admin::User < ActiveRecord::Base
       self.password_or_password_hash = hash_with_salt(password)
     end
 
-    def hash_new_password_with_salt_unless_blank
-      unless new_password.blank?
+    def hash_new_password_with_salt_unless_nil
+      unless new_password.nil?
         self.password_salt = make_salt # if new_record?
         self.password_or_password_hash = hash_with_salt(new_password)
       end

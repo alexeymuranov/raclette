@@ -1,10 +1,10 @@
 <div style="text-align:center;" >
 <%= form_tag sessions_path do %>
   <table style="width:auto;margin:auto;border-bottom:1px solid #ccc;" >
-    <caption style="text-align:center;" >Log in</caption>
+    <caption style="text-align:center;" ><%= t '.log_in' %></caption>
     <tr>
       <td>
-        <%= label_tag :username, 'Username:' %>
+        <%= label_tag :username, t('sessions.labels.username') %>
       </td>
       <td>
         <%= text_field_tag :username %>
@@ -12,7 +12,7 @@
     </tr>
     <tr>
       <td>
-        <%= label_tag :password, 'Password:' %>
+        <%= label_tag :password, t('sessions.labels.password') %>
       </td>
       <td>
         <%= password_field_tag :password %>
@@ -20,14 +20,14 @@
     </tr>
     <tr>
       <td>
-        <%= 'Your IP address:' %>
+        <%= t 'sessions.labels.your_ip_address' %>
       </td>
       <td style="text-align:center;" >
         <%= @client_ip %>
       </td>
     </tr>
   </table>
-  <p class="button" ><%= submit_tag "Log in" %></p>
+  <p class="button" ><%= submit_tag t('.log_in') %></p>
 <% end %>
 <%= logo(2) %>
 </div>

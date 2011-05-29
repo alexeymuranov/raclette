@@ -1,136 +1,93 @@
 ## encoding: UTF-8
 
 class Admin::UsersController < AdminController
-  # GET /users
-  # GET /users.xml
+
   def index
     @users = Admin::User.all
 
     @title = t('admin.users.index.title')
-
-    respond_to do |format|
-      format.html # index.html.erb
-      format.xml  { render :xml => @users }
-    end
   end
 
-  # GET /users/1
-  # GET /users/1.xml
   def show
     @user = Admin::User.find(params[:id])
 
     @title = t('admin.users.show.title', :username => @user.username)
-    
-    respond_to do |format|
-      format.html # show.html.erb
-      format.xml  { render :xml => @user }
-    end
   end
 
-  # GET /users/new
-  # GET /users/new.xml
   def new
     @user = Admin::User.new
+    # @known_ips = Admin::KnownIP.all
 
     @title = t('admin.users.new.title')
-
-    respond_to do |format|
-      format.html # new.html.erb
-      format.xml  { render :xml => @user }
-    end
   end
 
-  # GET /users/1/edit
   def edit
     @user = Admin::User.find(params[:id])
- 
+    # @safe_ips = @user.safe_ips.all
+    # @other_known_ips = Admin::KnownIP.all - @safe_ips
+    
     @title = t('admin.users.edit.title', :username => @user.username)
+  end
 
- end
-
-  # POST /users
-  # POST /users.xml
-  def create
-    @user = Admin::User.new(params[:admin_user])
-
+  def create  # FIXME (password)
     params[:admin_user].delete(:email)\
         if params[:admin_user][:email].blank?
-
-    params[:admin_user].delete(:password)\
-        if params[:admin_user][:password].blank?
         
-    respond_to do |format|
-      if @user.save
-        flash[:success] = t('admin.users.create.flash.success',
-                                :username => @user.username)
-        format.html { redirect_to(@user) }
-        format.xml  { render :xml => @user,
-                             :status => :created,
-                             :location => @user }
-      else
-        flash[:error] = t('admin.users.create.flash.failure')
-        @title = t('admin.users.new.title')
-        format.html { render :action => :new }
-        format.xml  { render :xml => @user.errors,
-                             :status => :unprocessable_entity }
-      end
+    params[:admin_user].delete(:comments)\
+        if params[:admin_user][:comments].blank?
+
+    @user = Admin::User.new(params[:admin_user])
+
+    if @user.save
+      flash[:success] = t('admin.users.create.flash.success',
+                          :username => @user.username)
+      redirect_to @user
+    else
+      flash[:error] = t('admin.users.create.flash.failure')
+      @title = t('admin.users.new.title')
+      render 'new'
     end
   end
 
-  # PUT /users/1
-  # PUT /users/1.xml
-  def update
+  def update  # FIXME (password)
     @user = Admin::User.find(params[:id])
 
     params[:admin_user].delete(:email)\
         if params[:admin_user][:email].blank?
 
-    params[:admin_user].delete(:password)\
-        if params[:admin_user][:password].blank?
-        
-    if params[:admin_user][:new_password].blank?
+    params[:admin_user].delete(:comments)\
+        if params[:admin_user][:comments].blank?
+
+    if params[:current_user_password].blank?
+      params.delete(:current_user_password)
       params[:admin_user].delete(:new_password)
-      params[:admin_user].delete(:new_password_confiramtion)
+      params[:admin_user].delete(:new_password_confirmation)
     end
-      
-    password = params[:admin_user][:password]
-    new_password = params[:admin_user][:new_password]
+              
+    current_user_password = params[:current_user_password]
     
-    if new_password.nil? || @user.has_password?(password)
-      respond_to do |format|
-        if @user.update_attributes(params[:admin_user])
-          flash[:success] =  t('admin.users.update.flash.success',
-                                   :username => @user.username)
-          format.html { redirect_to(@user) }
-          format.xml  { head :ok }
-        else
-          flash.now[:error] = t('admin.users.update.flash.failure')
-          @title =  t('admin.users.edit.title', :username => @user.username)
-          format.html { render :action => 'edit' }
-          format.xml  { render :xml => @user.errors,
-                               :status => :unprocessable_entity }
-        end
+    if current_user_password.nil? || current_user.has_password?(current_user_password)
+      if @user.update_attributes(params[:admin_user])
+        flash[:notice] = t('admin.users.update.flash.success',
+                           :username => @user.username)
+        redirect_to @user
+      else
+        flash.now[:error] = t('admin.users.update.flash.failure')
+        @title =  t('admin.users.edit.title', :username => @user.username)
+        render 'edit'
       end
     else
       flash.now[:error] = t('admin.users.update.flash.wrong_password')
-      @title =  t('admin.users.edit.title', :username => @user.username)
-      respond_to do |format|
-        format.html { render :action => 'edit' }
-        format.xml  { render :xml => @user.errors,
-                             :status => :unprocessable_entity }
-      end
+      @title = t('admin.users.edit.title', :username => @user.username)
+      render 'edit'
     end
   end
 
-  # DELETE /users/1
-  # DELETE /users/1.xml
   def destroy
     @user = Admin::User.find(params[:id])
     @user.destroy
+    flash[:notice] = 'User deleted.'
 
-    respond_to do |format|
-      format.html { redirect_to(admin_users_url) }
-      format.xml  { head :ok }
-    end
+    redirect_to admin_users_url
   end
 end
