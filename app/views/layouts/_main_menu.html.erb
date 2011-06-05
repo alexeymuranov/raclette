@@ -1,4 +1,4 @@
-<nav class="round">
+<nav>
   <ul>
     <% entry_register_path=secretary_tools_path=manager_tools_path='#' %>
     <% admin_tools_path=admin_users_path # temporary fix %>
@@ -6,55 +6,54 @@
     <li>
       <%= link_to t("application_layout.navigation_links.monitor"),
                   monitor_overview_path %>
-    </li>
-    <li>
+    </li><!--
+ --><li>
       <%= link_to t("application_layout.navigation_links.entry_register"),
                   entry_register_path %>
-    </li>
+    </li><!--
     <% if current_user.secretary? %>
-      <li>
+   --><li>
         <%= link_to t("application_layout.navigation_links.secretary_tools"),
                     secretary_tools_path %>
-      </li>
+      </li><!--
     <% else %>
-      <li class="disabled">
+   --><li class="disabled">
         <span class="disabled_link">
           <%= t("application_layout.navigation_links.secretary_tools") %>
         </span>
-      </li>
+      </li><!--
     <% end %>
     <% if current_user.manager? %>
-      <li>
+   --><li>
         <%= link_to t("application_layout.navigation_links.manager_tools"),
                     manager_tools_path %>
-      </li>
+      </li><!--
     <% else %>
-      <li class="disabled">
+   --><li class="disabled">
         <span class="disabled_link">
           <%= t("application_layout.navigation_links.manager_tools") %>
         </span>
-      </li>
+      </li><!--
     <% end %>
     <% if current_user.admin? %>
-      <li class="separator">|</li>
-      <li>
+   --><li class="separator">|</li><!--
+   --><li>
         <%= link_to t("application_layout.navigation_links.admin_tools"),
                     admin_tools_path %>
-      </li>
+      </li><!--
     <% else %>
-      <li class="disabled separator">|</li>
-      <li class="disabled">
+   --><li class="disabled separator">|</li><!--
+   --><li class="disabled">
         <span class="disabled_link">
           <%= t("application_layout.navigation_links.admin_tools") %>
         </span>
-      </li>
+      </li><!--
     <% end %>
-    <li class="logout_item">
+ --><li class="logout_item">
       <%= link_to t("application_layout.navigation_links.sign_out"),
                   logout_path,
                   :method => :delete,
-                  :class  => "logout_button round" %>
+                  :class  => "logout_button" %>
     </li>
-    
   </ul>
 </nav>

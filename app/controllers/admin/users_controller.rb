@@ -16,15 +16,15 @@ class Admin::UsersController < AdminController
 
   def new
     @user = Admin::User.new
-    # @known_ips = Admin::KnownIP.all
+    @known_ips = Admin::KnownIP.all
 
     @title = t('admin.users.new.title')
   end
 
   def edit
     @user = Admin::User.find(params[:id])
-    # @safe_ips = @user.safe_ips.all
-    # @other_known_ips = Admin::KnownIP.all - @safe_ips
+    # @safe_ips = @user.safe_ips
+    # @other_ips = Admin::KnownIP.all - @safe_ips
     
     @title = t('admin.users.edit.title', :username => @user.username)
   end
