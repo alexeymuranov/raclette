@@ -1,0 +1,320 @@
+$body-background-color: #009;
+$section-background-color: #fff;
+$common-navigation-link-color: #00c;
+$common-navigation-link-color-bright: #00f;
+$logout-navigation-link-color: #063;
+$logout-navigation-link-background-color: #ff0;
+$disabled-navigation-link-color: #ccc;
+$view-link-color:#063;
+$view-link-color-bright:#0c6;
+$modify-link-color:#603;
+$modify-link-color-bright:#c06;
+
+@mixin rounded-corners($radius) {  
+  border-radius: $radius;  
+  -moz-border-radius: $radius;  
+  -webkit-border-radius: $radius;  
+}  
+
+body {
+  background-color: $body-background-color;
+}
+
+.container {
+  width: 960px;
+  margin-left:160px;
+  padding:0px;
+}
+
+/* Navigation */
+
+nav {
+  float: none;
+  background-color: $section-background-color;
+  padding: 0;
+  
+  ul {
+    white-space-collapse: discard;
+    list-style-type: none;
+    width: 100%;
+    margin: 0;
+    
+    li {
+      display: inline-block;
+      margin: 0;
+      padding: 0;
+      
+      a {
+        display: inline-block;
+        color: $common-navigation-link-color;
+        font-weight: bold;
+        text-decoration: none;
+        padding: 5px;
+
+        &:visited {
+          color: $common-navigation-link-color;
+        }
+
+        &:hover {
+          color: $common-navigation-link-color-bright;
+          text-decoration: underline;
+        }
+      }
+    }
+    
+    li.separator {}
+  }
+}
+
+/* Header */
+
+header {
+  font-size: 120%;
+  text-align: left;
+  margin-top: 5px;
+  margin-left: auto;
+  margin-right: auto;
+
+  nav {
+    @include rounded-corners(10px);
+    
+    ul {
+      margin-left: 5px;
+      margin-right: 0;
+      padding: 0;
+      
+      li a {
+        display: inline-block;
+        text-decoration: none;
+        
+        &:hover {
+          color: $section-background-color;
+          background-color: $common-navigation-link-color;
+          text-decoration: none;
+        }
+      }
+      
+      li.logout_item {
+        display: inline;
+        float: right;
+        
+        a.logout_button {
+          @include rounded-corners(10px);
+          margin: 0 5px;
+          padding: 5px 10px;
+          color: $logout-navigation-link-color;
+          background-color: $logout-navigation-link-background-color;
+          text-decoration: none;
+          
+          &:visited {
+            color: $logout-navigation-link-color;
+            background-color: $logout-navigation-link-background-color;
+            text-decoration: none;
+          }
+          
+          &:hover {
+            color: $logout-navigation-link-background-color;
+            background-color: $logout-navigation-link-color;
+            text-decoration: none;
+          }
+        }
+      }      
+        
+      li.disabled {
+        color: $disabled-navigation-link-color;
+        text-decoration: none;
+          
+        span.disabled_link {
+          display: inline-block;
+          color: $disabled-navigation-link-color;
+          font-weight: bold;
+          text-decoration: none;
+          padding: 5px;
+        }
+      }
+    }
+  }
+}
+
+/* Logo box and menu */
+
+div#main_logo {
+  position: fixed;
+  top:  5px;
+  left: 5px;
+}
+
+div#main_logo div#logo_box {
+  @include rounded-corners(10px);
+  display: inline-block;
+  padding: 10px;
+  opacity:0.75;
+  
+  &:hover {
+    opacity:1;
+  }
+}
+
+div#main_logo div#logo_menu {
+  display: none;
+}
+
+div#main_logo:hover div#logo_menu {
+  margin-top: 5px;
+  display: block;
+  opacity:0.75;
+  
+  &:hover {
+    opacity:1;
+  }
+}
+
+div#main_logo div#logo_menu nav {
+  @include rounded-corners(0);
+  margin: 0;
+  padding: 0;
+  font-weight: normal;
+  font-size: 80%;
+  
+  ul {
+    margin: 0;
+    padding: 0;
+    
+    li {
+      display: block;
+      
+    a {
+      margin: 0;
+      padding: 5px;
+      display: block;
+      font-weight: normal;
+      }
+    }
+    
+    a.logout_button {
+      @include rounded-corners(0);
+      margin: 0;
+      padding: 5px;
+      display: block;
+    }
+
+    li.logout_item {
+      float: none;
+    }
+    
+    li.separator {
+      display: none;
+    }
+    
+    li.disabled {
+      display: none;
+    }
+  }
+}
+
+/* Footer */
+
+footer {
+  font-size: 120%;
+  text-align: center;
+  margin-top: 5px;
+  margin-left: auto;
+  margin-right: auto;
+  
+  nav {
+    @include rounded-corners(10px);
+  }  
+}
+
+/* Section */
+
+section {
+  @include rounded-corners(10px);
+  margin-top: 5px;
+  font-size: 120%;
+  padding: 20px;
+  background-color: $section-background-color;
+  
+  h1 {
+    font-size: 200%;
+  }
+  
+  table {
+    font-size: 100%;
+    
+    th {
+      font-size: 80%;
+    }
+  }
+  
+  a {
+    display: inline-block;
+    color: $view-link-color;
+    text-decoration: none;
+
+    &:visited {
+      color: $view-link-color;
+    }
+
+    &:hover {
+      color: $view-link-color-bright;
+      background-color: #ff0;
+    }
+  }
+  
+  a.modify {
+    color: $modify-link-color;
+    text-decoration: none;
+    
+    &:visited {
+      color: $modify-link-color;
+    }
+  
+    &:hover {
+      color: $modify-link-color-bright;
+    }
+  }
+}
+
+/* Styles for validation errors, generated automatically by scaffolding */
+
+pre {
+  background-color: #eee;
+  padding: 10px;
+  font-size: 11px;
+}
+
+div.field, div.actions {
+  margin-bottom: 10px;
+}
+
+#notice {
+  color: green;
+}
+
+.field_with_errors {
+  padding: 2px;
+  background-color: red;
+  display: inline;
+}
+  
+.field_with_errors .message {  
+  color: #c00;  
+  padding-left: 5px;  
+}  
+
+#error_explanation {
+  border: 2px solid red;
+  background-color: #ccc;
+  margin-bottom: 20px;
+  
+  h2 {
+    padding: 5px 5px 5px 15px;
+    background-color: #c00;
+    color: #fff;
+  }
+  
+  ul li {
+    list-style: square;
+  }
+}

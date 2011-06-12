@@ -1,7 +1,7 @@
 <header>
   <% if current_user %>
     <div id="main_logo">
-      <div id="logo_box" class="round" style="background-color:<%= user_permissions_color_code(current_user) %>;" >
+      <div id="logo_box" style="background-color:<%= user_permissions_color_code(current_user) %>;" >
         <%= link_to logo, root_path %>
       </div>
       <div id="logo_menu">
