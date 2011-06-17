@@ -1,0 +1,35 @@
+<h1><%= t '.header' %></h1>
+
+<%= form_tag "/admin/safe_user_ips", :method=> :put do |f| %>
+  <table>
+    <tr>
+      <th></th>
+      <% @known_ips.each do |known_ip| %>
+        <% note = known_ip.description.blank? ? "" : " (#{known_ip.description})" %>
+        <th style='text-align:center;'><%= "#{known_ip.ip}#{note}" %></th>
+      <% end %>
+    </tr>
+    <% @users.each do |user| %>
+    <tr>
+      <td><%= user.username %></td>
+      <% @known_ips.each do |known_ip| %>
+        <td style='text-align:center;'>
+          <% if user.safe_ips.include? known_ip %>
+            <%= check_box_tag "known_ip_is_safe_for_user[#{known_ip.id}][#{user.id}]", "1", true %>
+          <% else %>
+            <%= check_box_tag "known_ip_is_safe_for_user[#{known_ip.id}][#{user.id}]", "0", false %>
+          <% end %>
+        </td>
+      <% end %>
+    </tr>
+    <% end %>
+  </table>
+  <div class="actions">
+    <%= submit_tag t('buttons.save') %>
+  </div>
+<% end %>
+
+<br />
+
+<%= link_to show_icon(2)+t('admin.safe_user_i_ps.links.show_all'), admin_safe_user_ips_path,
+            :title => t('actions.read') %>

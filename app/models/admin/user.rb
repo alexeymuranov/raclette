@@ -23,6 +23,7 @@ class Admin::User < ActiveRecord::Base
                    # :password_or_password_hash,
                    # :password_salt,
                    # :last_signed_in_at,
+                   # :last_signed_in_from_ip,
                    :comments
                  )  ## all attributes listed here
 

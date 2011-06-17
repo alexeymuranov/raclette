@@ -9,18 +9,21 @@ class Admin::KnownIPsController < AdminController
   end
 
   def show #get
-    @title = "Known IP"
     @known_ip = Admin::KnownIP.find(params[:id])
+
+    @title = "Known IP"
   end
 
   def new
-    @title = "Create known IP"
     @known_ip = Admin::KnownIP.new
+    
+    @title = t('admin.known_i_ps.new.title')
   end
 
   def edit #get
-    @title = "Update known IP"
     @known_ip = Admin::KnownIP.find(params[:id])
+    
+    @title = "Update known IP"
   end
 
   def create

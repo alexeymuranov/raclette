@@ -1,6 +1,6 @@
-<h1>Editing admin_known_ip</h1>
+<h1><%= t '.header', :ip => @known_ip.ip %></h1>
 
 <%= render 'form' %>
 
-<%= link_to 'Show', @known_ip %> |
-<%= link_to 'Back', admin_known_ips_path %>
+<%= link_to show_icon(2)+t('.links.show'), @known_ip %> |
+<%= link_to list_all_icon(2)+t('admin.known_i_ps.links.show_all'), admin_known_ips_path %>

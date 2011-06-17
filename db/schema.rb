@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110510194633) do
+ActiveRecord::Schema.define(:version => 20110618120707) do
 
   create_table "activity_periods", :force => true do |t|
     t.string   "unique_title",    :limit => 64,                    :null => false
@@ -82,6 +82,7 @@ ActiveRecord::Schema.define(:version => 20110510194633) do
     t.text     "comments"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "last_signed_in_from_ip",    :limit => 15
   end
 
   add_index "admin_users", ["a_person"], :name => "index_admin_users_on_a_person"

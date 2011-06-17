@@ -2,13 +2,12 @@
 
 <table>
   <tr>
-    <th><%= t('admin.users.labels.username') %></th>
-    <th><%= t('admin.users.labels.full_name') %></th>
-    <th><%= t('admin.users.labels.email') %></th>
-    <th><%= t('admin.users.labels.admin') %></th>
-    <th><%= t('admin.users.labels.manager') %></th>
-    <th><%= t('admin.users.labels.secretary') %></th>
-    <th><%= t('admin.users.labels.person') %></th>
+    <th><%= t 'field_labels.username' %></th>
+    <th><%= t 'field_labels.full_name' %></th>
+    <th style='text-align:center;'><%= t 'field_labels.admin?' %></th>
+    <th style='text-align:center;'><%= t 'field_labels.manager?' %></th>
+    <th style='text-align:center;'><%= t 'field_labels.secretary?' %></th>
+    <th style='text-align:center;'><%= t 'field_labels.person?' %></th>
     <th></th>
     <th></th>
     <th></th>
@@ -18,7 +17,6 @@
   <tr>
     <td><%= user.username %></td>
     <td><%= user.full_name %></td>
-    <td><%= user.email %></td>
     <td style='text-align:center;'>
       <%= user.admin? ? yes_icon : t(:no) %>
     </td>
@@ -31,28 +29,26 @@
     <td style='text-align:center;'>
       <%= user.a_person? ? yes_icon : t(:no) %>
     </td>
-    <td>
+    <td style='text-align:center;'>
       <%= link_to show_icon, user,
-                  :title => t('admin.users.links.show') %>
+                  :title => t('actions.read') %>
     </td>
-    <td>
+    <td style='text-align:center;'>
       <%= link_to edit_icon, edit_admin_user_path(user),
-                  :title => t('admin.users.links.update'),
+                  :title => t('actions.update'),
                   :class => 'modify' %>
     </td>
-    <td>
+    <td style='text-align:center;'>
       <%= link_to delete_icon, user,
                   :confirm => t("questions.are_you_sure?"),
                   :method => :delete,
-                  :title  => t('admin.users.links.delete'),
+                  :title  => t('actions.delete'),
                   :class  => 'modify' %>
     </td>
   </tr>
 <% end %>
 </table>
 
-<br />
-
 <%= link_to add_icon(2)+t('admin.users.links.new'), new_admin_user_path,
-            :title  => t('admin.users.links.new'),
+            :title  => t('actions.create'),
             :class => 'modify' %>

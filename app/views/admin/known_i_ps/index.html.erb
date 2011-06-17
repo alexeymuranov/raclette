@@ -1,9 +1,9 @@
-<h1><%= t 'admin.known_ips.index.header' %></h1>
+<h1><%= t '.header' %></h1>
 
 <table>
   <tr>
-    <th>IP</th>
-    <th>Description</th>
+    <th><%= t 'field_labels.ip' %></th>
+    <th><%= t 'field_labels.description' %></th>
     <th></th>
     <th></th>
     <th></th>
@@ -13,13 +13,26 @@
   <tr>
     <td><%= known_ip.ip %></td>
     <td><%= known_ip.description %></td>
-    <td><%= link_to 'Show', known_ip %></td>
-    <td><%= link_to 'Edit', edit_admin_known_ip_path(known_ip) %></td>
-    <td><%= link_to 'Destroy', known_ip, :confirm => 'Are you sure?', :method => :delete %></td>
+    <td>
+      <%= link_to show_icon, known_ip,
+                  :title => t('actions.read') %>
+    </td>
+    <td>
+      <%= link_to edit_icon, edit_admin_known_ip_path(known_ip),
+                  :title => t('actions.update'),
+                  :class => 'modify' %>
+    </td>
+    <td>
+      <%= link_to delete_icon, known_ip,
+                  :confirm => t("questions.are_you_sure?"),
+                  :method => :delete,
+                  :title  => t('actions.delete'),
+                  :class  => 'modify' %>
+    </td>
   </tr>
 <% end %>
 </table>
 
-<br />
-
-<%= link_to 'New Known IP', new_admin_known_ip_path %>
+<%= link_to add_icon(2)+t('admin.known_i_ps.links.new'), new_admin_known_ip_path,
+            :title  => t('actions.create'),
+            :class => 'modify' %>

@@ -1,0 +1,25 @@
+<h1><%= t '.header' %></h1>
+
+<table>
+  <tr>
+    <th></th>
+    <% @known_ips.each do |known_ip| %>
+      <% note = known_ip.description.blank? ? "" : " (#{known_ip.description})" %>
+      <th style='text-align:center;'><%= "#{known_ip.ip}#{note}" %></th>
+    <% end %>
+  </tr>
+  <% @users.each do |user| %>
+  <tr>
+    <td><%= user.username %></td>
+    <% @known_ips.each do |known_ip| %>
+      <td style='text-align:center;'>
+        <%= user.safe_ips.include?(known_ip) ? yes_icon : t(:no) %>
+      </td>
+    <% end %>
+  </tr>
+  <% end %>
+</table>
+
+<%= link_to edit_icon(2)+t('admin.safe_user_i_ps.links.update_all'), edit_admin_safe_user_ips_path,
+            :title  => t('actions.update'),
+            :class => 'modify' %>

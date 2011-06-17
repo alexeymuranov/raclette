@@ -1,6 +1,12 @@
 module SessionsHelper
 
   def log_in(user, client_ip)
+    # user.update_attributes(:last_signed_in_at => Time.now, :last_signed_in_from_ip => client_ip)
+    # user.update_attribute(:last_signed_in_at, Time.now)
+    # user.update_attribute(:last_signed_in_from_ip, client_ip)
+    user.last_signed_in_at = Time.now
+    user.last_signed_in_from_ip = client_ip
+    user.save
     # cookies.permanent.signed[:remember_token] = [user.id, user.salt]
     session[:client_ip] = client_ip
     self.current_user = user

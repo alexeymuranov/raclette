@@ -229,6 +229,15 @@ en:
   "yes": "yes"
   "no": "no"
 
+  page_titles:
+    admin_tools: "Admin tools"
+    
+  headers:
+    admin_tools: "Administrator tools"
+    all_users: "Users"
+    all_known_ips: "Known IP addresses"
+    all_safe_user_ips: "Fully authorized IP addresses"
+
   field_labels:
     username: "Username:"
     full_name: "Full name:"
@@ -248,14 +257,14 @@ en:
     ip: "IP address:"
     description: "Description:"
     "authorized?": "Authorized?"
-
+    
   buttons:
     save: "Save"
   
   actions:
-    show: "Show"
-    create: "New"
-    update: "Edit"
+    create: "Add"
+    read: "View"
+    update: "Update"
     delete: "Delete"
   
   questions:
@@ -303,9 +312,11 @@ en:
       new:
         title: "New user"
         header: "New user"
+        captions:
+          authorized_ips: "The new user is fully authorized to connect from which IP addresses?"
       edit:
-        title: "Edit %{username}"
-        header: "Editing user '%{username}'"
+        title: "Update %{username}"
+        header: "Updating user '%{username}'"
         captions:
           authorized_ips: "The user '%{username}' is fully authorized to connect from which IP addresses?"
         links:
@@ -325,7 +336,7 @@ en:
           failure: "Error!"
         
       links:
-        all: "Show all users"
+        show_all: "Show all users"
         show: "Show"
         new: "New user"
         update: "Edit"
@@ -347,7 +358,40 @@ en:
         password_confirmation: "Confirmation:"
         new_password_confirmation: "Confirmation of new password:"
 
-    known_ips:
+    known_i_ps:
       index:
         title: "IP addresses"
         header: "Known IP addresses"
+      show:
+        title: "%{ip}"
+        links:
+          update: "Update the address IP"
+      new:
+        title: "New IP"
+        header: "New IP address"
+      edit:
+        title: "Update %{ip}"
+        header: "Updating IP address %{ip}"
+        links:
+          show: "Show the IP"
+        
+      links:
+        show_all: "Show all IP addresses"
+        show: "Show"
+        new: "New IP address"
+        update: "Update"
+        delete: "Delete"
+
+    safe_user_i_ps:
+      index:
+        title: "Fully authorized IPs"
+        header: "Fully authorized IP addresses"
+      edit_all:
+        title: "Edit fully authorized IPs"
+        header: "Editing fully authorized IP addresses"
+        
+      links:
+        show_all: "Show"
+        update_all: "Update"
+        delete: "Delete"
+

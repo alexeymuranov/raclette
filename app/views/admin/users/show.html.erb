@@ -35,10 +35,12 @@
   <%= @user.a_person? ? t(:yes) : t(:no) %>
 </p>
 
-<p>
-  <b><%= t('admin.users.labels.person_id') %></b>
-  <%= @user.person_id %>
-</p>
+<% if @user.a_person? %>
+  <p>
+    <b><%= t('admin.users.labels.person_id') %></b>
+    <%= @user.person_id %>
+  </p>
+<% end %>
 
 <table>
   <caption style="text-align:center;" ><%= t 'admin.users.show.captions.authorized_ips' %></caption>
@@ -73,7 +75,7 @@
 </p>
 
 
-<%= link_to edit_icon(2)+t('admin.users.show.links.update'),
+<%= link_to edit_icon(2)+t('.links.update'),
             edit_admin_user_path(@user),
             :class => 'modify' %> |
-<%= link_to list_all_icon(2)+t('admin.users.links.all'), admin_users_path %>
+<%= link_to list_all_icon(2)+t('admin.users.links.show_all'), admin_users_path %>

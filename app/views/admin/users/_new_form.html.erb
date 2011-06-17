@@ -17,15 +17,41 @@
   <%= render 'common_form_fields', :f => f %>
 
   <div class="field">
-    <%= f.label :password, t('admin.users.labels.password') %><br />
+    <%= f.label :password, t('admin.users.labels.password') %>
     <%= f.password_field :password %>
   </div>
   <div class="field">
     <%= f.label :password_confirmation,
                 t('admin.users.labels.password_confirmation') %>
-    <br />
     <%= f.password_field :password_confirmation %>
   </div>
+  <table>
+    <caption style="text-align:center;" ><%= t 'admin.users.new.captions.authorized_ips' %></caption>
+    <tr>
+      <th>
+        <%= t 'field_labels.ip' %>
+      </th>
+      <th>
+        <%= t 'field_labels.description' %>
+      </th>
+      <th style='text-align:center;'>
+        <%= t 'field_labels.authorized?' %>
+      </th>
+    </tr>
+    <% @known_ips.each do |known_ip| %>
+    <tr>
+      <td>
+        <%= label_tag "admin_user[known_ip_is_safe][#{known_ip.id}]", known_ip.ip %>
+      </td>
+      <td>
+        <%= known_ip.description %>
+      </td>
+      <td style='text-align:center;'>
+        <%= check_box_tag "admin_user[known_ip_is_safe][#{known_ip.id}]", "0", false %>
+      </td>
+    </tr>
+    <% end %>
+  </table>  
   <div class="field">
     <%= f.label :comments, t('admin.users.labels.comments') %><br />
     <%= f.text_area :comments %>

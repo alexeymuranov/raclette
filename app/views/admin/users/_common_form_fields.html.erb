@@ -1,29 +1,28 @@
   <div class="field">
-    <%= f.label :username, t('admin.users.labels.username') %>
-    <br />
+    <%= f.label :username, t('field_labels.username') %>
     <%= f.text_field :username, :disabled => !@user.new_record? %>*
   </div>
   <div class="field">
-    <%= f.label :full_name, t('admin.users.labels.full_name') %><br />
+    <%= f.label :full_name, t('field_labels.full_name') %>
     <%= f.text_field :full_name %>*
   </div>
   <div class="field">
-    <%= f.label :email, t('admin.users.labels.email') %><br />
+    <%= f.label :email, t('field_labels.email') %>
     <%= f.text_field :email %>
   </div>
   <div class="field">
-    <%= f.label :admin, t('admin.users.labels.admin') %><br />
+    <%= f.label :admin, t('field_labels.admin?') %>
     <%= f.check_box :admin %>
   </div>
   <div class="field">
-    <%= f.label :manager, t('admin.users.labels.manager') %><br />
+    <%= f.label :manager, t('field_labels.manager?') %>
     <%= f.check_box :manager %>
   </div>
   <div class="field">
-    <%= f.label :secretary, t('admin.users.labels.secretary') %><br />
+    <%= f.label :secretary, t('field_labels.secretary?') %>
     <%= f.check_box :secretary %>
   </div>
   <div class="field">
-    <%= f.label :a_person, t('admin.users.labels.person') %><br />
+    <%= f.label :a_person, t('field_labels.person?') %>
     <%= f.check_box :a_person %>
   </div>

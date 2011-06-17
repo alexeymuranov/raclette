@@ -1,14 +1,13 @@
-$body-background-color: #009;
-$section-background-color: #fff;
+$body-bg-color: #009;
+$section-bg-color: #fff;
 $common-navigation-link-color: #00c;
 $common-navigation-link-color-bright: #00f;
 $logout-navigation-link-color: #063;
-$logout-navigation-link-background-color: #ff0;
+$logout-navigation-link-bg-color: #ff0;
 $disabled-navigation-link-color: #ccc;
-$view-link-color:#063;
-$view-link-color-bright:#0c6;
-$modify-link-color:#603;
-$modify-link-color-bright:#c06;
+$view-link-color:#060;
+$modify-link-color:#600;
+$even-table-row-bg-color:#e5ecf9;
 
 @mixin rounded-corners($radius) {  
   border-radius: $radius;  
@@ -17,7 +16,7 @@ $modify-link-color-bright:#c06;
 }  
 
 body {
-  background-color: $body-background-color;
+  background-color: $body-bg-color;
 }
 
 .container {
@@ -30,7 +29,7 @@ body {
 
 nav {
   float: none;
-  background-color: $section-background-color;
+  background-color: $section-bg-color;
   padding: 0;
   
   ul {
@@ -88,7 +87,7 @@ header {
         text-decoration: none;
         
         &:hover {
-          color: $section-background-color;
+          color: $section-bg-color;
           background-color: $common-navigation-link-color;
           text-decoration: none;
         }
@@ -103,17 +102,17 @@ header {
           margin: 0 5px;
           padding: 5px 10px;
           color: $logout-navigation-link-color;
-          background-color: $logout-navigation-link-background-color;
+          background-color: $logout-navigation-link-bg-color;
           text-decoration: none;
           
           &:visited {
             color: $logout-navigation-link-color;
-            background-color: $logout-navigation-link-background-color;
+            background-color: $logout-navigation-link-bg-color;
             text-decoration: none;
           }
           
           &:hover {
-            color: $logout-navigation-link-background-color;
+            color: $logout-navigation-link-bg-color;
             background-color: $logout-navigation-link-color;
             text-decoration: none;
           }
@@ -233,7 +232,7 @@ section {
   margin-top: 5px;
   font-size: 120%;
   padding: 20px;
-  background-color: $section-background-color;
+  background-color: $section-bg-color;
   
   h1 {
     font-size: 200%;
@@ -241,13 +240,24 @@ section {
   
   table {
     font-size: 100%;
+    border-top: solid 1px $even-table-row-bg-color;
+    border-bottom: solid 1px $even-table-row-bg-color;
     
     th {
       font-size: 80%;
+      # margin: 5px 0px;
+      padding: 5px;
+    }
+        
+    td {
+      # margin: 10px 0px;
+      padding: 0px 5px;
     }
   }
   
   a {
+    @include rounded-corners(5px);
+    padding: 5px 5px;
     display: inline-block;
     color: $view-link-color;
     text-decoration: none;
@@ -257,22 +267,30 @@ section {
     }
 
     &:hover {
-      color: $view-link-color-bright;
-      background-color: #ff0;
+      color: $section-bg-color;
+      background-color: $view-link-color;
+    }
+      
+    img {
+      margin: 0px;
     }
   }
   
   a.modify {
     color: $modify-link-color;
-    text-decoration: none;
     
     &:visited {
       color: $modify-link-color;
     }
   
     &:hover {
-      color: $modify-link-color-bright;
+      color: $section-bg-color;
+      background-color: $modify-link-color;
     }
+  }
+  
+  h3, h4, h5, h6, p {
+    margin:0;
   }
 }
 

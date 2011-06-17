@@ -5,7 +5,6 @@ Raclette::Application.routes.draw do
   resources :sessions, :only => [ :create ]
   
   get "monitor/overview"
-  get "admin_tools/overview"
 
   # scope :module => :admin do
   namespace :admin do
@@ -14,7 +13,14 @@ Raclette::Application.routes.draw do
 
     resources :known_ips, :controller => :KnownIPs
     
-    resources :safe_user_ips, :controller => :SafeUserIPs
+    resources :safe_user_ips, :controller => :SafeUserIPs, :only => [ :index ] do
+      collection do
+        get "edit" => "SafeUserIPs#edit_all"
+      end
+    end
+    put "safe_user_ips" => "SafeUserIPs#update_all"
+    
+    get "admin_tools/overview"
   end
 
   root :to => 'monitor#overview'
