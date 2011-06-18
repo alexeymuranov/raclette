@@ -167,8 +167,14 @@ section {
     font-size: 200%; }
   section table {
     font-size: 100%;
-    border-top: solid 1px #e5ecf9;
-    border-bottom: solid 1px #e5ecf9; }
+    border-top: solid 1px #eeeeff;
+    border-bottom: solid 1px #eeeeff;
+    margin-bottom: 5px; }
+    section table.form {
+      width: auto;
+      margin: auto; }
+    section table tbody tr:nth-child(even) td, section table tbody tr.even td {
+      background: #eeeeff; }
     section table th {
       font-size: 80%;
       # margin: 5px 0px;
@@ -176,6 +182,8 @@ section {
     section table td {
       # margin: 10px 0px;
       padding: 0px 5px; }
+  section fieldset {
+    margin: 0; }
   section a {
     border-radius: 5px;
     -moz-border-radius: 5px;

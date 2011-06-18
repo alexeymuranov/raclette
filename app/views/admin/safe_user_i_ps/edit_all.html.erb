@@ -1,7 +1,7 @@
 <h1><%= t '.header' %></h1>
 
 <%= form_tag "/admin/safe_user_ips", :method=> :put do |f| %>
-  <table>
+  <table class="form">
     <tr>
       <th></th>
       <% @known_ips.each do |known_ip| %>

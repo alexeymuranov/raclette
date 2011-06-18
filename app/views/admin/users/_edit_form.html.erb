@@ -16,63 +16,74 @@
 
   <%= render 'common_form_fields', :f => f %>
 
-  <div class="field">
-    <%= f.label :new_password, t('admin.users.labels.new_password') %>
-    <%= f.password_field :new_password %>
-  </div>
-  <div class="field">
-    <%= f.label :new_password_confirmation,
-                t('admin.users.labels.new_password_confirmation') %>
-    <%= f.password_field :new_password_confirmation %>
-  </div>
-  <div class="field">
-    <%= label_tag :current_user_password, t('admin.users.labels.your_password') %>
-    <%= password_field_tag :current_user_password %>
-  </div>
-  <table>
-    <caption style="text-align:center;" ><%= t 'admin.users.edit.captions.authorized_ips', :username => @user.username %></caption>
-    <tr>
-      <th>
-        <%= t 'field_labels.ip' %>
-      </th>
-      <th>
-        <%= t 'field_labels.description' %>
-      </th>
-      <th style='text-align:center;'>
-        <%= t 'field_labels.authorized?' %>
-      </th>
-    </tr>
-    <% @safe_ips.each do |known_ip| %>
-    <tr>
-      <td>
-        <%= label_tag "admin_user[known_ip_is_safe][#{known_ip.id}]", known_ip.ip %>
-      </td>
-      <td>
-        <%= known_ip.description %>
-      </td>
-      <td style='text-align:center;'>
-        <%= check_box_tag "admin_user[known_ip_is_safe][#{known_ip.id}]", "1", true %>
-      </td>
-    </tr>
-    <% end %>
-    <% @other_ips.each do |known_ip| %>
-    <tr>
-      <td>
-        <%= label_tag "admin_user[known_ip_is_safe][#{known_ip.id}]", known_ip.ip %>
-      </td>
-      <td>
-        <%= known_ip.description %>
-      </td>
-      <td style='text-align:center;'>
-        <%= check_box_tag "admin_user[known_ip_is_safe][#{known_ip.id}]", "0", false %>
-      </td>
-    </tr>
-    <% end %>
-  </table>  
-  <div class="field">
-    <%= f.label :comments, t('admin.users.labels.comments') %><br />
-    <%= f.text_area :comments %>
-  </div>
+  <fieldset>
+    <table class="form">
+      <tr class="field">
+        <td><%= f.label :new_password, t('admin.users.labels.new_password') %></td>
+        <td><%= f.password_field :new_password %></td>
+      </tr>
+      <tr class="field">
+        <td><%= f.label :new_password_confirmation,
+                        t('admin.users.labels.new_password_confirmation') %></td>
+        <td><%= f.password_field :new_password_confirmation %></td>
+      </tr>
+      <tr class="field">
+        <td><%= label_tag :current_user_password, t('admin.users.labels.your_password') %></td>
+        <td><%= password_field_tag :current_user_password, nil, :size => 30 %></td>
+      </tr>
+    </table>
+  </fieldset>
+
+  <fieldset>
+    <legend><%= t 'admin.users.edit.captions.authorized_ips', :username => @user.username %></legend>
+    <table class="form">
+      <tr>
+        <th>
+          <%= t 'field_labels.ip' %>
+        </th>
+        <th>
+          <%= t 'field_labels.description' %>
+        </th>
+        <th style='text-align:center;'>
+          <%= t 'field_labels.authorized?' %>
+        </th>
+      </tr>
+      <% @safe_ips.each do |known_ip| %>
+      <tr class="field">
+        <td>
+          <%= label_tag "admin_user[known_ip_is_safe][#{known_ip.id}]", known_ip.ip %>
+        </td>
+        <td>
+          <%= known_ip.description %>
+        </td>
+        <td style='text-align:center;'>
+          <%= check_box_tag "admin_user[known_ip_is_safe][#{known_ip.id}]", "1", true %>
+        </td>
+      </tr>
+      <% end %>
+      <% @other_ips.each do |known_ip| %>
+      <tr class="field">
+        <td>
+          <%= label_tag "admin_user[known_ip_is_safe][#{known_ip.id}]", known_ip.ip %>
+        </td>
+        <td>
+          <%= known_ip.description %>
+        </td>
+        <td style='text-align:center;'>
+          <%= check_box_tag "admin_user[known_ip_is_safe][#{known_ip.id}]", "0", false %>
+        </td>
+      </tr>
+      <% end %>
+    </table>  
+  </fieldset>
+
+  <fieldset>
+    <div class="field">
+      <%= f.label :comments, t('admin.users.labels.comments') %>
+      <%= f.text_area :comments %>
+    </div>
+  </fieldset>
+  
   <div class="actions">
     <%= f.submit t('buttons.save') %>
   </div>

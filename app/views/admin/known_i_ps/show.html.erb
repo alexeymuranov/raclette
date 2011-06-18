@@ -1,15 +1,16 @@
 <p id="notice"><%= notice %></p>
 
-<p>
-  <b>IP:</b>
-  <%= @known_ip.ip %>
-</p>
+<table style="width:auto;">
+  <tr>
+    <td><b>IP:</b></td>
+    <td><%= @known_ip.ip %></td>
+  </tr>
 
-<p>
-  <b>Description:</b>
-  <%= @known_ip.description %>
-</p>
-
+  <tr>
+    <td><b>Description:</b></td>
+    <td><%= @known_ip.description %></td>
+  </tr>
+</table>
 
 <%= link_to edit_icon(2)+t('.links.update'),
             edit_admin_known_ip_path(@known_ip),

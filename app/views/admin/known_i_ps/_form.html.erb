@@ -11,14 +11,19 @@
     </div>
   <% end %>
 
-  <div class="field">
-    <%= f.label :ip, t('field_labels.ip') %>
-    <%= f.text_field :ip, :disabled => !@known_ip.new_record? %>
-  </div>
-  <div class="field">
-    <%= f.label :description, t('field_labels.description') %>
-    <%= f.text_field :description %>
-  </div>
+  <fieldset>
+    <table class="form">
+      <tr class="field">
+        <td><%= f.label :ip, t('field_labels.ip') %></td>
+        <td><%= f.text_field :ip, :disabled => !@known_ip.new_record? %></td>
+      </tr>
+      <tr class="field">
+        <td><%= f.label :description, t('field_labels.description') %></td>
+        <td><%= f.text_field :description %></td>
+      </tr>
+    </table>
+  </fieldset>
+
   <div class="actions">
     <%= f.submit t('buttons.save') %>
   </div>

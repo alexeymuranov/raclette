@@ -306,19 +306,19 @@ en:
       show:
         title: "%{username}"
         captions:
-          authorized_ips: "The user is fully authorized to connect from these IP addresses"
+          authorized_ips: "Fully authorized IP addresses"
         links:
           update: "Update the user"
       new:
         title: "New user"
         header: "New user"
         captions:
-          authorized_ips: "The new user is fully authorized to connect from which IP addresses?"
+          authorized_ips: "Fully authorized IP addresses"
       edit:
         title: "Update %{username}"
         header: "Updating user '%{username}'"
         captions:
-          authorized_ips: "The user '%{username}' is fully authorized to connect from which IP addresses?"
+          authorized_ips: "Fully authorized IP addresses"
         links:
           show: "Show the user"
       create:
@@ -353,7 +353,7 @@ en:
         last_signed_in_at: "Last signed in at:"
         comments: "Comments:"
         password: "Password:"
-        your_password: "Your password (only if changing user's password):"
+        your_password: "Your password:"
         new_password: "New password:"
         password_confirmation: "Confirmation:"
         new_password_confirmation: "Confirmation of new password:"

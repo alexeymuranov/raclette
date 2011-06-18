@@ -1,79 +1,74 @@
 <p id="notice"><%= notice %></p>
 
-<p>
-  <b><%= t('admin.users.labels.username') %></b>
-  <%= @user.username %>
-</p>
-
-<p>
-  <b><%= t('admin.users.labels.full_name') %></b>
-  <%= @user.full_name %>
-</p>
-
-<p>
-  <b><%= t('admin.users.labels.email') %></b>
-  <%= @user.email %>
-</p>
-
-<p>
-  <b><%= t('admin.users.labels.admin') %></b>
-  <%= @user.admin? ? t(:yes) : t(:no) %>
-</p>
-
-<p>
-  <b><%= t('admin.users.labels.manager') %></b>
-  <%= @user.manager? ? t(:yes) : t(:no) %>
-</p>
-
-<p>
-  <b><%= t('admin.users.labels.secretary') %></b>
-  <%= @user.secretary? ? t(:yes) : t(:no) %>
-</p>
-
-<p>
-  <b><%= t('admin.users.labels.person') %></b>
-  <%= @user.a_person? ? t(:yes) : t(:no) %>
-</p>
-
-<% if @user.a_person? %>
-  <p>
-    <b><%= t('admin.users.labels.person_id') %></b>
-    <%= @user.person_id %>
-  </p>
-<% end %>
-
-<table>
-  <caption style="text-align:center;" ><%= t 'admin.users.show.captions.authorized_ips' %></caption>
+<table style="width:auto;">
   <tr>
-    <th>
-      <%= t 'field_labels.ip' %>
-    </th>
-    <th>
-      <%= t 'field_labels.description' %>
-    </th>
+    <td><b><%= t('admin.users.labels.username') %></b></td>
+    <td><%= @user.username %></td>
+  </tr>
+
+  <tr>
+    <td><b><%= t('admin.users.labels.full_name') %></b></td>
+    <td><%= @user.full_name %></td>
+  </tr>
+
+  <tr>
+    <td><b><%= t('admin.users.labels.email') %></b></td>
+    <td><%= @user.email %></td>
+  </tr>
+
+  <tr>
+    <td><b><%= t('admin.users.labels.admin') %></b></td>
+    <td><%= @user.admin? ? t(:yes) : t(:no) %></td>
+  </tr>
+
+  <tr>
+    <td><b><%= t('admin.users.labels.manager') %></b></td>
+    <td><%= @user.manager? ? t(:yes) : t(:no) %></td>
+    </p>
+  </tr>
+
+  <tr>
+    <td><b><%= t('admin.users.labels.secretary') %></b></td>
+    <td><%= @user.secretary? ? t(:yes) : t(:no) %></td>
+  </tr>
+
+  <tr>
+    <td><b><%= t('admin.users.labels.person') %></b></td>
+    <td><%= @user.a_person? ? t(:yes) : t(:no) %></td>
+  </tr>
+
+  <% if @user.a_person? %>
+    <tr>
+      <td><b><%= t('admin.users.labels.person_id') %></b></td>
+      <td><%= @user.person_id %></td>
+    </tr>
+  <% end %>
+</table>
+
+<table style="width:auto;">
+  <caption style="text-align:center;white-space:nowrap;" ><%= t 'admin.users.show.captions.authorized_ips' %></caption>
+  <tr>
+    <th><%= t 'field_labels.ip' %></th>
+    <th><%= t 'field_labels.description' %></th>
   </tr>
   <% @user.safe_ips.each do |safe_ip| %>
-  <tr>
-    <td>
-      <%= safe_ip.ip %>
-    </td>
-    <td>
-      <%= safe_ip.description %>
-    </td>
-  </tr>
+    <tr>
+      <td><%= safe_ip.ip %></td>
+      <td><%= safe_ip.description %></td>
+    </tr>
   <% end %>
 </table>  
 
-<p>
-  <b><%= t('admin.users.labels.last_signed_in_at') %></b>
-  <%= @user.last_signed_in_at %>
-</p>
-
-<p>
-  <b><%= t('admin.users.labels.comments') %></b>
-  <%= @user.comments %>
-</p>
-
+<table style="width:auto;">
+  <tr>
+    <td><b><%= t('admin.users.labels.last_signed_in_at') %></b></td>
+    <td><%= @user.last_signed_in_at %>
+  </tr>
+  <tr>
+    <td><b><%= t('admin.users.labels.comments') %></b></td>
+    <td><p><%= @user.comments %></p></td>
+  </tr>
+</table>  
 
 <%= link_to edit_icon(2)+t('.links.update'),
             edit_admin_user_path(@user),

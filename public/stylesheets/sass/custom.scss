@@ -7,7 +7,7 @@ $logout-navigation-link-bg-color: #ff0;
 $disabled-navigation-link-color: #ccc;
 $view-link-color:#060;
 $modify-link-color:#600;
-$even-table-row-bg-color:#e5ecf9;
+$even-table-row-bg-color:#eef;
 
 @mixin rounded-corners($radius) {  
   border-radius: $radius;  
@@ -242,6 +242,16 @@ section {
     font-size: 100%;
     border-top: solid 1px $even-table-row-bg-color;
     border-bottom: solid 1px $even-table-row-bg-color;
+    margin-bottom: 5px;
+    
+    &.form {
+      width: auto;
+      margin: auto;
+    }
+    
+    tbody tr:nth-child(even) td, tbody tr.even td {
+      background: $even-table-row-bg-color;
+    }
     
     th {
       font-size: 80%;
@@ -253,6 +263,10 @@ section {
       # margin: 10px 0px;
       padding: 0px 5px;
     }
+  }
+  
+  fieldset {
+    margin:0;
   }
   
   a {

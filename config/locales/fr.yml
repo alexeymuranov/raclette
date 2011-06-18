@@ -266,19 +266,19 @@ fr:
       show:
         title: "%{username}"
         captions:
-          authorized_ips: "L'utilisateur est pleinement autorizé(e) à connecter de ses adresses IP"
+          authorized_ips: "Adresses IP pleinement autorisées"
         links:
           update: "Mettre l'utilisateur à jour"
       new:
         title: "Nouveau utilisateur"
         header: "Nouveau utilisateur"
         captions:
-          authorized_ips: "Le nouveau utilisateur est pleinement autorizé(e) à connecter de quelles adresses IP ?"
+          authorized_ips: "Adresses IP pleinement autorisées"
       edit:
         title: "%{username} - mise à jour"
         header: "Mise à jour de l'utilisateur « %{username} »"
         captions:
-          authorized_ips: "L'utilisateur « %{username} » est pleinement autorizé(e) à connecter de quelles adresses IP ?"
+          authorized_ips: "Adresses IP pleinement autorisées"
         links:
           show: "Voir l'utilisateur"
       create:
@@ -310,10 +310,10 @@ fr:
         manager: "Gestionnaire ?"
         secretary: "Secrétaire ?"
         person: "Personne ?"
-        last_signed_in_at: "S'est inscrit la dernière fois le :"
+        last_signed_in_at: "S'est connecté(e) la dernière fois le :"
         comments: "Remarques :"
         password: "Mot de passe :"
-        your_password: "Votre mot de passe (seulement pour changer le mot de passe de l'utilisateur) :"
+        your_password: "Votre mot de passe :"
         new_password: "Nouveau mot de passe :"
         password_confirmation: "Confirmation du mot de passe :"
         new_password_confirmation: "Confirmation du nouveau mot de passe :"
