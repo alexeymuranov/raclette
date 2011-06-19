@@ -17,7 +17,8 @@
   <%= render 'common_form_fields', :f => f %>
 
   <fieldset>
-    <table class="form">
+    <legend><%= t 'admin.users.new.captions.password' %></legend>
+    <table class="fields">
       <tr class="field">
         <td><%= f.label :password, t('admin.users.labels.password') %></td>
         <td><%= f.password_field :password %></td>
@@ -32,7 +33,7 @@
 
   <fieldset>
     <legend><%= t 'admin.users.new.captions.authorized_ips' %></legend>
-    <table class="form">
+    <table class="fields">
       <tr>
         <th>
           <%= t 'field_labels.ip' %>
@@ -61,15 +62,14 @@
   </fieldset>
 
   <fieldset>
-    <table class="form">
-      <div class="field">
-        <%= f.label :comments, t('admin.users.labels.comments') %>
-        <%= f.text_area :comments %>
-      </div>
-    </table>
+    <legend><%= t 'admin.users.new.captions.other' %></legend>
+    <div class="field">
+      <%= f.label :comments, t('admin.users.labels.comments'), :style => "vertical-align:top;" %>
+      <%= f.text_area :comments %>
+    </div>
   </fieldset>
 
-  <div class="actions">
+  <div class="actions" style="text-align:center;">
     <%= f.submit t('buttons.save') %>
   </div>
 <% end %>

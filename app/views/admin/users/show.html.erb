@@ -1,9 +1,10 @@
 <p id="notice"><%= notice %></p>
 
 <table style="width:auto;">
+  <caption style="text-align:center;white-space:nowrap;" ><%= t 'admin.users.show.captions.user_data' %></caption>
   <tr>
     <td><b><%= t('admin.users.labels.username') %></b></td>
-    <td><%= @user.username %></td>
+    <td><b><%= @user.username %></b></td>
   </tr>
 
   <tr>
@@ -46,20 +47,17 @@
 </table>
 
 <table style="width:auto;">
-  <caption style="text-align:center;white-space:nowrap;" ><%= t 'admin.users.show.captions.authorized_ips' %></caption>
-  <tr>
-    <th><%= t 'field_labels.ip' %></th>
-    <th><%= t 'field_labels.description' %></th>
-  </tr>
+  <caption><%= t 'admin.users.show.captions.authorized_ips' %></caption>
   <% @user.safe_ips.each do |safe_ip| %>
     <tr>
-      <td><%= safe_ip.ip %></td>
+      <td><%= link_to safe_ip.ip, safe_ip, :title => t('actions.read') %></td>
       <td><%= safe_ip.description %></td>
     </tr>
   <% end %>
 </table>  
 
 <table style="width:auto;">
+  <caption><%= t 'admin.users.show.captions.other' %></caption>
   <tr>
     <td><b><%= t('admin.users.labels.last_signed_in_at') %></b></td>
     <td><%= @user.last_signed_in_at %>

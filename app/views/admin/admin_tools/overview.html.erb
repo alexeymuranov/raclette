@@ -1,6 +1,6 @@
 <h1><%= t 'application_layout.navigation_links.admin_tools' %></h1>
 
-<div style="border:dotted 1px;">
+<div class="links_group">
 <h3><%= link_to t('headers.all_users'), admin_users_path %></h3>
 <p>
   <% @users.each do |user| %>
@@ -18,7 +18,7 @@
 
 <br/>
 
-<div style="border:dotted 1px;">
+<div class="links_group">
 <h3><%= link_to t('headers.all_known_ips'), admin_known_ips_path %></h3>
 <p>
   <% @known_ips.each do |known_ip| %>
@@ -37,6 +37,6 @@
 
 <br/>
 
-<div style="border:dotted 1px;">
+<div class="links_group">
 <h3><%= link_to t('headers.all_safe_user_ips'), admin_safe_user_ips_path %></h3>
 </div>

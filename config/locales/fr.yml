@@ -266,19 +266,27 @@ fr:
       show:
         title: "%{username}"
         captions:
+          user_data: "Données de l'utilisateur"
           authorized_ips: "Adresses IP pleinement autorisées"
+          other: "Divers"
         links:
           update: "Mettre l'utilisateur à jour"
       new:
         title: "Nouveau utilisateur"
         header: "Nouveau utilisateur"
         captions:
+          user_data: "Données de l'utilisateur"
+          password: "Mot de passe"
           authorized_ips: "Adresses IP pleinement autorisées"
+          other: "Divers"
       edit:
         title: "%{username} - mise à jour"
         header: "Mise à jour de l'utilisateur « %{username} »"
         captions:
+          user_data: "Données de l'utilisateur"
+          change_password: "Changer le mot de passe"
           authorized_ips: "Adresses IP pleinement autorisées"
+          other: "Divers"
         links:
           show: "Voir l'utilisateur"
       create:

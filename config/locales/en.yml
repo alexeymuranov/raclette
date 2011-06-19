@@ -306,19 +306,27 @@ en:
       show:
         title: "%{username}"
         captions:
+          user_data: "User data"
           authorized_ips: "Fully authorized IP addresses"
+          other: "Other"
         links:
           update: "Update the user"
       new:
         title: "New user"
         header: "New user"
         captions:
+          user_data: "User data"
+          password: "Password"
           authorized_ips: "Fully authorized IP addresses"
+          other: "Other"
       edit:
         title: "Update %{username}"
         header: "Updating user '%{username}'"
         captions:
+          user_data: "User data"
+          change_password: "Password change"
           authorized_ips: "Fully authorized IP addresses"
+          other: "Other"
         links:
           show: "Show the user"
       create:

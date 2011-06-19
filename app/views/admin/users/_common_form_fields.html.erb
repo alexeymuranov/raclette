@@ -1,5 +1,6 @@
   <fieldset>
-    <table class="form">
+    <legend><%= t 'admin.users.edit.captions.user_data' %></legend>
+    <table class="fields">
     <tr class="field">
       <td><%= f.label :username, t('field_labels.username') %></td>
       <td><%= f.text_field :username, :disabled => !@user.new_record? %>*</td>

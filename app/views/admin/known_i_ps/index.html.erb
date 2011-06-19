@@ -6,17 +6,12 @@
     <th><%= t 'field_labels.description' %></th>
     <th></th>
     <th></th>
-    <th></th>
   </tr>
 
 <% @known_ips.each do |known_ip| %>
   <tr>
-    <td><%= known_ip.ip %></td>
+    <td><%= link_to known_ip.ip, known_ip, :title => t('actions.read') %></td>
     <td><%= known_ip.description %></td>
-    <td>
-      <%= link_to show_icon, known_ip,
-                  :title => t('actions.read') %>
-    </td>
     <td>
       <%= link_to edit_icon, edit_admin_known_ip_path(known_ip),
                   :title => t('actions.update'),

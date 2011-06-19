@@ -101,7 +101,8 @@ div#main_logo div#logo_box {
     opacity: 1; }
 
 div#main_logo div#logo_menu {
-  display: none; }
+  display: none;
+  width: 150px; }
 
 div#main_logo:hover div#logo_menu {
   margin-top: 5px;
@@ -153,6 +154,8 @@ footer {
     border-radius: 10px;
     -moz-border-radius: 10px;
     -webkit-border-radius: 10px; }
+    footer nav ul {
+      padding: 0; }
 
 /* Section */
 section {
@@ -167,14 +170,18 @@ section {
     font-size: 200%; }
   section table {
     font-size: 100%;
-    border-top: solid 1px #eeeeff;
-    border-bottom: solid 1px #eeeeff;
-    margin-bottom: 5px; }
-    section table.form {
+    border-top: solid 1px #bbbbff;
+    border-bottom: solid 1px #bbbbff;
+    margin-bottom: 12pt;
+    width: auto; }
+    section table.fields {
       width: auto;
       margin: auto; }
     section table tbody tr:nth-child(even) td, section table tbody tr.even td {
       background: #eeeeff; }
+    section table caption {
+      text-align: center;
+      white-space: nowrap; }
     section table th {
       font-size: 80%;
       # margin: 5px 0px;
@@ -183,7 +190,18 @@ section {
       # margin: 10px 0px;
       padding: 0px 5px; }
   section fieldset {
-    margin: 0; }
+    border-radius: 5px;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    margin: 0 0 0.5em; }
+    section fieldset legend {
+      margin: 0;
+      padding: 0px 5px; }
+  section div.links_group {
+    border-radius: 5px;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    border: dotted 1px; }
   section a {
     border-radius: 5px;
     -moz-border-radius: 5px;

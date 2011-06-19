@@ -12,7 +12,7 @@
   <% end %>
 
   <fieldset>
-    <table class="form">
+    <table class="fields">
       <tr class="field">
         <td><%= f.label :ip, t('field_labels.ip') %></td>
         <td><%= f.text_field :ip, :disabled => !@known_ip.new_record? %></td>
@@ -24,7 +24,7 @@
     </table>
   </fieldset>
 
-  <div class="actions">
+  <div class="actions" style="text-align:center;">
     <%= f.submit t('buttons.save') %>
   </div>
 <% end %>

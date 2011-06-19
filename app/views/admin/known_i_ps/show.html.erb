@@ -2,12 +2,12 @@
 
 <table style="width:auto;">
   <tr>
-    <td><b>IP:</b></td>
-    <td><%= @known_ip.ip %></td>
+    <td><b><%= t('field_labels.ip') %></b></td>
+    <td><b><%= @known_ip.ip %></b></td>
   </tr>
 
   <tr>
-    <td><b>Description:</b></td>
+    <td><b><%= t 'field_labels.description' %></b></td>
     <td><%= @known_ip.description %></td>
   </tr>
 </table>
