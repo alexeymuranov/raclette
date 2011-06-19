@@ -8,6 +8,7 @@
     <th style='text-align:center;'><%= t 'field_labels.manager?' %></th>
     <th style='text-align:center;'><%= t 'field_labels.secretary?' %></th>
     <th style='text-align:center;'><%= t 'field_labels.person?' %></th>
+    <th style='text-align:center;'><%= t 'field_labels.deactivated?' %></th>
     <th></th>
     <th></th>
   </tr>
@@ -27,6 +28,9 @@
     </td>
     <td style='text-align:center;'>
       <%= user.a_person? ? yes_icon : t(:no) %>
+    </td>
+    <td style='text-align:center;'>
+      <%= user.account_deactivated? ? yes_icon : t(:no) %>
     </td>
     <td style='text-align:center;'>
       <%= link_to edit_icon, edit_admin_user_path(user),

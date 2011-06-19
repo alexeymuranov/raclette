@@ -29,7 +29,7 @@ class Admin::UsersController < AdminController
     @title = t('admin.users.edit.title', :username => @user.username)
   end
 
-  def create  # FIXME (password)
+  def create  # FIXME? (password)
     params[:admin_user].delete(:email)\
         if params[:admin_user][:email].blank?
         
@@ -49,8 +49,16 @@ class Admin::UsersController < AdminController
     end
   end
 
-  def update  # FIXME (password)
+  def update  # FIXME? (password)
     @user = Admin::User.find(params[:id])
+    
+    if @user == current_user
+      params[:admin_user].delete(:account_deactivated)
+    else
+      # params.delete(:current_user_password)
+      # params[:admin_user].delete(:new_password)
+      # params[:admin_user].delete(:new_password_confirmation)
+    end
 
     params[:admin_user].delete(:email)\
         if params[:admin_user][:email].blank?

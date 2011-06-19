@@ -16,7 +16,7 @@ class Admin::SafeUserIPsController < AdminController
     @title = t('admin.safe_user_i_ps.edit_all.title')
   end
   
-  def update_all # FIXME
+  def update_all # FIXME?
     @users = Admin::User.all
     @known_ips = Admin::KnownIP.all
 

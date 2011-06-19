@@ -247,6 +247,7 @@ en:
     "manager?": "Manager?"
     "secretary?": "Secretary?"
     "person?": "Person?"
+    "deactivated?": "Deactivated?"
     last_signed_in_at: "Last signed in at:"
     comments: "Comments:"
     password: "Password:"
@@ -256,7 +257,7 @@ en:
     new_password_confirmation: "Confirmation of new password:"
     ip: "IP address:"
     description: "Description:"
-    "authorized?": "Authorized?"
+    "authorized?(ip)": "Authorized?"
     
   buttons:
     save: "Save"
@@ -274,6 +275,7 @@ en:
     logged_in: "Your have signed in as '%{username}'."
     logged_out: "Your have signed out."
     invalid_login: "Invalid username/password combination."
+    user_account_deactivated: "Your user account is deactivated, please contact an administrator."
     operation_failed: "Operation failed."
     require_login: "Please log in to access this page."
     require_admin: "You must be an admin to access the section you tried to access."
@@ -349,22 +351,6 @@ en:
         new: "New user"
         update: "Edit"
         delete: "Delete"
-      labels:
-        username: "Username:"
-        full_name: "Full name:"
-        person_id: "Personal ID:"
-        email: "E-mail address:"
-        admin: "Administrator?"
-        manager: "Manager?"
-        secretary: "Secretary?"
-        person: "Person?"
-        last_signed_in_at: "Last signed in at:"
-        comments: "Comments:"
-        password: "Password:"
-        your_password: "Your password:"
-        new_password: "New password:"
-        password_confirmation: "Confirmation:"
-        new_password_confirmation: "Confirmation of new password:"
 
     known_i_ps:
       index:
@@ -382,6 +368,18 @@ en:
         header: "Updating IP address %{ip}"
         links:
           show: "Show the IP"
+      create:
+        flash:
+          success: "IP address %{ip} was successfully created."
+          failure: "IP address was not created."
+      update:
+        flash:
+          success: "IP address %{ip} was successfully updated."
+          failure: "IP address was not updated."
+      destroy:
+        flash:
+          success: "IP address %{ip} is deleted."
+          failure: "Error!"
         
       links:
         show_all: "Show all IP addresses"

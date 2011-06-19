@@ -207,7 +207,8 @@ fr:
     "manager?": "Gestionnaire ?"
     "secretary?": "Secrétaire ?"
     "person?": "Personne ?"
-    last_signed_in_at: "S'est inscrit la dernière fois à :"
+    "deactivated?": "Désactivé(e) ?"
+    last_signed_in_at: "S'est connecté(e)  la dernière fois le :"
     comments: "Remarques :"
     password: "Mot de passe :"
     your_password: "Votre mot de passe :"
@@ -216,7 +217,7 @@ fr:
     new_password_confirmation: "Confirmation du nouveau mot de passe :"
     ip: "Adresse IP :"
     description: "Description :"
-    "authorized?": "Autorisé(e) ?"
+    "authorized?(ip)": "Autorisée ?"
 
   buttons:
     save: "Enregistrer"
@@ -234,6 +235,7 @@ fr:
     logged_in: "Vous êtes connecté(e) comme « %{username} »."
     logged_out: "Vous êtes déconnecté(e)."
     invalid_login: "Nom d'utilisateur et/ou mot de passe est invalide."
+    user_account_deactivated: "Votre compte d'utilisateur est désactivé, veuillez contacter un administrateur."
     operation_failed: "L'opération a échouée."
     require_login: "Vous devez vous connecter pour acceder à cette page."
     require_admin: "Vous devez être un administratur pour acceder à la section que vous avez essayé d'acceder."
@@ -270,7 +272,7 @@ fr:
           authorized_ips: "Adresses IP pleinement autorisées"
           other: "Divers"
         links:
-          update: "Mettre l'utilisateur à jour"
+          update: "Mettre cette utilisateur à jour"
       new:
         title: "Nouveau utilisateur"
         header: "Nouveau utilisateur"
@@ -288,7 +290,7 @@ fr:
           authorized_ips: "Adresses IP pleinement autorisées"
           other: "Divers"
         links:
-          show: "Voir l'utilisateur"
+          show: "Voir cette utilisateur"
       create:
         flash:
           success: "L'utilisateur « %{username} » a été enregistré."
@@ -309,22 +311,6 @@ fr:
         new: "Ajouter un utilisateur"
         update: "Mettre à jour"
         delete: "Supprimer"
-      labels:
-        username: "Nom d'utilisateur :"
-        full_name: "Nom complet :"
-        person_id: "Id personnelle :"
-        email: "Adresse e-mail :"
-        admin: "Administrateur ?"
-        manager: "Gestionnaire ?"
-        secretary: "Secrétaire ?"
-        person: "Personne ?"
-        last_signed_in_at: "S'est connecté(e) la dernière fois le :"
-        comments: "Remarques :"
-        password: "Mot de passe :"
-        your_password: "Votre mot de passe :"
-        new_password: "Nouveau mot de passe :"
-        password_confirmation: "Confirmation du mot de passe :"
-        new_password_confirmation: "Confirmation du nouveau mot de passe :"
 
     known_i_ps:
       index:
@@ -335,16 +321,28 @@ fr:
         links:
           update: "Mettre cette adresse IP à jour"
       new:
-        title: "Nouveau IP"
-        header: "Nouveau adresses IP"
+        title: "Nouvelle IP"
+        header: "Nouvelle adresse IP"
       edit:
-        title: "Adresses IP - mise à jour"
+        title: "%{ip} - mise à jour"
         header: "Mise à jour de l'adresse IP %{ip}"
         links:
-          show: "Voir cette IP"
+          show: "Voir cette adresse IP"
+      create:
+        flash:
+          success: "L'adresse IP %{ip} a été enregistrée."
+          failure: "L'adresse IP n'a pas été enregistrée."
+      update:
+        flash:
+          success: "L'adresse IP %{ip} a été mise à jour."
+          failure: "L'adresse IP n'a pas été mise à jour."
+      destroy:
+        flash:
+          success: "L'adresse IP %{ip} est supprimée."
+          failure: "Une erreur s'est produit!"
 
       links:
-        show_all: "Voir tous les adresses IP"
+        show_all: "Voir toutes les adresses IP"
         show: "Voir"
         new: "Ajouter une adresse IP"
         update: "Mettre à jour"

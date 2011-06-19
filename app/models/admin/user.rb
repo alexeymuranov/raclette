@@ -16,7 +16,7 @@ class Admin::User < ActiveRecord::Base
                    :a_person,
                    # :person_id,
                    :email,
-                   # :account_deactivated,
+                   :account_deactivated,
                    :admin,
                    :manager,
                    :secretary,

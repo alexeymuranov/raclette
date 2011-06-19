@@ -20,16 +20,16 @@
     <legend><%= t 'admin.users.edit.captions.change_password' %></legend>
     <table class="fields">
       <tr class="field">
-        <td><%= f.label :new_password, t('admin.users.labels.new_password') %></td>
+        <td><%= f.label :new_password, t('field_labels.new_password') %></td>
         <td><%= f.password_field :new_password %></td>
       </tr>
       <tr class="field">
         <td><%= f.label :new_password_confirmation,
-                        t('admin.users.labels.new_password_confirmation') %></td>
+                        t('field_labels.new_password_confirmation') %></td>
         <td><%= f.password_field :new_password_confirmation %></td>
       </tr>
       <tr class="field">
-        <td><%= label_tag :current_user_password, t('admin.users.labels.your_password') %></td>
+        <td><%= label_tag :current_user_password, t('field_labels.your_password') %></td>
         <td><%= password_field_tag :current_user_password, nil, :size => 30 %></td>
       </tr>
     </table>
@@ -46,7 +46,7 @@
           <%= t 'field_labels.description' %>
         </th>
         <th style='text-align:center;'>
-          <%= t 'field_labels.authorized?' %>
+          <%= t 'field_labels.authorized?(ip)' %>
         </th>
       </tr>
       <% @safe_ips.each do |known_ip| %>
@@ -81,7 +81,7 @@
   <fieldset>
     <legend><%= t 'admin.users.edit.captions.other' %></legend>
     <div class="field">
-      <%= f.label :comments, t('admin.users.labels.comments'), :style => "vertical-align:top;" %>
+      <%= f.label :comments, t('field_labels.comments'), :style => "vertical-align:top;" %>
       <%= f.text_area :comments %>
     </div>
   </fieldset>

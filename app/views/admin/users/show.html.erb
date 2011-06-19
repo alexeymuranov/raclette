@@ -1,49 +1,54 @@
-<p id="notice"><%= notice %></p>
+<!-- <p id="notice"><%#= notice %></p> -->
 
 <table style="width:auto;">
   <caption style="text-align:center;white-space:nowrap;" ><%= t 'admin.users.show.captions.user_data' %></caption>
   <tr>
-    <td><b><%= t('admin.users.labels.username') %></b></td>
+    <td><b><%= t 'field_labels.username' %></b></td>
     <td><b><%= @user.username %></b></td>
   </tr>
 
   <tr>
-    <td><b><%= t('admin.users.labels.full_name') %></b></td>
+    <td><b><%= t 'field_labels.full_name' %></b></td>
     <td><%= @user.full_name %></td>
   </tr>
 
   <tr>
-    <td><b><%= t('admin.users.labels.email') %></b></td>
+    <td><b><%= t 'field_labels.email' %></b></td>
     <td><%= @user.email %></td>
   </tr>
 
   <tr>
-    <td><b><%= t('admin.users.labels.admin') %></b></td>
+    <td><b><%= t 'field_labels.admin?' %></b></td>
     <td><%= @user.admin? ? t(:yes) : t(:no) %></td>
   </tr>
 
   <tr>
-    <td><b><%= t('admin.users.labels.manager') %></b></td>
+    <td><b><%= t 'field_labels.manager?' %></b></td>
     <td><%= @user.manager? ? t(:yes) : t(:no) %></td>
     </p>
   </tr>
 
   <tr>
-    <td><b><%= t('admin.users.labels.secretary') %></b></td>
+    <td><b><%= t 'field_labels.secretary?' %></b></td>
     <td><%= @user.secretary? ? t(:yes) : t(:no) %></td>
   </tr>
 
   <tr>
-    <td><b><%= t('admin.users.labels.person') %></b></td>
+    <td><b><%= t 'field_labels.person?' %></b></td>
     <td><%= @user.a_person? ? t(:yes) : t(:no) %></td>
   </tr>
 
   <% if @user.a_person? %>
     <tr>
-      <td><b><%= t('admin.users.labels.person_id') %></b></td>
+      <td><b><%= t 'field_labels.person_id' %></b></td>
       <td><%= @user.person_id %></td>
     </tr>
   <% end %>
+
+  <tr>
+    <td><b><%= t 'field_labels.deactivated?' %></b></td>
+    <td><%= @user.account_deactivated? ? t(:yes) : t(:no) %></td>
+  </tr>
 </table>
 
 <table style="width:auto;">
@@ -59,11 +64,11 @@
 <table style="width:auto;">
   <caption><%= t 'admin.users.show.captions.other' %></caption>
   <tr>
-    <td><b><%= t('admin.users.labels.last_signed_in_at') %></b></td>
+    <td><b><%= t('field_labels.last_signed_in_at') %></b></td>
     <td><%= @user.last_signed_in_at %>
   </tr>
   <tr>
-    <td><b><%= t('admin.users.labels.comments') %></b></td>
+    <td><b><%= t('field_labels.comments') %></b></td>
     <td><p><%= @user.comments %></p></td>
   </tr>
 </table>  

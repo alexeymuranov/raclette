@@ -1,6 +1,6 @@
 module Admin::UsersHelper
 
-  def user_permissions_color_code(user)
+  def color_for_user_permissions(user)
     if user.admin?
       '#f00'
     elsif user.manager?
@@ -12,7 +12,7 @@ module Admin::UsersHelper
     end
   end
   
-  def logo_links_to_path(user)
+  def path_logo_links_to(user)
     if user.admin?
       admin_admin_tools_overview_path
     elsif user.manager?

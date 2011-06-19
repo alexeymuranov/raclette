@@ -13,10 +13,17 @@
 
   <fieldset>
     <table class="fields">
-      <tr class="field">
-        <td><%= f.label :ip, t('field_labels.ip') %></td>
-        <td><%= f.text_field :ip, :disabled => !@known_ip.new_record? %></td>
-      </tr>
+      <% if @known_ip.new_record? %>
+        <tr class="field">
+          <td><%= f.label :ip, t('field_labels.ip') %></td>
+          <td><%= f.text_field :ip %></td>
+        </tr>
+      <% else %>
+        <tr class="field">
+          <td><b><%= t 'field_labels.ip' %></b></td>
+          <td><%= @known_ip.ip %></td>
+        </tr>
+      <% end %>
       <tr class="field">
         <td><%= f.label :description, t('field_labels.description') %></td>
         <td><%= f.text_field :description %></td>

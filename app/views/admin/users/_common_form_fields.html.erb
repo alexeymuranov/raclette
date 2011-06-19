@@ -1,33 +1,44 @@
   <fieldset>
     <legend><%= t 'admin.users.edit.captions.user_data' %></legend>
     <table class="fields">
-    <tr class="field">
-      <td><%= f.label :username, t('field_labels.username') %></td>
-      <td><%= f.text_field :username, :disabled => !@user.new_record? %>*</td>
-    </tr>
-    <tr class="field">
-      <td><%= f.label :full_name, t('field_labels.full_name') %></td>
-      <td><%= f.text_field :full_name %>*</td>
-    </tr>
-    <tr class="field">
-      <td><%= f.label :email, t('field_labels.email') %></td>
-      <td><%= f.text_field :email %></td>
-    </tr>
-    <tr class="field">
-      <td><%= f.label :admin, t('field_labels.admin?') %></td>
-      <td><%= f.check_box :admin %></td>
-    </tr>
-    <tr class="field">
-      <td><%= f.label :manager, t('field_labels.manager?') %></td>
-      <td><%= f.check_box :manager %></td>
-    </tr>
-    <tr class="field">
-      <td><%= f.label :secretary, t('field_labels.secretary?') %></td>
-      <td><%= f.check_box :secretary %></td>
-    </tr>
-    <tr class="field">
-      <td><%= f.label :a_person, t('field_labels.person?') %></td>
-      <td><%= f.check_box :a_person %></td>
-    </tr>
+      <% if @user.new_record? %>
+        <tr class="field">
+          <td><%= f.label :username, t('field_labels.username') %></td>
+          <td><%= f.text_field :username %>*</td>
+        </tr>
+      <% else %>
+        <tr class="field">
+          <td><b><%= t 'field_labels.username' %></b></td>
+          <td><%= @user.username %></td>
+        </tr>
+      <% end %>
+      <tr class="field">
+        <td><%= f.label :full_name, t('field_labels.full_name') %></td>
+        <td><%= f.text_field :full_name %>*</td>
+      </tr>
+      <tr class="field">
+        <td><%= f.label :email, t('field_labels.email') %></td>
+        <td><%= f.text_field :email %></td>
+      </tr>
+      <tr class="field">
+        <td><%= f.label :admin, t('field_labels.admin?') %></td>
+        <td><%= f.check_box :admin %></td>
+      </tr>
+      <tr class="field">
+        <td><%= f.label :manager, t('field_labels.manager?') %></td>
+        <td><%= f.check_box :manager %></td>
+      </tr>
+      <tr class="field">
+        <td><%= f.label :secretary, t('field_labels.secretary?') %></td>
+        <td><%= f.check_box :secretary %></td>
+      </tr>
+      <tr class="field">
+        <td><%= f.label :a_person, t('field_labels.person?') %></td>
+        <td><%= f.check_box :a_person %></td>
+      </tr>
+      <tr class="field">
+        <td><%= f.label :account_deactivated, t('field_labels.deactivated?') %></td>
+        <td><%= f.check_box :account_deactivated %></td>
+      </tr>
     </table>
   </fieldset>

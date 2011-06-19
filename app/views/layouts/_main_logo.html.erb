@@ -1,6 +1,6 @@
     <div id="main_logo">
-      <div id="logo_box" style="background-color:<%= user_permissions_color_code(current_user) %>;" >
-        <%= link_to logo, logo_links_to_path(current_user) %>
+      <div id="logo_box" style="background-color:<%= color_for_user_permissions(current_user) %>;" >
+        <%= link_to logo, path_logo_links_to(current_user) %>
       </div>
       <div id="logo_menu">
         <%= render 'layouts/main_menu' %>
