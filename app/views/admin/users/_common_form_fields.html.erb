@@ -1,5 +1,4 @@
-  <fieldset>
-    <legend><%= t 'admin.users.edit.captions.user_data' %></legend>
+  <%= field_set_tag t('admin.users.edit.captions.user_data') do %>
     <table class="fields">
       <% if @user.new_record? %>
         <tr class="field">
@@ -22,7 +21,7 @@
       </tr>
       <tr class="field">
         <td><%= f.label :admin, t('field_labels.admin?') %></td>
-        <td><%= f.check_box :admin %></td>
+        <td><%= f.check_box :admin, :disabled => (@user == current_user) %></td>
       </tr>
       <tr class="field">
         <td><%= f.label :manager, t('field_labels.manager?') %></td>
@@ -38,7 +37,7 @@
       </tr>
       <tr class="field">
         <td><%= f.label :account_deactivated, t('field_labels.deactivated?') %></td>
-        <td><%= f.check_box :account_deactivated %></td>
+        <td><%= f.check_box :account_deactivated, :disabled => (@user == current_user) %></td>
       </tr>
     </table>
-  </fieldset>
+  <% end %>

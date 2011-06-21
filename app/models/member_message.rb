@@ -1,3 +1,5 @@
+## encoding: UTF-8
+
 class MemberMessage < ActiveRecord::Base
 
   attr_readonly :id, :member_id

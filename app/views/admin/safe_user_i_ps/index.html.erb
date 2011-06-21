@@ -9,17 +9,19 @@
     <% end %>
   </tr>
   <% @users.each do |user| %>
-  <tr>
-    <td><%= link_to user.username, user, :title => t('actions.read') %></td>
-    <% @known_ips.each do |known_ip| %>
-      <td style='text-align:center;'>
-        <%= user.safe_ips.include?(known_ip) ? yes_icon : t(:no) %>
-      </td>
-    <% end %>
-  </tr>
+    <tr>
+      <td><%= link_to user.username, user, :title => t('actions.read') %></td>
+      <% @known_ips.each do |known_ip| %>
+        <td style='text-align:center;'>
+          <%= user.safe_ips.include?(known_ip) ? yes_icon : t(:no) %>
+        </td>
+      <% end %>
+    </tr>
   <% end %>
 </table>
 
-<%= link_to edit_icon(2)+t('admin.safe_user_i_ps.links.update_all'), edit_admin_safe_user_ips_path,
+<hr/>
+
+<%= link_to edit_icon(2)+t('admin.safe_user_i_ps.links.update_all'), edit_all_admin_safe_user_ips_path,
             :title  => t('actions.update'),
             :class => 'modify' %>

@@ -1,3 +1,5 @@
+## encoding: UTF-8
+
 class CommitteeMembership < ActiveRecord::Base
 
   attr_readonly :id, :person_id, :function, :start_date

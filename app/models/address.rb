@@ -1,3 +1,5 @@
+## encoding: UTF-8
+
 class Address < ActiveRecord::Base
 
   attr_readonly :id, :country

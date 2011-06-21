@@ -1,3 +1,5 @@
+## encoding: UTF-8
+
 class LessonInstructor < ActiveRecord::Base
 
   attr_readonly :id, :lesson_supervision_id, :instructor_id

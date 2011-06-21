@@ -1,5 +1,5 @@
 <%= form_tag "/admin/safe_user_ips", :method=> :put do |f| %>
-  <fieldset>
+  <%= field_set_tag do %>
     <table class="fields">
       <tr>
         <th></th>
@@ -13,17 +13,13 @@
         <td><%= user.username %></td>
         <% @known_ips.each do |known_ip| %>
           <td style='text-align:center;'>
-            <% if user.safe_ips.include? known_ip %>
-              <%= check_box_tag "known_ip_is_safe_for_user[#{known_ip.id}][#{user.id}]", "1", true %>
-            <% else %>
-              <%= check_box_tag "known_ip_is_safe_for_user[#{known_ip.id}][#{user.id}]", "0", false %>
-            <% end %>
+            <%= check_box_tag "safe_ip_ids_for_users[#{user.id}][]", known_ip.id, user.safe_ips.include?(known_ip) %>
           </td>
         <% end %>
       </tr>
       <% end %>
     </table>
-  </fieldset>
+  <% end %>
 
   <div class="actions" style="text-align:center;">
     <%= submit_tag t('buttons.save') %>

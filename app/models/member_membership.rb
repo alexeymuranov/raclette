@@ -1,3 +1,5 @@
+## encoding: UTF-8
+
 class MemberMembership < ActiveRecord::Base
 
   attr_readonly :id, :member_id, :membership_id, :obtained_on

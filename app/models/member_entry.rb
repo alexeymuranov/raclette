@@ -1,3 +1,5 @@
+## encoding: UTF-8
+
 class MemberEntry < ActiveRecord::Base
 
   attr_readonly :id, :member_id

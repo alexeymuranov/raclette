@@ -1,3 +1,5 @@
+## encoding: UTF-8
+
 class EventEntry < ActiveRecord::Base
 
   attr_readonly :id, :participant_entry_type, :event_title, :date

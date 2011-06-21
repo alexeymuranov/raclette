@@ -1,3 +1,5 @@
+## encoding: UTF-8
+
 class Member < ActiveRecord::Base
   set_primary_key :person_id
 
@@ -22,15 +24,15 @@ class Member < ActiveRecord::Base
 
   # Associations:
   has_one :tickets_lender, :foreign_key => :shares_tickets_with_member_id,
-                           :class_name  => 'Member',
+                           :class_name  => :Member,
                            :dependent   => :nullify,
                            :inverse_of  => :tickets_borrower
 
-  has_one :short_history, :class_name => 'MemberShortHistory',
+  has_one :short_history, :class_name => :MemberShortHistory,
                           :dependent  => :destroy,
                           :inverse_of => :member
 
-  has_many :statistic_counters, :class_name => 'MemberStatisticCounter',
+  has_many :statistic_counters, :class_name => :MemberStatisticCounter,
                                 :dependent  => :destroy,
                                 :inverse_of => :member
 
@@ -58,7 +60,7 @@ class Member < ActiveRecord::Base
 
   belongs_to :tickets_borrower,
                  :foreign_key => :shares_tickets_with_member_id,
-                 :class_name  => 'Member',
+                 :class_name  => :Member,
                  :inverse_of  => :tickets_lender
 
   # Validations:

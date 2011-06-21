@@ -1,3 +1,5 @@
+## encoding: UTF-8
+
 class WeeklyEventSuspension < ActiveRecord::Base
 
   attr_readonly :id, :weekly_event_id, :suspend_from

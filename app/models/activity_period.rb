@@ -1,3 +1,5 @@
+## encoding: UTF-8
+
 class ActivityPeriod < ActiveRecord::Base
 
   attr_readonly :id, :start_date, :duration_months, :end_date

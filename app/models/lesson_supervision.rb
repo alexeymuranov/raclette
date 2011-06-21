@@ -1,3 +1,5 @@
+## encoding: UTF-8
+
 class LessonSupervision < ActiveRecord::Base
 
   attr_readonly :id, :unique_names, :instructors_count

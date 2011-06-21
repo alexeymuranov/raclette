@@ -13,40 +13,42 @@
     <th></th>
   </tr>
 
-<% @users.each do |user| %>
-  <tr>
-    <td><%= link_to user.username, user, :title => t('actions.read') %></td>
-    <td><%= user.full_name %></td>
-    <td style='text-align:center;'>
-      <%= user.admin? ? yes_icon : t(:no) %>
-    </td>
-    <td style='text-align:center;'>
-      <%= user.manager? ? yes_icon : t(:no)  %>
-    </td>
-    <td style='text-align:center;'>
-      <%= user.secretary? ? yes_icon : t(:no)  %>
-    </td>
-    <td style='text-align:center;'>
-      <%= user.a_person? ? yes_icon : t(:no) %>
-    </td>
-    <td style='text-align:center;'>
-      <%= user.account_deactivated? ? yes_icon : t(:no) %>
-    </td>
-    <td style='text-align:center;'>
-      <%= link_to edit_icon, edit_admin_user_path(user),
-                  :title => t('actions.update'),
-                  :class => 'modify' %>
-    </td>
-    <td style='text-align:center;'>
-      <%= link_to delete_icon, user,
-                  :confirm => t("questions.are_you_sure?"),
-                  :method => :delete,
-                  :title  => t('actions.delete'),
-                  :class  => 'modify' %>
-    </td>
-  </tr>
-<% end %>
+  <% @users.each do |user| %>
+    <tr>
+      <td><%= link_to user.username, user, :title => t('actions.read') %></td>
+      <td><%= user.full_name %></td>
+      <td style='text-align:center;'>
+        <%= user.admin? ? yes_icon : t(:no) %>
+      </td>
+      <td style='text-align:center;'>
+        <%= user.manager? ? yes_icon : t(:no)  %>
+      </td>
+      <td style='text-align:center;'>
+        <%= user.secretary? ? yes_icon : t(:no)  %>
+      </td>
+      <td style='text-align:center;'>
+        <%= user.a_person? ? yes_icon : t(:no) %>
+      </td>
+      <td style='text-align:center;'>
+        <%= user.account_deactivated? ? yes_icon : t(:no) %>
+      </td>
+      <td style='text-align:center;'>
+        <%= link_to edit_icon, edit_admin_user_path(user),
+                    :title => t('actions.update'),
+                    :class => 'modify' %>
+      </td>
+      <td style='text-align:center;'>
+        <%= link_to delete_icon, user,
+                    :confirm => t("questions.are_you_sure?"),
+                    :method => :delete,
+                    :title  => t('actions.delete'),
+                    :class  => 'modify' %>
+      </td>
+    </tr>
+  <% end %>
 </table>
+
+<hr/>
 
 <%= link_to add_icon(2)+t('admin.users.links.new'), new_admin_user_path,
             :title  => t('actions.create'),

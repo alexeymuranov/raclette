@@ -1,3 +1,5 @@
+## encoding: UTF-8
+
 class GuestEntry < ActiveRecord::Base
 
   attr_readonly :id, :first_name

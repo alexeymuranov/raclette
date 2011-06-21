@@ -1,3 +1,5 @@
+## encoding: UTF-8
+
 class PersonalStatement < ActiveRecord::Base
   set_primary_key :person_id
 

@@ -1,3 +1,5 @@
+## encoding: UTF-8
+
 class Payment < ActiveRecord::Base
 
   attr_readonly :id, :payable_type, :date, :amount, :method

@@ -1,3 +1,5 @@
+## encoding: UTF-8
+
 class TicketBook < ActiveRecord::Base
 
   attr_readonly :id, :membership_type_id, :tickets_number

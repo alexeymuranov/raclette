@@ -1,3 +1,5 @@
+## encoding: UTF-8
+
 class EventCashier < ActiveRecord::Base
 
   attr_readonly :id, :name, :started_at

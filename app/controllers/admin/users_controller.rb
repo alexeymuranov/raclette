@@ -30,6 +30,9 @@ class Admin::UsersController < AdminController
   end
 
   def create  # FIXME? (password)
+  
+    params[:admin_user][:safe_ip_ids] ||= []
+
     params[:admin_user].delete(:email)\
         if params[:admin_user][:email].blank?
         
@@ -52,13 +55,7 @@ class Admin::UsersController < AdminController
   def update  # FIXME? (password)
     @user = Admin::User.find(params[:id])
     
-    if @user == current_user
-      params[:admin_user].delete(:account_deactivated)
-    else
-      # params.delete(:current_user_password)
-      # params[:admin_user].delete(:new_password)
-      # params[:admin_user].delete(:new_password_confirmation)
-    end
+    params[:admin_user][:safe_ip_ids] ||= []
 
     params[:admin_user].delete(:email)\
         if params[:admin_user][:email].blank?
@@ -70,6 +67,15 @@ class Admin::UsersController < AdminController
       params.delete(:current_user_password)
       params[:admin_user].delete(:new_password)
       params[:admin_user].delete(:new_password_confirmation)
+    end
+
+    if @user == current_user
+      params[:admin_user].delete(:account_deactivated)
+      params[:admin_user].delete(:admin)
+    else
+      # params.delete(:current_user_password)
+      # params[:admin_user].delete(:new_password)
+      # params[:admin_user].delete(:new_password_confirmation)
     end
 
     current_user_password = params[:current_user_password]
@@ -88,18 +94,6 @@ class Admin::UsersController < AdminController
       flash.now[:error] = t('admin.users.update.flash.wrong_password')
       @title = t('admin.users.edit.title', :username => @user.username)
       render 'edit'
-    end
-
-    if params[:admin_user][:known_ip_is_safe].nil? # if none is safe
-      @user.safe_ips.delete_all
-    else
-      Admin::KnownIP.all.each do |known_ip|
-        if params[:admin_user][:known_ip_is_safe][known_ip.id.to_s] # if safe
-          @user.safe_ips << known_ip unless @user.safe_ips.include?(known_ip)
-        else
-          @user.safe_ips.delete(known_ip)
-        end
-      end
     end
   end
 

@@ -1,3 +1,5 @@
+## encoding: UTF-8
+
 class Membership < ActiveRecord::Base
 
   attr_readonly :id, :membership_type_id, :activity_period_id, :initial_price

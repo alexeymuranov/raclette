@@ -307,6 +307,7 @@ en:
         header: "Listing users"
       show:
         title: "%{username}"
+        header: "User '%{username}'"
         captions:
           user_data: "User data"
           authorized_ips: "Fully authorized IP addresses"
@@ -358,6 +359,7 @@ en:
         header: "Known IP addresses"
       show:
         title: "%{ip}"
+        header: "IP address %{ip}"
         links:
           update: "Update the address IP"
       new:

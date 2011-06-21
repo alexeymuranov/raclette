@@ -1,4 +1,4 @@
-<!-- <p id="notice"><%#= notice %></p> -->
+<h1><%= t '.header', :ip => @known_ip.ip %></h1>
 
 <table style="width:auto;">
   <tr>
@@ -12,7 +12,9 @@
   </tr>
 </table>
 
+<hr/>
+
 <%= link_to edit_icon(2)+t('.links.update'),
             edit_admin_known_ip_path(@known_ip),
-            :class => 'modify' %> |
+            :class => 'modify' %>
 <%= link_to list_all_icon(2)+t('admin.known_i_ps.links.show_all'), admin_known_ips_path %>

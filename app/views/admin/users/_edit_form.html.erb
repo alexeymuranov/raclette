@@ -16,8 +16,7 @@
 
   <%= render 'common_form_fields', :f => f %>
 
-  <fieldset>
-    <legend><%= t 'admin.users.edit.captions.change_password' %></legend>
+  <%= field_set_tag t('admin.users.edit.captions.change_password') do %>
     <table class="fields">
       <tr class="field">
         <td><%= f.label :new_password, t('field_labels.new_password') %></td>
@@ -33,10 +32,9 @@
         <td><%= password_field_tag :current_user_password, nil, :size => 30 %></td>
       </tr>
     </table>
-  </fieldset>
+  <% end %>
 
-  <fieldset>
-    <legend><%= t 'admin.users.edit.captions.authorized_ips' %></legend>
+  <%= field_set_tag t('admin.users.edit.captions.authorized_ips') do %>
     <table class="fields">
       <tr>
         <th>
@@ -52,39 +50,38 @@
       <% @safe_ips.each do |known_ip| %>
       <tr class="field">
         <td>
-          <%= label_tag "admin_user[known_ip_is_safe][#{known_ip.id}]", known_ip.ip %>
+          <%= label_tag "admin_user_safe_ip_ids_#{known_ip.id}", known_ip.ip %>
         </td>
         <td>
           <%= known_ip.description %>
         </td>
         <td style='text-align:center;'>
-          <%= check_box_tag "admin_user[known_ip_is_safe][#{known_ip.id}]", "1", true %>
+          <%= check_box_tag "admin_user[safe_ip_ids][]", known_ip.id, true, :id => "admin_user_safe_ip_ids_#{known_ip.id}" %>
         </td>
       </tr>
       <% end %>
       <% @other_ips.each do |known_ip| %>
       <tr class="field">
         <td>
-          <%= label_tag "admin_user[known_ip_is_safe][#{known_ip.id}]", known_ip.ip %>
+          <%= label_tag "admin_user_safe_ip_ids_#{known_ip.id}", known_ip.ip %>
         </td>
         <td>
           <%= known_ip.description %>
         </td>
         <td style='text-align:center;'>
-          <%= check_box_tag "admin_user[known_ip_is_safe][#{known_ip.id}]", "0", false %>
+          <%= check_box_tag "admin_user[safe_ip_ids][]", known_ip.id, false, :id => "admin_user_safe_ip_ids_#{known_ip.id}" %>
         </td>
       </tr>
       <% end %>
     </table>  
-  </fieldset>
+  <% end %>
 
-  <fieldset>
-    <legend><%= t 'admin.users.edit.captions.other' %></legend>
+  <%= field_set_tag t('admin.users.edit.captions.other') do %>
     <div class="field">
       <%= f.label :comments, t('field_labels.comments'), :style => "vertical-align:top;" %>
       <%= f.text_area :comments %>
     </div>
-  </fieldset>
+  <% end %>
   
   <div class="actions" style="text-align:center;">
     <%= f.submit t('buttons.save') %>

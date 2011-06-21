@@ -1,3 +1,5 @@
+## encoding: UTF-8
+
 class TicketsPurchase < ActiveRecord::Base
 
   attr_readonly :id, :member_id, :tickets_number, :purchase_date

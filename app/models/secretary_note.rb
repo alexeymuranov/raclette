@@ -1,3 +1,5 @@
+## encoding: UTF-8
+
 class SecretaryNote < ActiveRecord::Base
 
   attr_readonly :id, :note_type, :something_type, :something_id, :created_on

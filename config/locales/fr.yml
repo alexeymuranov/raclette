@@ -267,12 +267,13 @@ fr:
         header: "Liste des utilisateurs"
       show:
         title: "%{username}"
+        header: "Utilisateur « %{username} »"
         captions:
           user_data: "Données de l'utilisateur"
           authorized_ips: "Adresses IP pleinement autorisées"
           other: "Divers"
         links:
-          update: "Mettre cette utilisateur à jour"
+          update: "Mettre cet utilisateur à jour"
       new:
         title: "Nouveau utilisateur"
         header: "Nouveau utilisateur"
@@ -318,6 +319,7 @@ fr:
         header: "Adresses IP connues"
       show:
         title: "%{ip}"
+        header: "Adresse IP %{ip}"
         links:
           update: "Mettre cette adresse IP à jour"
       new:

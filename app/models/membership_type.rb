@@ -1,3 +1,5 @@
+## encoding: UTF-8
+
 class MembershipType < ActiveRecord::Base
 
   attr_readonly :id, :active, :reduced, :unlimited, :duration_months

@@ -1,3 +1,5 @@
+## encoding: UTF-8
+
 class Event < ActiveRecord::Base
 
   attr_readonly :id, :event_type, :lesson, :weekly

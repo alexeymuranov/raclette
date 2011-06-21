@@ -1,3 +1,5 @@
+## encoding: UTF-8
+
 require 'digest'
 
 class Admin::User < ActiveRecord::Base
@@ -7,10 +9,6 @@ class Admin::User < ActiveRecord::Base
   attr_accessor :password, :new_password
 
   attr_accessible( # :id,
-                   :password,                   # virtual attribute
-                   :password_confirmation,      # virtual attribute
-                   :new_password,               # virtual attribute
-                   :new_password_confirmation,  # virtual attribute
                    :username,
                    :full_name,
                    :a_person,
@@ -24,11 +22,16 @@ class Admin::User < ActiveRecord::Base
                    # :password_salt,
                    # :last_signed_in_at,
                    # :last_signed_in_from_ip,
-                   :comments
+                   :comments,
+                   :safe_ip_ids,                # associatin attribute
+                   :password,                   # virtual attribute
+                   :password_confirmation,      # virtual attribute
+                   :new_password,               # virtual attribute
+                   :new_password_confirmation   # virtual attribute
                  )  ## all attributes listed here
 
   # Associations:
-  has_many :safe_user_ips, :class_name => 'SafeUserIP',
+  has_many :safe_user_ips, :class_name => :SafeUserIP,
                            :dependent  => :destroy,
                            :inverse_of => :user
 
@@ -74,6 +77,7 @@ class Admin::User < ActiveRecord::Base
   before_update :hash_new_password_with_salt_unless_nil
 
   # Public methods:
+
   def has_password?(submitted_password)
     (password_or_password_hash == submitted_password) ||
         (password_or_password_hash == hash_with_salt(submitted_password))

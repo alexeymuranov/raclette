@@ -209,7 +209,8 @@ section {
     padding: 5px 5px;
     display: inline-block;
     color: #006600;
-    text-decoration: none; }
+    text-decoration: none;
+    # border: 1px dashed #006600; }
     section a:visited {
       color: #006600; }
     section a:hover {
@@ -218,14 +219,15 @@ section {
     section a img {
       margin: 0px; }
   section a.modify {
-    color: #660000; }
+    color: #660000;
+    # border: 1px dashed #660000; }
     section a.modify:visited {
       color: #660000; }
     section a.modify:hover {
       color: white;
       background-color: #660000; }
   section h3, section h4, section h5, section h6, section p {
-    margin: 0; }
+    margin-bottom: 0; }
 
 /* Styles for validation errors, generated automatically by scaffolding */
 pre {

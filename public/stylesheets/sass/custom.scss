@@ -287,7 +287,7 @@ section {
 
   div.links_group {
     @include rounded-corners(5px);
-    border:dotted 1px;
+    border: dotted 1px;
   }
 
   a {
@@ -296,6 +296,7 @@ section {
     display: inline-block;
     color: $view-link-color;
     text-decoration: none;
+    # border: 1px dashed $view-link-color;
 
     &:visited {
       color: $view-link-color;
@@ -313,6 +314,7 @@ section {
   
   a.modify {
     color: $modify-link-color;
+    # border: 1px dashed $modify-link-color;
 
     &:visited {
       color: $modify-link-color;
@@ -325,7 +327,7 @@ section {
   }
   
   h3, h4, h5, h6, p {
-    margin:0;
+    margin-bottom: 0;
   }
 }
 

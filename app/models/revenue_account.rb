@@ -1,3 +1,5 @@
+## encoding: UTF-8
+
 class RevenueAccount < ActiveRecord::Base
 
   attr_readonly :id, :opened_on

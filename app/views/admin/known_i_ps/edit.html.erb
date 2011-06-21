@@ -2,5 +2,7 @@
 
 <%= render 'form' %>
 
-<%= link_to show_icon(2)+t('.links.show'), @known_ip %> |
+<hr/>
+
+<%= link_to show_icon(2)+t('.links.show'), @known_ip %>
 <%= link_to list_all_icon(2)+t('admin.known_i_ps.links.show_all'), admin_known_ips_path %>

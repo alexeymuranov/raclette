@@ -11,7 +11,7 @@
     </div>
   <% end %>
 
-  <fieldset>
+  <%= field_set_tag do %>
     <table class="fields">
       <% if @known_ip.new_record? %>
         <tr class="field">
@@ -29,7 +29,7 @@
         <td><%= f.text_field :description %></td>
       </tr>
     </table>
-  </fieldset>
+  <% end %>
 
   <div class="actions" style="text-align:center;">
     <%= f.submit t('buttons.save') %>
