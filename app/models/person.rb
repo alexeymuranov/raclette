@@ -1,5 +1,25 @@
 ## encoding: UTF-8
 
+# == Schema Information
+# Schema version: 20110618120707
+#
+# Table name: people
+#
+#  id                 :integer         not null, primary key
+#  last_name          :string(32)      not null
+#  first_name         :string(32)      not null
+#  name_title         :string(16)
+#  nickname_or_other  :string(32)      default(""), not null
+#  birthyear          :integer(2)
+#  email              :string(255)
+#  mobile_phone       :string(32)
+#  home_phone         :string(32)
+#  work_phone         :string(32)
+#  primary_address_id :integer
+#  created_at         :datetime
+#  updated_at         :datetime
+#
+
 class Person < ActiveRecord::Base
 
   attr_readonly :id, :last_name

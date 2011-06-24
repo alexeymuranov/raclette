@@ -1,5 +1,18 @@
 ## encoding: UTF-8
 
+# == Schema Information
+# Schema version: 20110618120707
+#
+# Table name: ticket_books
+#
+#  id                 :integer         not null, primary key
+#  membership_type_id :integer         not null
+#  tickets_number     :integer(2)      not null
+#  price              :decimal(4, 1)   not null
+#  created_at         :datetime
+#  updated_at         :datetime
+#
+
 class TicketBook < ActiveRecord::Base
 
   attr_readonly :id, :membership_type_id, :tickets_number

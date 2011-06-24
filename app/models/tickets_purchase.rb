@@ -1,5 +1,19 @@
 ## encoding: UTF-8
 
+# == Schema Information
+# Schema version: 20110618120707
+#
+# Table name: tickets_purchases
+#
+#  id             :integer         not null, primary key
+#  member_id      :integer         not null
+#  tickets_number :integer(2)      not null
+#  ticket_book_id :integer
+#  purchase_date  :date            not null
+#  created_at     :datetime
+#  updated_at     :datetime
+#
+
 class TicketsPurchase < ActiveRecord::Base
 
   attr_readonly :id, :member_id, :tickets_number, :purchase_date

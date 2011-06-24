@@ -1,5 +1,23 @@
 ## encoding: UTF-8
 
+# == Schema Information
+# Schema version: 20110618120707
+#
+# Table name: application_journal
+#
+#  id             :integer         not null, primary key
+#  action         :string(64)      not null
+#  username       :string(32)      not null
+#  user_id        :integer
+#  ip             :string(15)      not null
+#  something_type :string(32)      not null
+#  something_id   :integer
+#  details        :string(255)
+#  generated_at   :datetime        not null
+#  created_at     :datetime
+#  updated_at     :datetime
+#
+
 class ApplicationJournalRecord < ActiveRecord::Base
   set_table_name :application_journal
 

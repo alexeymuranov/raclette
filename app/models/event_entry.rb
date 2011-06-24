@@ -1,5 +1,21 @@
 ## encoding: UTF-8
 
+# == Schema Information
+# Schema version: 20110618120707
+#
+# Table name: event_entries
+#
+#  id                     :integer         not null, primary key
+#  participant_entry_type :string(32)      not null
+#  participant_entry_id   :integer
+#  event_title            :string(64)      not null
+#  date                   :date            not null
+#  event_id               :integer
+#  person_id              :integer
+#  created_at             :datetime
+#  updated_at             :datetime
+#
+
 class EventEntry < ActiveRecord::Base
 
   attr_readonly :id, :participant_entry_type, :event_title, :date

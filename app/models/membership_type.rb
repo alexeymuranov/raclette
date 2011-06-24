@@ -1,5 +1,21 @@
 ## encoding: UTF-8
 
+# == Schema Information
+# Schema version: 20110618120707
+#
+# Table name: membership_types
+#
+#  id              :integer         not null, primary key
+#  unique_title    :string(32)      not null
+#  active          :boolean         not null
+#  reduced         :boolean         not null
+#  unlimited       :boolean         not null
+#  duration_months :integer(1)      default(12), not null
+#  description     :string(255)
+#  created_at      :datetime
+#  updated_at      :datetime
+#
+
 class MembershipType < ActiveRecord::Base
 
   attr_readonly :id, :active, :reduced, :unlimited, :duration_months

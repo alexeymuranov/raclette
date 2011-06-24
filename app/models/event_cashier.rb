@@ -1,5 +1,20 @@
 ## encoding: UTF-8
 
+# == Schema Information
+# Schema version: 20110618120707
+#
+# Table name: event_cashiers
+#
+#  id          :integer         not null, primary key
+#  event_id    :integer
+#  name        :string(64)      not null
+#  person_id   :integer
+#  started_at  :datetime        not null
+#  finished_at :datetime
+#  created_at  :datetime
+#  updated_at  :datetime
+#
+
 class EventCashier < ActiveRecord::Base
 
   attr_readonly :id, :name, :started_at
