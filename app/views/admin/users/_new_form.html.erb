@@ -16,22 +16,8 @@
 
   <%= render 'common_form_fields', :f => f %>
 
-  <%= field_set_tag t('admin.users.new.captions.password') do %>
-    <table class="fields">
-      <tr class="field">
-        <td><%= f.label :password, t('field_labels.password') %></td>
-        <td><%= f.password_field :password %></td>
-      </tr>
-      <tr class="field">
-        <td><%= f.label :password_confirmation,
-                        t('field_labels.password_confirmation') %></td>
-        <td><%= f.password_field :password_confirmation %></td>
-      </tr>
-    </table>
-  <% end %>
-
   <%= field_set_tag t('admin.users.new.captions.authorized_ips') do %>
-    <table class="fields">
+    <table class="form_fields">
       <tr>
         <th>
           <%= t 'field_labels.ip' %>
@@ -59,11 +45,29 @@
     </table>
   <% end %>
 
+  <%= field_set_tag t('admin.users.new.captions.password') do %>
+    <dl class="form_fields">
+      <div class="field">
+        <dt><%= f.label :password, t('field_labels.password') %></dt>
+        <dd><%= f.password_field :password %></dd>
+      </div>
+      <div class="field">
+        <dt><%= f.label :password_confirmation,
+                        t('field_labels.password_confirmation') %></dt>
+        <dd><%= f.password_field :password_confirmation %></dd>
+      </div>
+    </dl>
+  <% end %>
+
   <%= field_set_tag t('admin.users.new.captions.other') do %>
-    <div class="field">
-      <%= f.label :comments, t('field_labels.comments'), :style => "vertical-align:top;" %>
-      <%= f.text_area :comments %>
-    </div>
+    <dl class="form_fields">
+      <div>
+        <dt style="vertical-align:top;">
+          <%= f.label :comments, t('field_labels.comments') %>
+        </dt>
+        <dd><%= f.text_area :comments %></dd>
+      </div>
+    </dl>
   <% end %>
 
   <div class="actions" style="text-align:center;">

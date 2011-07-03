@@ -1,8 +1,16 @@
+<% content_for :side_menu_list_items do %>
+  <li>
+    <%= link_to t('admin.safe_user_i_ps.links.show_all'), admin_safe_user_ips_path,
+                :title => t('actions.read'),
+                :class => 'display' %>
+  </li>
+<% end %>
+
 <h1><%= t '.header' %></h1>
 
 <%= render 'form' %>
 
-<hr/>
-
-<%= link_to show_icon(2)+t('admin.safe_user_i_ps.links.show_all'), admin_safe_user_ips_path,
-            :title => t('actions.read') %>
+<footer>
+  <%= link_to show_icon(2)+' '+t('admin.safe_user_i_ps.links.show_all'), admin_safe_user_ips_path,
+              :title => t('actions.read') %>
+</footer>

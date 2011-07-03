@@ -1,6 +1,18 @@
+<% content_for :side_menu_list_items do %>
+  <li>
+    <%= link_to t('admin.safe_user_i_ps.links.update_all'), edit_all_admin_safe_user_ips_path,
+                :title  => t('actions.update'),
+                :class => 'modify' %>
+  </li>
+<% end %>
+
 <h1><%= t '.header' %></h1>
 
-<table style="width:auto;">
+<table class="grid" style="width:auto;">
+  <col />
+  <% @known_ips.size.times do %>
+    <col />
+  <% end %>    
   <tr>
     <th></th>
     <% @known_ips.each do |known_ip| %>
@@ -20,8 +32,8 @@
   <% end %>
 </table>
 
-<hr/>
-
-<%= link_to edit_icon(2)+t('admin.safe_user_i_ps.links.update_all'), edit_all_admin_safe_user_ips_path,
-            :title  => t('actions.update'),
-            :class => 'modify' %>
+<footer>
+  <%= link_to edit_icon(2)+' '+t('admin.safe_user_i_ps.links.update_all'), edit_all_admin_safe_user_ips_path,
+              :title  => t('actions.update'),
+              :class => 'modify' %>
+</footer>

@@ -1,7 +1,14 @@
+<% content_for :side_menu_list_items do %>
+  <li>
+    <%= link_to t('admin.known_i_ps.links.show_all'), admin_known_ips_path,
+                :class => 'display' %>
+  </li>
+<% end %>
+
 <h1><%= t '.header' %></h1>
 
 <%= render 'form' %>
 
-<hr/>
-
-<%= link_to list_all_icon(2)+t('admin.known_i_ps.links.show_all'), admin_known_ips_path %>
+<footer>
+  <%= link_to list_all_icon(2)+' '+t('admin.known_i_ps.links.show_all'), admin_known_ips_path %>
+</footer>

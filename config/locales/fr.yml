@@ -197,6 +197,9 @@ fr:
     all_users: "Utilisateurs"
     all_known_ips: "Adresses IP connues"
     all_safe_user_ips: "Adresses IP pleinement autorisées"
+    data: "Données"
+    maintenance: "Entretien"
+    tools: "Outils"
 
   field_labels:
     username: "Nom d'utilisateur :"

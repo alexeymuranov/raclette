@@ -237,6 +237,9 @@ en:
     all_users: "Users"
     all_known_ips: "Known IP addresses"
     all_safe_user_ips: "Fully authorized IP addresses"
+    data: "Data"
+    maintenance: "Maintenance"
+    tools: "Tools"
 
   field_labels:
     username: "Username:"

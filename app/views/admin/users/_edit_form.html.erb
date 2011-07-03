@@ -16,26 +16,8 @@
 
   <%= render 'common_form_fields', :f => f %>
 
-  <%= field_set_tag t('admin.users.edit.captions.change_password') do %>
-    <table class="fields">
-      <tr class="field">
-        <td><%= f.label :new_password, t('field_labels.new_password') %></td>
-        <td><%= f.password_field :new_password %></td>
-      </tr>
-      <tr class="field">
-        <td><%= f.label :new_password_confirmation,
-                        t('field_labels.new_password_confirmation') %></td>
-        <td><%= f.password_field :new_password_confirmation %></td>
-      </tr>
-      <tr class="field">
-        <td><%= label_tag :current_user_password, t('field_labels.your_password') %></td>
-        <td><%= password_field_tag :current_user_password, nil, :size => 30 %></td>
-      </tr>
-    </table>
-  <% end %>
-
   <%= field_set_tag t('admin.users.edit.captions.authorized_ips') do %>
-    <table class="fields">
+    <table class="form_fields">
       <tr>
         <th>
           <%= t 'field_labels.ip' %>
@@ -76,11 +58,33 @@
     </table>  
   <% end %>
 
+  <%= field_set_tag t('admin.users.edit.captions.change_password') do %>
+    <dl class="form_fields">
+      <div class="field">
+        <dt><%= f.label :new_password, t('field_labels.new_password') %></dt>
+        <dd><%= f.password_field :new_password %></dd>
+      </div>
+      <div class="field">
+        <dt><%= f.label :new_password_confirmation,
+                        t('field_labels.new_password_confirmation') %></dt>
+        <dd><%= f.password_field :new_password_confirmation %></dd>
+      </div>
+      <div class="field">
+        <dt><%= label_tag :current_user_password, t('field_labels.your_password') %></dt>
+        <dd><%= password_field_tag :current_user_password, nil, :size => 30 %></dd>
+      </div>
+    </dl>
+  <% end %>
+
   <%= field_set_tag t('admin.users.edit.captions.other') do %>
-    <div class="field">
-      <%= f.label :comments, t('field_labels.comments'), :style => "vertical-align:top;" %>
-      <%= f.text_area :comments %>
-    </div>
+    <dl class="form_fields">
+      <div>
+        <dt style="vertical-align:top;">
+          <%= f.label :comments, t('field_labels.comments') %>
+        </dt>
+        <dd><%= f.text_area :comments %></dd>
+      </div>
+    </dl>
   <% end %>
   
   <div class="actions" style="text-align:center;">

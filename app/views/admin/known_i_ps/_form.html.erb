@@ -12,23 +12,23 @@
   <% end %>
 
   <%= field_set_tag do %>
-    <table class="fields">
+    <dl class="form_fields">
       <% if @known_ip.new_record? %>
-        <tr class="field">
-          <td><%= f.label :ip, t('field_labels.ip') %></td>
-          <td><%= f.text_field :ip %></td>
-        </tr>
+        <div class="field">
+          <dt><%= f.label :ip, t('field_labels.ip') %></dt>
+          <dd><%= f.text_field :ip, :required => :required %>*</dd>
+        </div>
       <% else %>
-        <tr class="field">
-          <td><b><%= t 'field_labels.ip' %></b></td>
-          <td><%= @known_ip.ip %></td>
-        </tr>
+        <div class="field">
+          <dt><b><%= t 'field_labels.ip' %></b></dt>
+          <dd><%= @known_ip.ip %></dd>
+        </div>
       <% end %>
-      <tr class="field">
-        <td><%= f.label :description, t('field_labels.description') %></td>
-        <td><%= f.text_field :description %></td>
-      </tr>
-    </table>
+      <div class="field">
+        <dt><%= f.label :description, t('field_labels.description') %></dt>
+        <dd><%= f.text_field :description %></dd>
+      </div>
+    </dl>
   <% end %>
 
   <div class="actions" style="text-align:center;">

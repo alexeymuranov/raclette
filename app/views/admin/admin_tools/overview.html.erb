@@ -1,42 +1,79 @@
+<% content_for :side_menu_list_items do %>
+  <li>
+    <%= link_to t('headers.all_users'), admin_users_path,
+                :class => 'display' %>
+  </li>
+  <li>
+    <%= link_to t('headers.all_known_ips'), admin_known_ips_path,
+                :class => 'display' %>
+  </li>
+  <li>
+    <%= link_to t('headers.all_safe_user_ips'), admin_safe_user_ips_path,
+                :class => 'display' %>
+  </li>
+<% end %>
+
 <h1><%= t 'application_layout.navigation_links.admin_tools' %></h1>
 
-<div class="links_group">
-<h3><%= link_to t('headers.all_users'), admin_users_path %></h3>
-<p>
-  <% @users.each do |user| %>
-    <% unless user == @users.last %>
-      <%= link_to "#{user.username}", user %>,
-    <% else %>
-      <%= link_to "#{user.username}", user %>.
-    <% end %>
-  <% end %>
-</p>
-<%= link_to t('admin.users.links.new'), new_admin_user_path,
-            :title  => t('actions.create'),
-            :class => 'modify' %>
-</div>
+<section>
 
-<br/>
+  <h2><%= t 'headers.data' %></h2>
 
-<div class="links_group">
-<h3><%= link_to t('headers.all_known_ips'), admin_known_ips_path %></h3>
-<p>
-  <% @known_ips.each do |known_ip| %>
-    <% note = known_ip.description.blank? ? "" : " (#{known_ip.description})" %>
-    <% unless known_ip == @known_ips.last %>
-      <%= link_to "#{known_ip.ip}#{note}", known_ip %>,
-    <% else %>
-      <%= link_to "#{known_ip.ip}#{note}", known_ip %>.
-    <% end %>
-  <% end %>
-</p>
-<%= link_to t('admin.known_i_ps.links.new'), new_admin_known_ip_path,
-            :title  => t('actions.create'),
-            :class => 'modify' %>
-</div>
+  <section>
 
-<br/>
+    <h3><%= link_to t('headers.all_users'), admin_users_path %></h3>
 
-<div class="links_group">
-<h3><%= link_to t('headers.all_safe_user_ips'), admin_safe_user_ips_path %></h3>
-</div>
+    <p>
+      <% @users.each do |user| %>
+        <% unless user == @users.last %>
+          <%= link_to "#{user.username}", user %>,
+        <% else %>
+          <%= link_to "#{user.username}", user %>.
+        <% end %>
+      <% end %>
+    </p>
+    
+    <footer>
+      <%= link_to t('admin.users.links.new'), new_admin_user_path,
+                  :title  => t('actions.create'),
+                  :class => 'modify' %>
+    </footer>
+
+  </section>
+
+  <section>
+
+    <h3><%= link_to t('headers.all_known_ips'), admin_known_ips_path %></h3>
+
+    <p>
+      <% @known_ips.each do |known_ip| %>
+        <% note = known_ip.description.blank? ? "" : " (#{known_ip.description})" %>
+        <% unless known_ip == @known_ips.last %>
+          <%= link_to "#{known_ip.ip}#{note}", known_ip %>,
+        <% else %>
+          <%= link_to "#{known_ip.ip}#{note}", known_ip %>.
+        <% end %>
+      <% end %>
+    </p>
+
+    <footer>
+      <%= link_to t('admin.known_i_ps.links.new'), new_admin_known_ip_path,
+                  :title  => t('actions.create'),
+                  :class => 'modify' %>
+    </footer>
+
+  </section>
+
+  <section>
+
+    <h3><%= link_to t('headers.all_safe_user_ips'), admin_safe_user_ips_path %></h3>
+
+  </section>
+
+</section>
+
+<section>
+
+  <h2><%= t 'headers.tools' %></h2>
+
+</section>

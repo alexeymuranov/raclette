@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="<%= I18n.locale %>">
   <head>
     <meta charset="utf-8">
     <title><%= title %></title>
@@ -12,6 +12,7 @@
     <div class="container">
       <%= render 'layouts/header' %>
       <section>
+        <%= render 'layouts/side_menu' %>
         <% flash.each do |name, msg| %>
           <%= content_tag(:div, msg, :class => "flash #{name}") %>
         <% end %>

@@ -1,8 +1,16 @@
+<% content_for :side_menu_list_items do %>
+  <li>
+    <%= link_to t('admin.users.links.show_all'), admin_users_path,
+                :class => 'display' %>
+  </li>
+<% end %>
+
 <h1><%= t '.header', :username => @user.username %></h1>
 
 <%= render 'edit_form' %>
 
-<hr/>
+<footer>
+  <%= link_to show_icon(2)+' '+t('.links.show'), @user %>
+  <%= link_to list_all_icon(2)+' '+t('admin.users.links.show_all'), admin_users_path %>
+</footer>
 
-<%= link_to show_icon(2)+t('.links.show'), @user %>
-<%= link_to list_all_icon(2)+t('admin.users.links.show_all'), admin_users_path %>

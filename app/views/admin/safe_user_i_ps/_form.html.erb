@@ -1,6 +1,6 @@
 <%= form_tag "/admin/safe_user_ips", :method=> :put do |f| %>
   <%= field_set_tag do %>
-    <table class="fields">
+    <table class="grid form_fields">
       <tr>
         <th></th>
         <% @known_ips.each do |known_ip| %>

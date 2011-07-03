@@ -67,6 +67,8 @@ class Person < ActiveRecord::Base
   belongs_to :primary_address, :class_name => :Address,
                                :inverse_of => :people
 
+  accepts_nested_attributes_for :primary_address, :statement
+
   # Validations:
   validates :last_name, :first_name,
                 :presence => true

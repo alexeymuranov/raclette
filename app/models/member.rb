@@ -86,6 +86,8 @@ class Member < ActiveRecord::Base
                  :class_name  => :Member,
                  :inverse_of  => :tickets_lender
 
+  accepts_nested_attributes_for :person
+
   # Validations:
   validates :person_id, :been_member_by,
             :payed_tickets_count, :free_tickets_count,

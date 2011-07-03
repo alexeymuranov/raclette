@@ -1,35 +1,35 @@
-<div style="text-align:center;">
-<%= form_tag sessions_path do %>
-  <table class="form" style="width:auto;margin:auto;">
-    <caption style="text-align:center;" ><%= t '.log_in' %></caption>
-    <tr>
-      <td>
+<%= form_tag sessions_path, :class => "login_form" do %>
+  <dl class="form_fields">
+    <div style="display:table-caption;text-align:center;"><%= t '.log_in' %></div>
+    <div>
+      <dt>
         <%= label_tag :username, t('sessions.labels.username') %>
-      </td>
-      <td>
+      </dt>
+      <dd>
         <%= text_field_tag :username %>
-      </td>
-    </tr>
-    <tr>
-      <td>
+      </dd>
+    </div>
+    <div>
+      <dt>
         <%= label_tag :password, t('sessions.labels.password') %>
-      </td>
-      <td>
+      </dt>
+      <dd>
         <%= password_field_tag :password %>
-      </td>
-    </tr>
-    <tr>
-      <td>
+      </dd>
+    </div>
+    <div>
+      <dt>
         <%= t 'sessions.labels.your_ip_address' %>
-      </td>
-      <td style="text-align:center;" >
+      </dt>
+      <dd style="text-align:center;" >
         <%= @client_ip %>
-      </td>
-    </tr>
-  </table>
+      </dd>
+    </div>
+  </dl>
   <div class="actions" style="text-align:center;">
     <%= submit_tag t('.log_in') %>
   </div>
 <% end %>
+<div style="text-align:center;">
 <%= logo(2) %>
 </div>

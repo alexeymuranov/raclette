@@ -1,19 +1,37 @@
 $body-bg-color: #009;
 $section-bg-color: #fff;
+$alt-section-bg-color: #eef;
 $common-navigation-link-color: #00c;
 $common-navigation-link-color-bright: #00f;
 $logout-navigation-link-color: #063;
 $logout-navigation-link-bg-color: #ff0;
 $disabled-navigation-link-color: #ccc;
-$view-link-color:#060;
-$modify-link-color:#600;
-$even-table-row-bg-color:#eef;
+$view-link-color: #060;
+$modify-link-color: #600;
+$odd-table-row-bg-color: $section-bg-color;
+$even-table-row-bg-color: $alt-section-bg-color;
+$table-border-color: darken($alt-section-bg-color, 10%);
+$focus-glow-color: #f00;
+$focus-background-color: #ffe;
+$login_form-focus-glow-color: #00f;
 
-@mixin rounded-corners($radius) {  
+@mixin rounded-border($radius) {  
   border-radius: $radius;  
   -moz-border-radius: $radius;  
   -webkit-border-radius: $radius;  
-}  
+}
+
+@mixin rounded-outline($radius) {  
+  outline-radius: $radius;  
+  -moz-outline-radius: $radius;  
+  -webkit-outline-radius: $radius;  
+}
+
+@mixin box-shadow($x, $y, $blur, $spread, $color) {
+	box-shadow: $x $y $blur $spread $color;
+	-webkit-box-shadow: $x $y $blur $spread $color;
+	-moz-box-shadow: $x $y $blur $spread $color;
+}
 
 body {
   background-color: $body-bg-color;
@@ -23,6 +41,19 @@ body {
   width: 960px;
   margin-left:160px;
   padding:0px;
+}
+
+img {
+  vertical-align: middle;
+}
+
+input:focus, textarea:focus {
+  @include box-shadow(0, 0, 3px, 0, $focus-glow-color);
+  background-color: $focus-background-color;
+}
+
+form.login_form input:focus {
+  @include box-shadow(0, 0, 3px, 0, $login_form-focus-glow-color);
 }
 
 /* Navigation */
@@ -43,21 +74,15 @@ nav {
       margin: 0;
       padding: 0;
       
-      a {
+      a, a:visited {
         display: inline-block;
-        color: $common-navigation-link-color;
         font-weight: bold;
         text-decoration: none;
         padding: 5px;
-
-        &:visited {
-          color: $common-navigation-link-color;
-        }
-
-        &:hover {
-          color: $common-navigation-link-color-bright;
-          text-decoration: underline;
-        }
+      }
+      
+      ul {
+        display: none;
       }
     }
     
@@ -67,29 +92,116 @@ nav {
 
 /* Header */
 
-header {
+body > div.container > header {
   font-size: 120%;
   text-align: left;
   margin-top: 5px;
   margin-left: auto;
   margin-right: auto;
 
+  /* Logo box and menu */
+
+  div#main_logo {
+    position: fixed;
+    top: 5px;
+    left: 5px;
+    z-index: 1;
+  }
+
+  div#main_logo div#logo_box {
+    @include rounded-border(10px);
+    display: inline-block;
+    padding: 10px;
+    opacity: 0.75;
+
+    img {
+      vertical-align: middle;
+    }
+
+    &:hover {
+      opacity: 1;
+    }
+  }
+
+  div#main_logo div#logo_menu {
+    display: none;
+    width: 150px;
+  }
+
+  div#main_logo:hover div#logo_menu {
+    @include box-shadow(0, 0, 5px, 0, $body-bg-color);
+    
+    margin-top: 5px;
+    display: block;
+    opacity: 0.75;
+
+    &:hover {
+      opacity: 1;
+    }
+  }
+
+  div#main_logo div#logo_menu nav {
+    @include rounded-border(0);
+    margin: 0;
+    padding: 0;
+    font-weight: normal;
+    font-size: 80%;
+
+    ul {
+      margin: 0;
+      padding: 0;
+
+      li {
+        display: block;
+
+        a, a:visited {
+          margin: 0;
+          padding: 5px;
+          display: block;
+          font-weight: normal;
+        }
+      }
+
+      li.logout_item {
+        float: none;
+        
+        a.logout_button, a.logout_button:visited {
+          @include rounded-border(0);
+          margin: 0;
+          padding: 5px;
+          display: block;
+        }
+      }
+
+      li.separator {
+        display: none;
+      }
+
+      li.disabled {
+        display: none;
+      }
+    }
+  }
+
   nav {
-    @include rounded-corners(10px);
+    @include rounded-border(10px);
 
     ul {
       margin-left: 5px;
       margin-right: 0;
       padding: 0;
 
-      li a {
-        display: inline-block;
-        text-decoration: none;
-
-        &:hover {
-          color: $section-bg-color;
-          background-color: $common-navigation-link-color;
+      li {
+        a, a:visited {
+          display: inline-block;
+          color: $common-navigation-link-color;
           text-decoration: none;
+
+          &:hover {
+            color: $section-bg-color;
+            background-color: $common-navigation-link-color;
+            text-decoration: none;
+          }
         }
       }
 
@@ -97,24 +209,22 @@ header {
         display: inline;
         float: right;
 
-        a.logout_button {
-          @include rounded-corners(10px);
+        a.logout_button, a.logout_button:visited {
+          @include rounded-border(10px);
           margin: 0 5px;
           padding: 5px 10px;
           color: $logout-navigation-link-color;
           background-color: $logout-navigation-link-bg-color;
           text-decoration: none;
 
-          &:visited {
-            color: $logout-navigation-link-color;
-            background-color: $logout-navigation-link-bg-color;
-            text-decoration: none;
-          }
-
           &:hover {
             color: $logout-navigation-link-bg-color;
             background-color: $logout-navigation-link-color;
             text-decoration: none;
+          }
+
+          &:active {
+            background-color: lighten($logout-navigation-link-color, 10%);
           }
         }
       }      
@@ -135,86 +245,9 @@ header {
   }
 }
 
-/* Logo box and menu */
-
-div#main_logo {
-  position: fixed;
-  top:  5px;
-  left: 5px;
-}
-
-div#main_logo div#logo_box {
-  @include rounded-corners(10px);
-  display: inline-block;
-  padding: 10px;
-  opacity:0.75;
-
-  &:hover {
-    opacity:1;
-  }
-}
-
-div#main_logo div#logo_menu {
-  display: none;
-  width: 150px;
-}
-
-div#main_logo:hover div#logo_menu {
-  margin-top: 5px;
-  display: block;
-  opacity:0.75;
-
-  &:hover {
-    opacity:1;
-  }
-}
-
-div#main_logo div#logo_menu nav {
-  @include rounded-corners(0);
-  margin: 0;
-  padding: 0;
-  font-weight: normal;
-  font-size: 80%;
-
-  ul {
-    margin: 0;
-    padding: 0;
-
-    li {
-      display: block;
-
-    a {
-      margin: 0;
-      padding: 5px;
-      display: block;
-      font-weight: normal;
-      }
-    }
-
-    a.logout_button {
-      @include rounded-corners(0);
-      margin: 0;
-      padding: 5px;
-      display: block;
-    }
-
-    li.logout_item {
-      float: none;
-    }
-
-    li.separator {
-      display: none;
-    }
-
-    li.disabled {
-      display: none;
-    }
-  }
-}
-
 /* Footer */
 
-footer {
+body > div.container > footer {
   font-size: 120%;
   text-align: center;
   margin-top: 5px;
@@ -222,61 +255,191 @@ footer {
   margin-right: auto;
   
   nav {
-    @include rounded-corners(10px);
+    @include rounded-border(10px);
 
     ul {
       padding:0;
+
+      a, a:visited {
+        color: $common-navigation-link-color;
+
+        &:hover {
+          color: $common-navigation-link-color-bright;
+          text-decoration: underline;
+        }
+      }
     }
   }  
 }
 
 /* Section */
 
-section {
-  @include rounded-corners(10px);
+body > div.container > section {
+  @include rounded-border(10px);
   margin-top: 5px;
+  padding: 10px;
   font-size: 120%;
-  padding: 20px;
   background-color: $section-bg-color;
-  
-  h1 {
-    font-size: 200%;
+
+  /* Side menu */
+
+  nav#side_menu {
+    @include rounded-border(5px);
+    position: fixed;
+    top: 220px;
+    left: 5px;
+    width: 150px;
+    margin: 0;
+    padding: 0;
+    font-weight: normal;
+    font-size: 80%;
+
+    ul {
+      margin: 0;
+      padding: 0;
+
+      li {
+        display: block;
+
+        a, a:visited {
+          display: block;
+          font-weight: normal;
+          text-decoration: none;
+        }
+      }
+    }
+  }
+
+  & > section {
+    @include rounded-border(5px);
+    margin: 5px;
+    padding: 5px;
+    background: $alt-section-bg-color;
+    
+    & > section {
+      @include rounded-border(5px);
+      margin: 5px;
+      padding: 5px;
+      background: $section-bg-color;
+    }
+  }
+
+  h1, h2, h3, h4, h5, h6, p {
+    line-height:1.5;
+    margin-top: 0;
+    margin-bottom: 0;
   }
   
+  & > h1 {
+    text-align: center;
+    font-size: 150%;
+    font-weight: bold;
+  }
+
+  h2, & > section > h1 {
+    font-size: 120%;
+    font-weight: bold;
+  }
+
+  h3, h4, h5, & > section section h1 {
+    font-size: 100%;
+    font-weight: bold;
+  }
+  
+  dl.show, dl.form_fields {
+    display: table;
+    border: solid 1px $table-border-color;
+
+    & > div {
+      display: table-row;
+
+      & > dt {
+        display: table-cell;
+        padding: 0 5px;
+      }
+
+      & > dd {
+        display: table-cell;
+        padding: 0 5px;
+      }
+
+      &:nth-child(odd) {
+        & > dt {
+          background: $even-table-row-bg-color;
+        }
+
+        & > dd {
+          background: $odd-table-row-bg-color;
+        }
+      }      
+
+      &:nth-child(even) {
+        & > dt {
+          background: $odd-table-row-bg-color;
+        }
+
+        & > dd {
+          background: $even-table-row-bg-color;
+        }
+      }      
+    }
+  }
+
+  dl.form_fields {
+    width: auto;
+    margin: auto;
+  }
+
   table {
     font-size: 100%;
-    border-top: solid 1px darken($even-table-row-bg-color, 10%);
-    border-bottom: solid 1px darken($even-table-row-bg-color, 10%);
+    border: solid 1px $table-border-color;
     margin-bottom: 12pt;
     width: auto;
 
-    &.fields {
+    &.form_fields {
       width: auto;
       margin: auto;
     }
 
-    tbody tr:nth-child(even) td, tbody tr.even td {
-      background: $even-table-row-bg-color;
+    &.grid {
+      tr:nth-child(odd) {
+        & > td:nth-child(odd), & > th:nth-child(odd) {
+          background: $even-table-row-bg-color;
+        }
+
+        & > td:nth-child(even), & > th:nth-child(even) {
+          background: $odd-table-row-bg-color;
+        }
+      }
+
+      tr:nth-child(even) {
+        & > td:nth-child(odd) {
+          background: $odd-table-row-bg-color;
+        }
+
+        & > td:nth-child(even) {
+          background: $even-table-row-bg-color;
+        }
+      }
     }
 
     caption{
-      text-align:center;white-space:nowrap;
+      text-align: center;
+      white-space: nowrap;
     }
 
-    th {
+    tr > th {
       font-size: 80%;
-      # margin: 5px 0px;
       padding: 5px;
     }
 
-    td {
-      # margin: 10px 0px;
+    tr > td {
       padding: 0px 5px;
     }
   }
 
   fieldset {
-    @include rounded-corners(5px);
+    @include rounded-border(5px);
     margin:0 0 0.5em;
 
     legend {
@@ -285,49 +448,39 @@ section {
     }
   }
 
-  div.links_group {
-    @include rounded-corners(5px);
+  div.link_group {
+    @include rounded-border(5px);
     border: dotted 1px;
   }
 
-  a {
-    @include rounded-corners(5px);
-    padding: 5px 5px;
+  a, a:visited, a.display, a.display:visited {
+    @include rounded-border(5px);
+    padding: 5px;
     display: inline-block;
-    color: $view-link-color;
     text-decoration: none;
-    # border: 1px dashed $view-link-color;
-
-    &:visited {
-      color: $view-link-color;
-    }
+    color: $view-link-color;
 
     &:hover {
       color: $section-bg-color;
       background-color: $view-link-color;
     }
-      
-    img {
-      margin: 0px;
+
+    &:active {
+      background-color: lighten($view-link-color, 10%);
     }
   }
   
-  a.modify {
+  a.modify, a.modify:visited {
     color: $modify-link-color;
-    # border: 1px dashed $modify-link-color;
-
-    &:visited {
-      color: $modify-link-color;
-    }
 
     &:hover {
       color: $section-bg-color;
       background-color: $modify-link-color;
     }
-  }
-  
-  h3, h4, h5, h6, p {
-    margin-bottom: 0;
+
+    &:active {
+      background-color: lighten($modify-link-color, 10%);
+    }
   }
 }
 

@@ -19,7 +19,7 @@ class SessionsController < ApplicationController
         # clear_return_to  # redundant with reset_session
         reset_session  # security measure
         log_in(user, client_ip)
-        flash[:notice] = t('flash_messages.logged_in', :username => user.username)
+        flash[:info] = t('flash_messages.logged_in', :username => user.username)
         redirect_to(path || root_url)
       else
         flash.now.alert = t('flash_messages.user_account_deactivated')
@@ -36,7 +36,7 @@ class SessionsController < ApplicationController
   def destroy
     # log_out  # redundant with reset_session
     reset_session  # security measure
-    flash[:notice] = t('flash_messages.logged_out')
+    flash[:info] = t('flash_messages.logged_out')
     redirect_to login_url
   end
 end

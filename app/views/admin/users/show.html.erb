@@ -1,88 +1,108 @@
+<% content_for :side_menu_list_items do %>
+  <li>
+    <%= link_to t('admin.users.links.show_all'), admin_users_path,
+                :class => 'display' %>
+  </li>
+  <li>
+    <%= link_to t('admin.users.links.new'), new_admin_user_path,
+                :title  => t('actions.create'),
+                :class => 'modify' %>
+  </li>
+<% end %>
+
 <h1><%= t '.header', :username => @user.username %></h1>
 
-<h3><%= t 'admin.users.show.captions.user_data', :username => @user.username %></h3>
-<!-- Rails bug here? (<p></p>): -->
-<table style="width:auto;">
-  <tr>
-    <td><b><%= t 'field_labels.username' %></b></td>
-    <td><b><%= @user.username %></b></td>
-  </tr>
+<section>
 
-  <tr>
-    <td><b><%= t 'field_labels.full_name' %></b></td>
-    <td><%= @user.full_name %></td>
-  </tr>
+  <h2><%= t 'admin.users.show.captions.user_data', :username => @user.username %></h2>
 
-  <tr>
-    <td><b><%= t 'field_labels.email' %></b></td>
-    <td><%= @user.email %></td>
-  </tr>
+  <dl class="show">
+    <div>
+      <dt><%= t 'field_labels.username' %></dt>
+      <dd><b><%= @user.username %></b></dd>
+    </div>
 
-  <tr>
-    <td><b><%= t 'field_labels.admin?' %></b></td>
-    <td><%= @user.admin? ? t(:yes) : t(:no) %></td>
-  </tr>
+    <div>
+      <dt><%= t 'field_labels.full_name' %></dt>
+      <dd><%= @user.full_name %></dd>
+    </div>
 
-  <tr>
-    <td><b><%= t 'field_labels.manager?' %></b></td>
-    <td><%= @user.manager? ? t(:yes) : t(:no) %></td>
-    </p>
-  </tr>
+    <div>
+      <dt><%= t 'field_labels.deactivated?' %></dt>
+      <dd><%= @user.account_deactivated? ? t(:yes) : t(:no) %></dd>
+    </div>
 
-  <tr>
-    <td><b><%= t 'field_labels.secretary?' %></b></td>
-    <td><%= @user.secretary? ? t(:yes) : t(:no) %></td>
-  </tr>
+    <div>
+      <dt><%= t 'field_labels.admin?' %></dt>
+      <dd><%= @user.admin? ? t(:yes) : t(:no) %></dd>
+    </div>
 
-  <tr>
-    <td><b><%= t 'field_labels.person?' %></b></td>
-    <td><%= @user.a_person? ? t(:yes) : t(:no) %></td>
-  </tr>
+    <div>
+      <dt><%= t 'field_labels.manager?' %></dt>
+      <dd><%= @user.manager? ? t(:yes) : t(:no) %></dd>
+    </div>
 
-  <% if @user.a_person? %>
-    <tr>
-      <td><b><%= t 'field_labels.person_id' %></b></td>
-      <td><%= @user.person_id %></td>
-    </tr>
-  <% end %>
+    <div>
+      <dt><%= t 'field_labels.secretary?' %></dt>
+      <dd><%= @user.secretary? ? t(:yes) : t(:no) %></dd>
+    </div>
 
-  <tr>
-    <td><b><%= t 'field_labels.deactivated?' %></b></td>
-    <td><%= @user.account_deactivated? ? t(:yes) : t(:no) %></td>
-  </tr>
-</table>
+    <div>
+      <dt><%= t 'field_labels.email' %></dt>
+      <dd><%= @user.email %></dd>
+    </div>
 
-<hr/>
+    <div>
+      <dt><%= t 'field_labels.person?' %></dt>
+      <dd><%= @user.a_person? ? t(:yes) : t(:no) %></dd>
+    </div>
 
-<h3><%= t 'admin.users.show.captions.authorized_ips' %></h3>
+    <% if @user.a_person? %>
+      <div>
+        <dt><%= t 'field_labels.person_id' %></dt>
+        <dd><%= @user.person_id %></dd>
+      </div>
+    <% end %>
+  </dl>
 
-<table style="width:auto;">
-  <% @user.safe_ips.each do |safe_ip| %>
-    <tr>
-      <td><%= link_to safe_ip.ip, safe_ip, :title => t('actions.read') %></td>
-      <td><%= safe_ip.description %></td>
-    </tr>
-  <% end %>
-</table>  
+</section>
 
-<hr/>
+<section>
 
-<h3><%= t 'admin.users.show.captions.other' %></h3>
+  <h2><%= t 'admin.users.show.captions.authorized_ips' %></h2>
 
-<table style="width:auto;">
-  <tr>
-    <td><b><%= t('field_labels.last_signed_in_at') %></b></td>
-    <td><%= @user.last_signed_in_at %>
-  </tr>
-  <tr>
-    <td><b><%= t('field_labels.comments') %></b></td>
-    <td><p><%= @user.comments %></p></td>
-  </tr>
-</table>  
+  <dl class="show association_list">
+    <% @user.safe_ips.each do |safe_ip| %>
+    <div>
+      <dt><%= link_to safe_ip.ip, safe_ip, :title => t('actions.read') %></dt>
+      <dd><%= safe_ip.description %></dd>
+    </div>
+    <% end %>
+  </dl>  
 
-<hr/>
+</section>
 
-<%= link_to edit_icon(2)+t('.links.update'),
-            edit_admin_user_path(@user),
-            :class => 'modify' %>
-<%= link_to list_all_icon(2)+t('admin.users.links.show_all'), admin_users_path %>
+<section>
+
+  <h2><%= t 'admin.users.show.captions.other' %></h2>
+
+  <dl class="show">
+    <div>
+      <dt><%= t('field_labels.last_signed_in_at') %></dt>
+      <dd><%= @user.last_signed_in_at %></dd>
+    </div>
+      
+    <div>
+      <dt><%= t('field_labels.comments') %></dt>
+      <dd><%= @user.comments %></dd>
+    </div>
+  </dl>  
+
+</section>
+
+<footer>
+  <%= link_to edit_icon(2)+' '+t('.links.update'),
+              edit_admin_user_path(@user),
+              :class => 'modify' %>
+  <%= link_to list_all_icon(2)+' '+t('admin.users.links.show_all'), admin_users_path %>
+</footer>

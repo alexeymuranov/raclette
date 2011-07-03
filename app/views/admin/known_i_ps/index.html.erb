@@ -1,6 +1,18 @@
+<% content_for :side_menu_list_items do %>
+  <li>
+    <%= link_to t('admin.known_i_ps.links.new'), new_admin_known_ip_path,
+                :title  => t('actions.create'),
+                :class => 'modify' %>
+  </li>
+<% end %>
+
 <h1><%= t '.header' %></h1>
 
-<table>
+<table class="records">
+  <col />
+  <col />
+  <col />
+  <col />
   <tr>
     <th><%= t 'field_labels.ip' %></th>
     <th><%= t 'field_labels.description' %></th>
@@ -28,8 +40,8 @@
   <% end %>
 </table>
 
-<hr/>
-
-<%= link_to add_icon(2)+t('admin.known_i_ps.links.new'), new_admin_known_ip_path,
-            :title  => t('actions.create'),
-            :class => 'modify' %>
+<footer>
+  <%= link_to add_icon(2)+' '+t('admin.known_i_ps.links.new'), new_admin_known_ip_path,
+              :title  => t('actions.create'),
+              :class => 'modify' %>
+</footer>

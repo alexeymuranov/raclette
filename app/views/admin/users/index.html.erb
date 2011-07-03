@@ -1,14 +1,31 @@
+<% content_for :side_menu_list_items do %>
+  <li>
+    <%= link_to t('admin.users.links.new'), new_admin_user_path,
+                :title  => t('actions.create'),
+                :class => 'modify' %>
+  </li>
+<% end %>
+
 <h1><%= t '.header' %></h1>
 
-<table>
+<table class="records">
+  <col />
+  <col />
+  <col />
+  <col />
+  <col />
+  <col />
+  <col />
+  <col />
+  <col />
   <tr>
     <th><%= t 'field_labels.username' %></th>
     <th><%= t 'field_labels.full_name' %></th>
+    <th style='text-align:center;'><%= t 'field_labels.deactivated?' %></th>
     <th style='text-align:center;'><%= t 'field_labels.admin?' %></th>
     <th style='text-align:center;'><%= t 'field_labels.manager?' %></th>
     <th style='text-align:center;'><%= t 'field_labels.secretary?' %></th>
     <th style='text-align:center;'><%= t 'field_labels.person?' %></th>
-    <th style='text-align:center;'><%= t 'field_labels.deactivated?' %></th>
     <th></th>
     <th></th>
   </tr>
@@ -17,6 +34,9 @@
     <tr>
       <td><%= link_to user.username, user, :title => t('actions.read') %></td>
       <td><%= user.full_name %></td>
+      <td style='text-align:center;'>
+        <%= user.account_deactivated? ? yes_icon : t(:no) %>
+      </td>
       <td style='text-align:center;'>
         <%= user.admin? ? yes_icon : t(:no) %>
       </td>
@@ -28,9 +48,6 @@
       </td>
       <td style='text-align:center;'>
         <%= user.a_person? ? yes_icon : t(:no) %>
-      </td>
-      <td style='text-align:center;'>
-        <%= user.account_deactivated? ? yes_icon : t(:no) %>
       </td>
       <td style='text-align:center;'>
         <%= link_to edit_icon, edit_admin_user_path(user),
@@ -48,8 +65,8 @@
   <% end %>
 </table>
 
-<hr/>
-
-<%= link_to add_icon(2)+t('admin.users.links.new'), new_admin_user_path,
-            :title  => t('actions.create'),
-            :class => 'modify' %>
+<footer>
+  <%= link_to add_icon(2)+' '+t('admin.users.links.new'), new_admin_user_path,
+              :title  => t('actions.create'),
+              :class => 'modify' %>
+</footer>

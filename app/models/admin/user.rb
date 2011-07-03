@@ -47,7 +47,8 @@ class Admin::User < ActiveRecord::Base
                    # :last_signed_in_at,
                    # :last_signed_in_from_ip,
                    :comments,
-                   :safe_ip_ids,                # associatin attribute
+                   :safe_ip_ids,                # association attribute
+                   :person,                     # association attribute
                    :password,                   # virtual attribute
                    :password_confirmation,      # virtual attribute
                    :new_password,               # virtual attribute

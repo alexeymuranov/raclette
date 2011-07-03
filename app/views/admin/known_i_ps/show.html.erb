@@ -1,20 +1,32 @@
+<% content_for :side_menu_list_items do %>
+  <li>
+    <%= link_to t('admin.known_i_ps.links.show_all'), admin_known_ips_path,
+                :class => 'display' %>
+  </li>
+  <li>
+    <%= link_to t('admin.known_i_ps.links.new'), new_admin_known_ip_path,
+                :title  => t('actions.create'),
+                :class => 'modify' %>
+  </li>
+<% end %>
+
 <h1><%= t '.header', :ip => @known_ip.ip %></h1>
 
-<table style="width:auto;">
-  <tr>
-    <td><b><%= t('field_labels.ip') %></b></td>
-    <td><b><%= @known_ip.ip %></b></td>
-  </tr>
+<dl class="show">
+  <div>
+    <dt><%= t('field_labels.ip') %></dt>
+    <dd><b><%= @known_ip.ip %></b></dd>
+  </div>
 
-  <tr>
-    <td><b><%= t 'field_labels.description' %></b></td>
-    <td><%= @known_ip.description %></td>
-  </tr>
-</table>
+  <div>
+    <dt><%= t 'field_labels.description' %></dt>
+    <dd><%= @known_ip.description %></dd>
+  </div>
+</dl>
 
-<hr/>
-
-<%= link_to edit_icon(2)+t('.links.update'),
-            edit_admin_known_ip_path(@known_ip),
-            :class => 'modify' %>
-<%= link_to list_all_icon(2)+t('admin.known_i_ps.links.show_all'), admin_known_ips_path %>
+<footer>
+  <%= link_to edit_icon(2)+' '+t('.links.update'),
+              edit_admin_known_ip_path(@known_ip),
+              :class => 'modify' %>
+  <%= link_to list_all_icon(2)+' '+t('admin.known_i_ps.links.show_all'), admin_known_ips_path %>
+</footer>
