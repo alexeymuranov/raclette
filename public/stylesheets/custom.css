@@ -1,5 +1,6 @@
 body {
-  background-color: #000099; }
+  background-color: #000099;
+  font-size: 10pt; }
 
 .container {
   width: 960px;
@@ -44,7 +45,7 @@ nav {
 
 /* Header */
 body > div.container > header {
-  font-size: 120%;
+  font-size: 12pt;
   text-align: left;
   margin-top: 5px;
   margin-left: auto;
@@ -85,7 +86,7 @@ body > div.container > header {
     margin: 0;
     padding: 0;
     font-weight: normal;
-    font-size: 80%; }
+    font-size: 10pt; }
     body > div.container > header div#main_logo div#logo_menu nav ul {
       margin: 0;
       padding: 0; }
@@ -155,7 +156,7 @@ body > div.container > header {
 
 /* Footer */
 body > div.container > footer {
-  font-size: 120%;
+  font-size: 12pt;
   text-align: center;
   margin-top: 5px;
   margin-left: auto;
@@ -179,7 +180,6 @@ body > div.container > section {
   -webkit-border-radius: 10px;
   margin-top: 5px;
   padding: 10px;
-  font-size: 120%;
   background-color: white;
   /* Side menu */ }
   body > div.container > section nav#side_menu {
@@ -193,7 +193,7 @@ body > div.container > section {
     margin: 0;
     padding: 0;
     font-weight: normal;
-    font-size: 80%; }
+    font-size: 10pt; }
     body > div.container > section nav#side_menu ul {
       margin: 0;
       padding: 0; }
@@ -223,13 +223,13 @@ body > div.container > section {
     margin-bottom: 0; }
   body > div.container > section > h1 {
     text-align: center;
-    font-size: 150%;
+    font-size: 16pt;
     font-weight: bold; }
   body > div.container > section h2, body > div.container > section > section > h1 {
-    font-size: 120%;
+    font-size: 14pt;
     font-weight: bold; }
   body > div.container > section h3, body > div.container > section h4, body > div.container > section h5, body > div.container > section > section section h1 {
-    font-size: 100%;
+    font-size: 12pt;
     font-weight: bold; }
   body > div.container > section dl.show, body > div.container > section dl.form_fields {
     display: table;
@@ -253,8 +253,9 @@ body > div.container > section {
   body > div.container > section dl.form_fields {
     width: auto;
     margin: auto; }
+  body > div.container > section input[type="checkbox"]:not(:checked) + *.checkbox_conditional {
+    display: none; }
   body > div.container > section table {
-    font-size: 100%;
     border: solid 1px #bbbbff;
     margin-bottom: 12pt;
     width: auto; }
@@ -273,7 +274,6 @@ body > div.container > section {
       text-align: center;
       white-space: nowrap; }
     body > div.container > section table tr > th {
-      font-size: 80%;
       padding: 5px; }
     body > div.container > section table tr > td {
       padding: 0px 5px; }
@@ -315,7 +315,7 @@ body > div.container > section {
 pre {
   background-color: #eee;
   padding: 10px;
-  font-size: 11px; }
+  font-size: 10pt; }
 
 div.field, div.actions {
   margin-bottom: 10px; }

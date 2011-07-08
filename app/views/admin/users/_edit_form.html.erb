@@ -58,24 +58,6 @@
     </table>  
   <% end %>
 
-  <%= field_set_tag t('admin.users.edit.captions.change_password') do %>
-    <dl class="form_fields">
-      <div class="field">
-        <dt><%= f.label :new_password, t('field_labels.new_password') %></dt>
-        <dd><%= f.password_field :new_password %></dd>
-      </div>
-      <div class="field">
-        <dt><%= f.label :new_password_confirmation,
-                        t('field_labels.new_password_confirmation') %></dt>
-        <dd><%= f.password_field :new_password_confirmation %></dd>
-      </div>
-      <div class="field">
-        <dt><%= label_tag :current_user_password, t('field_labels.your_password') %></dt>
-        <dd><%= password_field_tag :current_user_password, nil, :size => 30 %></dd>
-      </div>
-    </dl>
-  <% end %>
-
   <%= field_set_tag t('admin.users.edit.captions.other') do %>
     <dl class="form_fields">
       <div>
@@ -86,7 +68,29 @@
       </div>
     </dl>
   <% end %>
-  
+
+  <% if @user == current_user %>
+    <%= field_set_tag t('admin.users.edit.captions.new_password') do %>
+      <%= label_tag :change_password, t('field_labels.change_password?') %>
+      <%= check_box_tag :change_password %>
+      <dl class="checkbox_conditional form_fields">
+        <div class="field">
+          <dt><%= f.label :new_password, t('field_labels.new_password') %></dt>
+          <dd><%= f.password_field :new_password %></dd>
+        </div>
+        <div class="field">
+          <dt><%= f.label :new_password_confirmation,
+                          t('field_labels.new_password_confirmation') %></dt>
+          <dd><%= f.password_field :new_password_confirmation %></dd>
+        </div>
+        <div class="field">
+          <dt><%= label_tag :current_password, t('field_labels.current_password') %></dt>
+          <dd><%= password_field_tag :current_password, nil, :size => 30 %></dd>
+        </div>
+      </dl>
+    <% end %>
+  <% end %>
+
   <div class="actions" style="text-align:center;">
     <%= f.submit t('buttons.save') %>
   </div>

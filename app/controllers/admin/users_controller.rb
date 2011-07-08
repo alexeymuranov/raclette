@@ -63,8 +63,8 @@ class Admin::UsersController < AdminController
     params[:admin_user].delete(:comments)\
         if params[:admin_user][:comments].blank?
 
-    if params[:current_user_password].blank?
-      params.delete(:current_user_password)
+    unless params[:change_password]
+      params.delete(:current_password)
       params[:admin_user].delete(:new_password)
       params[:admin_user].delete(:new_password_confirmation)
     end
@@ -73,25 +73,33 @@ class Admin::UsersController < AdminController
       params[:admin_user].delete(:account_deactivated)
       params[:admin_user].delete(:admin)
     else
-      # params.delete(:current_user_password)
-      # params[:admin_user].delete(:new_password)
-      # params[:admin_user].delete(:new_password_confirmation)
+      params.delete(:current_password)
+      params[:admin_user].delete(:new_password)
+      params[:admin_user].delete(:new_password_confirmation)
     end
 
-    current_user_password = params[:current_user_password]
+    current_password = params[:current_password]
 
-    if current_user_password.nil? || current_user.has_password?(current_user_password)
+    if current_password.nil? || @user.has_password?(current_password)
       if @user.update_attributes(params[:admin_user])
         flash[:notice] = t('admin.users.update.flash.success',
                            :username => @user.username)
         redirect_to @user
       else
         flash.now[:error] = t('admin.users.update.flash.failure')
+
+        @user = Admin::User.find(params[:id])
+        @safe_ips = @user.safe_ips
+        @other_ips = Admin::KnownIP.all - @safe_ips
         @title =  t('admin.users.edit.title', :username => @user.username)
         render 'edit'
       end
     else
       flash.now[:error] = t('admin.users.update.flash.wrong_password')
+      
+      @user = Admin::User.find(params[:id])
+      @safe_ips = @user.safe_ips
+      @other_ips = Admin::KnownIP.all - @safe_ips
       @title = t('admin.users.edit.title', :username => @user.username)
       render 'edit'
     end
