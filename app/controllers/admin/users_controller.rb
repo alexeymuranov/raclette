@@ -1,9 +1,10 @@
 ## encoding: UTF-8
 
 class Admin::UsersController < AdminController
+  helper_method :sort_column, :sort_direction
 
   def index
-    @users = Admin::User.all
+    @users = Admin::User.order("#{sort_column} #{sort_direction}")
 
     @title = t('admin.users.index.title')
   end
@@ -112,4 +113,15 @@ class Admin::UsersController < AdminController
 
     redirect_to admin_users_url
   end
+
+  private
+  
+    def sort_direction  
+      %w[asc desc].include?(params[:direction]) ?  params[:direction] : 'asc'  
+    end
+
+    def sort_column  
+      Admin::User.column_names.include?(params[:sort]) ? params[:sort] : 'username'
+    end
+  
 end

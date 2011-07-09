@@ -23,4 +23,8 @@ class Admin::KnownIP < ActiveRecord::Base
   validates :ip, :presence   => true,
                  :format     => /\A\d{1,3}(\.\d{1,3}){3}\z/,
                  :uniqueness => true
+
+  # Scopes:
+	scope :default_order, order('admin_known_ips.ip ASC')
+
 end

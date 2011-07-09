@@ -22,4 +22,5 @@ class Admin::SafeUserIP < ActiveRecord::Base
                 :presence => true
 
   validates :known_ip_id, :uniqueness => { :scope => :user_id }
+
 end

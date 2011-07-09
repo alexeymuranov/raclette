@@ -1,4 +1,5 @@
 $body-bg-color: #009;
+$body-color: #333;
 $section-bg-color: #fff;
 $alt-section-bg-color: #eef;
 $common-navigation-link-color: #00c;
@@ -7,11 +8,13 @@ $logout-navigation-link-color: #063;
 $logout-navigation-link-bg-color: #ff0;
 $disabled-navigation-link-color: #ccc;
 $button-link-bg-color: none;
+$button-link-hover-shadow-color: $section-bg-color;
 $view-link-color: #060;
 $modify-link-color: #600;
 $odd-table-row-bg-color: $section-bg-color;
 $even-table-row-bg-color: $alt-section-bg-color;
-$table-border-color: darken($alt-section-bg-color, 10%);
+$table-border-color: darken($alt-section-bg-color, 5%);
+$table-head-bg-color: $table-border-color;
 $focus-glow-color: #f00;
 $focus-background-color: #ffe;
 $login_form-focus-glow-color: #00f;
@@ -36,6 +39,7 @@ $login_form-focus-glow-color: #00f;
 
 body {
   background-color: $body-bg-color;
+  color: $body-color;
   font-size: 11pt;
 }
 
@@ -326,6 +330,7 @@ body > div.container > section {
   }
 
   h1, h2, h3, h4, h5, h6, p {
+    color: inherit;
     line-height:1.5;
     margin-top: 0;
     margin-bottom: 0;
@@ -400,20 +405,28 @@ body > div.container > section {
     margin-bottom: 12pt;
     width: auto;
 
-    &.form_fields {
-      width: auto;
-      margin: auto;
+    & > thead > tr > th {
+      background: $table-head-bg-color;
+      text-align: center;
+      padding: 0 5px;
     }
 
-    & > tbody > tr:nth-child(odd) {
-      & > td, & > th {
-        background: $odd-table-row-bg-color;
+    & > tbody > tr {
+
+      td, th {
+        padding: 0 5px;
       }
-    }
 
-    & > tbody > tr:nth-child(even) {
-      & > td, & > th {
-        background: $even-table-row-bg-color;
+      &:nth-child(odd) {
+        & > td, & > th {
+          background: $odd-table-row-bg-color;
+        }
+      }
+
+      &:nth-child(even) {
+        & > td, & > th {
+          background: $even-table-row-bg-color;
+        }
       }
     }
 
@@ -442,20 +455,31 @@ body > div.container > section {
     &.records, &.form_fields {
       & > thead > tr > th {
         font-size: 10pt;
+
+        a.current {  
+          padding-left: 20px;  
+          background-repeat: no-repeat;  
+          background-position: left center;
+
+          &.asc {
+            background-image: url(/images/icons/up_triangle-16.png);
+          }
+
+          &.desc {
+            background-image: url(/images/icons/down_triangle-16.png);
+          }
+        }  
       }
     }
 
-    caption{
+    &.form_fields {
+      width: auto;
+      margin: auto;
+    }
+
+    caption {
       text-align: center;
       white-space: nowrap;
-    }
-
-    & > thead > tr > th {
-      padding: 0 5px;
-    }
-
-    & > tbody > tr > td, & > tbody > tr > th {
-      padding: 0 5px;
     }
   }
 
@@ -480,6 +504,11 @@ body > div.container > section {
     display: inline-block;
     text-decoration: none;
     background-color: $button-link-bg-color;
+    
+    &:hover {
+      @include box-shadow(0, 0, 3px, 0, $button-link-hover-shadow-color);
+      text-shadow: 0 0 3px $button-link-hover-shadow-color;
+    }
   }
 
   a.display, a.display:visited {
@@ -488,6 +517,8 @@ body > div.container > section {
     &:hover {
       color: $section-bg-color;
       background-color: $view-link-color;
+      text-decoration: none;
+      text-shadow: none;
     }
 
     &:active {
@@ -501,6 +532,8 @@ body > div.container > section {
     &:hover {
       color: $section-bg-color;
       background-color: $modify-link-color;
+      text-decoration: none;
+      text-shadow: none;
     }
 
     &:active {

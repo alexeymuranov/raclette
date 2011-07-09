@@ -35,6 +35,9 @@ module ApplicationHelper
 
   def add_icon(size=1)
     image_tag ADD_ICON_FILE_NAMES[size], :alt => 'add'
+    # "<span style=\"display:inline-block;padding:0;margin:0;"\
+    # "font-size:#{32+16*size}px;font-weight:bold;"\
+    # "color:green;\">+</span>".html_safe
   end
 
   SAVE_ICON_FILE_NAMES = [ 'icons/save-16.png',
@@ -68,4 +71,13 @@ module ApplicationHelper
   def yes_icon(size=1)
     image_tag YES_ICON_FILE_NAMES[size], :alt => 'yes', :title => t(:yes)
   end
+
+  def sortable(column, title = nil)  
+    title ||= column.titleize
+    css_class = (column == sort_column) ? "current #{sort_direction}" : nil
+    direction = (column == sort_column && sort_direction == 'asc') ? 'desc' : 'asc'
+    link_to title, { :sort => column, :direction => direction },
+                   { :class => css_class } 
+  end  
+
 end

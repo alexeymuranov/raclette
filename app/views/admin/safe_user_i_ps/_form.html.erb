@@ -1,7 +1,7 @@
 <%= form_tag "/admin/safe_user_ips", :method=> :put do |f| %>
   <%= field_set_tag do %>
     <table class="grid form_fields">
-      <col />
+      <colgroup><col /></colgroup>
       <colgroup><% @known_ips.size.times do %><col /><% end %></colgroup>
       <thead>
         <tr>

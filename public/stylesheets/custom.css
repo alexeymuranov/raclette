@@ -1,5 +1,6 @@
 body {
   background-color: #000099;
+  color: #333333;
   font-size: 11pt; }
 
 .container {
@@ -218,6 +219,7 @@ body > div.container > section {
       padding: 5px;
       background: white; }
   body > div.container > section h1, body > div.container > section h2, body > div.container > section h3, body > div.container > section h4, body > div.container > section h5, body > div.container > section h6, body > div.container > section p {
+    color: inherit;
     line-height: 1.5;
     margin-top: 0;
     margin-bottom: 0; }
@@ -233,7 +235,7 @@ body > div.container > section {
     font-weight: bold; }
   body > div.container > section dl.show, body > div.container > section dl.form_fields {
     display: table;
-    border: solid 1px #bbbbff; }
+    border: solid 1px #d5d5ff; }
     body > div.container > section dl.show > div, body > div.container > section dl.form_fields > div {
       display: table-row; }
       body > div.container > section dl.show > div > dt, body > div.container > section dl.form_fields > div > dt {
@@ -256,12 +258,15 @@ body > div.container > section {
   body > div.container > section input[type="checkbox"]:not(:checked) + *.checkbox_conditional {
     display: none; }
   body > div.container > section table {
-    border: solid 1px #bbbbff;
+    border: solid 1px #d5d5ff;
     margin-bottom: 12pt;
     width: auto; }
-    body > div.container > section table.form_fields {
-      width: auto;
-      margin: auto; }
+    body > div.container > section table > thead > tr > th {
+      background: #d5d5ff;
+      text-align: center;
+      padding: 0 5px; }
+    body > div.container > section table > tbody > tr td, body > div.container > section table > tbody > tr th {
+      padding: 0 5px; }
     body > div.container > section table > tbody > tr:nth-child(odd) > td, body > div.container > section table > tbody > tr:nth-child(odd) > th {
       background: white; }
     body > div.container > section table > tbody > tr:nth-child(even) > td, body > div.container > section table > tbody > tr:nth-child(even) > th {
@@ -276,13 +281,20 @@ body > div.container > section {
       background: #eeeeff; }
     body > div.container > section table.records > thead > tr > th, body > div.container > section table.form_fields > thead > tr > th {
       font-size: 10pt; }
+      body > div.container > section table.records > thead > tr > th a.current, body > div.container > section table.form_fields > thead > tr > th a.current {
+        padding-left: 20px;
+        background-repeat: no-repeat;
+        background-position: left center; }
+        body > div.container > section table.records > thead > tr > th a.current.asc, body > div.container > section table.form_fields > thead > tr > th a.current.asc {
+          background-image: url(/images/icons/up_triangle-16.png); }
+        body > div.container > section table.records > thead > tr > th a.current.desc, body > div.container > section table.form_fields > thead > tr > th a.current.desc {
+          background-image: url(/images/icons/down_triangle-16.png); }
+    body > div.container > section table.form_fields {
+      width: auto;
+      margin: auto; }
     body > div.container > section table caption {
       text-align: center;
       white-space: nowrap; }
-    body > div.container > section table > thead > tr > th {
-      padding: 0 5px; }
-    body > div.container > section table > tbody > tr > td, body > div.container > section table > tbody > tr > th {
-      padding: 0 5px; }
   body > div.container > section fieldset {
     border-radius: 5px;
     -moz-border-radius: 5px;
@@ -304,18 +316,27 @@ body > div.container > section {
     display: inline-block;
     text-decoration: none;
     background-color: none; }
+    body > div.container > section a:hover, body > div.container > section a:visited:hover {
+      box-shadow: 0 0 3px 0 white;
+      -webkit-box-shadow: 0 0 3px 0 white;
+      -moz-box-shadow: 0 0 3px 0 white;
+      text-shadow: 0 0 3px white; }
   body > div.container > section a.display, body > div.container > section a.display:visited {
     color: #006600; }
     body > div.container > section a.display:hover, body > div.container > section a.display:visited:hover {
       color: white;
-      background-color: #006600; }
+      background-color: #006600;
+      text-decoration: none;
+      text-shadow: none; }
     body > div.container > section a.display:active, body > div.container > section a.display:visited:active {
       background-color: #009900; }
   body > div.container > section a.modify, body > div.container > section a.modify:visited {
     color: #660000; }
     body > div.container > section a.modify:hover, body > div.container > section a.modify:visited:hover {
       color: white;
-      background-color: #660000; }
+      background-color: #660000;
+      text-decoration: none;
+      text-shadow: none; }
     body > div.container > section a.modify:active, body > div.container > section a.modify:visited:active {
       background-color: #990000; }
 

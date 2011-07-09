@@ -3,15 +3,15 @@
 class Admin::SafeUserIPsController < AdminController
 
   def index
-    @users = Admin::User.all
-    @known_ips = Admin::KnownIP.all
+    @users = Admin::User.default_order
+    @known_ips = Admin::KnownIP.default_order
     
     @title = t('admin.safe_user_i_ps.index.title')
   end
 
   def edit_all
-    @users = Admin::User.all
-    @known_ips = Admin::KnownIP.all
+    @users = Admin::User.default_order
+    @known_ips = Admin::KnownIP.default_order
 
     @title = t('admin.safe_user_i_ps.edit_all.title')
   end

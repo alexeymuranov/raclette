@@ -1,9 +1,10 @@
 ## encoding: UTF-8
 
 class Admin::KnownIPsController < AdminController
+  helper_method :sort_column, :sort_direction
 
   def index
-    @known_ips = Admin::KnownIP.all
+    @known_ips = Admin::KnownIP.order("#{sort_column} #{sort_direction}")
 
     @title = t('admin.known_i_ps.index.title')
   end
@@ -58,4 +59,15 @@ class Admin::KnownIPsController < AdminController
     flash[:notice] = t('admin.known_i_ps.destroy.flash.success', :ip => @known_ip.ip)
     redirect_to admin_known_ips_url
   end
+  
+  private
+  
+    def sort_direction  
+      %w[asc desc].include?(params[:direction]) ?  params[:direction] : 'asc' 
+    end
+
+    def sort_column  
+      Admin::KnownIP.column_names.include?(params[:sort]) ? params[:sort] : 'ip'
+    end
+  
 end
