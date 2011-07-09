@@ -286,6 +286,7 @@ fr:
           user_data: "Données de l'utilisateur"
           password: "Mot de passe"
           authorized_ips: "Adresses IP pleinement autorisées"
+          comments: "Remarques"
           other: "Divers"
       edit:
         title: "%{username} - mise à jour"
@@ -295,6 +296,7 @@ fr:
           new_password: "Nouveau mot de passe"
           change_password: "Changer le mot de passe"
           authorized_ips: "Adresses IP pleinement autorisées"
+          comments: "Remarques"
           other: "Divers"
         links:
           show: "Voir cette utilisateur"

@@ -9,60 +9,59 @@
 <h1><%= t '.header' %></h1>
 
 <table class="records">
-  <col />
-  <col />
-  <col />
-  <col />
-  <col />
-  <col />
-  <col />
-  <col />
-  <col />
-  <tr>
-    <th><%= t 'field_labels.username' %></th>
-    <th><%= t 'field_labels.full_name' %></th>
-    <th style='text-align:center;'><%= t 'field_labels.deactivated?' %></th>
-    <th style='text-align:center;'><%= t 'field_labels.admin?' %></th>
-    <th style='text-align:center;'><%= t 'field_labels.manager?' %></th>
-    <th style='text-align:center;'><%= t 'field_labels.secretary?' %></th>
-    <th style='text-align:center;'><%= t 'field_labels.person?' %></th>
-    <th></th>
-    <th></th>
-  </tr>
-
-  <% @users.each do |user| %>
+  <col /><col /><col /><col /><col /><col /><col /><col /><col />
+  <thead>
     <tr>
-      <td><%= link_to user.username, user, :title => t('actions.read') %></td>
-      <td><%= user.full_name %></td>
-      <td style='text-align:center;'>
-        <%= user.account_deactivated? ? yes_icon : t(:no) %>
-      </td>
-      <td style='text-align:center;'>
-        <%= user.admin? ? yes_icon : t(:no) %>
-      </td>
-      <td style='text-align:center;'>
-        <%= user.manager? ? yes_icon : t(:no)  %>
-      </td>
-      <td style='text-align:center;'>
-        <%= user.secretary? ? yes_icon : t(:no)  %>
-      </td>
-      <td style='text-align:center;'>
-        <%= user.a_person? ? yes_icon : t(:no) %>
-      </td>
-      <td style='text-align:center;'>
-        <%= link_to edit_icon, edit_admin_user_path(user),
-                    :title => t('actions.update'),
-                    :class => 'modify' %>
-      </td>
-      <td style='text-align:center;'>
-        <%= link_to delete_icon, user,
-                    :confirm => t("questions.are_you_sure?"),
-                    :method => :delete,
-                    :title  => t('actions.delete'),
-                    :class  => 'modify' %>
-      </td>
+      <th><%= t 'field_labels.username' %></th>
+      <th><%= t 'field_labels.full_name' %></th>
+      <th style='text-align:center;'><%= t 'field_labels.deactivated?' %></th>
+      <th style='text-align:center;'><%= t 'field_labels.admin?' %></th>
+      <th style='text-align:center;'><%= t 'field_labels.manager?' %></th>
+      <th style='text-align:center;'><%= t 'field_labels.secretary?' %></th>
+      <th style='text-align:center;'><%= t 'field_labels.person?' %></th>
+      <th></th>
+      <th></th>
     </tr>
-  <% end %>
+  </thead>
+  <tdata>
+    <% @users.each do |user| %>
+      <tr>
+        <th span="row">
+          <%= link_to user.username, user,
+                      :title => t('actions.read'),
+                      :class => 'display' %>
+        </th>
+        <td><%= user.full_name %></td>
+        <td style='text-align:center;'>
+          <%= user.account_deactivated? ? yes_icon : t(:no) %>
+        </td>
+        <td style='text-align:center;'>
+          <%= user.admin? ? yes_icon : t(:no) %>
+        </td>
+        <td style='text-align:center;'>
+          <%= user.manager? ? yes_icon : t(:no)  %>
+        </td>
+        <td style='text-align:center;'>
+          <%= user.secretary? ? yes_icon : t(:no)  %>
+        </td>
+        <td style='text-align:center;'>
+          <%= user.a_person? ? yes_icon : t(:no) %>
+        </td>
+        <td style='text-align:center;'>
+          <%= link_to edit_icon, edit_admin_user_path(user),
+                      :title => t('actions.update'),
+                      :class => 'modify' %>
+        </td>
+        <td style='text-align:center;'>
+          <%= link_to delete_icon, user,
+                      :confirm => t("questions.are_you_sure?"),
+                      :method => :delete,
+                      :title  => t('actions.delete'),
+                      :class  => 'modify' %>
+        </td>
+      </tr>
+    <% end %>
+  </tdata>
 </table>
 
 <footer>

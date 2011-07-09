@@ -10,7 +10,9 @@
 <%= render 'edit_form' %>
 
 <footer>
-  <%= link_to show_icon(2)+' '+t('.links.show'), @user %>
-  <%= link_to list_all_icon(2)+' '+t('admin.users.links.show_all'), admin_users_path %>
+  <%= link_to show_icon(2)+' '+t('.links.show'), @user,
+              :class => 'display' %>
+  <%= link_to list_all_icon(2)+' '+t('admin.users.links.show_all'), admin_users_path,
+              :class => 'display' %>
 </footer>
 

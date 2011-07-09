@@ -63,6 +63,11 @@
         <dd><%= @user.person_id %></dd>
       </div>
     <% end %>
+      
+    <div>
+      <dt><%= t('field_labels.comments') %></dt>
+      <dd><%= @user.comments %></dd>
+    </div>
   </dl>
 
 </section>
@@ -74,7 +79,11 @@
   <dl class="show association_list">
     <% @user.safe_ips.each do |safe_ip| %>
     <div>
-      <dt><%= link_to safe_ip.ip, safe_ip, :title => t('actions.read') %></dt>
+      <dt>
+        <%= link_to safe_ip.ip, safe_ip,
+                    :title => t('actions.read'),
+                    :class => 'display' %>
+      </dt>
       <dd><%= safe_ip.description %></dd>
     </div>
     <% end %>
@@ -91,18 +100,13 @@
       <dt><%= t('field_labels.last_signed_in_at') %></dt>
       <dd><%= @user.last_signed_in_at %></dd>
     </div>
-      
-    <div>
-      <dt><%= t('field_labels.comments') %></dt>
-      <dd><%= @user.comments %></dd>
-    </div>
   </dl>  
 
 </section>
 
 <footer>
-  <%= link_to edit_icon(2)+' '+t('.links.update'),
-              edit_admin_user_path(@user),
+  <%= link_to edit_icon(2)+' '+t('.links.update'), edit_admin_user_path(@user),
               :class => 'modify' %>
-  <%= link_to list_all_icon(2)+' '+t('admin.users.links.show_all'), admin_users_path %>
+  <%= link_to list_all_icon(2)+' '+t('admin.users.links.show_all'), admin_users_path,
+              :class => 'display' %>
 </footer>

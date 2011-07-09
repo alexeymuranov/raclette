@@ -1,0 +1,10 @@
+  <%= field_set_tag t('admin.users.edit.captions.comments') do %>
+    <dl class="form_fields">
+      <div>
+        <dt style="vertical-align:top;">
+          <%= f.label :comments, t('field_labels.comments') %>
+        </dt>
+        <dd><%= f.text_area :comments, :maxlength => 1000 %></dd>
+      </div>
+    </dl>
+  <% end %>

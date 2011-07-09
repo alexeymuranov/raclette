@@ -6,6 +6,7 @@ $common-navigation-link-color-bright: #00f;
 $logout-navigation-link-color: #063;
 $logout-navigation-link-bg-color: #ff0;
 $disabled-navigation-link-color: #ccc;
+$button-link-bg-color: none;
 $view-link-color: #060;
 $modify-link-color: #600;
 $odd-table-row-bg-color: $section-bg-color;
@@ -35,7 +36,7 @@ $login_form-focus-glow-color: #00f;
 
 body {
   background-color: $body-bg-color;
-  font-size: 10pt;
+  font-size: 11pt;
 }
 
 .container {
@@ -404,8 +405,20 @@ body > div.container > section {
       margin: auto;
     }
 
+    & > tbody > tr:nth-child(odd) {
+      & > td, & > th {
+        background: $odd-table-row-bg-color;
+      }
+    }
+
+    & > tbody > tr:nth-child(even) {
+      & > td, & > th {
+        background: $even-table-row-bg-color;
+      }
+    }
+
     &.grid {
-      tr:nth-child(odd) {
+      & > tbody > tr:nth-child(odd) {
         & > td:nth-child(odd), & > th:nth-child(odd) {
           background: $even-table-row-bg-color;
         }
@@ -415,14 +428,20 @@ body > div.container > section {
         }
       }
 
-      tr:nth-child(even) {
-        & > td:nth-child(odd) {
+      & > tbody > tr:nth-child(even) {
+        & > td:nth-child(odd), & > th:nth-child(odd) {
           background: $odd-table-row-bg-color;
         }
 
-        & > td:nth-child(even) {
+        & > td:nth-child(even), & > th:nth-child(even) {
           background: $even-table-row-bg-color;
         }
+      }
+    }
+
+    &.records, &.form_fields {
+      & > thead > tr > th {
+        font-size: 10pt;
       }
     }
 
@@ -431,12 +450,12 @@ body > div.container > section {
       white-space: nowrap;
     }
 
-    tr > th {
-      padding: 5px;
+    & > thead > tr > th {
+      padding: 0 5px;
     }
 
-    tr > td {
-      padding: 0px 5px;
+    & > tbody > tr > td, & > tbody > tr > th {
+      padding: 0 5px;
     }
   }
 
@@ -455,11 +474,15 @@ body > div.container > section {
     border: dotted 1px;
   }
 
-  a, a:visited, a.display, a.display:visited {
+  a, a:visited {
     @include rounded-border(5px);
     padding: 5px;
     display: inline-block;
     text-decoration: none;
+    background-color: $button-link-bg-color;
+  }
+
+  a.display, a.display:visited {
     color: $view-link-color;
 
     &:hover {
@@ -471,7 +494,7 @@ body > div.container > section {
       background-color: lighten($view-link-color, 10%);
     }
   }
-  
+
   a.modify, a.modify:visited {
     color: $modify-link-color;
 

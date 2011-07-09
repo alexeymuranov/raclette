@@ -326,6 +326,7 @@ en:
           user_data: "User data"
           password: "Password"
           authorized_ips: "Fully authorized IP addresses"
+          comments: "Comments"
           other: "Other"
       edit:
         title: "Update %{username}"
@@ -335,6 +336,7 @@ en:
           new_password: "New password"
           change_password: "Password change"
           authorized_ips: "Fully authorized IP addresses"
+          comments: "Comments"
           other: "Other"
         links:
           show: "Show the user"

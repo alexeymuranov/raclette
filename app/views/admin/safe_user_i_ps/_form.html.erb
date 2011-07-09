@@ -1,23 +1,29 @@
 <%= form_tag "/admin/safe_user_ips", :method=> :put do |f| %>
   <%= field_set_tag do %>
     <table class="grid form_fields">
-      <tr>
-        <th></th>
-        <% @known_ips.each do |known_ip| %>
-          <% note = known_ip.description.blank? ? "" : " (#{known_ip.description})" %>
-          <th style='text-align:center;'><%= "#{known_ip.ip}#{note}" %></th>
+      <col />
+      <colgroup><% @known_ips.size.times do %><col /><% end %></colgroup>
+      <thead>
+        <tr>
+          <th></th>
+          <% @known_ips.each do |known_ip| %>
+            <% note = known_ip.description.blank? ? "" : " (#{known_ip.description})" %>
+            <th style='text-align:center;'><%= "#{known_ip.ip}#{note}" %></th>
+          <% end %>
+        </tr>
+      </thead>
+      <tbody>
+        <% @users.each do |user| %>
+        <tr>
+          <th span="row"><%= user.username %></th>
+          <% @known_ips.each do |known_ip| %>
+            <td style='text-align:center;'>
+              <%= check_box_tag "safe_ip_ids_for_users[#{user.id}][]", known_ip.id, user.safe_ips.include?(known_ip) %>
+            </td>
+          <% end %>
+        </tr>
         <% end %>
-      </tr>
-      <% @users.each do |user| %>
-      <tr>
-        <td><%= user.username %></td>
-        <% @known_ips.each do |known_ip| %>
-          <td style='text-align:center;'>
-            <%= check_box_tag "safe_ip_ids_for_users[#{user.id}][]", known_ip.id, user.safe_ips.include?(known_ip) %>
-          </td>
-        <% end %>
-      </tr>
-      <% end %>
+      </tbody>
     </table>
   <% end %>
 

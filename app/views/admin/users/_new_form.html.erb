@@ -18,30 +18,34 @@
 
   <%= field_set_tag t('admin.users.new.captions.authorized_ips') do %>
     <table class="form_fields">
-      <tr>
-        <th>
-          <%= t 'field_labels.ip' %>
-        </th>
-        <th>
-          <%= t 'field_labels.description' %>
-        </th>
-        <th style='text-align:center;'>
-          <%= t 'field_labels.authorized?(ip)' %>
-        </th>
-      </tr>
-      <% @known_ips.each do |known_ip| %>
-      <tr>
-        <td>
-          <%= label_tag "admin_user_safe_ip_ids_#{known_ip.id}", known_ip.ip %>
-        </td>
-        <td>
-          <%= known_ip.description %>
-        </td>
-        <td style='text-align:center;'>
-          <%= check_box_tag "admin_user[safe_ip_ids][]", known_ip.id, false, :id => "admin_user_safe_ip_ids_#{known_ip.id}" %>
-        </td>
-      </tr>
-      <% end %>
+      <thead>
+        <tr>
+          <th>
+            <%= t 'field_labels.ip' %>
+          </th>
+          <th>
+            <%= t 'field_labels.description' %>
+          </th>
+          <th style='text-align:center;'>
+            <%= t 'field_labels.authorized?(ip)' %>
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @known_ips.each do |known_ip| %>
+        <tr>
+          <td>
+            <%= label_tag "admin_user_safe_ip_ids_#{known_ip.id}", known_ip.ip %>
+          </td>
+          <td>
+            <%= known_ip.description %>
+          </td>
+          <td style='text-align:center;'>
+            <%= check_box_tag "admin_user[safe_ip_ids][]", known_ip.id, false, :id => "admin_user_safe_ip_ids_#{known_ip.id}" %>
+          </td>
+        </tr>
+        <% end %>
+      </tbody>
     </table>
   <% end %>
 
@@ -49,26 +53,17 @@
     <dl class="form_fields">
       <div class="field">
         <dt><%= f.label :password, t('field_labels.password') %></dt>
-        <dd><%= f.password_field :password %></dd>
+        <dd><%= f.password_field :password, :size => 30, :maxlength => 255 %></dd>
       </div>
       <div class="field">
         <dt><%= f.label :password_confirmation,
                         t('field_labels.password_confirmation') %></dt>
-        <dd><%= f.password_field :password_confirmation %></dd>
+        <dd><%= f.password_field :password_confirmation, :size => 30, :maxlength => 255 %></dd>
       </div>
     </dl>
   <% end %>
 
-  <%= field_set_tag t('admin.users.new.captions.other') do %>
-    <dl class="form_fields">
-      <div>
-        <dt style="vertical-align:top;">
-          <%= f.label :comments, t('field_labels.comments') %>
-        </dt>
-        <dd><%= f.text_area :comments %></dd>
-      </div>
-    </dl>
-  <% end %>
+  <%= render 'comments_field', :f => f %>
 
   <div class="actions" style="text-align:center;">
     <%= f.submit t('buttons.save') %>

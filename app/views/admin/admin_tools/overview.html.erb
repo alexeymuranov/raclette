@@ -21,14 +21,14 @@
 
   <section>
 
-    <h3><%= link_to t('headers.all_users'), admin_users_path %></h3>
+    <h3><%= link_to t('headers.all_users'), admin_users_path, :class => 'display' %></h3>
 
     <p>
       <% @users.each do |user| %>
         <% unless user == @users.last %>
-          <%= link_to "#{user.username}", user %>,
+          <%= link_to "#{user.username}", user, :class => 'display' %>,
         <% else %>
-          <%= link_to "#{user.username}", user %>.
+          <%= link_to "#{user.username}", user, :class => 'display' %>.
         <% end %>
       <% end %>
     </p>
@@ -43,15 +43,15 @@
 
   <section>
 
-    <h3><%= link_to t('headers.all_known_ips'), admin_known_ips_path %></h3>
+    <h3><%= link_to t('headers.all_known_ips'), admin_known_ips_path, :class => 'display' %></h3>
 
     <p>
       <% @known_ips.each do |known_ip| %>
         <% note = known_ip.description.blank? ? "" : " (#{known_ip.description})" %>
         <% unless known_ip == @known_ips.last %>
-          <%= link_to "#{known_ip.ip}#{note}", known_ip %>,
+          <%= link_to "#{known_ip.ip}#{note}", known_ip, :class => 'display' %>,
         <% else %>
-          <%= link_to "#{known_ip.ip}#{note}", known_ip %>.
+          <%= link_to "#{known_ip.ip}#{note}", known_ip, :class => 'display' %>.
         <% end %>
       <% end %>
     </p>
@@ -66,7 +66,7 @@
 
   <section>
 
-    <h3><%= link_to t('headers.all_safe_user_ips'), admin_safe_user_ips_path %></h3>
+    <h3><%= link_to t('headers.all_safe_user_ips'), admin_safe_user_ips_path, :class => 'display' %></h3>
 
   </section>
 
