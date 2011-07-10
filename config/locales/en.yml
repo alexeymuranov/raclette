@@ -236,7 +236,7 @@ en:
     admin_tools: "Administrator tools"
     all_users: "Users"
     all_known_ips: "Known IP addresses"
-    all_safe_user_ips: "Fully authorized IP addresses"
+    all_safe_user_ips: "Authorized IP addresses"
     data: "Data"
     maintenance: "Maintenance"
     tools: "Tools"
@@ -309,23 +309,23 @@ en:
     users:
       index:
         title: "Users"
-        header: "Listing users"
+        header: "All users"
       show:
         title: "%{username}"
         header: "User '%{username}'"
         captions:
           user_data: "User data"
-          authorized_ips: "Fully authorized IP addresses"
+          authorized_ips: "Authorized IP addresses"
           other: "Other"
         links:
-          update: "Update the user"
+          update: "Update"
       new:
         title: "New user"
         header: "New user"
         captions:
           user_data: "User data"
           password: "Password"
-          authorized_ips: "Fully authorized IP addresses"
+          authorized_ips: "Authorized IP addresses"
           comments: "Comments"
           other: "Other"
       edit:
@@ -335,11 +335,11 @@ en:
           user_data: "User data"
           new_password: "New password"
           change_password: "Password change"
-          authorized_ips: "Fully authorized IP addresses"
+          authorized_ips: "Authorized IP addresses"
           comments: "Comments"
           other: "Other"
         links:
-          show: "Show the user"
+          show: "This user"
       create:
         flash:
           success: "User '%{username}' was successfully created."
@@ -355,10 +355,10 @@ en:
           failure: "Error!"
         
       links:
-        show_all: "Show all users"
-        show: "Show"
-        new: "New user"
-        update: "Edit"
+        show_all: "All users"
+        show: "This user"
+        new: "New user form"
+        update: "Update form"
         delete: "Delete"
 
     known_i_ps:
@@ -369,7 +369,7 @@ en:
         title: "%{ip}"
         header: "IP address %{ip}"
         links:
-          update: "Update the address IP"
+          update: "Update form"
       new:
         title: "New IP"
         header: "New IP address"
@@ -377,7 +377,7 @@ en:
         title: "Update %{ip}"
         header: "Updating IP address %{ip}"
         links:
-          show: "Show the IP"
+          show: "This IP address"
       create:
         flash:
           success: "IP address %{ip} was successfully created."
@@ -392,22 +392,22 @@ en:
           failure: "Error!"
         
       links:
-        show_all: "Show all IP addresses"
-        show: "Show"
-        new: "New IP address"
-        update: "Update"
+        show_all: "Known IP addresses"
+        show: "This IP address"
+        new: "New IP form"
+        update: "Update form"
         delete: "Delete"
 
     safe_user_i_ps:
       index:
-        title: "Fully authorized IPs"
-        header: "Fully authorized IP addresses"
+        title: "Authorized IPs"
+        header: "Authorized IP addresses"
       edit_all:
-        title: "Edit fully authorized IPs"
-        header: "Editing fully authorized IP addresses"
+        title: "Edit authorized IPs"
+        header: "Editing authorized IP addresses"
         
       links:
-        show_all: "Show"
-        update_all: "Update"
+        show_all: "Authorized IPs"
+        update_all: "Update form"
         delete: "Delete"
 

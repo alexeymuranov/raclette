@@ -16,7 +16,8 @@
       <% if @known_ip.new_record? %>
         <div class="field">
           <dt><%= f.label :ip, t('field_labels.ip') %></dt>
-          <dd><%= f.text_field :ip, :size => 30, :maxlength => 15, :required => :required %>*</dd>
+          <dd class="required readonly input">
+            <%= f.text_field :ip, :size => 30, :maxlength => 15, :required => :required %></dd>
         </div>
       <% else %>
         <div class="field">
@@ -31,7 +32,7 @@
     </dl>
   <% end %>
 
-  <div class="actions" style="text-align:center;">
+  <div class="actions">
     <%= f.submit t('buttons.save') %>
   </div>
 <% end %>

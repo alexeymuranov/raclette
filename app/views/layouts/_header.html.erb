@@ -3,7 +3,7 @@
     <%= render 'layouts/main_logo' %>
     <%= render 'layouts/main_menu' %>
   <% else %>
-    <nav>
+    <nav id="main_menu">
       <ul>
         <li><%= link_to t('sessions.new.log_in_please'), login_path %></li>
       </ul>

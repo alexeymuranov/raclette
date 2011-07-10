@@ -1,15 +1,16 @@
 <% content_for :side_menu_list_items do %>
   <li>
     <%= link_to t('admin.known_i_ps.links.new'), new_admin_known_ip_path,
-                :title  => t('actions.create'),
-                :class => 'modify' %>
+                :title => t('actions.create'),
+                :class => 'add' %>
   </li>
 <% end %>
 
 <h1><%= t '.header' %></h1>
 
 <table class="records">
-  <colgroup><col /><col /><col /><col /></colgroup>
+  <colgroup><col /><col /></colgroup>
+  <colgroup><col /><col /></colgroup>
   <thead>
     <tr>
       <th><%= sortable 'ip', t('field_labels.ip') %></th>
@@ -22,19 +23,19 @@
   <tbody>
     <% @known_ips.each do |known_ip| %>
       <tr>
-        <th span="row">
+        <th scope=row>
           <%= link_to known_ip.ip, known_ip,
                       :title => t('actions.read'),
                       :class => 'display' %>
         </th>
         <td><%= known_ip.description %></td>
-        <td>
-          <%= link_to edit_icon, edit_admin_known_ip_path(known_ip),
+        <td class="operation">
+          <%= link_to edit_pictogram, edit_admin_known_ip_path(known_ip),
                       :title => t('actions.update'),
                       :class => 'modify' %>
         </td>
-        <td>
-          <%= link_to delete_icon, known_ip,
+        <td class="operation">
+          <%= link_to delete_pictogram, known_ip,
                       :confirm => t("questions.are_you_sure?"),
                       :method => :delete,
                       :title  => t('actions.delete'),
@@ -46,7 +47,7 @@
 </table>
 
 <footer>
-  <%= link_to add_icon(2)+' '+t('admin.known_i_ps.links.new'), new_admin_known_ip_path,
-              :title  => t('actions.create'),
-              :class => 'modify' %>
+  <%= link_to add_pictogram+' '+t('admin.known_i_ps.links.new'), new_admin_known_ip_path,
+              :title => t('actions.create'),
+              :class => 'add' %>
 </footer>

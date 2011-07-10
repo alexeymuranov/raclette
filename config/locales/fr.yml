@@ -196,7 +196,7 @@ fr:
     admin_tools: "Outils d'administration"
     all_users: "Utilisateurs"
     all_known_ips: "Adresses IP connues"
-    all_safe_user_ips: "Adresses IP pleinement autorisées"
+    all_safe_user_ips: "Adresses IP autorisées"
     data: "Données"
     maintenance: "Entretien"
     tools: "Outils"
@@ -229,7 +229,7 @@ fr:
 
   actions:
     create: "Ajouter"
-    read: "Voir"
+    read: "Montrer"
     update: "Mettre à jour"
     delete: "Supprimer"
 
@@ -269,23 +269,23 @@ fr:
     users:
       index:
         title: "Utilisateurs"
-        header: "Liste des utilisateurs"
+        header: "Tous les utilisateurs"
       show:
         title: "%{username}"
         header: "Utilisateur « %{username} »"
         captions:
           user_data: "Données de l'utilisateur"
-          authorized_ips: "Adresses IP pleinement autorisées"
+          authorized_ips: "Adresses IP autorisées"
           other: "Divers"
         links:
-          update: "Mettre cet utilisateur à jour"
+          update: "Mise à jour"
       new:
         title: "Nouveau utilisateur"
         header: "Nouveau utilisateur"
         captions:
           user_data: "Données de l'utilisateur"
           password: "Mot de passe"
-          authorized_ips: "Adresses IP pleinement autorisées"
+          authorized_ips: "Adresses IP autorisées"
           comments: "Remarques"
           other: "Divers"
       edit:
@@ -295,11 +295,11 @@ fr:
           user_data: "Données de l'utilisateur"
           new_password: "Nouveau mot de passe"
           change_password: "Changer le mot de passe"
-          authorized_ips: "Adresses IP pleinement autorisées"
+          authorized_ips: "Adresses IP autorisées"
           comments: "Remarques"
           other: "Divers"
         links:
-          show: "Voir cette utilisateur"
+          show: "Cet utilisateur"
       create:
         flash:
           success: "L'utilisateur « %{username} » a été enregistré."
@@ -315,10 +315,10 @@ fr:
           failure: "Une erreur s'est produit!"
 
       links:
-        show_all: "Voir tous les utilisateurs"
-        show: "Voir"
-        new: "Ajouter un utilisateur"
-        update: "Mettre à jour"
+        show_all: "Tous utilisateurs"
+        show: "Cet utilisateur"
+        new: "Nouvel utilisateur"
+        update: "Mise à jour"
         delete: "Supprimer"
 
     known_i_ps:
@@ -329,7 +329,7 @@ fr:
         title: "%{ip}"
         header: "Adresse IP %{ip}"
         links:
-          update: "Mettre cette adresse IP à jour"
+          update: "Mise à jour"
       new:
         title: "Nouvelle IP"
         header: "Nouvelle adresse IP"
@@ -337,7 +337,7 @@ fr:
         title: "%{ip} - mise à jour"
         header: "Mise à jour de l'adresse IP %{ip}"
         links:
-          show: "Voir cette adresse IP"
+          show: "Cette adresse IP"
       create:
         flash:
           success: "L'adresse IP %{ip} a été enregistrée."
@@ -352,21 +352,21 @@ fr:
           failure: "Une erreur s'est produit!"
 
       links:
-        show_all: "Voir toutes les adresses IP"
-        show: "Voir"
-        new: "Ajouter une adresse IP"
-        update: "Mettre à jour"
+        show_all: "Adresses IP connues"
+        show: "Cette adresse IP"
+        new: "Nouvelle adresse IP"
+        update: "Mise à jour"
         delete: "Supprimer"
 
     safe_user_i_ps:
       index:
-        title: "IPs pleinement autorisées"
-        header: "Adresses IP pleinement autorisées"
+        title: "IPs autorisées"
+        header: "Adresses IP autorisées"
       edit_all:
-        title: "IPs pleinement autorisées - mise à jour"
-        header: "Mise à jour des adresses IP pleinement autorisées"
+        title: "IPs autorisées - mise à jour"
+        header: "Mise à jour des adresses IP autorisées"
 
       links:
-        show_all: "Voir"
-        update_all: "Mettre à jour"
+        show_all: "Adresses IP autorisées"
+        update_all: "Mise à jour"
         delete: "Supprimer"

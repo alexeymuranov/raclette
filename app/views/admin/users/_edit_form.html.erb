@@ -27,7 +27,7 @@
           <th>
             <%= t 'field_labels.description' %>
           </th>
-          <th style='text-align:center;'>
+          <th class='boolean'>
             <%= t 'field_labels.authorized?(ip)' %>
           </th>
         </tr>
@@ -35,32 +35,32 @@
       <tbody>
         <% @safe_ips.each do |known_ip| %>
         <tr class="field">
-          <td>
+          <th scope=row>
             <%= label_tag "admin_user_safe_ip_ids_#{known_ip.id}", known_ip.ip %>
-          </td>
+          </th>
           <td>
             <%= known_ip.description %>
           </td>
-          <td style='text-align:center;'>
+          <td class="boolean">
             <%= check_box_tag "admin_user[safe_ip_ids][]", known_ip.id, true, :id => "admin_user_safe_ip_ids_#{known_ip.id}" %>
           </td>
         </tr>
         <% end %>
         <% @other_ips.each do |known_ip| %>
         <tr class="field">
-          <td>
+          <th scope=row>
             <%= label_tag "admin_user_safe_ip_ids_#{known_ip.id}", known_ip.ip %>
-          </td>
+          </th>
           <td>
             <%= known_ip.description %>
           </td>
-          <td style='text-align:center;'>
+          <td class='boolean'>
             <%= check_box_tag "admin_user[safe_ip_ids][]", known_ip.id, false, :id => "admin_user_safe_ip_ids_#{known_ip.id}" %>
           </td>
         </tr>
         <% end %>
       </tbody>
-    </table>  
+    </table>
   <% end %>
 
   <% if @user == current_user %>
@@ -87,7 +87,7 @@
 
   <%= render 'comments_field', :f => f %>
 
-  <div class="actions" style="text-align:center;">
+  <div class="actions">
     <%= f.submit t('buttons.save') %>
   </div>
 <% end %>

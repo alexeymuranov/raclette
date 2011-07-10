@@ -2,13 +2,13 @@ module Admin::UsersHelper
 
   def color_for_user_permissions(user)
     if user.admin?
-      '#f00'
+      'Red'
     elsif user.manager?
-      '#00f'
+      'Blue'
     elsif user.secretary?
-      '#0ff'
+      'Aqua'
     else
-      '#0f0'
+      'Green'
     end
   end
   

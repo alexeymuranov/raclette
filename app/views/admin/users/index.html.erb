@@ -1,25 +1,25 @@
 <% content_for :side_menu_list_items do %>
   <li>
     <%= link_to t('admin.users.links.new'), new_admin_user_path,
-                :title  => t('actions.create'),
-                :class => 'modify' %>
+                :title => t('actions.create'),
+                :class => 'add' %>
   </li>
 <% end %>
 
 <h1><%= t '.header' %></h1>
 
 <table class="records">
-  <colgroup><col /><col /><col /><col /><col /><col /><col /><col /><col />
-  </colgroup>
+  <colgroup><col /><col /><col /><col /><col /><col /><col /></colgroup>
+  <colgroup><col /><col /></colgroup>
   <thead>
     <tr>
       <th><%= sortable 'username', t('field_labels.username') %></th>
       <th><%= sortable 'full_name', t('field_labels.full_name') %></th>
-      <th style='text-align:center;'><%= sortable 'account_deactivated', t('field_labels.deactivated?') %></th>
-      <th style='text-align:center;'><%= sortable 'admin', t('field_labels.admin?') %></th>
-      <th style='text-align:center;'><%= sortable 'manager', t('field_labels.manager?') %></th>
-      <th style='text-align:center;'><%= sortable 'secretary', t('field_labels.secretary?') %></th>
-      <th style='text-align:center;'><%= sortable 'a_person', t('field_labels.person?') %></th>
+      <th class='boolean'><%= sortable 'account_deactivated', t('field_labels.deactivated?') %></th>
+      <th class='boolean'><%= sortable 'admin', t('field_labels.admin?') %></th>
+      <th class='boolean'><%= sortable 'manager', t('field_labels.manager?') %></th>
+      <th class='boolean'><%= sortable 'secretary', t('field_labels.secretary?') %></th>
+      <th class='boolean'><%= sortable 'a_person', t('field_labels.person?') %></th>
       <th></th>
       <th></th>
     </tr>
@@ -27,34 +27,34 @@
   <tdata>
     <% @users.each do |user| %>
       <tr>
-        <th span="row">
+        <th scope=row>
           <%= link_to user.username, user,
                       :title => t('actions.read'),
                       :class => 'display' %>
         </th>
         <td><%= user.full_name %></td>
-        <td style='text-align:center;'>
-          <%= user.account_deactivated? ? yes_icon : t(:no) %>
+        <td class='boolean'>
+          <%= user.account_deactivated? ? yes_pictogram : t(:no) %>
         </td>
-        <td style='text-align:center;'>
-          <%= user.admin? ? yes_icon : t(:no) %>
+        <td class='boolean'>
+          <%= user.admin? ? yes_pictogram : t(:no) %>
         </td>
-        <td style='text-align:center;'>
-          <%= user.manager? ? yes_icon : t(:no)  %>
+        <td class='boolean'>
+          <%= user.manager? ? yes_pictogram : t(:no)  %>
         </td>
-        <td style='text-align:center;'>
-          <%= user.secretary? ? yes_icon : t(:no)  %>
+        <td class='boolean'>
+          <%= user.secretary? ? yes_pictogram : t(:no)  %>
         </td>
-        <td style='text-align:center;'>
-          <%= user.a_person? ? yes_icon : t(:no) %>
+        <td class='boolean'>
+          <%= user.a_person? ? yes_pictogram : t(:no) %>
         </td>
-        <td style='text-align:center;'>
-          <%= link_to edit_icon, edit_admin_user_path(user),
+        <td class="operation">
+          <%= link_to edit_pictogram, edit_admin_user_path(user),
                       :title => t('actions.update'),
                       :class => 'modify' %>
         </td>
-        <td style='text-align:center;'>
-          <%= link_to delete_icon, user,
+        <td class="operation">
+          <%= link_to delete_pictogram, user,
                       :confirm => t("questions.are_you_sure?"),
                       :method => :delete,
                       :title  => t('actions.delete'),
@@ -66,7 +66,7 @@
 </table>
 
 <footer>
-  <%= link_to add_icon(2)+' '+t('admin.users.links.new'), new_admin_user_path,
-              :title  => t('actions.create'),
-              :class => 'modify' %>
+  <%= link_to add_pictogram+' '+t('admin.users.links.new'), new_admin_user_path,
+              :title => t('actions.create'),
+              :class => 'add' %>
 </footer>

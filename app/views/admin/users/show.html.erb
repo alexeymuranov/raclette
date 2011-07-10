@@ -5,8 +5,8 @@
   </li>
   <li>
     <%= link_to t('admin.users.links.new'), new_admin_user_path,
-                :title  => t('actions.create'),
-                :class => 'modify' %>
+                :title => t('actions.create'),
+                :class => 'add' %>
   </li>
 <% end %>
 
@@ -63,7 +63,7 @@
         <dd><%= @user.person_id %></dd>
       </div>
     <% end %>
-      
+
     <div>
       <dt><%= t('field_labels.comments') %></dt>
       <dd><%= @user.comments %></dd>
@@ -87,7 +87,7 @@
       <dd><%= safe_ip.description %></dd>
     </div>
     <% end %>
-  </dl>  
+  </dl>
 
 </section>
 
@@ -100,13 +100,13 @@
       <dt><%= t('field_labels.last_signed_in_at') %></dt>
       <dd><%= @user.last_signed_in_at %></dd>
     </div>
-  </dl>  
+  </dl>
 
 </section>
 
 <footer>
-  <%= link_to edit_icon(2)+' '+t('.links.update'), edit_admin_user_path(@user),
+  <%= link_to edit_pictogram(2)+' '+t('.links.update'), edit_admin_user_path(@user),
               :class => 'modify' %>
-  <%= link_to list_all_icon(2)+' '+t('admin.users.links.show_all'), admin_users_path,
+  <%= link_to list_all_pictogram(2)+' '+t('admin.users.links.show_all'), admin_users_path,
               :class => 'display' %>
 </footer>

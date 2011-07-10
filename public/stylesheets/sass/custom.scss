@@ -1,97 +1,110 @@
-$body-bg-color: #009;
-$body-color: #333;
-$section-bg-color: #fff;
-$alt-section-bg-color: #eef;
-$common-navigation-link-color: #00c;
-$common-navigation-link-color-bright: #00f;
-$logout-navigation-link-color: #063;
-$logout-navigation-link-bg-color: #ff0;
-$disabled-navigation-link-color: #ccc;
+$body-bg-color: Navy;
+$body-text-color: DarkSlateGray;
+$section-bg-color: White;
+$alt-section-bg-color: #E6E6FA;
+$common-navigation-link-color: MediumBlue;
+$common-navigation-link-hover-color: Blue;
+$logout-navigation-link-color: #006400;
+$logout-navigation-link-bg-color: Yellow;
+$disabled-navigation-link-color: Silver;
 $button-link-bg-color: none;
 $button-link-hover-shadow-color: $section-bg-color;
-$view-link-color: #060;
-$modify-link-color: #600;
+$view-link-color: Green;
+$add-link-color: Blue;
+$modify-link-color: Red;
 $odd-table-row-bg-color: $section-bg-color;
 $even-table-row-bg-color: $alt-section-bg-color;
 $table-border-color: darken($alt-section-bg-color, 5%);
 $table-head-bg-color: $table-border-color;
-$focus-glow-color: #f00;
-$focus-background-color: #ffe;
-$login_form-focus-glow-color: #00f;
+$focus-glow-color: Red;
+$focus-bg-color: LightYellow;
+$focus-text-color: Black;
+$login_form-focus-glow-color: Blue;
 
-@mixin rounded-border($radius) {  
-  border-radius: $radius;  
-  -moz-border-radius: $radius;  
-  -webkit-border-radius: $radius;  
+@mixin rounded-border($radius) {
+  border-radius: $radius;
+  -moz-border-radius: $radius;
+  -webkit-border-radius: $radius;
 }
 
-@mixin rounded-outline($radius) {  
-  outline-radius: $radius;  
-  -moz-outline-radius: $radius;  
-  -webkit-outline-radius: $radius;  
+@mixin rounded-outline($radius) {
+  outline-radius: $radius;
+  -moz-outline-radius: $radius;
+  -webkit-outline-radius: $radius;
 }
 
 @mixin box-shadow($x, $y, $blur, $spread, $color) {
-	box-shadow: $x $y $blur $spread $color;
-	-webkit-box-shadow: $x $y $blur $spread $color;
-	-moz-box-shadow: $x $y $blur $spread $color;
+  box-shadow: $x $y $blur $spread $color;
+  -webkit-box-shadow: $x $y $blur $spread $color;
+  -moz-box-shadow: $x $y $blur $spread $color;
 }
 
 body {
   background-color: $body-bg-color;
-  color: $body-color;
+  color: $body-text-color;
   font-size: 11pt;
 }
 
 .container {
   width: 960px;
-  margin-left:160px;
-  padding:0px;
+  margin-left: 160px;
+  padding: 0;
 }
 
 img {
   vertical-align: middle;
 }
 
-input:focus, textarea:focus {
-  @include box-shadow(0, 0, 3px, 0, $focus-glow-color);
-  background-color: $focus-background-color;
+span.pictogram {
+  display: inline-block;
+  font-weight: bold;
+  padding: 0;
+  margin: -100px 0;
+  vertical-align: middle;
+  color: inherit;
+}
+
+input, textarea {
+  &:focus {
+    @include box-shadow(0, 0, 3px, 0, $focus-glow-color);
+    background-color: $focus-bg-color;
+    color: $focus-text-color;
+  }
 }
 
 form.login_form input:focus {
   @include box-shadow(0, 0, 3px, 0, $login_form-focus-glow-color);
 }
 
-/* Navigation */
+div#welcome_logo {
+  text-align: center;
+}
+
+/* Generic navigation */
 
 nav {
-  float: none;
   background-color: $section-bg-color;
-  padding: 0;
-  
+
   ul {
-    white-space-collapse: discard;
     list-style-type: none;
     width: 100%;
     margin: 0;
-    
+
     li {
-      display: inline-block;
       margin: 0;
       padding: 0;
-      
+
       a, a:visited {
         display: inline-block;
-        font-weight: bold;
         text-decoration: none;
         padding: 5px;
       }
-      
+
       ul {
         display: none;
       }
     }
-    
+
     li.separator {}
   }
 }
@@ -101,9 +114,7 @@ nav {
 body > div.container > header {
   font-size: 12pt;
   text-align: left;
-  margin-top: 5px;
-  margin-left: auto;
-  margin-right: auto;
+  margin: 5px auto;
 
   /* Logo box and menu */
 
@@ -136,7 +147,6 @@ body > div.container > header {
 
   div#main_logo:hover div#logo_menu {
     @include box-shadow(0, 0, 5px, 0, $body-bg-color);
-    
     margin-top: 5px;
     display: block;
     opacity: 0.75;
@@ -161,21 +171,21 @@ body > div.container > header {
         display: block;
 
         a, a:visited {
+          display: block;
           margin: 0;
           padding: 5px;
-          display: block;
           font-weight: normal;
         }
       }
 
       li.logout_item {
         float: none;
-        
+
         a.logout_button, a.logout_button:visited {
           @include rounded-border(0);
+          display: block;
           margin: 0;
           padding: 5px;
-          display: block;
         }
       }
 
@@ -189,17 +199,21 @@ body > div.container > header {
     }
   }
 
-  nav {
+  nav#main_menu {
     @include rounded-border(10px);
 
     ul {
-      margin-left: 5px;
-      margin-right: 0;
+      margin: 0 5px;
       padding: 0;
 
       li {
+        display: inline-block;
+        font-weight: bold;
+
         a, a:visited {
           display: inline-block;
+          margin: 0;
+          padding: 5px;
           color: $common-navigation-link-color;
           text-decoration: none;
 
@@ -221,19 +235,17 @@ body > div.container > header {
           padding: 5px 10px;
           color: $logout-navigation-link-color;
           background-color: $logout-navigation-link-bg-color;
-          text-decoration: none;
 
           &:hover {
             color: $logout-navigation-link-bg-color;
             background-color: $logout-navigation-link-color;
-            text-decoration: none;
           }
 
           &:active {
             background-color: lighten($logout-navigation-link-color, 10%);
           }
         }
-      }      
+      }
 
       li.disabled {
         color: $disabled-navigation-link-color;
@@ -242,8 +254,6 @@ body > div.container > header {
         span.disabled_link {
           display: inline-block;
           color: $disabled-navigation-link-color;
-          font-weight: bold;
-          text-decoration: none;
           padding: 5px;
         }
       }
@@ -256,26 +266,29 @@ body > div.container > header {
 body > div.container > footer {
   font-size: 12pt;
   text-align: center;
-  margin-top: 5px;
-  margin-left: auto;
-  margin-right: auto;
-  
+  margin: 5px auto;
+
   nav {
     @include rounded-border(10px);
 
     ul {
       padding:0;
 
-      a, a:visited {
-        color: $common-navigation-link-color;
+      li {
+        display: inline-block;
+        font-weight: bold;
 
-        &:hover {
-          color: $common-navigation-link-color-bright;
-          text-decoration: underline;
+        a, a:visited {
+          color: $common-navigation-link-color;
+
+          &:hover {
+            color: $common-navigation-link-hover-color;
+            text-decoration: underline;
+          }
         }
       }
     }
-  }  
+  }
 }
 
 /* Section */
@@ -291,7 +304,7 @@ body > div.container > section {
   nav#side_menu {
     @include rounded-border(5px);
     position: fixed;
-    top: 220px;
+    top: 110px;
     left: 5px;
     width: 150px;
     margin: 0;
@@ -319,23 +332,23 @@ body > div.container > section {
     @include rounded-border(5px);
     margin: 5px;
     padding: 5px;
-    background: $alt-section-bg-color;
-    
+    background-color: $alt-section-bg-color;
+
     & > section {
       @include rounded-border(5px);
       margin: 5px;
       padding: 5px;
-      background: $section-bg-color;
+      background-color: $section-bg-color;
     }
   }
 
   h1, h2, h3, h4, h5, h6, p {
     color: inherit;
-    line-height:1.5;
+    line-height: 1.5;
     margin-top: 0;
     margin-bottom: 0;
   }
-  
+
   & > h1 {
     text-align: center;
     font-size: 16pt;
@@ -351,13 +364,18 @@ body > div.container > section {
     font-size: 12pt;
     font-weight: bold;
   }
-  
+
   dl.show, dl.form_fields {
     display: table;
     border: solid 1px $table-border-color;
-
+    
     & > div {
       display: table-row;
+
+      &.caption {
+        display: table-caption;
+        text-align: center;
+      }
 
       & > dt {
         display: table-cell;
@@ -367,114 +385,170 @@ body > div.container > section {
       & > dd {
         display: table-cell;
         padding: 0 5px;
+
+        &.long_text {
+          vertical-align: top;
+        }
       }
 
       &:nth-child(odd) {
         & > dt {
-          background: $even-table-row-bg-color;
+          background-color: darken($odd-table-row-bg-color, 5%);
         }
 
         & > dd {
-          background: $odd-table-row-bg-color;
+          background-color: $odd-table-row-bg-color;
         }
-      }      
+      }
 
       &:nth-child(even) {
         & > dt {
-          background: $odd-table-row-bg-color;
+          background-color: darken($even-table-row-bg-color, 5%);
         }
 
         & > dd {
-          background: $even-table-row-bg-color;
+          background-color: $even-table-row-bg-color;
         }
-      }      
+      }
     }
   }
 
   dl.form_fields {
     width: auto;
     margin: auto;
+    
+    & > div > dd.input {
+
+      &.required:after {
+        content: "*";
+      }
+
+      &.required.readonly:after {
+        content: "*!";
+      }      
+
+      &.readonly:after {
+        content: "!";
+      }      
+    }
   }
-  
+
   input[type="checkbox"]:not(:checked) + *.checkbox_conditional {
     display: none;
   }
 
   table {
     border: solid 1px $table-border-color;
-    margin-bottom: 12pt;
     width: auto;
+    margin: 10px 0;
 
-    & > thead > tr > th {
-      background: $table-head-bg-color;
-      text-align: center;
+    th, td {
       padding: 0 5px;
+
+      a {
+        display: block;
+        margin: 0 -5px;
+      }
+    }
+
+    th {
+      background-color: $table-head-bg-color;
+    }
+
+    & > thead > tr > th.boolean {
+      text-align: center;
     }
 
     & > tbody > tr {
 
-      td, th {
-        padding: 0 5px;
+      td.boolean, th.boolean {
+        text-align: center;
       }
 
       &:nth-child(odd) {
         & > td, & > th {
-          background: $odd-table-row-bg-color;
+          background-color: $odd-table-row-bg-color;
         }
       }
 
       &:nth-child(even) {
         & > td, & > th {
-          background: $even-table-row-bg-color;
+          background-color: $even-table-row-bg-color;
         }
       }
     }
 
     &.grid {
-      & > tbody > tr:nth-child(odd) {
-        & > td:nth-child(odd), & > th:nth-child(odd) {
-          background: $even-table-row-bg-color;
+      & > thead > tr {
+        th:nth-child(odd) {
+          background-color: darken($odd-table-row-bg-color, 5%);
         }
 
-        & > td:nth-child(even), & > th:nth-child(even) {
-          background: $odd-table-row-bg-color;
+        th:nth-child(even) {
+          background-color: darken($even-table-row-bg-color, 5%);
+        }
+      }
+
+      & > tbody > tr:nth-child(odd) {
+        & > td:nth-child(odd) {
+          background-color: $even-table-row-bg-color;
+        }
+
+        & > td:nth-child(even) {
+          background-color: $odd-table-row-bg-color;
+        }
+
+        & > th {
+          background-color: darken($even-table-row-bg-color, 5%);
         }
       }
 
       & > tbody > tr:nth-child(even) {
-        & > td:nth-child(odd), & > th:nth-child(odd) {
-          background: $odd-table-row-bg-color;
+        & > td:nth-child(odd) {
+          background-color: $odd-table-row-bg-color;
         }
 
-        & > td:nth-child(even), & > th:nth-child(even) {
-          background: $even-table-row-bg-color;
+        & > td:nth-child(even) {
+          background-color: $even-table-row-bg-color;
         }
+
+        & > th {
+          background-color: darken($odd-table-row-bg-color, 5%);
+        }
+      }
+
+      & > tbody > tr > th {
+        background-color: $table-head-bg-color;
       }
     }
 
     &.records, &.form_fields {
       & > thead > tr > th {
         font-size: 10pt;
-
-        a.current {  
-          padding-left: 20px;  
-          background-repeat: no-repeat;  
-          background-position: left center;
-
-          &.asc {
-            background-image: url(/images/icons/up_triangle-16.png);
-          }
-
-          &.desc {
-            background-image: url(/images/icons/down_triangle-16.png);
-          }
-        }  
       }
+
+      & > tbody > tr {
+        &:nth-child(odd) {
+          & > td.operation {
+            background-color: darken($odd-table-row-bg-color, 5%)
+          }
+        }
+
+        &:nth-child(even) {
+          & > td.operation {
+            background-color: darken($even-table-row-bg-color, 5%)
+          }
+        }
+      }
+    }
+
+    &.records {
+      overflow: scroll;
     }
 
     &.form_fields {
       width: auto;
-      margin: auto;
+      margin: 10px auto;
     }
 
     caption {
@@ -493,6 +567,10 @@ body > div.container > section {
     }
   }
 
+  form div.actions {
+    text-align: center;
+  }
+
   div.link_group {
     @include rounded-border(5px);
     border: dotted 1px;
@@ -500,13 +578,12 @@ body > div.container > section {
 
   a, a:visited {
     @include rounded-border(5px);
-    padding: 5px;
     display: inline-block;
+    padding: 5px;
     text-decoration: none;
     background-color: $button-link-bg-color;
-    
+
     &:hover {
-      @include box-shadow(0, 0, 3px, 0, $button-link-hover-shadow-color);
       text-shadow: 0 0 3px $button-link-hover-shadow-color;
     }
   }
@@ -523,6 +600,21 @@ body > div.container > section {
 
     &:active {
       background-color: lighten($view-link-color, 10%);
+    }
+  }
+
+  a.add, a.add:visited {
+    color: $add-link-color;
+
+    &:hover {
+      color: $section-bg-color;
+      background-color: $add-link-color;
+      text-decoration: none;
+      text-shadow: none;
+    }
+
+    &:active {
+      background-color: lighten($add-link-color, 10%);
     }
   }
 
@@ -559,27 +651,27 @@ div.field, div.actions {
 }
 
 .field_with_errors {
+  display: inline;
   padding: 2px;
   background-color: red;
-  display: inline;
 }
-  
-.field_with_errors .message {  
-  color: #c00;  
-  padding-left: 5px;  
-}  
+
+.field_with_errors .message {
+  color: #c00;
+  padding-left: 5px;
+}
 
 #error_explanation {
   border: 2px solid red;
   background-color: #ccc;
   margin-bottom: 20px;
-  
+
   h2 {
     padding: 5px 5px 5px 15px;
     background-color: #c00;
     color: #fff;
   }
-  
+
   ul li {
     list-style: square;
   }

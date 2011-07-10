@@ -30,7 +30,7 @@ class Admin::UsersController < AdminController
     @title = t('admin.users.edit.title', :username => @user.username)
   end
 
-  def create  # FIXME? (password)
+  def create
   
     params[:admin_user][:safe_ip_ids] ||= []
 
@@ -53,7 +53,7 @@ class Admin::UsersController < AdminController
     end
   end
 
-  def update  # FIXME? (password)
+  def update
     @user = Admin::User.find(params[:id])
     
     params[:admin_user][:safe_ip_ids] ||= []
@@ -116,10 +116,6 @@ class Admin::UsersController < AdminController
 
   private
   
-    def sort_direction  
-      %w[asc desc].include?(params[:direction]) ?  params[:direction] : 'asc'  
-    end
-
     def sort_column  
       Admin::User.column_names.include?(params[:sort]) ? params[:sort] : 'username'
     end

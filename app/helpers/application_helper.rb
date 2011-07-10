@@ -1,3 +1,5 @@
+## encoding: UTF-8
+
 module ApplicationHelper
 
   def title
@@ -17,67 +19,77 @@ module ApplicationHelper
                            'icons/show-24.png',
                            'icons/show-32.png' ]
 
-  def show_icon(size=1)
-    image_tag SHOW_ICON_FILE_NAMES[size], :alt => 'show'
+  def show_pictogram(size=1)
+    # image_tag SHOW_ICON_FILE_NAMES[size], :alt => 'show'
+    css_style = "font-size:#{16+8*size}px;"
+    content_tag :span, '⇒', :class => 'pictogram',
+                            :style => css_style
   end
 
   EDIT_ICON_FILE_NAMES = [ 'icons/edit-16.png',
                            'icons/edit-24.png',
                            'icons/edit-32.png' ]
 
-  def edit_icon(size=1)
-    image_tag EDIT_ICON_FILE_NAMES[size], :alt => 'edit'
+  def edit_pictogram(size=1)
+    # image_tag EDIT_ICON_FILE_NAMES[size], :alt => 'edit'
+    css_style = "font-size:#{16+8*size}px;"
+    content_tag :span, '✎', :class => 'pictogram',
+                            :style => css_style
   end
 
   ADD_ICON_FILE_NAMES = [ 'icons/add-16.png',
                           'icons/add-24.png',
                           'icons/add-32.png' ]
 
-  def add_icon(size=1)
-    image_tag ADD_ICON_FILE_NAMES[size], :alt => 'add'
-    # "<span style=\"display:inline-block;padding:0;margin:0;"\
-    # "font-size:#{32+16*size}px;font-weight:bold;"\
-    # "color:green;\">+</span>".html_safe
-  end
-
-  SAVE_ICON_FILE_NAMES = [ 'icons/save-16.png',
-                           'icons/save-24.png',
-                           'icons/save-32.png' ]
-
-  def save_icon(size=1)
-    image_tag SAVE_ICON_FILE_NAMES[size], :alt => 'save'
+  def add_pictogram(size=1)
+    # image_tag ADD_ICON_FILE_NAMES[size], :alt => 'add'
+    css_style = "font-size:#{16+8*size}px;"
+    content_tag :span, '＋', :class => 'pictogram',
+                            :style => css_style
   end
 
   DELETE_ICON_FILE_NAMES = [ 'icons/delete-16.png',
                              'icons/delete-24.png',
                              'icons/delete-32.png' ]
 
-  def delete_icon(size=1)
-    image_tag DELETE_ICON_FILE_NAMES[size], :alt => 'delete'
+  def delete_pictogram(size=1)
+    # image_tag DELETE_ICON_FILE_NAMES[size], :alt => 'delete'
+    css_style = "font-size:#{16+8*size}px;"
+    content_tag :span, '✕', :class => 'pictogram',
+                            :style => css_style
   end
 
   LIST_ALL_ICON_FILE_NAMES = [ 'icons/list_all-16.png',
                                'icons/list_all-24.png',
                                'icons/list_all-32.png' ]
 
-  def list_all_icon(size=1)
-    image_tag LIST_ALL_ICON_FILE_NAMES[size], :alt => 'list all'
+  def list_all_pictogram(size=1)
+    # image_tag LIST_ALL_ICON_FILE_NAMES[size], :alt => 'list all'
+    css_style = "font-size:#{16+8*size}px;"
+    content_tag :span, '⇕', :class => 'pictogram',
+                            :style => css_style
   end
 
   YES_ICON_FILE_NAMES = [ 'icons/yes-16.png',
                           'icons/yes-24.png',
                           'icons/yes-32.png' ]
 
-  def yes_icon(size=1)
-    image_tag YES_ICON_FILE_NAMES[size], :alt => 'yes', :title => t(:yes)
+  def yes_pictogram(size=1)
+    # image_tag YES_ICON_FILE_NAMES[size], :alt => t(:yes), :title => t(:yes)
+    css_style = "font-size:#{16+8*size}px;"
+    content_tag :span, '✓', :title => t(:yes),
+                            :class => 'pictogram',
+                            :style => css_style
   end
 
-  def sortable(column, title = nil)  
+  def sortable(column, title = nil)
     title ||= column.titleize
     css_class = (column == sort_column) ? "current #{sort_direction}" : nil
-    direction = (column == sort_column && sort_direction == 'asc') ? 'desc' : 'asc'
-    link_to title, { :sort => column, :direction => direction },
-                   { :class => css_class } 
-  end  
-
+    sort_indicator = (column == sort_column) ?
+                     ((sort_direction =='asc') ? '▲ ' : '▼ ') : ''
+    direction = (column == sort_column && sort_direction == 'asc') ?
+                'desc' : 'asc'
+    link_to sort_indicator+title, { :sort => column, :direction => direction },
+                                  { :class => css_class }
+  end
 end
