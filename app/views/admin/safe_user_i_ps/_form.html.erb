@@ -5,7 +5,7 @@
       <colgroup><% @known_ips.size.times do %><col /><% end %></colgroup>
       <thead>
         <tr>
-          <th></th>
+          <th class='empty'></th>
           <% @known_ips.each do |known_ip| %>
             <% note = known_ip.description.blank? ? "" : " (#{known_ip.description})" %>
             <th><%= "#{known_ip.ip}#{note}" %></th>

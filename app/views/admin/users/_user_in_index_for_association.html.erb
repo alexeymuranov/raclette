@@ -1,0 +1,15 @@
+<tr>
+  <th scope=row>
+    <%= link_to user.username, user,
+                :title => t('actions.read'),
+                :class => 'display' %>
+  </th>
+
+  <td><%= user.full_name %></td>
+
+  <% [ :account_deactivated, :admin, :manager, :secretary, :a_person ].each do |attribute| %>
+    <td class="boolean">
+      <%= boolean_to_picto(user.public_send(attribute)) %>
+    </td>
+  <% end %>
+</tr>

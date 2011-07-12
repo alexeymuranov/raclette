@@ -291,57 +291,58 @@ body > div.container > footer {
   }
 }
 
-/* Section */
+/* Side menu */
 
-body > div.container > section {
-  @include rounded-border(10px);
-  margin-top: 5px;
-  padding: 10px;
-  background-color: $section-bg-color;
+nav#side_menu {
+  @include rounded-border(5px);
+  position: fixed;
+  top: 110px;
+  left: 5px;
+  width: 150px;
+  margin: 0;
+  padding: 0;
+  font-weight: normal;
+  font-size: 10pt;
 
-  /* Side menu */
-
-  nav#side_menu {
-    @include rounded-border(5px);
-    position: fixed;
-    top: 110px;
-    left: 5px;
-    width: 150px;
+  ul {
     margin: 0;
     padding: 0;
-    font-weight: normal;
-    font-size: 10pt;
 
-    ul {
-      margin: 0;
-      padding: 0;
+    li {
+      display: block;
 
-      li {
+      a, a:visited {
         display: block;
-
-        a, a:visited {
-          display: block;
-          font-weight: normal;
-          text-decoration: none;
-        }
+        font-weight: normal;
+        text-decoration: none;
       }
     }
   }
+}
+
+/* Sections */
+
+body > div.container > section {
+  @include rounded-border(10px);
+  background-color: $section-bg-color;
+  padding: 10px;
+
+  section {
+    @include rounded-border(5px);
+    margin: 5px 0;
+    padding: 5px;
+  }
 
   & > section {
-    @include rounded-border(5px);
-    margin: 5px;
-    padding: 5px;
     background-color: $alt-section-bg-color;
 
     & > section {
-      @include rounded-border(5px);
-      margin: 5px;
-      padding: 5px;
       background-color: $section-bg-color;
     }
   }
+}
 
+body > div.container section {
   h1, h2, h3, h4, h5, h6, p {
     color: inherit;
     line-height: 1.5;
@@ -413,9 +414,12 @@ body > div.container > section {
     }
   }
 
+  dl.show {
+    margin: 0;
+  }
+
   dl.form_fields {
-    width: auto;
-    margin: auto;
+    margin: 0 auto;
     
     & > div > dd.input {
 
@@ -440,7 +444,7 @@ body > div.container > section {
   table {
     border: solid 1px $table-border-color;
     width: auto;
-    margin: 10px 0;
+    margin: 5px 0 0;
 
     th, td {
       padding: 0 5px;
@@ -542,13 +546,10 @@ body > div.container > section {
       }
     }
 
-    &.records {
-      overflow: scroll;
-    }
-
     &.form_fields {
       width: auto;
-      margin: 10px auto;
+      margin-left: auto;
+      margin-right: auto;
     }
 
     caption {
@@ -559,7 +560,7 @@ body > div.container > section {
 
   fieldset {
     @include rounded-border(5px);
-    margin:0 0 0.5em;
+    margin: 0 0 0.5em;
 
     legend {
       margin: 0;
@@ -634,45 +635,48 @@ body > div.container > section {
   }
 }
 
-/* Styles for validation errors, generated automatically by scaffolding */
+/* Styles for validation errors, use automatically generated classes and ids */
 
 pre {
-  background-color: #eee;
+  background-color: WhiteSmoke;
   padding: 10px;
   font-size: 10pt;
 }
 
-div.field, div.actions {
-  margin-bottom: 10px;
-}
-
 #notice {
-  color: green;
-}
-
-.field_with_errors {
-  display: inline;
-  padding: 2px;
-  background-color: red;
-}
-
-.field_with_errors .message {
-  color: #c00;
-  padding-left: 5px;
+  color: Green;
 }
 
 #error_explanation {
-  border: 2px solid red;
-  background-color: #ccc;
+  border: 2px solid DarkRed;
+  background-color: WhiteSmoke;
   margin-bottom: 20px;
 
   h2 {
     padding: 5px 5px 5px 15px;
-    background-color: #c00;
-    color: #fff;
+    background-color: DarkRed;
+    color: White;
   }
 
-  ul li {
-    list-style: square;
+  ul {
+    margin-bottom: 0;
+
+    li {
+      list-style: square;
+    }
+  }
+}
+
+div.field_with_errors {
+  display: inline;
+  
+  label {
+    color: Red;
+    text-decoration: underline;
+  }
+
+  .message {
+    color: DarkRed;
+    padding-left: 5px;
   }
 }

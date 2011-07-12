@@ -1,0 +1,23 @@
+<%= content_tag :table, :id => :users, :class => "records" do %>
+  <colgroup><col /></colgroup>
+  <colgroup><col /><col /><col /><col /><col /><col /></colgroup>
+  <colgroup><col /><col /></colgroup>
+  <thead>
+    <tr>
+      <th><%= sortable :users, :username, Admin::User.human_attribute_name(:username) %></th>
+
+      <th><%= sortable :users, :full_name, Admin::User.human_attribute_name(:full_name) %></th>
+
+      <% [ :account_deactivated, :admin, :manager, :secretary, :a_person ].each do |attribute| %>
+        <th class="boolean">
+          <%= sortable 'users', attribute, Admin::User.human_attribute_name(attribute) %>
+        </th>
+      <% end %>
+
+      <th class="empty"></th><th class="empty"></th>
+    </tr>
+  </thead>
+  <tbody>
+    <%= render :partial => 'user_in_index', :collection => @users, :as => :user %>
+  </tbody>
+<% end %>

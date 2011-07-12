@@ -4,9 +4,9 @@
       <h2><%= pluralize(@known_ip.errors.count, "error") %> prohibited this known IP from being saved:</h2>
 
       <ul>
-      <% @known_ip.errors.full_messages.each do |msg| %>
-        <li><%= msg %></li>
-      <% end %>
+        <% @known_ip.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
       </ul>
     </div>
   <% end %>
@@ -25,6 +25,7 @@
           <dd><%= @known_ip.ip %></dd>
         </div>
       <% end %>
+
       <div class="field">
         <dt><%= f.label :description, t('field_labels.description') %></dt>
         <dd><%= f.text_field :description, :size => 30, :maxlength => 255 %></dd>

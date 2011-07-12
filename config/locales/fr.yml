@@ -1,4 +1,4 @@
-# French translations for Ruby on Rails
+# French translations for Ruby on Rails "Raclette" apllication
 # Original version downloaded from
 #   https://github.com/svenfuchs/rails-i18n/raw/master/rails/locale/fr.yml
 
@@ -161,6 +161,7 @@ fr:
       less_than_or_equal_to: "doit être inférieur ou égal à %{count}"
       odd: "doit être impair"
       even: "doit être pair"
+
       # Custom:
       email_format: "n'est pas bien formé(e)"
 
@@ -182,12 +183,47 @@ fr:
       full_messages:
         format: "%{attribute} %{message}"
 
+    # Custom:
+    models:
+      admin:
+        user: "Utilisateur"
+        known_ip: "Adresse IP connue"
+      member: "Adhérent"
+    attributes:
+      admin:
+        user:
+          username: "Nom d'utilisateur"
+          full_name: "Nom complet"
+          "a_person": "Personne"
+          person_id: "Id personnelle"
+          email: "Adresse e-mail"
+          "account_deactivated": "Désactivé(e)"
+          "admin": "Administrateur"
+          "manager": "Gestionnaire"
+          "secretary": "Secrétaire"
+          last_signed_in_at: "S'est connecté(e) la dernière fois le"
+          last_signed_in_from_ip: "S'est connecté(e) la dernière fois de l'IP"
+          comments: "Remarques"
+          password: "Mot de passe"
+          password_confirmation: "Confirmation du mot de passe"
+          new_password: "Nouveau mot de passe"
+          new_password_confirmation: "Confirmation du nouveau mot de passe"
+          safe_ips: "Adresses IP autorisées"
+        known_ip:
+          ip: "Adresse IP"
+          description: "Description"
+          safe_users: "Utilisateurs autorisés"
+
 ################################################################
 # Custom translations:
 
   hello: "bonjour"
   "yes": "oui"
   "no": "non"
+
+  formats:
+    "attribute_name:": "%{attribute} :"
+    "attribute_name?": "%{attribute} ?"
 
   page_titles:
     admin_tools: "Administration"
@@ -211,7 +247,7 @@ fr:
     "secretary?": "Secrétaire ?"
     "person?": "Personne ?"
     "deactivated?": "Désactivé(e) ?"
-    last_signed_in_at: "S'est connecté(e)  la dernière fois le :"
+    last_signed_in_at: "S'est connecté(e) la dernière fois le :"
     comments: "Remarques :"
     password: "Mot de passe :"
     password_confirmation: "Confirmation du mot de passe :"
@@ -275,7 +311,7 @@ fr:
         header: "Utilisateur « %{username} »"
         captions:
           user_data: "Données de l'utilisateur"
-          authorized_ips: "Adresses IP autorisées"
+          safe_ips: "Adresses IP autorisées"
           other: "Divers"
         links:
           update: "Mise à jour"
@@ -328,6 +364,10 @@ fr:
       show:
         title: "%{ip}"
         header: "Adresse IP %{ip}"
+        captions:
+          known_ip_data: "Données de l'adresse IP"
+          safe_users: "Utilisateurs autorisés"
+          other: "Divers"
         links:
           update: "Mise à jour"
       new:

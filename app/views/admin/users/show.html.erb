@@ -1,107 +1,71 @@
 <% content_for :side_menu_list_items do %>
-  <li>
-    <%= link_to t('admin.users.links.show_all'), admin_users_path,
-                :class => 'display' %>
-  </li>
-  <li>
-    <%= link_to t('admin.users.links.new'), new_admin_user_path,
-                :title => t('actions.create'),
-                :class => 'add' %>
-  </li>
+  <li><%= link_to t('admin.users.links.show_all'),
+                  admin_users_path,
+                  :class => 'display' %></li>
+  <li><%= link_to t('admin.users.links.new'), new_admin_user_path,
+                  :title => t('actions.create'),
+                  :class => 'add' %></li>
 <% end %>
 
 <h1><%= t '.header', :username => @user.username %></h1>
 
 <section>
-
-  <h2><%= t 'admin.users.show.captions.user_data', :username => @user.username %></h2>
-
+  <h2><%= t 'admin.users.show.captions.user_data' %></h2>
   <dl class="show">
-    <div>
-      <dt><%= t 'field_labels.username' %></dt>
-      <dd><b><%= @user.username %></b></dd>
-    </div>
-
-    <div>
-      <dt><%= t 'field_labels.full_name' %></dt>
-      <dd><%= @user.full_name %></dd>
-    </div>
-
-    <div>
-      <dt><%= t 'field_labels.deactivated?' %></dt>
-      <dd><%= @user.account_deactivated? ? t(:yes) : t(:no) %></dd>
-    </div>
-
-    <div>
-      <dt><%= t 'field_labels.admin?' %></dt>
-      <dd><%= @user.admin? ? t(:yes) : t(:no) %></dd>
-    </div>
-
-    <div>
-      <dt><%= t 'field_labels.manager?' %></dt>
-      <dd><%= @user.manager? ? t(:yes) : t(:no) %></dd>
-    </div>
-
-    <div>
-      <dt><%= t 'field_labels.secretary?' %></dt>
-      <dd><%= @user.secretary? ? t(:yes) : t(:no) %></dd>
-    </div>
-
-    <div>
-      <dt><%= t 'field_labels.email' %></dt>
-      <dd><%= @user.email %></dd>
-    </div>
-
-    <div>
-      <dt><%= t 'field_labels.person?' %></dt>
-      <dd><%= @user.a_person? ? t(:yes) : t(:no) %></dd>
-    </div>
-
-    <% if @user.a_person? %>
+    <% [ :username ].each do |attribute| %>
       <div>
-        <dt><%= t 'field_labels.person_id' %></dt>
-        <dd><%= @user.person_id %></dd>
+        <dt><%= t 'formats.attribute_name:', :attribute => Admin::User.human_attribute_name(attribute) %></dt>
+        <dd><b><%= @user.public_send(attribute) %></b></dd>
       </div>
     <% end %>
 
+    <% [ :full_name, :email ].each do |attribute| %>
+      <div>
+        <dt><%= t 'formats.attribute_name:', :attribute => Admin::User.human_attribute_name(attribute) %></dt>
+        <dd><%= @user.public_send(attribute) %></dd>
+      </div>
+    <% end %>
+
+    <% [ :account_deactivated, :admin, :manager, :secretary, :a_person ].each do |attribute| %>
+      <div>
+        <dt><%= t 'formats.attribute_name?', :attribute => Admin::User.human_attribute_name(attribute) %></dt>
+        <dd><%= boolean_to_yes_no(@user.public_send(attribute)) %></dd>
+      </div>
+    <% end %>
+
+    <% if @user.a_person? %>
+      <% [ :person_id ].each do |attribute| %>
+        <div>
+          <dt><%= t 'formats.attribute_name:', :attribute => Admin::User.human_attribute_name(attribute) %></dt>
+          <dd><%= @user.public_send(attribute) %></dd>
+        </div>
+      <% end %>
+    <% end %>
+
     <div>
-      <dt><%= t('field_labels.comments') %></dt>
+      <dt><%= t 'formats.attribute_name:', :attribute => Admin::User.human_attribute_name(:comments) %></dt>
       <dd><%= @user.comments %></dd>
     </div>
   </dl>
-
 </section>
 
 <section>
+  <h2><%= Admin::User.human_attribute_name(:safe_ips) %></h2>
+  <%= render 'admin/known_i_ps/index_table_for_association',
+             :known_ips  => @safe_ips,
+             :table_name => :safe_ips %>
+</section>
 
-  <h2><%= t 'admin.users.show.captions.authorized_ips' %></h2>
-
-  <dl class="show association_list">
-    <% @user.safe_ips.each do |safe_ip| %>
-    <div>
-      <dt>
-        <%= link_to safe_ip.ip, safe_ip,
-                    :title => t('actions.read'),
-                    :class => 'display' %>
-      </dt>
-      <dd><%= safe_ip.description %></dd>
-    </div>
+<section>
+  <h2><%= t 'admin.users.show.captions.other' %></h2>
+  <dl class="show">
+    <% [ :last_signed_in_at ].each do |attribute| %>
+      <div>
+        <dt><%= t 'formats.attribute_name:', :attribute => Admin::User.human_attribute_name(attribute) %></dt>
+        <dd><%= @user.public_send(attribute) %></dd>
+      </div>
     <% end %>
   </dl>
-
-</section>
-
-<section>
-
-  <h2><%= t 'admin.users.show.captions.other' %></h2>
-
-  <dl class="show">
-    <div>
-      <dt><%= t('field_labels.last_signed_in_at') %></dt>
-      <dd><%= @user.last_signed_in_at %></dd>
-    </div>
-  </dl>
-
 </section>
 
 <footer>

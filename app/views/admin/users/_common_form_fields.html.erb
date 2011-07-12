@@ -1,45 +1,59 @@
-  <%= field_set_tag t('admin.users.edit.captions.user_data') do %>
-    <dl class="form_fields">
+<%= field_set_tag t('admin.users.edit.captions.user_data') do %>
+  <dl class="form_fields">
+    <div class="field">
       <% if @user.new_record? %>
-        <div class="field">
-          <dt><%= f.label :username, t('field_labels.username') %></dt>
-          <dd class="required readonly input">
-            <%= f.text_field :username, :size => 30, :maxlength => 32, :required => :required %></dd>
-        </div>
+        <dt><%= f.label :username, t('formats.attribute_name:', :attribute => Admin::User.human_attribute_name(:username)) %></dt>
+        <dd class="required readonly input">
+          <%= f.text_field :username, :size => 30, :maxlength => 32, :required => :required %></dd>
       <% else %>
-        <div class="field">
-          <dt><b><%= t 'field_labels.username' %></b></dt>
-          <dd><%= @user.username %></dd>
-        </div>
+        <dt><b><%= t('formats.attribute_name:', :attribute => Admin::User.human_attribute_name(:username)) %></b></dt>
+        <dd><%= @user.username %></dd>
       <% end %>
+    </div>
+
+    <div class="field">
+      <dt><%= f.label :full_name, t('formats.attribute_name:', :attribute => Admin::User.human_attribute_name(:full_name)) %></dt>
+      <dd class="required input">
+        <%= f.text_field :full_name, :size => 30, :maxlength => 64, :required => :required %></dd>
+    </div>
+
+    <div class="field">
+      <dt><%= f.label :email, t('formats.attribute_name:', :attribute => Admin::User.human_attribute_name(:email)) %></dt>
+      <dd><%= f.email_field :email, :size => 30, :maxlength => 255 %></dd>
+    </div>
+
+    <% [ :account_deactivated, :admin ].each do |attribute| %>
       <div class="field">
-        <dt><%= f.label :full_name, t('field_labels.full_name') %></dt>
-        <dd class="required input">
-          <%= f.text_field :full_name, :size => 30, :maxlength => 64, :required => :required %></dd>
+        <dt><%= f.label attribute, t('formats.attribute_name?', :attribute => Admin::User.human_attribute_name(attribute)) %></dt>
+        <dd><%= f.check_box attribute, :disabled => (@user == current_user) %></dd>
       </div>
+    <% end %>
+
+    <% [ :manager, :secretary, :a_person ].each do |attribute| %>
       <div class="field">
-        <dt><%= f.label :account_deactivated, t('field_labels.deactivated?') %></dt>
-        <dd><%= f.check_box :account_deactivated, :disabled => (@user == current_user) %></dd>
+        <dt><%= f.label attribute, t('formats.attribute_name?', :attribute => Admin::User.human_attribute_name(attribute)) %></dt>
+        <dd><%= f.check_box attribute %></dd>
       </div>
-      <div class="field">
-        <dt><%= f.label :admin, t('field_labels.admin?') %></dt>
-        <dd><%= f.check_box :admin, :disabled => (@user == current_user) %></dd>
-      </div>
-      <div class="field">
-        <dt><%= f.label :manager, t('field_labels.manager?') %></dt>
-        <dd><%= f.check_box :manager %></dd>
-      </div>
-      <div class="field">
-        <dt><%= f.label :secretary, t('field_labels.secretary?') %></dt>
-        <dd><%= f.check_box :secretary %></dd>
-      </div>
-      <div class="field">
-        <dt><%= f.label :email, t('field_labels.email') %></dt>
-        <dd><%= f.email_field :email, :size => 30, :maxlength => 255 %></dd>
-      </div>
-      <div class="field">
-        <dt><%= f.label :a_person, t('field_labels.person?') %></dt>
-        <dd><%= f.check_box :a_person %></dd>
-      </div>
-    </dl>
-  <% end %>
+    <% end %>
+ </dl>
+<% end %>
+
+<%= field_set_tag t('admin.users.edit.captions.authorized_ips') do %>
+  <%= render 'admin/known_i_ps/selection_index_table_for_association_form',
+             :f                          => f,
+             :known_ips                  => @known_ips,
+             :id_prefix                  => "admin_user_safe_ip_ids",
+             :array_name                 => "admin_user[safe_ip_ids]",
+             :check_box_selection_header => t('field_labels.authorized?(ip)') %>
+<% end %>
+
+<%= field_set_tag t('admin.users.edit.captions.comments') do %>
+  <dl class="form_fields">
+    <div>
+      <dt>
+        <%= f.label :comments, t('formats.attribute_name:', :attribute => Admin::User.human_attribute_name(:comments)) %>
+      </dt>
+      <dd class="long_text"><%= f.text_area :comments, :maxlength => 1000 %></dd>
+    </div>
+  </dl>
+<% end %>

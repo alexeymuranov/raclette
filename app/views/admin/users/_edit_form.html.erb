@@ -16,53 +16,6 @@
 
   <%= render 'common_form_fields', :f => f %>
 
-  <%= field_set_tag t('admin.users.edit.captions.authorized_ips') do %>
-    <table class="form_fields">
-      <colgroup><col /><col /><col /></colgroup>
-      <thead>
-        <tr>
-          <th>
-            <%= t 'field_labels.ip' %>
-          </th>
-          <th>
-            <%= t 'field_labels.description' %>
-          </th>
-          <th class='boolean'>
-            <%= t 'field_labels.authorized?(ip)' %>
-          </th>
-        </tr>
-      </thead>
-      <tbody>
-        <% @safe_ips.each do |known_ip| %>
-        <tr class="field">
-          <th scope=row>
-            <%= label_tag "admin_user_safe_ip_ids_#{known_ip.id}", known_ip.ip %>
-          </th>
-          <td>
-            <%= known_ip.description %>
-          </td>
-          <td class="boolean">
-            <%= check_box_tag "admin_user[safe_ip_ids][]", known_ip.id, true, :id => "admin_user_safe_ip_ids_#{known_ip.id}" %>
-          </td>
-        </tr>
-        <% end %>
-        <% @other_ips.each do |known_ip| %>
-        <tr class="field">
-          <th scope=row>
-            <%= label_tag "admin_user_safe_ip_ids_#{known_ip.id}", known_ip.ip %>
-          </th>
-          <td>
-            <%= known_ip.description %>
-          </td>
-          <td class='boolean'>
-            <%= check_box_tag "admin_user[safe_ip_ids][]", known_ip.id, false, :id => "admin_user_safe_ip_ids_#{known_ip.id}" %>
-          </td>
-        </tr>
-        <% end %>
-      </tbody>
-    </table>
-  <% end %>
-
   <% if @user == current_user %>
     <%= field_set_tag t('admin.users.edit.captions.new_password') do %>
       <%= label_tag :change_password, t('field_labels.change_password?') %>
@@ -84,8 +37,6 @@
       </dl>
     <% end %>
   <% end %>
-
-  <%= render 'comments_field', :f => f %>
 
   <div class="actions">
     <%= f.submit t('buttons.save') %>

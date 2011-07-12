@@ -180,232 +180,228 @@ body > div.container > footer {
             color: blue;
             text-decoration: underline; }
 
-/* Section */
+/* Side menu */
+nav#side_menu {
+  border-radius: 5px;
+  -moz-border-radius: 5px;
+  -webkit-border-radius: 5px;
+  position: fixed;
+  top: 110px;
+  left: 5px;
+  width: 150px;
+  margin: 0;
+  padding: 0;
+  font-weight: normal;
+  font-size: 10pt; }
+  nav#side_menu ul {
+    margin: 0;
+    padding: 0; }
+    nav#side_menu ul li {
+      display: block; }
+      nav#side_menu ul li a, nav#side_menu ul li a:visited {
+        display: block;
+        font-weight: normal;
+        text-decoration: none; }
+
+/* Sections */
 body > div.container > section {
   border-radius: 10px;
   -moz-border-radius: 10px;
   -webkit-border-radius: 10px;
-  margin-top: 5px;
-  padding: 10px;
   background-color: white;
-  /* Side menu */ }
-  body > div.container > section nav#side_menu {
+  padding: 10px; }
+  body > div.container > section section {
     border-radius: 5px;
     -moz-border-radius: 5px;
     -webkit-border-radius: 5px;
-    position: fixed;
-    top: 110px;
-    left: 5px;
-    width: 150px;
-    margin: 0;
-    padding: 0;
-    font-weight: normal;
-    font-size: 10pt; }
-    body > div.container > section nav#side_menu ul {
-      margin: 0;
-      padding: 0; }
-      body > div.container > section nav#side_menu ul li {
-        display: block; }
-        body > div.container > section nav#side_menu ul li a, body > div.container > section nav#side_menu ul li a:visited {
-          display: block;
-          font-weight: normal;
-          text-decoration: none; }
+    margin: 5px 0;
+    padding: 5px; }
   body > div.container > section > section {
-    border-radius: 5px;
-    -moz-border-radius: 5px;
-    -webkit-border-radius: 5px;
-    margin: 5px;
-    padding: 5px;
     background-color: #e6e6fa; }
     body > div.container > section > section > section {
-      border-radius: 5px;
-      -moz-border-radius: 5px;
-      -webkit-border-radius: 5px;
-      margin: 5px;
-      padding: 5px;
       background-color: white; }
-  body > div.container > section h1, body > div.container > section h2, body > div.container > section h3, body > div.container > section h4, body > div.container > section h5, body > div.container > section h6, body > div.container > section p {
-    color: inherit;
-    line-height: 1.5;
-    margin-top: 0;
-    margin-bottom: 0; }
-  body > div.container > section > h1 {
-    text-align: center;
-    font-size: 16pt;
-    font-weight: bold; }
-  body > div.container > section h2, body > div.container > section > section > h1 {
-    font-size: 14pt;
-    font-weight: bold; }
-  body > div.container > section h3, body > div.container > section h4, body > div.container > section h5, body > div.container > section > section section h1 {
-    font-size: 12pt;
-    font-weight: bold; }
-  body > div.container > section dl.show, body > div.container > section dl.form_fields {
-    display: table;
-    border: solid 1px #d1d1f6; }
-    body > div.container > section dl.show > div, body > div.container > section dl.form_fields > div {
-      display: table-row; }
-      body > div.container > section dl.show > div.caption, body > div.container > section dl.form_fields > div.caption {
-        display: table-caption;
-        text-align: center; }
-      body > div.container > section dl.show > div > dt, body > div.container > section dl.form_fields > div > dt {
-        display: table-cell;
-        padding: 0 5px; }
-      body > div.container > section dl.show > div > dd, body > div.container > section dl.form_fields > div > dd {
-        display: table-cell;
-        padding: 0 5px; }
-        body > div.container > section dl.show > div > dd.long_text, body > div.container > section dl.form_fields > div > dd.long_text {
-          vertical-align: top; }
-      body > div.container > section dl.show > div:nth-child(odd) > dt, body > div.container > section dl.form_fields > div:nth-child(odd) > dt {
-        background-color: #f2f2f2; }
-      body > div.container > section dl.show > div:nth-child(odd) > dd, body > div.container > section dl.form_fields > div:nth-child(odd) > dd {
-        background-color: white; }
-      body > div.container > section dl.show > div:nth-child(even) > dt, body > div.container > section dl.form_fields > div:nth-child(even) > dt {
-        background-color: #d1d1f6; }
-      body > div.container > section dl.show > div:nth-child(even) > dd, body > div.container > section dl.form_fields > div:nth-child(even) > dd {
-        background-color: #e6e6fa; }
-  body > div.container > section dl.form_fields {
-    width: auto;
-    margin: auto; }
-    body > div.container > section dl.form_fields > div > dd.input.required:after {
-      content: "*"; }
-    body > div.container > section dl.form_fields > div > dd.input.required.readonly:after {
-      content: "*!"; }
-    body > div.container > section dl.form_fields > div > dd.input.readonly:after {
-      content: "!"; }
-  body > div.container > section input[type="checkbox"]:not(:checked) + *.checkbox_conditional {
-    display: none; }
-  body > div.container > section table {
-    border: solid 1px #d1d1f6;
-    width: auto;
-    margin: 10px 0; }
-    body > div.container > section table th, body > div.container > section table td {
-      padding: 0 5px; }
-      body > div.container > section table th a, body > div.container > section table td a {
-        display: block;
-        margin: 0 -5px; }
-    body > div.container > section table th {
-      background-color: #d1d1f6; }
-    body > div.container > section table > thead > tr > th.boolean {
-      text-align: center; }
-    body > div.container > section table > tbody > tr td.boolean, body > div.container > section table > tbody > tr th.boolean {
-      text-align: center; }
-    body > div.container > section table > tbody > tr:nth-child(odd) > td, body > div.container > section table > tbody > tr:nth-child(odd) > th {
-      background-color: white; }
-    body > div.container > section table > tbody > tr:nth-child(even) > td, body > div.container > section table > tbody > tr:nth-child(even) > th {
-      background-color: #e6e6fa; }
-    body > div.container > section table.grid > thead > tr th:nth-child(odd) {
-      background-color: #f2f2f2; }
-    body > div.container > section table.grid > thead > tr th:nth-child(even) {
-      background-color: #d1d1f6; }
-    body > div.container > section table.grid > tbody > tr:nth-child(odd) > td:nth-child(odd) {
-      background-color: #e6e6fa; }
-    body > div.container > section table.grid > tbody > tr:nth-child(odd) > td:nth-child(even) {
-      background-color: white; }
-    body > div.container > section table.grid > tbody > tr:nth-child(odd) > th {
-      background-color: #d1d1f6; }
-    body > div.container > section table.grid > tbody > tr:nth-child(even) > td:nth-child(odd) {
-      background-color: white; }
-    body > div.container > section table.grid > tbody > tr:nth-child(even) > td:nth-child(even) {
-      background-color: #e6e6fa; }
-    body > div.container > section table.grid > tbody > tr:nth-child(even) > th {
-      background-color: #f2f2f2; }
-    body > div.container > section table.grid > tbody > tr > th {
-      background-color: #d1d1f6; }
-    body > div.container > section table.records > thead > tr > th, body > div.container > section table.form_fields > thead > tr > th {
-      font-size: 10pt; }
-    body > div.container > section table.records > tbody > tr:nth-child(odd) > td.operation, body > div.container > section table.form_fields > tbody > tr:nth-child(odd) > td.operation {
-      background-color: #f2f2f2; }
-    body > div.container > section table.records > tbody > tr:nth-child(even) > td.operation, body > div.container > section table.form_fields > tbody > tr:nth-child(even) > td.operation {
-      background-color: #d1d1f6; }
-    body > div.container > section table.records {
-      overflow: scroll; }
-    body > div.container > section table.form_fields {
-      width: auto;
-      margin: 10px auto; }
-    body > div.container > section table caption {
-      text-align: center;
-      white-space: nowrap; }
-  body > div.container > section fieldset {
-    border-radius: 5px;
-    -moz-border-radius: 5px;
-    -webkit-border-radius: 5px;
-    margin: 0 0 0.5em; }
-    body > div.container > section fieldset legend {
-      margin: 0;
-      padding: 0px 5px; }
-  body > div.container > section form div.actions {
-    text-align: center; }
-  body > div.container > section div.link_group {
-    border-radius: 5px;
-    -moz-border-radius: 5px;
-    -webkit-border-radius: 5px;
-    border: dotted 1px; }
-  body > div.container > section a, body > div.container > section a:visited {
-    border-radius: 5px;
-    -moz-border-radius: 5px;
-    -webkit-border-radius: 5px;
-    display: inline-block;
-    padding: 5px;
-    text-decoration: none;
-    background-color: none; }
-    body > div.container > section a:hover, body > div.container > section a:visited:hover {
-      text-shadow: 0 0 3px white; }
-  body > div.container > section a.display, body > div.container > section a.display:visited {
-    color: green; }
-    body > div.container > section a.display:hover, body > div.container > section a.display:visited:hover {
-      color: white;
-      background-color: green;
-      text-decoration: none;
-      text-shadow: none; }
-    body > div.container > section a.display:active, body > div.container > section a.display:visited:active {
-      background-color: #00b300; }
-  body > div.container > section a.add, body > div.container > section a.add:visited {
-    color: blue; }
-    body > div.container > section a.add:hover, body > div.container > section a.add:visited:hover {
-      color: white;
-      background-color: blue;
-      text-decoration: none;
-      text-shadow: none; }
-    body > div.container > section a.add:active, body > div.container > section a.add:visited:active {
-      background-color: #3333ff; }
-  body > div.container > section a.modify, body > div.container > section a.modify:visited {
-    color: red; }
-    body > div.container > section a.modify:hover, body > div.container > section a.modify:visited:hover {
-      color: white;
-      background-color: red;
-      text-decoration: none;
-      text-shadow: none; }
-    body > div.container > section a.modify:active, body > div.container > section a.modify:visited:active {
-      background-color: #ff3333; }
 
-/* Styles for validation errors, generated automatically by scaffolding */
+body > div.container section h1, body > div.container section h2, body > div.container section h3, body > div.container section h4, body > div.container section h5, body > div.container section h6, body > div.container section p {
+  color: inherit;
+  line-height: 1.5;
+  margin-top: 0;
+  margin-bottom: 0; }
+body > div.container section > h1 {
+  text-align: center;
+  font-size: 16pt;
+  font-weight: bold; }
+body > div.container section h2, body > div.container section > section > h1 {
+  font-size: 14pt;
+  font-weight: bold; }
+body > div.container section h3, body > div.container section h4, body > div.container section h5, body > div.container section > section section h1 {
+  font-size: 12pt;
+  font-weight: bold; }
+body > div.container section dl.show, body > div.container section dl.form_fields {
+  display: table;
+  border: solid 1px #d1d1f6; }
+  body > div.container section dl.show > div, body > div.container section dl.form_fields > div {
+    display: table-row; }
+    body > div.container section dl.show > div.caption, body > div.container section dl.form_fields > div.caption {
+      display: table-caption;
+      text-align: center; }
+    body > div.container section dl.show > div > dt, body > div.container section dl.form_fields > div > dt {
+      display: table-cell;
+      padding: 0 5px; }
+    body > div.container section dl.show > div > dd, body > div.container section dl.form_fields > div > dd {
+      display: table-cell;
+      padding: 0 5px; }
+      body > div.container section dl.show > div > dd.long_text, body > div.container section dl.form_fields > div > dd.long_text {
+        vertical-align: top; }
+    body > div.container section dl.show > div:nth-child(odd) > dt, body > div.container section dl.form_fields > div:nth-child(odd) > dt {
+      background-color: #f2f2f2; }
+    body > div.container section dl.show > div:nth-child(odd) > dd, body > div.container section dl.form_fields > div:nth-child(odd) > dd {
+      background-color: white; }
+    body > div.container section dl.show > div:nth-child(even) > dt, body > div.container section dl.form_fields > div:nth-child(even) > dt {
+      background-color: #d1d1f6; }
+    body > div.container section dl.show > div:nth-child(even) > dd, body > div.container section dl.form_fields > div:nth-child(even) > dd {
+      background-color: #e6e6fa; }
+body > div.container section dl.show {
+  margin: 0; }
+body > div.container section dl.form_fields {
+  margin: 0 auto; }
+  body > div.container section dl.form_fields > div > dd.input.required:after {
+    content: "*"; }
+  body > div.container section dl.form_fields > div > dd.input.required.readonly:after {
+    content: "*!"; }
+  body > div.container section dl.form_fields > div > dd.input.readonly:after {
+    content: "!"; }
+body > div.container section input[type="checkbox"]:not(:checked) + *.checkbox_conditional {
+  display: none; }
+body > div.container section table {
+  border: solid 1px #d1d1f6;
+  width: auto;
+  margin: 5px 0 0; }
+  body > div.container section table th, body > div.container section table td {
+    padding: 0 5px; }
+    body > div.container section table th a, body > div.container section table td a {
+      display: block;
+      margin: 0 -5px; }
+  body > div.container section table th {
+    background-color: #d1d1f6; }
+  body > div.container section table > thead > tr > th.boolean {
+    text-align: center; }
+  body > div.container section table > tbody > tr td.boolean, body > div.container section table > tbody > tr th.boolean {
+    text-align: center; }
+  body > div.container section table > tbody > tr:nth-child(odd) > td, body > div.container section table > tbody > tr:nth-child(odd) > th {
+    background-color: white; }
+  body > div.container section table > tbody > tr:nth-child(even) > td, body > div.container section table > tbody > tr:nth-child(even) > th {
+    background-color: #e6e6fa; }
+  body > div.container section table.grid > thead > tr th:nth-child(odd) {
+    background-color: #f2f2f2; }
+  body > div.container section table.grid > thead > tr th:nth-child(even) {
+    background-color: #d1d1f6; }
+  body > div.container section table.grid > tbody > tr:nth-child(odd) > td:nth-child(odd) {
+    background-color: #e6e6fa; }
+  body > div.container section table.grid > tbody > tr:nth-child(odd) > td:nth-child(even) {
+    background-color: white; }
+  body > div.container section table.grid > tbody > tr:nth-child(odd) > th {
+    background-color: #d1d1f6; }
+  body > div.container section table.grid > tbody > tr:nth-child(even) > td:nth-child(odd) {
+    background-color: white; }
+  body > div.container section table.grid > tbody > tr:nth-child(even) > td:nth-child(even) {
+    background-color: #e6e6fa; }
+  body > div.container section table.grid > tbody > tr:nth-child(even) > th {
+    background-color: #f2f2f2; }
+  body > div.container section table.grid > tbody > tr > th {
+    background-color: #d1d1f6; }
+  body > div.container section table.records > thead > tr > th, body > div.container section table.form_fields > thead > tr > th {
+    font-size: 10pt; }
+  body > div.container section table.records > tbody > tr:nth-child(odd) > td.operation, body > div.container section table.form_fields > tbody > tr:nth-child(odd) > td.operation {
+    background-color: #f2f2f2; }
+  body > div.container section table.records > tbody > tr:nth-child(even) > td.operation, body > div.container section table.form_fields > tbody > tr:nth-child(even) > td.operation {
+    background-color: #d1d1f6; }
+  body > div.container section table.form_fields {
+    width: auto;
+    margin-left: auto;
+    margin-right: auto; }
+  body > div.container section table caption {
+    text-align: center;
+    white-space: nowrap; }
+body > div.container section fieldset {
+  border-radius: 5px;
+  -moz-border-radius: 5px;
+  -webkit-border-radius: 5px;
+  margin: 0 0 0.5em; }
+  body > div.container section fieldset legend {
+    margin: 0;
+    padding: 0px 5px; }
+body > div.container section form div.actions {
+  text-align: center; }
+body > div.container section div.link_group {
+  border-radius: 5px;
+  -moz-border-radius: 5px;
+  -webkit-border-radius: 5px;
+  border: dotted 1px; }
+body > div.container section a, body > div.container section a:visited {
+  border-radius: 5px;
+  -moz-border-radius: 5px;
+  -webkit-border-radius: 5px;
+  display: inline-block;
+  padding: 5px;
+  text-decoration: none;
+  background-color: none; }
+  body > div.container section a:hover, body > div.container section a:visited:hover {
+    text-shadow: 0 0 3px white; }
+body > div.container section a.display, body > div.container section a.display:visited {
+  color: green; }
+  body > div.container section a.display:hover, body > div.container section a.display:visited:hover {
+    color: white;
+    background-color: green;
+    text-decoration: none;
+    text-shadow: none; }
+  body > div.container section a.display:active, body > div.container section a.display:visited:active {
+    background-color: #00b300; }
+body > div.container section a.add, body > div.container section a.add:visited {
+  color: blue; }
+  body > div.container section a.add:hover, body > div.container section a.add:visited:hover {
+    color: white;
+    background-color: blue;
+    text-decoration: none;
+    text-shadow: none; }
+  body > div.container section a.add:active, body > div.container section a.add:visited:active {
+    background-color: #3333ff; }
+body > div.container section a.modify, body > div.container section a.modify:visited {
+  color: red; }
+  body > div.container section a.modify:hover, body > div.container section a.modify:visited:hover {
+    color: white;
+    background-color: red;
+    text-decoration: none;
+    text-shadow: none; }
+  body > div.container section a.modify:active, body > div.container section a.modify:visited:active {
+    background-color: #ff3333; }
+
+/* Styles for validation errors, use automatically generated classes and ids */
 pre {
-  background-color: #eee;
+  background-color: WhiteSmoke;
   padding: 10px;
   font-size: 10pt; }
 
-div.field, div.actions {
-  margin-bottom: 10px; }
-
 #notice {
-  color: green; }
-
-.field_with_errors {
-  display: inline;
-  padding: 2px;
-  background-color: red; }
-
-.field_with_errors .message {
-  color: #c00;
-  padding-left: 5px; }
+  color: Green; }
 
 #error_explanation {
-  border: 2px solid red;
-  background-color: #ccc;
+  border: 2px solid DarkRed;
+  background-color: WhiteSmoke;
   margin-bottom: 20px; }
   #error_explanation h2 {
     padding: 5px 5px 5px 15px;
-    background-color: #c00;
-    color: #fff; }
-  #error_explanation ul li {
-    list-style: square; }
+    background-color: DarkRed;
+    color: White; }
+  #error_explanation ul {
+    margin-bottom: 0; }
+    #error_explanation ul li {
+      list-style: square; }
+
+div.field_with_errors {
+  display: inline; }
+  div.field_with_errors label {
+    color: Red;
+    text-decoration: underline; }
+  div.field_with_errors .message {
+    color: DarkRed;
+    padding-left: 5px; }

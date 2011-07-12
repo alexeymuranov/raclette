@@ -16,40 +16,6 @@
 
   <%= render 'common_form_fields', :f => f %>
 
-  <%= field_set_tag t('admin.users.new.captions.authorized_ips') do %>
-    <table class="form_fields">
-      <colgroup><col /><col /><col /></colgroup>
-      <thead>
-        <tr>
-          <th>
-            <%= t 'field_labels.ip' %>
-          </th>
-          <th>
-            <%= t 'field_labels.description' %>
-          </th>
-          <th class='boolean'>
-            <%= t 'field_labels.authorized?(ip)' %>
-          </th>
-        </tr>
-      </thead>
-      <tbody>
-        <% @known_ips.each do |known_ip| %>
-        <tr>
-          <th scope=row>
-            <%= label_tag "admin_user_safe_ip_ids_#{known_ip.id}", known_ip.ip %>
-          </th>
-          <td>
-            <%= known_ip.description %>
-          </td>
-          <td class='boolean'>
-            <%= check_box_tag "admin_user[safe_ip_ids][]", known_ip.id, false, :id => "admin_user_safe_ip_ids_#{known_ip.id}" %>
-          </td>
-        </tr>
-        <% end %>
-      </tbody>
-    </table>
-  <% end %>
-
   <%= field_set_tag t('admin.users.new.captions.password') do %>
     <dl class="form_fields">
       <div class="field">
@@ -63,8 +29,6 @@
       </div>
     </dl>
   <% end %>
-
-  <%= render 'comments_field', :f => f %>
 
   <div class="actions">
     <%= f.submit t('buttons.save') %>

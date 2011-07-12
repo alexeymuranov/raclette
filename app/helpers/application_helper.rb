@@ -82,14 +82,37 @@ module ApplicationHelper
                             :style => css_style
   end
 
-  def sortable(column, title = nil)
-    title ||= column.titleize
-    css_class = (column == sort_column) ? "current #{sort_direction}" : nil
-    sort_indicator = (column == sort_column) ?
-                     ((sort_direction =='asc') ? '▲ ' : '▼ ') : ''
-    direction = (column == sort_column && sort_direction == 'asc') ?
-                'desc' : 'asc'
-    link_to sort_indicator+title, { :sort => column, :direction => direction },
+  def boolean_to_yes_no(bool)
+    bool ? t(:yes) : t(:no)
+  end
+
+  def boolean_to_picto(bool, size=1)
+    bool ? yes_pictogram(size) : t(:no)
+  end
+
+  def table_name_to_sort_column_key(table_name)
+    (table_name.to_s+'_sort_column').intern
+  end
+
+  def table_name_to_sort_direction_key(table_name)
+    (table_name.to_s+'_sort_direction').intern
+  end
+
+  def sortable(table_id, column, title = nil)
+    title ||= column.to_s.titleize
+
+    sort_column_key = table_name_to_sort_column_key(table_id)
+    sort_direction_key = table_name_to_sort_direction_key(table_id)
+
+    column_is_current_sort_column = (column.intern == sort_column(table_id))
+    current_sort_direction = sort_direction(table_id)
+    current_sort_direction_is_asc = (current_sort_direction == :asc)
+
+    css_class = column_is_current_sort_column ? "current #{current_sort_direction.to_s}" : nil
+    sort_indicator = column_is_current_sort_column ?
+                     (current_sort_direction_is_asc ? '▲ ' : '▼ ') : ''
+    direction_on_click = (column_is_current_sort_column && current_sort_direction_is_asc) ? :desc : :asc
+    link_to sort_indicator+title, { sort_column_key => column, sort_direction_key => direction_on_click, :anchor => table_id },
                                   { :class => css_class }
   end
 end

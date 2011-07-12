@@ -1,28 +1,36 @@
 <% content_for :side_menu_list_items do %>
-  <li>
-    <%= link_to t('admin.known_i_ps.links.show_all'), admin_known_ips_path,
-                :class => 'display' %>
-  </li>
-  <li>
-    <%= link_to t('admin.known_i_ps.links.new'), new_admin_known_ip_path,
-                :title => t('actions.create'),
-                :class => 'add' %>
-  </li>
+  <li><%= link_to t('admin.known_i_ps.links.show_all'), admin_known_ips_path,
+                  :class => 'display' %></li>
+  <li><%= link_to t('admin.known_i_ps.links.new'), new_admin_known_ip_path,
+                  :title => t('actions.create'),
+                  :class => 'add' %></li>
 <% end %>
 
 <h1><%= t '.header', :ip => @known_ip.ip %></h1>
 
-<dl class="show">
-  <div>
-    <dt><%= t('field_labels.ip') %></dt>
-    <dd><b><%= @known_ip.ip %></b></dd>
-  </div>
+<section>
+  <h2><%= t 'admin.known_i_ps.show.captions.known_ip_data' %></h2>
 
-  <div>
-    <dt><%= t 'field_labels.description' %></dt>
-    <dd><%= @known_ip.description %></dd>
-  </div>
-</dl>
+  <dl class="show">
+    <div>
+      <dt><%= Admin::KnownIP.human_attribute_name('ip') %></dt>
+      <dd><b><%= @known_ip.ip %></b></dd>
+    </div>
+
+    <div>
+      <dt><%= Admin::KnownIP.human_attribute_name('description') %></dt>
+      <dd><%= @known_ip.description %></dd>
+    </div>
+  </dl>
+</section>
+
+<section>
+  <h2><%= Admin::KnownIP.human_attribute_name(:safe_users) %></h2>
+
+  <%= render 'admin/users/index_table_for_association',
+             :users      => @safe_users,
+             :table_name => :safe_users %>
+</section>
 
 <footer>
   <%= link_to edit_pictogram(2)+' '+t('.links.update'),

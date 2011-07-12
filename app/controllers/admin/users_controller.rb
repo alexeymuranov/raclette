@@ -4,39 +4,37 @@ class Admin::UsersController < AdminController
   helper_method :sort_column, :sort_direction
 
   def index
-    @users = Admin::User.order("#{sort_column} #{sort_direction}")
+    @users = Admin::User.order("#{sort_column('users')} #{sort_direction('users')}")
 
-    @title = t('admin.users.index.title')
+    @title = t('admin.users.index.title')  # or: Admin::User.human_name.pluralize
   end
 
   def show
     @user = Admin::User.find(params[:id])
+    @safe_ips = @user.safe_ips.order("#{sort_column('safe_ips')} #{sort_direction('safe_ips')}")
 
     @title = t('admin.users.show.title', :username => @user.username)
   end
 
   def new
     @user = Admin::User.new
-    @known_ips = Admin::KnownIP.all
 
-    @title = t('admin.users.new.title')
+    render_new_properly
   end
 
   def edit
     @user = Admin::User.find(params[:id])
-    @safe_ips = @user.safe_ips
-    @other_ips = Admin::KnownIP.all - @safe_ips
 
-    @title = t('admin.users.edit.title', :username => @user.username)
+    render_edit_properly
   end
 
   def create
-  
+
     params[:admin_user][:safe_ip_ids] ||= []
 
     params[:admin_user].delete(:email)\
         if params[:admin_user][:email].blank?
-        
+
     params[:admin_user].delete(:comments)\
         if params[:admin_user][:comments].blank?
 
@@ -47,15 +45,15 @@ class Admin::UsersController < AdminController
                           :username => @user.username)
       redirect_to @user
     else
-      flash[:error] = t('admin.users.create.flash.failure')
-      @title = t('admin.users.new.title')
-      render 'new'
+      flash.now[:error] = t('admin.users.create.flash.failure')
+
+      render_new_properly  # is it OK?
     end
   end
 
   def update
     @user = Admin::User.find(params[:id])
-    
+
     params[:admin_user][:safe_ip_ids] ||= []
 
     params[:admin_user].delete(:email)\
@@ -89,20 +87,12 @@ class Admin::UsersController < AdminController
       else
         flash.now[:error] = t('admin.users.update.flash.failure')
 
-        @user = Admin::User.find(params[:id])
-        @safe_ips = @user.safe_ips
-        @other_ips = Admin::KnownIP.all - @safe_ips
-        @title =  t('admin.users.edit.title', :username => @user.username)
-        render 'edit'
+        render_edit_properly  # is it OK?
       end
     else
       flash.now[:error] = t('admin.users.update.flash.wrong_password')
-      
-      @user = Admin::User.find(params[:id])
-      @safe_ips = @user.safe_ips
-      @other_ips = Admin::KnownIP.all - @safe_ips
-      @title = t('admin.users.edit.title', :username => @user.username)
-      render 'edit'
+
+      render_edit_properly  # is it OK?
     end
   end
 
@@ -115,9 +105,22 @@ class Admin::UsersController < AdminController
   end
 
   private
-  
-    def sort_column  
-      Admin::User.column_names.include?(params[:sort]) ? params[:sort] : 'username'
+
+    def render_new_properly
+      @known_ips = Admin::KnownIP.order("#{sort_column('safe_ips')} #{sort_direction('safe_ips')}")
+      @title = t('admin.users.new.title')
+
+      render :new
     end
-  
+
+    def render_edit_properly
+      safe_ips = @user.safe_ips.order("#{sort_column('safe_ips')} #{sort_direction('safe_ips')}")
+      other_ips = Admin::KnownIP.order("#{sort_column('safe_ips')} #{sort_direction('safe_ips')}") - safe_ips
+      @known_ips = safe_ips + other_ips  # a strange way to sort 'safe' before 'other'
+
+      @title =  t('admin.users.edit.title', :username => @user.username)
+
+      render :edit
+    end
+
 end

@@ -1,0 +1,16 @@
+<%= content_tag :table, :id => :known_ips, :class => "records" do %>
+  <colgroup><col /></colgroup>
+  <colgroup><col /></colgroup>
+  <colgroup><col /><col /></colgroup>
+  <thead>
+    <tr>
+      <th><%= sortable :known_ips, :ip, Admin::KnownIP.human_attribute_name(:ip) %></th>
+      <th><%= sortable :known_ips, :description, Admin::KnownIP.human_attribute_name(:description) %></th>
+      <th class="empty"></th>
+      <th class="empty"></th>
+    </tr>
+  </thead>
+  <tbody>
+    <%= render :partial => 'known_i_p_in_index', :collection => @known_ips, :as => :known_ip %>
+  <tbody>
+<% end %>

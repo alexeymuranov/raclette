@@ -1,0 +1,13 @@
+<%= content_tag :table, :id => table_name, :class => "associated records" do %>
+  <colgroup><col /></colgroup>
+  <colgroup><col /></colgroup>
+  <thead>
+    <tr>
+      <th><%= sortable table_name, :ip, Admin::KnownIP.human_attribute_name('ip') %></th>
+      <th><%= sortable table_name, :description, Admin::KnownIP.human_attribute_name(:description) %></th>
+    </tr>
+  </thead>
+  <tbody>
+    <%= render :partial => 'admin/known_i_ps/known_i_p_in_index_for_association', :collection => known_ips, :as => :known_ip %>
+  </tbody>
+<% end %>

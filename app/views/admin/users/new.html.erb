@@ -1,8 +1,7 @@
 <% content_for :side_menu_list_items do %>
-  <li>
-    <%= link_to t('admin.users.links.show_all'), admin_users_path,
-                :class => 'display' %>
-  </li>
+  <li><%= link_to t('admin.users.links.show_all'),
+                  admin_users_path,
+                  :class => 'display' %></li>
 <% end %>
 
 <h1><%= t '.header' %></h1>

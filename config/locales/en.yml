@@ -1,4 +1,4 @@
-# US English translations for Ruby on Rails
+# US English translations for Ruby on Rails "Raclette" apllication
 # Original version downloaded from
 #   https://github.com/svenfuchs/rails-i18n/raw/master/rails/locale/en-US.yml
 
@@ -164,6 +164,7 @@ en:
       almost_x_years:
         one:   "almost 1 year"
         other: "almost %{count} years"
+
     prompts:
       year:   "Year"
       month:  "Month"
@@ -203,6 +204,7 @@ en:
       less_than_or_equal_to: "must be less than or equal to %{count}"
       odd: "must be odd"
       even: "must be even"
+
       # Custom:
       email_format: "is not well-formed"
 
@@ -222,12 +224,47 @@ en:
       full_messages:
         format: "%{attribute} %{message}"
 
+    # Custom:
+    models:
+      admin:
+        user: "User"
+        known_ip: "Known IP address"
+      member: "Member"
+    attributes:
+      admin:
+        user:
+          username: "Username"
+          full_name: "Full name"
+          "a_person": "Person"
+          person_id: "Personal ID"
+          email: "E-mail address"
+          "account_deactivated": "Deactivated"
+          "admin": "Administrator"
+          "manager": "Manager"
+          "secretary": "Secretary"
+          last_signed_in_at: "Last signed in on"
+          last_signed_in_from_ip: "Last signed in from IP"
+          comments: "Comments"
+          password: "Password"
+          password_confirmation: "Password confirmation"
+          new_password: "New password"
+          new_password_confirmation: "New password confirmation"
+          safe_ips: "Authorized IP addresses"
+        known_ip:
+          ip: "IP address"
+          description: "Description"
+          safe_users: "Authorized users"
+
 ################################################################
 # Custom translations:
 
   hello: "hello"
   "yes": "yes"
   "no": "no"
+
+  formats:
+    "attribute_name:": "%{attribute}:"
+    "attribute_name?": "%{attribute}?"
 
   page_titles:
     admin_tools: "Admin tools"
@@ -368,6 +405,10 @@ en:
       show:
         title: "%{ip}"
         header: "IP address %{ip}"
+        captions:
+          known_ip_data: "IP address data"
+          safe_users: "Authorized users"
+          other: "Other"
         links:
           update: "Update form"
       new:
