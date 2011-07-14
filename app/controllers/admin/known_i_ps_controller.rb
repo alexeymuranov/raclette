@@ -29,6 +29,10 @@ class Admin::KnownIPsController < AdminController
   end
 
   def create
+    params[:admin_known_ip].keep_if do |key, value|
+      [ 'ip', 'description' ].include? key
+    end
+
     @known_ip = Admin::KnownIP.new(params[:admin_known_ip])
 
     if @known_ip.save
@@ -42,6 +46,10 @@ class Admin::KnownIPsController < AdminController
   end
 
   def update
+    params[:admin_known_ip].keep_if do |key, value|
+      [ 'ip', 'description' ].include? key
+    end
+
     @known_ip = Admin::KnownIP.find(params[:id])
 
     if @known_ip.update_attributes(params[:admin_known_ip])

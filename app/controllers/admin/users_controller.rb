@@ -38,6 +38,14 @@ class Admin::UsersController < AdminController
     params[:admin_user].delete(:comments)\
         if params[:admin_user][:comments].blank?
 
+    params[:admin_user].keep_if do |key, value|
+      [ 'username', 'full_name', 'email',
+        'account_deactivated', 'admin', 'manager', 'secretary', 'a_person',
+        'comments',
+        'password', 'password_confirmation',
+        'safe_ip_ids' ].include? key
+    end
+
     @user = Admin::User.new(params[:admin_user])
 
     if @user.save
@@ -75,6 +83,14 @@ class Admin::UsersController < AdminController
       params.delete(:current_password)
       params[:admin_user].delete(:new_password)
       params[:admin_user].delete(:new_password_confirmation)
+    end
+
+    params[:admin_user].keep_if do |key, value|
+      [ 'username', 'full_name', 'email',
+        'account_deactivated', 'admin', 'manager', 'secretary', 'a_person',
+        'comments',
+        'current_password', 'new_password', 'new_password_confirmation',
+        'safe_ip_ids' ].include? key
     end
 
     current_password = params[:current_password]
