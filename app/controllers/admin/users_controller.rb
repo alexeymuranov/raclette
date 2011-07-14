@@ -4,14 +4,14 @@ class Admin::UsersController < AdminController
   helper_method :sort_column, :sort_direction
 
   def index
-    @users = Admin::User.order("#{sort_column('users')} #{sort_direction('users')}")
+    @users = Admin::User.order("#{sort_column(:users)} #{sort_direction(:users)}")
 
     @title = t('admin.users.index.title')  # or: Admin::User.human_name.pluralize
   end
 
   def show
     @user = Admin::User.find(params[:id])
-    @safe_ips = @user.safe_ips.order("#{sort_column('safe_ips')} #{sort_direction('safe_ips')}")
+    @safe_ips = @user.safe_ips.order("#{sort_column(:safe_ips)} #{sort_direction(:safe_ips)}")
 
     @title = t('admin.users.show.title', :username => @user.username)
   end
@@ -122,16 +122,32 @@ class Admin::UsersController < AdminController
 
   private
 
+    def table_name_to_class(table_name)
+      case table_name
+      when :users then Admin::User
+      when :safe_ips then Admin::KnownIP
+      else nil
+      end
+    end
+
+    def default_sort_column(table_name)
+      case table_name
+      when :users then :username
+      when :safe_ips then :ip
+      else nil
+      end
+    end
+
     def render_new_properly
-      @known_ips = Admin::KnownIP.order("#{sort_column('safe_ips')} #{sort_direction('safe_ips')}")
+      @known_ips = Admin::KnownIP.order("#{sort_column(:safe_ips)} #{sort_direction(:safe_ips)}")
       @title = t('admin.users.new.title')
 
       render :new
     end
 
     def render_edit_properly
-      safe_ips = @user.safe_ips.order("#{sort_column('safe_ips')} #{sort_direction('safe_ips')}")
-      other_ips = Admin::KnownIP.order("#{sort_column('safe_ips')} #{sort_direction('safe_ips')}") - safe_ips
+      safe_ips = @user.safe_ips.order("#{sort_column(:safe_ips)} #{sort_direction(:safe_ips)}")
+      other_ips = Admin::KnownIP.order("#{sort_column(:safe_ips)} #{sort_direction(:safe_ips)}") - safe_ips
       @known_ips = safe_ips + other_ips  # a strange way to sort 'safe' before 'other'
 
       @title =  t('admin.users.edit.title', :username => @user.username)

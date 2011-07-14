@@ -4,14 +4,14 @@ class Admin::KnownIPsController < AdminController
   helper_method :sort_column, :sort_direction
 
   def index
-    @known_ips = Admin::KnownIP.order("#{sort_column('known_ips')} #{sort_direction('known_ips')}")
+    @known_ips = Admin::KnownIP.order("#{sort_column(:known_ips)} #{sort_direction(:known_ips)}")
 
     @title = t('admin.known_i_ps.index.title')
   end
 
   def show
     @known_ip = Admin::KnownIP.find(params[:id])
-    @safe_users = @known_ip.safe_users.order("#{sort_column('safe_users')} #{sort_direction('safe_users')}")
+    @safe_users = @known_ip.safe_users.order("#{sort_column(:safe_users)} #{sort_direction(:safe_users)}")
 
     @title = t('admin.known_i_ps.show.title', :ip => @known_ip.ip)
   end
@@ -71,6 +71,22 @@ class Admin::KnownIPsController < AdminController
   end
 
   private
+
+    def table_name_to_class(table_name)
+      case table_name
+      when :known_ips then Admin::KnownIP
+      when :safe_users then Admin::User
+      else nil
+      end
+    end
+
+    def default_sort_column(table_name)
+      case table_name
+      when :known_ips then :ip
+      when :safe_users then :username
+      else nil
+      end
+    end
 
     def render_new_properly
       @title = t('admin.known_i_ps.new.title')

@@ -16,22 +16,6 @@ class ApplicationController < ActionController::Base
 
   private
 
-    def table_name_to_class(table_name)
-      case table_name.intern
-      when :users, :safe_users then Admin::User
-      when :known_ips, :safe_ips then Admin::KnownIP
-      else nil
-      end
-    end
-
-    def default_sort_column(table_name)
-      case table_name.intern
-      when :users, :safe_users then :username
-      when :known_ips, :safe_ips then :ip
-      else nil
-      end
-    end
-
     def sort_column(table_name)
       suggested_sort_column = params[table_name_to_sort_column_key(table_name)]
       table_name_to_class(table_name).column_names.include?(suggested_sort_column) ?

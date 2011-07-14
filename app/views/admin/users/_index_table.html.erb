@@ -10,7 +10,7 @@
 
       <% [ :account_deactivated, :admin, :manager, :secretary, :a_person ].each do |attribute| %>
         <th class="boolean">
-          <%= sortable 'users', attribute, Admin::User.human_attribute_name(attribute) %>
+          <%= sortable :users, attribute, Admin::User.human_attribute_name(attribute) %>
         </th>
       <% end %>
 
