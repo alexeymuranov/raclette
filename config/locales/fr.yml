@@ -22,6 +22,8 @@ fr:
       default: "%d %B %Y %H:%M:%S"
       short: "%d %b %H:%M"
       long: "%A %d %B %Y %H:%M"
+      # Custom:
+      custom: "%A le %d %B %Y à %Hh%M"
     am: 'am'
     pm: 'pm'
 
@@ -201,7 +203,7 @@ fr:
           "admin": "Administrateur"
           "manager": "Gestionnaire"
           "secretary": "Secrétaire"
-          last_signed_in_at: "S'est connecté(e) la dernière fois le"
+          last_signed_in_at: "S'est connecté(e) la dernière fois"
           last_signed_in_from_ip: "S'est connecté(e) la dernière fois de l'IP"
           comments: "Remarques"
           password: "Mot de passe"

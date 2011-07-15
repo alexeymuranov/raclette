@@ -11,6 +11,7 @@
 
 <section>
   <h2><%= t 'admin.users.show.captions.user_data' %></h2>
+
   <dl class="show">
     <% [ :username ].each do |attribute| %>
       <div>
@@ -51,18 +52,22 @@
 
 <section>
   <h2><%= Admin::User.human_attribute_name(:safe_ips) %></h2>
-  <%= render 'admin/known_i_ps/index_table_for_association',
-             :known_ips  => @safe_ips,
-             :table_name => :safe_ips %>
+
+  <% unless @safe_ips.blank? %>
+    <%= render 'admin/known_i_ps/index_table_for_association',
+               :known_ips  => @safe_ips,
+               :table_name => :safe_ips %>
+  <% end %>
 </section>
 
 <section>
   <h2><%= t 'admin.users.show.captions.other' %></h2>
+
   <dl class="show">
-    <% [ :last_signed_in_at ].each do |attribute| %>
+    <% unless @user.last_signed_in_at.blank? %>
       <div>
-        <dt><%= t 'formats.attribute_name:', :attribute => Admin::User.human_attribute_name(attribute) %></dt>
-        <dd><%= @user.public_send(attribute) %></dd>
+        <dt><%= t 'formats.attribute_name:', :attribute => Admin::User.human_attribute_name(:last_signed_in_at) %></dt>
+        <dd><%= l @user.last_signed_in_at, :format => :custom %></dd>
       </div>
     <% end %>
   </dl>

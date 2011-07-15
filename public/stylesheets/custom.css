@@ -19,12 +19,14 @@ span.pictogram {
   vertical-align: middle;
   color: inherit; }
 
-input:focus, textarea:focus {
-  box-shadow: 0 0 3px 0 red;
-  -webkit-box-shadow: 0 0 3px 0 red;
-  -moz-box-shadow: 0 0 3px 0 red;
-  background-color: LightYellow;
-  color: black; }
+input:not([type="submit"]), textarea {
+  background-color: white; }
+  input:not([type="submit"]):focus, textarea:focus {
+    box-shadow: 0 0 3px 0 red;
+    -webkit-box-shadow: 0 0 3px 0 red;
+    -moz-box-shadow: 0 0 3px 0 red;
+    background-color: white;
+    color: black; }
 
 form.login_form input:focus {
   box-shadow: 0 0 3px 0 blue;
@@ -62,7 +64,7 @@ div#links_for_developpers {
     padding: 0;
     text-align: center;
     vertical-align: middle;
-    color: LimeGreen;
+    color: Lime;
     background-color: LightSlateGray;
     text-decoration: none;
     font-size: 12pt;

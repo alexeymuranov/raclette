@@ -27,9 +27,11 @@
 <section>
   <h2><%= Admin::KnownIP.human_attribute_name(:safe_users) %></h2>
 
-  <%= render 'admin/users/index_table_for_association',
-             :users      => @safe_users,
-             :table_name => :safe_users %>
+  <% unless @safe_users.blank? %>
+    <%= render 'admin/users/index_table_for_association',
+               :users      => @safe_users,
+               :table_name => :safe_users %>
+  <% end %>
 </section>
 
 <footer>

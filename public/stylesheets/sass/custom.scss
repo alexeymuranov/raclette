@@ -16,9 +16,10 @@ $odd-table-row-bg-color: $section-bg-color;
 $even-table-row-bg-color: $alt-section-bg-color;
 $table-border-color: darken($alt-section-bg-color, 5%);
 $table-head-bg-color: $table-border-color;
-$focus-glow-color: Red;
-$focus-bg-color: LightYellow;
-$focus-text-color: Black;
+$input-bg-color: White;
+$focus-input-glow-color: Red;
+$focus-input-bg-color: White;
+$focus-input-text-color: Black;
 $login_form-focus-glow-color: Blue;
 
 @mixin rounded-border($radius) {
@@ -64,11 +65,13 @@ span.pictogram {
   color: inherit;
 }
 
-input, textarea {
+input:not([type="submit"]), textarea {
+  background-color: $input-bg-color;
+
   &:focus {
-    @include box-shadow(0, 0, 3px, 0, $focus-glow-color);
-    background-color: $focus-bg-color;
-    color: $focus-text-color;
+    @include box-shadow(0, 0, 3px, 0, $focus-input-glow-color);
+    background-color: $focus-input-bg-color;
+    color: $focus-input-text-color;
   }
 }
 
@@ -115,7 +118,7 @@ div#links_for_developpers {
     padding: 0;
     text-align: center;
     vertical-align: middle;
-    color: LimeGreen;
+    color: Lime;
     background-color: LightSlateGray;
     text-decoration: none;
     font-size: 12pt;

@@ -64,6 +64,8 @@ en:
       default: "%a, %d %b %Y %H:%M:%S %z"
       short: "%d %b %H:%M"
       long: "%B %d, %Y %H:%M"
+      # Custom:
+      custom: "%A %d %B %Y at %H:%M"
     am: "am"
     pm: "pm"
 
@@ -242,7 +244,7 @@ en:
           "admin": "Administrator"
           "manager": "Manager"
           "secretary": "Secretary"
-          last_signed_in_at: "Last signed in on"
+          last_signed_in_at: "Last signed in"
           last_signed_in_from_ip: "Last signed in from IP"
           comments: "Comments"
           password: "Password"
