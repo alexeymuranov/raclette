@@ -424,7 +424,7 @@ pre {
 
 #error_explanation {
   border: 2px solid DarkRed;
-  background-color: WhiteSmoke;
+  background-color: LightYellow;
   margin-bottom: 20px; }
   #error_explanation h2 {
     padding: 5px 5px 5px 15px;
