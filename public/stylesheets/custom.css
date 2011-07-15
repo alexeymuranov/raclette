@@ -113,13 +113,15 @@ body > div.container > header {
       opacity: 1; }
   body > div.container > header div#main_logo div#logo_menu {
     display: none;
-    width: 150px; }
+    # width: 150px; }
   body > div.container > header div#main_logo:hover div#logo_menu {
-    box-shadow: 0 0 5px 0 navy;
-    -webkit-box-shadow: 0 0 5px 0 navy;
-    -moz-box-shadow: 0 0 5px 0 navy;
-    margin-top: 5px;
     display: block;
+    # margin-top: 5px;
+    position: fixed;
+    top: 0;
+    left: 155px;
+    padding: 5px;
+    background-color: transparent;
     opacity: 0.75; }
     body > div.container > header div#main_logo:hover div#logo_menu:hover {
       opacity: 1; }
@@ -127,6 +129,9 @@ body > div.container > header {
     border-radius: 0;
     -moz-border-radius: 0;
     -webkit-border-radius: 0;
+    box-shadow: 0 0 5px 0 navy;
+    -webkit-box-shadow: 0 0 5px 0 navy;
+    -moz-box-shadow: 0 0 5px 0 navy;
     margin: 0;
     padding: 0;
     font-weight: normal;
@@ -369,9 +374,10 @@ body > div.container section fieldset {
   border-radius: 5px;
   -moz-border-radius: 5px;
   -webkit-border-radius: 5px;
-  margin: 0 0 0.5em; }
+  margin: 0.5em 0;
+  padding: 10px; }
   body > div.container section fieldset legend {
-    margin: 0;
+    margin: 0 10px;
     padding: 0px 5px; }
 body > div.container section form div.actions {
   text-align: center; }

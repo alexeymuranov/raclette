@@ -192,13 +192,17 @@ body > div.container > header {
 
   div#main_logo div#logo_menu {
     display: none;
-    width: 150px;
+    # width: 150px;
   }
 
   div#main_logo:hover div#logo_menu {
-    @include box-shadow(0, 0, 5px, 0, $body-bg-color);
-    margin-top: 5px;
     display: block;
+    # margin-top: 5px;
+    position: fixed;
+    top: 0;
+    left: 155px;
+    padding: 5px;
+    background-color: transparent;
     opacity: 0.75;
 
     &:hover {
@@ -208,6 +212,7 @@ body > div.container > header {
 
   div#main_logo div#logo_menu nav {
     @include rounded-border(0);
+    @include box-shadow(0, 0, 5px, 0, $body-bg-color);
     margin: 0;
     padding: 0;
     font-weight: normal;
@@ -619,10 +624,11 @@ body > div.container section {
 
   fieldset {
     @include rounded-border(5px);
-    margin: 0 0 0.5em;
+    margin: 0.5em 0;
+    padding: 10px;
 
     legend {
-      margin: 0;
+      margin: 0 10px;
       padding: 0px 5px;
     }
   }
