@@ -9,6 +9,20 @@
     <link rel="shortcut icon" href="/favicon.ico" />
   </head>
   <body>
+    <div id="links_for_developpers">
+      <%= link_to ruby_logo,
+                  'http://www.ruby-lang.org/',
+                  :id     => 'ruby',
+                  :target =>'_blank' %>
+      <%= link_to rails_logo,
+                  'http://rubyonrails.org/',
+                  :id     => 'rails',
+                  :target =>'_blank' %>
+      <%= link_to 'Source code',
+                  'https://github.com/alexeymuranov/raclette',
+                  :id     => 'source_code',
+                  :target =>'_blank' %>
+    </div>
     <div class="container">
       <%= render 'layouts/header' %>
       <section>

@@ -15,6 +15,14 @@ module ApplicationHelper
     image_tag LOGO_PICTURE_FILE_NAMES[size], :alt => 'raclette'
   end
 
+  def rails_logo
+    image_tag 'logos/rails-logo.png', :alt => 'Ruby on Rails'
+  end
+
+  def ruby_logo
+    image_tag 'logos/ruby-logo.png', :alt => 'Ruby'
+  end
+
   SHOW_ICON_FILE_NAMES = [ 'icons/show-16.png',
                            'icons/show-24.png',
                            'icons/show-32.png' ]

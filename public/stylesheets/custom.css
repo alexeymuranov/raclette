@@ -6,7 +6,7 @@ body {
 .container {
   width: 960px;
   margin-left: 160px;
-  padding: 0; }
+  margin-botton: auto; }
 
 img {
   vertical-align: middle; }
@@ -34,9 +34,45 @@ form.login_form input:focus {
 div#welcome_logo {
   text-align: center; }
 
+div#links_for_developpers {
+  position: absolute;
+  top: 5px;
+  left: 1125px; }
+  div#links_for_developpers a {
+    position: absolute;
+    opacity: 0.5; }
+    div#links_for_developpers a:hover {
+      opacity: 1; }
+  div#links_for_developpers a#ruby {
+    top: 0;
+    left: 0; }
+  div#links_for_developpers a#rails {
+    top: 0;
+    left: 61px; }
+  div#links_for_developpers a#source_code {
+    border-radius: 5px;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    top: 69px;
+    left: 0;
+    display: block;
+    width: 111px;
+    height: 31px;
+    line-height: 31px;
+    padding: 0;
+    text-align: center;
+    vertical-align: middle;
+    color: LimeGreen;
+    background-color: LightSlateGray;
+    text-decoration: none;
+    font-size: 12pt;
+    font-weight: normal; }
+    div#links_for_developpers a#source_code:hover {
+      text-decoration: none; }
+
 /* Generic navigation */
 nav {
-  background-color: white; }
+  background-color: #f5f5f5; }
   nav ul {
     list-style-type: none;
     width: 100%;
@@ -133,7 +169,7 @@ body > div.container > header {
           color: MediumBlue;
           text-decoration: none; }
           body > div.container > header nav#main_menu ul li a:hover, body > div.container > header nav#main_menu ul li a:visited:hover {
-            color: white;
+            color: #f5f5f5;
             background-color: MediumBlue;
             text-decoration: none; }
       body > div.container > header nav#main_menu ul li.logout_item {
@@ -208,7 +244,7 @@ body > div.container > section {
   border-radius: 10px;
   -moz-border-radius: 10px;
   -webkit-border-radius: 10px;
-  background-color: white;
+  background-color: #f5f5f5;
   padding: 10px; }
   body > div.container > section section {
     border-radius: 5px;
@@ -219,7 +255,7 @@ body > div.container > section {
   body > div.container > section > section {
     background-color: #e6e6fa; }
     body > div.container > section > section > section {
-      background-color: white; }
+      background-color: #f5f5f5; }
 
 body > div.container section h1, body > div.container section h2, body > div.container section h3, body > div.container section h4, body > div.container section h5, body > div.container section h6, body > div.container section p {
   color: inherit;
@@ -253,9 +289,9 @@ body > div.container section dl.show, body > div.container section dl.form_field
       body > div.container section dl.show > div > dd.long_text, body > div.container section dl.form_fields > div > dd.long_text {
         vertical-align: top; }
     body > div.container section dl.show > div:nth-child(odd) > dt, body > div.container section dl.form_fields > div:nth-child(odd) > dt {
-      background-color: #f2f2f2; }
+      background-color: #e8e8e8; }
     body > div.container section dl.show > div:nth-child(odd) > dd, body > div.container section dl.form_fields > div:nth-child(odd) > dd {
-      background-color: white; }
+      background-color: #f5f5f5; }
     body > div.container section dl.show > div:nth-child(even) > dt, body > div.container section dl.form_fields > div:nth-child(even) > dt {
       background-color: #d1d1f6; }
     body > div.container section dl.show > div:nth-child(even) > dd, body > div.container section dl.form_fields > div:nth-child(even) > dd {
@@ -288,31 +324,31 @@ body > div.container section table {
   body > div.container section table > tbody > tr td.boolean, body > div.container section table > tbody > tr th.boolean {
     text-align: center; }
   body > div.container section table > tbody > tr:nth-child(odd) > td, body > div.container section table > tbody > tr:nth-child(odd) > th {
-    background-color: white; }
+    background-color: #f5f5f5; }
   body > div.container section table > tbody > tr:nth-child(even) > td, body > div.container section table > tbody > tr:nth-child(even) > th {
     background-color: #e6e6fa; }
   body > div.container section table.grid > thead > tr th:nth-child(odd) {
-    background-color: #f2f2f2; }
+    background-color: #e8e8e8; }
   body > div.container section table.grid > thead > tr th:nth-child(even) {
     background-color: #d1d1f6; }
   body > div.container section table.grid > tbody > tr:nth-child(odd) > td:nth-child(odd) {
     background-color: #e6e6fa; }
   body > div.container section table.grid > tbody > tr:nth-child(odd) > td:nth-child(even) {
-    background-color: white; }
+    background-color: #f5f5f5; }
   body > div.container section table.grid > tbody > tr:nth-child(odd) > th {
     background-color: #d1d1f6; }
   body > div.container section table.grid > tbody > tr:nth-child(even) > td:nth-child(odd) {
-    background-color: white; }
+    background-color: #f5f5f5; }
   body > div.container section table.grid > tbody > tr:nth-child(even) > td:nth-child(even) {
     background-color: #e6e6fa; }
   body > div.container section table.grid > tbody > tr:nth-child(even) > th {
-    background-color: #f2f2f2; }
+    background-color: #e8e8e8; }
   body > div.container section table.grid > tbody > tr > th {
     background-color: #d1d1f6; }
   body > div.container section table.records > thead > tr > th, body > div.container section table.form_fields > thead > tr > th {
     font-size: 10pt; }
   body > div.container section table.records > tbody > tr:nth-child(odd) > td.operation, body > div.container section table.form_fields > tbody > tr:nth-child(odd) > td.operation {
-    background-color: #f2f2f2; }
+    background-color: #e8e8e8; }
   body > div.container section table.records > tbody > tr:nth-child(even) > td.operation, body > div.container section table.form_fields > tbody > tr:nth-child(even) > td.operation {
     background-color: #d1d1f6; }
   body > div.container section table.form_fields {
@@ -346,11 +382,11 @@ body > div.container section a, body > div.container section a:visited {
   text-decoration: none;
   background-color: none; }
   body > div.container section a:hover, body > div.container section a:visited:hover {
-    text-shadow: 0 0 3px white; }
+    text-shadow: 0 0 3px #f5f5f5; }
 body > div.container section a.display, body > div.container section a.display:visited {
   color: green; }
   body > div.container section a.display:hover, body > div.container section a.display:visited:hover {
-    color: white;
+    color: #f5f5f5;
     background-color: green;
     text-decoration: none;
     text-shadow: none; }
@@ -359,7 +395,7 @@ body > div.container section a.display, body > div.container section a.display:v
 body > div.container section a.add, body > div.container section a.add:visited {
   color: blue; }
   body > div.container section a.add:hover, body > div.container section a.add:visited:hover {
-    color: white;
+    color: #f5f5f5;
     background-color: blue;
     text-decoration: none;
     text-shadow: none; }
@@ -368,7 +404,7 @@ body > div.container section a.add, body > div.container section a.add:visited {
 body > div.container section a.modify, body > div.container section a.modify:visited {
   color: red; }
   body > div.container section a.modify:hover, body > div.container section a.modify:visited:hover {
-    color: white;
+    color: #f5f5f5;
     background-color: red;
     text-decoration: none;
     text-shadow: none; }

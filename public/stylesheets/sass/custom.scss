@@ -1,6 +1,6 @@
 $body-bg-color: Navy;
 $body-text-color: DarkSlateGray;
-$section-bg-color: White;
+$section-bg-color: #F5F5F5;
 $alt-section-bg-color: #E6E6FA;
 $common-navigation-link-color: MediumBlue;
 $common-navigation-link-hover-color: Blue;
@@ -48,7 +48,7 @@ body {
 .container {
   width: 960px;
   margin-left: 160px;
-  padding: 0;
+  margin-botton: auto;
 }
 
 img {
@@ -78,6 +78,53 @@ form.login_form input:focus {
 
 div#welcome_logo {
   text-align: center;
+}
+
+div#links_for_developpers {
+  position: absolute;
+  top: 5px;
+  left: 1125px;
+  
+  a {
+    position: absolute;
+    opacity: 0.5;
+
+    &:hover {
+      opacity: 1;
+    }
+  }
+
+  a#ruby {
+    top: 0;
+    left: 0;
+  }
+
+  a#rails {
+    top: 0;
+    left: 61px;
+  }
+
+  a#source_code {
+    @include rounded-border(5px);
+    top: 69px;
+    left: 0;
+    display: block;
+    width: 111px;
+    height: 31px;
+    line-height: 31px;
+    padding: 0;
+    text-align: center;
+    vertical-align: middle;
+    color: LimeGreen;
+    background-color: LightSlateGray;
+    text-decoration: none;
+    font-size: 12pt;
+    font-weight: normal;
+
+    &:hover {
+      text-decoration: none;
+    }
+  }
 }
 
 /* Generic navigation */
