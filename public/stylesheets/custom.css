@@ -241,6 +241,11 @@ nav#side_menu {
         font-weight: normal;
         text-decoration: none; }
 
+/* Flash messages */
+body > div.container > section > div.flash a {
+  margin: 0;
+  padding: 0; }
+
 /* Sections */
 body > div.container > section {
   border-radius: 10px;

@@ -370,6 +370,15 @@ nav#side_menu {
   }
 }
 
+/* Flash messages */
+
+body > div.container > section > div.flash {
+  a {
+    margin: 0;
+    padding: 0;
+  }
+}
+
 /* Sections */
 
 body > div.container > section {
