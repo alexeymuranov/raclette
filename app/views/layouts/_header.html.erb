@@ -1,12 +1,4 @@
 <header>
-  <% if current_user %>
-    <%= render 'layouts/main_logo' %>
-    <%= render 'layouts/main_menu' %>
-  <% else %>
-    <nav id="main_menu">
-      <ul>
-        <li><%= link_to t('sessions.new.log_in_please'), login_path %></li>
-      </ul>
-    </nav>
-  <% end %>
+  <%= render 'layouts/main_logo' %>
+  <%= render 'layouts/main_menu' %>
 </header>

@@ -28,30 +28,26 @@ input:not([type="submit"]), textarea {
     background-color: white;
     color: black; }
 
-form.login_form input:focus {
-  box-shadow: 0 0 3px 0 blue;
-  -webkit-box-shadow: 0 0 3px 0 blue;
-  -moz-box-shadow: 0 0 3px 0 blue; }
-
 div#welcome_logo {
   text-align: center; }
 
-div#links_for_developpers {
+/* Links for developpers */
+div#developper_links {
   position: absolute;
   top: 5px;
   left: 1125px; }
-  div#links_for_developpers a {
+  div#developper_links a {
     position: absolute;
     opacity: 0.5; }
-    div#links_for_developpers a:hover {
+    div#developper_links a:hover {
       opacity: 1; }
-  div#links_for_developpers a#ruby {
+  div#developper_links a#ruby {
     top: 0;
     left: 0; }
-  div#links_for_developpers a#rails {
+  div#developper_links a#rails {
     top: 0;
     left: 61px; }
-  div#links_for_developpers a#source_code {
+  div#developper_links a#source_code {
     border-radius: 5px;
     -moz-border-radius: 5px;
     -webkit-border-radius: 5px;
@@ -69,25 +65,31 @@ div#links_for_developpers {
     text-decoration: none;
     font-size: 12pt;
     font-weight: normal; }
-    div#links_for_developpers a#source_code:hover {
+    div#developper_links a#source_code:hover {
       text-decoration: none; }
 
 /* Generic navigation */
 nav {
   background-color: #f5f5f5; }
   nav ul {
-    list-style-type: none;
-    width: 100%;
-    margin: 0; }
-    nav ul li {
-      margin: 0;
-      padding: 0; }
-      nav ul li a, nav ul li a:visited {
-        display: inline-block;
-        text-decoration: none;
-        padding: 5px; }
-      nav ul li ul {
-        display: none; }
+    # list-style-type: none;
+    width: 100%; }
+    nav ul li ul {
+      display: none; }
+
+/* Log-in form */
+form#login_form {
+  text-align: center; }
+  form#login_form input:focus {
+    box-shadow: 0 0 3px 0 blue;
+    -webkit-box-shadow: 0 0 3px 0 blue;
+    -moz-box-shadow: 0 0 3px 0 blue; }
+  form#login_form fieldset {
+    display: inline-block;
+    text-align: left; }
+    form#login_form fieldset legend {
+      display: inline;
+      text-align: center; }
 
 /* Header */
 body > div.container > header {
@@ -95,6 +97,51 @@ body > div.container > header {
   text-align: left;
   margin: 5px auto;
   /* Logo box and menu */ }
+  body > div.container > header nav.main_menu ul {
+    margin: 0 5px;
+    padding: 0; }
+    body > div.container > header nav.main_menu ul li {
+      display: inline-block;
+      font-weight: bold; }
+      body > div.container > header nav.main_menu ul li a, body > div.container > header nav.main_menu ul li a:visited {
+        display: inline-block;
+        margin: 0;
+        padding: 5px;
+        color: MediumBlue;
+        text-decoration: none; }
+        body > div.container > header nav.main_menu ul li a:hover, body > div.container > header nav.main_menu ul li a:visited:hover {
+          color: #f5f5f5;
+          background-color: MediumBlue;
+          text-decoration: none; }
+    body > div.container > header nav.main_menu ul li.logout_item a.logout_button, body > div.container > header nav.main_menu ul li.logout_item a.logout_button:visited {
+      margin: 0 5px;
+      padding: 5px 10px;
+      color: #006400;
+      background-color: yellow; }
+      body > div.container > header nav.main_menu ul li.logout_item a.logout_button:hover, body > div.container > header nav.main_menu ul li.logout_item a.logout_button:visited:hover {
+        color: yellow;
+        background-color: #006400; }
+      body > div.container > header nav.main_menu ul li.logout_item a.logout_button:active, body > div.container > header nav.main_menu ul li.logout_item a.logout_button:visited:active {
+        background-color: #009700; }
+    body > div.container > header nav.main_menu ul li.separator:after {
+      content: "|"; }
+    body > div.container > header nav.main_menu ul li.disabled {
+      color: silver;
+      text-decoration: none; }
+      body > div.container > header nav.main_menu ul li.disabled span.disabled_link {
+        display: inline-block;
+        color: silver;
+        padding: 5px; }
+  body > div.container > header > nav.main_menu {
+    border-radius: 10px;
+    -moz-border-radius: 10px;
+    -webkit-border-radius: 10px; }
+    body > div.container > header > nav.main_menu ul li.logout_item {
+      float: right; }
+      body > div.container > header > nav.main_menu ul li.logout_item a.logout_button, body > div.container > header > nav.main_menu ul li.logout_item a.logout_button:visited {
+        border-radius: 10px;
+        -moz-border-radius: 10px;
+        -webkit-border-radius: 10px; }
   body > div.container > header div#main_logo {
     position: fixed;
     top: 5px;
@@ -112,11 +159,9 @@ body > div.container > header {
     body > div.container > header div#main_logo div#logo_box:hover {
       opacity: 1; }
   body > div.container > header div#main_logo div#logo_menu {
-    display: none;
-    # width: 150px; }
+    display: none; }
   body > div.container > header div#main_logo:hover div#logo_menu {
     display: block;
-    # margin-top: 5px;
     position: fixed;
     top: 0;
     left: 155px;
@@ -126,9 +171,6 @@ body > div.container > header {
     body > div.container > header div#main_logo:hover div#logo_menu:hover {
       opacity: 1; }
   body > div.container > header div#main_logo div#logo_menu nav {
-    border-radius: 0;
-    -moz-border-radius: 0;
-    -webkit-border-radius: 0;
     box-shadow: 0 0 5px 0 navy;
     -webkit-box-shadow: 0 0 5px 0 navy;
     -moz-box-shadow: 0 0 5px 0 navy;
@@ -149,9 +191,6 @@ body > div.container > header {
       body > div.container > header div#main_logo div#logo_menu nav ul li.logout_item {
         float: none; }
         body > div.container > header div#main_logo div#logo_menu nav ul li.logout_item a.logout_button, body > div.container > header div#main_logo div#logo_menu nav ul li.logout_item a.logout_button:visited {
-          border-radius: 0;
-          -moz-border-radius: 0;
-          -webkit-border-radius: 0;
           display: block;
           margin: 0;
           padding: 5px; }
@@ -159,69 +198,36 @@ body > div.container > header {
         display: none; }
       body > div.container > header div#main_logo div#logo_menu nav ul li.disabled {
         display: none; }
-  body > div.container > header nav#main_menu {
-    border-radius: 10px;
-    -moz-border-radius: 10px;
-    -webkit-border-radius: 10px; }
-    body > div.container > header nav#main_menu ul {
-      margin: 0 5px;
-      padding: 0; }
-      body > div.container > header nav#main_menu ul li {
-        display: inline-block;
-        font-weight: bold; }
-        body > div.container > header nav#main_menu ul li a, body > div.container > header nav#main_menu ul li a:visited {
-          display: inline-block;
-          margin: 0;
-          padding: 5px;
-          color: MediumBlue;
-          text-decoration: none; }
-          body > div.container > header nav#main_menu ul li a:hover, body > div.container > header nav#main_menu ul li a:visited:hover {
-            color: #f5f5f5;
-            background-color: MediumBlue;
-            text-decoration: none; }
-      body > div.container > header nav#main_menu ul li.logout_item {
-        display: inline;
-        float: right; }
-        body > div.container > header nav#main_menu ul li.logout_item a.logout_button, body > div.container > header nav#main_menu ul li.logout_item a.logout_button:visited {
-          border-radius: 10px;
-          -moz-border-radius: 10px;
-          -webkit-border-radius: 10px;
-          margin: 0 5px;
-          padding: 5px 10px;
-          color: #006400;
-          background-color: yellow; }
-          body > div.container > header nav#main_menu ul li.logout_item a.logout_button:hover, body > div.container > header nav#main_menu ul li.logout_item a.logout_button:visited:hover {
-            color: yellow;
-            background-color: #006400; }
-          body > div.container > header nav#main_menu ul li.logout_item a.logout_button:active, body > div.container > header nav#main_menu ul li.logout_item a.logout_button:visited:active {
-            background-color: #009700; }
-      body > div.container > header nav#main_menu ul li.disabled {
-        color: silver;
-        text-decoration: none; }
-        body > div.container > header nav#main_menu ul li.disabled span.disabled_link {
-          display: inline-block;
-          color: silver;
-          padding: 5px; }
 
 /* Footer */
 body > div.container > footer {
+  border-radius: 10px;
+  -moz-border-radius: 10px;
+  -webkit-border-radius: 10px;
+  background-color: #f5f5f5;
   font-size: 12pt;
   text-align: center;
   margin: 5px auto; }
-  body > div.container > footer nav {
-    border-radius: 10px;
-    -moz-border-radius: 10px;
-    -webkit-border-radius: 10px; }
-    body > div.container > footer nav ul {
-      padding: 0; }
-      body > div.container > footer nav ul li {
+  body > div.container > footer ul {
+    list-style-type: none;
+    width: 100%;
+    margin: 0;
+    padding: 0; }
+    body > div.container > footer ul li {
+      margin: 0;
+      padding: 0;
+      display: inline-block;
+      font-weight: bold; }
+      body > div.container > footer ul li a, body > div.container > footer ul li a:visited {
         display: inline-block;
-        font-weight: bold; }
-        body > div.container > footer nav ul li a, body > div.container > footer nav ul li a:visited {
-          color: MediumBlue; }
-          body > div.container > footer nav ul li a:hover, body > div.container > footer nav ul li a:visited:hover {
-            color: blue;
-            text-decoration: underline; }
+        padding: 5px;
+        text-decoration: none;
+        color: MediumBlue; }
+        body > div.container > footer ul li a:hover, body > div.container > footer ul li a:visited:hover {
+          color: blue;
+          text-decoration: underline; }
+      body > div.container > footer ul li ul {
+        display: none; }
 
 /* Side menu */
 nav#side_menu {

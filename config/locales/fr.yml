@@ -461,8 +461,9 @@ fr:
   sessions:
     new:
       title: "Connection"
-      log_in: "Se connecter"
+      log_in_invitation: "Connectez-vous"
       log_in_please: "Connectez-vous, s'il vous plaît"
+      log_in_button: "Connecter"
     labels:
       username: "Nom d'utilisateur :"
       password: "Mot de passe :"

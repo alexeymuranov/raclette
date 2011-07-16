@@ -1,33 +1,38 @@
-<%= form_tag sessions_path, :class => "login_form" do %>
-  <dl class="form_fields">
-    <div class="caption"><%= t '.log_in' %></div>
-    <div>
-      <dt>
-        <%= label_tag :username, t('sessions.labels.username') %>
-      </dt>
-      <dd>
-        <%= text_field_tag :username %>
-      </dd>
-    </div>
-    <div>
-      <dt>
-        <%= label_tag :password, t('sessions.labels.password') %>
-      </dt>
-      <dd>
-        <%= password_field_tag :password %>
-      </dd>
-    </div>
-    <div>
-      <dt>
-        <%= t 'sessions.labels.your_ip_address' %>
-      </dt>
-      <dd>
-        <%= @client_ip %>
-      </dd>
-    </div>
-  </dl>
+<%= form_tag sessions_path, :id => "login_form" do %>
+  <%= field_set_tag t('.log_in_invitation') do %>
+    <dl class="form_fields">
+      <div class="field">
+        <dt>
+          <%= label_tag :username,
+                        t('formats.attribute_name:',
+                          :attribute => Admin::User.human_attribute_name(:username)) %>
+        </dt>
+        <dd>
+          <%= text_field_tag :username %>
+        </dd>
+      </div class="field">
+      <div>
+        <dt>
+          <%= label_tag :password,
+                        t('formats.attribute_name:',
+                          :attribute => Admin::User.human_attribute_name(:password)) %>
+        </dt>
+        <dd>
+          <%= password_field_tag :password %>
+        </dd>
+      </div>
+      <div>
+        <dt>
+          <%= t 'sessions.labels.your_ip_address' %>
+        </dt>
+        <dd>
+          <%= @client_ip %>
+        </dd>
+      </div>
+    </dl>
+  <% end %>
   <div class="actions">
-    <%= submit_tag t('.log_in') %>
+    <%= submit_tag t('.log_in_button') %>
   </div>
 <% end %>
 <div id="welcome_logo">

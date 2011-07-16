@@ -502,8 +502,9 @@ en:
   sessions:
     new:
       title: "Sign in"
-      log_in: "Sign in"
+      log_in_invitation: "Sign in"
       log_in_please: "Sign in please"
+      log_in_button: "Sign in"
     labels:
       username: "Username:"
       password: "Password:"

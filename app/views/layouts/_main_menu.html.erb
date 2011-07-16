@@ -1,58 +1,64 @@
-<nav id="main_menu">
-  <ul>
-    <% entry_register_path=secretary_tools_path=manager_tools_path='#' %>
+<nav class="main_menu">
+  <% if current_user %>
+    <ul>
+      <% entry_register_path=secretary_tools_path=manager_tools_path='#' %>
 
-    <li>
-      <%= link_to t("application_layout.navigation_links.monitor"),
-                  monitor_overview_path %>
-    </li><!--
- --><li>
-      <%= link_to t("application_layout.navigation_links.entry_register"),
-                  entry_register_path %>
-    </li><!--
-    <% if current_user.secretary? %>
+      <li>
+        <%= link_to t("application_layout.navigation_links.monitor"),
+                    monitor_overview_path %>
+      </li><!--
    --><li>
-        <%= link_to t("application_layout.navigation_links.secretary_tools"),
-                    secretary_tools_path %>
+        <%= link_to t("application_layout.navigation_links.entry_register"),
+                    entry_register_path %>
       </li><!--
-    <% else %>
-   --><li class="disabled">
-        <span class="disabled_link">
-          <%= t("application_layout.navigation_links.secretary_tools") %>
-        </span>
-      </li><!--
-    <% end %>
-    <% if current_user.manager? %>
-   --><li>
-        <%= link_to t("application_layout.navigation_links.manager_tools"),
-                    manager_tools_path %>
-      </li><!--
-    <% else %>
-   --><li class="disabled">
-        <span class="disabled_link">
-          <%= t("application_layout.navigation_links.manager_tools") %>
-        </span>
-      </li><!--
-    <% end %>
-    <% if current_user.admin? %>
-   --><li class="separator">|</li><!--
-   --><li>
-        <%= link_to t("application_layout.navigation_links.admin_tools"),
-                    admin_admin_tools_overview_path %>
-      </li><!--
-    <% else %>
-   --><li class="disabled separator">|</li><!--
-   --><li class="disabled">
-        <span class="disabled_link">
-          <%= t("application_layout.navigation_links.admin_tools") %>
-        </span>
-      </li><!--
-    <% end %>
- --><li class="logout_item">
-      <%= link_to t("application_layout.navigation_links.sign_out"),
-                  logout_path,
-                  :method => :delete,
-                  :class  => "logout_button" %>
-    </li>
-  </ul>
+      <%- if current_user.secretary? -%>
+     --><li>
+          <%= link_to t("application_layout.navigation_links.secretary_tools"),
+                      secretary_tools_path %>
+        </li><!--
+      <%- else -%>
+     --><li class="disabled">
+          <span class="disabled_link">
+            <%= t("application_layout.navigation_links.secretary_tools") %>
+          </span>
+        </li><!--
+      <%- end -%>
+      <%- if current_user.manager? -%>
+     --><li>
+          <%= link_to t("application_layout.navigation_links.manager_tools"),
+                      manager_tools_path %>
+        </li><!--
+      <%- else -%>
+     --><li class="disabled">
+          <span class="disabled_link">
+            <%= t("application_layout.navigation_links.manager_tools") %>
+          </span>
+        </li><!--
+      <%- end -%>
+      <%- if current_user.admin? -%>
+     --><li class="separator"></li><!--
+     --><li>
+          <%= link_to t("application_layout.navigation_links.admin_tools"),
+                      admin_admin_tools_overview_path %>
+        </li><!--
+      <%- else -%>
+     --><li class="disabled separator"></li><!--
+     --><li class="disabled">
+          <span class="disabled_link">
+            <%= t("application_layout.navigation_links.admin_tools") %>
+          </span>
+        </li><!--
+      <%- end -%>
+   --><li class="logout_item">
+        <%= link_to t("application_layout.navigation_links.sign_out"),
+                    logout_path,
+                    :method => :delete,
+                    :class  => "logout_button" %>
+      </li>
+    </ul>
+  <% else %>
+    <ul>
+      <li><%= link_to t('sessions.new.log_in_please'), login_path %></li>
+    </ul>
+  <% end %>
 </nav>
