@@ -10,7 +10,7 @@
 <h1><%= t '.header', :username => @user.username %></h1>
 
 <section>
-  <h2><%= t 'admin.users.show.captions.user_data' %></h2>
+  <h2><%= t 'admin.users.show.headers.user_data' %></h2>
 
   <dl class="show">
     <% [ :username ].each do |attribute| %>
@@ -61,7 +61,7 @@
 </section>
 
 <section>
-  <h2><%= t 'admin.users.show.captions.other' %></h2>
+  <h2><%= t 'admin.users.show.headers.other' %></h2>
 
   <dl class="show">
     <% unless @user.last_signed_in_at.blank? %>
