@@ -3,18 +3,23 @@
   <colgroup><col /><col /><col /><col /><col /><col /></colgroup>
   <thead>
     <tr>
-      <th><%= sortable table_name, :username, Admin::User.human_attribute_name(:username) %></th>
-
-      <th><%= sortable table_name, :full_name, Admin::User.human_attribute_name(:full_name) %></th>
-
-      <% [ :account_deactivated, :admin, :manager, :secretary, :a_person ].each do |attribute| %>
-        <th class='boolean'>
-          <%= sortable table_name, attribute, Admin::User.human_attribute_name(attribute) %>
-        </th>
+      <% displayed_columns.each do |attribute| %>
+        <%- if Admin::User.columns_hash[attribute.to_s].type == :boolean -%>
+          <th class='boolean'>
+            <%= sortable table_name, attribute, Admin::User.human_attribute_name(attribute) %>
+          </th>
+        <%- else -%>
+          <th>
+            <%= sortable table_name, attribute, Admin::User.human_attribute_name(attribute) %>
+          </th>
+        <%- end -%>
       <% end %>
     </tr>
   </thead>
   <tbody>
-    <%= render :partial => 'admin/users/user_in_index_for_association', :collection => users, :as => :user %>
+    <%= render :partial => 'admin/users/user_in_index_for_association',
+               :collection => users,
+               :as => :user,
+               :locals => { :displayed_columns => displayed_columns } %>
   </tbody>
 <% end %>

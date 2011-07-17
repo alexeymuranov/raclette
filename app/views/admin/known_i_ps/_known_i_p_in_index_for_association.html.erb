@@ -1,9 +1,11 @@
 <tr>
   <th scope=row>
-    <%= link_to known_ip.ip, known_ip,
+    <%= link_to known_ip.public_send(displayed_columns[0]), known_ip,
                 :title => t('actions.read'),
                 :class => 'display' %>
   </th>
 
-  <td><%= known_ip.description %></td>
+  <% displayed_columns[1..-1].each do |attribute| %>
+    <td><%= known_ip.public_send(attribute) %></td>
+  <% end %>
 </tr>

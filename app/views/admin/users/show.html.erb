@@ -13,40 +13,26 @@
   <h2><%= t 'admin.users.show.subheaders.user_data' %></h2>
 
   <dl class="show">
-    <% [ :username ].each do |attribute| %>
+    <% @key_displayed_columns.each do |attribute| %>
       <div>
         <dt><%= t 'formats.attribute_name:', :attribute => Admin::User.human_attribute_name(attribute) %></dt>
         <dd><b><%= @user.public_send(attribute) %></b></dd>
       </div>
     <% end %>
 
-    <% [ :full_name, :email ].each do |attribute| %>
-      <div>
-        <dt><%= t 'formats.attribute_name:', :attribute => Admin::User.human_attribute_name(attribute) %></dt>
-        <dd><%= @user.public_send(attribute) %></dd>
-      </div>
-    <% end %>
-
-    <% [ :account_deactivated, :admin, :manager, :secretary, :a_person ].each do |attribute| %>
-      <div>
-        <dt><%= t 'formats.attribute_name?', :attribute => Admin::User.human_attribute_name(attribute) %></dt>
-        <dd><%= boolean_to_yes_no(@user.public_send(attribute)) %></dd>
-      </div>
-    <% end %>
-
-    <% if @user.a_person? %>
-      <% [ :person_id ].each do |attribute| %>
+    <% @main_displayed_columns.each do |attribute| %>
+      <%- if Admin::User.columns_hash[attribute.to_s].type == :boolean -%>
+        <div>
+          <dt><%= t 'formats.attribute_name?', :attribute => Admin::User.human_attribute_name(attribute) %></dt>
+          <dd><%= boolean_to_yes_no(@user.public_send(attribute)) %></dd>
+        </div>
+      <%- else -%>
         <div>
           <dt><%= t 'formats.attribute_name:', :attribute => Admin::User.human_attribute_name(attribute) %></dt>
           <dd><%= @user.public_send(attribute) %></dd>
         </div>
-      <% end %>
+      <%- end -%>
     <% end %>
-
-    <div>
-      <dt><%= t 'formats.attribute_name:', :attribute => Admin::User.human_attribute_name(:comments) %></dt>
-      <dd><%= @user.comments %></dd>
-    </div>
   </dl>
 </section>
 
@@ -55,7 +41,8 @@
 
   <% unless @safe_ips.blank? %>
     <%= render 'admin/known_i_ps/index_table_for_association',
-               :known_ips  => @safe_ips,
+               :known_ips => @safe_ips,
+               :displayed_columns => @safe_ips_displayed_columns,
                :table_name => :safe_ips %>
   <% end %>
 </section>
@@ -74,8 +61,10 @@
 </section>
 
 <footer>
-  <%= link_to edit_pictogram(2)+' '+t('.links.update'), edit_admin_user_path(@user),
+  <%= link_to edit_pictogram(2)+' '+t('.links.update'),
+              edit_admin_user_path(@user),
               :class => 'modify' %>
-  <%= link_to list_all_pictogram(2)+' '+t('admin.users.links.show_all'), admin_users_path,
+  <%= link_to list_all_pictogram(2)+' '+t('admin.users.links.show_all'),
+              admin_users_path,
               :class => 'display' %>
 </footer>

@@ -12,15 +12,19 @@
   <h2><%= t 'admin.known_i_ps.show.subheaders.known_ip_data' %></h2>
 
   <dl class="show">
-    <div>
-      <dt><%= Admin::KnownIP.human_attribute_name('ip') %></dt>
-      <dd><b><%= @known_ip.ip %></b></dd>
-    </div>
+    <% @key_displayed_columns.each do |attribute| %>
+      <div>
+        <dt><%= Admin::KnownIP.human_attribute_name(attribute) %></dt>
+        <dd><b><%= @known_ip.public_send(attribute) %></b></dd>
+      </div>
+    <% end %>
 
-    <div>
-      <dt><%= Admin::KnownIP.human_attribute_name('description') %></dt>
-      <dd><%= @known_ip.description %></dd>
-    </div>
+    <% @main_displayed_columns.each do |attribute| %>
+      <div>
+        <dt><%= Admin::KnownIP.human_attribute_name(attribute) %></dt>
+        <dd><%= @known_ip.public_send(attribute) %></dd>
+      </div>
+    <% end %>
   </dl>
 </section>
 
@@ -29,7 +33,8 @@
 
   <% unless @safe_users.blank? %>
     <%= render 'admin/users/index_table_for_association',
-               :users      => @safe_users,
+               :users => @safe_users,
+               :displayed_columns => @safe_users_displayed_columns,
                :table_name => :safe_users %>
   <% end %>
 </section>
@@ -38,6 +43,7 @@
   <%= link_to edit_pictogram(2)+' '+t('.links.update'),
               edit_admin_known_ip_path(@known_ip),
               :class => 'modify' %>
-  <%= link_to list_all_pictogram(2)+' '+t('admin.known_i_ps.links.show_all'), admin_known_ips_path,
+  <%= link_to list_all_pictogram(2)+' '+t('admin.known_i_ps.links.show_all'),
+              admin_known_ips_path,
               :class => 'display' %>
 </footer>

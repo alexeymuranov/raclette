@@ -6,12 +6,34 @@ class Admin::UsersController < AdminController
   def index
     @users = Admin::User.order("#{sort_column(:users)} #{sort_direction(:users)}")
 
+    @displayed_columns = [ :username,
+                           :full_name,
+                           :account_deactivated,
+                           :admin,
+                           :manager,
+                           :secretary,
+                           :a_person ]
+
     @title = t('admin.users.index.title')  # or: Admin::User.human_name.pluralize
   end
 
   def show
     @user = Admin::User.find(params[:id])
     @safe_ips = @user.safe_ips.order("#{sort_column(:safe_ips)} #{sort_direction(:safe_ips)}")
+
+    @key_displayed_columns = [ :username ]
+    @main_displayed_columns = [ :full_name,
+                                :email,
+                                :account_deactivated,
+                                :admin,
+                                :manager,
+                                :secretary,
+                                :a_person ]
+    if @user.a_person? then @main_displayed_columns << :person_id end
+    @main_displayed_columns << :comments
+    @other_displayed_columns = [ :last_signed_in_at ]
+
+    @safe_ips_displayed_columns = [ :ip, :description ]
 
     @title = t('admin.users.show.title', :username => @user.username)
   end
@@ -38,12 +60,14 @@ class Admin::UsersController < AdminController
     params[:admin_user].delete(:comments)\
         if params[:admin_user][:comments].blank?
 
-    params[:admin_user].keep_if do |key, value|
-      [ 'username', 'full_name', 'email',
+    @acceptable_attribute_names = [ 'username', 'full_name', 'email',
         'account_deactivated', 'admin', 'manager', 'secretary', 'a_person',
         'comments',
         'password', 'password_confirmation',
-        'safe_ip_ids' ].include? key
+        'safe_ip_ids' ]
+
+    params[:admin_user].keep_if do |key, value|
+      @acceptable_attribute_names.include? key
     end
 
     @user = Admin::User.new(params[:admin_user])
@@ -85,12 +109,14 @@ class Admin::UsersController < AdminController
       params[:admin_user].delete(:new_password_confirmation)
     end
 
-    params[:admin_user].keep_if do |key, value|
-      [ 'username', 'full_name', 'email',
+    @acceptable_attribute_names = [ 'username', 'full_name', 'email',
         'account_deactivated', 'admin', 'manager', 'secretary', 'a_person',
         'comments',
         'current_password', 'new_password', 'new_password_confirmation',
-        'safe_ip_ids' ].include? key
+        'safe_ip_ids' ]
+
+    params[:admin_user].keep_if do |key, value|
+      @acceptable_attribute_names.include? key
     end
 
     current_password = params[:current_password]

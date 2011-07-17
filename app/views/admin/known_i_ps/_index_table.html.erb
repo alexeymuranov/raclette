@@ -4,8 +4,14 @@
   <colgroup><col /><col /></colgroup>
   <thead>
     <tr>
-      <th><%= sortable :known_ips, :ip, Admin::KnownIP.human_attribute_name(:ip) %></th>
-      <th><%= sortable :known_ips, :description, Admin::KnownIP.human_attribute_name(:description) %></th>
+      <% @displayed_columns.each do |attribute| %>
+        <th>
+          <%= sortable :known_ips,
+                       attribute,
+                       Admin::KnownIP.human_attribute_name(attribute) %>
+        </th>
+      <% end %>
+
       <th class="empty"></th>
       <th class="empty"></th>
     </tr>

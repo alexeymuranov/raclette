@@ -35,6 +35,7 @@ class Person < ActiveRecord::Base
                    # :home_phone,
                    # :work_phone,
                    # :primary_address_id,
+                   # :full_name  # virtual attribute
                  # )  ## all attributes listed here
 
   # Associations:
@@ -92,4 +93,10 @@ class Person < ActiveRecord::Base
 
   validates :nickname_or_other,
                 :uniqueness => { :scope => [ :last_name, :first_name ] }
+
+  def full_name
+    nickname_or_other.nil? ?
+        "#{last_name}, #{first_name}" :
+        "#{last_name}, #{first_name} '#{nickname_or_other}'"
+  end
 end

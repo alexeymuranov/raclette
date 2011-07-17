@@ -1,16 +1,18 @@
 <tr>
   <th scope=row>
-    <%= link_to user.username, user,
+    <%= link_to user.public_send(@displayed_columns[0]), user,
                 :title => t('actions.read'),
                 :class => 'display' %>
   </th>
 
-  <td><%= user.full_name %></td>
-
-  <% [ :account_deactivated, :admin, :manager, :secretary, :a_person ].each do |attribute| %>
-    <td class="boolean">
-      <%= boolean_to_picto(user.public_send(attribute)) %>
-    </td>
+  <% @displayed_columns[1..-1].each do |attribute| %>
+    <%- if Admin::User.columns_hash[attribute.to_s].type == :boolean -%>
+      <td class="boolean">
+        <%= boolean_to_picto(user.public_send(attribute)) %>
+      </td>
+    <%- else -%>
+      <td><%= user.public_send(attribute) %></td>
+    <%- end -%>
   <% end %>
 
   <td class="operation">

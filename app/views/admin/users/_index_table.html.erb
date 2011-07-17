@@ -4,17 +4,20 @@
   <colgroup><col /><col /></colgroup>
   <thead>
     <tr>
-      <th><%= sortable :users, :username, Admin::User.human_attribute_name(:username) %></th>
-
-      <th><%= sortable :users, :full_name, Admin::User.human_attribute_name(:full_name) %></th>
-
-      <% [ :account_deactivated, :admin, :manager, :secretary, :a_person ].each do |attribute| %>
-        <th class="boolean">
-          <%= sortable :users, attribute, Admin::User.human_attribute_name(attribute) %>
-        </th>
+      <% @displayed_columns.each do |attribute| %>
+        <%- if Admin::User.columns_hash[attribute.to_s].type == :boolean -%>
+          <th class="boolean">
+            <%= sortable :users, attribute, Admin::User.human_attribute_name(attribute) %>
+          </th>
+        <%- else -%>
+          <th>
+            <%= sortable :users, attribute, Admin::User.human_attribute_name(attribute) %>
+          </th>
+        <%- end -%>
       <% end %>
 
-      <th class="empty"></th><th class="empty"></th>
+      <th class="empty"></th>
+      <th class="empty"></th>
     </tr>
   </thead>
   <tbody>

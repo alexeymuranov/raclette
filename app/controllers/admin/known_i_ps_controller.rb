@@ -6,12 +6,25 @@ class Admin::KnownIPsController < AdminController
   def index
     @known_ips = Admin::KnownIP.order("#{sort_column(:known_ips)} #{sort_direction(:known_ips)}")
 
+    @displayed_columns = [ :ip, :description ]
+
     @title = t('admin.known_i_ps.index.title')
   end
 
   def show
     @known_ip = Admin::KnownIP.find(params[:id])
     @safe_users = @known_ip.safe_users.order("#{sort_column(:safe_users)} #{sort_direction(:safe_users)}")
+
+    @key_displayed_columns = [ :ip ]
+    @main_displayed_columns = [ :description ]
+
+    @safe_users_displayed_columns = [ :username,
+                                      :full_name,
+                                      :account_deactivated,
+                                      :admin,
+                                      :manager,
+                                      :secretary,
+                                      :a_person ]
 
     @title = t('admin.known_i_ps.show.title', :ip => @known_ip.ip)
   end
@@ -29,8 +42,10 @@ class Admin::KnownIPsController < AdminController
   end
 
   def create
+    @acceptable_attribute_names = [ 'ip', 'description' ]
+
     params[:admin_known_ip].keep_if do |key, value|
-      [ 'ip', 'description' ].include? key
+      @acceptable_attribute_names.include? key
     end
 
     @known_ip = Admin::KnownIP.new(params[:admin_known_ip])
@@ -46,8 +61,10 @@ class Admin::KnownIPsController < AdminController
   end
 
   def update
+    @acceptable_attribute_names = [ 'ip', 'description' ]
+    
     params[:admin_known_ip].keep_if do |key, value|
-      [ 'ip', 'description' ].include? key
+      @acceptable_attribute_names.include? key
     end
 
     @known_ip = Admin::KnownIP.find(params[:id])
