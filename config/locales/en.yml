@@ -439,6 +439,13 @@ en:
         person:
           <<: *person_attributes
 
+  # For kaminari gem:
+  views:  
+    pagination:  
+      previous: "← Previous"  
+      next: "Next →"  
+      truncate: "…"
+
 ################################################################
 # My custom translations:
 

@@ -542,11 +542,11 @@ body > div.container section {
       background-color: $table-head-bg-color;
     }
 
-    & > thead > tr > th.boolean {
+    thead > tr > th.boolean {
       text-align: center;
     }
 
-    & > tbody > tr {
+    tbody > tr {
 
       td.boolean, th.boolean {
         text-align: center;
@@ -566,7 +566,7 @@ body > div.container section {
     }
 
     &.grid {
-      & > thead > tr {
+      thead > tr {
         th:nth-child(odd) {
           background-color: darken($odd-table-row-bg-color, 5%);
         }
@@ -576,7 +576,7 @@ body > div.container section {
         }
       }
 
-      & > tbody > tr:nth-child(odd) {
+      tbody > tr:nth-child(odd) {
         & > td:nth-child(odd) {
           background-color: $even-table-row-bg-color;
         }
@@ -590,7 +590,7 @@ body > div.container section {
         }
       }
 
-      & > tbody > tr:nth-child(even) {
+      tbody > tr:nth-child(even) {
         & > td:nth-child(odd) {
           background-color: $odd-table-row-bg-color;
         }
@@ -604,17 +604,17 @@ body > div.container section {
         }
       }
 
-      & > tbody > tr > th {
+      tbody > tr > th {
         background-color: $table-head-bg-color;
       }
     }
 
     &.records, &.form_fields {
-      & > thead > tr > th {
+      thead > tr > th {
         font-size: 10pt;
       }
 
-      & > tbody > tr {
+      tbody > tr {
         &:nth-child(odd) {
           & > td.operation {
             background-color: darken($odd-table-row-bg-color, 5%)
