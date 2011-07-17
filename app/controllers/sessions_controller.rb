@@ -20,13 +20,16 @@ class SessionsController < ApplicationController
         reset_session  # security measure
         log_in(user, client_ip)
 
+        flash[:info] = t('flash_messages.logged_in', :username => user.username)
+
+##  Alternative:        
 ### XXX NOTE Security Warning:
 ###   Need to be sure that 'flash_messages.logged_in' translations
 ###   are HTML safe
-        flash[:info] = t('flash_messages.logged_in',
-                         :username => "<a href=\"#{admin_user_path(user)}\">"\
-                                      "#{CGI.escapeHTML(user.username)}"\
-                                      "</a>").html_safe
+#         flash[:info] = t('flash_messages.logged_in',
+#                          :username => "<a href=\"#{admin_user_path(user)}\">"\
+#                                       "#{CGI.escapeHTML(user.username)}"\
+#                                       "</a>").html_safe
 ###
 
         redirect_to(path || root_url)

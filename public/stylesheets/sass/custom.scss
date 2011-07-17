@@ -125,11 +125,9 @@ div#developper_links {
 /* Generic navigation */
 
 nav {
-  background-color: $section-bg-color;
-
   ul {
     # list-style-type: none;
-    width: 100%;
+    # width: 100%;
 
     li {
       ul {
@@ -162,11 +160,15 @@ form#login_form {
 /* Header */
 
 body > div.container > header {
+  @include rounded-border(10px);
+  background-color: $section-bg-color;
   font-size: 12pt;
   text-align: left;
   margin: 5px auto;
 
   nav.main_menu {
+    display: inline-block;
+
     ul {
       margin: 0 5px;
       padding: 0;
@@ -180,6 +182,7 @@ body > div.container > header {
           margin: 0;
           padding: 5px;
           color: $common-navigation-link-color;
+          font-weight: bold;
           text-decoration: none;
 
           &:hover {
@@ -189,26 +192,12 @@ body > div.container > header {
           }
         }
       }
+    }
+  }
 
-      li.logout_item {
-        a.logout_button, a.logout_button:visited {
-          margin: 0 5px;
-          padding: 5px 10px;
-          color: $logout-navigation-link-color;
-          background-color: $logout-navigation-link-bg-color;
-
-          &:hover {
-            color: $logout-navigation-link-bg-color;
-            background-color: $logout-navigation-link-color;
-          }
-
-          &:active {
-            background-color: lighten($logout-navigation-link-color, 10%);
-          }
-        }
-      }
-
-      li.separator:after {
+  & > nav.main_menu {
+    ul {
+      hr + li:before {
         content: "|";
       }
 
@@ -222,20 +211,32 @@ body > div.container > header {
           padding: 5px;
         }
       }
+      
+      hr {
+        display: none;
+      }
     }
   }
 
-  & > nav.main_menu {
+  a.logout_button, a.logout_button:visited {
     @include rounded-border(10px);
+    display: inline-block;
+    margin: 0;
+    padding: 5px 10px;
+    color: $logout-navigation-link-color;
+    background-color: $logout-navigation-link-bg-color;
+    font-weight: bold;
+    text-decoration: none;
+    float: right;
 
-    ul {
-      li.logout_item {
-        float: right;
+    &:hover {
+      color: $logout-navigation-link-bg-color;
+      background-color: $logout-navigation-link-color;
+      text-decoration: none;
+    }
 
-        a.logout_button, a.logout_button:visited {
-          @include rounded-border(10px);
-        }
-      }
+    &:active {
+      background-color: lighten($logout-navigation-link-color, 10%);
     }
   }
 
@@ -279,6 +280,10 @@ body > div.container > header {
     &:hover {
       opacity: 1;
     }
+    
+    nav {
+      background-color: $section-bg-color
+    }
   }
 
   div#main_logo div#logo_menu nav {
@@ -303,18 +308,8 @@ body > div.container > header {
         }
       }
 
-      li.logout_item {
-        float: none;
-
-        a.logout_button, a.logout_button:visited {
-          display: block;
-          margin: 0;
-          padding: 5px;
-        }
-      }
-
-      li.separator {
-        display: none;
+      hr {
+        margin: 0;
       }
 
       li.disabled {
@@ -334,16 +329,14 @@ body > div.container > footer {
   margin: 5px auto;
 
   ul {
-    list-style-type: none;
-    width: 100%;
     margin: 0;
     padding:0;
+    font-weight: bold;
 
     li {
+      display: inline-block;
       margin: 0;
       padding: 0;
-      display: inline-block;
-      font-weight: bold;
 
       a, a:visited {
         display: inline-block;
@@ -374,6 +367,7 @@ nav#side_menu {
   width: 150px;
   margin: 0;
   padding: 0;
+  background-color: $section-bg-color;
   font-weight: normal;
   font-size: 10pt;
 
@@ -425,7 +419,14 @@ body > div.container > section {
 }
 
 body > div.container section {
-  h1, h2, h3, h4, h5, h6, p {
+  h1 {
+    color: inherit;
+    line-height: 1.5;
+    margin-top: 0;
+    margin-bottom: 5px;
+  }
+
+  h2, h3, h4, h5, h6, p {
     color: inherit;
     line-height: 1.5;
     margin-top: 0;
@@ -526,7 +527,7 @@ body > div.container section {
   table {
     border: solid 1px $table-border-color;
     width: auto;
-    margin: 5px 0 0;
+    margin: 0;
 
     th, td {
       padding: 0 5px;

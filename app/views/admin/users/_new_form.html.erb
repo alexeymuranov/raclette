@@ -16,7 +16,7 @@
 
   <%= render 'common_form_fields', :f => f %>
 
-  <%= field_set_tag t('admin.users.new.headers.password') do %>
+  <%= field_set_tag t('admin.users.new.subheaders.password') do %>
     <dl class="form_fields">
       <div class="field">
         <dt><%= f.label :password, t('formats.attribute_name:', :attribute => Admin::User.human_attribute_name(:password)) %></dt>

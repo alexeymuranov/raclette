@@ -17,7 +17,7 @@
   <%= render 'common_form_fields', :f => f %>
 
   <% if @user == current_user %>
-    <%= field_set_tag t('admin.users.edit.headers.new_password') do %>
+    <%= field_set_tag t('admin.users.edit.subheaders.new_password') do %>
       <%= label_tag :change_password, t('field_labels.change_password?') %>
       <%= check_box_tag :change_password %>
       <dl class="checkbox_conditional form_fields">

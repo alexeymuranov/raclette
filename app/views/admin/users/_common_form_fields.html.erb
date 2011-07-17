@@ -1,10 +1,10 @@
-<%= field_set_tag t('admin.users.edit.headers.user_data') do %>
+<%= field_set_tag t('admin.users.edit.subheaders.user_data') do %>
   <dl class="form_fields">
     <div class="field">
       <% if @user.new_record? %>
         <dt><%= f.label :username, t('formats.attribute_name:', :attribute => Admin::User.human_attribute_name(:username)) %></dt>
         <dd class="required readonly input">
-          <%= f.text_field :username, :size => 30, :maxlength => 32, :required => :required %></dd>
+          <%= f.text_field :username, :size => 30, :maxlength => 32, :required => :required %><!-- no space! --></dd>
       <% else %>
         <dt><b><%= t('formats.attribute_name:', :attribute => Admin::User.human_attribute_name(:username)) %></b></dt>
         <dd><%= @user.username %></dd>
@@ -14,7 +14,7 @@
     <div class="field">
       <dt><%= f.label :full_name, t('formats.attribute_name:', :attribute => Admin::User.human_attribute_name(:full_name)) %></dt>
       <dd class="required input">
-        <%= f.text_field :full_name, :size => 30, :maxlength => 64, :required => :required %></dd>
+        <%= f.text_field :full_name, :size => 30, :maxlength => 64, :required => :required %><!-- no space! --></dd>
     </div>
 
     <div class="field">
@@ -38,7 +38,7 @@
  </dl>
 <% end %>
 
-<%= field_set_tag t('admin.users.edit.headers.authorized_ips') do %>
+<%= field_set_tag t('admin.users.edit.subheaders.authorized_ips') do %>
   <%= render 'admin/known_i_ps/selection_index_table_for_association_form',
              :f                          => f,
              :known_ips                  => @known_ips,
@@ -47,7 +47,7 @@
              :check_box_selection_header => t('field_labels.authorized?(ip)') %>
 <% end %>
 
-<%= field_set_tag t('admin.users.edit.headers.comments') do %>
+<%= field_set_tag t('admin.users.edit.subheaders.comments') do %>
   <dl class="form_fields">
     <div>
       <dt>

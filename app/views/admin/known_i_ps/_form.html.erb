@@ -19,7 +19,7 @@
                           t('formats.attribute_name:',
                             :attribute => Admin::KnownIP.human_attribute_name(:ip)) %></dt>
           <dd class="required readonly input">
-            <%= f.text_field :ip, :size => 30, :maxlength => 15, :required => :required %></dd>
+            <%= f.text_field :ip, :size => 30, :maxlength => 15, :required => :required %><!-- no space! --></dd>
         </div>
       <% else %>
         <div class="field">

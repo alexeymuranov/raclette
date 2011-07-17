@@ -518,7 +518,7 @@ en:
       show:
         title: "%{username}"
         header: "User '%{username}'"
-        headers:
+        subheaders:
           user_data: "User data"
           authorized_ips: "Authorized IP addresses"
           other: "Other"
@@ -527,7 +527,7 @@ en:
       new:
         title: "New user"
         header: "New user"
-        headers:
+        subheaders:
           user_data: "User data"
           password: "Password"
           authorized_ips: "Authorized IP addresses"
@@ -536,7 +536,7 @@ en:
       edit:
         title: "Update %{username}"
         header: "Updating user '%{username}'"
-        headers:
+        subheaders:
           user_data: "User data"
           new_password: "New password"
           change_password: "Password change"
@@ -573,7 +573,7 @@ en:
       show:
         title: "%{ip}"
         header: "IP address %{ip}"
-        headers:
+        subheaders:
           known_ip_data: "IP address data"
           safe_users: "Authorized users"
           other: "Other"
@@ -620,3 +620,262 @@ en:
         update_all: "Update form"
         delete: "Delete"
 
+  instructors:
+    index:
+      title: ""
+      header: ""
+    show:
+      title: ""
+      header: ""
+    new:
+      title: ""
+      header: ""
+    edit:
+      title: ""
+      header: ""
+    create:
+      flash:
+        success: "Created."
+        failure: "Creation failed."
+    update:
+      flash:
+        success: "Updated."
+        failure: "Update failed."
+    destroy:
+      flash:
+        success: "Destroyed."
+        failure: "Not destroyed."
+
+  lesson_supervisions:
+    index:
+      title: ""
+      header: ""
+    show:
+      title: ""
+      header: ""
+    new:
+      title: ""
+      header: ""
+    edit:
+      title: ""
+      header: ""
+    create:
+      flash:
+        success: "Created."
+        failure: "Creation failed."
+    update:
+      flash:
+        success: "Updated."
+        failure: "Update failed."
+    destroy:
+      flash:
+        success: "Destroyed."
+        failure: "Not destroyed."
+
+  members:
+    index:
+      title: ""
+      header: ""
+    show:
+      title: ""
+      header: ""
+    new:
+      title: ""
+      header: ""
+    edit:
+      title: ""
+      header: ""
+    create:
+      flash:
+        success: "Created."
+        failure: "Creation failed."
+    update:
+      flash:
+        success: "Updated."
+        failure: "Update failed."
+    destroy:
+      flash:
+        success: "Destroyed."
+        failure: "Not destroyed."
+
+  membership_types:
+    index:
+      title: ""
+      header: ""
+    show:
+      title: ""
+      header: ""
+    new:
+      title: ""
+      header: ""
+    edit:
+      title: ""
+      header: ""
+    create:
+      flash:
+        success: "Created."
+        failure: "Creation failed."
+    update:
+      flash:
+        success: "Updated."
+        failure: "Update failed."
+    destroy:
+      flash:
+        success: "Destroyed."
+        failure: "Not destroyed."
+
+  ticket_books:
+    index:
+      title: ""
+      header: ""
+    show:
+      title: ""
+      header: ""
+    new:
+      title: ""
+      header: ""
+    edit:
+      title: ""
+      header: ""
+    create:
+      flash:
+        success: "Created."
+        failure: "Creation failed."
+    update:
+      flash:
+        success: "Updated."
+        failure: "Update failed."
+    destroy:
+      flash:
+        success: "Destroyed."
+        failure: "Not destroyed."
+
+  activity_periods:
+    index:
+      title: ""
+      header: ""
+    show:
+      title: ""
+      header: ""
+    new:
+      title: ""
+      header: ""
+    edit:
+      title: ""
+      header: ""
+    create:
+      flash:
+        success: "Created."
+        failure: "Creation failed."
+    update:
+      flash:
+        success: "Updated."
+        failure: "Update failed."
+    destroy:
+      flash:
+        success: "Destroyed."
+        failure: "Not destroyed."
+
+  memberships:
+    index:
+      title: ""
+      header: ""
+    show:
+      title: ""
+      header: ""
+    new:
+      title: ""
+      header: ""
+    edit:
+      title: ""
+      header: ""
+    create:
+      flash:
+        success: "Created."
+        failure: "Creation failed."
+    update:
+      flash:
+        success: "Updated."
+        failure: "Update failed."
+    destroy:
+      flash:
+        success: "Destroyed."
+        failure: "Not destroyed."
+
+  weekly_events:
+    index:
+      title: ""
+      header: ""
+    show:
+      title: ""
+      header: ""
+    new:
+      title: ""
+      header: ""
+    edit:
+      title: ""
+      header: ""
+    create:
+      flash:
+        success: "Created."
+        failure: "Creation failed."
+    update:
+      flash:
+        success: "Updated."
+        failure: "Update failed."
+    destroy:
+      flash:
+        success: "Destroyed."
+        failure: "Not destroyed."
+
+  weekly_event_suspensions:
+    index:
+      title: ""
+      header: ""
+    show:
+      title: ""
+      header: ""
+    new:
+      title: ""
+      header: ""
+    edit:
+      title: ""
+      header: ""
+    create:
+      flash:
+        success: "Created."
+        failure: "Creation failed."
+    update:
+      flash:
+        success: "Updated."
+        failure: "Update failed."
+    destroy:
+      flash:
+        success: "Destroyed."
+        failure: "Not destroyed."
+
+  events:
+    index:
+      title: ""
+      header: ""
+    show:
+      title: ""
+      header: ""
+    new:
+      title: ""
+      header: ""
+    edit:
+      title: ""
+      header: ""
+    create:
+      flash:
+        success: "Created."
+        failure: "Creation failed."
+    update:
+      flash:
+        success: "Updated."
+        failure: "Update failed."
+    destroy:
+      flash:
+        success: "Destroyed."
+        failure: "Not destroyed."

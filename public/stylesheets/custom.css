@@ -69,13 +69,11 @@ div#developper_links {
       text-decoration: none; }
 
 /* Generic navigation */
-nav {
-  background-color: #f5f5f5; }
-  nav ul {
-    # list-style-type: none;
-    width: 100%; }
-    nav ul li ul {
-      display: none; }
+nav ul {
+  # list-style-type: none;
+  # width: 100%; }
+  nav ul li ul {
+    display: none; }
 
 /* Log-in form */
 form#login_form {
@@ -93,55 +91,62 @@ form#login_form {
 
 /* Header */
 body > div.container > header {
+  border-radius: 10px;
+  -moz-border-radius: 10px;
+  -webkit-border-radius: 10px;
+  background-color: #f5f5f5;
   font-size: 12pt;
   text-align: left;
   margin: 5px auto;
   /* Logo box and menu */ }
-  body > div.container > header nav.main_menu ul {
-    margin: 0 5px;
-    padding: 0; }
-    body > div.container > header nav.main_menu ul li {
-      display: inline-block;
-      font-weight: bold; }
-      body > div.container > header nav.main_menu ul li a, body > div.container > header nav.main_menu ul li a:visited {
-        display: inline-block;
-        margin: 0;
-        padding: 5px;
-        color: MediumBlue;
-        text-decoration: none; }
-        body > div.container > header nav.main_menu ul li a:hover, body > div.container > header nav.main_menu ul li a:visited:hover {
-          color: #f5f5f5;
-          background-color: MediumBlue;
-          text-decoration: none; }
-    body > div.container > header nav.main_menu ul li.logout_item a.logout_button, body > div.container > header nav.main_menu ul li.logout_item a.logout_button:visited {
+  body > div.container > header nav.main_menu {
+    display: inline-block; }
+    body > div.container > header nav.main_menu ul {
       margin: 0 5px;
-      padding: 5px 10px;
-      color: #006400;
-      background-color: yellow; }
-      body > div.container > header nav.main_menu ul li.logout_item a.logout_button:hover, body > div.container > header nav.main_menu ul li.logout_item a.logout_button:visited:hover {
-        color: yellow;
-        background-color: #006400; }
-      body > div.container > header nav.main_menu ul li.logout_item a.logout_button:active, body > div.container > header nav.main_menu ul li.logout_item a.logout_button:visited:active {
-        background-color: #009700; }
-    body > div.container > header nav.main_menu ul li.separator:after {
-      content: "|"; }
-    body > div.container > header nav.main_menu ul li.disabled {
-      color: silver;
-      text-decoration: none; }
-      body > div.container > header nav.main_menu ul li.disabled span.disabled_link {
+      padding: 0; }
+      body > div.container > header nav.main_menu ul li {
         display: inline-block;
-        color: silver;
-        padding: 5px; }
-  body > div.container > header > nav.main_menu {
+        font-weight: bold; }
+        body > div.container > header nav.main_menu ul li a, body > div.container > header nav.main_menu ul li a:visited {
+          display: inline-block;
+          margin: 0;
+          padding: 5px;
+          color: MediumBlue;
+          font-weight: bold;
+          text-decoration: none; }
+          body > div.container > header nav.main_menu ul li a:hover, body > div.container > header nav.main_menu ul li a:visited:hover {
+            color: #f5f5f5;
+            background-color: MediumBlue;
+            text-decoration: none; }
+  body > div.container > header > nav.main_menu ul hr + li:before {
+    content: "|"; }
+  body > div.container > header > nav.main_menu ul li.disabled {
+    color: silver;
+    text-decoration: none; }
+    body > div.container > header > nav.main_menu ul li.disabled span.disabled_link {
+      display: inline-block;
+      color: silver;
+      padding: 5px; }
+  body > div.container > header > nav.main_menu ul hr {
+    display: none; }
+  body > div.container > header a.logout_button, body > div.container > header a.logout_button:visited {
     border-radius: 10px;
     -moz-border-radius: 10px;
-    -webkit-border-radius: 10px; }
-    body > div.container > header > nav.main_menu ul li.logout_item {
-      float: right; }
-      body > div.container > header > nav.main_menu ul li.logout_item a.logout_button, body > div.container > header > nav.main_menu ul li.logout_item a.logout_button:visited {
-        border-radius: 10px;
-        -moz-border-radius: 10px;
-        -webkit-border-radius: 10px; }
+    -webkit-border-radius: 10px;
+    display: inline-block;
+    margin: 0;
+    padding: 5px 10px;
+    color: #006400;
+    background-color: yellow;
+    font-weight: bold;
+    text-decoration: none;
+    float: right; }
+    body > div.container > header a.logout_button:hover, body > div.container > header a.logout_button:visited:hover {
+      color: yellow;
+      background-color: #006400;
+      text-decoration: none; }
+    body > div.container > header a.logout_button:active, body > div.container > header a.logout_button:visited:active {
+      background-color: #009700; }
   body > div.container > header div#main_logo {
     position: fixed;
     top: 5px;
@@ -170,6 +175,8 @@ body > div.container > header {
     opacity: 0.75; }
     body > div.container > header div#main_logo:hover div#logo_menu:hover {
       opacity: 1; }
+    body > div.container > header div#main_logo:hover div#logo_menu nav {
+      background-color: #f5f5f5; }
   body > div.container > header div#main_logo div#logo_menu nav {
     box-shadow: 0 0 5px 0 navy;
     -webkit-box-shadow: 0 0 5px 0 navy;
@@ -188,14 +195,8 @@ body > div.container > header {
           margin: 0;
           padding: 5px;
           font-weight: normal; }
-      body > div.container > header div#main_logo div#logo_menu nav ul li.logout_item {
-        float: none; }
-        body > div.container > header div#main_logo div#logo_menu nav ul li.logout_item a.logout_button, body > div.container > header div#main_logo div#logo_menu nav ul li.logout_item a.logout_button:visited {
-          display: block;
-          margin: 0;
-          padding: 5px; }
-      body > div.container > header div#main_logo div#logo_menu nav ul li.separator {
-        display: none; }
+      body > div.container > header div#main_logo div#logo_menu nav ul hr {
+        margin: 0; }
       body > div.container > header div#main_logo div#logo_menu nav ul li.disabled {
         display: none; }
 
@@ -209,15 +210,13 @@ body > div.container > footer {
   text-align: center;
   margin: 5px auto; }
   body > div.container > footer ul {
-    list-style-type: none;
-    width: 100%;
     margin: 0;
-    padding: 0; }
+    padding: 0;
+    font-weight: bold; }
     body > div.container > footer ul li {
-      margin: 0;
-      padding: 0;
       display: inline-block;
-      font-weight: bold; }
+      margin: 0;
+      padding: 0; }
       body > div.container > footer ul li a, body > div.container > footer ul li a:visited {
         display: inline-block;
         padding: 5px;
@@ -240,6 +239,7 @@ nav#side_menu {
   width: 150px;
   margin: 0;
   padding: 0;
+  background-color: #f5f5f5;
   font-weight: normal;
   font-size: 10pt; }
   nav#side_menu ul {
@@ -275,7 +275,12 @@ body > div.container > section {
     body > div.container > section > section > section {
       background-color: #f5f5f5; }
 
-body > div.container section h1, body > div.container section h2, body > div.container section h3, body > div.container section h4, body > div.container section h5, body > div.container section h6, body > div.container section p {
+body > div.container section h1 {
+  color: inherit;
+  line-height: 1.5;
+  margin-top: 0;
+  margin-bottom: 5px; }
+body > div.container section h2, body > div.container section h3, body > div.container section h4, body > div.container section h5, body > div.container section h6, body > div.container section p {
   color: inherit;
   line-height: 1.5;
   margin-top: 0;
@@ -329,7 +334,7 @@ body > div.container section input[type="checkbox"]:not(:checked) + *.checkbox_c
 body > div.container section table {
   border: solid 1px #d1d1f6;
   width: auto;
-  margin: 5px 0 0; }
+  margin: 0; }
   body > div.container section table th, body > div.container section table td {
     padding: 0 5px; }
     body > div.container section table th a, body > div.container section table td a {

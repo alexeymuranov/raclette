@@ -477,7 +477,7 @@ fr:
       show:
         title: "%{username}"
         header: "Utilisateur « %{username} »"
-        headers:
+        subheaders:
           user_data: "Données de l'utilisateur"
           safe_ips: "Adresses IP autorisées"
           other: "Divers"
@@ -486,7 +486,7 @@ fr:
       new:
         title: "Nouveau utilisateur"
         header: "Nouveau utilisateur"
-        headers:
+        subheaders:
           user_data: "Données de l'utilisateur"
           password: "Mot de passe"
           authorized_ips: "Adresses IP autorisées"
@@ -495,7 +495,7 @@ fr:
       edit:
         title: "%{username} - mise à jour"
         header: "Mise à jour de l'utilisateur « %{username} »"
-        headers:
+        subheaders:
           user_data: "Données de l'utilisateur"
           new_password: "Nouveau mot de passe"
           change_password: "Changer le mot de passe"
@@ -532,7 +532,7 @@ fr:
       show:
         title: "%{ip}"
         header: "Adresse IP %{ip}"
-        headers:
+        subheaders:
           known_ip_data: "Données de l'adresse IP"
           safe_users: "Utilisateurs autorisés"
           other: "Divers"
@@ -578,3 +578,263 @@ fr:
         show_all: "Adresses IP autorisées"
         update_all: "Mise à jour"
         delete: "Supprimer"
+
+  instructors:
+    index:
+      title: ""
+      header: ""
+    show:
+      title: ""
+      header: ""
+    new:
+      title: ""
+      header: ""
+    edit:
+      title: ""
+      header: ""
+    create:
+      flash:
+        success: "Le modèle est enregistré."
+        failure: "Une erreur s'est produit!"
+    update:
+      flash:
+        success: "Le modèle est mis à jour."
+        failure: "Une erreur s'est produit!"
+    destroy:
+      flash:
+        success: "Le modèle est supprimé."
+        failure: "Une erreur s'est produit!"
+
+  lesson_supervisions:
+    index:
+      title: ""
+      header: ""
+    show:
+      title: ""
+      header: ""
+    new:
+      title: ""
+      header: ""
+    edit:
+      title: ""
+      header: ""
+    create:
+      flash:
+        success: "Le modèle est enregistré."
+        failure: "Une erreur s'est produit!"
+    update:
+      flash:
+        success: "Le modèle est mis à jour."
+        failure: "Une erreur s'est produit!"
+    destroy:
+      flash:
+        success: "Le modèle est supprimé."
+        failure: "Une erreur s'est produit!"
+
+  members:
+    index:
+      title: ""
+      header: ""
+    show:
+      title: ""
+      header: ""
+    new:
+      title: ""
+      header: ""
+    edit:
+      title: ""
+      header: ""
+    create:
+      flash:
+        success: "Le modèle est enregistré."
+        failure: "Une erreur s'est produit!"
+    update:
+      flash:
+        success: "Le modèle est mis à jour."
+        failure: "Une erreur s'est produit!"
+    destroy:
+      flash:
+        success: "Le modèle est supprimé."
+        failure: "Une erreur s'est produit!"
+
+  membership_types:
+    index:
+      title: ""
+      header: ""
+    show:
+      title: ""
+      header: ""
+    new:
+      title: ""
+      header: ""
+    edit:
+      title: ""
+      header: ""
+    create:
+      flash:
+        success: "Le modèle est enregistré."
+        failure: "Une erreur s'est produit!"
+    update:
+      flash:
+        success: "Le modèle est mis à jour."
+        failure: "Une erreur s'est produit!"
+    destroy:
+      flash:
+        success: "Le modèle est supprimé."
+        failure: "Une erreur s'est produit!"
+
+  ticket_books:
+    index:
+      title: ""
+      header: ""
+    show:
+      title: ""
+      header: ""
+    new:
+      title: ""
+      header: ""
+    edit:
+      title: ""
+      header: ""
+    create:
+      flash:
+        success: "Le modèle est enregistré."
+        failure: "Une erreur s'est produit!"
+    update:
+      flash:
+        success: "Le modèle est mis à jour."
+        failure: "Une erreur s'est produit!"
+    destroy:
+      flash:
+        success: "Le modèle est supprimé."
+        failure: "Une erreur s'est produit!"
+
+  activity_periods:
+    index:
+      title: ""
+      header: ""
+    show:
+      title: ""
+      header: ""
+    new:
+      title: ""
+      header: ""
+    edit:
+      title: ""
+      header: ""
+    create:
+      flash:
+        success: "Le modèle est enregistré."
+        failure: "Une erreur s'est produit!"
+    update:
+      flash:
+        success: "Le modèle est mis à jour."
+        failure: "Une erreur s'est produit!"
+    destroy:
+      flash:
+        success: "Le modèle est supprimé."
+        failure: "Une erreur s'est produit!"
+
+  memberships:
+    index:
+      title: ""
+      header: ""
+    show:
+      title: ""
+      header: ""
+    new:
+      title: ""
+      header: ""
+    edit:
+      title: ""
+      header: ""
+    create:
+      flash:
+        success: "Le modèle est enregistré."
+        failure: "Une erreur s'est produit!"
+    update:
+      flash:
+        success: "Le modèle est mis à jour."
+        failure: "Une erreur s'est produit!"
+    destroy:
+      flash:
+        success: "Le modèle est supprimé."
+        failure: "Une erreur s'est produit!"
+
+  weekly_events:
+    index:
+      title: ""
+      header: ""
+    show:
+      title: ""
+      header: ""
+    new:
+      title: ""
+      header: ""
+    edit:
+      title: ""
+      header: ""
+    create:
+      flash:
+        success: "Le modèle est enregistré."
+        failure: "Une erreur s'est produit!"
+    update:
+      flash:
+        success: "Le modèle est mis à jour."
+        failure: "Une erreur s'est produit!"
+    destroy:
+      flash:
+        success: "Le modèle est supprimé."
+        failure: "Une erreur s'est produit!"
+
+  weekly_event_suspensions:
+    index:
+      title: ""
+      header: ""
+    show:
+      title: ""
+      header: ""
+    new:
+      title: ""
+      header: ""
+    edit:
+      title: ""
+      header: ""
+    create:
+      flash:
+        success: "Le modèle est enregistré."
+        failure: "Une erreur s'est produit!"
+    update:
+      flash:
+        success: "Le modèle est mis à jour."
+        failure: "Une erreur s'est produit!"
+    destroy:
+      flash:
+        success: "Le modèle est supprimé."
+        failure: "Une erreur s'est produit!"
+
+  events:
+    index:
+      title: ""
+      header: ""
+    show:
+      title: ""
+      header: ""
+    new:
+      title: ""
+      header: ""
+    edit:
+      title: ""
+      header: ""
+    create:
+      flash:
+        success: "Le modèle est enregistré."
+        failure: "Une erreur s'est produit!"
+    update:
+      flash:
+        success: "Le modèle est mis à jour."
+        failure: "Une erreur s'est produit!"
+    destroy:
+      flash:
+        success: "Le modèle est supprimé."
+        failure: "Une erreur s'est produit!"
