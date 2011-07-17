@@ -4,9 +4,8 @@ class SessionsController < ApplicationController
   skip_before_filter :require_login, :only => [:new, :create]
   
   def new
-    @session = ActiveRecord::SessionStore::Session.new
-    @title = t('sessions.new.title')
-    @client_ip = request.remote_ip
+    # @session = ActiveRecord::SessionStore::Session.new  # how to use SessionStore?
+    render_new_properly
   end
 
   def create
@@ -22,10 +21,11 @@ class SessionsController < ApplicationController
 
         flash[:info] = t('flash_messages.logged_in', :username => user.username)
 
-##  Alternative:        
+##  It is possible to use HTML in the message, however:        
 ### XXX NOTE Security Warning:
 ###   Need to be sure that 'flash_messages.logged_in' translations
 ###   are HTML safe
+### XXX NOTE: not good for non-admin users
 #         flash[:info] = t('flash_messages.logged_in',
 #                          :username => "<a href=\"#{admin_user_path(user)}\">"\
 #                                       "#{CGI.escapeHTML(user.username)}"\
@@ -35,13 +35,11 @@ class SessionsController < ApplicationController
         redirect_to(path || root_url)
       else
         flash.now.alert = t('flash_messages.user_account_deactivated')
-        @title = t('sessions.new.title')
-        render 'new'
+        render_new_properly
       end
     else
       flash.now.alert = t('flash_messages.invalid_login')
-      @title = t('sessions.new.title')
-      render 'new'
+      render_new_properly
     end
   end
 
@@ -51,4 +49,14 @@ class SessionsController < ApplicationController
     flash[:info] = t('flash_messages.logged_out')
     redirect_to login_url
   end
+
+  private
+
+    def render_new_properly
+      @client_ip = request.remote_ip
+      @title = t('sessions.new.title')
+
+      render :new
+    end
+
 end

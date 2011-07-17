@@ -23,8 +23,8 @@ class ApplicationController < ActionController::Base
     end
 
     def sort_direction(table_name)
-      suggested_direction = params[table_name_to_sort_direction_key(table_name)]
-      %w[asc desc].include?(suggested_direction) ? suggested_direction.intern : :asc
+      params[table_name_to_sort_direction_key(table_name)] == 'desc' ?
+          :desc : :asc
     end
 
 end
