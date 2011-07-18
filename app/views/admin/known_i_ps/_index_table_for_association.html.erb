@@ -1,6 +1,9 @@
 <%= content_tag :table, :id => table_name, :class => "associated records" do %>
-  <colgroup><col /></colgroup>
-  <colgroup><col /></colgroup>
+  <colgroup class="attributes">
+    <% @displayed_columns.size.times do %>
+      <col />
+    <% end %>
+  </colgroup>
   <thead>
     <tr>
       <% displayed_columns.each do |attribute| %>

@@ -411,6 +411,7 @@ fr:
   hello: "bonjour"
   "yes": "oui"
   "no": "non"
+  all: "tous"
 
   formats:
     "attribute_name:": "%{attribute} :"
@@ -436,6 +437,7 @@ fr:
 
   buttons:
     save: "Enregistrer"
+    filter: "Filtrer"
 
   actions:
     create: "Ajouter"
@@ -480,7 +482,7 @@ fr:
     users:
       index:
         title: "Utilisateurs"
-        header: "Tous les utilisateurs"
+        header: "Les utilisateurs"
       show:
         title: "%{username}"
         header: "Utilisateur « %{username} »"
@@ -535,7 +537,7 @@ fr:
     known_i_ps:
       index:
         title: "Adresses IP"
-        header: "Adresses IP connues"
+        header: "Les adresses IP connues"
       show:
         title: "%{ip}"
         header: "Adresse IP %{ip}"

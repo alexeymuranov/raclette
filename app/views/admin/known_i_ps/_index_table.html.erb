@@ -1,6 +1,9 @@
 <%= content_tag :table, :id => :known_ips, :class => "records" do %>
-  <colgroup><col /></colgroup>
-  <colgroup><col /></colgroup>
+  <colgroup class="attributes">
+    <% @displayed_columns.size.times do %>
+      <col />
+    <% end %>
+  </colgroup>
   <colgroup><col /><col /></colgroup>
   <thead>
     <tr>

@@ -14,6 +14,26 @@ class Admin::UsersController < AdminController
                            :secretary,
                            :a_person ]
 
+    @filter = {}
+    @displayed_columns.each do |attribute|
+      case Admin::User.columns_hash[attribute.to_s].type
+      when :string
+        unless params['filter_'+attribute.to_s].blank?
+          @filter[attribute] = params['filter_'+attribute.to_s]
+          @filter[attribute].sub!(/\%*\z/, '%')
+          # @filter[attribute] = "#{params['filter_'+attribute.to_s]}%"
+          @users = @users.where("#{attribute.to_s} like ?", @filter[attribute])
+        end
+      when :boolean
+        case params['filter_'+attribute.to_s]
+        when 'yes'
+          @users = @users.where(attribute => (@filter[attribute] = true))
+        when 'no'
+          @users = @users.where(attribute => (@filter[attribute] = false))
+        end
+      end
+    end
+
     @title = t('admin.users.index.title')  # or: Admin::User.human_name.pluralize
   end
 

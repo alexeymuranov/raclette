@@ -69,11 +69,8 @@ div#developper_links {
       text-decoration: none; }
 
 /* Generic navigation */
-nav ul {
-  # list-style-type: none;
-  # width: 100%; }
-  nav ul li ul {
-    display: none; }
+nav ul li ul {
+  display: none; }
 
 /* Log-in form */
 form#login_form {
@@ -275,129 +272,156 @@ body > div.container > section {
     body > div.container > section > section > section {
       background-color: #f5f5f5; }
 
-body > div.container section h1 {
+body div.container section h1 {
   color: inherit;
   line-height: 1.5;
   margin-top: 0;
   margin-bottom: 5px; }
-body > div.container section h2, body > div.container section h3, body > div.container section h4, body > div.container section h5, body > div.container section h6, body > div.container section p {
+body div.container section h2, body div.container section h3, body div.container section h4, body div.container section h5, body div.container section h6, body div.container section p {
   color: inherit;
   line-height: 1.5;
   margin-top: 0;
   margin-bottom: 0; }
-body > div.container section > h1 {
+body div.container section > h1 {
   text-align: center;
   font-size: 16pt;
   font-weight: bold; }
-body > div.container section h2, body > div.container section > section > h1 {
+body div.container section h2, body div.container section > section > h1 {
   font-size: 14pt;
   font-weight: bold; }
-body > div.container section h3, body > div.container section h4, body > div.container section h5, body > div.container section > section section h1 {
+body div.container section h3, body div.container section h4, body div.container section h5, body div.container section > section section h1 {
   font-size: 12pt;
   font-weight: bold; }
-body > div.container section dl.show, body > div.container section dl.form_fields {
+body div.container section dl.show, body div.container section dl.form_fields {
   display: table;
   border: solid 1px #d1d1f6; }
-  body > div.container section dl.show > div, body > div.container section dl.form_fields > div {
-    display: table-row; }
-    body > div.container section dl.show > div.caption, body > div.container section dl.form_fields > div.caption {
-      display: table-caption;
-      text-align: center; }
-    body > div.container section dl.show > div > dt, body > div.container section dl.form_fields > div > dt {
-      display: table-cell;
-      padding: 0 5px; }
-    body > div.container section dl.show > div > dd, body > div.container section dl.form_fields > div > dd {
-      display: table-cell;
-      padding: 0 5px; }
-      body > div.container section dl.show > div > dd.long_text, body > div.container section dl.form_fields > div > dd.long_text {
-        vertical-align: top; }
-    body > div.container section dl.show > div:nth-child(odd) > dt, body > div.container section dl.form_fields > div:nth-child(odd) > dt {
-      background-color: #e8e8e8; }
-    body > div.container section dl.show > div:nth-child(odd) > dd, body > div.container section dl.form_fields > div:nth-child(odd) > dd {
-      background-color: #f5f5f5; }
-    body > div.container section dl.show > div:nth-child(even) > dt, body > div.container section dl.form_fields > div:nth-child(even) > dt {
-      background-color: #d1d1f6; }
-    body > div.container section dl.show > div:nth-child(even) > dd, body > div.container section dl.form_fields > div:nth-child(even) > dd {
-      background-color: #e6e6fa; }
-body > div.container section dl.show {
+body div.container section dl.show {
   margin: 0; }
-body > div.container section dl.form_fields {
+body div.container section dl.form_fields {
   margin: 0 auto; }
-  body > div.container section dl.form_fields > div > dd.input.required:after {
-    content: "*"; }
-  body > div.container section dl.form_fields > div > dd.input.required.readonly:after {
-    content: "*!"; }
-  body > div.container section dl.form_fields > div > dd.input.readonly:after {
-    content: "!"; }
-body > div.container section input[type="checkbox"]:not(:checked) + *.checkbox_conditional {
+body div.container section dl.form_fields div.field, body div.container section dl.show div.entry {
+  display: table-row; }
+  body div.container section dl.form_fields div.field.caption, body div.container section dl.show div.entry.caption {
+    display: table-caption;
+    text-align: center; }
+  body div.container section dl.form_fields div.field dt, body div.container section dl.show div.entry dt {
+    display: table-cell;
+    padding: 0 5px; }
+  body div.container section dl.form_fields div.field dd, body div.container section dl.show div.entry dd {
+    display: table-cell;
+    padding: 0 5px; }
+    body div.container section dl.form_fields div.field dd.long_text, body div.container section dl.show div.entry dd.long_text {
+      vertical-align: top; }
+  body div.container section dl.form_fields div.field:nth-child(odd) dt, body div.container section dl.show div.entry:nth-child(odd) dt {
+    background-color: #e8e8e8; }
+  body div.container section dl.form_fields div.field:nth-child(odd) dd, body div.container section dl.show div.entry:nth-child(odd) dd {
+    background-color: #f5f5f5; }
+  body div.container section dl.form_fields div.field:nth-child(even) dt, body div.container section dl.show div.entry:nth-child(even) dt {
+    background-color: #d1d1f6; }
+  body div.container section dl.form_fields div.field:nth-child(even) dd, body div.container section dl.show div.entry:nth-child(even) dd {
+    background-color: #e6e6fa; }
+body div.container section dl.form_fields div.field dd.input.required:after {
+  content: "*"; }
+body div.container section dl.form_fields div.field dd.input.required.readonly:after {
+  content: "*!"; }
+body div.container section dl.form_fields div.field dd.input.readonly:after {
+  content: "!"; }
+body div.container section input[type="checkbox"]:not(:checked) + *.checkbox_conditional {
   display: none; }
-body > div.container section table {
+body div.container section table {
+  border-collapse: collapse;
   border: solid 1px #d1d1f6;
   width: auto;
   margin: 0; }
-  body > div.container section table th, body > div.container section table td {
+  body div.container section table tr {
+    border: solid 1px #d1d1f6; }
+  body div.container section table tr th, body div.container section table tr td {
     padding: 0 5px; }
-    body > div.container section table th a, body > div.container section table td a {
+    body div.container section table tr th a, body div.container section table tr td a {
       display: block;
       margin: 0 -5px; }
-  body > div.container section table th {
+  body div.container section table thead th {
     background-color: #d1d1f6; }
-  body > div.container section table thead > tr > th.boolean {
+  body div.container section table thead th.empty {
+    background-color: #e6e6fa; }
+  body div.container section table thead td {
+    background-color: #e6e6fa; }
+  body div.container section table thead td.empty {
+    background-color: #d1d1f6; }
+  body div.container section table thead td.actions {
+    border-top: solid 1px #d1d1f6; }
+  body div.container section table thead th.boolean, body div.container section table thead:not(.form_fields) td.boolean {
     text-align: center; }
-  body > div.container section table tbody > tr td.boolean, body > div.container section table tbody > tr th.boolean {
+  body div.container section table thead:not(:hover) {
+    /* does not work! */ }
+    body div.container section table thead:not(:hover) tr.form_fields, body div.container section table thead:not(:hover) tr.form_actions {
+      # display: none;
+      # visibility: collapse;
+      # transition: all 2s ease 0s;
+      # -moz-transition: all 2s ease 0s;
+      /* Firefox 4 */
+      # -webkit-transition: all 2s ease 0s;
+      /* Safari and Chrome */
+      # -o-transition: all 2s ease 0s; }
+  body div.container section table tbody tr td.boolean, body div.container section table tbody tr th.boolean {
     text-align: center; }
-  body > div.container section table tbody > tr:nth-child(odd) > td, body > div.container section table tbody > tr:nth-child(odd) > th {
+  body div.container section table tbody tr:nth-child(odd) td, body div.container section table tbody tr:nth-child(odd) th {
     background-color: #f5f5f5; }
-  body > div.container section table tbody > tr:nth-child(even) > td, body > div.container section table tbody > tr:nth-child(even) > th {
+  body div.container section table tbody tr:nth-child(even) td, body div.container section table tbody tr:nth-child(even) th {
     background-color: #e6e6fa; }
-  body > div.container section table.grid thead > tr th:nth-child(odd) {
-    background-color: #e8e8e8; }
-  body > div.container section table.grid thead > tr th:nth-child(even) {
-    background-color: #d1d1f6; }
-  body > div.container section table.grid tbody > tr:nth-child(odd) > td:nth-child(odd) {
-    background-color: #e6e6fa; }
-  body > div.container section table.grid tbody > tr:nth-child(odd) > td:nth-child(even) {
-    background-color: #f5f5f5; }
-  body > div.container section table.grid tbody > tr:nth-child(odd) > th {
-    background-color: #d1d1f6; }
-  body > div.container section table.grid tbody > tr:nth-child(even) > td:nth-child(odd) {
-    background-color: #f5f5f5; }
-  body > div.container section table.grid tbody > tr:nth-child(even) > td:nth-child(even) {
-    background-color: #e6e6fa; }
-  body > div.container section table.grid tbody > tr:nth-child(even) > th {
-    background-color: #e8e8e8; }
-  body > div.container section table.grid tbody > tr > th {
-    background-color: #d1d1f6; }
-  body > div.container section table.records thead > tr > th, body > div.container section table.form_fields thead > tr > th {
-    font-size: 10pt; }
-  body > div.container section table.records tbody > tr:nth-child(odd) > td.operation, body > div.container section table.form_fields tbody > tr:nth-child(odd) > td.operation {
-    background-color: #e8e8e8; }
-  body > div.container section table.records tbody > tr:nth-child(even) > td.operation, body > div.container section table.form_fields tbody > tr:nth-child(even) > td.operation {
-    background-color: #d1d1f6; }
-  body > div.container section table.form_fields {
-    width: auto;
-    margin-left: auto;
-    margin-right: auto; }
-  body > div.container section table caption {
+  body div.container section table caption {
     text-align: center;
     white-space: nowrap; }
-body > div.container section fieldset {
+body div.container section table.records colgroup.attributes col, body div.container section table.form_fields colgroup.attributes col {
+  border: solid 1px #d1d1f6; }
+body div.container section table.records thead, body div.container section table.form_fields thead {
+  font-size: 10pt;
+  border: solid 1px #d1d1f6; }
+body div.container section table.records tbody tr:nth-child(odd) > td.operation, body div.container section table.form_fields tbody tr:nth-child(odd) > td.operation {
+  background-color: #e8e8e8; }
+body div.container section table.records tbody tr:nth-child(even) > td.operation, body div.container section table.form_fields tbody tr:nth-child(even) > td.operation {
+  background-color: #d1d1f6; }
+body div.container section table.form_fields {
+  width: auto;
+  margin-left: auto;
+  margin-right: auto; }
+body div.container section table.grid thead tr th:nth-child(odd) {
+  background-color: #e8e8e8; }
+body div.container section table.grid thead tr th:nth-child(even) {
+  background-color: #d1d1f6; }
+body div.container section table.grid tbody tr:nth-child(odd) td:nth-child(odd) {
+  background-color: #e6e6fa; }
+body div.container section table.grid tbody tr:nth-child(odd) td:nth-child(even) {
+  background-color: #f5f5f5; }
+body div.container section table.grid tbody tr:nth-child(odd) th {
+  background-color: #d1d1f6; }
+body div.container section table.grid tbody tr:nth-child(even) td:nth-child(odd) {
+  background-color: #f5f5f5; }
+body div.container section table.grid tbody tr:nth-child(even) td:nth-child(even) {
+  background-color: #e6e6fa; }
+body div.container section table.grid tbody tr:nth-child(even) th {
+  background-color: #e8e8e8; }
+body div.container section table.filtered {
+  box-shadow: 0 0 3px 0 red;
+  -webkit-box-shadow: 0 0 3px 0 red;
+  -moz-box-shadow: 0 0 3px 0 red; }
+body div.container section fieldset {
   border-radius: 5px;
   -moz-border-radius: 5px;
   -webkit-border-radius: 5px;
   margin: 0.5em 0;
   padding: 10px; }
-  body > div.container section fieldset legend {
+  body div.container section fieldset legend {
     margin: 0 10px;
     padding: 0px 5px; }
-body > div.container section form div.actions {
+body div.container section form *.actions {
   text-align: center; }
-body > div.container section div.link_group {
+body div.container section div.link_group {
   border-radius: 5px;
   -moz-border-radius: 5px;
   -webkit-border-radius: 5px;
   border: dotted 1px; }
-body > div.container section a, body > div.container section a:visited {
+body div.container section a, body div.container section a:visited {
   border-radius: 5px;
   -moz-border-radius: 5px;
   -webkit-border-radius: 5px;
@@ -405,34 +429,34 @@ body > div.container section a, body > div.container section a:visited {
   padding: 5px;
   text-decoration: none;
   background-color: none; }
-  body > div.container section a:hover, body > div.container section a:visited:hover {
+  body div.container section a:hover, body div.container section a:visited:hover {
     text-shadow: 0 0 3px #f5f5f5; }
-body > div.container section a.display, body > div.container section a.display:visited {
+body div.container section a.display, body div.container section a.display:visited {
   color: green; }
-  body > div.container section a.display:hover, body > div.container section a.display:visited:hover {
+  body div.container section a.display:hover, body div.container section a.display:visited:hover {
     color: #f5f5f5;
     background-color: green;
     text-decoration: none;
     text-shadow: none; }
-  body > div.container section a.display:active, body > div.container section a.display:visited:active {
+  body div.container section a.display:active, body div.container section a.display:visited:active {
     background-color: #00b300; }
-body > div.container section a.add, body > div.container section a.add:visited {
+body div.container section a.add, body div.container section a.add:visited {
   color: blue; }
-  body > div.container section a.add:hover, body > div.container section a.add:visited:hover {
+  body div.container section a.add:hover, body div.container section a.add:visited:hover {
     color: #f5f5f5;
     background-color: blue;
     text-decoration: none;
     text-shadow: none; }
-  body > div.container section a.add:active, body > div.container section a.add:visited:active {
+  body div.container section a.add:active, body div.container section a.add:visited:active {
     background-color: #3333ff; }
-body > div.container section a.modify, body > div.container section a.modify:visited {
+body div.container section a.modify, body div.container section a.modify:visited {
   color: red; }
-  body > div.container section a.modify:hover, body > div.container section a.modify:visited:hover {
+  body div.container section a.modify:hover, body div.container section a.modify:visited:hover {
     color: #f5f5f5;
     background-color: red;
     text-decoration: none;
     text-shadow: none; }
-  body > div.container section a.modify:active, body > div.container section a.modify:visited:active {
+  body div.container section a.modify:active, body div.container section a.modify:visited:active {
     background-color: #ff3333; }
 
 /* Styles for validation errors, use automatically generated classes and ids */

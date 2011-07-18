@@ -452,6 +452,7 @@ en:
   hello: "hello"
   "yes": "yes"
   "no": "no"
+  all: "all"
 
   formats:
     "attribute_name:": "%{attribute}:"
@@ -477,6 +478,7 @@ en:
 
   buttons:
     save: "Save"
+    filter: "Filter"
 
   actions:
     create: "Add"
@@ -521,7 +523,7 @@ en:
     users:
       index:
         title: "Users"
-        header: "All users"
+        header: "Users"
       show:
         title: "%{username}"
         header: "User '%{username}'"

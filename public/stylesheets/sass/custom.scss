@@ -126,9 +126,6 @@ div#developper_links {
 
 nav {
   ul {
-    # list-style-type: none;
-    # width: 100%;
-
     li {
       ul {
         display: none;
@@ -418,7 +415,7 @@ body > div.container > section {
   }
 }
 
-body > div.container section {
+body div.container section {
   h1 {
     color: inherit;
     line-height: 1.5;
@@ -452,49 +449,6 @@ body > div.container section {
   dl.show, dl.form_fields {
     display: table;
     border: solid 1px $table-border-color;
-    
-    & > div {
-      display: table-row;
-
-      &.caption {
-        display: table-caption;
-        text-align: center;
-      }
-
-      & > dt {
-        display: table-cell;
-        padding: 0 5px;
-      }
-
-      & > dd {
-        display: table-cell;
-        padding: 0 5px;
-
-        &.long_text {
-          vertical-align: top;
-        }
-      }
-
-      &:nth-child(odd) {
-        & > dt {
-          background-color: darken($odd-table-row-bg-color, 5%);
-        }
-
-        & > dd {
-          background-color: $odd-table-row-bg-color;
-        }
-      }
-
-      &:nth-child(even) {
-        & > dt {
-          background-color: darken($even-table-row-bg-color, 5%);
-        }
-
-        & > dd {
-          background-color: $even-table-row-bg-color;
-        }
-      }
-    }
   }
 
   dl.show {
@@ -503,8 +457,53 @@ body > div.container section {
 
   dl.form_fields {
     margin: 0 auto;
+  }
     
-    & > div > dd.input {
+  dl.form_fields div.field, dl.show div.entry {
+    display: table-row;
+
+    &.caption {
+      display: table-caption;
+      text-align: center;
+    }
+
+    dt {
+      display: table-cell;
+      padding: 0 5px;
+    }
+
+    dd {
+      display: table-cell;
+      padding: 0 5px;
+
+      &.long_text {
+        vertical-align: top;
+      }
+    }
+
+    &:nth-child(odd) {
+      dt {
+        background-color: darken($odd-table-row-bg-color, 5%);
+      }
+
+      dd {
+        background-color: $odd-table-row-bg-color;
+      }
+    }
+
+    &:nth-child(even) {
+      dt {
+        background-color: darken($even-table-row-bg-color, 5%);
+      }
+
+      dd {
+        background-color: $even-table-row-bg-color;
+      }
+    }
+  }
+
+  dl.form_fields {
+    div.field dd.input {
 
       &.required:after {
         content: "*";
@@ -525,11 +524,16 @@ body > div.container section {
   }
 
   table {
+    border-collapse: collapse;
     border: solid 1px $table-border-color;
     width: auto;
     margin: 0;
 
-    th, td {
+    tr {
+      border: solid 1px $table-border-color;
+    }
+
+    tr th, tr td {
       padding: 0 5px;
 
       a {
@@ -538,107 +542,141 @@ body > div.container section {
       }
     }
 
-    th {
-      background-color: $table-head-bg-color;
+    thead {
+      th {
+        background-color: $table-head-bg-color;
+      }
+
+      th.empty {
+        background-color: lighten($table-head-bg-color, 5%);
+      }
+
+      td {
+        background-color: $even-table-row-bg-color;
+      }
+
+      td.empty {
+        background-color: darken($even-table-row-bg-color, 5%);
+      }
+
+      td.actions {
+        border-top: solid 1px $table-border-color;
+      }
+
+      th.boolean, &:not(.form_fields) td.boolean {
+        text-align: center;
+      }
     }
 
-    thead > tr > th.boolean {
-      text-align: center;
+    thead:not(:hover) { /* does not work! */
+      tr.form_fields, tr.form_actions {
+        # display: none;
+        # visibility: collapse;
+
+        # transition: all 2s ease 0s;
+        # -moz-transition: all 2s ease 0s; /* Firefox 4 */
+        # -webkit-transition: all 2s ease 0s; /* Safari and Chrome */
+        # -o-transition: all 2s ease 0s;
+      }
     }
 
-    tbody > tr {
-
+    tbody tr {
       td.boolean, th.boolean {
         text-align: center;
       }
 
       &:nth-child(odd) {
-        & > td, & > th {
+        td, th {
           background-color: $odd-table-row-bg-color;
         }
       }
 
       &:nth-child(even) {
-        & > td, & > th {
+        td, th {
           background-color: $even-table-row-bg-color;
         }
       }
-    }
-
-    &.grid {
-      thead > tr {
-        th:nth-child(odd) {
-          background-color: darken($odd-table-row-bg-color, 5%);
-        }
-
-        th:nth-child(even) {
-          background-color: darken($even-table-row-bg-color, 5%);
-        }
-      }
-
-      tbody > tr:nth-child(odd) {
-        & > td:nth-child(odd) {
-          background-color: $even-table-row-bg-color;
-        }
-
-        & > td:nth-child(even) {
-          background-color: $odd-table-row-bg-color;
-        }
-
-        & > th {
-          background-color: darken($even-table-row-bg-color, 5%);
-        }
-      }
-
-      tbody > tr:nth-child(even) {
-        & > td:nth-child(odd) {
-          background-color: $odd-table-row-bg-color;
-        }
-
-        & > td:nth-child(even) {
-          background-color: $even-table-row-bg-color;
-        }
-
-        & > th {
-          background-color: darken($odd-table-row-bg-color, 5%);
-        }
-      }
-
-      tbody > tr > th {
-        background-color: $table-head-bg-color;
-      }
-    }
-
-    &.records, &.form_fields {
-      thead > tr > th {
-        font-size: 10pt;
-      }
-
-      tbody > tr {
-        &:nth-child(odd) {
-          & > td.operation {
-            background-color: darken($odd-table-row-bg-color, 5%)
-          }
-        }
-
-        &:nth-child(even) {
-          & > td.operation {
-            background-color: darken($even-table-row-bg-color, 5%)
-          }
-        }
-      }
-    }
-
-    &.form_fields {
-      width: auto;
-      margin-left: auto;
-      margin-right: auto;
     }
 
     caption {
       text-align: center;
       white-space: nowrap;
     }
+  }
+
+  table.records, table.form_fields {
+    colgroup.attributes col {
+      border: solid 1px $table-border-color;
+    }
+
+    thead {
+      font-size: 10pt;
+      border: solid 1px $table-border-color;
+    }
+
+    tbody tr {
+      &:nth-child(odd) {
+        & > td.operation {
+          background-color: darken($odd-table-row-bg-color, 5%)
+        }
+      }
+
+      &:nth-child(even) {
+        & > td.operation {
+          background-color: darken($even-table-row-bg-color, 5%)
+        }
+      }
+    }
+  }
+
+  table.form_fields {
+    width: auto;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  table.grid {
+    thead tr {
+      th:nth-child(odd) {
+        background-color: darken($odd-table-row-bg-color, 5%);
+      }
+
+      th:nth-child(even) {
+        background-color: darken($even-table-row-bg-color, 5%);
+      }
+    }
+
+    tbody tr:nth-child(odd) {
+      td:nth-child(odd) {
+        background-color: $even-table-row-bg-color;
+      }
+
+      td:nth-child(even) {
+        background-color: $odd-table-row-bg-color;
+      }
+
+      th {
+        background-color: darken($even-table-row-bg-color, 5%);
+      }
+    }
+
+    tbody tr:nth-child(even) {
+      td:nth-child(odd) {
+        background-color: $odd-table-row-bg-color;
+      }
+
+      td:nth-child(even) {
+        background-color: $even-table-row-bg-color;
+      }
+
+      th {
+        background-color: darken($odd-table-row-bg-color, 5%);
+      }
+    }
+  }
+
+  table.filtered {
+    @include box-shadow(0, 0, 3px, 0, $focus-input-glow-color);
   }
 
   fieldset {
@@ -652,7 +690,7 @@ body > div.container section {
     }
   }
 
-  form div.actions {
+  form *.actions {
     text-align: center;
   }
 
