@@ -1,31 +1,5 @@
-<tr>
-  <th scope=row>
-    <%= link_to user.public_send(@displayed_columns[0]), user,
-                :title => t('actions.read'),
-                :class => 'display' %>
-  </th>
-
-  <% @displayed_columns[1..-1].each do |attribute| %>
-    <%- if Admin::User.columns_hash[attribute.to_s].type == :boolean -%>
-      <td class="boolean">
-        <%= boolean_to_picto(user.public_send(attribute)) %>
-      </td>
-    <%- else -%>
-      <td><%= user.public_send(attribute) %></td>
-    <%- end -%>
-  <% end %>
-
-  <td class="operation">
-    <%= link_to edit_pictogram, edit_admin_user_path(user),
-                :title => t('actions.update'),
-                :class => 'modify' %>
-  </td>
-
-  <td class="operation">
-    <%= link_to delete_pictogram, user,
-                :confirm => t("questions.are_you_sure?"),
-                :method  => :delete,
-                :title   => t('actions.delete'),
-                :class   => 'modify' %>
-  </td>
-</tr>
+<%= render :partial => 'user_in_table',
+           :object => user,
+           :as => :user,
+           :layout => 'row_in_index',
+           :locals => { :displayed_columns => @displayed_columns } %>

@@ -1,17 +1,5 @@
-<tr>
-  <th scope=row>
-    <%= link_to user.username, user,
-                :title => t('actions.read'),
-                :class => 'display' %>
-  </th>
-
-  <% displayed_columns[1..-1].each do |attribute| %>
-    <%- if Admin::User.columns_hash[attribute.to_s].type == :boolean -%>
-      <td class="boolean">
-        <%= boolean_to_picto(user.public_send(attribute)) %>
-      </td>
-    <%- else -%>
-      <td><%= user.public_send(attribute) %></td>
-    <%- end -%>
-  <% end %>
-</tr>
+<%= render :partial => 'admin/users/user_in_table',
+           :object => user,
+           :as => :user,
+           :layout => 'admin/users/row_in_index_for_association',
+           :locals => { :displayed_columns => displayed_columns } %>

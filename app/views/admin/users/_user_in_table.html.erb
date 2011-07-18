@@ -1,0 +1,16 @@
+<th scope=row>
+  <%= link_to user.public_send(displayed_columns[0]), user,
+              :title => t('actions.read'),
+              :class => 'display' %>
+</th>
+
+<% displayed_columns[1..-1].each do |attribute| %>
+  <%- case user.class.columns_hash[attribute.to_s].type -%>
+  <%- when :boolean -%>
+    <td class="boolean">
+      <%= boolean_to_picto(user.public_send(attribute)) %>
+    </td>
+  <%- else -%>
+    <td><%= user.public_send(attribute) %></td>
+  <%- end -%>
+<% end %>
