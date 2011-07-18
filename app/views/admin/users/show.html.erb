@@ -1,38 +1,18 @@
-<% content_for :side_menu_list_items do %>
-  <li><%= link_to t('admin.users.links.show_all'),
-                  admin_users_path,
-                  :class => 'display' %></li>
-  <li><%= link_to t('admin.users.links.new'), new_admin_user_path,
-                  :title => t('actions.create'),
-                  :class => 'add' %></li>
-<% end %>
-
 <h1><%= t '.header', :username => @user.username %></h1>
 
 <section>
   <h2><%= t 'admin.users.show.subheaders.user_data' %></h2>
 
   <dl class="show">
-    <% @key_displayed_columns.each do |attribute| %>
-      <div>
-        <dt><%= t 'formats.attribute_name:', :attribute => Admin::User.human_attribute_name(attribute) %></dt>
-        <dd><b><%= @user.public_send(attribute) %></b></dd>
-      </div>
-    <% end %>
+    <%= render :partial => 'shared/important_attribute_in_show',
+               :collection =>  @key_displayed_columns,
+               :as => :attribute,
+               :locals => { :model => @user } %>
 
-    <% @main_displayed_columns.each do |attribute| %>
-      <%- if Admin::User.columns_hash[attribute.to_s].type == :boolean -%>
-        <div>
-          <dt><%= t 'formats.attribute_name?', :attribute => Admin::User.human_attribute_name(attribute) %></dt>
-          <dd><%= boolean_to_yes_no(@user.public_send(attribute)) %></dd>
-        </div>
-      <%- else -%>
-        <div>
-          <dt><%= t 'formats.attribute_name:', :attribute => Admin::User.human_attribute_name(attribute) %></dt>
-          <dd><%= @user.public_send(attribute) %></dd>
-        </div>
-      <%- end -%>
-    <% end %>
+    <%= render :partial => 'shared/attribute_in_show',
+               :collection =>  @main_displayed_columns,
+               :as => :attribute,
+               :locals => { :model => @user } %>
   </dl>
 </section>
 
@@ -50,14 +30,14 @@
 <section>
   <h2><%= t 'admin.users.show.subheaders.other' %></h2>
 
-  <dl class="show">
-    <% unless @user.last_signed_in_at.blank? %>
-      <div>
-        <dt><%= t 'formats.attribute_name:', :attribute => Admin::User.human_attribute_name(:last_signed_in_at) %></dt>
-        <dd><%= l @user.last_signed_in_at, :format => :custom %></dd>
-      </div>
-    <% end %>
-  </dl>
+  <% unless @other_displayed_columns.blank? %>
+    <dl class="show">
+      <%= render :partial => 'shared/attribute_in_show',
+                 :collection =>  @other_displayed_columns,
+                 :as => :attribute,
+                 :locals => { :model => @user } %>
+    </dl>
+  <% end %>
 </section>
 
 <footer>
@@ -68,3 +48,12 @@
               admin_users_path,
               :class => 'display' %>
 </footer>
+
+<% content_for :side_menu_list_items do %>
+  <li><%= link_to t('admin.users.links.show_all'),
+                  admin_users_path,
+                  :class => 'display' %></li>
+  <li><%= link_to t('admin.users.links.new'), new_admin_user_path,
+                  :title => t('actions.create'),
+                  :class => 'add' %></li>
+<% end %>

@@ -29,10 +29,10 @@ class Admin::UsersController < AdminController
                                 :manager,
                                 :secretary,
                                 :a_person ]
-    if @user.a_person? then @main_displayed_columns << :person_id end
+    @main_displayed_columns << :person_id if @user.a_person?
     @main_displayed_columns << :comments
-    @other_displayed_columns = [ :last_signed_in_at ]
-
+    @other_displayed_columns = []
+    @other_displayed_columns << :last_signed_in_at unless @user.last_signed_in_at.blank?
     @safe_ips_displayed_columns = [ :ip, :description ]
 
     @title = t('admin.users.show.title', :username => @user.username)

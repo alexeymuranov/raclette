@@ -1,30 +1,18 @@
-<% content_for :side_menu_list_items do %>
-  <li><%= link_to t('admin.known_i_ps.links.show_all'), admin_known_ips_path,
-                  :class => 'display' %></li>
-  <li><%= link_to t('admin.known_i_ps.links.new'), new_admin_known_ip_path,
-                  :title => t('actions.create'),
-                  :class => 'add' %></li>
-<% end %>
-
 <h1><%= t '.header', :ip => @known_ip.ip %></h1>
 
 <section>
   <h2><%= t 'admin.known_i_ps.show.subheaders.known_ip_data' %></h2>
 
   <dl class="show">
-    <% @key_displayed_columns.each do |attribute| %>
-      <div>
-        <dt><%= Admin::KnownIP.human_attribute_name(attribute) %></dt>
-        <dd><b><%= @known_ip.public_send(attribute) %></b></dd>
-      </div>
-    <% end %>
+    <%= render :partial => 'shared/important_attribute_in_show',
+               :collection =>  @key_displayed_columns,
+               :as => :attribute,
+               :locals => { :model => @known_ip } %>
 
-    <% @main_displayed_columns.each do |attribute| %>
-      <div>
-        <dt><%= Admin::KnownIP.human_attribute_name(attribute) %></dt>
-        <dd><%= @known_ip.public_send(attribute) %></dd>
-      </div>
-    <% end %>
+    <%= render :partial => 'shared/attribute_in_show',
+               :collection =>  @main_displayed_columns,
+               :as => :attribute,
+               :locals => { :model => @known_ip } %>
   </dl>
 </section>
 
@@ -47,3 +35,11 @@
               admin_known_ips_path,
               :class => 'display' %>
 </footer>
+
+<% content_for :side_menu_list_items do %>
+  <li><%= link_to t('admin.known_i_ps.links.show_all'), admin_known_ips_path,
+                  :class => 'display' %></li>
+  <li><%= link_to t('admin.known_i_ps.links.new'), new_admin_known_ip_path,
+                  :title => t('actions.create'),
+                  :class => 'add' %></li>
+<% end %>

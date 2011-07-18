@@ -1,0 +1,17 @@
+<%- case model.class.columns_hash[attribute.to_s].type -%>
+<%- when :boolean -%>
+  <div>
+    <dt><%= t 'formats.attribute_name?', :attribute => model.class.human_attribute_name(attribute) %></dt>
+    <dd><%= boolean_to_yes_no(model.public_send(attribute)) %></dd>
+  </div>
+<%- when :datetime -%>
+  <div>
+    <dt><%= t 'formats.attribute_name:', :attribute => model.class.human_attribute_name(attribute) %></dt>
+    <dd><%= l model.public_send(attribute), :format => :custom %></dd>
+  </div>
+<%- else -%>
+  <div>
+    <dt><%= t 'formats.attribute_name:', :attribute => model.class.human_attribute_name(attribute) %></dt>
+    <dd><%= model.public_send(attribute) %></dd>
+  </div>
+<%- end -%>

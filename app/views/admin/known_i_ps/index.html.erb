@@ -1,10 +1,3 @@
-<% content_for :side_menu_list_items do %>
-  <li><%= link_to t('admin.known_i_ps.links.new'),
-                  new_admin_known_ip_path,
-                  :title => t('actions.create'),
-                  :class => 'add' %></li>
-<% end %>
-
 <h1><%= t '.header' %></h1>
 
 <%= render 'index_table' %>
@@ -15,3 +8,10 @@
               :title => t('actions.create'),
               :class => 'add' %>
 </footer>
+
+<% content_for :side_menu_list_items do %>
+  <li><%= link_to t('admin.known_i_ps.links.new'),
+                  new_admin_known_ip_path,
+                  :title => t('actions.create'),
+                  :class => 'add' %></li>
+<% end %>
