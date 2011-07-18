@@ -11,6 +11,8 @@ gem 'kaminari'  # pagination
 
 gem 'sass'  # generate CSS
 
+gem 'meta_where'  # queries without SQL
+
 # Use unicorn as the web server
 # gem 'unicorn'
 

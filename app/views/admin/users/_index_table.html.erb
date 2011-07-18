@@ -23,16 +23,16 @@
         <th class="empty"></th>
       </tr>
       <% unless @filter.blank? %>
-        <tr>
+        <tr class="filter_values">
           <% @displayed_columns.each do |attribute| %>
             <% unless @filter[attribute].nil? %>
               <%- case Admin::User.columns_hash[attribute.to_s].type -%>
               <%- when :string -%>
-                <td>
+                <td class="value">
                   <%= @filter[attribute] %>
                 </td>
               <%- when :boolean -%>
-                <td class="boolean">
+                <td class="boolean value">
                   <%= boolean_to_yes_no(@filter[attribute]) %>
                 </td>
               <% end %>

@@ -21,8 +21,9 @@ class Admin::UsersController < AdminController
         unless params['filter_'+attribute.to_s].blank?
           @filter[attribute] = params['filter_'+attribute.to_s]
           @filter[attribute].sub!(/\%*\z/, '%')
-          # @filter[attribute] = "#{params['filter_'+attribute.to_s]}%"
-          @users = @users.where("#{attribute.to_s} like ?", @filter[attribute])
+          # @users = @users.where(Admin::User.arel_table[attribute].matches(@filter[attribute]).to_sql)
+          # Use MetaWhere instead:
+          @users = @users.where(attribute.matches => @filter[attribute])
         end
       when :boolean
         case params['filter_'+attribute.to_s]

@@ -17,6 +17,8 @@ $even-table-row-bg-color: $alt-section-bg-color;
 $table-border-color: darken($alt-section-bg-color, 5%);
 $table-head-bg-color: $table-border-color;
 $input-bg-color: White;
+$emphasis-glow-color: Red;
+$emphasis-text-color: Red;
 $focus-input-glow-color: Red;
 $focus-input-bg-color: White;
 $focus-input-text-color: Black;
@@ -636,6 +638,10 @@ body div.container section {
   }
 
   table.grid {
+    col {
+      border: solid 1px $table-border-color;
+    }
+
     thead tr {
       th:nth-child(odd) {
         background-color: darken($odd-table-row-bg-color, 5%);
@@ -676,7 +682,16 @@ body div.container section {
   }
 
   table.filtered {
-    @include box-shadow(0, 0, 3px, 0, $focus-input-glow-color);
+    @include box-shadow(0, 0, 3px, 0, $emphasis-glow-color);
+    
+    thead tr.filter_values {
+      font-size: 11pt;
+
+      td.value {
+        color: $emphasis-text-color;
+        background-color: $section-bg-color;
+      }
+    }
   }
 
   fieldset {
