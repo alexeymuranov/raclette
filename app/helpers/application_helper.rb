@@ -116,11 +116,17 @@ module ApplicationHelper
     current_sort_direction = sort_direction(table_id)
     current_sort_direction_is_asc = (current_sort_direction == :asc)
 
-    css_class = column_is_current_sort_column ? "current #{current_sort_direction.to_s}" : nil
+    direction_on_click = (column_is_current_sort_column && current_sort_direction_is_asc) ? :desc : :asc
+
+    html_options = params.merge({ sort_column_key => column,
+                     sort_direction_key => direction_on_click,
+                     :anchor => table_id })
+
     sort_indicator = column_is_current_sort_column ?
                      (current_sort_direction_is_asc ? '▲ ' : '▼ ') : ''
-    direction_on_click = (column_is_current_sort_column && current_sort_direction_is_asc) ? :desc : :asc
-    link_to sort_indicator+title, { sort_column_key => column, sort_direction_key => direction_on_click, :anchor => table_id },
-                                  { :class => css_class }
+
+    css_class = column_is_current_sort_column ? "current #{current_sort_direction.to_s}" : nil
+
+    link_to sort_indicator+title, html_options, :class => css_class
   end
 end
