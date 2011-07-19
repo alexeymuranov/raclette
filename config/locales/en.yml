@@ -441,9 +441,11 @@ en:
 
   # For kaminari gem:
   views:  
-    pagination:  
-      previous: "← Previous"  
-      next: "Next →"  
+    pagination:
+      first: "▕◀◀ First page"
+      last: "Last page ▶▶▏"
+      previous: "◀ Previous page"  
+      next: "Next page ▶"  
       truncate: "…"
 
 ################################################################
@@ -524,6 +526,8 @@ en:
       index:
         title: "Users"
         header: "Users"
+        count_total: "%{count} users total"
+        count_filtered: "%{count} of %{total} users filtered"
       show:
         title: "%{username}"
         header: "User '%{username}'"

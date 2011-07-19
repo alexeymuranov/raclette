@@ -1,36 +1,38 @@
 <%= field_set_tag t('admin.users.edit.subheaders.user_data') do %>
   <dl class="form_fields">
-    <div class="field">
-      <% if @user.new_record? %>
+    <% if @user.new_record? %>
+      <div class="item field">
         <dt><%= f.label :username, t('formats.attribute_name:', :attribute => Admin::User.human_attribute_name(:username)) %></dt>
         <dd class="required readonly input">
           <%= f.text_field :username, :size => 30, :maxlength => 32, :required => :required %><!-- no space! --></dd>
-      <% else %>
+      </div>
+    <% else %>
+      <div class="item">
         <dt><b><%= t('formats.attribute_name:', :attribute => Admin::User.human_attribute_name(:username)) %></b></dt>
         <dd><%= @user.username %></dd>
-      <% end %>
-    </div>
+      </div>
+    <% end %>
 
-    <div class="field">
+    <div class="item field">
       <dt><%= f.label :full_name, t('formats.attribute_name:', :attribute => Admin::User.human_attribute_name(:full_name)) %></dt>
       <dd class="required input">
         <%= f.text_field :full_name, :size => 30, :maxlength => 64, :required => :required %><!-- no space! --></dd>
     </div>
 
-    <div class="field">
+    <div class="item field">
       <dt><%= f.label :email, t('formats.attribute_name:', :attribute => Admin::User.human_attribute_name(:email)) %></dt>
       <dd><%= f.email_field :email, :size => 30, :maxlength => 255 %></dd>
     </div>
 
     <% [ :account_deactivated, :admin ].each do |attribute| %>
-      <div class="field">
+      <div class="item field">
         <dt><%= f.label attribute, t('formats.attribute_name?', :attribute => Admin::User.human_attribute_name(attribute)) %></dt>
         <dd><%= f.check_box attribute, :disabled => (@user == current_user) %></dd>
       </div>
     <% end %>
 
     <% [ :manager, :secretary, :a_person ].each do |attribute| %>
-      <div class="field">
+      <div class="item field">
         <dt><%= f.label attribute, t('formats.attribute_name?', :attribute => Admin::User.human_attribute_name(attribute)) %></dt>
         <dd><%= f.check_box attribute %></dd>
       </div>
@@ -49,7 +51,7 @@
 
 <%= field_set_tag t('admin.users.edit.subheaders.comments') do %>
   <dl class="form_fields">
-    <div class="field">
+    <div class="item field">
       <dt>
         <%= f.label :comments, t('formats.attribute_name:', :attribute => Admin::User.human_attribute_name(:comments)) %>
       </dt>

@@ -1,6 +1,18 @@
 <h1><%= t '.header' %></h1>
 
+<p>
+  <% if @filter.blank? %>
+    <%= t '.count_total', :count => Admin::User.count %>
+  <% else %>
+    <%= t '.count_filtered', :count => @all_filtered_users.size, :total => Admin::User.count %>
+  <% end %>
+</p>
+
+<%= paginate @users %>
+
 <%= render 'index_table' %>
+
+<%= paginate @users %>
 
 <footer>
   <%= link_to add_pictogram+' '+t('admin.users.links.new'),

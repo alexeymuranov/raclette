@@ -98,35 +98,32 @@ module ApplicationHelper
     bool ? yes_pictogram(size) : t(:no)
   end
 
-  def table_name_to_sort_column_key(table_name)
-    (table_name.to_s+'_sort_column').intern
-  end
-
-  def table_name_to_sort_direction_key(table_name)
-    (table_name.to_s+'_sort_direction').intern
-  end
-
-  def sortable(table_id, column, title = nil)
+  def sortable(table_name, column, title = nil)
     title ||= column.to_s.titleize
 
-    sort_column_key = table_name_to_sort_column_key(table_id)
-    sort_direction_key = table_name_to_sort_direction_key(table_id)
+    if column.intern == sort_column(table_name)  # column is current sort column
+      if sort_direction(table_name) == :asc  # current sort direction is asc
+        sort_indicator = '▲ '
+        direction_on_click = :desc
+        css_class = "current asc"
+      else
+        sort_indicator = '▼ '
+        direction_on_click = :asc
+        css_class = "current desc"
+      end
+    else
+      sort_indicator = ''
+      direction_on_click = :asc
+      css_class = nil
+    end
 
-    column_is_current_sort_column = (column.intern == sort_column(table_id))
-    current_sort_direction = sort_direction(table_id)
-    current_sort_direction_is_asc = (current_sort_direction == :asc)
-
-    direction_on_click = (column_is_current_sort_column && current_sort_direction_is_asc) ? :desc : :asc
-
-    html_options = params.merge({ sort_column_key => column,
-                     sort_direction_key => direction_on_click,
-                     :anchor => table_id })
-
-    sort_indicator = column_is_current_sort_column ?
-                     (current_sort_direction_is_asc ? '▲ ' : '▼ ') : ''
-
-    css_class = column_is_current_sort_column ? "current #{current_sort_direction.to_s}" : nil
-
+    html_options = params.deep_merge :page => 1,
+                                     :sort =>
+                                       { table_name =>
+                                         { :column    => column,
+                                           :direction => direction_on_click } },
+                                     :anchor => table_name
+    
     link_to sort_indicator+title, html_options, :class => css_class
   end
 end

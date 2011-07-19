@@ -18,11 +18,11 @@
 
   <%= field_set_tag t('admin.users.new.subheaders.password') do %>
     <dl class="form_fields">
-      <div class="field">
+      <div class="item field">
         <dt><%= f.label :password, t('formats.attribute_name:', :attribute => Admin::User.human_attribute_name(:password)) %></dt>
         <dd><%= f.password_field :password, :size => 30, :maxlength => 255 %></dd>
       </div>
-      <div class="field">
+      <div class="item field">
         <dt><%= f.label :password_confirmation,
                         t('formats.attribute_name:', :attribute => Admin::User.human_attribute_name(:password_confirmation)) %></dt>
         <dd><%= f.password_field :password_confirmation, :size => 30, :maxlength => 255 %></dd>

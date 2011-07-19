@@ -1,4 +1,4 @@
-<div class="entry">
+<div class="item">
   <%- case model.class.columns_hash[attribute.to_s].type -%>
   <%- when :boolean -%>
     <dt><%= t 'formats.attribute_name?', :attribute => model.class.human_attribute_name(attribute) %></dt>

@@ -49,15 +49,15 @@
           <td class="field">
             <%- case Admin::User.columns_hash[attribute.to_s].type -%>
             <%- when :string -%>
-              <%= text_field_tag 'filter_'+attribute.to_s, @filter[attribute] %>
+              <%= text_field_tag "filter[#{attribute}]", @filter[attribute] %>
             <%- when :boolean -%>
-              <%= radio_button_tag 'filter_'+attribute.to_s, 'yes', @filter[attribute] %>
+              <%= radio_button_tag "filter[#{attribute}]", 'yes', @filter[attribute] %>
               <%= label_tag 'filter_'+attribute.to_s+'_yes', t('yes') %>
               <br />
-              <%= radio_button_tag 'filter_'+attribute.to_s, 'no', @filter[attribute] == false %>
+              <%= radio_button_tag "filter[#{attribute}]", 'no', @filter[attribute] == false %>
               <%= label_tag 'filter_'+attribute.to_s+'_no', t('no') %>
               <br />
-              <%= radio_button_tag 'filter_'+attribute.to_s, 'all', @filter[attribute].nil? %>
+              <%= radio_button_tag "filter[#{attribute}]", 'all', @filter[attribute].nil? %>
               <%= label_tag 'filter_'+attribute.to_s+'_all', t('all') %>
             <%- end -%>
           </td>
@@ -73,9 +73,6 @@
         <td class="empty"></td>
       </tr>
     </thead>
-    
-    <tfoot>
-    </tfoot>
     
     <tbody>
       <%= render :partial => 'user_in_index', :collection => @users, :as => :user %>

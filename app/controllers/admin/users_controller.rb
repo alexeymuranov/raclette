@@ -4,7 +4,7 @@ class Admin::UsersController < AdminController
   helper_method :sort_column, :sort_direction
 
   def index
-    @users = Admin::User.order("#{sort_column(:users)} #{sort_direction(:users)}")
+    @all_filtered_users = Admin::User.order("#{sort_column(:users)} #{sort_direction(:users)}")
 
     @displayed_columns = [ :username,
                            :full_name,
@@ -14,26 +14,31 @@ class Admin::UsersController < AdminController
                            :secretary,
                            :a_person ]
 
+    params[:filter] ||= {}
     @filter = {}
+
     @displayed_columns.each do |attribute|
       case Admin::User.columns_hash[attribute.to_s].type
       when :string
-        unless params['filter_'+attribute.to_s].blank?
-          @filter[attribute] = params['filter_'+attribute.to_s]
-          @filter[attribute].sub!(/\%*\z/, '%')
+        unless params[:filter][attribute].blank?
+          @filter[attribute] = params[:filter][attribute].sub(/\%*\z/, '%')
           # @users = @users.where(Admin::User.arel_table[attribute].matches(@filter[attribute]).to_sql)
           # Use MetaWhere instead:
-          @users = @users.where(attribute.matches => @filter[attribute])
+          @all_filtered_users = @all_filtered_users.where(attribute.matches => @filter[attribute])
         end
       when :boolean
-        case params['filter_'+attribute.to_s]
+        case params[:filter][attribute]
         when 'yes'
-          @users = @users.where(attribute => (@filter[attribute] = true))
+          @filter[attribute] = true
+          @all_filtered_users = @all_filtered_users.where(attribute => true)
         when 'no'
-          @users = @users.where(attribute => (@filter[attribute] = false))
+          @filter[attribute] = false
+          @all_filtered_users = @all_filtered_users.where(attribute => false)
         end
       end
     end
+
+    @users = @all_filtered_users.page(params[:page]).per(10)
 
     @title = t('admin.users.index.title')  # or: Admin::User.human_name.pluralize
   end

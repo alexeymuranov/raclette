@@ -17,14 +17,16 @@ class ApplicationController < ActionController::Base
   private
 
     def sort_column(table_name)
-      suggested_sort_column = params[table_name_to_sort_column_key(table_name)]
+      params.deep_merge! :sort => { table_name => {} }
+
+      suggested_sort_column = params[:sort][table_name][:column]
+
       table_name_to_class(table_name).column_names.include?(suggested_sort_column) ?
           suggested_sort_column.intern : default_sort_column(table_name)
     end
 
     def sort_direction(table_name)
-      params[table_name_to_sort_direction_key(table_name)] == 'desc' ?
-          :desc : :asc
+      params[:sort][table_name][:direction] == 'desc' ? :desc : :asc
     end
 
 end
