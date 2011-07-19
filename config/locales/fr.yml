@@ -440,6 +440,8 @@ fr:
   buttons:
     save: "Enregistrer"
     filter: "Filtrer"
+    show_email_addresses: "Montrer les adresses e-mail"
+    hide_email_addresses: "Cacher les adresses e-mail"
 
   actions:
     create: "Ajouter"
@@ -487,6 +489,8 @@ fr:
         header: "Les utilisateurs"
         count_total: "%{count} utilisateurs en total"
         count_filtered: "%{count} sur %{total} utilisateurs filtrés"
+        subheaders:
+          mailing_list: "Adresses e-mail des utilisateurs selectionnés"
       show:
         title: "%{username}"
         header: "Utilisateur « %{username} »"

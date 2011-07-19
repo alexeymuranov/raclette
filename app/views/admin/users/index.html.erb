@@ -1,18 +1,37 @@
+<hgroup>
 <h1><%= t '.header' %></h1>
 
-<p>
+<h2>
   <% if @filter.blank? %>
     <%= t '.count_total', :count => Admin::User.count %>
   <% else %>
     <%= t '.count_filtered', :count => @all_filtered_users.size, :total => Admin::User.count %>
   <% end %>
-</p>
+</h2>
+</hgroup>
 
 <%= paginate @users %>
 
 <%= render 'index_table' %>
 
 <%= paginate @users %>
+
+<% if @mailing_list.nil? %>
+  <%= link_to t('buttons.show_email_addresses'),
+              params.merge( :list_email_addresses => :filtered,
+                            :anchor => 'email_addresses_hide_button' ),
+              :id => 'email_addresses_show_button' %>
+<% else %>
+  <%= link_to t('buttons.hide_email_addresses'),
+              params.except(:list_email_addresses).merge( :anchor => 'email_addresses_show_button' ),
+              :id => 'email_addresses_hide_button' %>
+
+  <section id="email_addresses">
+    <h2><%= t 'admin.users.index.subheaders.mailing_list' %></h2>
+    
+    <p><%= @mailing_list %></p>
+  </section>
+<% end %>
 
 <footer>
   <%= link_to add_pictogram+' '+t('admin.users.links.new'),
@@ -24,7 +43,8 @@
 <%# End of template %>
 
 <% content_for :side_menu_list_items do %>
-  <li><%= link_to t('admin.users.links.new'), new_admin_user_path,
+  <li><%= link_to t('admin.users.links.new'),
+                  new_admin_user_path,
                   :title => t('actions.create'),
                   :class => 'add' %></li>
 <% end %>

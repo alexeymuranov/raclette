@@ -4,7 +4,9 @@ class Admin::UsersController < AdminController
   helper_method :sort_column, :sort_direction
 
   def index
-    @all_filtered_users = Admin::User.order("#{sort_column(:users)} #{sort_direction(:users)}")
+
+    # Filter:
+    @all_filtered_users = Admin::User.scoped
 
     @displayed_columns = [ :username,
                            :full_name,
@@ -38,8 +40,17 @@ class Admin::UsersController < AdminController
       end
     end
 
+    # Sort:
+    @all_filtered_users = @all_filtered_users.order("#{sort_column(:users)} #{sort_direction(:users)}")
+
+    # Paginate:
     @users = @all_filtered_users.page(params[:page]).per(10)
 
+    if params[:list_email_addresses]
+      @mailing_list_users = @all_filtered_users.select { |user| !user.email.blank? }
+      @mailing_list = @mailing_list_users.collect { |user| "#{user.full_name} <#{user.email}>" }.join(', ')
+    end
+    
     @title = t('admin.users.index.title')  # or: Admin::User.human_name.pluralize
   end
 
@@ -92,9 +103,7 @@ class Admin::UsersController < AdminController
         'password', 'password_confirmation',
         'safe_ip_ids' ]
 
-    params[:admin_user].keep_if do |key, value|
-      @acceptable_attribute_names.include? key
-    end
+    params[:admin_user].slice!(*@acceptable_attribute_names)
 
     @user = Admin::User.new(params[:admin_user])
 
@@ -122,17 +131,14 @@ class Admin::UsersController < AdminController
 
     unless params[:change_password]
       params.delete(:current_password)
-      params[:admin_user].delete(:new_password)
-      params[:admin_user].delete(:new_password_confirmation)
+      params[:admin_user].except!(:new_password, :new_password_confirmation)
     end
 
     if @user == current_user
-      params[:admin_user].delete(:account_deactivated)
-      params[:admin_user].delete(:admin)
+      params[:admin_user].except!(:account_deactivated, :admin)
     else
       params.delete(:current_password)
-      params[:admin_user].delete(:new_password)
-      params[:admin_user].delete(:new_password_confirmation)
+      params[:admin_user].except!(:new_password, :new_password_confirmation)
     end
 
     @acceptable_attribute_names = [ 'username', 'full_name', 'email',
@@ -141,9 +147,7 @@ class Admin::UsersController < AdminController
         'current_password', 'new_password', 'new_password_confirmation',
         'safe_ip_ids' ]
 
-    params[:admin_user].keep_if do |key, value|
-      @acceptable_attribute_names.include? key
-    end
+    params[:admin_user].slice!(*@acceptable_attribute_names)
 
     current_password = params[:current_password]
 

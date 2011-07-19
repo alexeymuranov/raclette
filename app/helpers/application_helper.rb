@@ -117,13 +117,12 @@ module ApplicationHelper
       css_class = nil
     end
 
-    html_options = params.deep_merge :page => 1,
-                                     :sort =>
-                                       { table_name =>
-                                         { :column    => column,
-                                           :direction => direction_on_click } },
-                                     :anchor => table_name
+    options = params.deep_merge :page => 1,
+                                :sort => { table_name =>
+                                           { :column    => column,
+                                             :direction => direction_on_click } },
+                                :anchor => table_name
     
-    link_to sort_indicator+title, html_options, :class => css_class
+    link_to sort_indicator+title, options, :class => css_class
   end
 end

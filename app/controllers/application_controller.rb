@@ -26,6 +26,8 @@ class ApplicationController < ActionController::Base
     end
 
     def sort_direction(table_name)
+      params.deep_merge! :sort => { table_name => {} }
+
       params[:sort][table_name][:direction] == 'desc' ? :desc : :asc
     end
 

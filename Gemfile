@@ -13,6 +13,8 @@ gem 'sass'  # generate CSS
 
 gem 'meta_where'  # queries without SQL
 
+gem 'spreadsheet'  # for writing to spreadsheets
+
 # Use unicorn as the web server
 # gem 'unicorn'
 
