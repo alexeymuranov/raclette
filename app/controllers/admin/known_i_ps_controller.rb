@@ -6,7 +6,13 @@ class Admin::KnownIPsController < AdminController
   def index
     @known_ips = Admin::KnownIP.order("#{sort_column(:known_ips)} #{sort_direction(:known_ips)}")
 
-    @displayed_columns = [ :ip, :description ]
+    @attributes = [ :ip, :description ]
+
+    @column_types_o_hash = ActiveSupport::OrderedHash.new
+    @attributes.each do |attr|
+      @column_types_o_hash[attr] = Admin::KnownIP.columns_hash[attr.to_s].type
+    end
+
 
     @title = t('admin.known_i_ps.index.title')
   end
@@ -15,16 +21,21 @@ class Admin::KnownIPsController < AdminController
     @known_ip = Admin::KnownIP.find(params[:id])
     @safe_users = @known_ip.safe_users.order("#{sort_column(:safe_users)} #{sort_direction(:safe_users)}")
 
-    @key_displayed_columns = [ :ip ]
-    @main_displayed_columns = [ :description ]
+    @key_attributes = [ :ip ]
+    @other_main_attributes = [ :description ]
 
-    @safe_users_displayed_columns = [ :username,
-                                      :full_name,
-                                      :account_deactivated,
-                                      :admin,
-                                      :manager,
-                                      :secretary,
-                                      :a_person ]
+    @safe_users_attributes = [ :username,
+                               :full_name,
+                               :account_deactivated,
+                               :admin,
+                               :manager,
+                               :secretary,
+                               :a_person ]
+
+    @safe_users_column_types_o_hash = ActiveSupport::OrderedHash.new
+    @safe_users_attributes.each do |attr|
+      @safe_users_column_types_o_hash[attr] = Admin::User.columns_hash[attr.to_s].type
+    end
 
     @title = t('admin.known_i_ps.show.title', :ip => @known_ip.ip)
   end
@@ -62,7 +73,7 @@ class Admin::KnownIPsController < AdminController
 
   def update
     @acceptable_attribute_names = [ 'ip', 'description' ]
-    
+
     params[:admin_known_ip].keep_if do |key, value|
       @acceptable_attribute_names.include? key
     end

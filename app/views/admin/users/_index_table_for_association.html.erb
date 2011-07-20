@@ -1,26 +1,27 @@
 <%= content_tag :table, :id => table_name, :class => 'associated records' do %>
   <colgroup class="attributes">
-    <% displayed_columns.size.times do %><col /><% end %>
+    <% attributes.size.times do %><col /><% end %>
   </colgroup>
   <thead>
     <tr>
-      <% displayed_columns.each do |attribute| %>
-        <%- if Admin::User.columns_hash[attribute.to_s].type == :boolean -%>
+      <% column_types_o_hash.each do |attr, col_type| %>
+        <%- if col_type == :boolean -%>
           <th class='boolean'>
-            <%= sortable table_name, attribute, Admin::User.human_attribute_name(attribute) %>
+            <%= sortable table_name, attr, Admin::User.human_attribute_name(attr) %>
           </th>
         <%- else -%>
           <th>
-            <%= sortable table_name, attribute, Admin::User.human_attribute_name(attribute) %>
+            <%= sortable table_name, attr, Admin::User.human_attribute_name(attr) %>
           </th>
         <%- end -%>
       <% end %>
     </tr>
   </thead>
   <tbody>
-    <%= render :partial => 'admin/users/user_in_index_for_association',
+    <%= render :partial => 'shared/model_in_index_for_association',
                :collection => users,
-               :as => :user,
-               :locals => { :displayed_columns => displayed_columns } %>
+               :as => :model,
+               :locals => { :attributes => attributes,
+                            :column_types_o_hash => column_types_o_hash } %>
   </tbody>
 <% end %>

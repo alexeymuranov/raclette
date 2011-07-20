@@ -8,34 +8,39 @@ class Admin::UsersController < AdminController
     # Filter:
     @all_filtered_users = Admin::User.scoped
 
-    @displayed_columns = [ :username,
-                           :full_name,
-                           :account_deactivated,
-                           :admin,
-                           :manager,
-                           :secretary,
-                           :a_person ]
+    @attributes = [ :username,
+                    :full_name,
+                    :account_deactivated,
+                    :admin,
+                    :manager,
+                    :secretary,
+                    :a_person ]
+
+    @column_types_o_hash = ActiveSupport::OrderedHash.new
+    @attributes.each do |attr|
+      @column_types_o_hash[attr] = Admin::User.columns_hash[attr.to_s].type
+    end
 
     params[:filter] ||= {}
     @filter = {}
 
-    @displayed_columns.each do |attribute|
-      case Admin::User.columns_hash[attribute.to_s].type
+    @column_types_o_hash.each do |attr, col_type|
+      case col_type
       when :string
-        unless params[:filter][attribute].blank?
-          @filter[attribute] = params[:filter][attribute].sub(/\%*\z/, '%')
-          # @users = @users.where(Admin::User.arel_table[attribute].matches(@filter[attribute]).to_sql)
+        unless params[:filter][attr].blank?
+          @filter[attr] = params[:filter][attr].sub(/\%*\z/, '%')
+          # @users = @users.where(Admin::User.arel_table[attribute].matches(@filter[attr]).to_sql)
           # Use MetaWhere instead:
-          @all_filtered_users = @all_filtered_users.where(attribute.matches => @filter[attribute])
+          @all_filtered_users = @all_filtered_users.where(attr.matches => @filter[attr])
         end
       when :boolean
-        case params[:filter][attribute]
+        case params[:filter][attr]
         when 'yes'
-          @filter[attribute] = true
-          @all_filtered_users = @all_filtered_users.where(attribute => true)
+          @filter[attr] = true
+          @all_filtered_users = @all_filtered_users.where(attr => true)
         when 'no'
-          @filter[attribute] = false
-          @all_filtered_users = @all_filtered_users.where(attribute => false)
+          @filter[attr] = false
+          @all_filtered_users = @all_filtered_users.where(attr => false)
         end
       end
     end
@@ -50,7 +55,7 @@ class Admin::UsersController < AdminController
       @mailing_list_users = @all_filtered_users.select { |user| !user.email.blank? }
       @mailing_list = @mailing_list_users.collect { |user| "#{user.full_name} <#{user.email}>" }.join(', ')
     end
-    
+
     @title = t('admin.users.index.title')  # or: Admin::User.human_name.pluralize
   end
 
@@ -58,19 +63,24 @@ class Admin::UsersController < AdminController
     @user = Admin::User.find(params[:id])
     @safe_ips = @user.safe_ips.order("#{sort_column(:safe_ips)} #{sort_direction(:safe_ips)}")
 
-    @key_displayed_columns = [ :username ]
-    @main_displayed_columns = [ :full_name,
-                                :email,
-                                :account_deactivated,
-                                :admin,
-                                :manager,
-                                :secretary,
-                                :a_person ]
-    @main_displayed_columns << :person_id if @user.a_person?
-    @main_displayed_columns << :comments
-    @other_displayed_columns = []
-    @other_displayed_columns << :last_signed_in_at unless @user.last_signed_in_at.blank?
-    @safe_ips_displayed_columns = [ :ip, :description ]
+    @key_attributes = [ :username ]
+    @other_main_attributes = [ :full_name,
+                               :email,
+                               :account_deactivated,
+                               :admin,
+                               :manager,
+                               :secretary,
+                               :a_person ]
+    @other_main_attributes << :person_id if @user.a_person?
+    @other_main_attributes << :comments
+    @other_attributes = []
+    @other_attributes << :last_signed_in_at unless @user.last_signed_in_at.blank?
+
+    @safe_ips_attributes = [ :ip, :description ]
+    @safe_ips_column_types_o_hash = ActiveSupport::OrderedHash.new
+    @safe_ips_attributes.each do |attr|
+      @safe_ips_column_types_o_hash[attr] = Admin::KnownIP.columns_hash[attr.to_s].type
+    end
 
     @title = t('admin.users.show.title', :username => @user.username)
   end

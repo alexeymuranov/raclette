@@ -1,20 +1,3 @@
-<% if @user.errors.any? %>
-  <div id="error_explanation">
-    <h2>
-      <%= @user.errors.count == 1 ? t('activerecord.errors.template.header.one') :
-                                    t('activerecord.errors.template.header.other',
-                                      :count => @user.errors.count,
-                                      :model => Admin::User.human_name) %>
-    </h2>
-
-    <ul>
-    <% @user.errors.full_messages.each do |msg| %>
-      <li><%= msg %></li>
-    <% end %>
-    </ul>
-  </div>
-<% end %>
-
 <%= field_set_tag t('admin.users.edit.subheaders.user_data') do %>
   <dl class="form_fields">
     <% if @user.new_record? %>

@@ -1,0 +1,29 @@
+<%= content_tag :table, :id => table_name, :class => 'records' do %>
+  <colgroup class="attributes">
+    <% attributes.size.times do %><col /><% end %>
+  </colgroup>
+  <colgroup><col /><col /></colgroup>
+  <thead>
+    <tr>
+      <% column_types_o_hash.each do |attr, col_type| %>
+        <%- if col_type == :boolean -%>
+          <th class="boolean">
+            <%= sortable table_name, attr, model_class.human_attribute_name(attr) %>
+          </th>
+        <%- else -%>
+          <th>
+            <%= sortable table_name, attr, model_class.human_attribute_name(attr) %>
+          </th>
+        <%- end -%>
+      <% end %>
+      <th class="empty"></th>
+      <th class="empty"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+
+    <%= yield %>
+
+  </tbody>
+<% end %>

@@ -1,5 +1,7 @@
 <%= form_for(@user) do |f| %>
 
+  <%= render 'validation_errors' %>
+
   <%= render 'common_form_fields', :f => f %>
 
   <%= field_set_tag t('admin.users.new.subheaders.password') do %>

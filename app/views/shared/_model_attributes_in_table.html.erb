@@ -1,0 +1,17 @@
+<th scope=row>
+  <%= link_to model.public_send(attributes[0]),
+              model,
+              :title => t('actions.read'),
+              :class => 'display resource' %>
+</th>
+
+<% attributes[1..-1].each do |attr| %>
+  <%- case column_types_o_hash[attr] -%>
+  <%- when :boolean -%>
+    <td class="boolean">
+      <%= boolean_to_picto(model.public_send(attr)) %>
+    </td>
+  <%- else -%>
+    <td><%= model.public_send(attr) %></td>
+  <%- end -%>
+<% end %>

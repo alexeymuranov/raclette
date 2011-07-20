@@ -1,11 +1,11 @@
 <%= content_tag :table, :id => :known_ips, :class => 'records' do %>
   <colgroup class="attributes">
-    <% @displayed_columns.size.times do %><col /><% end %>
+    <% @attributes.size.times do %><col /><% end %>
   </colgroup>
-  <colgroup span="2"></colgroup>
+  <colgroup><col /><col /></colgroup>
   <thead>
     <tr>
-      <% @displayed_columns.each do |attribute| %>
+      <% @attributes.each do |attribute| %>
         <th>
           <%= sortable :known_ips,
                        attribute,
@@ -18,8 +18,11 @@
     </tr>
   </thead>
   <tbody>
-    <%= render :partial => 'known_i_p_in_index',
-               :collection => @known_ips,
-               :as => :known_ip %>
+      <%= render :partial => 'shared/model_in_index',
+                 :collection => @known_ips,
+                 :as => :model,
+                 :locals => { :attributes => @attributes,
+                              :column_types_o_hash => @column_types_o_hash,
+                              :edit_path_helper_method => method(:edit_admin_known_ip_path) } %>
   <tbody>
 <% end %>

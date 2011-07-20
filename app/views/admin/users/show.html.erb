@@ -5,12 +5,12 @@
 
   <dl class="show">
     <%= render :partial => 'shared/important_attribute_in_show',
-               :collection =>  @key_displayed_columns,
+               :collection =>  @key_attributes,
                :as => :attribute,
                :locals => { :model => @user } %>
 
     <%= render :partial => 'shared/attribute_in_show',
-               :collection =>  @main_displayed_columns,
+               :collection =>  @other_main_attributes,
                :as => :attribute,
                :locals => { :model => @user } %>
   </dl>
@@ -22,7 +22,8 @@
   <% unless @safe_ips.blank? %>
     <%= render 'admin/known_i_ps/index_table_for_association',
                :known_ips => @safe_ips,
-               :displayed_columns => @safe_ips_displayed_columns,
+               :attributes => @safe_ips_attributes,
+               :column_types_o_hash => @safe_ips_column_types_o_hash,
                :table_name => :safe_ips %>
   <% end %>
 </section>
@@ -30,10 +31,10 @@
 <section>
   <h2><%= t 'admin.users.show.subheaders.other' %></h2>
 
-  <% unless @other_displayed_columns.blank? %>
+  <% unless @other_attributes.blank? %>
     <dl class="show">
       <%= render :partial => 'shared/attribute_in_show',
-                 :collection =>  @other_displayed_columns,
+                 :collection =>  @other_attributes,
                  :as => :attribute,
                  :locals => { :model => @user } %>
     </dl>

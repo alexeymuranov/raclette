@@ -1,5 +1,5 @@
 <div class="item">
-  <%- case model.class.columns_hash[attribute.to_s].type -%>
+  <%- case model.column_for_attribute(attribute).type -%>
   <%- when :boolean -%>
     <dt><%= t 'formats.attribute_name?', :attribute => model.class.human_attribute_name(attribute) %></dt>
     <dd><%= boolean_to_yes_no(model.public_send(attribute)) %></dd>

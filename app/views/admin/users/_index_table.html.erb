@@ -1,19 +1,19 @@
 <%= form_tag admin_users_path, :method => :get do %>
   <%= content_tag :table, :id => :users, :class => (@filter.blank? ? 'records' : 'filtered records') do %>
     <colgroup class="attributes">
-      <% @displayed_columns.size.times do %><col /><% end %>
+      <% @attributes.size.times do %><col /><% end %>
     </colgroup>
-    <colgroup span="2"></colgroup>
+    <colgroup><col /><col /></colgroup>
     <thead>
       <tr>
-        <% @displayed_columns.each do |attribute| %>
-          <%- if Admin::User.columns_hash[attribute.to_s].type == :boolean -%>
+        <% @column_types_o_hash.each do |attr, col_type| %>
+          <%- if col_type == :boolean -%>
             <th class="boolean">
-              <%= sortable :users, attribute, Admin::User.human_attribute_name(attribute) %>
+              <%= sortable :users, attr, Admin::User.human_attribute_name(attr) %>
             </th>
           <%- else -%>
             <th>
-              <%= sortable :users, attribute, Admin::User.human_attribute_name(attribute) %>
+              <%= sortable :users, attr, Admin::User.human_attribute_name(attr) %>
             </th>
           <%- end -%>
         <% end %>
@@ -22,16 +22,16 @@
       </tr>
       <% unless @filter.blank? %>
         <tr class="filter_values">
-          <% @displayed_columns.each do |attribute| %>
-            <% unless @filter[attribute].nil? %>
-              <%- case Admin::User.columns_hash[attribute.to_s].type -%>
+          <% @column_types_o_hash.each do |attr, col_type| %>
+            <% unless @filter[attr].nil? %>
+              <%- case col_type -%>
               <%- when :string -%>
                 <td class="value">
-                  <%= @filter[attribute] %>
+                  <%= @filter[attr] %>
                 </td>
               <%- when :boolean -%>
                 <td class="boolean value">
-                  <%= boolean_to_yes_no(@filter[attribute]) %>
+                  <%= boolean_to_yes_no(@filter[attr]) %>
                 </td>
               <% end %>
             <% else %>
@@ -43,20 +43,20 @@
         </tr>
       <% end %>
       <tr class="form_fields">
-        <% @displayed_columns.each do |attribute| %>
+        <% @column_types_o_hash.each do |attr, col_type| %>
           <td class="field">
-            <%- case Admin::User.columns_hash[attribute.to_s].type -%>
+            <%- case col_type -%>
             <%- when :string -%>
-              <%= text_field_tag "filter[#{attribute}]", @filter[attribute] %>
+              <%= text_field_tag "filter[#{attr}]", @filter[attr] %>
             <%- when :boolean -%>
-              <%= radio_button_tag "filter[#{attribute}]", 'yes', @filter[attribute] %>
-              <%= label_tag 'filter_'+attribute.to_s+'_yes', t('yes') %>
+              <%= radio_button_tag "filter[#{attr}]", 'yes', @filter[attr] %>
+              <%= label_tag 'filter_'+attr.to_s+'_yes', t('yes') %>
               <br />
-              <%= radio_button_tag "filter[#{attribute}]", 'no', @filter[attribute] == false %>
-              <%= label_tag 'filter_'+attribute.to_s+'_no', t('no') %>
+              <%= radio_button_tag "filter[#{attr}]", 'no', @filter[attr] == false %>
+              <%= label_tag 'filter_'+attr.to_s+'_no', t('no') %>
               <br />
-              <%= radio_button_tag "filter[#{attribute}]", 'all', @filter[attribute].nil? %>
-              <%= label_tag 'filter_'+attribute.to_s+'_all', t('all') %>
+              <%= radio_button_tag "filter[#{attr}]", 'all', @filter[attr].nil? %>
+              <%= label_tag 'filter_'+attr.to_s+'_all', t('all') %>
             <%- end -%>
           </td>
         <% end %>
@@ -64,16 +64,21 @@
         <td class="empty"></td>
       </tr>
       <tr class="form_actions">
-        <%= content_tag :td, :colspan => @displayed_columns.size, :class => 'actions' do %>
+        <%= content_tag :td, :colspan => @attributes.size, :class => 'actions' do %>
           <%= submit_tag t('buttons.filter') %>
         <% end %>
         <td class="empty"></td>
         <td class="empty"></td>
       </tr>
     </thead>
-    
+
     <tbody>
-      <%= render :partial => 'user_in_index', :collection => @users, :as => :user %>
+      <%= render :partial => 'shared/model_in_index',
+                 :collection => @users,
+                 :as => :model,
+                 :locals => { :attributes => @attributes,
+                              :column_types_o_hash => @column_types_o_hash,
+                              :edit_path_helper_method => method(:edit_admin_user_path) } %>
     </tbody>
   <% end %>
 <% end %>

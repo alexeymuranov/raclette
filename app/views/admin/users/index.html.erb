@@ -12,7 +12,23 @@
 
 <%= paginate @users %>
 
-<%= render 'index_table' %>
+<%= render :layout => 'shared/in_filtered_index_table',
+           :locals => { :attributes => @attributes,
+                        :column_types_o_hash => @column_types_o_hash,
+                        :model_class => Admin::User,
+                        :table_name => :users,
+                        :filter => @filter } do %>
+
+  <%= render :partial => 'shared/model_in_index',
+             :collection => @users,
+             :as => :model,
+             :locals => { :attributes => @attributes,
+                          :column_types_o_hash => @column_types_o_hash,
+                          :edit_path_helper_method => method(:edit_admin_user_path) } %>
+
+<% end %>
+
+<%#= render 'index_table' %>
 
 <%= paginate @users %>
 

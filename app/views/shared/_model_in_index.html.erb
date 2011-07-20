@@ -1,0 +1,35 @@
+<tr>
+
+  <% locals_for_model_attributes_in_table = {
+         :attributes => attributes,
+         :column_types_o_hash => column_types_o_hash } %>
+  <% locals_for_model_attributes_in_table[:edit_path_helper_method] =
+         edit_path_helper_method \
+             if local_assigns.has_key?(:edit_path_helper_method) %>
+  <% locals_for_model_attributes_in_table[:edit_path] =
+         edit_path \
+             if local_assigns.has_key?(:edit_path) %>
+  <%= render :partial => 'shared/model_attributes_in_table',
+             :object => model,
+             :as => :model,
+             :locals => locals_for_model_attributes_in_table %>
+
+  <% edit_path = edit_path_helper_method.call(model) \
+         unless local_assigns.has_key?(:edit_path) %>
+
+  <td class="operation">
+    <%= link_to edit_pictogram,
+                edit_path,
+                :title => t('actions.update'),
+                :class => 'modify resource' %>
+  </td>
+
+  <td class="operation">
+    <%= link_to delete_pictogram,
+                model,
+                :confirm => t('questions.are_you_sure?'),
+                :method  => :delete,
+                :title   => t('actions.delete'),
+                :class   => 'modify resource' %>
+  </td>
+</tr>

@@ -1,10 +1,10 @@
 <%= content_tag :table, :id => table_name, :class => 'associated records' do %>
   <colgroup class="attributes">
-    <% displayed_columns.size.times do %><col /><% end %>
+    <% attributes.size.times do %><col /><% end %>
   </colgroup>
   <thead>
     <tr>
-      <% displayed_columns.each do |attribute| %>
+      <% attributes.each do |attribute| %>
         <th>
           <%= sortable table_name,
                        attribute,
@@ -14,9 +14,10 @@
     </tr>
   </thead>
   <tbody>
-    <%= render :partial => 'admin/known_i_ps/known_i_p_in_index_for_association',
+    <%= render :partial => 'shared/model_in_index_for_association',
                :collection => known_ips,
-               :as => :known_ip,
-               :locals => { :displayed_columns => displayed_columns } %>
+               :as => :model,
+               :locals => { :attributes => attributes,
+                            :column_types_o_hash => column_types_o_hash } %>
   </tbody>
 <% end %>
