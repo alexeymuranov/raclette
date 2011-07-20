@@ -1,20 +1,7 @@
 <%= form_for(@known_ip) do |f| %>
-  <% if @known_ip.errors.any? %>
-    <div id="error_explanation">
-      <h2>
-        <%= @known_ip.errors.count == 1 ? t('activerecord.errors.template.header.one') :
-                                      t('activerecord.errors.template.header.other',
-                                        :count => @known_ip.errors.count,
-                                        :model => Admin::KnownIP.human_name ) %>
-      </h2>
 
-      <ul>
-      <% @known_ip.errors.full_messages.each do |msg| %>
-        <li><%= msg %></li>
-      <% end %>
-      </ul>
-    </div>
-  <% end %>
+  <%= render 'validation_error_messages' %>
+
 
   <%= field_set_tag do %>
     <dl class="form_fields">

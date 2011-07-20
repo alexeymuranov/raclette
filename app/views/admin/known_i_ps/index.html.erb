@@ -7,7 +7,6 @@
                         :table_name => :known_ips } do %>
 
   <%= render :partial => 'shared/model_in_index',
-             # :object => @known_ips.first,
              :collection => @known_ips,
              :as => :model,
              :locals => { :attributes => @attributes,
@@ -15,8 +14,6 @@
                           :edit_path_helper_method => method(:edit_admin_known_ip_path) } %>
 
 <% end %>
-
-<%#= render 'index_table' %>
 
 <footer>
   <%= link_to add_pictogram+' '+t('admin.known_i_ps.links.new'),
