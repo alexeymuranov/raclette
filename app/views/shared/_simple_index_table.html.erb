@@ -22,8 +22,11 @@
   </thead>
 
   <tbody>
-
-    <%= yield %>
-
+    <%= render :partial => 'shared/model_in_index',
+               :collection => models,
+               :as => :model,
+               :locals => { :attributes => attributes,
+                            :column_types_o_hash => column_types_o_hash,
+                            :edit_path_helper_method => edit_path_helper_method } %>
   </tbody>
 <% end %>

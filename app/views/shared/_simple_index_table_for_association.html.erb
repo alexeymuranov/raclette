@@ -19,8 +19,10 @@
   </thead>
 
   <tbody>
-
-    <%= yield %>
-
+    <%= render :partial => 'shared/model_in_index_for_association',
+               :collection => models,
+               :as => :model,
+               :locals => { :attributes => attributes,
+                            :column_types_o_hash => column_types_o_hash } %>
   </tbody>
 <% end %>
