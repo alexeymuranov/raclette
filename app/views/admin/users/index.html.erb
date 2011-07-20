@@ -1,32 +1,16 @@
 <hgroup>
-<h1><%= t '.header' %></h1>
+  <h1><%= t '.header' %></h1>
 
-<h2>
-  <% if @filter.blank? %>
-    <%= t '.count_total', :count => Admin::User.count %>
-  <% else %>
-    <%= t '.count_filtered', :count => @all_filtered_users.size, :total => Admin::User.count %>
-  <% end %>
-</h2>
+  <h2>
+    <% if @filter.blank? %>
+      <%= t '.count_total', :count => Admin::User.count %>
+    <% else %>
+      <%= t '.count_filtered', :count => @all_filtered_users.size, :total => Admin::User.count %>
+    <% end %>
+  </h2>
 </hgroup>
 
 <%= paginate @users %>
-
-<%#= render :layout => 'shared/in_filtered_index_table',
-  #         :locals => { :attributes => @attributes,
-  #                      :column_types_o_hash => @column_types_o_hash,
-  #                      :model_class => Admin::User,
-  #                      :table_name => :users,
-  #                      :filter => @filter } do %>
-
-  <%#= render :partial => 'shared/model_in_index',
-    #         :collection => @users,
-    #         :as => :model,
-    #         :locals => { :attributes => @attributes,
-    #                      :column_types_o_hash => @column_types_o_hash,
-    #                      :edit_path_helper_method => method(:edit_admin_user_path) } %>
-
-<%# end %>
 
 <%= render :partial => 'shared/filtered_index_table',
            :object => @users,

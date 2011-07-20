@@ -1,0 +1,8 @@
+<%- case column_type -%>
+<%- when :boolean -%>
+  <td class="boolean">
+    <%= boolean_to_picto(value) %>
+  </td>
+<%- else -%>
+  <td><%= value %></td>
+<%- end -%>

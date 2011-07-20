@@ -6,31 +6,24 @@
     <colgroup><col /><col /></colgroup>
     <thead>
       <tr>
-        <% column_types_o_hash.each do |attr, col_type| %>
-          <%- if col_type == :boolean -%>
-            <th class="boolean">
-              <%= sortable table_name, attr, model_class.human_attribute_name(attr) %>
-            </th>
-          <%- else -%>
-            <th>
-              <%= sortable table_name, attr, model_class.human_attribute_name(attr) %>
-            </th>
-          <%- end -%>
-        <% end %>
+        <%= render 'shared/sorting_table_headers',
+                   :column_types_o_hash => column_types_o_hash,
+                   :model_class => model_class,
+                   :table_name => table_name %>
         <th class="empty"></th>
         <th class="empty"></th>
       </tr>
       <% unless filter.blank? %>
-        <tr class="filter_values">
+        <tr>
           <% column_types_o_hash.each do |attr, col_type| %>
             <% unless filter[attr].nil? %>
               <%- case col_type -%>
               <%- when :string -%>
-                <td class="value">
+                <td class="filtering_value">
                   <%= filter[attr] %>
                 </td>
               <%- when :boolean -%>
-                <td class="boolean value">
+                <td class="boolean filtering_value">
                   <%= boolean_to_yes_no(filter[attr]) %>
                 </td>
               <% end %>
@@ -42,7 +35,7 @@
           <td class="empty"></td>
         </tr>
       <% end %>
-      <tr class="form_fields">
+      <tr>
         <% column_types_o_hash.each do |attr, col_type| %>
           <td class="field">
             <%- case col_type -%>
@@ -63,7 +56,7 @@
         <td class="empty"></td>
         <td class="empty"></td>
       </tr>
-      <tr class="form_actions">
+      <tr>
         <%= content_tag :td, :colspan => attributes.size, :class => 'actions' do %>
           <%= submit_tag t('buttons.filter') %>
         <% end %>

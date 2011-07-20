@@ -4,17 +4,10 @@
   </colgroup>
   <thead>
     <tr>
-      <% column_types_o_hash.each do |attr, col_type| %>
-        <%- if col_type == :boolean -%>
-          <th class="boolean">
-            <%= sortable table_name, attr, model_class.human_attribute_name(attr) %>
-          </th>
-        <%- else -%>
-          <th>
-            <%= sortable table_name, attr, model_class.human_attribute_name(attr) %>
-          </th>
-        <%- end -%>
-      <% end %>
+      <%= render 'shared/sorting_table_headers',
+                 :column_types_o_hash => column_types_o_hash,
+                 :model_class => model_class,
+                 :table_name => table_name %>
     </tr>
   </thead>
 

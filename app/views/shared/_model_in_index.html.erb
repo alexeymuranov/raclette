@@ -1,25 +1,14 @@
 <tr>
 
-  <% locals_for_model_attributes_in_table = {
-         :attributes => attributes,
-         :column_types_o_hash => column_types_o_hash } %>
-  <% locals_for_model_attributes_in_table[:edit_path_helper_method] =
-         edit_path_helper_method \
-             if local_assigns.has_key?(:edit_path_helper_method) %>
-  <% locals_for_model_attributes_in_table[:edit_path] =
-         edit_path \
-             if local_assigns.has_key?(:edit_path) %>
   <%= render :partial => 'shared/model_attributes_in_table',
              :object => model,
              :as => :model,
-             :locals => locals_for_model_attributes_in_table %>
-
-  <% edit_path = edit_path_helper_method.call(model) \
-         unless local_assigns.has_key?(:edit_path) %>
+             :locals => { :attributes => attributes,
+                          :column_types_o_hash => column_types_o_hash } %>
 
   <td class="operation">
     <%= link_to edit_pictogram,
-                edit_path,
+                edit_path_helper_method.call(model),
                 :title => t('actions.update'),
                 :class => 'modify resource' %>
   </td>

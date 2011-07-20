@@ -1,11 +1,8 @@
 ## encoding: UTF-8
 
 class Admin::KnownIPsController < AdminController
-  helper_method :sort_column, :sort_direction
 
   def index
-    @known_ips = Admin::KnownIP.order("#{sort_column(:known_ips)} #{sort_direction(:known_ips)}")
-
     @attributes = [ :ip, :description ]
 
     @column_types_o_hash = ActiveSupport::OrderedHash.new
@@ -13,6 +10,7 @@ class Admin::KnownIPsController < AdminController
       @column_types_o_hash[attr] = Admin::KnownIP.columns_hash[attr.to_s].type
     end
 
+    @known_ips = Admin::KnownIP.order("#{sort_column(:known_ips)} #{sort_direction(:known_ips)}")
 
     @title = t('admin.known_i_ps.index.title')
   end

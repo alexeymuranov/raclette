@@ -407,11 +407,10 @@ body div.container section table.filtered {
   box-shadow: 0 0 3px 0 red;
   -webkit-box-shadow: 0 0 3px 0 red;
   -moz-box-shadow: 0 0 3px 0 red; }
-  body div.container section table.filtered thead tr.filter_values {
-    font-size: 11pt; }
-    body div.container section table.filtered thead tr.filter_values td.value {
-      color: red;
-      background-color: #f5f5f5; }
+  body div.container section table.filtered thead tr td.filtering_value {
+    font-size: 11pt;
+    color: red;
+    background-color: #f5f5f5; }
 body div.container section fieldset {
   border-radius: 5px;
   -moz-border-radius: 5px;

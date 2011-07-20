@@ -684,13 +684,10 @@ body div.container section {
   table.filtered {
     @include box-shadow(0, 0, 3px, 0, $emphasis-glow-color);
     
-    thead tr.filter_values {
+    thead tr td.filtering_value {
       font-size: 11pt;
-
-      td.value {
-        color: $emphasis-text-color;
-        background-color: $section-bg-color;
-      }
+      color: $emphasis-text-color;
+      background-color: $section-bg-color;
     }
   }
 

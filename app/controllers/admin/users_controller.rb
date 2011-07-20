@@ -1,12 +1,8 @@
 ## encoding: UTF-8
 
 class Admin::UsersController < AdminController
-  helper_method :sort_column, :sort_direction
 
   def index
-
-    # Filter:
-    @all_filtered_users = Admin::User.scoped
 
     @attributes = [ :username,
                     :full_name,
@@ -21,8 +17,11 @@ class Admin::UsersController < AdminController
       @column_types_o_hash[attr] = Admin::User.columns_hash[attr.to_s].type
     end
 
+    # Filter:
     params[:filter] ||= {}
     @filter = {}
+
+    @all_filtered_users = Admin::User.scoped
 
     @column_types_o_hash.each do |attr, col_type|
       case col_type
@@ -51,10 +50,12 @@ class Admin::UsersController < AdminController
     # Paginate:
     @users = @all_filtered_users.page(params[:page]).per(10)
 
+    # Compose mailing list:
     if params[:list_email_addresses]
       @mailing_list_users = @all_filtered_users.select { |user| !user.email.blank? }
       @mailing_list = @mailing_list_users.collect { |user| "#{user.full_name} <#{user.email}>" }.join(', ')
     end
+
 
     @title = t('admin.users.index.title')  # or: Admin::User.human_name.pluralize
   end
@@ -205,16 +206,29 @@ class Admin::UsersController < AdminController
     end
 
     def render_new_properly
-      @known_ips = Admin::KnownIP.order("#{sort_column(:safe_ips)} #{sort_direction(:safe_ips)}")
+      @known_ips_attributes = [ :ip, :description ]
+      @known_ips_column_types_o_hash = ActiveSupport::OrderedHash.new
+      @known_ips_attributes.each do |attr|
+        @known_ips_column_types_o_hash[attr] = Admin::KnownIP.columns_hash[attr.to_s].type
+      end
+
+      @safe_ips = nil
+      @other_ips = Admin::KnownIP.order("#{sort_column(:safe_ips)} #{sort_direction(:safe_ips)}")
+      
       @title = t('admin.users.new.title')
 
       render :new
     end
 
     def render_edit_properly
-      safe_ips = @user.safe_ips.order("#{sort_column(:safe_ips)} #{sort_direction(:safe_ips)}")
-      other_ips = Admin::KnownIP.order("#{sort_column(:safe_ips)} #{sort_direction(:safe_ips)}") - safe_ips
-      @known_ips = safe_ips + other_ips  # a strange way to sort 'safe' before 'other'
+      @known_ips_attributes = [ :ip, :description ]
+      @known_ips_column_types_o_hash = ActiveSupport::OrderedHash.new
+      @known_ips_attributes.each do |attr|
+        @known_ips_column_types_o_hash[attr] = Admin::KnownIP.columns_hash[attr.to_s].type
+      end
+
+      @safe_ips = @user.safe_ips.order("#{sort_column(:safe_ips)} #{sort_direction(:safe_ips)}")
+      @other_ips = Admin::KnownIP.order("#{sort_column(:safe_ips)} #{sort_direction(:safe_ips)}") - @safe_ips
 
       @title =  t('admin.users.edit.title', :username => @user.username)
 

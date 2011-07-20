@@ -1,2 +1,0 @@
-module AdminToolsHelper
-end

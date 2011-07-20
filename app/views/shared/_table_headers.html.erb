@@ -1,0 +1,11 @@
+<% column_types_o_hash.each do |attr, col_type| %>
+  <%- if col_type == :boolean -%>
+    <th class="boolean">
+      <%= model_class.human_attribute_name(attr) %>
+    </th>
+  <%- else -%>
+    <th>
+      <%= model_class.human_attribute_name(attr) %>
+    </th>
+  <%- end -%>
+<% end %>

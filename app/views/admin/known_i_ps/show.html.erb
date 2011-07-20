@@ -20,21 +20,7 @@
   <h2><%= Admin::KnownIP.human_attribute_name(:safe_users) %></h2>
 
   <% unless @safe_users.blank? %>
-    <%#= render :layout => 'shared/in_simple_index_table_for_association',
-      #         :locals => { :attributes => @safe_users_attributes,
-      #                      :column_types_o_hash => @safe_users_column_types_o_hash,
-      #                      :model_class => Admin::User,
-      #                      :table_name => :safe_users } do %>
-
-      <%#= render :partial => 'shared/model_in_index_for_association',
-        #         :collection => @safe_users,
-        #         :as => :model,
-        #         :locals => { :attributes => @safe_users_attributes,
-        #                      :column_types_o_hash => @safe_users_column_types_o_hash } %>
-
-    <%# end %>
-
-    <%= render :partial => 'shared/simple_index_table_for_association',
+    <%= render :partial => 'shared/index_table_for_association',
                :object => @safe_users,
                :as => :models,
                :locals => { :attributes => @safe_users_attributes,
