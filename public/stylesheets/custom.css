@@ -335,11 +335,11 @@ body div.container section table {
   margin: 0; }
   body div.container section table tr {
     border: solid 1px #d1d1f6; }
-  body div.container section table tr th, body div.container section table tr td {
-    padding: 0 5px; }
-    body div.container section table tr th a, body div.container section table tr td a {
-      display: block;
-      margin: 0 -5px; }
+    body div.container section table tr th, body div.container section table tr td {
+      padding: 0 5px; }
+      body div.container section table tr th a.resource, body div.container section table tr td a.resource {
+        display: block;
+        margin: 0 -5px; }
   body div.container section table thead th {
     background-color: #d1d1f6; }
   body div.container section table thead th.empty {
@@ -429,40 +429,41 @@ body div.container section div.link_group {
   -webkit-border-radius: 5px;
   border: dotted 1px; }
 body div.container section a, body div.container section a:visited {
+  display: inline-block;
+  text-decoration: none;
+  margin: -5px;
+  padding: 0 5px;
+  color: #0066cc; }
+  body div.container section a:hover, body div.container section a:visited:hover {
+    text-shadow: 0 0 3px #f5f5f5;
+    text-decoration: none;
+    color: #0099ff; }
+body div.container section a.resource, body div.container section a.resource:visited {
   border-radius: 5px;
   -moz-border-radius: 5px;
   -webkit-border-radius: 5px;
   display: inline-block;
   padding: 5px;
-  text-decoration: none;
-  background-color: none; }
-  body div.container section a:hover, body div.container section a:visited:hover {
-    text-shadow: 0 0 3px #f5f5f5; }
+  margin: 0; }
+  body div.container section a.resource:hover, body div.container section a.resource:visited:hover {
+    color: #f5f5f5;
+    text-shadow: none; }
 body div.container section a.display, body div.container section a.display:visited {
   color: green; }
   body div.container section a.display:hover, body div.container section a.display:visited:hover {
-    color: #f5f5f5;
-    background-color: green;
-    text-decoration: none;
-    text-shadow: none; }
+    background-color: green; }
   body div.container section a.display:active, body div.container section a.display:visited:active {
     background-color: #00b300; }
 body div.container section a.add, body div.container section a.add:visited {
   color: blue; }
   body div.container section a.add:hover, body div.container section a.add:visited:hover {
-    color: #f5f5f5;
-    background-color: blue;
-    text-decoration: none;
-    text-shadow: none; }
+    background-color: blue; }
   body div.container section a.add:active, body div.container section a.add:visited:active {
     background-color: #3333ff; }
 body div.container section a.modify, body div.container section a.modify:visited {
   color: red; }
   body div.container section a.modify:hover, body div.container section a.modify:visited:hover {
-    color: #f5f5f5;
-    background-color: red;
-    text-decoration: none;
-    text-shadow: none; }
+    background-color: red; }
   body div.container section a.modify:active, body div.container section a.modify:visited:active {
     background-color: #ff3333; }
 

@@ -1,5 +1,6 @@
-<%= render :partial => 'user_in_table',
+<%= render :partial => 'shared/model_in_table',
            :object => user,
-           :as => :user,
-           :layout => 'row_in_index',
-           :locals => { :displayed_columns => @displayed_columns } %>
+           :as => :model,
+           :layout => 'shared/row_in_index',
+           :locals => { :displayed_columns => @displayed_columns,
+                        :edit_path => edit_admin_user_path(user) } %>

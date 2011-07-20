@@ -2,7 +2,9 @@
   <%= field_set_tag do %>
     <table class="grid form_fields">
       <colgroup><col /></colgroup>
-      <colgroup><% @known_ips.size.times do %><col /><% end %></colgroup>
+      <colgroup>
+        <% @known_ips.size.times do %><col /><% end %>
+      </colgroup>
       <thead>
         <tr>
           <th class='empty'></th>

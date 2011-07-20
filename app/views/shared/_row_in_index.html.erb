@@ -1,0 +1,20 @@
+<tr>
+
+  <%= yield %>
+
+  <td class="operation">
+    <%= link_to edit_pictogram,
+                edit_path,
+                :title => t('actions.update'),
+                :class => 'modify resource' %>
+  </td>
+
+  <td class="operation">
+    <%= link_to delete_pictogram,
+                model,
+                :confirm => t('questions.are_you_sure?'),
+                :method  => :delete,
+                :title   => t('actions.delete'),
+                :class   => 'modify resource' %>
+  </td>
+</tr>

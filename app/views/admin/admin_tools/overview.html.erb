@@ -1,15 +1,15 @@
 <% content_for :side_menu_list_items do %>
   <li>
     <%= link_to t('headers.all_users'), admin_users_path,
-                :class => 'display' %>
+                :class => 'display resource' %>
   </li>
   <li>
     <%= link_to t('headers.all_known_ips'), admin_known_ips_path,
-                :class => 'display' %>
+                :class => 'display resource' %>
   </li>
   <li>
     <%= link_to t('headers.all_safe_user_ips'), admin_safe_user_ips_path,
-                :class => 'display' %>
+                :class => 'display resource' %>
   </li>
 <% end %>
 
@@ -21,44 +21,55 @@
 
   <section>
 
-    <h3><%= link_to list_all_pictogram+' '+t('headers.all_users'), admin_users_path, :class => 'display' %></h3>
+    <h3><%= link_to list_all_pictogram+' '+t('headers.all_users'),
+                    admin_users_path,
+                    :class => 'display resource' %></h3>
 
     <p>
       <% @users.each do |user| %>
-        <%= link_to show_pictogram+' '+user.username, user, :class => 'display' %>
+        <%= link_to show_pictogram+' '+user.username,
+                    user,
+                    :class => 'display resource' %>
       <% end %>
     </p>
 
     <footer>
       <%= link_to add_pictogram+' '+t('admin.users.links.new'), new_admin_user_path,
                   :title => t('actions.create'),
-                  :class => 'add' %>
+                  :class => 'add resource' %>
     </footer>
 
   </section>
 
   <section>
 
-    <h3><%= link_to list_all_pictogram+' '+t('headers.all_known_ips'), admin_known_ips_path, :class => 'display' %></h3>
+    <h3><%= link_to list_all_pictogram+' '+t('headers.all_known_ips'),
+                    admin_known_ips_path,
+                    :class => 'display resource' %></h3>
 
     <p>
       <% @known_ips.each do |known_ip| %>
         <% note = known_ip.description.blank? ? '' : " (#{known_ip.description})" %>
-          <%= link_to show_pictogram+' '+known_ip.ip+note, known_ip, :class => 'display' %>
+          <%= link_to show_pictogram+' '+known_ip.ip+note,
+                      known_ip,
+                      :class => 'display resource' %>
       <% end %>
     </p>
 
     <footer>
-      <%= link_to add_pictogram+' '+t('admin.known_i_ps.links.new'), new_admin_known_ip_path,
+      <%= link_to add_pictogram+' '+t('admin.known_i_ps.links.new'),
+                  new_admin_known_ip_path,
                   :title => t('actions.create'),
-                  :class => 'add' %>
+                  :class => 'add resource' %>
     </footer>
 
   </section>
 
   <section>
 
-    <h3><%= link_to list_all_pictogram+' '+t('headers.all_safe_user_ips'), admin_safe_user_ips_path, :class => 'display' %></h3>
+    <h3><%= link_to list_all_pictogram+' '+t('headers.all_safe_user_ips'),
+                    admin_safe_user_ips_path,
+                    :class => 'display resource' %></h3>
 
   </section>
 

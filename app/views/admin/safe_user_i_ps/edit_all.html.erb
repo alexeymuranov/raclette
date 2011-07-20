@@ -1,8 +1,9 @@
 <% content_for :side_menu_list_items do %>
   <li>
-    <%= link_to t('admin.safe_user_i_ps.links.show_all'), admin_safe_user_ips_path,
+    <%= link_to t('admin.safe_user_i_ps.links.show_all'),
+                admin_safe_user_ips_path,
                 :title => t('actions.read'),
-                :class => 'display' %>
+                :class => 'display resource' %>
   </li>
 <% end %>
 
@@ -11,7 +12,8 @@
 <%= render 'form' %>
 
 <footer>
-  <%= link_to list_all_pictogram(2)+' '+t('admin.safe_user_i_ps.links.show_all'), admin_safe_user_ips_path,
+  <%= link_to list_all_pictogram(2)+' '+t('admin.safe_user_i_ps.links.show_all'),
+              admin_safe_user_ips_path,
               :title => t('actions.read'),
-              :class => 'display' %>
+              :class => 'display resource' %>
 </footer>

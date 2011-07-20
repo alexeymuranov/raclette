@@ -19,25 +19,24 @@
 <% if @mailing_list.nil? %>
   <%= link_to t('buttons.show_email_addresses'),
               params.merge( :list_email_addresses => :filtered,
-                            :anchor => 'email_addresses_hide_button' ),
+                            :anchor => 'email_addresses' ),
               :id => 'email_addresses_show_button' %>
 <% else %>
+  <section id="email_addresses">
+    <h2><%= t 'admin.users.index.subheaders.mailing_list' %></h2>
+
+    <p><%= @mailing_list %></p>
+  </section>
   <%= link_to t('buttons.hide_email_addresses'),
               params.except(:list_email_addresses).merge( :anchor => 'email_addresses_show_button' ),
               :id => 'email_addresses_hide_button' %>
-
-  <section id="email_addresses">
-    <h2><%= t 'admin.users.index.subheaders.mailing_list' %></h2>
-    
-    <p><%= @mailing_list %></p>
-  </section>
 <% end %>
 
 <footer>
   <%= link_to add_pictogram+' '+t('admin.users.links.new'),
               new_admin_user_path,
               :title => t('actions.create'),
-              :class => 'add' %>
+              :class => 'add resource' %>
 </footer>
 
 <%# End of template %>
@@ -46,5 +45,5 @@
   <li><%= link_to t('admin.users.links.new'),
                   new_admin_user_path,
                   :title => t('actions.create'),
-                  :class => 'add' %></li>
+                  :class => 'add resource' %></li>
 <% end %>

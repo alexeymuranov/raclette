@@ -1,8 +1,9 @@
 <% content_for :side_menu_list_items do %>
   <li>
-    <%= link_to t('admin.safe_user_i_ps.links.update_all'), edit_all_admin_safe_user_ips_path,
+    <%= link_to t('admin.safe_user_i_ps.links.update_all'),
+                edit_all_admin_safe_user_ips_path,
                 :title => t('actions.update'),
-                :class => 'modify' %>
+                :class => 'modify resource' %>
   </li>
 <% end %>
 
@@ -11,7 +12,8 @@
 <%= render 'index_table' %>
 
 <footer>
-  <%= link_to edit_pictogram(2)+' '+t('admin.safe_user_i_ps.links.update_all'), edit_all_admin_safe_user_ips_path,
+  <%= link_to edit_pictogram(2)+' '+t('admin.safe_user_i_ps.links.update_all'),
+              edit_all_admin_safe_user_ips_path,
               :title  => t('actions.update'),
-              :class => 'modify' %>
+              :class => 'modify resource' %>
 </footer>

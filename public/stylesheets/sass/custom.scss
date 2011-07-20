@@ -2,13 +2,13 @@ $body-bg-color: Navy;
 $body-text-color: DarkSlateGray;
 $section-bg-color: #F5F5F5;
 $alt-section-bg-color: #E6E6FA;
+$common-link-color: #06c;
+$common-link-hover-color: #09f;
 $common-navigation-link-color: MediumBlue;
 $common-navigation-link-hover-color: Blue;
 $logout-navigation-link-color: #006400;
 $logout-navigation-link-bg-color: Yellow;
 $disabled-navigation-link-color: Silver;
-$button-link-bg-color: none;
-$button-link-hover-shadow-color: $section-bg-color;
 $view-link-color: Green;
 $add-link-color: Blue;
 $modify-link-color: Red;
@@ -533,14 +533,14 @@ body div.container section {
 
     tr {
       border: solid 1px $table-border-color;
-    }
 
-    tr th, tr td {
-      padding: 0 5px;
+      th, td {
+        padding: 0 5px;
 
-      a {
-        display: block;
-        margin: 0 -5px;
+        a.resource {
+          display: block;
+          margin: 0 -5px;
+        }
       }
     }
 
@@ -715,14 +715,28 @@ body div.container section {
   }
 
   a, a:visited {
+    display: inline-block;
+    text-decoration: none;
+    margin: -5px;
+    padding: 0 5px;
+    color: $common-link-color;
+
+    &:hover {
+      text-shadow: 0 0 3px $section-bg-color;
+      text-decoration: none;
+      color: $common-link-hover-color;
+    }
+  }
+
+  a.resource, a.resource:visited {
     @include rounded-border(5px);
     display: inline-block;
     padding: 5px;
-    text-decoration: none;
-    background-color: $button-link-bg-color;
+    margin: 0;
 
     &:hover {
-      text-shadow: 0 0 3px $button-link-hover-shadow-color;
+      color: $section-bg-color;
+      text-shadow: none;
     }
   }
 
@@ -730,10 +744,7 @@ body div.container section {
     color: $view-link-color;
 
     &:hover {
-      color: $section-bg-color;
       background-color: $view-link-color;
-      text-decoration: none;
-      text-shadow: none;
     }
 
     &:active {
@@ -745,10 +756,7 @@ body div.container section {
     color: $add-link-color;
 
     &:hover {
-      color: $section-bg-color;
       background-color: $add-link-color;
-      text-decoration: none;
-      text-shadow: none;
     }
 
     &:active {
@@ -760,10 +768,7 @@ body div.container section {
     color: $modify-link-color;
 
     &:hover {
-      color: $section-bg-color;
       background-color: $modify-link-color;
-      text-decoration: none;
-      text-shadow: none;
     }
 
     &:active {

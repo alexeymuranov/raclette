@@ -1,5 +1,5 @@
-<%= render :partial => 'admin/users/user_in_table',
+<%= render :partial => 'shared/model_in_table',
            :object => user,
-           :as => :user,
-           :layout => 'admin/users/row_in_index_for_association',
+           :as => :model,
+           :layout => 'shared/row_in_index_for_association',
            :locals => { :displayed_columns => displayed_columns } %>

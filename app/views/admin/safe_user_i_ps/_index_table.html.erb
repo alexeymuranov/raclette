@@ -1,15 +1,18 @@
 <table class="grid">
-  <colgroup><col /</colgroup>
-  <colgroup><% @known_ips.size.times do %><col /><% end %></colgroup>
+  <colgroup><col /></colgroup>
+  <colgroup>
+    <% @known_ips.size.times do %><col /><% end %>
+  </colgroup>
   <thead>
     <tr>
       <th class='empty'></th>
       <% @known_ips.each do |known_ip| %>
         <% note = known_ip.description.blank? ? '' : " (#{known_ip.description})" %>
         <th>
-          <%= link_to "#{known_ip.ip}#{note}", known_ip,
+          <%= link_to "#{known_ip.ip}#{note}",
+                      known_ip,
                       :title => t('actions.read'),
-                      :class => 'display' %>
+                      :class => 'display resource' %>
         </th>
       <% end %>
     </tr>
@@ -18,9 +21,10 @@
     <% @users.each do |user| %>
       <tr>
         <th scope=row>
-          <%= link_to user.username, user,
+          <%= link_to user.username,
+                      user,
                       :title => t('actions.read'),
-                      :class => 'display' %>
+                      :class => 'display resource' %>
         </th>
         <% @known_ips.each do |known_ip| %>
           <td class='boolean'>

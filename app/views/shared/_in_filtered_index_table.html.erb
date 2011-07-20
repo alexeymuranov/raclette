@@ -1,19 +1,17 @@
-<%= form_tag admin_users_path, :method => :get do %>
-  <%= content_tag :table, :id => :users, :class => (@filter.blank? ? 'records' : 'filtered records') do %>
-    <colgroup class="attributes">
-      <% @displayed_columns.size.times do %><col /><% end %>
-    </colgroup>
+<%= form_tag index_path, :method => :get do %>
+  <%= content_tag :table, :id => table_name, :class => (@filter.blank? ? 'records' : 'filtered records') do %>
+    <%= content_tag :colgroup, nil, :span => @displayed_columns.size, :class => 'attributes' %>
     <colgroup span="2"></colgroup>
     <thead>
       <tr>
-        <% @displayed_columns.each do |attribute| %>
-          <%- if Admin::User.columns_hash[attribute.to_s].type == :boolean -%>
+        <% displayed_columns.each do |attribute| %>
+          <%- model_class.columns_hash[attribute.to_s].type == :boolean -%>
             <th class="boolean">
-              <%= sortable :users, attribute, Admin::User.human_attribute_name(attribute) %>
+              <%= sortable table_name, attribute, model_class.human_attribute_name(attribute) %>
             </th>
           <%- else -%>
             <th>
-              <%= sortable :users, attribute, Admin::User.human_attribute_name(attribute) %>
+              <%= sortable table_name, attribute, model_class.human_attribute_name(attribute) %>
             </th>
           <%- end -%>
         <% end %>
@@ -24,7 +22,7 @@
         <tr class="filter_values">
           <% @displayed_columns.each do |attribute| %>
             <% unless @filter[attribute].nil? %>
-              <%- case Admin::User.columns_hash[attribute.to_s].type -%>
+              <%- case model_class.columns_hash[attribute.to_s].type -%>
               <%- when :string -%>
                 <td class="value">
                   <%= @filter[attribute] %>
@@ -45,7 +43,7 @@
       <tr class="form_fields">
         <% @displayed_columns.each do |attribute| %>
           <td class="field">
-            <%- case Admin::User.columns_hash[attribute.to_s].type -%>
+            <%- case model_class.columns_hash[attribute.to_s].type -%>
             <%- when :string -%>
               <%= text_field_tag "filter[#{attribute}]", @filter[attribute] %>
             <%- when :boolean -%>
@@ -73,7 +71,9 @@
     </thead>
     
     <tbody>
-      <%= render :partial => 'user_in_index', :collection => @users, :as => :user %>
+
+      <%= yield %>
+
     </tbody>
   <% end %>
 <% end %>

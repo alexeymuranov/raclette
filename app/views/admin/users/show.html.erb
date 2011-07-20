@@ -43,10 +43,10 @@
 <footer>
   <%= link_to edit_pictogram(2)+' '+t('.links.update'),
               edit_admin_user_path(@user),
-              :class => 'modify' %>
+              :class => 'modify resource' %>
   <%= link_to list_all_pictogram(2)+' '+t('admin.users.links.show_all'),
               admin_users_path,
-              :class => 'display' %>
+              :class => 'display resource' %>
 </footer>
 
 <%# End of template %>
@@ -54,8 +54,8 @@
 <% content_for :side_menu_list_items do %>
   <li><%= link_to t('admin.users.links.show_all'),
                   admin_users_path,
-                  :class => 'display' %></li>
+                  :class => 'display resource' %></li>
   <li><%= link_to t('admin.users.links.new'), new_admin_user_path,
                   :title => t('actions.create'),
-                  :class => 'add' %></li>
+                  :class => 'add resource' %></li>
 <% end %>

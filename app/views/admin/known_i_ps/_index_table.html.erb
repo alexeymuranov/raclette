@@ -1,10 +1,8 @@
-<%= content_tag :table, :id => :known_ips, :class => "records" do %>
+<%= content_tag :table, :id => :known_ips, :class => 'records' do %>
   <colgroup class="attributes">
-    <% @displayed_columns.size.times do %>
-      <col />
-    <% end %>
+    <% @displayed_columns.size.times do %><col /><% end %>
   </colgroup>
-  <colgroup><col /><col /></colgroup>
+  <colgroup span="2"></colgroup>
   <thead>
     <tr>
       <% @displayed_columns.each do |attribute| %>
