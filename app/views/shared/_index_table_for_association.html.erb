@@ -12,10 +12,18 @@
   </thead>
 
   <tbody>
-    <%= render :partial => 'shared/model_in_index_for_association',
-               :collection => models,
-               :as => :model,
-               :locals => { :attributes => attributes,
-                            :column_types_o_hash => column_types_o_hash } %>
+    <% if models.blank? %>
+      <tr>
+        <%= content_tag :td, '∅', :colspan => attributes.size, :class => 'nothing' %>
+        <td class="empty"></td>
+        <td class="empty"></td>
+      <tr>
+    <% else %>
+      <%= render :partial => 'shared/model_in_index_for_association',
+                 :collection => models,
+                 :as => :model,
+                 :locals => { :attributes => attributes,
+                              :column_types_o_hash => column_types_o_hash } %>
+    <% end %>
   </tbody>
 <% end %>

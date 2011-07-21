@@ -33,4 +33,8 @@ class ApplicationController < ActionController::Base
       params[:sort][table_name][:direction] == 'desc' ? :desc : :asc
     end
 
+    def sort_sql(table_name)
+      "#{sort_column(table_name)} #{sort_direction(table_name)}"
+    end
+
 end

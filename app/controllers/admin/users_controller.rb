@@ -45,7 +45,7 @@ class Admin::UsersController < AdminController
     end
 
     # Sort:
-    @all_filtered_users = @all_filtered_users.order("#{sort_column(:users)} #{sort_direction(:users)}")
+    @all_filtered_users = @all_filtered_users.order(sort_sql(:users))
 
     # Paginate:
     @users = @all_filtered_users.page(params[:page]).per(10)
@@ -53,7 +53,7 @@ class Admin::UsersController < AdminController
     # Compose mailing list:
     if params[:list_email_addresses]
       @mailing_list_users = @all_filtered_users.select { |user| !user.email.blank? }
-      @mailing_list = @mailing_list_users.collect { |user| "#{user.full_name} <#{user.email}>" }.join(', ')
+      @mailing_list = @mailing_list_users.collect(&:formatted_email).join(', ')
     end
 
 
@@ -62,7 +62,7 @@ class Admin::UsersController < AdminController
 
   def show
     @user = Admin::User.find(params[:id])
-    @safe_ips = @user.safe_ips.order("#{sort_column(:safe_ips)} #{sort_direction(:safe_ips)}")
+    @safe_ips = @user.safe_ips.order(sort_sql(:safe_ips))
 
     @key_attributes = [ :username ]
     @other_main_attributes = [ :full_name,
@@ -213,7 +213,7 @@ class Admin::UsersController < AdminController
       end
 
       @safe_ips = nil
-      @other_ips = Admin::KnownIP.order("#{sort_column(:safe_ips)} #{sort_direction(:safe_ips)}")
+      @other_ips = Admin::KnownIP.order(sort_sql(:safe_ips))
       
       @title = t('admin.users.new.title')
 
@@ -227,8 +227,8 @@ class Admin::UsersController < AdminController
         @known_ips_column_types_o_hash[attr] = Admin::KnownIP.columns_hash[attr.to_s].type
       end
 
-      @safe_ips = @user.safe_ips.order("#{sort_column(:safe_ips)} #{sort_direction(:safe_ips)}")
-      @other_ips = Admin::KnownIP.order("#{sort_column(:safe_ips)} #{sort_direction(:safe_ips)}") - @safe_ips
+      @safe_ips = @user.safe_ips.order(sort_sql(:safe_ips))
+      @other_ips = Admin::KnownIP.order(sort_sql(:safe_ips)) - @safe_ips
 
       @title =  t('admin.users.edit.title', :username => @user.username)
 

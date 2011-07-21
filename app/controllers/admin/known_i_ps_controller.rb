@@ -10,14 +10,14 @@ class Admin::KnownIPsController < AdminController
       @column_types_o_hash[attr] = Admin::KnownIP.columns_hash[attr.to_s].type
     end
 
-    @known_ips = Admin::KnownIP.order("#{sort_column(:known_ips)} #{sort_direction(:known_ips)}")
+    @known_ips = Admin::KnownIP.order(sort_sql(:known_ips))
 
     @title = t('admin.known_i_ps.index.title')
   end
 
   def show
     @known_ip = Admin::KnownIP.find(params[:id])
-    @safe_users = @known_ip.safe_users.order("#{sort_column(:safe_users)} #{sort_direction(:safe_users)}")
+    @safe_users = @known_ip.safe_users.order(sort_sql(:safe_users))
 
     @key_attributes = [ :ip ]
     @other_main_attributes = [ :description ]

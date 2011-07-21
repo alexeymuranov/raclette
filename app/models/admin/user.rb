@@ -119,6 +119,10 @@ class Admin::User < ActiveRecord::Base
     user && user.has_password?(submitted_password) ? user : nil
   end
 
+  def formatted_email
+    @formatted_email ||= "#{full_name} <#{email}>"
+  end
+
   # Private methods:
   private
   

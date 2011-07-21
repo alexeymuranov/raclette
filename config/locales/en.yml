@@ -455,6 +455,7 @@ en:
   "yes": "yes"
   "no": "no"
   all: "all"
+  nothing: "nothing"
 
   formats:
     "attribute_name:": "%{attribute}:"

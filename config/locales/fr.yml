@@ -414,6 +414,7 @@ fr:
   "yes": "oui"
   "no": "non"
   all: "tous"
+  nothing: "rien"
 
   formats:
     "attribute_name:": "%{attribute} :"

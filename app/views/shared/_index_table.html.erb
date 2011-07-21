@@ -15,11 +15,19 @@
   </thead>
 
   <tbody>
-    <%= render :partial => 'shared/model_in_index',
-               :collection => models,
-               :as => :model,
-               :locals => { :attributes => attributes,
-                            :column_types_o_hash => column_types_o_hash,
-                            :edit_path_helper_method => edit_path_helper_method } %>
+    <% if models.blank? %>
+      <tr>
+        <%= content_tag :td, '∅', :colspan => attributes.size, :class => 'nothing' %>
+        <td class="empty"></td>
+        <td class="empty"></td>
+      <tr>
+    <% else %>
+      <%= render :partial => 'shared/model_in_index',
+                 :collection => models,
+                 :as => :model,
+                 :locals => { :attributes => attributes,
+                              :column_types_o_hash => column_types_o_hash,
+                              :edit_path_helper_method => edit_path_helper_method } %>
+    <% end %>
   </tbody>
 <% end %>

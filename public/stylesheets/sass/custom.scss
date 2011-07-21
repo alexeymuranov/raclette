@@ -1,7 +1,7 @@
 $body-bg-color: Navy;
 $body-text-color: DarkSlateGray;
 $section-bg-color: #F5F5F5; /* WhiteSmoke */
-$alt-section-bg-color: #B0C4DE; /* LightSteelBlue */ /* #E6E6FA Lavender */
+$alt-section-bg-color: lighten(#B0C4DE, 10%); /* LightSteelBlue */
 $common-link-color: #06c;
 $common-link-hover-color: #09f;
 $common-navigation-link-color: MediumBlue;
@@ -12,9 +12,10 @@ $disabled-navigation-link-color: Silver;
 $view-link-color: Green;
 $add-link-color: Blue;
 $modify-link-color: Red;
-$odd-table-row-bg-color: $section-bg-color;
-$even-table-row-bg-color: lighten($alt-section-bg-color, 10%);
-$table-head-bg-color: $alt-section-bg-color;
+$table-data-bg-color: $section-bg-color; /* #F0FFFF; Azure */
+$alt-table-data-bg-color: darken($table-data-bg-color, 5%);
+$table-head-bg-color: #B0C4DE; /* LightSteelBlue */
+$alt-table-head-bg-color: lighten($table-head-bg-color, 10%);
 $table-border-color: darken($table-head-bg-color, 10%);
 $input-bg-color: White;
 $emphasis-glow-color: Red;
@@ -428,8 +429,8 @@ body div.container section {
   h2, h3, h4, h5, h6, p {
     color: inherit;
     line-height: 1.5;
-    margin-top: 0;
-    margin-bottom: 0;
+    margin-top: 5px;
+    margin-bottom: 5px;
   }
 
   h1 {
@@ -446,6 +447,12 @@ body div.container section {
   h3, h4, h5, & > section section h1 {
     font-size: 12pt;
     font-weight: bold;
+  }
+  
+  p {
+    @include rounded-border(5px);
+    padding: 5px;
+    background-color: $table-data-bg-color;
   }
 
   dl.show, dl.form_fields {
@@ -485,21 +492,21 @@ body div.container section {
 
     &:nth-child(odd) {
       dt {
-        background-color: darken($odd-table-row-bg-color, 10%);
+        background-color: $alt-table-head-bg-color;
       }
 
       dd {
-        background-color: $odd-table-row-bg-color;
+        background-color: $table-data-bg-color;
       }
     }
 
     &:nth-child(even) {
       dt {
-        background-color: darken($even-table-row-bg-color, 10%);
+        background-color: $table-head-bg-color;
       }
 
       dd {
-        background-color: $even-table-row-bg-color;
+        background-color: $alt-table-data-bg-color;
       }
     }
   }
@@ -549,24 +556,26 @@ body div.container section {
         background-color: $table-head-bg-color;
       }
 
-      th.empty {
-        background-color: lighten($table-head-bg-color, 10%);
+      th.boolean, &:not(.form_fields) td.boolean {
+        text-align: center;
       }
 
       td {
-        background-color: $even-table-row-bg-color;
-      }
-
-      td.empty {
-        background-color: darken($even-table-row-bg-color, 10%);
+        background-color: $alt-table-head-bg-color;
       }
 
       td.actions {
         border-top: solid 1px $table-border-color;
       }
 
-      th.boolean, &:not(.form_fields) td.boolean {
-        text-align: center;
+      th.empty {
+        background-color: $section-bg-color;
+        border: none;
+      }
+
+      td.empty {
+        background-color:  $section-bg-color;
+        border: none;
       }
     }
 
@@ -589,13 +598,13 @@ body div.container section {
 
       &:nth-child(odd) {
         td, th {
-          background-color: $odd-table-row-bg-color;
+          background-color: $table-data-bg-color;
         }
       }
 
       &:nth-child(even) {
         td, th {
-          background-color: $even-table-row-bg-color;
+          background-color: $alt-table-data-bg-color;
         }
       }
     }
@@ -625,14 +634,18 @@ body div.container section {
     tbody tr {
       &:nth-child(odd) {
         & > td.operation {
-          background-color: darken($odd-table-row-bg-color, 10%)
+          background-color: $alt-table-head-bg-color;
         }
       }
 
       &:nth-child(even) {
         & > td.operation {
-          background-color: darken($even-table-row-bg-color, 10%)
+          background-color: $table-head-bg-color;
         }
+      }
+      
+      td.nothing {
+        text-align: center;
       }
     }
   }
@@ -648,42 +661,12 @@ body div.container section {
       border: solid 1px $table-border-color;
     }
 
-    thead tr {
-      th:nth-child(odd) {
-        background-color: darken($odd-table-row-bg-color, 10%);
-      }
-
-      th:nth-child(even) {
-        background-color: darken($even-table-row-bg-color, 10%);
-      }
+    tbody tr:nth-child(odd) th {
+      background-color: $alt-table-head-bg-color;
     }
 
-    tbody tr:nth-child(odd) {
-      td:nth-child(odd) {
-        background-color: $even-table-row-bg-color;
-      }
-
-      td:nth-child(even) {
-        background-color: $odd-table-row-bg-color;
-      }
-
-      th {
-        background-color: darken($even-table-row-bg-color, 10%);
-      }
-    }
-
-    tbody tr:nth-child(even) {
-      td:nth-child(odd) {
-        background-color: $odd-table-row-bg-color;
-      }
-
-      td:nth-child(even) {
-        background-color: $even-table-row-bg-color;
-      }
-
-      th {
-        background-color: darken($odd-table-row-bg-color, 10%);
-      }
+    tbody tr:nth-child(even) th {
+      background-color: $table-head-bg-color;
     }
   }
 
@@ -723,6 +706,7 @@ body div.container section {
     margin: -5px;
     padding: 0 5px;
     color: $common-link-color;
+    font-weight: bold;
 
     &:hover {
       text-shadow: 0 0 3px $section-bg-color;

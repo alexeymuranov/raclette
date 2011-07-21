@@ -1,7 +1,8 @@
 /* WhiteSmoke */
 /* LightSteelBlue */
-/* #E6E6FA Lavender */
 /* DarkGreen */
+/* #F0FFFF; Azure */
+/* LightSteelBlue */
 body {
   background-color: navy;
   color: DarkSlateGray;
@@ -272,7 +273,7 @@ body > div.container > section {
     margin: 5px 0;
     padding: 5px; }
   body > div.container > section > section {
-    background-color: #b0c4de; }
+    background-color: #d4dfed; }
     body > div.container > section > section > section {
       background-color: #f5f5f5; }
 
@@ -284,8 +285,8 @@ body div.container section h1 {
 body div.container section h2, body div.container section h3, body div.container section h4, body div.container section h5, body div.container section h6, body div.container section p {
   color: inherit;
   line-height: 1.5;
-  margin-top: 0;
-  margin-bottom: 0; }
+  margin-top: 5px;
+  margin-bottom: 5px; }
 body div.container section h1 {
   text-align: center;
   font-size: 16pt;
@@ -296,6 +297,12 @@ body div.container section h2, body div.container section > section > h1 {
 body div.container section h3, body div.container section h4, body div.container section h5, body div.container section > section section h1 {
   font-size: 12pt;
   font-weight: bold; }
+body div.container section p {
+  border-radius: 5px;
+  -moz-border-radius: 5px;
+  -webkit-border-radius: 5px;
+  padding: 5px;
+  background-color: #f5f5f5; }
 body div.container section dl.show, body div.container section dl.form_fields {
   display: table;
   border: solid 1px #8ca9cf; }
@@ -317,13 +324,13 @@ body div.container section dl.form_fields div.item, body div.container section d
     body div.container section dl.form_fields div.item dd.long_text, body div.container section dl.show div.item dd.long_text {
       vertical-align: top; }
   body div.container section dl.form_fields div.item:nth-child(odd) dt, body div.container section dl.show div.item:nth-child(odd) dt {
-    background-color: #dcdcdc; }
+    background-color: #d4dfed; }
   body div.container section dl.form_fields div.item:nth-child(odd) dd, body div.container section dl.show div.item:nth-child(odd) dd {
     background-color: #f5f5f5; }
   body div.container section dl.form_fields div.item:nth-child(even) dt, body div.container section dl.show div.item:nth-child(even) dt {
     background-color: #b0c4de; }
   body div.container section dl.form_fields div.item:nth-child(even) dd, body div.container section dl.show div.item:nth-child(even) dd {
-    background-color: #d4dfed; }
+    background-color: #e8e8e8; }
 body div.container section dl.form_fields div.field dd.input.required:after {
   content: "*"; }
 body div.container section dl.form_fields div.field dd.input.required.readonly:after {
@@ -346,16 +353,18 @@ body div.container section table {
         margin: 0 -5px; }
   body div.container section table thead th {
     background-color: #b0c4de; }
-  body div.container section table thead th.empty {
-    background-color: #d4dfed; }
-  body div.container section table thead td {
-    background-color: #d4dfed; }
-  body div.container section table thead td.empty {
-    background-color: #b0c4de; }
-  body div.container section table thead td.actions {
-    border-top: solid 1px #8ca9cf; }
   body div.container section table thead th.boolean, body div.container section table thead:not(.form_fields) td.boolean {
     text-align: center; }
+  body div.container section table thead td {
+    background-color: #d4dfed; }
+  body div.container section table thead td.actions {
+    border-top: solid 1px #8ca9cf; }
+  body div.container section table thead th.empty {
+    background-color: #f5f5f5;
+    border: none; }
+  body div.container section table thead td.empty {
+    background-color: #f5f5f5;
+    border: none; }
   body div.container section table thead:not(:hover) {
     /* does not work! */ }
     body div.container section table thead:not(:hover) tr.form_fields, body div.container section table thead:not(:hover) tr.form_actions {
@@ -372,7 +381,7 @@ body div.container section table {
   body div.container section table tbody tr:nth-child(odd) td, body div.container section table tbody tr:nth-child(odd) th {
     background-color: #f5f5f5; }
   body div.container section table tbody tr:nth-child(even) td, body div.container section table tbody tr:nth-child(even) th {
-    background-color: #d4dfed; }
+    background-color: #e8e8e8; }
   body div.container section table caption {
     text-align: center;
     white-space: nowrap; }
@@ -386,31 +395,21 @@ body div.container section table.records thead, body div.container section table
     border-left: solid 1px #8ca9cf;
     border-right: solid 1px #8ca9cf; }
 body div.container section table.records tbody tr:nth-child(odd) > td.operation, body div.container section table.form_fields tbody tr:nth-child(odd) > td.operation {
-  background-color: #dcdcdc; }
+  background-color: #d4dfed; }
 body div.container section table.records tbody tr:nth-child(even) > td.operation, body div.container section table.form_fields tbody tr:nth-child(even) > td.operation {
   background-color: #b0c4de; }
+body div.container section table.records tbody tr td.nothing, body div.container section table.form_fields tbody tr td.nothing {
+  text-align: center; }
 body div.container section table.form_fields {
   width: auto;
   margin-left: auto;
   margin-right: auto; }
 body div.container section table.grid col {
   border: solid 1px #8ca9cf; }
-body div.container section table.grid thead tr th:nth-child(odd) {
-  background-color: #dcdcdc; }
-body div.container section table.grid thead tr th:nth-child(even) {
-  background-color: #b0c4de; }
-body div.container section table.grid tbody tr:nth-child(odd) td:nth-child(odd) {
-  background-color: #d4dfed; }
-body div.container section table.grid tbody tr:nth-child(odd) td:nth-child(even) {
-  background-color: #f5f5f5; }
 body div.container section table.grid tbody tr:nth-child(odd) th {
-  background-color: #b0c4de; }
-body div.container section table.grid tbody tr:nth-child(even) td:nth-child(odd) {
-  background-color: #f5f5f5; }
-body div.container section table.grid tbody tr:nth-child(even) td:nth-child(even) {
   background-color: #d4dfed; }
 body div.container section table.grid tbody tr:nth-child(even) th {
-  background-color: #dcdcdc; }
+  background-color: #b0c4de; }
 body div.container section table.filtered {
   box-shadow: 0 0 3px 0 red;
   -webkit-box-shadow: 0 0 3px 0 red;
@@ -440,7 +439,8 @@ body div.container section a, body div.container section a:visited {
   text-decoration: none;
   margin: -5px;
   padding: 0 5px;
-  color: #0066cc; }
+  color: #0066cc;
+  font-weight: bold; }
   body div.container section a:hover, body div.container section a:visited:hover {
     text-shadow: 0 0 3px #f5f5f5;
     text-decoration: none;

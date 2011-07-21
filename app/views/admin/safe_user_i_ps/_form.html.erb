@@ -3,27 +3,29 @@
     <table class="grid form_fields">
       <colgroup><col /></colgroup>
       <colgroup>
-        <% @known_ips.size.times do %><col /><% end %>
+        <% @users.size.times do %><col /><% end %>
       </colgroup>
       <thead>
         <tr>
           <th class='empty'></th>
-          <% @known_ips.each do |known_ip| %>
-            <% note = known_ip.description.blank? ? "" : " (#{known_ip.description})" %>
-            <th><%= "#{known_ip.ip}#{note}" %></th>
+          <% @users.each do |user| %>
+            <th><%= user.username %></th>
           <% end %>
         </tr>
       </thead>
       <tbody>
-        <% @users.each do |user| %>
-        <tr>
-          <th scope=row><%= user.username %></th>
-          <% @known_ips.each do |known_ip| %>
-            <td class='boolean'>
-              <%= check_box_tag "safe_ip_ids_for_users[#{user.id}][]", known_ip.id, user.safe_ips.include?(known_ip) %>
-            </td>
-          <% end %>
-        </tr>
+        <% @known_ips.each do |known_ip| %>
+          <tr>
+            <th scope=row>
+              <%= known_ip.ip %>
+              <%= "(#{known_ip.description})" unless known_ip.description.blank? %>
+            </th>
+            <% @users.each do |user| %>
+              <td class='boolean'>
+                <%= check_box_tag "safe_user_ids_for_known_ips[#{known_ip.id}][]", user.id, known_ip.safe_users.include?(user) %>
+              </td>
+            <% end %>
+          </tr>
         <% end %>
       </tbody>
     </table>

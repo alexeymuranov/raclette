@@ -18,10 +18,11 @@ class Admin::SafeUserIPsController < AdminController
   
   def update_all
 
-    params[:safe_ip_ids_for_users] ||= {}
+    params[:safe_user_ids_for_known_ips] ||= {}
     
-    Admin::User.all.each do |user|
-      user.safe_ip_ids = params[:safe_ip_ids_for_users][user.id.to_s]      
+    Admin::KnownIP.all.each do |known_ip|
+      known_ip.safe_user_ids =
+          params[:safe_user_ids_for_known_ips][known_ip.id.to_s]      
     end
 
     redirect_to admin_safe_user_ips_path
