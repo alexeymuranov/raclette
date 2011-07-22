@@ -1,0 +1,37 @@
+<table class="grid">
+  <colgroup><col /></colgroup>
+  <colgroup>
+    <% models2.size.times do %><col /><% end %>
+  </colgroup>
+  <thead>
+    <tr>
+      <th class='empty'></th>
+      <% models2.each do |model2| %>
+        <th>
+          <%= link_to model2.public_send(key2),
+                      model2,
+                      :title => model2.public_send(description2),
+                      :class => 'display resource' %>
+        </th>
+      <% end %>
+    </tr>
+  </thead>
+  <tbody>
+    <% models1.each do |model1| %>
+      <tr>
+        <th scope=row>
+          <%= link_to model1.public_send(key1),
+                      model1,
+                      :title => model1.public_send(description1),
+                      :class => 'display resource' %>
+        </th>
+        <% models2.each do |model2| %>
+          <td class='boolean'>
+            <%= boolean_to_picto(
+                    model1.public_send(association_attribute1).include?(model2)) %>
+          </td>
+        <% end %>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

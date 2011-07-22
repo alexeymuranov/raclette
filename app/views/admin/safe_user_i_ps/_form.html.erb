@@ -1,34 +1,16 @@
 <%= form_tag "/admin/safe_user_ips", :method=> :put do |f| %>
   <%= field_set_tag do %>
-    <table class="grid form_fields">
-      <colgroup><col /></colgroup>
-      <colgroup>
-        <% @users.size.times do %><col /><% end %>
-      </colgroup>
-      <thead>
-        <tr>
-          <th class='empty'></th>
-          <% @users.each do |user| %>
-            <th><%= user.username %></th>
-          <% end %>
-        </tr>
-      </thead>
-      <tbody>
-        <% @known_ips.each do |known_ip| %>
-          <tr>
-            <th scope=row>
-              <%= known_ip.ip %>
-              <%= "(#{known_ip.description})" unless known_ip.description.blank? %>
-            </th>
-            <% @users.each do |user| %>
-              <td class='boolean'>
-                <%= check_box_tag "safe_user_ids_for_known_ips[#{known_ip.id}][]", user.id, known_ip.safe_users.include?(user) %>
-              </td>
-            <% end %>
-          </tr>
-        <% end %>
-      </tbody>
-    </table>
+
+    <%= render 'shared/association_form_table',
+               :models1 => @known_ips,
+               :models2 => @users,
+               :association_attribute1 => :safe_users,
+               :key1 => :ip,
+               :key2 => :username,
+               :description1 => :description,
+               :description2 => :full_name,
+               :id_array_name => :safe_user_ids_for_known_ips %>
+
   <% end %>
 
   <div class="actions">

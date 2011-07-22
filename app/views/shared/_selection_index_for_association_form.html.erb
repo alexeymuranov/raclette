@@ -27,9 +27,9 @@
         <%= render :partial => 'shared/model_attributes_in_selection_table_form',
                    :object => model,
                    :as => :model,
-                   :locals => { :attributes => attributes,
+                   :locals => { :attributes          => attributes,
                                 :column_types_o_hash => column_types_o_hash,
-                                :id_prefix => id_prefix } %>
+                                :id_prefix           => id_prefix } %>
 
       </tr>
     <% end unless selected.nil? %>
@@ -46,9 +46,9 @@
         <%= render :partial => 'shared/model_attributes_in_selection_table_form',
                    :object => model,
                    :as => :model,
-                   :locals => { :attributes => attributes,
+                   :locals => { :attributes          => attributes,
                                 :column_types_o_hash => column_types_o_hash,
-                                :id_prefix => id_prefix } %>
+                                :id_prefix           => id_prefix } %>
       </tr>
     <% end unless unselected.nil? %>
   </tbody>

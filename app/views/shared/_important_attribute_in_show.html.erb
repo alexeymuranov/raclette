@@ -1,13 +1,22 @@
 <div class="item">
   <%- case model.column_for_attribute(attribute).type -%>
   <%- when :boolean -%>
-    <dt><%= t 'formats.attribute_name?', :attribute => model.class.human_attribute_name(attribute) %></dt>
+    <dt>
+      <%= t 'formats.attribute_name?',
+            :attribute => model.class.human_attribute_name(attribute) %>
+    </dt>
     <dd><b><%= boolean_to_yes_no(model.public_send(attribute)) %></b></dd>
   <%- when :datetime -%>
-    <dt><%= t 'formats.attribute_name:', :attribute => model.class.human_attribute_name(attribute) %></dt>
+    <dt>
+      <%= t 'formats.attribute_name:',
+            :attribute => model.class.human_attribute_name(attribute) %>
+    </dt>
     <dd><b><%= l model.public_send(attribute), :format => :custom %></b></dd>
   <%- else -%>
-    <dt><%= t 'formats.attribute_name:', :attribute => model.class.human_attribute_name(attribute) %></dt>
+    <dt>
+      <%= t 'formats.attribute_name:',
+            :attribute => model.class.human_attribute_name(attribute) %>
+    </dt>
     <dd><b><%= model.public_send(attribute) %></b></dd>
   <%- end -%>
 </div>

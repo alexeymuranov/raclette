@@ -1,5 +1,7 @@
 <%= form_tag nil, :method => :get do %>
-  <%= content_tag :table, :id => table_name, :class => (filter.blank? ? 'records' : 'filtered records') do %>
+  <%= content_tag :table,
+                  :id => table_name,
+                  :class => (filter.blank? ? '' : 'filtered ')+'records' do %>
     <colgroup class="attributes">
       <% attributes.size.times do %><col /><% end %>
     </colgroup>
@@ -42,13 +44,19 @@
             <%- when :string -%>
               <%= text_field_tag "filter[#{attr}]", filter[attr] %>
             <%- when :boolean -%>
-              <%= radio_button_tag "filter[#{attr}]", 'yes', filter[attr] %>
+              <%= radio_button_tag "filter[#{attr}]",
+                                   'yes',
+                                   filter[attr] %>
               <%= label_tag 'filter_'+attr.to_s+'_yes', t('yes') %>
               <br />
-              <%= radio_button_tag "filter[#{attr}]", 'no', filter[attr] == false %>
+              <%= radio_button_tag "filter[#{attr}]",
+                                   'no',
+                                   filter[attr] == false %>
               <%= label_tag 'filter_'+attr.to_s+'_no', t('no') %>
               <br />
-              <%= radio_button_tag "filter[#{attr}]", 'all', filter[attr].nil? %>
+              <%= radio_button_tag "filter[#{attr}]",
+                                   'all',
+                                   filter[attr].nil? %>
               <%= label_tag 'filter_'+attr.to_s+'_all', t('all') %>
             <%- end -%>
           </td>
@@ -57,7 +65,8 @@
         <td class="empty"></td>
       </tr>
       <tr>
-        <%= content_tag :td, :colspan => attributes.size, :class => 'actions' do %>
+        <%= content_tag :td, :colspan => attributes.size,
+                             :class => 'actions' do %>
           <%= submit_tag t('buttons.filter') %>
         <% end %>
         <td class="empty"></td>
@@ -68,7 +77,8 @@
     <tbody>
       <% if models.blank? %>
         <tr>
-          <%= content_tag :td, '∅', :colspan => attributes.size, :class => 'nothing' %>
+          <%= content_tag :td, '∅', :colspan => attributes.size,
+                                    :class => 'nothing' %>
           <td class="empty"></td>
           <td class="empty"></td>
         <tr>
@@ -76,8 +86,8 @@
         <%= render :partial => 'shared/model_in_index',
                    :collection => models,
                    :as => :model,
-                   :locals => { :attributes => attributes,
-                                :column_types_o_hash => column_types_o_hash,
+                   :locals => { :attributes              => attributes,
+                                :column_types_o_hash     => column_types_o_hash,
                                 :edit_path_helper_method => edit_path_helper_method } %>
       <% end %>
     </tbody>

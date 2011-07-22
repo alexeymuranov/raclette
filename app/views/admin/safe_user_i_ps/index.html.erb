@@ -9,7 +9,14 @@
 
 <h1><%= t '.header' %></h1>
 
-<%= render 'index_table' %>
+<%= render 'shared/association_table',
+           :models1 => @known_ips,
+           :models2 => @users,
+           :association_attribute1 => :safe_users,
+           :key1 => :ip,
+           :key2 => :username,
+           :description1 => :description,
+           :description2 => :full_name %>
 
 <footer>
   <%= link_to edit_pictogram(2)+' '+t('admin.safe_user_i_ps.links.update_all'),

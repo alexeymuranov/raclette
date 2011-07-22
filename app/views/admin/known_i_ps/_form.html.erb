@@ -7,25 +7,37 @@
     <dl class="form_fields">
       <% if @known_ip.new_record? %>
         <div class="item">
-          <dt><%= f.label :ip,
-                          t('formats.attribute_name:',
-                            :attribute => Admin::KnownIP.human_attribute_name(:ip)) %></dt>
+          <dt>
+            <%= f.label :ip,
+                        t('formats.attribute_name:',
+                        :attribute => Admin::KnownIP.human_attribute_name(:ip)) %>
+          </dt>
           <dd class="required readonly input">
-            <%= f.text_field :ip, :size => 30, :maxlength => 15, :required => :required %><!-- no space! --></dd>
+            <%= f.text_field :ip, :size => 30,
+                                  :maxlength => 15,
+                                  :required => :required %><!-- no space!
+      --></dd>
         </div>
       <% else %>
         <div class="item field">
-          <dt><b><%= t('formats.attribute_name:',
-                       :attribute => Admin::KnownIP.human_attribute_name(:ip)) %></b></dt>
+          <dt>
+            <b><%= t('formats.attribute_name:',
+                     :attribute => Admin::KnownIP.human_attribute_name(:ip)) %></b>
+          </dt>
           <dd><%= @known_ip.ip %></dd>
         </div>
       <% end %>
 
       <div class="item field">
-        <dt><%= f.label :description,
-                        t('formats.attribute_name:',
-                          :attribute => Admin::KnownIP.human_attribute_name(:description)) %></dt>
-        <dd><%= f.text_field :description, :size => 30, :maxlength => 255 %></dd>
+        <dt>
+          <%= f.label :description,
+                      t('formats.attribute_name:',
+                      :attribute => Admin::KnownIP.human_attribute_name(:description)) %>
+        </dt>
+        <dd>
+           <%= f.text_field :description, :size => 30,
+                                          :maxlength => 255 %>
+        </dd>
       </div>
     </dl>
   <% end %>

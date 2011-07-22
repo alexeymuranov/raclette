@@ -1,0 +1,36 @@
+<table class="grid form_fields">
+  <colgroup><col /></colgroup>
+  <colgroup>
+    <% models2.size.times do %><col /><% end %>
+  </colgroup>
+  <thead>
+    <tr>
+      <th class='empty'></th>
+      <% models2.each do |model2| %>
+        <th>
+          <%= content_tag :span,
+                          model2.public_send(key2),
+                          :title => model2.public_send(description2) %>
+        </th>
+      <% end %>
+    </tr>
+  </thead>
+  <tbody>
+    <% models1.each do |model1| %>
+      <tr>
+        <th scope=row>
+          <%= content_tag :span,
+                          model1.public_send(key1),
+                          :title => model1.public_send(description1) %>
+        </th>
+        <% models2.each do |model2| %>
+          <td class='boolean'>
+            <%= check_box_tag "#{id_array_name}[#{model1.id}][]",
+                    model2.id,
+                    model1.public_send(association_attribute1).include?(model2) %>
+          </td>
+        <% end %>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
