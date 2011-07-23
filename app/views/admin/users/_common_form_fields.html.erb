@@ -2,38 +2,65 @@
   <dl class="form_fields">
     <% if @user.new_record? %>
       <div class="item field">
-        <dt><%= f.label :username, t('formats.attribute_name:', :attribute => Admin::User.human_attribute_name(:username)) %></dt>
+        <dt><%= f.label :username,
+                        t('formats.attribute_name:',
+                          :attribute => Admin::User.human_attribute_name(:username)) %>
+        </dt>
         <dd class="required readonly input">
-          <%= f.text_field :username, :size => 30, :maxlength => 32, :required => :required %><!-- no space! --></dd>
+          <%= f.text_field :username, :size => 30,
+                                      :maxlength => 32,
+                                      :required => :required %><!-- no space! -->
+        </dd>
       </div>
     <% else %>
       <div class="item">
-        <dt><b><%= t('formats.attribute_name:', :attribute => Admin::User.human_attribute_name(:username)) %></b></dt>
+        <dt>
+          <b><%= t('formats.attribute_name:',
+                   :attribute => Admin::User.human_attribute_name(:username)) %></b>
+        </dt>
         <dd><%= @user.username %></dd>
       </div>
     <% end %>
 
     <div class="item field">
-      <dt><%= f.label :full_name, t('formats.attribute_name:', :attribute => Admin::User.human_attribute_name(:full_name)) %></dt>
+      <dt>
+        <%= f.label :full_name,
+                    t('formats.attribute_name:',
+                      :attribute => Admin::User.human_attribute_name(:full_name)) %>
+      </dt>
       <dd class="required input">
-        <%= f.text_field :full_name, :size => 30, :maxlength => 64, :required => :required %><!-- no space! --></dd>
+        <%= f.text_field :full_name, :size => 30,
+                                     :maxlength => 64,
+                                     :required => :required %><!-- no space! -->
+      </dd>
     </div>
 
     <div class="item field">
-      <dt><%= f.label :email, t('formats.attribute_name:', :attribute => Admin::User.human_attribute_name(:email)) %></dt>
+      <dt><%= f.label :email,
+                      t('formats.attribute_name:',
+                        :attribute => Admin::User.human_attribute_name(:email)) %>
+      </dt>
       <dd><%= f.email_field :email, :size => 30, :maxlength => 255 %></dd>
     </div>
 
     <% [ :account_deactivated, :admin ].each do |attribute| %>
       <div class="item field">
-        <dt><%= f.label attribute, t('formats.attribute_name?', :attribute => Admin::User.human_attribute_name(attribute)) %></dt>
+        <dt>
+          <%= f.label attribute,
+                      t('formats.attribute_name?',
+                        :attribute => Admin::User.human_attribute_name(attribute)) %>
+        </dt>
         <dd><%= f.check_box attribute, :disabled => (@user == current_user) %></dd>
       </div>
     <% end %>
 
     <% [ :manager, :secretary, :a_person ].each do |attribute| %>
       <div class="item field">
-        <dt><%= f.label attribute, t('formats.attribute_name?', :attribute => Admin::User.human_attribute_name(attribute)) %></dt>
+        <dt>
+          <%= f.label attribute,
+                      t('formats.attribute_name?',
+                        :attribute => Admin::User.human_attribute_name(attribute)) %>
+        </dt>
         <dd><%= f.check_box attribute %></dd>
       </div>
     <% end %>
@@ -56,7 +83,9 @@
   <dl class="form_fields">
     <div class="item field">
       <dt>
-        <%= f.label :comments, t('formats.attribute_name:', :attribute => Admin::User.human_attribute_name(:comments)) %>
+        <%= f.label :comments,
+                    t('formats.attribute_name:',
+                      :attribute => Admin::User.human_attribute_name(:comments)) %>
       </dt>
       <dd class="long_text"><%= f.text_area :comments, :maxlength => 1000 %></dd>
     </div>

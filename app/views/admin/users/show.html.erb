@@ -19,15 +19,14 @@
 <section>
   <h2><%= Admin::User.human_attribute_name(:safe_ips) %></h2>
 
-  <% unless @safe_ips.blank? %>
-    <%= render :partial => 'shared/index_table_for_association',
-               :object => @safe_ips,
-               :as => :models,
-               :locals => { :attributes => @safe_ips_attributes,
-                            :column_types_o_hash => @safe_ips_column_types_o_hash,
-                            :model_class => Admin::KnownIP,
-                            :table_name => :safe_ips } %>
-  <% end %>
+  <%= render(:partial => 'shared/index_table_for_association',
+             :object => @safe_ips,
+             :as => :models,
+             :locals => { :attributes => @safe_ips_attributes,
+                          :column_types_o_hash => @safe_ips_column_types_o_hash,
+                          :model_class => Admin::KnownIP,
+                          :table_name => :safe_ips }) %>
+
 </section>
 
 <section>

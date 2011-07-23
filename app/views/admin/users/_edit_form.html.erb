@@ -10,17 +10,39 @@
       <%= check_box_tag :change_password %>
       <dl class="checkbox_conditional form_fields">
         <div class="item field">
-          <dt><%= f.label :new_password, t('formats.attribute_name:', :attribute => Admin::User.human_attribute_name(:new_password)) %></dt>
-          <dd><%= f.password_field :new_password, :size => 30, :maxlength => 255 %></dd>
+          <dt>
+            <%= f.label :new_password,
+                        t('formats.attribute_name:',
+                          :attribute => Admin::User.human_attribute_name(:new_password)) %>
+          </dt>
+          <dd>
+            <%= f.password_field :new_password,
+                                 :size => 30,
+                                 :maxlength => 255 %>
+          </dd>
         </div>
         <div class="item field">
-          <dt><%= f.label :new_password_confirmation,
-                          t('formats.attribute_name:', :attribute => Admin::User.human_attribute_name(:new_password_confirmation)) %></dt>
-          <dd><%= f.password_field :new_password_confirmation, :size => 30, :maxlength => 255 %></dd>
+          <dt>
+            <%= f.label :new_password_confirmation,
+                        t('formats.attribute_name:',
+                          :attribute => Admin::User.human_attribute_name(:new_password_confirmation)) %>
+          </dt>
+          <dd>
+            <%= f.password_field :new_password_confirmation,
+                                 :size => 30,
+                                 :maxlength => 255 %>
+          </dd>
         </div>
         <div class="item field">
-          <dt><%= label_tag :current_password, t('field_labels.current_password') %></dt>
-          <dd><%= password_field_tag :current_password, nil, :size => 30, :maxlength => 255 %></dd>
+          <dt>
+            <%= label_tag :current_password, t('field_labels.current_password') %>
+          </dt>
+          <dd>
+            <%= password_field_tag :current_password,
+                                   nil,
+                                   :size => 30,
+                                   :maxlength => 255 %>
+          </dd>
         </div>
       </dl>
     <% end %>

@@ -1,8 +1,10 @@
-/* WhiteSmoke */
-/* LightSteelBlue */
+/* #778899 LightSlateGray */
+/* #F5F5F5 WhiteSmoke */
+/* LightSlateGray */
 /* DarkGreen */
+/* #F8F8FF GhostWhite */
 /* #F0FFFF; Azure */
-/* LightSteelBlue */
+/* #B0C4DE LightSteelBlue */
 body {
   background-color: navy;
   color: DarkSlateGray;
@@ -37,22 +39,22 @@ div#welcome_logo {
   text-align: center; }
 
 /* Links for developpers */
-div#developper_links {
+aside#developper_links {
   position: absolute;
   top: 5px;
   left: 1125px; }
-  div#developper_links a {
+  aside#developper_links a {
     position: absolute;
     opacity: 0.5; }
-    div#developper_links a:hover {
+    aside#developper_links a:hover {
       opacity: 1; }
-  div#developper_links a#ruby {
+  aside#developper_links a#ruby {
     top: 0;
     left: 0; }
-  div#developper_links a#rails {
+  aside#developper_links a#rails {
     top: 0;
     left: 61px; }
-  div#developper_links a#source_code {
+  aside#developper_links a#source_code {
     border-radius: 5px;
     -moz-border-radius: 5px;
     -webkit-border-radius: 5px;
@@ -70,7 +72,7 @@ div#developper_links {
     text-decoration: none;
     font-size: 12pt;
     font-weight: normal; }
-    div#developper_links a#source_code:hover {
+    aside#developper_links a#source_code:hover {
       text-decoration: none; }
 
 /* Generic navigation */
@@ -96,7 +98,7 @@ body > div.container > header {
   border-radius: 10px;
   -moz-border-radius: 10px;
   -webkit-border-radius: 10px;
-  background-color: #f5f5f5;
+  background-color: #eceef0;
   font-size: 12pt;
   text-align: left;
   margin: 5px auto;
@@ -117,7 +119,7 @@ body > div.container > header {
           font-weight: bold;
           text-decoration: none; }
           body > div.container > header nav.main_menu ul li a:hover, body > div.container > header nav.main_menu ul li a:visited:hover {
-            color: #f5f5f5;
+            color: #eceef0;
             background-color: MediumBlue;
             text-decoration: none; }
   body > div.container > header > nav.main_menu ul hr + li:before {
@@ -178,7 +180,7 @@ body > div.container > header {
     body > div.container > header div#main_logo:hover div#logo_menu:hover {
       opacity: 1; }
     body > div.container > header div#main_logo:hover div#logo_menu nav {
-      background-color: #f5f5f5; }
+      background-color: #eceef0; }
   body > div.container > header div#main_logo div#logo_menu nav {
     box-shadow: 0 0 5px 0 navy;
     -webkit-box-shadow: 0 0 5px 0 navy;
@@ -207,7 +209,7 @@ body > div.container > footer {
   border-radius: 10px;
   -moz-border-radius: 10px;
   -webkit-border-radius: 10px;
-  background-color: #f5f5f5;
+  background-color: #eceef0;
   font-size: 12pt;
   text-align: center;
   margin: 5px auto; }
@@ -241,7 +243,7 @@ nav#side_menu {
   width: 150px;
   margin: 0;
   padding: 0;
-  background-color: #f5f5f5;
+  background-color: #eceef0;
   font-weight: normal;
   font-size: 10pt; }
   nav#side_menu ul {
@@ -264,7 +266,7 @@ body > div.container > section {
   border-radius: 10px;
   -moz-border-radius: 10px;
   -webkit-border-radius: 10px;
-  background-color: #f5f5f5;
+  background-color: #eceef0;
   padding: 10px; }
   body > div.container > section section {
     border-radius: 5px;
@@ -273,9 +275,9 @@ body > div.container > section {
     margin: 5px 0;
     padding: 5px; }
   body > div.container > section > section {
-    background-color: #d4dfed; }
+    background-color: #b1bbc5; }
     body > div.container > section > section > section {
-      background-color: #f5f5f5; }
+      background-color: #eceef0; }
 
 body div.container section h1 {
   color: inherit;
@@ -302,7 +304,7 @@ body div.container section p {
   -moz-border-radius: 5px;
   -webkit-border-radius: 5px;
   padding: 5px;
-  background-color: #f5f5f5; }
+  background-color: #f8f8ff; }
 body div.container section dl.show, body div.container section dl.form_fields {
   display: table;
   border: solid 1px #8ca9cf; }
@@ -326,11 +328,11 @@ body div.container section dl.form_fields div.item, body div.container section d
   body div.container section dl.form_fields div.item:nth-child(odd) dt, body div.container section dl.show div.item:nth-child(odd) dt {
     background-color: #d4dfed; }
   body div.container section dl.form_fields div.item:nth-child(odd) dd, body div.container section dl.show div.item:nth-child(odd) dd {
-    background-color: #f5f5f5; }
+    background-color: #f8f8ff; }
   body div.container section dl.form_fields div.item:nth-child(even) dt, body div.container section dl.show div.item:nth-child(even) dt {
     background-color: #b0c4de; }
   body div.container section dl.form_fields div.item:nth-child(even) dd, body div.container section dl.show div.item:nth-child(even) dd {
-    background-color: #e8e8e8; }
+    background-color: #dfdfff; }
 body div.container section dl.form_fields div.field dd.input.required:after {
   content: "*"; }
 body div.container section dl.form_fields div.field dd.input.required.readonly:after {
@@ -344,13 +346,13 @@ body div.container section table {
   border: solid 1px #8ca9cf;
   width: auto;
   margin: 0; }
-  body div.container section table tr {
+  body div.container section table tr th, body div.container section table tr td {
+    padding: 0 5px; }
+    body div.container section table tr th a.resource, body div.container section table tr td a.resource {
+      display: block;
+      margin: 0 -5px; }
+  body div.container section table thead th, body div.container section table thead td {
     border: solid 1px #8ca9cf; }
-    body div.container section table tr th, body div.container section table tr td {
-      padding: 0 5px; }
-      body div.container section table tr th a.resource, body div.container section table tr td a.resource {
-        display: block;
-        margin: 0 -5px; }
   body div.container section table thead th {
     background-color: #b0c4de; }
   body div.container section table thead th.boolean, body div.container section table thead:not(.form_fields) td.boolean {
@@ -360,10 +362,10 @@ body div.container section table {
   body div.container section table thead td.actions {
     border-top: solid 1px #8ca9cf; }
   body div.container section table thead th.empty {
-    background-color: #f5f5f5;
+    background-color: #eceef0;
     border: none; }
   body div.container section table thead td.empty {
-    background-color: #f5f5f5;
+    background-color: #eceef0;
     border: none; }
   body div.container section table thead:not(:hover) {
     /* does not work! */ }
@@ -379,9 +381,9 @@ body div.container section table {
   body div.container section table tbody tr td.boolean, body div.container section table tbody tr th.boolean {
     text-align: center; }
   body div.container section table tbody tr:nth-child(odd) td, body div.container section table tbody tr:nth-child(odd) th {
-    background-color: #f5f5f5; }
+    background-color: #f8f8ff; }
   body div.container section table tbody tr:nth-child(even) td, body div.container section table tbody tr:nth-child(even) th {
-    background-color: #e8e8e8; }
+    background-color: #dfdfff; }
   body div.container section table caption {
     text-align: center;
     white-space: nowrap; }
@@ -417,7 +419,7 @@ body div.container section table.filtered {
   body div.container section table.filtered thead tr td.filtering_value {
     font-size: 11pt;
     color: red;
-    background-color: #f5f5f5; }
+    background-color: #eceef0; }
 body div.container section fieldset {
   border-radius: 5px;
   -moz-border-radius: 5px;
@@ -442,7 +444,7 @@ body div.container section a, body div.container section a:visited {
   color: #0066cc;
   font-weight: bold; }
   body div.container section a:hover, body div.container section a:visited:hover {
-    text-shadow: 0 0 3px #f5f5f5;
+    text-shadow: 0 0 3px #eceef0;
     text-decoration: none;
     color: #0099ff; }
 body div.container section a.resource, body div.container section a.resource:visited {
@@ -453,7 +455,7 @@ body div.container section a.resource, body div.container section a.resource:vis
   padding: 5px;
   margin: 0; }
   body div.container section a.resource:hover, body div.container section a.resource:visited:hover {
-    color: #f5f5f5;
+    color: #eceef0;
     text-shadow: none; }
 body div.container section a.display, body div.container section a.display:visited {
   color: green; }

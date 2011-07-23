@@ -1,7 +1,7 @@
 Raclette::Application.routes.draw do
 
-  resources :sessions, :only => [ :create ]
   get    'login',  :controller => :Sessions, :action => :new
+  post   'login',  :controller => :Sessions, :action => :create
   delete 'logout', :controller => :Sessions, :action => :destroy
 
   # scope :module => :admin do  # an alternative for admin namespace
@@ -13,7 +13,7 @@ Raclette::Application.routes.draw do
     
     resources :safe_user_ips, :controller => :SafeUserIPs, :only => [ :index ] do
       collection do
-        get 'edit_all'
+        get 'edit_all', :action => :edit_all
         put '', :action => :update_all
       end
     end

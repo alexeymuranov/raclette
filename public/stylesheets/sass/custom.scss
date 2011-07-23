@@ -1,7 +1,7 @@
 $body-bg-color: Navy;
 $body-text-color: DarkSlateGray;
-$section-bg-color: #F5F5F5; /* WhiteSmoke */
-$alt-section-bg-color: lighten(#B0C4DE, 10%); /* LightSteelBlue */
+$section-bg-color: lighten(#778899, 40%); /* #778899 LightSlateGray */ /* #F5F5F5 WhiteSmoke */
+$alt-section-bg-color: lighten(#778899, 20%); /* LightSlateGray */
 $common-link-color: #06c;
 $common-link-hover-color: #09f;
 $common-navigation-link-color: MediumBlue;
@@ -12,9 +12,9 @@ $disabled-navigation-link-color: Silver;
 $view-link-color: Green;
 $add-link-color: Blue;
 $modify-link-color: Red;
-$table-data-bg-color: $section-bg-color; /* #F0FFFF; Azure */
+$table-data-bg-color: #F8F8FF; /* #F8F8FF GhostWhite */ /* #F0FFFF; Azure */
 $alt-table-data-bg-color: darken($table-data-bg-color, 5%);
-$table-head-bg-color: #B0C4DE; /* LightSteelBlue */
+$table-head-bg-color: #B0C4DE; /* #B0C4DE LightSteelBlue */
 $alt-table-head-bg-color: lighten($table-head-bg-color, 10%);
 $table-border-color: darken($table-head-bg-color, 10%);
 $input-bg-color: White;
@@ -78,7 +78,7 @@ div#welcome_logo {
 
 /* Links for developpers */
 
-div#developper_links {
+aside#developper_links {
   position: absolute;
   top: 5px;
   left: 1125px;
@@ -539,8 +539,6 @@ body div.container section {
     margin: 0;
 
     tr {
-      border: solid 1px $table-border-color;
-
       th, td {
         padding: 0 5px;
 
@@ -552,6 +550,11 @@ body div.container section {
     }
 
     thead {
+
+      th, td {
+        border: solid 1px $table-border-color;
+      }
+
       th {
         background-color: $table-head-bg-color;
       }
@@ -574,7 +577,7 @@ body div.container section {
       }
 
       td.empty {
-        background-color:  $section-bg-color;
+        background-color: $section-bg-color;
         border: none;
       }
     }

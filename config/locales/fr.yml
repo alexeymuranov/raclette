@@ -234,6 +234,13 @@ fr:
           ip: "Adresse IP"
           description: "Description"
           safe_users: "Utilisateurs autorisés"
+      address: &address_attributes
+        names: "Nom(s)"
+        address_type: "Type"
+        country: "Pays"
+        city: "Commune"
+        post_code: "Code postal"
+        street_address: "Voie"
       person: &person_attributes
         last_name: "Nom"
         first_name: "Prénom"
@@ -246,13 +253,6 @@ fr:
         work_phone: "Tél. bureau"
         address:
           <<: *address_attributes
-      address: &address_attributes
-        names: "Nom(s)"
-        address_type: "Type"
-        country: "Pays"
-        city: "Commune"
-        post_code: "Code postal"
-        street_address: "Voie"
       instructor:
         person:
           <<: *person_attributes

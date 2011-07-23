@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="<%= I18n.locale %>">
+<%= content_tag :html, :lang => @locale, 'xml:lang' => @locale do %>
   <head>
     <meta charset="utf-8">
     <title><%= title %></title>
@@ -8,6 +8,7 @@
     <%= javascript_include_tag :defaults %>
     <link rel="shortcut icon" href="/favicon.ico" />
   </head>
+
   <body>
     <%= render 'layouts/developper_links' %>
     <div class="container">
@@ -17,10 +18,12 @@
           <%= content_tag(:div, msg, :class => "flash #{name}") %>
         <% end %>
         <%= render 'layouts/side_menu' %>
+
         <%= yield %>
+
       </section>
       <%= render 'layouts/footer' %>
       <%= debug(params) if Rails.env.development? %>
     </div>
   </body>  
-</html>
+<% end %>
