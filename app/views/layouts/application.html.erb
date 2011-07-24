@@ -23,7 +23,9 @@
 
       </section>
       <%= render 'layouts/footer' %>
-      <%= debug(params) if Rails.env.development? %>
+      <div id="debug_params">
+        <%= debug(params) if Rails.env.development? %>
+      </div>
     </div>
   </body>  
 <% end %>

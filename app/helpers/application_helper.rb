@@ -29,7 +29,7 @@ module ApplicationHelper
 
   def show_pictogram(size=1)
     # image_tag SHOW_ICON_FILE_NAMES[size], :alt => 'show'
-    css_style = "font-size:#{(100*(1+size)).to_i}%;"
+    css_style = (size == 1) ? '' : "font-size:#{(100*size).to_i}%;"
     content_tag :span, '⇒', :class => 'pictogram',
                             :style => css_style
   end
@@ -40,7 +40,7 @@ module ApplicationHelper
 
   def edit_pictogram(size=1)
     # image_tag EDIT_ICON_FILE_NAMES[size], :alt => 'edit'
-    css_style = "font-size:#{(100*(1+size)).to_i}%;"
+    css_style = (size == 1) ? '' : "font-size:#{(100*size).to_i}%;"
     content_tag :span, '✎', :class => 'pictogram',
                             :style => css_style
   end
@@ -51,7 +51,7 @@ module ApplicationHelper
 
   def add_pictogram(size=1)
     # image_tag ADD_ICON_FILE_NAMES[size], :alt => 'add'
-    css_style = "font-size:#{(100*(1+size)).to_i}%;"
+    css_style = (size == 1) ? '' : "font-size:#{(100*size).to_i}%;"
     content_tag :span, '＋', :class => 'pictogram',
                             :style => css_style
   end
@@ -62,7 +62,7 @@ module ApplicationHelper
 
   def delete_pictogram(size=1)
     # image_tag DELETE_ICON_FILE_NAMES[size], :alt => 'delete'
-    css_style = "font-size:#{(100*(1+size)).to_i}%;"
+    css_style = (size == 1) ? '' : "font-size:#{(100*size).to_i}%;"
     content_tag :span, '✕', :class => 'pictogram',
                             :style => css_style
   end
@@ -73,7 +73,7 @@ module ApplicationHelper
 
   def list_all_pictogram(size=1)
     # image_tag LIST_ALL_ICON_FILE_NAMES[size], :alt => 'list all'
-    css_style = "font-size:#{(100*(1+size)).to_i}%;"
+    css_style = (size == 1) ? '' : "font-size:#{(100*size).to_i}%;"
     content_tag :span, '⇕', :class => 'pictogram',
                             :style => css_style
   end
@@ -84,7 +84,7 @@ module ApplicationHelper
 
   def yes_pictogram(size=1)
     # image_tag YES_ICON_FILE_NAMES[size], :alt => t(:yes), :title => t(:yes)
-    css_style = "font-size:#{(100*(1+size)).to_i}%;"
+    css_style = (size == 1) ? '' : "font-size:#{(100*size).to_i}%;"
     content_tag :span, '✓', :title => t(:yes),
                             :class => 'pictogram',
                             :style => css_style
@@ -98,7 +98,7 @@ module ApplicationHelper
     bool ? yes_pictogram(size) : t(:no)
   end
 
-  def sortable(table_name, column, title = nil)
+  def sortable(table_name, column, title = nil, html_options = {})
     title ||= column.to_s.titleize
 
     if column.intern == sort_column(table_name)  # column is current sort column
@@ -121,8 +121,15 @@ module ApplicationHelper
                                 :sort => { table_name =>
                                            { :column    => column,
                                              :direction => direction_on_click } },
-                                :anchor => table_name
-    
-    link_to sort_indicator+title, options, :class => css_class
+                                :anchor => table_name,
+                                :query_type => 'sort'
+
+    if html_options[:class].blank?
+      html_options[:class] = css_class
+    else
+      html_options[:class] += " #{css_class}"
+    end
+
+    link_to sort_indicator+title, options, html_options
   end
 end

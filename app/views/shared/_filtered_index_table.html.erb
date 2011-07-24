@@ -8,6 +8,16 @@
     <colgroup><col /><col /></colgroup>
     <thead>
       <tr>
+        <%= content_tag :td, :colspan => attributes.size,
+                             :class => 'actions' do %>
+
+          <%= paginate models %>
+
+        <% end %>
+        <td class="empty"></td>
+        <td class="empty"></td>
+      </tr>
+      <tr>
         <%= render 'shared/sorting_table_headers',
                    :column_types_o_hash => column_types_o_hash,
                    :model_class => model_class,
@@ -67,12 +77,29 @@
       <tr>
         <%= content_tag :td, :colspan => attributes.size,
                              :class => 'actions' do %>
-          <%= submit_tag t('buttons.filter') %>
+          <%= hidden_field_tag 'query_type', 'filter' %>
+          <%= content_tag :button,
+                          t('buttons.filter'),
+                          :name => 'filter_button',
+                          :type => 'submit',
+                          :value => 'clicked' %>
         <% end %>
         <td class="empty"></td>
         <td class="empty"></td>
       </tr>
     </thead>
+    <tfoot>
+      <tr>
+        <%= content_tag :td, :colspan => attributes.size,
+                             :class => 'actions' do %>
+
+          <%= paginate models %>
+
+        <% end %>
+        <td class="empty"></td>
+        <td class="empty"></td>
+      </tr>
+    </tfoot>
 
     <%= render :partial => 'shared/index_table_body',
                :object => models,

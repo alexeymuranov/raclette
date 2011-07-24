@@ -257,7 +257,7 @@ nav#side_menu {
         text-decoration: none; }
 
 /* Flash messages */
-body > div.container > section > div.flash a {
+body > div.container section div.flash a {
   margin: 0;
   padding: 0; }
 
@@ -274,9 +274,9 @@ body > div.container > section {
     -webkit-border-radius: 5px;
     margin: 5px 0;
     padding: 5px; }
-  body > div.container > section > section {
+  body > div.container > section section {
     background-color: #b1bbc5; }
-    body > div.container > section > section > section {
+    body > div.container > section section section {
       background-color: #eceef0; }
 
 body div.container section h1 {
@@ -293,10 +293,10 @@ body div.container section h1 {
   text-align: center;
   font-size: 16pt;
   font-weight: bold; }
-body div.container section h2, body div.container section > section > h1 {
+body div.container section h2, body div.container section section h1 {
   font-size: 14pt;
   font-weight: bold; }
-body div.container section h3, body div.container section h4, body div.container section h5, body div.container section > section section h1 {
+body div.container section h3, body div.container section h4, body div.container section h5, body div.container section section section h1 {
   font-size: 12pt;
   font-weight: bold; }
 body div.container section p {
@@ -351,25 +351,25 @@ body div.container section table {
     body div.container section table tr th a.resource, body div.container section table tr td a.resource {
       display: block;
       margin: 0 -5px; }
-  body div.container section table thead th, body div.container section table thead td {
-    border: solid 1px #8ca9cf; }
-  body div.container section table thead th {
-    background-color: #b0c4de; }
-  body div.container section table thead th.boolean, body div.container section table thead:not(.form_fields) td.boolean {
-    text-align: center; }
-  body div.container section table thead td {
-    background-color: #d4dfed; }
-  body div.container section table thead td.actions {
-    border-top: solid 1px #8ca9cf; }
-  body div.container section table thead th.empty {
-    background-color: #eceef0;
-    border: none; }
-  body div.container section table thead td.empty {
-    background-color: #eceef0;
-    border: none; }
-  body div.container section table thead:not(:hover) {
+  body div.container section table thead, body div.container section table tfoot {
+    font-style: normal; }
+    body div.container section table thead th, body div.container section table thead td, body div.container section table tfoot th, body div.container section table tfoot td {
+      border: solid 1px #8ca9cf; }
+    body div.container section table thead th, body div.container section table tfoot th {
+      background-color: #b0c4de; }
+    body div.container section table thead th.boolean, body div.container section table thead:not(.form_fields) td.boolean, body div.container section table tfoot th.boolean, body div.container section table tfoot:not(.form_fields) td.boolean {
+      text-align: center; }
+    body div.container section table thead td, body div.container section table tfoot td {
+      background-color: #d4dfed; }
+    body div.container section table thead td.actions, body div.container section table tfoot td.actions {
+      border-top: solid 1px #8ca9cf; }
+    body div.container section table thead th:empty, body div.container section table thead td:empty, body div.container section table tfoot th:empty, body div.container section table tfoot td:empty {
+      border: none; }
+      body div.container section table thead th:empty.empty, body div.container section table thead td:empty.empty, body div.container section table tfoot th:empty.empty, body div.container section table tfoot td:empty.empty {
+        background-color: #eceef0; }
+  body div.container section table thead:not(:hover), body div.container section table tfoot:not(:hover) {
     /* does not work! */ }
-    body div.container section table thead:not(:hover) tr.form_fields, body div.container section table thead:not(:hover) tr.form_actions {
+    body div.container section table thead:not(:hover) tr.form_fields, body div.container section table thead:not(:hover) tr.form_actions, body div.container section table tfoot:not(:hover) tr.form_fields, body div.container section table tfoot:not(:hover) tr.form_actions {
       # display: none;
       # visibility: collapse;
       # transition: all 2s ease 0s;
@@ -389,16 +389,16 @@ body div.container section table {
     white-space: nowrap; }
 body div.container section table.records colgroup.attributes, body div.container section table.form_fields colgroup.attributes {
   border: solid 1px #8ca9cf; }
-body div.container section table.records thead, body div.container section table.form_fields thead {
+body div.container section table.records thead, body div.container section table.records tfoot, body div.container section table.form_fields thead, body div.container section table.form_fields tfoot {
   font-size: 10pt;
   border: solid 1px #8ca9cf; }
-  body div.container section table.records thead th:not(:empty), body div.container section table.records thead td:not(:empty), body div.container section table.form_fields thead th:not(:empty), body div.container section table.form_fields thead td:not(:empty) {
+  body div.container section table.records thead th:not(:empty), body div.container section table.records thead td:not(:empty), body div.container section table.records tfoot th:not(:empty), body div.container section table.records tfoot td:not(:empty), body div.container section table.form_fields thead th:not(:empty), body div.container section table.form_fields thead td:not(:empty), body div.container section table.form_fields tfoot th:not(:empty), body div.container section table.form_fields tfoot td:not(:empty) {
     font-size: 10pt;
     border-left: solid 1px #8ca9cf;
     border-right: solid 1px #8ca9cf; }
-body div.container section table.records tbody tr:nth-child(odd) > td.operation, body div.container section table.form_fields tbody tr:nth-child(odd) > td.operation {
+body div.container section table.records tbody tr:nth-child(odd) td.operation, body div.container section table.form_fields tbody tr:nth-child(odd) td.operation {
   background-color: #d4dfed; }
-body div.container section table.records tbody tr:nth-child(even) > td.operation, body div.container section table.form_fields tbody tr:nth-child(even) > td.operation {
+body div.container section table.records tbody tr:nth-child(even) td.operation, body div.container section table.form_fields tbody tr:nth-child(even) td.operation {
   background-color: #b0c4de; }
 body div.container section table.records tbody tr td.nothing, body div.container section table.form_fields tbody tr td.nothing {
   text-align: center; }
@@ -416,7 +416,7 @@ body div.container section table.filtered {
   box-shadow: 0 0 3px 0 red;
   -webkit-box-shadow: 0 0 3px 0 red;
   -moz-box-shadow: 0 0 3px 0 red; }
-  body div.container section table.filtered thead tr td.filtering_value {
+  body div.container section table.filtered thead tr td.filtering_value, body div.container section table.filtered tfoot tr td.filtering_value {
     font-size: 11pt;
     color: red;
     background-color: #eceef0; }

@@ -5,7 +5,7 @@
   </colgroup>
   <thead>
     <tr>
-      <th class='empty'></th>
+      <th class="empty"></th>
       <% models2.each do |model2| %>
         <th>
           <%= link_to model2.public_send(key2),
@@ -28,7 +28,8 @@
         <% models2.each do |model2| %>
           <td class='boolean'>
             <%= boolean_to_picto(
-                    model1.public_send(association_attribute1).include?(model2)) %>
+                    model1.public_send(association_attribute1).include?(model2),
+                    size=2) %>
           </td>
         <% end %>
       </tr>

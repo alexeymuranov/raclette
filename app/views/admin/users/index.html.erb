@@ -1,47 +1,38 @@
 <hgroup>
   <h1><%= t '.header' %></h1>
 
-  <h2>
+  <h2 id="users_count">
     <% if @filter.blank? %>
       <%= t '.count_total', :count => Admin::User.count %>
     <% else %>
-      <%= t '.count_filtered', :count => @all_filtered_users.size, :total => Admin::User.count %>
+      <%= t '.count_filtered', :count => @all_filtered_users.size,
+                               :total => Admin::User.count %>
     <% end %>
   </h2>
 </hgroup>
 
-<%= paginate @users %>
+<div id="users_table">
 
-<%= render :partial => 'shared/filtered_index_table',
-           :object => @users,
-           :as => :models,
-           :locals => { :attributes => @attributes,
-                        :column_types_o_hash => @column_types_o_hash,
-                        :model_class => Admin::User,
-                        :table_name => :users,
-                        :filter => @filter,
-                        :edit_path_helper_method => method(:edit_admin_user_path) } %>
+  <%= render :partial => 'shared/filtered_index_table',
+             :object => @users,
+             :as => :models,
+             :locals => { :attributes => @attributes,
+                          :column_types_o_hash => @column_types_o_hash,
+                          :model_class => Admin::User,
+                          :table_name => :users,
+                          :filter => @filter,
+                          :edit_path_helper_method => method(:edit_admin_user_path) } %>
 
-<%= paginate @users %>
+</div>
 
-<section id="email_addresses">
-  <% if @mailing_list.nil? %>
-    <%= link_to t('buttons.show_email_addresses'),
-                params.merge( :list_email_addresses => :filtered,
-                              :anchor => 'email_addresses' ),
-                :id => 'email_addresses_show_button' %>
-  <% else %>
-    <h2><%= t 'admin.users.index.subheaders.mailing_list' %></h2>
+<div id="users_mailing_list">
 
-    <p><%= @mailing_list %></p>
-    <%= link_to t('buttons.hide_email_addresses'),
-                params.except(:list_email_addresses).merge( :anchor => 'email_addresses_show_button' ),
-                :id => 'email_addresses_hide_button' %>
-  <% end %>
-</section>
+  <%= render('emailing_list') %>
+
+</div>
 
 <footer>
-  <%= link_to add_pictogram+' '+t('admin.users.links.new'),
+  <%= link_to add_pictogram(2)+' '+t('admin.users.links.new'),
               new_admin_user_path,
               :title => t('actions.create'),
               :class => 'add resource' %>
@@ -53,5 +44,6 @@
   <li><%= link_to t('admin.users.links.new'),
                   new_admin_user_path,
                   :title => t('actions.create'),
-                  :class => 'add resource' %></li>
+                  :class => 'add resource',
+                  :remote => true %></li>
 <% end %>

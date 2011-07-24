@@ -6,7 +6,7 @@
   <%- case column_types_o_hash[attr] -%>
   <%- when :boolean -%>
     <td class="boolean">
-      <%= boolean_to_picto model.public_send(attr) %>
+      <%= boolean_to_picto model.public_send(attr), size=2 %>
     </td>
   <%- else -%>
     <td><%= model.public_send(attr) %></td>

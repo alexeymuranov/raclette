@@ -4,6 +4,9 @@ class Admin::UsersController < AdminController
 
   def index
 
+    @query_type = params[:query_type]
+    params.delete(:query_type)
+
     @attributes = [ :username,
                     :full_name,
                     :account_deactivated,
@@ -55,7 +58,6 @@ class Admin::UsersController < AdminController
       @mailing_list_users = @all_filtered_users.select { |user| !user.email.blank? }
       @mailing_list = @mailing_list_users.collect(&:formatted_email).join(', ')
     end
-
 
     @title = t('admin.users.index.title')  # or: Admin::User.human_name.pluralize
   end
@@ -206,6 +208,8 @@ class Admin::UsersController < AdminController
     end
 
     def render_new_properly
+      params = {}
+
       @known_ips_attributes = [ :ip, :description ]
       @known_ips_column_types_o_hash = ActiveSupport::OrderedHash.new
       @known_ips_attributes.each do |attr|
@@ -221,6 +225,8 @@ class Admin::UsersController < AdminController
     end
 
     def render_edit_properly
+      params = {}
+
       @known_ips_attributes = [ :ip, :description ]
       @known_ips_column_types_o_hash = ActiveSupport::OrderedHash.new
       @known_ips_attributes.each do |attr|

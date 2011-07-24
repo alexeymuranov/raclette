@@ -15,6 +15,8 @@ gem 'meta_where'  # queries without SQL
 
 gem 'spreadsheet'  # for writing to spreadsheets
 
+gem 'jquery-rails'  
+
 # Use unicorn as the web server
 # gem 'unicorn'
 

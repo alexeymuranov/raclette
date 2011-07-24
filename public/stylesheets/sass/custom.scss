@@ -389,7 +389,7 @@ nav#side_menu {
 
 /* Flash messages */
 
-body > div.container > section > div.flash {
+body > div.container section div.flash {
   a {
     margin: 0;
     padding: 0;
@@ -409,10 +409,10 @@ body > div.container > section {
     padding: 5px;
   }
 
-  & > section {
+  section {
     background-color: $alt-section-bg-color;
 
-    & > section {
+    section {
       background-color: $section-bg-color;
     }
   }
@@ -439,12 +439,12 @@ body div.container section {
     font-weight: bold;
   }
 
-  h2, & > section > h1 {
+  h2, section h1 {
     font-size: 14pt;
     font-weight: bold;
   }
 
-  h3, h4, h5, & > section section h1 {
+  h3, h4, h5, & section section h1 {
     font-size: 12pt;
     font-weight: bold;
   }
@@ -549,7 +549,8 @@ body div.container section {
       }
     }
 
-    thead {
+    thead, tfoot {
+      font-style: normal;
 
       th, td {
         border: solid 1px $table-border-color;
@@ -571,18 +572,16 @@ body div.container section {
         border-top: solid 1px $table-border-color;
       }
 
-      th.empty {
-        background-color: $section-bg-color;
+      th:empty, td:empty {
         border: none;
-      }
 
-      td.empty {
-        background-color: $section-bg-color;
-        border: none;
+        &.empty {
+          background-color: $section-bg-color;
+        }
       }
     }
 
-    thead:not(:hover) { /* does not work! */
+    thead:not(:hover), tfoot:not(:hover) { /* does not work! */
       tr.form_fields, tr.form_actions {
         # display: none;
         # visibility: collapse;
@@ -623,7 +622,7 @@ body div.container section {
       border: solid 1px $table-border-color;
     }
 
-    thead {
+    thead, tfoot {
       font-size: 10pt;
       border: solid 1px $table-border-color;
       
@@ -636,13 +635,13 @@ body div.container section {
 
     tbody tr {
       &:nth-child(odd) {
-        & > td.operation {
+        td.operation {
           background-color: $alt-table-head-bg-color;
         }
       }
 
       &:nth-child(even) {
-        & > td.operation {
+        td.operation {
           background-color: $table-head-bg-color;
         }
       }
@@ -676,7 +675,7 @@ body div.container section {
   table.filtered {
     @include box-shadow(0, 0, 3px, 0, $emphasis-glow-color);
     
-    thead tr td.filtering_value {
+    thead tr td.filtering_value, tfoot tr td.filtering_value {
       font-size: 11pt;
       color: $emphasis-text-color;
       background-color: $section-bg-color;
