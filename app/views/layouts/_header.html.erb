@@ -2,9 +2,9 @@
   <%= render 'layouts/main_logo' %>
   <%= render 'layouts/main_menu' %>
   <% if current_user %>
-    <%= link_to t("application_layout.navigation_links.sign_out"),
+    <%= link_to t('application_layout.navigation_links.sign_out'),
                 logout_path,
                 :method => :delete,
-                :class  => "logout_button" %>
+                :class  => 'logout_button' %>
   <% end %>
 </header>

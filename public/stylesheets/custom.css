@@ -76,6 +76,17 @@ aside#developper_links {
       text-decoration: none; }
 
 /* Generic navigation */
+nav a, nav a:visited {
+  display: inline-block;
+  margin: 0;
+  padding: 5px;
+  color: MediumBlue;
+  font-weight: bold;
+  text-decoration: none; }
+nav a:hover {
+  color: #eceef0;
+  background-color: MediumBlue;
+  text-decoration: none; }
 nav ul li ul {
   display: none; }
 
@@ -112,16 +123,15 @@ body > div.container > header {
         display: inline-block;
         font-weight: bold; }
         body > div.container > header nav.main_menu ul li a, body > div.container > header nav.main_menu ul li a:visited {
-          display: inline-block;
           margin: 0;
           padding: 5px;
           color: MediumBlue;
           font-weight: bold;
           text-decoration: none; }
-          body > div.container > header nav.main_menu ul li a:hover, body > div.container > header nav.main_menu ul li a:visited:hover {
-            color: #eceef0;
-            background-color: MediumBlue;
-            text-decoration: none; }
+        body > div.container > header nav.main_menu ul li a:hover {
+          color: #eceef0;
+          background-color: MediumBlue;
+          text-decoration: none; }
   body > div.container > header > nav.main_menu ul hr + li:before {
     content: "|"; }
   body > div.container > header > nav.main_menu ul li.disabled {
@@ -348,11 +358,12 @@ body div.container section table {
   margin: 0; }
   body div.container section table tr th, body div.container section table tr td {
     padding: 0 5px; }
-    body div.container section table tr th a.resource, body div.container section table tr td a.resource {
+    body div.container section table tr th a.resource, body div.container section table tr th a.sort, body div.container section table tr td a.resource, body div.container section table tr td a.sort {
       display: block;
       margin: 0 -5px; }
   body div.container section table thead, body div.container section table tfoot {
-    font-style: normal; }
+    font-style: normal;
+    border: solid 1px #8ca9cf; }
     body div.container section table thead th, body div.container section table thead td, body div.container section table tfoot th, body div.container section table tfoot td {
       border: solid 1px #8ca9cf; }
     body div.container section table thead th, body div.container section table tfoot th {
@@ -387,20 +398,19 @@ body div.container section table {
   body div.container section table caption {
     text-align: center;
     white-space: nowrap; }
-body div.container section table.records colgroup.attributes, body div.container section table.form_fields colgroup.attributes {
+body div.container section table.records colgroup.attributes {
   border: solid 1px #8ca9cf; }
-body div.container section table.records thead, body div.container section table.records tfoot, body div.container section table.form_fields thead, body div.container section table.form_fields tfoot {
-  font-size: 10pt;
-  border: solid 1px #8ca9cf; }
-  body div.container section table.records thead th:not(:empty), body div.container section table.records thead td:not(:empty), body div.container section table.records tfoot th:not(:empty), body div.container section table.records tfoot td:not(:empty), body div.container section table.form_fields thead th:not(:empty), body div.container section table.form_fields thead td:not(:empty), body div.container section table.form_fields tfoot th:not(:empty), body div.container section table.form_fields tfoot td:not(:empty) {
+body div.container section table.records thead, body div.container section table.records tfoot {
+  font-size: 10pt; }
+  body div.container section table.records thead th:not(:empty), body div.container section table.records thead td:not(:empty), body div.container section table.records tfoot th:not(:empty), body div.container section table.records tfoot td:not(:empty) {
     font-size: 10pt;
     border-left: solid 1px #8ca9cf;
     border-right: solid 1px #8ca9cf; }
-body div.container section table.records tbody tr:nth-child(odd) td.operation, body div.container section table.form_fields tbody tr:nth-child(odd) td.operation {
+body div.container section table.records tbody tr:nth-child(odd) td.operation {
   background-color: #d4dfed; }
-body div.container section table.records tbody tr:nth-child(even) td.operation, body div.container section table.form_fields tbody tr:nth-child(even) td.operation {
+body div.container section table.records tbody tr:nth-child(even) td.operation {
   background-color: #b0c4de; }
-body div.container section table.records tbody tr td.nothing, body div.container section table.form_fields tbody tr td.nothing {
+body div.container section table.records tbody tr td.nothing {
   text-align: center; }
 body div.container section table.form_fields {
   width: auto;
@@ -412,6 +422,8 @@ body div.container section table.grid tbody tr:nth-child(odd) th {
   background-color: #d4dfed; }
 body div.container section table.grid tbody tr:nth-child(even) th {
   background-color: #b0c4de; }
+body div.container section table.grid th {
+  border: solid 1px #8ca9cf; }
 body div.container section table.filtered {
   box-shadow: 0 0 3px 0 red;
   -webkit-box-shadow: 0 0 3px 0 red;
@@ -437,16 +449,34 @@ body div.container section div.link_group {
   -webkit-border-radius: 5px;
   border: dotted 1px; }
 body div.container section a, body div.container section a:visited {
-  display: inline-block;
   text-decoration: none;
-  margin: -5px;
   padding: 0 5px;
-  color: #0066cc;
+  color: MediumBlue;
   font-weight: bold; }
-  body div.container section a:hover, body div.container section a:visited:hover {
-    text-shadow: 0 0 3px #eceef0;
-    text-decoration: none;
-    color: #0099ff; }
+body div.container section a:hover {
+  text-shadow: 0 0 3px #eceef0;
+  text-decoration: none;
+  color: blue; }
+body div.container section nav.pagination {
+  margin: 0 -5px;
+  padding: 0;
+  font-size: 12pt;
+  text-align: center; }
+  body div.container section nav.pagination span {
+    display: inline-block;
+    margin: 0 10px; }
+    body div.container section nav.pagination span.page {
+      font-weight: bold; }
+    body div.container section nav.pagination span a, body div.container section nav.pagination span a:visited {
+      margin: 0 -10px;
+      padding: 0 10px;
+      color: MediumBlue;
+      text-decoration: none; }
+    body div.container section nav.pagination span a:hover {
+      text-shadow: none;
+      color: #eceef0;
+      background-color: MediumBlue;
+      text-decoration: none; }
 body div.container section a.resource, body div.container section a.resource:visited {
   border-radius: 5px;
   -moz-border-radius: 5px;

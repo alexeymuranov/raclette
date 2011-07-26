@@ -68,15 +68,15 @@
 <% end %>
 
 <%= field_set_tag t('admin.users.edit.subheaders.authorized_ips') do %>
-  <%= render 'shared/selection_index_for_association_form',
+  <%= render 'shared/selection_index_form',
              :model_class => Admin::KnownIP,
              :table_name => :known_ips,
              :attributes => @known_ips_attributes,
              :column_types_o_hash => @known_ips_column_types_o_hash,
              :selected => @safe_ips,
              :unselected => @other_ips,
-             :id_prefix => "admin_user_safe_ip_ids",
-             :array_name => "admin_user[safe_ip_ids]" %>
+             :id_prefix => 'admin_user_safe_ip_ids',
+             :array_name => 'admin_user[safe_ip_ids]' %>
 <% end %>
 
 <%= field_set_tag t('admin.users.edit.subheaders.comments') do %>

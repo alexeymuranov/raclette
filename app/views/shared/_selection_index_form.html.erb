@@ -18,13 +18,13 @@
     <% selected.each do |model| %>
       <tr class="field">
         <td class="boolean">
-          <%= check_box_tag array_name+"[]",
+          <%= check_box_tag array_name+'[]',
                             model.id,
                             true,
                             :id => id_prefix+"_#{model.id}" %>
         </td>
 
-        <%= render :partial => 'shared/model_attributes_in_selection_table_form',
+        <%= render :partial => 'shared/attributes_in_selection_index_form',
                    :object => model,
                    :as => :model,
                    :locals => { :attributes          => attributes,
@@ -37,13 +37,13 @@
     <% unselected.each do |model| %>
       <tr class="field">
         <td class="boolean">
-          <%= check_box_tag array_name+"[]",
+          <%= check_box_tag array_name+'[]',
                             model.id,
                             false,
                             :id => id_prefix+"_#{model.id}" %>
         </td>
 
-        <%= render :partial => 'shared/model_attributes_in_selection_table_form',
+        <%= render :partial => 'shared/attributes_in_selection_index_form',
                    :object => model,
                    :as => :model,
                    :locals => { :attributes          => attributes,

@@ -1,0 +1,57 @@
+<% html_options = {} %>
+<% if readonly = model.readonly_attributes.include?(attribute) %>
+  <% css_class = 'readonly' %>
+<% else %>
+  <% css_class = '' %>
+<% end %>
+
+<% if model.validators_on(attribute).include?(:presence)
+  <% css_class = 'required ' + css_class %>
+  <% html_options[:required] = 'required' %>
+<% end %>
+<% html_options[:class] = css_class %>
+
+<% value = model.public_send(attribute) %>
+
+<div class="item field">
+  <%- case model.column_for_attribute(attribute).type -%>
+  <%- when :boolean -%>
+    <dt>
+      <%= f.label attribute,
+                  t('formats.attribute_name?',
+                    :attribute => model.class.human_attribute_name(attribute)) %>
+    </dt>
+    <dd>
+      <%- if !readonly || model.new_record? -%>
+        <%= f.check_box attribute %>
+      <%- else -%>
+        <%= boolean_to_picto(value, size=2) %>
+      <%- end -%>
+    </dd>
+  <%- when :datetime -%>
+    <dt>
+      <%= t 'formats.attribute_name:',
+            :attribute => model.class.human_attribute_name(attribute) %>
+    </dt>
+    <dd>
+      <%- if !readonly || model.new_record? -%>
+        <%= f.text_field attribute %>
+      <%- else -%>
+        <%= l model.public_send(attribute), :format => :custom %>
+      <%- end -%>
+    </dd>
+    <dd><b><%= l model.public_send(attribute), :format => :custom %></b></dd>
+  <%- else -%>
+    <dt>
+      <%= t 'formats.attribute_name:',
+            :attribute => model.class.human_attribute_name(attribute) %>
+    </dt>
+    <dd>
+      <%- if !readonly || model.new_record? -%>
+        <%= f.text_field attribute %>
+      <%- else -%>
+        <%= model.public_send(attribute) %>
+      <%- end -%>
+    </dd>
+  <%- end -%>
+</div>

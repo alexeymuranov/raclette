@@ -401,8 +401,8 @@ fr:
   # For kaminari gem:
   views:  
     pagination:
-      first: "▕◀◀ première page"
-      last: "dernière page ▶▶▏"
+      first: "|◀◀ première page"
+      last: "dernière page ▶▶|"
       previous: "◀ page précédente"  
       next: "page suivante ▶"  
       truncate: "…"
@@ -489,7 +489,7 @@ fr:
         title: "Utilisateurs"
         header: "Les utilisateurs"
         count_total: "%{count} utilisateurs en total"
-        count_filtered: "%{count} sur %{total} utilisateurs filtrés"
+        count_filtered: "%{count} utilisateurs filtrés sur %{total}"
         subheaders:
           mailing_list: "Adresses e-mail des utilisateurs selectionnés"
       show:

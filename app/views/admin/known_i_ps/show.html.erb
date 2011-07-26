@@ -4,12 +4,12 @@
   <h2><%= t 'admin.known_i_ps.show.subheaders.known_ip_data' %></h2>
 
   <dl class="show">
-    <%= render :partial => 'shared/important_attribute_in_show',
+    <%= render :partial => 'shared/readonly_attribute_in_show_list',
                :collection =>  @key_attributes,
                :as => :attribute,
                :locals => { :model => @known_ip } %>
 
-    <%= render :partial => 'shared/attribute_in_show',
+    <%= render :partial => 'shared/attribute_in_show_list',
                :collection =>  @other_main_attributes,
                :as => :attribute,
                :locals => { :model => @known_ip } %>
@@ -19,7 +19,7 @@
 <section>
   <h2><%= Admin::KnownIP.human_attribute_name(:safe_users) %></h2>
 
-  <%= render(:partial => 'shared/index_table_for_association',
+  <%= render(:partial => 'shared/simple_index_table',
              :object => @safe_users,
              :as => :models,
              :locals => { :attributes => @safe_users_attributes,

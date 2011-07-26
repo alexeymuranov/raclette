@@ -2,8 +2,8 @@ $body-bg-color: Navy;
 $body-text-color: DarkSlateGray;
 $section-bg-color: lighten(#778899, 40%); /* #778899 LightSlateGray */ /* #F5F5F5 WhiteSmoke */
 $alt-section-bg-color: lighten(#778899, 20%); /* LightSlateGray */
-$common-link-color: #06c;
-$common-link-hover-color: #09f;
+$common-link-color: MediumBlue;
+$common-link-hover-color: Blue;
 $common-navigation-link-color: MediumBlue;
 $common-navigation-link-hover-color: Blue;
 $logout-navigation-link-color: #006400; /* DarkGreen */
@@ -31,10 +31,22 @@ $login_form-focus-glow-color: Blue;
   -webkit-border-radius: $radius;
 }
 
+@mixin no-rounded-border {
+  border-radius: none;
+  -moz-border-radius: none;
+  -webkit-border-radius: none;
+}
+
 @mixin box-shadow($x, $y, $blur, $spread, $color) {
   box-shadow: $x $y $blur $spread $color;
   -webkit-box-shadow: $x $y $blur $spread $color;
   -moz-box-shadow: $x $y $blur $spread $color;
+}
+
+@mixin no-box-shadow {
+  box-shadow: none;
+  -webkit-box-shadow: none;
+  -moz-box-shadow: none;
 }
 
 body {
@@ -128,6 +140,21 @@ aside#developper_links {
 /* Generic navigation */
 
 nav {
+  a, a:visited {
+    display: inline-block;
+    margin: 0;
+    padding: 5px;
+    color: $common-navigation-link-color;
+    font-weight: bold;
+    text-decoration: none;
+  }
+
+  a:hover {
+    color: $section-bg-color;
+    background-color: $common-navigation-link-color;
+    text-decoration: none;
+  }
+
   ul {
     li {
       ul {
@@ -178,18 +205,17 @@ body > div.container > header {
         font-weight: bold;
 
         a, a:visited {
-          display: inline-block;
           margin: 0;
           padding: 5px;
           color: $common-navigation-link-color;
           font-weight: bold;
           text-decoration: none;
+        }
 
-          &:hover {
-            color: $section-bg-color;
-            background-color: $common-navigation-link-color;
-            text-decoration: none;
-          }
+        a:hover {
+          color: $section-bg-color;
+          background-color: $common-navigation-link-color;
+          text-decoration: none;
         }
       }
     }
@@ -211,7 +237,7 @@ body > div.container > header {
           padding: 5px;
         }
       }
-      
+
       hr {
         display: none;
       }
@@ -542,7 +568,7 @@ body div.container section {
       th, td {
         padding: 0 5px;
 
-        a.resource {
+        a.resource, a.sort {
           display: block;
           margin: 0 -5px;
         }
@@ -551,6 +577,7 @@ body div.container section {
 
     thead, tfoot {
       font-style: normal;
+      border: solid 1px $table-border-color;
 
       th, td {
         border: solid 1px $table-border-color;
@@ -617,14 +644,13 @@ body div.container section {
     }
   }
 
-  table.records, table.form_fields {
+  table.records {
     colgroup.attributes {
       border: solid 1px $table-border-color;
     }
 
     thead, tfoot {
       font-size: 10pt;
-      border: solid 1px $table-border-color;
       
       th:not(:empty), td:not(:empty) {
         font-size: 10pt;
@@ -670,6 +696,10 @@ body div.container section {
     tbody tr:nth-child(even) th {
       background-color: $table-head-bg-color;
     }
+
+    th {
+      border: solid 1px $table-border-color;
+    }
   }
 
   table.filtered {
@@ -703,17 +733,45 @@ body div.container section {
   }
 
   a, a:visited {
-    display: inline-block;
     text-decoration: none;
-    margin: -5px;
     padding: 0 5px;
     color: $common-link-color;
     font-weight: bold;
+  }
 
-    &:hover {
-      text-shadow: 0 0 3px $section-bg-color;
-      text-decoration: none;
-      color: $common-link-hover-color;
+  a:hover {
+    text-shadow: 0 0 3px $section-bg-color;
+    text-decoration: none;
+    color: $common-link-hover-color;
+  }
+
+  nav.pagination {
+    margin: 0 -5px;
+    padding: 0;
+    font-size: 12pt;
+    text-align: center;
+
+    span {
+      display: inline-block;
+      margin: 0 10px;
+      
+      &.page {
+        font-weight: bold;
+      }
+
+      a, a:visited {
+        margin: 0 -10px;
+        padding: 0 10px;
+        color: $common-navigation-link-color;
+        text-decoration: none;
+      }
+
+      a:hover {
+        text-shadow: none;
+        color: $section-bg-color;
+        background-color: $common-navigation-link-color;
+        text-decoration: none;
+      }
     }
   }
 

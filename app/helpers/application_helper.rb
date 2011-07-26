@@ -105,16 +105,16 @@ module ApplicationHelper
       if sort_direction(table_name) == :asc  # current sort direction is asc
         sort_indicator = '▲ '
         direction_on_click = :desc
-        css_class = "current asc"
+        css_class = 'sort current asc'
       else
         sort_indicator = '▼ '
         direction_on_click = :asc
-        css_class = "current desc"
+        css_class = 'sort current desc'
       end
     else
       sort_indicator = ''
       direction_on_click = :asc
-      css_class = nil
+      css_class = 'sort'
     end
 
     options = params.deep_merge :page => 1,

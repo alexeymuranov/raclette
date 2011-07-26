@@ -8,8 +8,7 @@
     <colgroup><col /><col /></colgroup>
     <thead>
       <tr>
-        <%= content_tag :td, :colspan => attributes.size,
-                             :class => 'actions' do %>
+        <%= content_tag :td, :colspan => attributes.size do %>
 
           <%= paginate models %>
 
@@ -82,7 +81,7 @@
                           t('buttons.filter'),
                           :name => 'filter_button',
                           :type => 'submit',
-                          :value => 'clicked' %>
+                          :value => 'activated' %>
         <% end %>
         <td class="empty"></td>
         <td class="empty"></td>
@@ -90,8 +89,7 @@
     </thead>
     <tfoot>
       <tr>
-        <%= content_tag :td, :colspan => attributes.size,
-                             :class => 'actions' do %>
+        <%= content_tag :td, :colspan => attributes.size do %>
 
           <%= paginate models %>
 

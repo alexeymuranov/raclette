@@ -51,7 +51,7 @@ class Admin::UsersController < AdminController
     @all_filtered_users = @all_filtered_users.order(sort_sql(:users))
 
     # Paginate:
-    @users = @all_filtered_users.page(params[:page]).per(10)
+    @users = @all_filtered_users.page(params[:page]).per(3)
 
     # Compose mailing list:
     if params[:list_email_addresses]

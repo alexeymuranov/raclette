@@ -5,7 +5,7 @@
                                 :class => 'nothing' %>
     <tr>
   <% else %>
-    <%= render :partial => 'shared/model_in_index_for_association',
+    <%= render :partial => 'shared/model_in_simple_index_table',
                :collection => models,
                :as => :model,
                :locals => { :attributes          => attributes,

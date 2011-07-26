@@ -1,7 +1,7 @@
 <%= form_tag "/admin/safe_user_ips", :method=> :put do |f| %>
   <%= field_set_tag do %>
 
-    <%= render 'shared/association_form_table',
+    <%= render 'shared/association_selection_grid_form',
                :models1 => @known_ips,
                :models2 => @users,
                :association_attribute1 => :safe_users,
