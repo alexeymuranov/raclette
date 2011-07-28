@@ -478,10 +478,12 @@ en:
     current_password: "Current password:"
     your_password: "Your password:"
     "authorized?(ip)": "Authorized?"
+    per_page: "Per page:"
 
   buttons:
     save: "Save"
     filter: "Filter"
+    repaginate: "Paginate"
     show_email_addresses: "Show e-mail addresses"
     hide_email_addresses: "Hide e-mail addresses"
 

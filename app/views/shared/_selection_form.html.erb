@@ -31,12 +31,12 @@
     <% selected_models.each do |mod| %>
       <tr class="field">
         <td class="boolean">
-          <%= check_box_tag array_name+'[]', model.id, true,
+          <%= check_box_tag array_name+'[]', mod.id, true,
                             :id => id_prefix+"_#{mod.id}" %>
         </td>
 
         <%= render 'shared/attributes_in_selection_form',
-                   :model               => model,
+                   :model               => mod,
                    :attributes          => attributes,
                    :column_types_o_hash => column_types_o_hash,
                    :id_prefix           => id_prefix %>
@@ -44,15 +44,15 @@
       </tr>
     <% end unless selected_models.nil? %>
 
-    <% unselected_models.each do |model| %>
+    <% unselected_models.each do |mod| %>
       <tr class="field">
         <td class="boolean">
-          <%= check_box_tag array_name+'[]', model.id, false,
-                            :id => id_prefix+"_#{model.id}" %>
+          <%= check_box_tag array_name+'[]', mod.id, false,
+                            :id => id_prefix+"_#{mod.id}" %>
         </td>
 
         <%= render 'shared/attributes_in_selection_form',
-                   :model               => model,
+                   :model               => mod,
                    :attributes          => attributes,
                    :column_types_o_hash => column_types_o_hash,
                    :id_prefix           => id_prefix %>

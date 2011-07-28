@@ -437,10 +437,12 @@ fr:
     current_password: "Mot de passe actuel :"
     your_password: "Votre mot de passe :"
     "authorized?(ip)": "Autorisée ?"
+    per_page: "Par page :"
 
   buttons:
     save: "Enregistrer"
     filter: "Filtrer"
+    repaginate: "Paginer"
     show_email_addresses: "Montrer les adresses e-mail"
     hide_email_addresses: "Cacher les adresses e-mail"
 

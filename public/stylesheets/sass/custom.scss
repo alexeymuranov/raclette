@@ -394,8 +394,7 @@ nav#side_menu {
   margin: 0;
   padding: 0;
   background-color: $section-bg-color;
-  font-weight: normal;
-  font-size: 10pt;
+  font-size: 9pt;
 
   ul {
     margin: 0;
@@ -406,7 +405,7 @@ nav#side_menu {
 
       a, a:visited {
         display: block;
-        font-weight: normal;
+        # font-weight: normal;
         text-decoration: none;
       }
     }
@@ -748,8 +747,7 @@ body div.container section {
   nav.pagination {
     margin: 0 -5px;
     padding: 0;
-    font-size: 12pt;
-    text-align: center;
+    font-size: 11pt;
 
     span {
       display: inline-block;
@@ -773,6 +771,10 @@ body div.container section {
         text-decoration: none;
       }
     }
+  }
+
+  td nav.pagination {
+    text-align: center;
   }
 
   a.resource, a.resource:visited {

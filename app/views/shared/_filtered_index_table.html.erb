@@ -9,6 +9,34 @@
 -%>
 
 <%= form_tag nil, :method => :get do %>
+  <% params[:filter].each do |attribute, value| %>
+    <%= hidden_field_tag "filter[#{attribute}]", value %>
+  <% end unless params[:filter].blank? %>
+  <% params[:sort][table_name].each do |attribute, value| %>
+    <%= hidden_field_tag "sort[#{table_name}][#{attribute}]", value %>
+  <% end unless params[:sort].blank? %>
+  <%= label_tag :per_page, t('field_labels.per_page') %>
+  <%= select_tag :per_page,
+                 options_for_select([5, 10, 25, 50, 100, 250, 500, 1000],
+                 params[:per_page]) %>
+  <span class="actions">
+    <%= hidden_field_tag 'query_type', 'repaginate' %>
+    <%= content_tag :button,
+                    t('buttons.repaginate'),
+                    :name  => 'repaginate_button',
+                    :type  => 'submit',
+                    :value => nil %>
+ </span>
+<% end %>
+
+<%= paginate models %>
+
+<%= form_tag nil, :method => :get do %>
+  <%= hidden_field_tag :per_page, params[:per_page] %>
+  <% params[:sort][table_name].each do |attribute, value| %>
+    <%= hidden_field_tag "sort[#{table_name}][#{attribute}]", value %>
+  <% end unless params[:sort].blank? %>
+
   <%= content_tag :table,
                   :id    => table_name,
                   :class => (filter.blank? ? '' : 'filtered ')+'records' do %>
@@ -17,15 +45,6 @@
     </colgroup>
     <colgroup><col /><col /></colgroup>
     <thead>
-      <tr>
-        <%= content_tag :td, :colspan => attributes.size do %>
-
-          <%= paginate models %>
-
-        <% end %>
-        <td class="empty"></td>
-        <td class="empty"></td>
-      </tr>
       <tr>
 
         <%= render 'shared/sorting_table_headers',
@@ -93,23 +112,12 @@
                           t('buttons.filter'),
                           :name  => 'filter_button',
                           :type  => 'submit',
-                          :value => 'activated' %>
+                          :value => nil %>
         <% end %>
         <td class="empty"></td>
         <td class="empty"></td>
       </tr>
     </thead>
-    <tfoot>
-      <tr>
-        <%= content_tag :td, :colspan => attributes.size do %>
-
-          <%= paginate models %>
-
-        <% end %>
-        <td class="empty"></td>
-        <td class="empty"></td>
-      </tr>
-    </tfoot>
 
     <%= render 'shared/index_table_body',
                :models                  => models,
@@ -119,3 +127,5 @@
 
   <% end %>
 <% end %>
+
+<%= paginate models %>
