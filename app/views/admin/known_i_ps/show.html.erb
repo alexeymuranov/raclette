@@ -4,28 +4,29 @@
   <h2><%= t 'admin.known_i_ps.show.subheaders.known_ip_data' %></h2>
 
   <dl class="show">
-    <%= render :partial => 'shared/readonly_attribute_in_show_list',
-               :collection =>  @key_attributes,
-               :as => :attribute,
-               :locals => { :model => @known_ip } %>
+    <% @key_attributes.each do |attr| %>
+      <%= render 'shared/readonly_attribute_in_show_list',
+                 :attribute => attr,
+                 :model     => @known_ip %>
+    <% end %>
 
-    <%= render :partial => 'shared/attribute_in_show_list',
-               :collection =>  @other_main_attributes,
-               :as => :attribute,
-               :locals => { :model => @known_ip } %>
+    <% @other_main_attributes.each do |attr| %>
+      <%= render 'shared/attribute_in_show_list',
+                 :attribute => attr,
+                 :model     => @known_ip %>
+    <% end %>
   </dl>
 </section>
 
 <section>
   <h2><%= Admin::KnownIP.human_attribute_name(:safe_users) %></h2>
 
-  <%= render(:partial => 'shared/simple_index_table',
-             :object => @safe_users,
-             :as => :models,
-             :locals => { :attributes => @safe_users_attributes,
-                          :column_types_o_hash => @safe_users_column_types_o_hash,
-                          :model_class => Admin::User,
-                          :table_name => :safe_users }) %>
+  <%= render 'shared/simple_index_table',
+             :models => @safe_users,
+             :attributes => @safe_users_attributes,
+             :column_types_o_hash => @safe_users_column_types_o_hash,
+             :model_class => Admin::User,
+             :table_name => :safe_users %>
 
 </section>
 

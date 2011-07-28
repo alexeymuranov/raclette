@@ -1,15 +1,15 @@
 <%= form_tag "/admin/safe_user_ips", :method=> :put do |f| %>
   <%= field_set_tag do %>
 
-    <%= render 'shared/association_selection_grid_form',
-               :models1 => @known_ips,
-               :models2 => @users,
+    <%= render 'shared/association_grid_form',
+               :models1                => @known_ips,
+               :models2                => @users,
                :association_attribute1 => :safe_users,
-               :key1 => :ip,
-               :key2 => :username,
-               :description1 => :description,
-               :description2 => :full_name,
-               :id_array_name => :safe_user_ids_for_known_ips %>
+               :key1                   => :ip,
+               :key2                   => :username,
+               :description1           => :description,
+               :description2           => :full_name,
+               :id_array_name          => :safe_user_ids_for_known_ips %>
 
   <% end %>
 

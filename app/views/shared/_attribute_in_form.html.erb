@@ -1,0 +1,87 @@
+<%# Locals:
+      form_builder:
+      model:
+      attribute:
+      input_html_options (optional):
+-%>
+
+<% input_html_options = {} unless local_assigns.has_key? :input_html_options %>
+
+<% input_parent_css_classes = [] %>
+
+<% model_class = model.class %>
+
+<% if model_class.validators_on(attribute).map(&:class).include?(
+          ActiveModel::Validations::PresenceValidator) %>
+  <% input_parent_css_classes << 'required' %>
+  <% input_html_options[:required] = 'required' %>
+<% end %>
+
+<% if readonly = model_class.readonly_attributes.include?(attribute.to_s) %>
+  <% input_parent_css_classes << 'readonly' %>
+<% end %>
+
+<% if editable = !readonly || model.new_record? %>
+  <% input_parent_css_classes << 'input' %>
+<% end %>
+
+<% if model_class.column_names.include?(attribute.to_s) %>
+  <% column_type = model.column_for_attribute(attribute).type %>
+<% else %>
+  <% column_type = nil %>
+<% end %>
+
+<div class="item field">
+  <dt>
+    <% human_name = model.class.human_attribute_name(attribute) %>
+
+    <%- case column_type -%>
+    <%- when :boolean -%>
+      <%- label_content = t('formats.attribute_name?', :attribute => human_name) -%>
+    <%- else -%>
+      <%- label_content = t('formats.attribute_name:', :attribute => human_name) -%>
+    <%- end -%>
+
+    <%- if editable -%>
+      <%= form_builder.label attribute, label_content -%>
+    <%- else -%>
+      <b><%= label_content -%></b>
+    <%- end -%>
+  </dt>
+
+  <%- if column_type == :text -%>
+    <%- input_parent_css_classes << 'long_text' -%>
+  <%- end -%>
+
+  <%= content_tag :dd, :class => input_parent_css_classes.join(' ') do -%>
+    <%- if editable -%>
+      <%- case column_type -%>
+      <%- when :boolean -%>
+        <%= form_builder.check_box attribute, input_html_options -%>
+      <%- when :date -%>
+        <%- input_html_options[:type] = 'date' -%>
+        <%= form_builder.text_field attribute, input_html_options -%>
+      <%- when :datetime -%>
+        <%- input_html_options[:type] = 'datetime' -%>
+        <%= form_builder.text_field attribute, input_html_options -%>
+      <%- when :text -%>
+        <%= form_builder.text_area attribute, input_html_options -%>
+      <%- else -%>
+        <%= form_builder.text_field attribute, input_html_options -%>
+      <%- end -%>
+    <%- else -%>
+      <%- value = model.public_send(attribute) -%>
+
+      <%- case column_type -%>
+      <%- when :boolean -%>
+        <%= boolean_to_picto(value, size=2) %>
+      <%- when :date -%>
+        <%= l value, :format => :long %>
+      <%- when :datetime -%>
+        <%= l value, :format => :custom %>
+      <%- else -%>
+        <%= value %>
+      <%- end -%>
+    <%- end -%>
+  <%- end -%>
+</div>

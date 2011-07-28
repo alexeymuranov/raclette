@@ -1,17 +1,41 @@
+<%# Locals:
+      models:
+      attributes:
+      column_types_o_hash:
+      edit_path_helper_method:
+-%>
+
 <tbody>
   <% if models.blank? %>
     <tr>
       <%= content_tag :td, '∅', :colspan => attributes.size,
-                                :class => 'nothing' %>
+                                :class   => 'nothing' %>
       <td class="empty"></td>
       <td class="empty"></td>
     <tr>
   <% else %>
-    <%= render :partial => 'shared/model_in_index_table',
-               :collection => models,
-               :as => :model,
-               :locals => { :attributes              => attributes,
-                            :column_types_o_hash     => column_types_o_hash,
-                            :edit_path_helper_method => edit_path_helper_method } %>
+    <% models.each do |mod| %>
+      <tr>
+
+        <%= render 'shared/attributes_in_index_table',
+                   :model               => mod,
+                   :attributes          => attributes,
+                   :column_types_o_hash => column_types_o_hash %>
+
+        <td class="operation">
+          <%= link_to edit_pictogram(2), edit_path_helper_method.call(mod),
+                      :title => t('actions.update'),
+                      :class => 'modify resource' %>
+        </td>
+
+        <td class="operation">
+          <%= link_to delete_pictogram(2),  mod,
+                      :confirm => t('questions.are_you_sure?'),
+                      :method  => :delete,
+                      :title   => t('actions.delete'),
+                      :class   => 'modify resource' %>
+        </td>
+      </tr>
+    <% end %>
   <% end %>
 </tbody>

@@ -4,28 +4,29 @@
   <h2><%= t 'admin.users.show.subheaders.user_data' %></h2>
 
   <dl class="show">
-    <%= render :partial => 'shared/readonly_attribute_in_show_list',
-               :collection =>  @key_attributes,
-               :as => :attribute,
-               :locals => { :model => @user } %>
+    <% @key_attributes.each do |attr| %>
+      <%= render 'shared/readonly_attribute_in_show_list',
+                 :attribute => attr,
+                 :model     => @user %>
+    <% end %>
 
-    <%= render :partial => 'shared/attribute_in_show_list',
-               :collection =>  @other_main_attributes,
-               :as => :attribute,
-               :locals => { :model => @user } %>
+    <% @other_main_attributes.each do |attr| %>
+      <%= render 'shared/attribute_in_show_list',
+                 :attribute => attr,
+                 :model     => @user %>
+    <% end %>
   </dl>
 </section>
 
 <section>
   <h2><%= Admin::User.human_attribute_name(:safe_ips) %></h2>
 
-  <%= render(:partial => 'shared/simple_index_table',
-             :object => @safe_ips,
-             :as => :models,
-             :locals => { :attributes => @safe_ips_attributes,
-                          :column_types_o_hash => @safe_ips_column_types_o_hash,
-                          :model_class => Admin::KnownIP,
-                          :table_name => :safe_ips }) %>
+  <%= render 'shared/simple_index_table',
+             :models              => @safe_ips,
+             :attributes          => @safe_ips_attributes,
+             :column_types_o_hash => @safe_ips_column_types_o_hash,
+             :model_class         => Admin::KnownIP,
+             :table_name          => :safe_ips %>
 
 </section>
 
@@ -34,10 +35,11 @@
 
   <% unless @other_attributes.blank? %>
     <dl class="show">
-      <%= render :partial => 'shared/attribute_in_show_list',
-                 :collection =>  @other_attributes,
-                 :as => :attribute,
-                 :locals => { :model => @user } %>
+      <% @other_attributes.each do |attr| %>
+        <%= render 'shared/attribute_in_show_list',
+                   :attribute => attr,
+                   :model     => @user %>
+      <% end %>
     </dl>
   <% end %>
 </section>

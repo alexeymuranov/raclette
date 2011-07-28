@@ -1,93 +1,65 @@
 <%= field_set_tag t('admin.users.edit.subheaders.user_data') do %>
   <dl class="form_fields">
-    <% if @user.new_record? %>
-      <div class="item field">
-        <dt><%= f.label :username,
-                        t('formats.attribute_name:',
-                          :attribute => Admin::User.human_attribute_name(:username)) %>
-        </dt>
-        <dd class="required readonly input">
-          <%= f.text_field :username, :size => 30,
-                                      :maxlength => 32,
-                                      :required => :required %><!-- no space!
-     --></dd>
-      </div>
-    <% else %>
-      <div class="item">
-        <dt>
-          <b><%= t('formats.attribute_name:',
-                   :attribute => Admin::User.human_attribute_name(:username)) %></b>
-        </dt>
-        <dd><%= @user.username %></dd>
-      </div>
+    <% [:username, :full_name ].each do |attribute| %>
+
+      <%= render 'shared/attribute_in_form',
+                 :form_builder => f,
+                 :model        => @user,
+                 :attribute    => attribute %>
+
     <% end %>
 
-    <div class="item field">
-      <dt>
-        <%= f.label :full_name,
-                    t('formats.attribute_name:',
-                      :attribute => Admin::User.human_attribute_name(:full_name)) %>
-      </dt>
-      <dd class="required input">
-        <%= f.text_field :full_name, :size => 30,
-                                     :maxlength => 64,
-                                     :required => :required %><!-- no space!
-   --></dd>
-    </div>
+    <%= render 'shared/attribute_in_form',
+               :form_builder       => f,
+               :model              => @user,
+               :attribute          => :email,
+               :input_html_options => { :type => :email } %>
 
-    <div class="item field">
-      <dt><%= f.label :email,
-                      t('formats.attribute_name:',
-                        :attribute => Admin::User.human_attribute_name(:email)) %>
-      </dt>
-      <dd><%= f.email_field :email, :size => 30, :maxlength => 255 %></dd>
-    </div>
+    <% is_current_user = (@user == current_user) %>
 
     <% [ :account_deactivated, :admin ].each do |attribute| %>
-      <div class="item field">
-        <dt>
-          <%= f.label attribute,
-                      t('formats.attribute_name?',
-                        :attribute => Admin::User.human_attribute_name(attribute)) %>
-        </dt>
-        <dd><%= f.check_box attribute, :disabled => (@user == current_user) %></dd>
-      </div>
+
+      <%= render 'shared/attribute_in_form',
+                 :form_builder       => f,
+                 :model              => @user,
+                 :attribute          => attribute,
+                 :input_html_options => { :disabled => is_current_user } %>
+
     <% end %>
 
     <% [ :manager, :secretary, :a_person ].each do |attribute| %>
-      <div class="item field">
-        <dt>
-          <%= f.label attribute,
-                      t('formats.attribute_name?',
-                        :attribute => Admin::User.human_attribute_name(attribute)) %>
-        </dt>
-        <dd><%= f.check_box attribute %></dd>
-      </div>
+
+      <%= render 'shared/attribute_in_form',
+                 :form_builder => f,
+                 :model        => @user,
+                 :attribute    => attribute %>
+
     <% end %>
  </dl>
 <% end %>
 
 <%= field_set_tag t('admin.users.edit.subheaders.authorized_ips') do %>
-  <%= render 'shared/selection_index_form',
-             :model_class => Admin::KnownIP,
-             :table_name => :known_ips,
-             :attributes => @known_ips_attributes,
+
+  <%= render 'shared/selection_form',
+             :model_class         => Admin::KnownIP,
+             :table_name          => :known_ips,
+             :attributes          => @known_ips_attributes,
              :column_types_o_hash => @known_ips_column_types_o_hash,
-             :selected => @safe_ips,
-             :unselected => @other_ips,
-             :id_prefix => 'admin_user_safe_ip_ids',
-             :array_name => 'admin_user[safe_ip_ids]' %>
+             :selected_models     => @safe_ips,
+             :unselected_models   => @other_ips,
+             :id_prefix           => 'admin_user_safe_ip_ids',
+             :array_name          => 'admin_user[safe_ip_ids]' %>
+
 <% end %>
 
 <%= field_set_tag t('admin.users.edit.subheaders.comments') do %>
   <dl class="form_fields">
-    <div class="item field">
-      <dt>
-        <%= f.label :comments,
-                    t('formats.attribute_name:',
-                      :attribute => Admin::User.human_attribute_name(:comments)) %>
-      </dt>
-      <dd class="long_text"><%= f.text_area :comments, :maxlength => 1000 %></dd>
-    </div>
+
+    <%= render 'shared/attribute_in_form',
+               :form_builder       => f,
+               :model              => @user,
+               :attribute          => :comments,
+               :input_html_options => { :maxlength => 1000 } %>
+
   </dl>
 <% end %>

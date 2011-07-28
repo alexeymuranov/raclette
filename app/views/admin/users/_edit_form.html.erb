@@ -9,46 +9,32 @@
       <%= label_tag :change_password, t('field_labels.change_password?') %>
       <%= check_box_tag :change_password %>
       <dl class="checkbox_conditional form_fields">
-        <div class="item field">
-          <dt>
-            <%= f.label :new_password,
-                        t('formats.attribute_name:',
-                          :attribute => Admin::User.human_attribute_name(:new_password)) %>
-          </dt>
-          <dd>
-            <%= f.password_field :new_password,
-                                 :size => 30,
-                                 :maxlength => 255 %>
-          </dd>
-        </div>
-        <div class="item field">
-          <dt>
-            <%= f.label :new_password_confirmation,
-                        t('formats.attribute_name:',
-                          :attribute => Admin::User.human_attribute_name(:new_password_confirmation)) %>
-          </dt>
-          <dd>
-            <%= f.password_field :new_password_confirmation,
-                                 :size => 30,
-                                 :maxlength => 255 %>
-          </dd>
-        </div>
-        <div class="item field">
-          <dt>
-            <%= label_tag :current_password, t('field_labels.current_password') %>
-          </dt>
-          <dd>
-            <%= password_field_tag :current_password,
-                                   nil,
-                                   :size => 30,
-                                   :maxlength => 255 %>
-          </dd>
-        </div>
+
+        <%= render 'shared/attribute_in_form',
+                   :form_builder       => f,
+                   :model              => @user,
+                   :attribute          => :new_password,
+                   :input_html_options => { :type => :password } %>
+
+        <%= render 'shared/attribute_in_form',
+                   :form_builder       => f,
+                   :model              => @user,
+                   :attribute          => :new_password_confirmation,
+                   :input_html_options => { :type => :password } %>
+
+        <%= render 'shared/input_in_form',
+                   :name               => :current_password,
+                   :value              => nil,
+                   :label_content      => t('field_labels.current_password'),
+                   :input_html_options => { :type      => :password,
+                                            :size      => 30,
+                                            :maxlength => 255 } %>
+
       </dl>
     <% end %>
   <% end %>
 
   <div class="actions">
-    <%= f.submit t('buttons.save') %>
+    <%= f.submit %>
   </div>
 <% end %>

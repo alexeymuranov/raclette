@@ -333,8 +333,8 @@ body div.container section dl.form_fields div.item, body div.container section d
   body div.container section dl.form_fields div.item dd, body div.container section dl.show div.item dd {
     display: table-cell;
     padding: 0 5px; }
-    body div.container section dl.form_fields div.item dd.long_text, body div.container section dl.show div.item dd.long_text {
-      vertical-align: top; }
+  body div.container section dl.form_fields div.item dd.long_text, body div.container section dl.show div.item dd.long_text {
+    vertical-align: top; }
   body div.container section dl.form_fields div.item:nth-child(odd) dt, body div.container section dl.show div.item:nth-child(odd) dt {
     background-color: #d4dfed; }
   body div.container section dl.form_fields div.item:nth-child(odd) dd, body div.container section dl.show div.item:nth-child(odd) dd {

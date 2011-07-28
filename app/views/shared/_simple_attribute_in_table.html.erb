@@ -1,0 +1,13 @@
+<%# Locals:
+      column_type:
+      value:
+-%>
+
+<%- case column_type -%>
+<%- when :boolean -%>
+  <td class="boolean">
+    <%= boolean_to_picto value, size=2 -%>
+  </td>
+<%- else -%>
+  <td><%= value -%></td>
+<%- end -%>

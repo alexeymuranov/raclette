@@ -1,3 +1,12 @@
+<%# Locals:
+      models:
+      attributes:
+      column_types_o_hash:
+      model_class:
+      table_name:
+      edit_path_helper_method:
+-%>
+
 <%= content_tag :table, :id => table_name, :class => 'records' do %>
   <colgroup class="attributes">
     <% attributes.size.times do %><col /><% end %>
@@ -5,23 +14,21 @@
   <colgroup><col /><col /></colgroup>
   <thead>
     <tr>
+
       <%= render 'shared/sorting_table_headers',
                  :column_types_o_hash => column_types_o_hash,
-                 :model_class => model_class,
-                 :table_name => table_name %>
+                 :model_class         => model_class,
+                 :table_name          => table_name %>
+
       <th class="empty"></th>
       <th class="empty"></th>
     </tr>
   </thead>
 
-  <tbody>
+  <%= render 'shared/index_table_body',
+             :models                  => models,
+             :attributes              => attributes,
+             :column_types_o_hash     => column_types_o_hash,
+             :edit_path_helper_method => edit_path_helper_method %>
 
-    <%= render :partial => 'shared/index_table_body',
-               :object => models,
-               :as => :models,
-               :locals => { :attributes              => attributes,
-                            :column_types_o_hash     => column_types_o_hash,
-                            :edit_path_helper_method => edit_path_helper_method } %>
-
-  </tbody>
 <% end %>

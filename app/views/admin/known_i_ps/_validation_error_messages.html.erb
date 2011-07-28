@@ -2,10 +2,11 @@
   <div id="error_explanation">
     <h2>
       <%= @known_ip.errors.count == 1 ?
-              t('activerecord.errors.template.header.one') :
+              t('activerecord.errors.template.header.one',
+                :model => Admin::KnownIP.human_name) :
               t('activerecord.errors.template.header.other',
                 :count => @known_ip.errors.count,
-                :model => Admin::KnownIP.human_name ) %>
+                :model => Admin::KnownIP.human_name) %>
     </h2>
 
     <ul>

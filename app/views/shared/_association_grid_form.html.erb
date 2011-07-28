@@ -6,9 +6,10 @@
       key2:
       description1:
       description2:
+      id_array_name:
 -%>
 
-<table class="grid">
+<table class="grid form_fields">
   <colgroup><col /></colgroup>
   <colgroup>
     <% models2.size.times do %><col /><% end %>
@@ -18,9 +19,8 @@
       <th class="empty"></th>
       <% models2.each do |mod2| %>
         <th>
-          <%= link_to mod2.public_send(key2), mod2,
-                      :title => mod2.public_send(description2),
-                      :class => 'display resource' %>
+          <%= content_tag :span, mod2.public_send(key2),
+                          :title => mod2.public_send(description2) %>
         </th>
       <% end %>
     </tr>
@@ -29,15 +29,13 @@
     <% models1.each do |mod1| %>
       <tr>
         <th scope=row>
-          <%= link_to mod1.public_send(key1), mod1,
-                      :title => mod1.public_send(description1),
-                      :class => 'display resource' %>
+          <%= content_tag :span, mod1.public_send(key1),
+                          :title => mod1.public_send(description1) %>
         </th>
         <% models2.each do |mod2| %>
           <td class='boolean'>
-            <%= boolean_to_picto(
-                    mod1.public_send(association_attribute1).include?(mod2),
-                    size=2) %>
+            <%= check_box_tag "#{id_array_name}[#{mod1.id}][]", mod2.id,
+                    mod1.public_send(association_attribute1).include?(mod2) %>
           </td>
         <% end %>
       </tr>

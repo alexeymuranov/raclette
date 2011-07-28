@@ -1,6 +1,16 @@
+<%# Locals:
+      models:
+      attributes:
+      column_types_o_hash:
+      model_class:
+      table_name:
+      filter:
+      edit_path_helper_method:
+-%>
+
 <%= form_tag nil, :method => :get do %>
   <%= content_tag :table,
-                  :id => table_name,
+                  :id    => table_name,
                   :class => (filter.blank? ? '' : 'filtered ')+'records' do %>
     <colgroup class="attributes">
       <% attributes.size.times do %><col /><% end %>
@@ -17,10 +27,12 @@
         <td class="empty"></td>
       </tr>
       <tr>
+
         <%= render 'shared/sorting_table_headers',
                    :column_types_o_hash => column_types_o_hash,
-                   :model_class => model_class,
-                   :table_name => table_name %>
+                   :model_class         => model_class,
+                   :table_name          => table_name %>
+
         <th class="empty"></th>
         <th class="empty"></th>
       </tr>
@@ -75,12 +87,12 @@
       </tr>
       <tr>
         <%= content_tag :td, :colspan => attributes.size,
-                             :class => 'actions' do %>
+                             :class   => 'actions' do %>
           <%= hidden_field_tag 'query_type', 'filter' %>
           <%= content_tag :button,
                           t('buttons.filter'),
-                          :name => 'filter_button',
-                          :type => 'submit',
+                          :name  => 'filter_button',
+                          :type  => 'submit',
                           :value => 'activated' %>
         <% end %>
         <td class="empty"></td>
@@ -99,12 +111,11 @@
       </tr>
     </tfoot>
 
-    <%= render :partial => 'shared/index_table_body',
-               :object => models,
-               :as => :models,
-               :locals => { :attributes              => attributes,
-                            :column_types_o_hash     => column_types_o_hash,
-                            :edit_path_helper_method => edit_path_helper_method } %>
+    <%= render 'shared/index_table_body',
+               :models                  => models,
+               :attributes              => attributes,
+               :column_types_o_hash     => column_types_o_hash,
+               :edit_path_helper_method => edit_path_helper_method %>
 
   <% end %>
 <% end %>

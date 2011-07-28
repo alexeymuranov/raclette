@@ -5,15 +5,13 @@
 -%>
 
 <th scope=row>
-  <%= link_to model.public_send(attributes[0]), model,
-              :title => t('actions.read'),
-              :class => 'display resource' %>
+  <%= label_tag id_prefix+"_#{model.id}", model.public_send(attributes[0]) %>
 </th>
 
-<%- attributes[1..-1].each do |attr| -%>
+<% attributes[1..-1].each do |attr| %>
 
   <%= render 'shared/simple_attribute_in_table',
              :column_type => column_types_o_hash[attr],
              :value       => model.public_send(attr) %>
 
-<%- end -%>
+<% end %>

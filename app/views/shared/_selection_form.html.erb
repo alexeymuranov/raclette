@@ -1,0 +1,63 @@
+<%# Locals:
+      model_class:
+      table_name:
+      attributes:
+      column_types_o_hash:
+      selected_models:
+      unselected_models:
+      id_prefix:
+      array_name:
+-%>
+
+<%= content_tag :table, :class => 'form_fields' do %>
+  <colgroup><col /></colgroup>
+  <colgroup class="attributes">
+    <% attributes.size.times do %><col /><% end %>
+  </colgroup>
+
+  <thead>
+    <tr>
+      <th class='empty boolean'></th>
+
+      <%= render 'shared/table_headers',
+                 :column_types_o_hash => column_types_o_hash,
+                 :model_class         => model_class,
+                 :table_name          => table_name %>
+
+    </tr>
+  </thead>
+
+  <tbody>
+    <% selected_models.each do |mod| %>
+      <tr class="field">
+        <td class="boolean">
+          <%= check_box_tag array_name+'[]', model.id, true,
+                            :id => id_prefix+"_#{mod.id}" %>
+        </td>
+
+        <%= render 'shared/attributes_in_selection_form',
+                   :model               => model,
+                   :attributes          => attributes,
+                   :column_types_o_hash => column_types_o_hash,
+                   :id_prefix           => id_prefix %>
+
+      </tr>
+    <% end unless selected_models.nil? %>
+
+    <% unselected_models.each do |model| %>
+      <tr class="field">
+        <td class="boolean">
+          <%= check_box_tag array_name+'[]', model.id, false,
+                            :id => id_prefix+"_#{model.id}" %>
+        </td>
+
+        <%= render 'shared/attributes_in_selection_form',
+                   :model               => model,
+                   :attributes          => attributes,
+                   :column_types_o_hash => column_types_o_hash,
+                   :id_prefix           => id_prefix %>
+
+      </tr>
+    <% end unless unselected_models.nil? %>
+  </tbody>
+<% end %>

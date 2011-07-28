@@ -2,7 +2,8 @@
   <div id="error_explanation">
     <h2>
       <%= @user.errors.count == 1 ?
-              t('activerecord.errors.template.header.one') :
+              t('activerecord.errors.template.header.one',
+                :model => Admin::User.human_name) :
               t('activerecord.errors.template.header.other',
                 :count => @user.errors.count,
                 :model => Admin::User.human_name) %>
