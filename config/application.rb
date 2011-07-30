@@ -8,7 +8,8 @@ Bundler.require(:default, Rails.env) if defined?(Bundler)
 
 module Raclette
   class Application < Rails::Application
-    config.autoload_paths << "#{config.root}/lib/each_validators"
+    config.autoload_paths << "#{config.root}/lib/" <<
+                             "#{config.root}/lib/each_validators/"
 
     # Settings in config/environments/* take precedence over those specified here.
     # Application configuration should go into files in config/initializers
@@ -40,9 +41,8 @@ module Raclette
 
     # Configure sensitive parameters which will be filtered from the log file.
     config.filter_parameters += [:password]
+    
+    # Added by Alexey, just in case if responders are used in future:
+    # config.responders.flash_keys = [ :success, :failure ]
   end
 end
-
-# module Spreadsheet
-#   self.client_encoding = 'UTF-8'
-# end

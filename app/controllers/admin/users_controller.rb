@@ -2,10 +2,14 @@
 
 class Admin::UsersController < AdminController
 
+  respond_to :html, :js, :xml, :ms_excel_2003_xml, :only => :index
+
   def index
 
     @query_type = params[:query_type]
     params.delete(:query_type)
+    # params.delete(:commit)
+    # params.delete(:button)
 
     @attributes = [ :username,
                     :full_name,
@@ -61,6 +65,32 @@ class Admin::UsersController < AdminController
     end
 
     @title = t('admin.users.index.title')  # or: Admin::User.human_name.pluralize
+
+    @attributes_for_download = [ :username,
+                                 :full_name,
+                                 :email,
+                                 :account_deactivated,
+                                 :admin,
+                                 :manager,
+                                 :secretary,
+                                 :a_person ]
+
+    @column_types_for_download_o_hash = ActiveSupport::OrderedHash.new
+    @attributes_for_download.each do |attr|
+      @column_types_for_download_o_hash[attr] = Admin::User.columns_hash[attr.to_s].type
+    end
+
+    respond_with(@all_filtered_users) do |requested_format|
+      requested_format.ms_excel_2003_xml do
+        send_data render_to_string(:ms_excel_2003_xml => @all_filtered_users),
+                  :type        => 'application/xml',
+                  :filename    => "#{Time.now.strftime('%Y-%m-%d %k_%M')} "\
+                                  "#{Admin::User.human_name.pluralize}"\
+                                  ".excel2003.xml",
+                  :disposition => 'inline'
+#                  :disposition => 'attachment'
+      end
+    end
   end
 
   def show
@@ -87,6 +117,11 @@ class Admin::UsersController < AdminController
     end
 
     @title = t('admin.users.show.title', :username => @user.username)
+
+    respond_to do |format|
+      format.html
+      # format.xml { render :xml => @all_filtered_users }
+    end
   end
 
   def new
@@ -240,6 +275,21 @@ class Admin::UsersController < AdminController
       @title =  t('admin.users.edit.title', :username => @user.username)
 
       render :edit
+    end
+
+    def render_to_excel_spreadsheet(users)  # FIXME (not finished)
+      book = Spreadsheet::Workbook.new
+      worksheet = book.create_worksheet(:name => Admin::User.human_name.pluralize)
+      
+      contruct_body(worksheet, @users)  # FIXME (not finished)
+
+      blob = StringIO.new
+      book.write(blob)
+
+      filename = I18n.l(Time.now, :format => :short) +
+                 ' - ' + Admin::User.human_name.pluralize + '.xls'
+      send_data blob.string, :type     => 'application/ms-excel',
+                             :filename => filename
     end
 
 end

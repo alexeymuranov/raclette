@@ -13,7 +13,9 @@ gem 'sass'  # generate CSS
 
 gem 'meta_where'  # queries without SQL
 
-gem 'spreadsheet'  # for writing to spreadsheets
+gem 'spreadsheet'  # to generate XLS
+
+gem 'fastercsv'  # to generate CSV
 
 gem 'jquery-rails'  
 

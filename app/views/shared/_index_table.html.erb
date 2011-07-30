@@ -4,7 +4,6 @@
       column_types_o_hash:
       model_class:
       table_name:
-      edit_path_helper_method:
 -%>
 
 <%= content_tag :table, :id => table_name, :class => 'records' do %>
@@ -26,9 +25,8 @@
   </thead>
 
   <%= render 'shared/index_table_body',
-             :models                  => models,
-             :attributes              => attributes,
-             :column_types_o_hash     => column_types_o_hash,
-             :edit_path_helper_method => edit_path_helper_method %>
+             :models              => models,
+             :attributes          => attributes,
+             :column_types_o_hash => column_types_o_hash %>
 
 <% end %>

@@ -5,16 +5,13 @@
       model_class:
       table_name:
       filter:
-      edit_path_helper_method:
 -%>
 
 <%= form_tag nil, :method => :get do %>
-  <% params[:filter].each do |attribute, value| %>
-    <%= hidden_field_tag "filter[#{attribute}]", value %>
-  <% end unless params[:filter].blank? %>
-  <% params[:sort][table_name].each do |attribute, value| %>
-    <%= hidden_field_tag "sort[#{table_name}][#{attribute}]", value %>
-  <% end unless params[:sort].blank? %>
+  <%= store_hash_in_hidden_form_fields params.except(:controller,
+                                                     :action,
+                                                     :per_page) %>
+
   <%= label_tag :per_page, t('field_labels.per_page') %>
   <%= select_tag :per_page,
                  options_for_select([5, 10, 25, 50, 100, 250, 500, 1000],
@@ -23,19 +20,18 @@
     <%= hidden_field_tag 'query_type', 'repaginate' %>
     <%= content_tag :button,
                     t('buttons.repaginate'),
-                    :name  => 'repaginate_button',
+                    :name  => 'button',
                     :type  => 'submit',
-                    :value => nil %>
+                    :value => 'repaginate_button' %>
  </span>
 <% end %>
 
 <%= paginate models %>
 
 <%= form_tag nil, :method => :get do %>
-  <%= hidden_field_tag :per_page, params[:per_page] %>
-  <% params[:sort][table_name].each do |attribute, value| %>
-    <%= hidden_field_tag "sort[#{table_name}][#{attribute}]", value %>
-  <% end unless params[:sort].blank? %>
+  <%= store_hash_in_hidden_form_fields params.except(:controller,
+                                                     :action,
+                                                     :filter) %>
 
   <%= content_tag :table,
                   :id    => table_name,
@@ -110,9 +106,9 @@
           <%= hidden_field_tag 'query_type', 'filter' %>
           <%= content_tag :button,
                           t('buttons.filter'),
-                          :name  => 'filter_button',
+                          :name  => 'button',
                           :type  => 'submit',
-                          :value => nil %>
+                          :value => 'filter_button' %>
         <% end %>
         <td class="empty"></td>
         <td class="empty"></td>
@@ -120,10 +116,9 @@
     </thead>
 
     <%= render 'shared/index_table_body',
-               :models                  => models,
-               :attributes              => attributes,
-               :column_types_o_hash     => column_types_o_hash,
-               :edit_path_helper_method => edit_path_helper_method %>
+               :models              => models,
+               :attributes          => attributes,
+               :column_types_o_hash => column_types_o_hash %>
 
   <% end %>
 <% end %>

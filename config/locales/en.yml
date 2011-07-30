@@ -482,6 +482,7 @@ en:
 
   buttons:
     save: "Save"
+    download: "Download"
     filter: "Filter"
     repaginate: "Paginate"
     show_email_addresses: "Show e-mail addresses"
@@ -504,6 +505,20 @@ en:
     operation_failed: "Operation failed."
     require_login: "Please log in to access this page."
     require_admin: "You must be an admin to access the section you tried to access."
+
+  flash:
+    actions:
+      create:
+        success: "%{resource_name} was successfully created."
+      update:
+        success: "%{resource_name} was successfully updated."
+      destroy:
+        success: "%{resource_name} was successfully destroyed."
+        failure: "%{resource_name} could not be destroyed."
+    admin:
+      users:
+        create:
+          success: "The user was successfully created."
 
   application_layout:
     navigation_links:

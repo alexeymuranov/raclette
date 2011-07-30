@@ -399,12 +399,12 @@ fr:
           <<: *person_attributes
 
   # For kaminari gem:
-  views:  
+  views:
     pagination:
       first: "|◀◀ première page"
       last: "dernière page ▶▶|"
-      previous: "◀ page précédente"  
-      next: "page suivante ▶"  
+      previous: "◀ page précédente"
+      next: "page suivante ▶"
       truncate: "…"
 
 ################################################################
@@ -441,6 +441,7 @@ fr:
 
   buttons:
     save: "Enregistrer"
+    download: "Télécharger"
     filter: "Filtrer"
     repaginate: "Paginer"
     show_email_addresses: "Montrer les adresses e-mail"
@@ -463,6 +464,20 @@ fr:
     operation_failed: "L'opération a échouée."
     require_login: "Vous devez vous connecter pour acceder à cette page."
     require_admin: "Vous devez être un administratur pour acceder à la section que vous avez essayé d'acceder."
+
+  flash:
+    actions:
+      create:
+        success: "%{resource_name} créé(e) avec succès."
+      update:
+        success: "%{resource_name} mis(e) à jour avec succès."
+      destroy:
+        success: "%{resource_name} supprimé(e) avec succès."
+        failure: "%{resource_name} n'a pas pu être supprimé(e)."
+    admin:
+      users:
+        create:
+          success: "L'utilisateur créé(e) avec succès."
 
   application_layout:
     navigation_links:
@@ -504,8 +519,8 @@ fr:
         links:
           update: "Mise à jour"
       new:
-        title: "Nouveau utilisateur"
-        header: "Nouveau utilisateur"
+        title: "Nouvel utilisateur"
+        header: "Nouvel utilisateur"
         subheaders:
           user_data: "Données de l'utilisateur"
           password: "Mot de passe"

@@ -4,6 +4,7 @@ case "show_email_addresses":
 case "hide_email_addresses":
   $("#users_mailing_list").html("<%= escape_javascript(render('emailing_list')) %>");
   break;
+case "download":
 }
 
 $("#debug_params").html("<%= escape_javascript(debug(params)) if Rails.env.development? %>");

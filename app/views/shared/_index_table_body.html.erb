@@ -2,7 +2,6 @@
       models:
       attributes:
       column_types_o_hash:
-      edit_path_helper_method:
 -%>
 
 <tbody>
@@ -23,7 +22,7 @@
                    :column_types_o_hash => column_types_o_hash %>
 
         <td class="operation">
-          <%= link_to edit_pictogram(2), edit_path_helper_method.call(mod),
+          <%= link_to edit_pictogram(2), [ :edit, mod ],
                       :title => t('actions.update'),
                       :class => 'modify resource' %>
         </td>

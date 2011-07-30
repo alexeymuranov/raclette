@@ -1,20 +1,21 @@
 <section id="email_addresses">
   <% if @mailing_list.nil? %>
     <%= link_to t('buttons.show_email_addresses'),
-                params.merge( :list_email_addresses => :filtered,
-                              :query_type           => 'show_email_addresses',
-                              :anchor               => 'email_addresses' ),
-                :id     => 'email_addresses_show_button',
-                :remote => true %>
+                params.except(:controller, :action).merge(
+                    :list_email_addresses => :filtered,
+                    :query_type           => 'show_email_addresses',
+                    :anchor               => 'email_addresses' ),
+                :id     => 'email_addresses_show_button' %>
   <% else %>
     <h2><%= t 'admin.users.index.subheaders.mailing_list' %></h2>
 
     <p><%= @mailing_list %></p>
     <%= link_to t('buttons.hide_email_addresses'),
-                params.except(:list_email_addresses).merge(
+                params.except(:controller,
+                              :action,
+                              :list_email_addresses).merge(
                     :query_type => 'hide_email_addresses',
                     :anchor     => 'email_addresses_show_button' ),
-                :id     => 'email_addresses_hide_button',
-                :remote => true %>
+                :id     => 'email_addresses_hide_button' %>
   <% end %>
 </section>

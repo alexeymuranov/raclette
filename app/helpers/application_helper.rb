@@ -2,6 +2,18 @@
 
 module ApplicationHelper
 
+  def boolean_to_yes_no(bool)
+    bool ? t(:yes) : t(:no)
+  end
+
+  def boolean_to_picto(bool, size=1)
+    bool ? yes_pictogram(size) : t(:no)
+  end
+
+  def boolean_to_0_1(bool)
+    bool ? 1 : 0
+  end
+
   def title
     base_title = 'Raclette'
     @title.nil? ? base_title : "#{base_title} | #{@title}"
@@ -90,14 +102,6 @@ module ApplicationHelper
                             :style => css_style
   end
 
-  def boolean_to_yes_no(bool)
-    bool ? t(:yes) : t(:no)
-  end
-
-  def boolean_to_picto(bool, size=1)
-    bool ? yes_pictogram(size) : t(:no)
-  end
-
   def sortable(table_name, column, title = nil, html_options = {})
     title ||= column.to_s.titleize
 
@@ -131,5 +135,16 @@ module ApplicationHelper
     end
 
     link_to sort_indicator+title, options, html_options
+  end
+  
+  def store_hash_in_hidden_form_fields(hash)
+    generated_html = ''.html_safe
+    hash.to_query.split(/[&;]+/).each do |single_option|
+      unless single_option.blank?
+        a = single_option.split('=')
+        generated_html += hidden_field_tag(a[0], a[1])
+      end
+    end
+    generated_html
   end
 end

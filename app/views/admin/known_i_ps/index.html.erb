@@ -1,12 +1,11 @@
 <h1><%= t '.header' %></h1>
 
 <%= render 'shared/index_table',
-           :models                  => @known_ips,
-           :attributes              => @attributes,
-           :column_types_o_hash     => @column_types_o_hash,
-           :model_class             => Admin::KnownIP,
-           :table_name              => :known_ips,
-           :edit_path_helper_method => method(:edit_admin_known_ip_path) %>
+           :models              => @known_ips,
+           :attributes          => @attributes,
+           :column_types_o_hash => @column_types_o_hash,
+           :model_class         => Admin::KnownIP,
+           :table_name          => :known_ips %>
 
 <footer>
   <%= link_to add_pictogram(2)+' '+t('admin.known_i_ps.links.new'),
