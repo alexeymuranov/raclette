@@ -9,15 +9,15 @@
 
 <% input_parent_css_classes = [] %>
 
-<% model_class = model.class %>
+<% klass = model.class %>
 
-<% if model_class.validators_on(attribute).map(&:class).include?(
+<% if klass.validators_on(attribute).map(&:class).include?(
           ActiveModel::Validations::PresenceValidator) %>
   <% input_parent_css_classes << 'required' %>
   <% input_html_options[:required] = 'required' %>
 <% end %>
 
-<% if readonly = model_class.readonly_attributes.include?(attribute.to_s) %>
+<% if readonly = klass.readonly_attributes.include?(attribute.to_s) %>
   <% input_parent_css_classes << 'readonly' %>
 <% end %>
 
@@ -25,7 +25,7 @@
   <% input_parent_css_classes << 'input' %>
 <% end %>
 
-<% if model_class.column_names.include?(attribute.to_s) %>
+<% if klass.column_names.include?(attribute.to_s) %>
   <% column_type = model.column_for_attribute(attribute).type %>
 <% else %>
   <% column_type = nil %>

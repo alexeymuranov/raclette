@@ -41,7 +41,7 @@
 <%= field_set_tag t('admin.users.edit.subheaders.authorized_ips') do %>
 
   <%= render 'shared/selection_form',
-             :model_class         => Admin::KnownIP,
+             :klass               => Admin::KnownIP,
              :table_name          => :known_ips,
              :attributes          => @known_ips_attributes,
              :column_types_o_hash => @known_ips_column_types_o_hash,

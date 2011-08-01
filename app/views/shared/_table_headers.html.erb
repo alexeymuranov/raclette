@@ -1,5 +1,5 @@
 <%# Locals:
-  model_class:
+  klass:
   column_types_o_hash:
 -%>
 
@@ -7,11 +7,11 @@
   <%- case col_type -%>
   <%- when :boolean -%>
     <th class="boolean">
-      <%= model_class.human_attribute_name(attr) %>
+      <%= klass.human_attribute_name(attr) %>
     </th>
   <%- else -%>
     <th>
-      <%= model_class.human_attribute_name(attr) %>
+      <%= klass.human_attribute_name(attr) %>
     </th>
   <%- end -%>
 <% end %>

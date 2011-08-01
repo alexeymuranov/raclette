@@ -5,7 +5,8 @@
                     :list_email_addresses => :filtered,
                     :query_type           => 'show_email_addresses',
                     :anchor               => 'email_addresses' ),
-                :id     => 'email_addresses_show_button' %>
+                :id     => 'email_addresses_show_link',
+                :remote => true %>
   <% else %>
     <h2><%= t 'admin.users.index.subheaders.mailing_list' %></h2>
 
@@ -16,6 +17,7 @@
                               :list_email_addresses).merge(
                     :query_type => 'hide_email_addresses',
                     :anchor     => 'email_addresses_show_button' ),
-                :id     => 'email_addresses_hide_button' %>
+                :id     => 'email_addresses_hide_link',
+                :remote => true %>
   <% end %>
 </section>

@@ -15,8 +15,6 @@ gem 'meta_where'  # queries without SQL
 
 gem 'spreadsheet'  # to generate XLS
 
-gem 'fastercsv'  # to generate CSV
-
 gem 'jquery-rails'  
 
 # Use unicorn as the web server

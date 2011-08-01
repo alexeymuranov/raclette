@@ -1,5 +1,7 @@
 ## encoding: UTF-8
 
+require 'csv'  # to render CSV
+
 class ApplicationController < ActionController::Base
   protect_from_forgery
 
@@ -36,6 +38,19 @@ class ApplicationController < ActionController::Base
 
     def sort_sql(table_name)
       "#{sort_column(table_name)} #{sort_direction(table_name)}"
+    end
+
+    def csv_from_collection(klass, collection, options={})
+      columns = klass.columns.map(&:name).map(&:intern)
+      columns &= Array.wrap(options[:only]) unless options[:only].nil?
+      columns -= Array.wrap(options[:except]) unless options[:except].nil?
+
+      CSV.generate(options.except(:only, :except)) do |csv|
+        csv << columns.map { |col| klass.human_attribute_name(col) } << []
+        collection.each do |model|
+          csv << columns.map { |col| model.public_send(col).to_s }
+        end
+      end
     end
 
 end

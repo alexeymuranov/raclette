@@ -10,6 +10,14 @@
       <%= check_box_tag :change_password %>
       <dl class="checkbox_conditional form_fields">
 
+        <%= render 'shared/input_in_form',
+                   :name               => :current_password,
+                   :value              => nil,
+                   :label_content      => t('field_labels.current_password'),
+                   :input_html_options => { :type      => :password,
+                                            :size      => 30,
+                                            :maxlength => 255 } %>
+
         <%= render 'shared/attribute_in_form',
                    :form_builder       => f,
                    :model              => @user,
@@ -21,14 +29,6 @@
                    :model              => @user,
                    :attribute          => :new_password_confirmation,
                    :input_html_options => { :type => :password } %>
-
-        <%= render 'shared/input_in_form',
-                   :name               => :current_password,
-                   :value              => nil,
-                   :label_content      => t('field_labels.current_password'),
-                   :input_html_options => { :type      => :password,
-                                            :size      => 30,
-                                            :maxlength => 255 } %>
 
       </dl>
     <% end %>

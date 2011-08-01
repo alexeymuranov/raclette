@@ -442,6 +442,10 @@ fr:
   buttons:
     save: "Enregistrer"
     download: "Télécharger"
+    download_in_format: "Télécharger en %{format}"
+    download_resources_in_format: "Télécharger les %{resources} en %{file_format}"
+    render_in_format: "Rendre en %{format}"
+    render_resources_in_format: "Rendre les %{resources} en %{file_format}"
     filter: "Filtrer"
     repaginate: "Paginer"
     show_email_addresses: "Montrer les adresses e-mail"
@@ -508,7 +512,9 @@ fr:
         count_total: "%{count} utilisateurs en total"
         count_filtered: "%{count} utilisateurs filtrés sur %{total}"
         subheaders:
-          mailing_list: "Adresses e-mail des utilisateurs selectionnés"
+          mailing_list: "Adresses e-mail des utilisateurs filtrés"
+        terms:
+          filtered_users: "utilisateurs filtrés"
       show:
         title: "%{username}"
         header: "Utilisateur « %{username} »"

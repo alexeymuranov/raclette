@@ -483,6 +483,10 @@ en:
   buttons:
     save: "Save"
     download: "Download"
+    download_in_format: "Download in %{format}"
+    download_resources_in_format: "Download the %{resources} in %{file_format}"
+    render_in_format: "Render in %{format}"
+    render_resources_in_format: "Render the %{resources} in %{file_format}"
     filter: "Filter"
     repaginate: "Paginate"
     show_email_addresses: "Show e-mail addresses"
@@ -549,7 +553,9 @@ en:
         count_total: "%{count} users total"
         count_filtered: "%{count} users filtered out of %{total}"
         subheaders:
-          mailing_list: "E-mail addresses of the selectes users"
+          mailing_list: "E-mail addresses of the filtered users"
+        terms:
+          filtered_users: "filtered users"
       show:
         title: "%{username}"
         header: "User '%{username}'"

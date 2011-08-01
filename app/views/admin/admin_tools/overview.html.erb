@@ -27,14 +27,14 @@
 
     <p>
       <% @users.each do |user| %>
-        <%= link_to show_pictogram(2)+' '+user.username,
-                    user,
+        <%= link_to show_pictogram(2)+' '+user.username, user,
                     :class => 'display resource' %>
       <% end %>
     </p>
 
     <footer>
-      <%= link_to add_pictogram(2)+' '+t('admin.users.links.new'), new_admin_user_path,
+      <%= link_to add_pictogram(2)+' '+t('admin.users.links.new'),
+                  new_admin_user_path,
                   :title => t('actions.create'),
                   :class => 'add resource' %>
     </footer>
@@ -49,9 +49,9 @@
 
     <p>
       <% @known_ips.each do |known_ip| %>
-        <% note = known_ip.description.blank? ? '' : " (#{known_ip.description})" %>
-          <%= link_to show_pictogram(2)+' '+known_ip.ip+note,
-                      known_ip,
+        <% note = known_ip.description.blank? ?
+                  '' : " (#{known_ip.description})" %>
+          <%= link_to show_pictogram(2)+' '+known_ip.ip+note, known_ip,
                       :class => 'display resource' %>
       <% end %>
     </p>

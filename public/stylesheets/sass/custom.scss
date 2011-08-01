@@ -1,3 +1,4 @@
+/* Colors: */
 $body-bg-color: Navy;
 $body-text-color: DarkSlateGray;
 $section-bg-color: lighten(#778899, 40%); /* #778899 LightSlateGray */ /* #F5F5F5 WhiteSmoke */
@@ -25,6 +26,18 @@ $focus-input-bg-color: White;
 $focus-input-text-color: Black;
 $login_form-focus-glow-color: Blue;
 
+/* Lengths: */
+
+$side-menu-font-size: 9pt;
+$table-header-font-size: 9pt;
+$body-font-size: 10pt;
+$main-menu-font-size: 12pt;
+$h1-font-size: 16pt;
+$h2-font-size: 14pt;
+$h3-font-size: 12pt;
+
+/* Mixins: */
+
 @mixin rounded-border($radius) {
   border-radius: $radius;
   -moz-border-radius: $radius;
@@ -49,10 +62,20 @@ $login_form-focus-glow-color: Blue;
   -moz-box-shadow: none;
 }
 
+/**********/
+/* Style: */
+/**********/
+
 body {
   background-color: $body-bg-color;
   color: $body-text-color;
-  font-size: 11pt;
+  font-size: $body-font-size;
+  # font-style: normal;
+  # font-variant: normal;
+  # font-family: 'andale mono', 'lucida console', monospace;
+  font-family: "Helvetica Narrow", Helvetica, sans-serif;
+  # font-family: sans-serif;
+  line-height: 1.5;
 }
 
 .container {
@@ -128,7 +151,7 @@ aside#developper_links {
     color: Lime;
     background-color: LightSlateGray;
     text-decoration: none;
-    font-size: 12pt;
+    font-size: $main-menu-font-size;
     font-weight: normal;
 
     &:hover {
@@ -189,7 +212,7 @@ form#login_form {
 body > div.container > header {
   @include rounded-border(10px);
   background-color: $section-bg-color;
-  font-size: 12pt;
+  font-size: $main-menu-font-size;
   text-align: left;
   margin: 5px auto;
 
@@ -316,8 +339,7 @@ body > div.container > header {
     @include box-shadow(0, 0, 5px, 0, $body-bg-color);
     margin: 0;
     padding: 0;
-    font-weight: normal;
-    font-size: 10pt;
+    font-size: $body-font-size;
 
     ul {
       margin: 0;
@@ -330,7 +352,6 @@ body > div.container > header {
           display: block;
           margin: 0;
           padding: 5px;
-          font-weight: normal;
         }
       }
 
@@ -350,7 +371,7 @@ body > div.container > header {
 body > div.container > footer {
   @include rounded-border(10px);
   background-color: $section-bg-color;
-  font-size: 12pt;
+  font-size: $main-menu-font-size;
   text-align: center;
   margin: 5px auto;
 
@@ -394,7 +415,7 @@ nav#side_menu {
   margin: 0;
   padding: 0;
   background-color: $section-bg-color;
-  font-size: 9pt;
+  font-size: $side-menu-font-size;
 
   ul {
     margin: 0;
@@ -460,17 +481,17 @@ body div.container section {
 
   h1 {
     text-align: center;
-    font-size: 16pt;
+    font-size: $h1-font-size;
     font-weight: bold;
   }
 
   h2, section h1 {
-    font-size: 14pt;
+    font-size: $h2-font-size;
     font-weight: bold;
   }
 
   h3, h4, h5, & section section h1 {
-    font-size: 12pt;
+    font-size: $h3-font-size;
     font-weight: bold;
   }
   
@@ -649,10 +670,10 @@ body div.container section {
     }
 
     thead, tfoot {
-      font-size: 10pt;
+      font-size: $table-header-font-size;
       
       th:not(:empty), td:not(:empty) {
-        font-size: 10pt;
+        font-size: $table-header-font-size;
         border-left: solid 1px $table-border-color;
         border-right: solid 1px $table-border-color;
       }
@@ -688,6 +709,10 @@ body div.container section {
       border: solid 1px $table-border-color;
     }
 
+    thead th {
+      border: solid 1px $table-border-color;
+    }
+
     tbody tr:nth-child(odd) th {
       background-color: $alt-table-head-bg-color;
     }
@@ -695,17 +720,13 @@ body div.container section {
     tbody tr:nth-child(even) th {
       background-color: $table-head-bg-color;
     }
-
-    th {
-      border: solid 1px $table-border-color;
-    }
   }
 
   table.filtered {
     @include box-shadow(0, 0, 3px, 0, $emphasis-glow-color);
     
     thead tr td.filtering_value, tfoot tr td.filtering_value {
-      font-size: 11pt;
+      font-size: $body-font-size;
       color: $emphasis-text-color;
       background-color: $section-bg-color;
     }
@@ -747,7 +768,7 @@ body div.container section {
   nav.pagination {
     margin: 0 -5px;
     padding: 0;
-    font-size: 11pt;
+    font-size: $body-font-size;
 
     span {
       display: inline-block;
@@ -765,6 +786,7 @@ body div.container section {
       }
 
       a:hover {
+        @include rounded-border(3px);
         text-shadow: none;
         color: $section-bg-color;
         background-color: $common-navigation-link-color;

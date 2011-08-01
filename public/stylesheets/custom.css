@@ -1,3 +1,4 @@
+/* Colors: */
 /* #778899 LightSlateGray */
 /* #F5F5F5 WhiteSmoke */
 /* LightSlateGray */
@@ -5,10 +6,21 @@
 /* #F8F8FF GhostWhite */
 /* #F0FFFF; Azure */
 /* #B0C4DE LightSteelBlue */
+/* Lengths: */
+/* Mixins: */
+/**********/
+/* Style: */
+/**********/
 body {
   background-color: navy;
   color: DarkSlateGray;
-  font-size: 11pt; }
+  font-size: 10pt;
+  # font-style: normal;
+  # font-variant: normal;
+  # font-family: 'andale mono', 'lucida console', monospace;
+  font-family: "Helvetica Narrow", Helvetica, sans-serif;
+  # font-family: sans-serif;
+  line-height: 1.5; }
 
 .container {
   width: 960px;
@@ -197,7 +209,6 @@ body > div.container > header {
     -moz-box-shadow: 0 0 5px 0 navy;
     margin: 0;
     padding: 0;
-    font-weight: normal;
     font-size: 10pt; }
     body > div.container > header div#main_logo div#logo_menu nav ul {
       margin: 0;
@@ -207,8 +218,7 @@ body > div.container > header {
         body > div.container > header div#main_logo div#logo_menu nav ul li a, body > div.container > header div#main_logo div#logo_menu nav ul li a:visited {
           display: block;
           margin: 0;
-          padding: 5px;
-          font-weight: normal; }
+          padding: 5px; }
       body > div.container > header div#main_logo div#logo_menu nav ul hr {
         margin: 0; }
       body > div.container > header div#main_logo div#logo_menu nav ul li.disabled {
@@ -400,9 +410,9 @@ body div.container section table {
 body div.container section table.records colgroup.attributes {
   border: solid 1px #8ca9cf; }
 body div.container section table.records thead, body div.container section table.records tfoot {
-  font-size: 10pt; }
+  font-size: 9pt; }
   body div.container section table.records thead th:not(:empty), body div.container section table.records thead td:not(:empty), body div.container section table.records tfoot th:not(:empty), body div.container section table.records tfoot td:not(:empty) {
-    font-size: 10pt;
+    font-size: 9pt;
     border-left: solid 1px #8ca9cf;
     border-right: solid 1px #8ca9cf; }
 body div.container section table.records tbody tr:nth-child(odd) td.operation {
@@ -417,18 +427,18 @@ body div.container section table.form_fields {
   margin-right: auto; }
 body div.container section table.grid col {
   border: solid 1px #8ca9cf; }
+body div.container section table.grid thead th {
+  border: solid 1px #8ca9cf; }
 body div.container section table.grid tbody tr:nth-child(odd) th {
   background-color: #d4dfed; }
 body div.container section table.grid tbody tr:nth-child(even) th {
   background-color: #b0c4de; }
-body div.container section table.grid th {
-  border: solid 1px #8ca9cf; }
 body div.container section table.filtered {
   box-shadow: 0 0 3px 0 red;
   -webkit-box-shadow: 0 0 3px 0 red;
   -moz-box-shadow: 0 0 3px 0 red; }
   body div.container section table.filtered thead tr td.filtering_value, body div.container section table.filtered tfoot tr td.filtering_value {
-    font-size: 11pt;
+    font-size: 10pt;
     color: red;
     background-color: #eceef0; }
 body div.container section fieldset {
@@ -459,7 +469,7 @@ body div.container section a:hover {
 body div.container section nav.pagination {
   margin: 0 -5px;
   padding: 0;
-  font-size: 11pt; }
+  font-size: 10pt; }
   body div.container section nav.pagination span {
     display: inline-block;
     margin: 0 10px; }
@@ -471,6 +481,9 @@ body div.container section nav.pagination {
       color: MediumBlue;
       text-decoration: none; }
     body div.container section nav.pagination span a:hover {
+      border-radius: 3px;
+      -moz-border-radius: 3px;
+      -webkit-border-radius: 3px;
       text-shadow: none;
       color: #eceef0;
       background-color: MediumBlue;

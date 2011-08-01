@@ -25,6 +25,7 @@
 #
 
 require 'digest'
+require 'app_validations/email_format'
 
 class Admin::User < ActiveRecord::Base
 

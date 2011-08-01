@@ -2,7 +2,7 @@
       models:
       attributes:
       column_types_o_hash:
-      model_class:
+      klass:
       table_name:
 -%>
 
@@ -16,7 +16,7 @@
 
       <%= render 'shared/sorting_table_headers',
                  :column_types_o_hash => column_types_o_hash,
-                 :model_class         => model_class,
+                 :klass               => klass,
                  :table_name          => table_name %>
 
       <th class="empty"></th>

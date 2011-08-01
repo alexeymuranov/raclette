@@ -2,7 +2,8 @@
 
 class Admin::UsersController < AdminController
 
-  respond_to :html, :js, :xml, :ms_excel_2003_xml, :only => :index
+  # To be used with respond_with, but currently useless: 
+  # respond_to :html, :js, :xml, :ms_excel_2003_xml, :csv, :only => :index
 
   def index
 
@@ -80,15 +81,51 @@ class Admin::UsersController < AdminController
       @column_types_for_download_o_hash[attr] = Admin::User.columns_hash[attr.to_s].type
     end
 
-    respond_with(@all_filtered_users) do |requested_format|
-      requested_format.ms_excel_2003_xml do
-        send_data render_to_string(:ms_excel_2003_xml => @all_filtered_users),
-                  :type        => 'application/xml',
-                  :filename    => "#{Time.now.strftime('%Y-%m-%d %k_%M')} "\
-                                  "#{Admin::User.human_name.pluralize}"\
+    # respond_with(@all_filtered_users) do |requested_format|
+
+    respond_to do |requested_format|
+      requested_format.html do
+        render :index
+      end
+
+      requested_format.xml do
+        render :xml => @all_filtered_users, :only => @attributes_for_download
+      end
+
+      requested_format.js do
+        case @query_type
+        # when 'filter', 'sort'
+        # when 'repaginate'
+        when 'show_email_addresses', 'hide_email_addresses'
+          render :update_email_list
+        # else
+        end
+      end
+
+      requested_format.ms_excel_2003_xml do  # renders .ms_excel_2003_xml.builder template
+        send_data render_to_string( :template => 'shared/index',
+                                    :locals   => { :models              => @all_filtered_users,
+                                                   :column_types_o_hash => @column_types_for_download_o_hash }),
+                  :filename    => "#{Admin::User.human_name.pluralize}"\
+                                  " #{Time.now.strftime('%Y-%m-%d %k_%M')}"\
                                   ".excel2003.xml",
+                  :type        => "#{Mime::MS_EXCEL_2003_XML.to_s}; "\
+                                  "charset=utf-8",
                   :disposition => 'inline'
-#                  :disposition => 'attachment'
+      end
+
+      requested_format.csv do
+        send_data csv_from_collection(Admin::User,
+                                      @all_filtered_users,
+                                      :only     => @attributes_for_download,
+                                      :col_sep  => ';',
+                                      :row_sep  => "\r\n",
+                                      :encoding => 'utf-8'),
+                  :filename    => "#{Admin::User.human_name.pluralize}"\
+                                  " #{Time.now.strftime('%Y-%m-%d %k_%M')}"\
+                                  ".csv",
+                  :type        => "#{Mime::CSV.to_s}; charset=utf-8",
+                  :disposition => 'inline'
       end
     end
   end
@@ -117,11 +154,6 @@ class Admin::UsersController < AdminController
     end
 
     @title = t('admin.users.show.title', :username => @user.username)
-
-    respond_to do |format|
-      format.html
-      # format.xml { render :xml => @all_filtered_users }
-    end
   end
 
   def new
@@ -178,14 +210,14 @@ class Admin::UsersController < AdminController
     params[:admin_user].delete(:comments)\
         if params[:admin_user][:comments].blank?
 
-    unless params[:change_password]
-      params.delete(:current_password)
-      params[:admin_user].except!(:new_password, :new_password_confirmation)
-    end
-
     if @user == current_user
       params[:admin_user].except!(:account_deactivated, :admin)
     else
+      params.delete(:change_password)
+      params[:admin_user].except!(:new_password, :new_password_confirmation)
+    end
+
+    unless params[:change_password]
       params.delete(:current_password)
       params[:admin_user].except!(:new_password, :new_password_confirmation)
     end
@@ -254,7 +286,7 @@ class Admin::UsersController < AdminController
 
       @safe_ips = nil
       @other_ips = Admin::KnownIP.order(sort_sql(:safe_ips))
-      
+
       @title = t('admin.users.new.title')
 
       render :new
@@ -275,21 +307,6 @@ class Admin::UsersController < AdminController
       @title =  t('admin.users.edit.title', :username => @user.username)
 
       render :edit
-    end
-
-    def render_to_excel_spreadsheet(users)  # FIXME (not finished)
-      book = Spreadsheet::Workbook.new
-      worksheet = book.create_worksheet(:name => Admin::User.human_name.pluralize)
-      
-      contruct_body(worksheet, @users)  # FIXME (not finished)
-
-      blob = StringIO.new
-      book.write(blob)
-
-      filename = I18n.l(Time.now, :format => :short) +
-                 ' - ' + Admin::User.human_name.pluralize + '.xls'
-      send_data blob.string, :type     => 'application/ms-excel',
-                             :filename => filename
     end
 
 end

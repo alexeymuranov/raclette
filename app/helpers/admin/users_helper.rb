@@ -1,14 +1,14 @@
 module Admin::UsersHelper
 
-  def color_for_user_permissions(user)
+  def logo_box_inline_style_for_user(user)
     if user.admin?
-      'Red'
+      'background-color:Red'
     elsif user.manager?
-      'Blue'
+      'background-color:Blue'
     elsif user.secretary?
       'Aqua'
     else
-      'Green'
+      'background-color:Green'
     end
   end
   

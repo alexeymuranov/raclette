@@ -1,7 +1,8 @@
 <div id="main_logo">
   <% if current_user %>
-    <%= content_tag(:div, :id => 'logo_box',
-                          :style => "background-color:#{color_for_user_permissions(current_user)}") do %>
+    <%= content_tag :div,
+                    :id    => 'logo_box',
+                    :style => logo_box_inline_style_for_user(current_user) do %>
       <%= link_to logo, path_logo_links_to(current_user) %>
     <% end %>
     <div id="logo_menu">
