@@ -2,11 +2,7 @@
 
 class Admin::UsersController < AdminController
 
-  # To be used with respond_with, but currently useless: 
-  # respond_to :html, :js, :xml, :ms_excel_2003_xml, :csv, :only => :index
-
   def index
-
     @query_type = params[:query_type]
     params.delete(:query_type)
     # params.delete(:commit)
@@ -26,42 +22,18 @@ class Admin::UsersController < AdminController
     end
 
     # Filter:
-    params[:filter] ||= {}
-    @filter = {}
-
-    @all_filtered_users = Admin::User.scoped
-
-    @column_types_o_hash.each do |attr, col_type|
-      case col_type
-      when :string
-        unless params[:filter][attr].blank?
-          @filter[attr] = params[:filter][attr].sub(/\%*\z/, '%')
-          # @users = @users.where(Admin::User.arel_table[attribute].matches(@filter[attr]).to_sql)
-          # Use MetaWhere instead:
-          @all_filtered_users = @all_filtered_users.where(attr.matches => @filter[attr])
-        end
-      when :boolean
-        case params[:filter][attr]
-        when 'yes'
-          @filter[attr] = true
-          @all_filtered_users = @all_filtered_users.where(attr => true)
-        when 'no'
-          @filter[attr] = false
-          @all_filtered_users = @all_filtered_users.where(attr => false)
-        end
-      end
-    end
+    @all_filtered_users = filter(Admin::User.scoped)
 
     # Sort:
-    @all_filtered_users = @all_filtered_users.order(sort_sql(:users))
+    @all_filtered_users = sort(@all_filtered_users, :users)  # table_name = :users
 
     # Paginate:
-    params[:per_page] ||= 25
-    @users = @all_filtered_users.page(params[:page]).per(params[:per_page])
+    @users = paginate(@all_filtered_users)
 
     # Compose mailing list:
     if params[:list_email_addresses]
-      @mailing_list_users = @all_filtered_users.select { |user| !user.email.blank? }
+      @mailing_list_users =
+          @all_filtered_users.select { |user| !user.email.blank? }
       @mailing_list = @mailing_list_users.collect(&:formatted_email).join(', ')
     end
 
@@ -78,10 +50,9 @@ class Admin::UsersController < AdminController
 
     @column_types_for_download_o_hash = ActiveSupport::OrderedHash.new
     @attributes_for_download.each do |attr|
-      @column_types_for_download_o_hash[attr] = Admin::User.columns_hash[attr.to_s].type
+      @column_types_for_download_o_hash[attr] =
+          Admin::User.columns_hash[attr.to_s].type
     end
-
-    # respond_with(@all_filtered_users) do |requested_format|
 
     respond_to do |requested_format|
       requested_format.html do
@@ -102,30 +73,14 @@ class Admin::UsersController < AdminController
         end
       end
 
-      requested_format.ms_excel_2003_xml do  # renders .ms_excel_2003_xml.builder template
-        send_data render_to_string( :template => 'shared/index',
-                                    :locals   => { :models              => @all_filtered_users,
-                                                   :column_types_o_hash => @column_types_for_download_o_hash }),
-                  :filename    => "#{Admin::User.human_name.pluralize}"\
-                                  " #{Time.now.strftime('%Y-%m-%d %k_%M')}"\
-                                  ".excel2003.xml",
-                  :type        => "#{Mime::MS_EXCEL_2003_XML.to_s}; "\
-                                  "charset=utf-8",
-                  :disposition => 'inline'
+      requested_format.ms_excel_2003_xml do
+        render_ms_excel_2003_xml_for_download\
+            Admin::User, @all_filtered_users, @column_types_for_download_o_hash  # defined in ApplicationController
       end
 
       requested_format.csv do
-        send_data csv_from_collection(Admin::User,
-                                      @all_filtered_users,
-                                      :only     => @attributes_for_download,
-                                      :col_sep  => ';',
-                                      :row_sep  => "\r\n",
-                                      :encoding => 'utf-8'),
-                  :filename    => "#{Admin::User.human_name.pluralize}"\
-                                  " #{Time.now.strftime('%Y-%m-%d %k_%M')}"\
-                                  ".csv",
-                  :type        => "#{Mime::CSV.to_s}; charset=utf-8",
-                  :disposition => 'inline'
+        render_csv_for_download\
+            Admin::User, @all_filtered_users, @attributes_for_download  # defined in ApplicationController
       end
     end
   end
@@ -145,12 +100,14 @@ class Admin::UsersController < AdminController
     @other_main_attributes << :person_id if @user.a_person?
     @other_main_attributes << :comments
     @other_attributes = []
-    @other_attributes << :last_signed_in_at unless @user.last_signed_in_at.blank?
+    @other_attributes << :last_signed_in_at\
+        unless @user.last_signed_in_at.blank?
 
     @safe_ips_attributes = [ :ip, :description ]
     @safe_ips_column_types_o_hash = ActiveSupport::OrderedHash.new
     @safe_ips_attributes.each do |attr|
-      @safe_ips_column_types_o_hash[attr] = Admin::KnownIP.columns_hash[attr.to_s].type
+      @safe_ips_column_types_o_hash[attr] =
+          Admin::KnownIP.columns_hash[attr.to_s].type
     end
 
     @title = t('admin.users.show.title', :username => @user.username)
@@ -178,22 +135,22 @@ class Admin::UsersController < AdminController
     params[:admin_user].delete(:comments)\
         if params[:admin_user][:comments].blank?
 
-    @acceptable_attribute_names = [ 'username', 'full_name', 'email',
+    @acceptable_attributs = [ 'username', 'full_name', 'email',
         'account_deactivated', 'admin', 'manager', 'secretary', 'a_person',
         'comments',
         'password', 'password_confirmation',
         'safe_ip_ids' ]
 
-    params[:admin_user].slice!(*@acceptable_attribute_names)
+    params[:admin_user].slice!(*@acceptable_attributs)
 
     @user = Admin::User.new(params[:admin_user])
 
     if @user.save
-      flash[:success] = t('admin.users.create.flash.success',
+      flash[:success] = t('flash.admin.users.create.success',
                           :username => @user.username)
       redirect_to @user
     else
-      flash.now[:error] = t('admin.users.create.flash.failure')
+      flash.now[:error] = t('flash.admin.users.create.failure')
 
       render_new_properly  # is it OK?
     end
@@ -222,28 +179,28 @@ class Admin::UsersController < AdminController
       params[:admin_user].except!(:new_password, :new_password_confirmation)
     end
 
-    @acceptable_attribute_names = [ 'username', 'full_name', 'email',
+    @acceptable_attributs = [ 'username', 'full_name', 'email',
         'account_deactivated', 'admin', 'manager', 'secretary', 'a_person',
         'comments',
         'current_password', 'new_password', 'new_password_confirmation',
         'safe_ip_ids' ]
 
-    params[:admin_user].slice!(*@acceptable_attribute_names)
+    params[:admin_user].slice!(*@acceptable_attributs)
 
     current_password = params[:current_password]
 
     if current_password.nil? || @user.has_password?(current_password)
       if @user.update_attributes(params[:admin_user])
-        flash[:notice] = t('admin.users.update.flash.success',
+        flash[:notice] = t('flash.admin.users.update.success',
                            :username => @user.username)
         redirect_to @user
       else
-        flash.now[:error] = t('admin.users.update.flash.failure')
+        flash.now[:error] = t('flash.admin.users.update.failure')
 
         render_edit_properly  # is it OK?
       end
     else
-      flash.now[:error] = t('admin.users.update.flash.wrong_password')
+      flash.now[:error] = t('flash.admin.users.update.wrong_password')
 
       render_edit_properly  # is it OK?
     end
@@ -252,7 +209,8 @@ class Admin::UsersController < AdminController
   def destroy
     @user = Admin::User.find(params[:id])
     @user.destroy
-    flash[:notice] =  t('admin.users.destroy.flash.success', :username => @user.username)
+    flash[:notice] = t('flash.admin.users.destroy.success',
+                       :username => @user.username)
 
     redirect_to admin_users_url
   end
@@ -276,12 +234,11 @@ class Admin::UsersController < AdminController
     end
 
     def render_new_properly
-      params = {}
-
       @known_ips_attributes = [ :ip, :description ]
       @known_ips_column_types_o_hash = ActiveSupport::OrderedHash.new
       @known_ips_attributes.each do |attr|
-        @known_ips_column_types_o_hash[attr] = Admin::KnownIP.columns_hash[attr.to_s].type
+        @known_ips_column_types_o_hash[attr] =
+            Admin::KnownIP.columns_hash[attr.to_s].type
       end
 
       @safe_ips = nil
@@ -293,12 +250,11 @@ class Admin::UsersController < AdminController
     end
 
     def render_edit_properly
-      params = {}
-
       @known_ips_attributes = [ :ip, :description ]
       @known_ips_column_types_o_hash = ActiveSupport::OrderedHash.new
       @known_ips_attributes.each do |attr|
-        @known_ips_column_types_o_hash[attr] = Admin::KnownIP.columns_hash[attr.to_s].type
+        @known_ips_column_types_o_hash[attr] =
+            Admin::KnownIP.columns_hash[attr.to_s].type
       end
 
       @safe_ips = @user.safe_ips.order(sort_sql(:safe_ips))

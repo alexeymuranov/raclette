@@ -1,5 +1,7 @@
 ## encoding: UTF-8
 
+# require 'rails/generators/resource_helpers'
+
 module ApplicationHelper
 
   def boolean_to_yes_no(bool)
@@ -16,6 +18,7 @@ module ApplicationHelper
 
   def title
     base_title = 'Raclette'
+    # @title ||= t("#{controller_i18n_scope}.#{action_name}.title")  # FIXME
     @title.nil? ? base_title : "#{base_title} | #{@title}"
   end
 
@@ -35,9 +38,9 @@ module ApplicationHelper
     image_tag 'logos/ruby-logo.png', :alt => 'Ruby'
   end
 
-  SHOW_ICON_FILE_NAMES = [ 'icons/show-16.png',
-                           'icons/show-24.png',
-                           'icons/show-32.png' ]
+#   SHOW_ICON_FILE_NAMES = [ 'icons/show-16.png',
+#                            'icons/show-24.png',
+#                            'icons/show-32.png' ]
 
   def show_pictogram(size=1)
     # image_tag SHOW_ICON_FILE_NAMES[size], :alt => 'show'
@@ -46,9 +49,9 @@ module ApplicationHelper
                             :style => css_style
   end
 
-  EDIT_ICON_FILE_NAMES = [ 'icons/edit-16.png',
-                           'icons/edit-24.png',
-                           'icons/edit-32.png' ]
+#   EDIT_ICON_FILE_NAMES = [ 'icons/edit-16.png',
+#                            'icons/edit-24.png',
+#                            'icons/edit-32.png' ]
 
   def edit_pictogram(size=1)
     # image_tag EDIT_ICON_FILE_NAMES[size], :alt => 'edit'
@@ -57,9 +60,9 @@ module ApplicationHelper
                             :style => css_style
   end
 
-  ADD_ICON_FILE_NAMES = [ 'icons/add-16.png',
-                          'icons/add-24.png',
-                          'icons/add-32.png' ]
+#   ADD_ICON_FILE_NAMES = [ 'icons/add-16.png',
+#                           'icons/add-24.png',
+#                           'icons/add-32.png' ]
 
   def add_pictogram(size=1)
     # image_tag ADD_ICON_FILE_NAMES[size], :alt => 'add'
@@ -68,9 +71,9 @@ module ApplicationHelper
                             :style => css_style
   end
 
-  DELETE_ICON_FILE_NAMES = [ 'icons/delete-16.png',
-                             'icons/delete-24.png',
-                             'icons/delete-32.png' ]
+#   DELETE_ICON_FILE_NAMES = [ 'icons/delete-16.png',
+#                              'icons/delete-24.png',
+#                              'icons/delete-32.png' ]
 
   def delete_pictogram(size=1)
     # image_tag DELETE_ICON_FILE_NAMES[size], :alt => 'delete'
@@ -79,9 +82,9 @@ module ApplicationHelper
                             :style => css_style
   end
 
-  LIST_ALL_ICON_FILE_NAMES = [ 'icons/list_all-16.png',
-                               'icons/list_all-24.png',
-                               'icons/list_all-32.png' ]
+#   LIST_ALL_ICON_FILE_NAMES = [ 'icons/list_all-16.png',
+#                                'icons/list_all-24.png',
+#                                'icons/list_all-32.png' ]
 
   def list_all_pictogram(size=1)
     # image_tag LIST_ALL_ICON_FILE_NAMES[size], :alt => 'list all'
@@ -90,9 +93,9 @@ module ApplicationHelper
                             :style => css_style
   end
 
-  YES_ICON_FILE_NAMES = [ 'icons/yes-16.png',
-                          'icons/yes-24.png',
-                          'icons/yes-32.png' ]
+#   YES_ICON_FILE_NAMES = [ 'icons/yes-16.png',
+#                           'icons/yes-24.png',
+#                           'icons/yes-32.png' ]
 
   def yes_pictogram(size=1)
     # image_tag YES_ICON_FILE_NAMES[size], :alt => t(:yes), :title => t(:yes)
@@ -105,8 +108,8 @@ module ApplicationHelper
   def sortable(table_name, column, title = nil, html_options = {})
     title ||= column.to_s.titleize
 
-    if column.intern == sort_column(table_name)  # column is current sort column
-      if sort_direction(table_name) == :asc  # current sort direction is asc
+    if column.intern == sort_column(table_name)  # is column current sort column?
+      if sort_direction(table_name) == :asc  # is current sort direction asc?
         sort_indicator = '▲ '
         direction_on_click = :desc
         css_class = 'sort current asc'
@@ -121,11 +124,12 @@ module ApplicationHelper
       css_class = 'sort'
     end
 
-    options = params.deep_merge :page => 1,
-                                :sort => { table_name =>
-                                           { :column    => column,
-                                             :direction => direction_on_click } },
-                                :anchor => table_name,
+    options = params.deep_merge :page      => 1,
+                                :sort      =>
+                                    { table_name =>
+                                        { :column    => column,
+                                          :direction => direction_on_click } },
+                                :anchor     => table_name,
                                 :query_type => 'sort'
 
     if html_options[:class].blank?
@@ -136,10 +140,11 @@ module ApplicationHelper
 
     link_to sort_indicator+title, options, html_options
   end
-  
-  def store_hash_in_hidden_form_fields(hash)
+
+  def set_params_in_hidden_form_fields(hash)
+    query_string = hash.except(:controller, :action).to_query
     generated_html = ''.html_safe
-    hash.to_query.split(/[&;]+/).each do |single_option|
+    query_string.split(/[&;]+/).each do |single_option|
       unless single_option.blank?
         a = single_option.split('=')
         generated_html += hidden_field_tag(a[0], a[1])

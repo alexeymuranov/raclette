@@ -4,48 +4,48 @@
       <% entry_register_path=secretary_tools_path=manager_tools_path='#' %>
 
       <li>
-        <%= link_to t("application_layout.navigation_links.monitor"),
+        <%= link_to t("monitor.overview.title"),
                     monitor_overview_path %>
       </li><!-- no space!
    --><li>
-        <%= link_to t("application_layout.navigation_links.entry_register"),
+        <%= link_to t("entry_register.overview.title"),
                     entry_register_path %>
       </li><!-- no space!
       <%- if current_user.secretary? -%>
      --><li>
-          <%= link_to t("application_layout.navigation_links.secretary_tools"),
+          <%= link_to t("secretary_tools.overview.title"),
                       secretary_tools_path %>
         </li><!-- no space!
       <%- else -%>
      --><li class="disabled">
           <span class="disabled_link">
-            <%= t("application_layout.navigation_links.secretary_tools") %>
+            <%= t("secretary_tools.overview.title") %>
           </span>
         </li><!-- no space!
       <%- end -%>
       <%- if current_user.manager? -%>
      --><li>
-          <%= link_to t("application_layout.navigation_links.manager_tools"),
+          <%= link_to t("manager_tools.overview.title"),
                       manager_tools_path %>
         </li><!-- no space!
       <%- else -%>
      --><li class="disabled">
           <span class="disabled_link">
-            <%= t("application_layout.navigation_links.manager_tools") %>
+            <%= t("manager_tools.overview.title") %>
           </span>
         </li><!-- no space!
       <%- end -%>
       <%- if current_user.admin? -%>
      --><hr /><!-- no space!
      --><li><!-- no space!
-       --><%= link_to t("application_layout.navigation_links.admin_tools"),
+       --><%= link_to t("admin.admin_tools.overview.title"),
                       admin_admin_tools_overview_path %>
         </li>
       <%- else -%>
      --><hr /><!-- no space!
      --><li class="disabled"><!-- no space!
        --><span class="disabled_link">
-            <%= t("application_layout.navigation_links.admin_tools") %>
+            <%= t("admin.admin_tools.overview.title") %>
           </span>
         </li>
       <%- end -%>

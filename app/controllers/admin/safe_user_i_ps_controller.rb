@@ -17,7 +17,6 @@ class Admin::SafeUserIPsController < AdminController
   end
   
   def update_all
-
     params[:safe_user_ids_for_known_ips] ||= {}
     
     Admin::KnownIP.all.each do |known_ip|

@@ -10,7 +10,8 @@ class Admin::KnownIPsController < AdminController
       @column_types_o_hash[attr] = Admin::KnownIP.columns_hash[attr.to_s].type
     end
 
-    @known_ips = Admin::KnownIP.order(sort_sql(:known_ips))
+    # Sort:
+    @known_ips = sort(Admin::KnownIP.scoped, :known_ips)  # table_name = :known_ips
 
     @title = t('admin.known_i_ps.index.title')
   end
@@ -32,7 +33,8 @@ class Admin::KnownIPsController < AdminController
 
     @safe_users_column_types_o_hash = ActiveSupport::OrderedHash.new
     @safe_users_attributes.each do |attr|
-      @safe_users_column_types_o_hash[attr] = Admin::User.columns_hash[attr.to_s].type
+      @safe_users_column_types_o_hash[attr] =
+          Admin::User.columns_hash[attr.to_s].type
     end
 
     @title = t('admin.known_i_ps.show.title', :ip => @known_ip.ip)
@@ -51,38 +53,40 @@ class Admin::KnownIPsController < AdminController
   end
 
   def create
-    @acceptable_attribute_names = [ 'ip', 'description' ]
+    @acceptable_attributs = [ 'ip', 'description' ]
 
     params[:admin_known_ip].keep_if do |key, value|
-      @acceptable_attribute_names.include? key
+      @acceptable_attributs.include? key
     end
 
     @known_ip = Admin::KnownIP.new(params[:admin_known_ip])
 
     if @known_ip.save
-      flash[:success] =  t('admin.known_i_ps.create.flash.success', :ip => @known_ip.ip)
+      flash[:success] = t('flash.admin.known_i_ps.create.success',
+                          :ip => @known_ip.ip)
       redirect_to @known_ip
     else
-      flash.now[:error] = t('admin.known_i_ps.create.flash.failure')
+      flash.now[:error] = t('flash.admin.known_i_ps.create.failure')
 
       render_new_properly
     end
   end
 
   def update
-    @acceptable_attribute_names = [ 'ip', 'description' ]
+    @acceptable_attributs = [ 'ip', 'description' ]
 
     params[:admin_known_ip].keep_if do |key, value|
-      @acceptable_attribute_names.include? key
+      @acceptable_attributs.include? key
     end
 
     @known_ip = Admin::KnownIP.find(params[:id])
 
     if @known_ip.update_attributes(params[:admin_known_ip])
-      flash[:notice] =  t('admin.known_i_ps.update.flash.success', :ip => @known_ip.ip)
+      flash[:notice] =  t('flash.admin.known_i_ps.update.success',
+                          :ip => @known_ip.ip)
       redirect_to @known_ip
     else
-      flash.now[:error] = t('admin.known_i_ps.update.flash.failure')
+      flash.now[:error] = t('flash.admin.known_i_ps.update.failure')
 
       render_edit_properly
     end
@@ -91,7 +95,8 @@ class Admin::KnownIPsController < AdminController
   def destroy
     @known_ip = Admin::KnownIP.find(params[:id])
     @known_ip.destroy
-    flash[:notice] = t('admin.known_i_ps.destroy.flash.success', :ip => @known_ip.ip)
+    flash[:notice] = t('flash.admin.known_i_ps.destroy.success',
+                       :ip => @known_ip.ip)
 
     redirect_to admin_known_ips_url
   end

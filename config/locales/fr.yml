@@ -460,15 +460,6 @@ fr:
   questions:
     "are_you_sure?": "Vous êtes sûr ?"
 
-  flash_messages:
-    logged_in: "Vous êtes connecté(e) comme « %{username} »."
-    logged_out: "Vous êtes déconnecté(e)."
-    invalid_login: "Nom d'utilisateur et/ou mot de passe est invalide."
-    user_account_deactivated: "Votre compte d'utilisateur est désactivé, veuillez contacter un administrateur."
-    operation_failed: "L'opération a échouée."
-    require_login: "Vous devez vous connecter pour acceder à cette page."
-    require_admin: "Vous devez être un administratur pour acceder à la section que vous avez essayé d'acceder."
-
   flash:
     actions:
       create:
@@ -478,21 +469,146 @@ fr:
       destroy:
         success: "%{resource_name} supprimé(e) avec succès."
         failure: "%{resource_name} n'a pas pu être supprimé(e)."
+    filters:
+      require_login: "Vous devez vous connecter pour acceder à cette page."
+      require_admin: "Vous devez être un administratur pour acceder à la section que vous avez essayé d'acceder."
+
+    sessions:
+      create:
+        logged_in: "Vous êtes connecté(e) comme « %{username} »."
+        invalid_login: "Nom d'utilisateur et/ou mot de passe est invalide."
+        user_account_deactivated: "Votre compte d'utilisateur est désactivé, veuillez contacter un administrateur."
+      destroy:
+        logged_out: "Vous êtes déconnecté(e)."
     admin:
       users:
         create:
-          success: "L'utilisateur créé(e) avec succès."
+          success: "L'utilisateur « %{username} » a été enregistré."
+          failure: "L'utilisateur n'a pas été enregistré."
+        update:
+          success: "L'utilisateur « %{username} » a été mis à jour."
+          failure: "L'utilisateur n'a pas été mis à jour."
+          wrong_password: "Le mot de passe est invalide, l'utilisateur n'a pas été mis à jour."
+        destroy:
+          success: "L'utilisateur « %{username} » est supprimé."
+          failure: "Une erreur s'est produit!"
+      known_i_ps:
+        create:
+          success: "L'adresse IP %{ip} a été enregistrée."
+          failure: "L'adresse IP n'a pas été enregistrée."
+        update:
+          success: "L'adresse IP %{ip} a été mise à jour."
+          failure: "L'adresse IP n'a pas été mise à jour."
+        destroy:
+          success: "L'adresse IP %{ip} est supprimée."
+          failure: "Une erreur s'est produit!"
+    instructors:
+      create:
+        success: "Le modèle est enregistré."
+        failure: "Une erreur s'est produit!"
+      update:
+        success: "Le modèle est mis à jour."
+        failure: "Une erreur s'est produit!"
+      destroy:
+        success: "Le modèle est supprimé."
+        failure: "Une erreur s'est produit!"
+    lesson_supervisions:
+      create:
+        success: "Le modèle est enregistré."
+        failure: "Une erreur s'est produit!"
+      update:
+        success: "Le modèle est mis à jour."
+        failure: "Une erreur s'est produit!"
+      destroy:
+        success: "Le modèle est supprimé."
+        failure: "Une erreur s'est produit!"
+    members:
+      create:
+        success: "Le modèle est enregistré."
+        failure: "Une erreur s'est produit!"
+      update:
+        success: "Le modèle est mis à jour."
+        failure: "Une erreur s'est produit!"
+      destroy:
+        success: "Le modèle est supprimé."
+        failure: "Une erreur s'est produit!"
+    membership_types:
+      create:
+        success: "Le modèle est enregistré."
+        failure: "Une erreur s'est produit!"
+      update:
+        success: "Le modèle est mis à jour."
+        failure: "Une erreur s'est produit!"
+      destroy:
+        success: "Le modèle est supprimé."
+        failure: "Une erreur s'est produit!"
+    ticket_books:
+      create:
+        success: "Le modèle est enregistré."
+        failure: "Une erreur s'est produit!"
+      update:
+        success: "Le modèle est mis à jour."
+        failure: "Une erreur s'est produit!"
+      destroy:
+        success: "Le modèle est supprimé."
+        failure: "Une erreur s'est produit!"
+    activity_periods:
+      create:
+        success: "Le modèle est enregistré."
+        failure: "Une erreur s'est produit!"
+      update:
+        success: "Le modèle est mis à jour."
+        failure: "Une erreur s'est produit!"
+      destroy:
+        success: "Le modèle est supprimé."
+        failure: "Une erreur s'est produit!"
+    memberships:
+      create:
+        success: "Le modèle est enregistré."
+        failure: "Une erreur s'est produit!"
+      update:
+        success: "Le modèle est mis à jour."
+        failure: "Une erreur s'est produit!"
+      destroy:
+        success: "Le modèle est supprimé."
+        failure: "Une erreur s'est produit!"
+    weekly_events:
+      create:
+        success: "Le modèle est enregistré."
+        failure: "Une erreur s'est produit!"
+      update:
+        success: "Le modèle est mis à jour."
+        failure: "Une erreur s'est produit!"
+      destroy:
+        success: "Le modèle est supprimé."
+        failure: "Une erreur s'est produit!"
+    weekly_event_suspensions:
+      create:
+        success: "Le modèle est enregistré."
+        failure: "Une erreur s'est produit!"
+      update:
+        success: "Le modèle est mis à jour."
+        failure: "Une erreur s'est produit!"
+      destroy:
+        success: "Le modèle est supprimé."
+        failure: "Une erreur s'est produit!"
+    events:
+      create:
+        success: "Le modèle est enregistré."
+        failure: "Une erreur s'est produit!"
+      update:
+        success: "Le modèle est mis à jour."
+        failure: "Une erreur s'est produit!"
+      destroy:
+        success: "Le modèle est supprimé."
+        failure: "Une erreur s'est produit!"
 
-  application_layout:
-    navigation_links:
-      monitor: "Écran de contrôle"
-      entry_register: "Caisse d'entrée"
-      secretary_tools: "Outils de secrétare"
-      manager_tools: "Outils de gestion"
-      admin_tools: "Outils d'administration"
-      sign_out: "Se deconnecter"
+  external_links:
       tangueando_site: "Site Tangueando"
 
+  application_navigation_links:
+    sign_out: "Se deconnecter"
+ 
   sessions:
     new:
       title: "Connection"
@@ -504,7 +620,26 @@ fr:
       password: "Mot de passe :"
       your_ip_address: "Votre adresse IP :"
 
+  monitor:
+    overview:
+      title: "Écran de contrôle"
+
+  entry_register:
+    overview:
+      title: "Caisse d'entrée"
+
+  secretary_tools:
+    overview:
+      title: "Outils de secrétare"
+
+  manager_tools:
+    overview:
+      title: "Outils de gestion"
+
   admin:
+    admin_tools:
+      overview:
+        title: "Outils d'administration"
     users:
       index:
         title: "Utilisateurs"
@@ -545,19 +680,6 @@ fr:
           other: "Divers"
         links:
           show: "Cet utilisateur"
-      create:
-        flash:
-          success: "L'utilisateur « %{username} » a été enregistré."
-          failure: "L'utilisateur n'a pas été enregistré."
-      update:
-        flash:
-          success: "L'utilisateur « %{username} » a été mis à jour."
-          failure: "L'utilisateur n'a pas été mis à jour."
-          wrong_password: "Le mot de passe est invalide, l'utilisateur n'a pas été mis à jour."
-      destroy:
-        flash:
-          success: "L'utilisateur « %{username} » est supprimé."
-          failure: "Une erreur s'est produit!"
 
       links:
         show_all: "Tous utilisateurs"
@@ -587,18 +709,6 @@ fr:
         header: "Mise à jour de l'adresse IP %{ip}"
         links:
           show: "Cette adresse IP"
-      create:
-        flash:
-          success: "L'adresse IP %{ip} a été enregistrée."
-          failure: "L'adresse IP n'a pas été enregistrée."
-      update:
-        flash:
-          success: "L'adresse IP %{ip} a été mise à jour."
-          failure: "L'adresse IP n'a pas été mise à jour."
-      destroy:
-        flash:
-          success: "L'adresse IP %{ip} est supprimée."
-          failure: "Une erreur s'est produit!"
 
       links:
         show_all: "Adresses IP connues"
@@ -633,18 +743,6 @@ fr:
     edit:
       title: ""
       header: ""
-    create:
-      flash:
-        success: "Le modèle est enregistré."
-        failure: "Une erreur s'est produit!"
-    update:
-      flash:
-        success: "Le modèle est mis à jour."
-        failure: "Une erreur s'est produit!"
-    destroy:
-      flash:
-        success: "Le modèle est supprimé."
-        failure: "Une erreur s'est produit!"
 
   lesson_supervisions:
     index:
@@ -659,18 +757,6 @@ fr:
     edit:
       title: ""
       header: ""
-    create:
-      flash:
-        success: "Le modèle est enregistré."
-        failure: "Une erreur s'est produit!"
-    update:
-      flash:
-        success: "Le modèle est mis à jour."
-        failure: "Une erreur s'est produit!"
-    destroy:
-      flash:
-        success: "Le modèle est supprimé."
-        failure: "Une erreur s'est produit!"
 
   members:
     index:
@@ -685,18 +771,6 @@ fr:
     edit:
       title: ""
       header: ""
-    create:
-      flash:
-        success: "Le modèle est enregistré."
-        failure: "Une erreur s'est produit!"
-    update:
-      flash:
-        success: "Le modèle est mis à jour."
-        failure: "Une erreur s'est produit!"
-    destroy:
-      flash:
-        success: "Le modèle est supprimé."
-        failure: "Une erreur s'est produit!"
 
   membership_types:
     index:
@@ -711,18 +785,6 @@ fr:
     edit:
       title: ""
       header: ""
-    create:
-      flash:
-        success: "Le modèle est enregistré."
-        failure: "Une erreur s'est produit!"
-    update:
-      flash:
-        success: "Le modèle est mis à jour."
-        failure: "Une erreur s'est produit!"
-    destroy:
-      flash:
-        success: "Le modèle est supprimé."
-        failure: "Une erreur s'est produit!"
 
   ticket_books:
     index:
@@ -737,18 +799,6 @@ fr:
     edit:
       title: ""
       header: ""
-    create:
-      flash:
-        success: "Le modèle est enregistré."
-        failure: "Une erreur s'est produit!"
-    update:
-      flash:
-        success: "Le modèle est mis à jour."
-        failure: "Une erreur s'est produit!"
-    destroy:
-      flash:
-        success: "Le modèle est supprimé."
-        failure: "Une erreur s'est produit!"
 
   activity_periods:
     index:
@@ -763,18 +813,6 @@ fr:
     edit:
       title: ""
       header: ""
-    create:
-      flash:
-        success: "Le modèle est enregistré."
-        failure: "Une erreur s'est produit!"
-    update:
-      flash:
-        success: "Le modèle est mis à jour."
-        failure: "Une erreur s'est produit!"
-    destroy:
-      flash:
-        success: "Le modèle est supprimé."
-        failure: "Une erreur s'est produit!"
 
   memberships:
     index:
@@ -789,18 +827,6 @@ fr:
     edit:
       title: ""
       header: ""
-    create:
-      flash:
-        success: "Le modèle est enregistré."
-        failure: "Une erreur s'est produit!"
-    update:
-      flash:
-        success: "Le modèle est mis à jour."
-        failure: "Une erreur s'est produit!"
-    destroy:
-      flash:
-        success: "Le modèle est supprimé."
-        failure: "Une erreur s'est produit!"
 
   weekly_events:
     index:
@@ -815,18 +841,6 @@ fr:
     edit:
       title: ""
       header: ""
-    create:
-      flash:
-        success: "Le modèle est enregistré."
-        failure: "Une erreur s'est produit!"
-    update:
-      flash:
-        success: "Le modèle est mis à jour."
-        failure: "Une erreur s'est produit!"
-    destroy:
-      flash:
-        success: "Le modèle est supprimé."
-        failure: "Une erreur s'est produit!"
 
   weekly_event_suspensions:
     index:
@@ -841,18 +855,6 @@ fr:
     edit:
       title: ""
       header: ""
-    create:
-      flash:
-        success: "Le modèle est enregistré."
-        failure: "Une erreur s'est produit!"
-    update:
-      flash:
-        success: "Le modèle est mis à jour."
-        failure: "Une erreur s'est produit!"
-    destroy:
-      flash:
-        success: "Le modèle est supprimé."
-        failure: "Une erreur s'est produit!"
 
   events:
     index:
@@ -867,15 +869,3 @@ fr:
     edit:
       title: ""
       header: ""
-    create:
-      flash:
-        success: "Le modèle est enregistré."
-        failure: "Une erreur s'est produit!"
-    update:
-      flash:
-        success: "Le modèle est mis à jour."
-        failure: "Une erreur s'est produit!"
-    destroy:
-      flash:
-        success: "Le modèle est supprimé."
-        failure: "Une erreur s'est produit!"

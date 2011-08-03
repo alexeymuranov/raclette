@@ -501,15 +501,6 @@ en:
   questions:
     "are_you_sure?": "Are you sure?"
 
-  flash_messages:
-    logged_in: "Your have signed in as '%{username}'."
-    logged_out: "Your have signed out."
-    invalid_login: "Invalid username/password combination."
-    user_account_deactivated: "Your user account is deactivated, please contact an administrator."
-    operation_failed: "Operation failed."
-    require_login: "Please log in to access this page."
-    require_admin: "You must be an admin to access the section you tried to access."
-
   flash:
     actions:
       create:
@@ -519,20 +510,145 @@ en:
       destroy:
         success: "%{resource_name} was successfully destroyed."
         failure: "%{resource_name} could not be destroyed."
+    filters:
+      require_login: "Please log in to access this page."
+      require_admin: "You must be an admin to access the section you tried to access."
+    
+    sessions:
+      create:
+        logged_in: "Your have signed in as '%{username}'."
+        invalid_login: "Invalid username/password combination."
+        user_account_deactivated: "Your user account is deactivated, please contact an administrator."
+      destroy:
+        logged_out: "Your have signed out."
     admin:
       users:
         create:
-          success: "The user was successfully created."
+          success: "User '%{username}' was successfully created."
+          failure: "User was not created."
+        update:
+          success: "User '%{username}' was successfully updated."
+          failure: "User was not updated."
+          wrong_password: "Password is invalid, the user was not updated."
+        destroy:
+          success: "User '%{username}' is deleted."
+          failure: "Error!"
+      known_i_ps:
+        create:
+          success: "IP address %{ip} was successfully created."
+          failure: "IP address was not created."
+        update:
+          success: "IP address %{ip} was successfully updated."
+          failure: "IP address was not updated."
+        destroy:
+          success: "IP address %{ip} is deleted."
+          failure: "Error!"
+  instructors:
+    create:
+      success: "Created."
+      failure: "Creation failed."
+    update:
+      success: "Updated."
+      failure: "Update failed."
+    destroy:
+      success: "Destroyed."
+      failure: "Not destroyed."
+  lesson_supervisions:
+    create:
+      success: "Created."
+      failure: "Creation failed."
+    update:
+      success: "Updated."
+      failure: "Update failed."
+    destroy:
+      success: "Destroyed."
+      failure: "Not destroyed."
+  members:
+    create:
+      success: "Created."
+      failure: "Creation failed."
+    update:
+      success: "Updated."
+      failure: "Update failed."
+    destroy:
+      success: "Destroyed."
+      failure: "Not destroyed."
+  membership_types:
+    create:
+      success: "Created."
+      failure: "Creation failed."
+    update:
+      success: "Updated."
+      failure: "Update failed."
+    destroy:
+      success: "Destroyed."
+      failure: "Not destroyed."
+  ticket_books:
+    create:
+      success: "Created."
+      failure: "Creation failed."
+    update:
+      success: "Updated."
+      failure: "Update failed."
+    destroy:
+      success: "Destroyed."
+      failure: "Not destroyed."
+  activity_periods:
+    create:
+      success: "Created."
+      failure: "Creation failed."
+    update:
+      success: "Updated."
+      failure: "Update failed."
+    destroy:
+      success: "Destroyed."
+      failure: "Not destroyed."
+  memberships:
+    create:
+      success: "Created."
+      failure: "Creation failed."
+    update:
+      success: "Updated."
+      failure: "Update failed."
+    destroy:
+      success: "Destroyed."
+      failure: "Not destroyed."
+  weekly_events:
+    create:
+      success: "Created."
+      failure: "Creation failed."
+    update:
+      success: "Updated."
+      failure: "Update failed."
+    destroy:
+      success: "Destroyed."
+      failure: "Not destroyed."
+  weekly_event_suspensions:
+    create:
+      success: "Created."
+      failure: "Creation failed."
+    update:
+      success: "Updated."
+      failure: "Update failed."
+    destroy:
+      success: "Destroyed."
+      failure: "Not destroyed."
+  events:
+    create:
+      success: "Created."
+      failure: "Creation failed."
+    update:
+      success: "Updated."
+      failure: "Update failed."
+    destroy:
+      success: "Destroyed."
+      failure: "Not destroyed."
 
-  application_layout:
-    navigation_links:
-      monitor: "Monitor"
-      entry_register: "Entry register"
-      secretary_tools: "Secretary tools"
-      manager_tools: "Manager tools"
-      admin_tools: "Admin tools"
-      sign_out: "Sign out"
+  external_links:
       tangueando_site: "Site Tangueando"
+
+  application_navigation_links:
+    sign_out: "Sign out"
 
   sessions:
     new:
@@ -545,7 +661,27 @@ en:
       password: "Password:"
       your_ip_address: "Your IP address:"
 
+  monitor:
+    overview:
+      title: "Monitor"
+
+  entry_register:
+    overview:
+      title: "Entry register"
+
+  secretary_tools:
+    overview:
+      title: "Secretary tools"
+
+  manager_tools:
+    overview:
+      title: "Manager tools"
+
   admin:
+    admin_tools:
+      overview:
+        title: "Admin tools"
+      
     users:
       index:
         title: "Users"
@@ -586,19 +722,6 @@ en:
           other: "Other"
         links:
           show: "This user"
-      create:
-        flash:
-          success: "User '%{username}' was successfully created."
-          failure: "User was not created."
-      update:
-        flash:
-          success: "User '%{username}' was successfully updated."
-          failure: "User was not updated."
-          wrong_password: "Password is invalid, the user was not updated."
-      destroy:
-        flash:
-          success: "User '%{username}' is deleted."
-          failure: "Error!"
 
       links:
         show_all: "All users"
@@ -628,18 +751,6 @@ en:
         header: "Updating IP address %{ip}"
         links:
           show: "This IP address"
-      create:
-        flash:
-          success: "IP address %{ip} was successfully created."
-          failure: "IP address was not created."
-      update:
-        flash:
-          success: "IP address %{ip} was successfully updated."
-          failure: "IP address was not updated."
-      destroy:
-        flash:
-          success: "IP address %{ip} is deleted."
-          failure: "Error!"
 
       links:
         show_all: "Known IP addresses"
@@ -674,18 +785,6 @@ en:
     edit:
       title: ""
       header: ""
-    create:
-      flash:
-        success: "Created."
-        failure: "Creation failed."
-    update:
-      flash:
-        success: "Updated."
-        failure: "Update failed."
-    destroy:
-      flash:
-        success: "Destroyed."
-        failure: "Not destroyed."
 
   lesson_supervisions:
     index:
@@ -700,18 +799,6 @@ en:
     edit:
       title: ""
       header: ""
-    create:
-      flash:
-        success: "Created."
-        failure: "Creation failed."
-    update:
-      flash:
-        success: "Updated."
-        failure: "Update failed."
-    destroy:
-      flash:
-        success: "Destroyed."
-        failure: "Not destroyed."
 
   members:
     index:
@@ -726,18 +813,6 @@ en:
     edit:
       title: ""
       header: ""
-    create:
-      flash:
-        success: "Created."
-        failure: "Creation failed."
-    update:
-      flash:
-        success: "Updated."
-        failure: "Update failed."
-    destroy:
-      flash:
-        success: "Destroyed."
-        failure: "Not destroyed."
 
   membership_types:
     index:
@@ -752,18 +827,6 @@ en:
     edit:
       title: ""
       header: ""
-    create:
-      flash:
-        success: "Created."
-        failure: "Creation failed."
-    update:
-      flash:
-        success: "Updated."
-        failure: "Update failed."
-    destroy:
-      flash:
-        success: "Destroyed."
-        failure: "Not destroyed."
 
   ticket_books:
     index:
@@ -778,18 +841,6 @@ en:
     edit:
       title: ""
       header: ""
-    create:
-      flash:
-        success: "Created."
-        failure: "Creation failed."
-    update:
-      flash:
-        success: "Updated."
-        failure: "Update failed."
-    destroy:
-      flash:
-        success: "Destroyed."
-        failure: "Not destroyed."
 
   activity_periods:
     index:
@@ -804,18 +855,6 @@ en:
     edit:
       title: ""
       header: ""
-    create:
-      flash:
-        success: "Created."
-        failure: "Creation failed."
-    update:
-      flash:
-        success: "Updated."
-        failure: "Update failed."
-    destroy:
-      flash:
-        success: "Destroyed."
-        failure: "Not destroyed."
 
   memberships:
     index:
@@ -830,18 +869,6 @@ en:
     edit:
       title: ""
       header: ""
-    create:
-      flash:
-        success: "Created."
-        failure: "Creation failed."
-    update:
-      flash:
-        success: "Updated."
-        failure: "Update failed."
-    destroy:
-      flash:
-        success: "Destroyed."
-        failure: "Not destroyed."
 
   weekly_events:
     index:
@@ -856,18 +883,6 @@ en:
     edit:
       title: ""
       header: ""
-    create:
-      flash:
-        success: "Created."
-        failure: "Creation failed."
-    update:
-      flash:
-        success: "Updated."
-        failure: "Update failed."
-    destroy:
-      flash:
-        success: "Destroyed."
-        failure: "Not destroyed."
 
   weekly_event_suspensions:
     index:
@@ -882,18 +897,6 @@ en:
     edit:
       title: ""
       header: ""
-    create:
-      flash:
-        success: "Created."
-        failure: "Creation failed."
-    update:
-      flash:
-        success: "Updated."
-        failure: "Update failed."
-    destroy:
-      flash:
-        success: "Destroyed."
-        failure: "Not destroyed."
 
   events:
     index:
@@ -908,15 +911,3 @@ en:
     edit:
       title: ""
       header: ""
-    create:
-      flash:
-        success: "Created."
-        failure: "Creation failed."
-    update:
-      flash:
-        success: "Updated."
-        failure: "Update failed."
-    destroy:
-      flash:
-        success: "Destroyed."
-        failure: "Not destroyed."

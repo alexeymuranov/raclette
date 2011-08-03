@@ -8,58 +8,58 @@ module SessionsHelper
     session[:client_ip] = client_ip
     self.current_user = user
   end
-	
+
   def current_user=(user)
     session[:user_id] = user.id
     @current_user = user
   end
-	
+
   def current_user
     @current_user ||= user_from_session
   end
-	
+
   def logged_in?
     !current_user.nil?
   end
-	
+
   def log_out
     cookies.delete(:remember_token)
     self.current_user = nil
   end
-    
-  def require_login
+
+  def require_login  # before filter
     deny_access unless logged_in?
   end
-	
+
   def deny_access
     store_location_to_return_to
-    flash[:alert] = t('flash_messages.require_login')
+    flash[:alert] = t('flash.filters.require_login')
     redirect_to login_path
   end
-	
+
   def redirect_back_or_to(default)
     redirect_to(path_to_return_to || default)
     clear_return_to
   end
-	
+
   private
-	
+
     # def user_from_remember_token
     #   Admin::User.authenticate_with_salt(*remember_token)
     # end
-    
+
     def user_from_session
       Admin::User.find(session[:user_id]) if session[:user_id]
-	end
-    	
+    end
+
     # def remember_token
     #   cookies.signed[:remember_token] || [nil, nil]
     # end
-		
+
     def store_location_to_return_to
       session[:return_to] = request.fullpath
     end
-		
+
     def clear_return_to
       session[:return_to] = nil
     end
@@ -67,4 +67,5 @@ module SessionsHelper
     def path_to_return_to
       session[:return_to]
     end
+
 end
