@@ -604,9 +604,9 @@ fr:
         failure: "Une erreur s'est produit!"
 
   external_links:
-      tangueando_site: "Site Tangueando"
+    tangueando_site: "Site Tangueando"
 
-  application_navigation_links:
+  navigation_links:
     sign_out: "Se deconnecter"
  
   sessions:
@@ -623,23 +623,29 @@ fr:
   monitor:
     overview:
       title: "Écran de contrôle"
+      header: "Écran de contrôle"
 
   entry_register:
     overview:
       title: "Caisse d'entrée"
+      header: "Caisse d'entrée"
 
   secretary_tools:
     overview:
       title: "Outils de secrétare"
+      header: "Outils de secrétare"
 
   manager_tools:
     overview:
       title: "Outils de gestion"
+      header: "Outils de gestion"
 
   admin:
     admin_tools:
       overview:
         title: "Outils d'administration"
+        header: "Outils d'administration"
+
     users:
       index:
         title: "Utilisateurs"
@@ -732,8 +738,8 @@ fr:
 
   instructors:
     index:
-      title: ""
-      header: ""
+      title: "Professeurs"
+      header: "Professeurs"
     show:
       title: ""
       header: ""
@@ -746,8 +752,8 @@ fr:
 
   lesson_supervisions:
     index:
-      title: ""
-      header: ""
+      title: "Encadrement des cours"
+      header: "Encadrement des cours"
     show:
       title: ""
       header: ""
@@ -760,8 +766,8 @@ fr:
 
   members:
     index:
-      title: ""
-      header: ""
+      title: "Adhérents"
+      header: "Adhérents"
     show:
       title: ""
       header: ""
@@ -774,8 +780,8 @@ fr:
 
   membership_types:
     index:
-      title: ""
-      header: ""
+      title: "Types d'adhésion"
+      header: "Types d'adhésion"
     show:
       title: ""
       header: ""
@@ -788,8 +794,8 @@ fr:
 
   ticket_books:
     index:
-      title: ""
-      header: ""
+      title: "Carnets de tickets"
+      header: "Carnets de tickets"
     show:
       title: ""
       header: ""
@@ -802,8 +808,8 @@ fr:
 
   activity_periods:
     index:
-      title: ""
-      header: ""
+      title: "Saisons"
+      header: "Saisons"
     show:
       title: ""
       header: ""
@@ -816,8 +822,8 @@ fr:
 
   memberships:
     index:
-      title: ""
-      header: ""
+      title: "Adhésions"
+      header: "Adhésions"
     show:
       title: ""
       header: ""
@@ -830,8 +836,8 @@ fr:
 
   weekly_events:
     index:
-      title: ""
-      header: ""
+      title: "Événements hebdomadaires"
+      header: "Événements hebdomadaires"
     show:
       title: ""
       header: ""
@@ -844,8 +850,8 @@ fr:
 
   weekly_event_suspensions:
     index:
-      title: ""
-      header: ""
+      title: "Arrêts des événements hebdomadaires"
+      header: "Arrêts des événements hebdomadaires"
     show:
       title: ""
       header: ""
@@ -858,8 +864,8 @@ fr:
 
   events:
     index:
-      title: ""
-      header: ""
+      title: "Événements"
+      header: "Événements"
     show:
       title: ""
       header: ""

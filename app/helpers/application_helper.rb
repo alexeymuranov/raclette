@@ -1,7 +1,5 @@
 ## encoding: UTF-8
 
-# require 'rails/generators/resource_helpers'
-
 module ApplicationHelper
 
   def boolean_to_yes_no(bool)

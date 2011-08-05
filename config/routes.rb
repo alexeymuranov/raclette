@@ -4,6 +4,11 @@ Raclette::Application.routes.draw do
   post   'login',  :controller => :Sessions, :action => :create
   delete 'logout', :controller => :Sessions, :action => :destroy
 
+  get 'monitor/overview'
+  get 'entry_register/overview'
+  get 'secretary_tools/overview'
+  get 'manager_tools/overview'
+
   # scope :module => :admin do  # an alternative for admin namespace
   namespace :admin do
 
@@ -20,8 +25,6 @@ Raclette::Application.routes.draw do
 
     get 'admin_tools/overview'
   end
-
-  get 'monitor/overview'
 
   root :to => 'monitor#overview'
     

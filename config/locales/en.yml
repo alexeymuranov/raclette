@@ -645,14 +645,14 @@ en:
       failure: "Not destroyed."
 
   external_links:
-      tangueando_site: "Site Tangueando"
+    tangueando_site: "Site Tangueando"
 
-  application_navigation_links:
+  navigation_links:
     sign_out: "Sign out"
 
   sessions:
     new:
-      title: "Sign in"
+      title: "Sign In"
       log_in_invitation: "Sign in"
       log_in_please: "Sign in please"
       log_in_button: "Sign in"
@@ -664,23 +664,28 @@ en:
   monitor:
     overview:
       title: "Monitor"
+      header: "Monitor"
 
   entry_register:
     overview:
-      title: "Entry register"
+      title: "Entry Register"
+      header: "Entry Register"
 
   secretary_tools:
     overview:
-      title: "Secretary tools"
+      title: "Secretary Tools"
+      header: "Secretary Tools"
 
   manager_tools:
     overview:
-      title: "Manager tools"
+      title: "Manager Tools"
+      header: "Manager Tools"
 
   admin:
     admin_tools:
       overview:
-        title: "Admin tools"
+        title: "Admin Tools"
+        header: "Admin Tools"
       
     users:
       index:
@@ -732,8 +737,8 @@ en:
 
     known_i_ps:
       index:
-        title: "IP addresses"
-        header: "Known IP addresses"
+        title: "IP Addresses"
+        header: "Known IP Addresses"
       show:
         title: "%{ip}"
         header: "IP address %{ip}"
@@ -762,7 +767,7 @@ en:
     safe_user_i_ps:
       index:
         title: "Authorized IPs"
-        header: "Authorized IP addresses"
+        header: "Authorized IP Addresses"
       edit_all:
         title: "Edit authorized IPs"
         header: "Editing authorized IP addresses"
@@ -774,8 +779,8 @@ en:
 
   instructors:
     index:
-      title: ""
-      header: ""
+      title: "Instructors"
+      header: "Instructors"
     show:
       title: ""
       header: ""
@@ -788,8 +793,8 @@ en:
 
   lesson_supervisions:
     index:
-      title: ""
-      header: ""
+      title: "Lesson Supervisions"
+      header: "Lesson Supervisions"
     show:
       title: ""
       header: ""
@@ -802,8 +807,8 @@ en:
 
   members:
     index:
-      title: ""
-      header: ""
+      title: "Members"
+      header: "Members"
     show:
       title: ""
       header: ""
@@ -816,8 +821,8 @@ en:
 
   membership_types:
     index:
-      title: ""
-      header: ""
+      title: "Membership Types"
+      header: "Membership Types"
     show:
       title: ""
       header: ""
@@ -830,8 +835,8 @@ en:
 
   ticket_books:
     index:
-      title: ""
-      header: ""
+      title: "Ticket Books"
+      header: "Ticket Books"
     show:
       title: ""
       header: ""
@@ -844,8 +849,8 @@ en:
 
   activity_periods:
     index:
-      title: ""
-      header: ""
+      title: "Activity Periods"
+      header: "Activity Periods"
     show:
       title: ""
       header: ""
@@ -858,8 +863,8 @@ en:
 
   memberships:
     index:
-      title: ""
-      header: ""
+      title: "Memberships"
+      header: "Memberships"
     show:
       title: ""
       header: ""
@@ -872,8 +877,8 @@ en:
 
   weekly_events:
     index:
-      title: ""
-      header: ""
+      title: "Weekly Events"
+      header: "Weekly Events"
     show:
       title: ""
       header: ""
@@ -886,8 +891,8 @@ en:
 
   weekly_event_suspensions:
     index:
-      title: ""
-      header: ""
+      title: "Weekly Event Suspensions"
+      header: "Weekly Event Suspensions"
     show:
       title: ""
       header: ""
@@ -900,8 +905,8 @@ en:
 
   events:
     index:
-      title: ""
-      header: ""
+      title: "Events"
+      header: "Events"
     show:
       title: ""
       header: ""
