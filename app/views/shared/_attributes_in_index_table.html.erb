@@ -1,7 +1,7 @@
 <%# Locals:
       model:
       attributes:
-      column_types_o_hash:
+      column_types:
 -%>
 
 <th scope=row>
@@ -13,7 +13,7 @@
 <%- attributes[1..-1].each do |attr| -%>
 
   <%= render 'shared/simple_attribute_in_table',
-             :column_type => column_types_o_hash[attr],
+             :column_type => column_types[attr],
              :value       => model.public_send(attr) %>
 
 <%- end -%>

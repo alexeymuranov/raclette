@@ -16,9 +16,9 @@ class Admin::UsersController < AdminController
                     :secretary,
                     :a_person ]
 
-    @column_types_o_hash = ActiveSupport::OrderedHash.new
+    @column_types = {}
     @attributes.each do |attr|
-      @column_types_o_hash[attr] = Admin::User.columns_hash[attr.to_s].type
+      @column_types[attr] = Admin::User.columns_hash[attr.to_s].type
     end
 
     # Filter:
@@ -48,9 +48,9 @@ class Admin::UsersController < AdminController
                                  :secretary,
                                  :a_person ]
 
-    @column_types_for_download_o_hash = ActiveSupport::OrderedHash.new
+    @column_types = {}
     @attributes_for_download.each do |attr|
-      @column_types_for_download_o_hash[attr] =
+      @column_types[attr] =
           Admin::User.columns_hash[attr.to_s].type
     end
 
@@ -60,7 +60,8 @@ class Admin::UsersController < AdminController
       end
 
       requested_format.xml do
-        render :xml => @all_filtered_users, :only => @attributes_for_download
+        render :xml  => @all_filtered_users,
+               :only => @attributes_for_download
       end
 
       requested_format.js do
@@ -75,12 +76,14 @@ class Admin::UsersController < AdminController
 
       requested_format.ms_excel_2003_xml do
         render_ms_excel_2003_xml_for_download\
-            Admin::User, @all_filtered_users, @column_types_for_download_o_hash  # defined in ApplicationController
+            Admin::User, @all_filtered_users,
+            @attributes_for_download, @column_types  # defined in ApplicationController
       end
 
       requested_format.csv do
         render_csv_for_download\
-            Admin::User, @all_filtered_users, @attributes_for_download  # defined in ApplicationController
+            Admin::User, @all_filtered_users,
+            @attributes_for_download  # defined in ApplicationController
       end
     end
   end
@@ -104,9 +107,9 @@ class Admin::UsersController < AdminController
         unless @user.last_signed_in_at.blank?
 
     @safe_ips_attributes = [ :ip, :description ]
-    @safe_ips_column_types_o_hash = ActiveSupport::OrderedHash.new
+    @safe_ips_column_types = {}
     @safe_ips_attributes.each do |attr|
-      @safe_ips_column_types_o_hash[attr] =
+      @safe_ips_column_types[attr] =
           Admin::KnownIP.columns_hash[attr.to_s].type
     end
 
@@ -235,9 +238,9 @@ class Admin::UsersController < AdminController
 
     def render_new_properly
       @known_ips_attributes = [ :ip, :description ]
-      @known_ips_column_types_o_hash = ActiveSupport::OrderedHash.new
+      @known_ips_column_types = {}
       @known_ips_attributes.each do |attr|
-        @known_ips_column_types_o_hash[attr] =
+        @known_ips_column_types[attr] =
             Admin::KnownIP.columns_hash[attr.to_s].type
       end
 
@@ -251,9 +254,9 @@ class Admin::UsersController < AdminController
 
     def render_edit_properly
       @known_ips_attributes = [ :ip, :description ]
-      @known_ips_column_types_o_hash = ActiveSupport::OrderedHash.new
+      @known_ips_column_types = {}
       @known_ips_attributes.each do |attr|
-        @known_ips_column_types_o_hash[attr] =
+        @known_ips_column_types[attr] =
             Admin::KnownIP.columns_hash[attr.to_s].type
       end
 

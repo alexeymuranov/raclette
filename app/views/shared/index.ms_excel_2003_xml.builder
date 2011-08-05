@@ -1,6 +1,7 @@
 # Locals:
 #   models:
-#   column_types_o_hash:
+#   attributes:
+#   column_types:
 
 xml.instruct! :xml, :version    => '1.0',
                     :encoding   => 'UTF-8',
@@ -33,7 +34,7 @@ xml.Workbook(
 
       # Header
       xml.Row 'ss:StyleID' => 'MyTableHeading' do
-        column_types_o_hash.each do |attr, col_type|
+        attributes.each do |attr|
           xml.Cell { xml.Data Admin::User.human_attribute_name(attr), 'ss:Type' => 'String' }
         end
       end
@@ -43,8 +44,8 @@ xml.Workbook(
       # Rows
       models.each do |mod|
         xml.Row do
-          column_types_o_hash.each do |attr, col_type|
-            case col_type
+          attributes.each do |attr|
+            case column_types[attr]
             when :boolean
               xml.Cell { xml.Data boolean_to_0_1(mod.public_send(attr)), 'ss:Type' => 'Boolean' }
             else

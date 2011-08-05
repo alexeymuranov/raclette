@@ -22,11 +22,11 @@
   <h2><%= Admin::User.human_attribute_name(:safe_ips) %></h2>
 
   <%= render 'shared/simple_index_table',
-             :models              => @safe_ips,
-             :attributes          => @safe_ips_attributes,
-             :column_types_o_hash => @safe_ips_column_types_o_hash,
-             :klass               => Admin::KnownIP,
-             :table_name          => :safe_ips %>
+             :models       => @safe_ips,
+             :attributes   => @safe_ips_attributes,
+             :column_types => @safe_ips_column_types,
+             :klass        => Admin::KnownIP,
+             :table_name   => :safe_ips %>
 
 </section>
 

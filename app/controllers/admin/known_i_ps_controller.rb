@@ -5,9 +5,9 @@ class Admin::KnownIPsController < AdminController
   def index
     @attributes = [ :ip, :description ]
 
-    @column_types_o_hash = ActiveSupport::OrderedHash.new
+    @column_types = {}
     @attributes.each do |attr|
-      @column_types_o_hash[attr] = Admin::KnownIP.columns_hash[attr.to_s].type
+      @column_types[attr] = Admin::KnownIP.columns_hash[attr.to_s].type
     end
 
     # Sort:
@@ -31,9 +31,9 @@ class Admin::KnownIPsController < AdminController
                                :secretary,
                                :a_person ]
 
-    @safe_users_column_types_o_hash = ActiveSupport::OrderedHash.new
+    @safe_users_column_types = {}
     @safe_users_attributes.each do |attr|
-      @safe_users_column_types_o_hash[attr] =
+      @safe_users_column_types[attr] =
           Admin::User.columns_hash[attr.to_s].type
     end
 

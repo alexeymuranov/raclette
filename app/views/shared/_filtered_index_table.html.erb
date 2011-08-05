@@ -1,7 +1,7 @@
 <%# Locals:
       models:
       attributes:
-      column_types_o_hash:
+      column_types:
       klass:
       table_name:
       filter:
@@ -40,18 +40,19 @@
       <tr>
 
         <%= render 'shared/sorting_table_headers',
-                   :column_types_o_hash => column_types_o_hash,
-                   :klass               => klass,
-                   :table_name          => table_name %>
+                   :attributes   => attributes,
+                   :column_types => column_types,
+                   :klass        => klass,
+                   :table_name   => table_name %>
 
         <th class="empty"></th>
         <th class="empty"></th>
       </tr>
       <% unless filter.blank? %>
         <tr>
-          <% column_types_o_hash.each do |attr, col_type| %>
+          <% attributes.each do |attr| %>
             <% unless filter[attr].nil? %>
-              <%- case col_type -%>
+              <%- case column_types[attr] -%>
               <%- when :string -%>
                 <td class="filtering_value">
                   <%= filter[attr] %>
@@ -70,9 +71,9 @@
         </tr>
       <% end %>
       <tr>
-        <% column_types_o_hash.each do |attr, col_type| %>
+        <% attributes.each do |attr| %>
           <td class="field">
-            <%- case col_type -%>
+            <%- case column_types[attr] -%>
             <%- when :string -%>
               <%= text_field_tag "filter[#{attr}]", filter[attr] %>
             <%- when :boolean -%>
@@ -112,9 +113,9 @@
     </thead>
 
     <%= render 'shared/index_table_body',
-               :models              => models,
-               :attributes          => attributes,
-               :column_types_o_hash => column_types_o_hash %>
+               :models       => models,
+               :attributes   => attributes,
+               :column_types => column_types %>
 
   <% end %>
 <% end %>

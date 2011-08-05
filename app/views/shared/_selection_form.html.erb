@@ -2,7 +2,7 @@
       klass:
       table_name:
       attributes:
-      column_types_o_hash:
+      column_types:
       selected_models:
       unselected_models:
       id_prefix:
@@ -20,9 +20,10 @@
       <th class='empty boolean'></th>
 
       <%= render 'shared/table_headers',
-                 :column_types_o_hash => column_types_o_hash,
-                 :klass               => klass,
-                 :table_name          => table_name %>
+                 :attributes   => attributes,
+                 :column_types => column_types,
+                 :klass        => klass,
+                 :table_name   => table_name %>
 
     </tr>
   </thead>
@@ -36,10 +37,10 @@
         </td>
 
         <%= render 'shared/attributes_in_selection_form',
-                   :model               => mod,
-                   :attributes          => attributes,
-                   :column_types_o_hash => column_types_o_hash,
-                   :id_prefix           => id_prefix %>
+                   :model        => mod,
+                   :attributes   => attributes,
+                   :column_types => column_types,
+                   :id_prefix    => id_prefix %>
 
       </tr>
     <% end unless selected_models.nil? %>
@@ -52,10 +53,10 @@
         </td>
 
         <%= render 'shared/attributes_in_selection_form',
-                   :model               => mod,
-                   :attributes          => attributes,
-                   :column_types_o_hash => column_types_o_hash,
-                   :id_prefix           => id_prefix %>
+                   :model        => mod,
+                   :attributes   => attributes,
+                   :column_types => column_types,
+                   :id_prefix    => id_prefix %>
 
       </tr>
     <% end unless unselected_models.nil? %>

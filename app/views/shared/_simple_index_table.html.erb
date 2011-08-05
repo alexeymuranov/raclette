@@ -1,7 +1,7 @@
 <%# Locals:
       models:
       attributes:
-      column_types_o_hash:
+      column_types:
       klass:
       table_name:
 -%>
@@ -14,16 +14,17 @@
     <tr>
 
       <%= render 'shared/sorting_table_headers',
-                 :column_types_o_hash => column_types_o_hash,
-                 :klass               => klass,
-                 :table_name          => table_name %>
+                 :attributes   => attributes,
+                 :column_types => column_types,
+                 :klass        => klass,
+                 :table_name   => table_name %>
 
     </tr>
   </thead>
 
   <%= render 'shared/simple_index_table_body',
-             :models                  => models,
-             :attributes              => attributes,
-             :column_types_o_hash     => column_types_o_hash %>
+             :models       => models,
+             :attributes   => attributes,
+             :column_types => column_types %>
 
 <% end %>

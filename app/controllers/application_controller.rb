@@ -23,12 +23,14 @@ class ApplicationController < ActionController::Base
 
     def render_ms_excel_2003_xml_for_download(klass,
                                               models,
-                                              column_types_for_download_o_hash)
+                                              attributes,
+                                              column_types)
       send_data render_to_string(
           :template => 'shared/index',
           :locals   =>
-              { :models              => models,
-                :column_types_o_hash => column_types_for_download_o_hash }),
+              { :models       => models,
+                :attributes   => attributes,
+                :column_types => column_types }),
           :filename    => "#{klass.human_name.pluralize}"\
                           " #{Time.now.strftime('%Y-%m-%d %k_%M')}"\
                           ".excel2003.xml",
@@ -88,7 +90,7 @@ class ApplicationController < ActionController::Base
       params[:filter] ||= {}
       @filter = {}
 
-      @column_types_o_hash.each do |attr, col_type|
+      @column_types.each do |attr, col_type|
         case col_type
         when :string
           unless params[:filter][attr].blank?
@@ -112,7 +114,7 @@ class ApplicationController < ActionController::Base
     end
 
     def sort(models, table_name)
-      models.order(sort_sql(table_name))    
+      models.order(sort_sql(table_name))
     end
 
     def paginate(models)

@@ -1,7 +1,7 @@
 <%# Locals:
       models:
       attributes:
-      column_types_o_hash:
+      column_types:
 -%>
 
 <tbody>
@@ -16,9 +16,9 @@
       <tr>
 
         <%= render 'shared/attributes_in_index_table',
-                   :model               => mod,
-                   :attributes          => attributes,
-                   :column_types_o_hash => column_types_o_hash %>
+                   :model        => mod,
+                   :attributes   => attributes,
+                   :column_types => column_types %>
 
       </tr>
 

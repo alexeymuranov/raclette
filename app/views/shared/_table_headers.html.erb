@@ -1,10 +1,11 @@
 <%# Locals:
   klass:
-  column_types_o_hash:
+  attributes:
+  column_types:
 -%>
 
-<% column_types_o_hash.each do |attr, col_type| %>
-  <%- case col_type -%>
+<% attributes.each do |attr| %>
+  <%- case column_types[attr] -%>
   <%- when :boolean -%>
     <th class="boolean">
       <%= klass.human_attribute_name(attr) %>
