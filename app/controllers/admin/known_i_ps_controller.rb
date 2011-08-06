@@ -13,7 +13,7 @@ class Admin::KnownIPsController < AdminController
     # Sort:
     @known_ips = sort(Admin::KnownIP.scoped, :known_ips)  # table_name = :known_ips
 
-    @title = t('admin.known_i_ps.index.title')
+    # @title = t('admin.known_i_ps.index.title')
   end
 
   def show
@@ -120,7 +120,7 @@ class Admin::KnownIPsController < AdminController
     end
 
     def render_new_properly
-      @title = t('admin.known_i_ps.new.title')
+      # @title = t('admin.known_i_ps.new.title')
 
       render :new
     end

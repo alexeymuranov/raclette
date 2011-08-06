@@ -16,7 +16,13 @@ module ApplicationHelper
 
   def title
     base_title = 'Raclette'
-    # @title ||= t("#{controller_i18n_scope}.#{action_name}.title")  # FIXME
+    controller_i18n_scope = controller.class.name\
+                                      .gsub(/Controller\z/, '')\
+                                      .gsub('::', '.').underscore
+    # XXX: there is a protected method controller_i18n_scope in Rails::Generators::ResourceHelpers!
+
+    @title ||= t("#{controller_i18n_scope}.#{action_name}.title")
+
     @title.nil? ? base_title : "#{base_title} | #{@title}"
   end
 

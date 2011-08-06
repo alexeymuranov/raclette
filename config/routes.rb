@@ -1,8 +1,8 @@
 Raclette::Application.routes.draw do
 
-  get    'login',  :controller => :Sessions, :action => :new
-  post   'login',  :controller => :Sessions, :action => :create
-  delete 'logout', :controller => :Sessions, :action => :destroy
+  get    'login',  :controller => :sessions, :action => :new
+  post   'login',  :controller => :sessions, :action => :create
+  delete 'logout', :controller => :sessions, :action => :destroy
 
   get 'monitor/overview'
   get 'entry_register/overview'
@@ -14,9 +14,9 @@ Raclette::Application.routes.draw do
 
     resources :users
 
-    resources :known_ips, :controller => :KnownIPs
+    resources :known_ips, :controller => :known_i_ps
     
-    resources :safe_user_ips, :controller => :SafeUserIPs, :only => [ :index ] do
+    resources :safe_user_ips, :controller => :safe_user_i_ps, :only => [ :index ] do
       collection do
         get 'edit_all', :action => :edit_all
         put '', :action => :update_all

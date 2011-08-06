@@ -37,7 +37,7 @@ class Admin::UsersController < AdminController
       @mailing_list = @mailing_list_users.collect(&:formatted_email).join(', ')
     end
 
-    @title = t('admin.users.index.title')  # or: Admin::User.human_name.pluralize
+    # @title = t('admin.users.index.title')  # or: Admin::User.human_name.pluralize
 
     @attributes_for_download = [ :username,
                                  :full_name,
@@ -247,7 +247,7 @@ class Admin::UsersController < AdminController
       @safe_ips = nil
       @other_ips = Admin::KnownIP.order(sort_sql(:safe_ips))
 
-      @title = t('admin.users.new.title')
+      # @title = t('admin.users.new.title')
 
       render :new
     end
