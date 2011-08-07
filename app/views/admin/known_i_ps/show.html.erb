@@ -31,21 +31,22 @@
 </section>
 
 <footer>
-  <%= link_to edit_pictogram(3)+' '+t('.links.update'),
+  <%= link_to edit_pictogram(3)+' '+t('admin.known_i_ps.edit.header',
+                                      :ip => @known_ip.ip),
               edit_admin_known_ip_path(@known_ip),
               :class => 'modify resource' %>
-  <%= link_to list_all_pictogram(3)+' '+t('admin.known_i_ps.links.show_all'),
+  <%= link_to list_all_pictogram(3)+' '+t('admin.known_i_ps.index.header'),
               admin_known_ips_path,
               :class => 'display resource' %>
 </footer>
 
-<%# End of template %>
+<%# End of the main body of the view %>
 
 <% content_for :side_menu_list_items do %>
-  <li><%= link_to t('admin.known_i_ps.links.show_all'),
+  <li><%= link_to list_all_pictogram+' '+t('admin.known_i_ps.index.title'),
                   admin_known_ips_path,
                   :class => 'display resource' %></li>
-  <li><%= link_to t('admin.known_i_ps.links.new'),
+  <li><%= link_to add_pictogram+' '+t('admin.known_i_ps.new.title'),
                   new_admin_known_ip_path,
                   :title => t('actions.create'),
                   :class => 'add resource' %></li>

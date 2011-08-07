@@ -1,19 +1,21 @@
-<% content_for :side_menu_list_items do %>
-  <li>
-    <%= link_to t('admin.safe_user_i_ps.links.show_all'),
-                admin_safe_user_ips_path,
-                :title => t('actions.read'),
-                :class => 'display resource' %>
-  </li>
-<% end %>
-
 <h1><%= t '.header' %></h1>
 
 <%= render 'form' %>
 
 <footer>
-  <%= link_to list_all_pictogram(3)+' '+t('admin.safe_user_i_ps.links.show_all'),
+  <%= link_to list_all_pictogram(3)+' '+t('admin.safe_user_i_ps.index.header'),
               admin_safe_user_ips_path,
               :title => t('actions.read'),
               :class => 'display resource' %>
 </footer>
+
+<%# End of the main body of the view %>
+
+<% content_for :side_menu_list_items do %>
+  <li>
+    <%= link_to list_all_pictogram+' '+t('admin.safe_user_i_ps.index.title'),
+                admin_safe_user_ips_path,
+                :title => t('actions.read'),
+                :class => 'display resource' %>
+  </li>
+<% end %>

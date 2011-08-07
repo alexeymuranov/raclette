@@ -7,7 +7,7 @@
       filter:
 -%>
 
-<%= form_tag nil, :method => :get do %>
+<%= form_tag(nil, :method => :get) do %>
   <%= set_params_in_hidden_form_fields params.except(:per_page) %>
 
   <%= label_tag :per_page, t('field_labels.per_page') %>
@@ -26,7 +26,7 @@
 
 <%= paginate models %>
 
-<%= form_tag nil, :method => :get do %>
+<%= form_tag(nil, :method => :get) do %>
   <%= set_params_in_hidden_form_fields params.except(:filter) %>
 
   <%= content_tag :table,

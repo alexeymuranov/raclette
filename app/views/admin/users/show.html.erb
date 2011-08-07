@@ -45,21 +45,23 @@
 </section>
 
 <footer>
-  <%= link_to edit_pictogram(3)+' '+t('.links.update'),
+  <%= link_to edit_pictogram(3)+' '+t('admin.users.edit.header',
+                                      :username => @user.username),
               edit_admin_user_path(@user),
               :class => 'modify resource' %>
-  <%= link_to list_all_pictogram(3)+' '+t('admin.users.links.show_all'),
+  <%= link_to list_all_pictogram(3)+' '+t('admin.users.index.header'),
               admin_users_path,
               :class => 'display resource' %>
 </footer>
 
-<%# End of template %>
+<%# End of the main body of the view %>
 
 <% content_for :side_menu_list_items do %>
-  <li><%= link_to t('admin.users.links.show_all'),
+  <li><%= link_to list_all_pictogram+' '+t('admin.users.index.title'),
                   admin_users_path,
                   :class => 'display resource' %></li>
-  <li><%= link_to t('admin.users.links.new'), new_admin_user_path,
+  <li><%= link_to add_pictogram+' '+t('admin.users.new.title'),
+                  new_admin_user_path,
                   :title => t('actions.create'),
                   :class => 'add resource' %></li>
 <% end %>

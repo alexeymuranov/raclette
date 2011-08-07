@@ -1,6 +1,6 @@
 ## encoding: UTF-8
 
-class ManagerToolsController < ApplicationController
+class ManagerToolsController < ManagerController
   def overview
   end
 end

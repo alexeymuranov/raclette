@@ -8,16 +8,17 @@
            :table_name   => :known_ips %>
 
 <footer>
-  <%= link_to add_pictogram(2)+' '+t('admin.known_i_ps.links.new'),
+  <%= link_to add_pictogram(2)+' '+t('admin.known_i_ps.new.header'),
               new_admin_known_ip_path,
               :title => t('actions.create'),
               :class => 'add resource' %>
 </footer>
 
-<%# End of template %>
+<%# End of the main body of the view %>
 
 <% content_for :side_menu_list_items do %>
-  <li><%= link_to t('admin.known_i_ps.links.new'), new_admin_known_ip_path,
+  <li><%= link_to add_pictogram+' '+t('admin.known_i_ps.new.title'),
+                  new_admin_known_ip_path,
                   :title => t('actions.create'),
                   :class => 'add resource' %></li>
 <% end %>

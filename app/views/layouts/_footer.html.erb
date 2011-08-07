@@ -1,9 +1,10 @@
 <footer>
   <ul>
     <li>
-      <a href="http://www.tangueando-toulouse.fr/" target="_blank" rel="external">
-        <%= t('external_links.tangueando_site') %>
-      </a>
+      <%= link_to t('external_links.tangueando_site'),
+                  'http://www.tangueando-toulouse.fr/',
+                  :target => '_blank',
+                  :rel    => 'external' %>
     </li>
   </ul>
 </footer>

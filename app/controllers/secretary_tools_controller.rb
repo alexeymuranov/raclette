@@ -1,6 +1,6 @@
 ## encoding: UTF-8
 
-class SecretaryToolsController < ApplicationController
+class SecretaryToolsController < SecretaryController
   def overview
   end
 end

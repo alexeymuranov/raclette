@@ -465,10 +465,6 @@ en:
     admin_tools: "Admin tools"
 
   headers:
-    admin_tools: "Administrator tools"
-    all_users: "Users"
-    all_known_ips: "Known IP addresses"
-    all_safe_user_ips: "Authorized IP addresses"
     data: "Data"
     maintenance: "Maintenance"
     tools: "Tools"
@@ -512,6 +508,8 @@ en:
         failure: "%{resource_name} could not be destroyed."
     filters:
       require_login: "Please log in to access this page."
+      require_secretary: "You must be a secretary to access the section you tried to access."
+      require_manager: "You must be a manager to access the section you tried to access."
       require_admin: "You must be an admin to access the section you tried to access."
     
     sessions:
@@ -666,25 +664,25 @@ en:
       title: "Monitor"
       header: "Monitor"
 
-  entry_register:
+  register:
     overview:
-      title: "Entry Register"
-      header: "Entry Register"
+      title: "Register"
+      header: "Payment and Entry Register"
 
   secretary_tools:
     overview:
-      title: "Secretary Tools"
+      title: "Secretary"
       header: "Secretary Tools"
 
   manager_tools:
     overview:
-      title: "Manager Tools"
+      title: "Manager"
       header: "Manager Tools"
 
   admin:
     admin_tools:
       overview:
-        title: "Admin Tools"
+        title: "Administrator"
         header: "Admin Tools"
       
     users:
@@ -704,8 +702,6 @@ en:
           user_data: "User data"
           authorized_ips: "Authorized IP addresses"
           other: "Other"
-        links:
-          update: "Update"
       new:
         title: "New user"
         header: "New user"
@@ -725,15 +721,6 @@ en:
           authorized_ips: "Authorized IP addresses"
           comments: "Comments"
           other: "Other"
-        links:
-          show: "This user"
-
-      links:
-        show_all: "All users"
-        show: "This user"
-        new: "New user form"
-        update: "Update form"
-        delete: "Delete"
 
     known_i_ps:
       index:
@@ -746,23 +733,12 @@ en:
           known_ip_data: "IP address data"
           safe_users: "Authorized users"
           other: "Other"
-        links:
-          update: "Update form"
       new:
         title: "New IP"
         header: "New IP address"
       edit:
         title: "Update %{ip}"
         header: "Updating IP address %{ip}"
-        links:
-          show: "This IP address"
-
-      links:
-        show_all: "Known IP addresses"
-        show: "This IP address"
-        new: "New IP form"
-        update: "Update form"
-        delete: "Delete"
 
     safe_user_i_ps:
       index:
@@ -771,11 +747,6 @@ en:
       edit_all:
         title: "Edit authorized IPs"
         header: "Editing authorized IP addresses"
-
-      links:
-        show_all: "Authorized IPs"
-        update_all: "Update form"
-        delete: "Delete"
 
   instructors:
     index:

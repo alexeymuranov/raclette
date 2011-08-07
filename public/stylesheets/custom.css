@@ -50,6 +50,12 @@ input:not([type="submit"]), textarea {
 div#welcome_logo {
   text-align: center; }
 
+ul.compact {
+  margin: 0;
+  padding: 0; }
+  ul.compact li {
+    display: inline-block; }
+
 /* Links for developpers */
 aside#developper_links {
   position: absolute;
@@ -272,7 +278,6 @@ nav#side_menu {
       display: block; }
       nav#side_menu ul li a, nav#side_menu ul li a:visited {
         display: block;
-        # font-weight: normal;
         text-decoration: none; }
 
 /* Flash messages */
@@ -291,12 +296,15 @@ body > div.container > section {
     border-radius: 5px;
     -moz-border-radius: 5px;
     -webkit-border-radius: 5px;
-    margin: 5px 0;
-    padding: 5px; }
-  body > div.container > section section {
-    background-color: #b1bbc5; }
+    margin: 5px 0px; }
     body > div.container > section section section {
-      background-color: #eceef0; }
+      margin: 5px; }
+  body > div.container > section section {
+    border: solid 5px #b1bbc5; }
+    body > div.container > section section section {
+      border: solid 3px #b1bbc5; }
+      body > div.container > section section section section {
+        border: solid 1px #b1bbc5; }
 
 body div.container section h1 {
   color: inherit;
@@ -305,23 +313,25 @@ body div.container section h1 {
   margin-bottom: 5px; }
 body div.container section h2, body div.container section h3, body div.container section h4, body div.container section h5, body div.container section h6, body div.container section p {
   color: inherit;
+  background-color: #b1bbc5;
   line-height: 1.5;
-  margin-top: 5px;
-  margin-bottom: 5px; }
+  margin-top: 0px;
+  margin-bottom: 0px; }
+body div.container section hgroup h1 + h2 {
+  background-color: inherit; }
+body div.container section h2, body div.container section h3, body div.container section h4, body div.container section h5, body div.container section h6 {
+  background-color: #b1bbc5; }
 body div.container section h1 {
   text-align: center;
   font-size: 16pt;
   font-weight: bold; }
-body div.container section h2, body div.container section section h1 {
+body div.container section h2 {
   font-size: 14pt;
   font-weight: bold; }
-body div.container section h3, body div.container section h4, body div.container section h5, body div.container section section section h1 {
+body div.container section h3, body div.container section h4, body div.container section h5 {
   font-size: 12pt;
   font-weight: bold; }
 body div.container section p {
-  border-radius: 5px;
-  -moz-border-radius: 5px;
-  -webkit-border-radius: 5px;
   padding: 5px;
   background-color: #f8f8ff; }
 body div.container section dl.show, body div.container section dl.form_fields {

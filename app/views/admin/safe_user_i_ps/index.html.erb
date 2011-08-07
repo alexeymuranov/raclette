@@ -1,12 +1,3 @@
-<% content_for :side_menu_list_items do %>
-  <li>
-    <%= link_to t('admin.safe_user_i_ps.links.update_all'),
-                edit_all_admin_safe_user_ips_path,
-                :title => t('actions.update'),
-                :class => 'modify resource' %>
-  </li>
-<% end %>
-
 <h1><%= t '.header' %></h1>
 
 <%= render 'shared/association_grid_table',
@@ -19,7 +10,7 @@
            :description2           => :full_name %>
 
 <footer>
-  <%= link_to edit_pictogram(3)+' '+t('admin.safe_user_i_ps.links.update_all'),
+  <%= link_to edit_pictogram(3)+' '+t('admin.safe_user_i_ps.edit_all.header'),
               edit_all_admin_safe_user_ips_path,
               :title => t('actions.update'),
               :class => 'modify resource' %>

@@ -424,10 +424,6 @@ fr:
     admin_tools: "Administration"
 
   headers:
-    admin_tools: "Outils d'administration"
-    all_users: "Utilisateurs"
-    all_known_ips: "Adresses IP connues"
-    all_safe_user_ips: "Adresses IP autorisées"
     data: "Données"
     maintenance: "Entretien"
     tools: "Outils"
@@ -448,12 +444,12 @@ fr:
     render_resources_in_format: "Rendre les %{resources} en %{file_format}"
     filter: "Filtrer"
     repaginate: "Paginer"
-    show_email_addresses: "Montrer les adresses e-mail"
+    show_email_addresses: "Afficher les adresses e-mail"
     hide_email_addresses: "Cacher les adresses e-mail"
 
   actions:
     create: "Ajouter"
-    read: "Montrer"
+    read: "Afficher"
     update: "Mettre à jour"
     delete: "Supprimer"
 
@@ -471,7 +467,9 @@ fr:
         failure: "%{resource_name} n'a pas pu être supprimé(e)."
     filters:
       require_login: "Vous devez vous connecter pour acceder à cette page."
-      require_admin: "Vous devez être un administratur pour acceder à la section que vous avez essayé d'acceder."
+      require_secretary: "Vous devez être un(e) secrétaire pour acceder à la section que vous avez essayée d'acceder."
+      require_manager: "Vous devez être un(e) gestionnaire pour acceder à la section que vous avez essayée d'acceder."
+      require_admin: "Vous devez être un(e) administrateur pour acceder à la section que vous avez essayée d'acceder."
 
     sessions:
       create:
@@ -622,28 +620,28 @@ fr:
 
   monitor:
     overview:
-      title: "Écran de contrôle"
+      title: "Contrôle"
       header: "Écran de contrôle"
 
-  entry_register:
+  register:
     overview:
-      title: "Caisse d'entrée"
-      header: "Caisse d'entrée"
+      title: "Caisse"
+      header: "Caisse des entrées et règlements"
 
   secretary_tools:
     overview:
-      title: "Outils de secrétare"
-      header: "Outils de secrétare"
+      title: "Secrétaire"
+      header: "Outils de secrétaire"
 
   manager_tools:
     overview:
-      title: "Outils de gestion"
+      title: "Gestionnaire"
       header: "Outils de gestion"
 
   admin:
     admin_tools:
       overview:
-        title: "Outils d'administration"
+        title: "Administrateur"
         header: "Outils d'administration"
 
     users:
@@ -663,11 +661,9 @@ fr:
           user_data: "Données de l'utilisateur"
           safe_ips: "Adresses IP autorisées"
           other: "Divers"
-        links:
-          update: "Mise à jour"
       new:
         title: "Nouvel utilisateur"
-        header: "Nouvel utilisateur"
+        header: "Ajouter un(e) utilisateur"
         subheaders:
           user_data: "Données de l'utilisateur"
           password: "Mot de passe"
@@ -684,15 +680,6 @@ fr:
           authorized_ips: "Adresses IP autorisées"
           comments: "Remarques"
           other: "Divers"
-        links:
-          show: "Cet utilisateur"
-
-      links:
-        show_all: "Tous utilisateurs"
-        show: "Cet utilisateur"
-        new: "Nouvel utilisateur"
-        update: "Mise à jour"
-        delete: "Supprimer"
 
     known_i_ps:
       index:
@@ -705,23 +692,12 @@ fr:
           known_ip_data: "Données de l'adresse IP"
           safe_users: "Utilisateurs autorisés"
           other: "Divers"
-        links:
-          update: "Mise à jour"
       new:
         title: "Nouvelle IP"
-        header: "Nouvelle adresse IP"
+        header: "Ajouter une adresse IP"
       edit:
         title: "%{ip} - mise à jour"
         header: "Mise à jour de l'adresse IP %{ip}"
-        links:
-          show: "Cette adresse IP"
-
-      links:
-        show_all: "Adresses IP connues"
-        show: "Cette adresse IP"
-        new: "Nouvelle adresse IP"
-        update: "Mise à jour"
-        delete: "Supprimer"
 
     safe_user_i_ps:
       index:
@@ -730,11 +706,6 @@ fr:
       edit_all:
         title: "IPs autorisées - mise à jour"
         header: "Mise à jour des adresses IP autorisées"
-
-      links:
-        show_all: "Adresses IP autorisées"
-        update_all: "Mise à jour"
-        delete: "Supprimer"
 
   instructors:
     index:

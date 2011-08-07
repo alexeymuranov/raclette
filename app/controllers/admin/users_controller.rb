@@ -247,7 +247,7 @@ class Admin::UsersController < AdminController
       @safe_ips = nil
       @other_ips = Admin::KnownIP.order(sort_sql(:safe_ips))
 
-      # @title = t('admin.users.new.title')
+      @title = t('admin.users.new.title')
 
       render :new
     end

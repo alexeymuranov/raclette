@@ -5,7 +5,7 @@ Raclette::Application.routes.draw do
   delete 'logout', :controller => :sessions, :action => :destroy
 
   get 'monitor/overview'
-  get 'entry_register/overview'
+  get 'register/overview'
   get 'secretary_tools/overview'
   get 'manager_tools/overview'
 

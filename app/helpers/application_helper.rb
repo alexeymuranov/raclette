@@ -16,12 +16,14 @@ module ApplicationHelper
 
   def title
     base_title = 'Raclette'
+
     controller_i18n_scope = controller.class.name\
-                                      .gsub(/Controller\z/, '')\
+                                      .sub(/Controller$/, '')\
                                       .gsub('::', '.').underscore
-    # XXX: there is a protected method controller_i18n_scope in Rails::Generators::ResourceHelpers!
+    # XXX: There exists a protected method controller_i18n_scope in Rails::Generators::ResourceHelpers.
 
     @title ||= t("#{controller_i18n_scope}.#{action_name}.title")
+    # XXX: Using conroller_name instead of controller_i18n_scope does not work (loses module part).
 
     @title.nil? ? base_title : "#{base_title} | #{@title}"
   end
@@ -112,8 +114,8 @@ module ApplicationHelper
   def sortable(table_name, column, title = nil, html_options = {})
     title ||= column.to_s.titleize
 
-    if column.intern == sort_column(table_name)  # is column current sort column?
-      if sort_direction(table_name) == :asc  # is current sort direction asc?
+    if column.intern == sort_column(table_name)  # is column the current sort column?
+      if sort_direction(table_name) == :asc  # is the current sort direction asc?
         sort_indicator = '▲ '
         direction_on_click = :desc
         css_class = 'sort current asc'

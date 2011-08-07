@@ -32,16 +32,17 @@
 </div>
 
 <footer>
-  <%= link_to add_pictogram(2)+' '+t('admin.users.links.new'),
+  <%= link_to add_pictogram(2)+' '+t('admin.users.new.header'),
               new_admin_user_path,
               :title => t('actions.create'),
               :class => 'add resource' %>
 </footer>
 
-<%# End of template %>
+<%# End of the main body of the view %>
 
 <% content_for :side_menu_list_items do %>
-  <li><%= link_to t('admin.users.links.new'), new_admin_user_path,
+  <li><%= link_to add_pictogram+' '+t('admin.users.new.title'),
+                  new_admin_user_path,
                   :title => t('actions.create'),
                   :class => 'add resource' %></li>
 <% end %>

@@ -120,7 +120,7 @@ class Admin::KnownIPsController < AdminController
     end
 
     def render_new_properly
-      # @title = t('admin.known_i_ps.new.title')
+      @title = t('admin.known_i_ps.new.title')
 
       render :new
     end
