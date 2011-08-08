@@ -668,6 +668,10 @@ en:
     overview:
       title: "Register"
       header: "Payment and Entry Register"
+      tabs:
+        - "Entries"
+        - "Tickets"
+        - "Memberships"
 
   secretary_tools:
     overview:

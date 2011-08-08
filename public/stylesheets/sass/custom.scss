@@ -32,6 +32,7 @@ $side-menu-font-size: 9pt;
 $table-header-font-size: 9pt;
 $body-font-size: 10pt;
 $main-menu-font-size: 12pt;
+$tabs-font-size: 11pt;
 $h1-font-size: 16pt;
 $h2-font-size: 14pt;
 $h3-font-size: 12pt;
@@ -447,6 +448,46 @@ body > div.container section div.flash {
   a {
     margin: 0;
     padding: 0;
+  }
+}
+
+/* Tabs */
+
+body > div.container section nav.tabs {
+  display: block;
+  font-size: $tabs-font-size;
+
+  ul {
+    margin: 0;
+    padding: 0;
+
+    li {
+      display: inline-block;
+      font-weight: bold;
+
+      a, a:visited {
+        margin: 0;
+        padding: 5px;
+        color: $common-navigation-link-color;
+        font-weight: bold;
+        text-decoration: none;
+      }
+
+      a:hover {
+        text-shadow: none;
+        color: $section-bg-color;
+        background-color: $common-navigation-link-color;
+        text-decoration: none;
+      }
+    }
+    
+    li.current {
+      span {
+        display: inline-block;
+        padding: 5px;
+        background-color: $table-head-bg-color;
+      }
+    }
   }
 }
 

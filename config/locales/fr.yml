@@ -627,6 +627,10 @@ fr:
     overview:
       title: "Caisse"
       header: "Caisse des entrées et règlements"
+      tabs:
+        - "Entrées"
+        - "Tickets"
+        - "Adhésions"
 
   secretary_tools:
     overview:
@@ -663,7 +667,7 @@ fr:
           other: "Divers"
       new:
         title: "Nouvel utilisateur"
-        header: "Ajouter un(e) utilisateur"
+        header: "Ajouter un utilisateur"
         subheaders:
           user_data: "Données de l'utilisateur"
           password: "Mot de passe"

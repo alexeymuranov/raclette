@@ -1,0 +1,20 @@
+<header>
+  <nav class="tabs">
+    <ul class="tabs"><!-- no space!
+      <%- 3.times do |i| -%>
+        <%- if i == @tab -%>
+       --><li class="tab current">
+            <span>
+              <%= t('register.overview.tabs')[i] -%>
+            </span>
+          </li><!-- no space!
+        <%- else -%>
+       --><li class="tab">
+            <%= link_to t('register.overview.tabs')[i],
+                        :tab => i -%>
+          </li><!-- no space!
+        <%- end -%>
+      <%- end -%>
+ --></ul>
+  </nav>
+</header>
