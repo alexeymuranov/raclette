@@ -61,6 +61,26 @@
                 <td class="boolean filtering_value">
                   <%= boolean_to_yes_no(filter[attr]) %>
                 </td>
+              <%- when :integer -%>
+                <td class="integer filtering_value">
+                  <%= t('formats.attribute_name:', :attribute => 'min') %>
+                  <%= filter[attr][:min] %>
+                  <br />
+                  <%= t('formats.attribute_name:', :attribute => 'max') %>
+                  <%= filter[attr][:max] %>
+                </td>
+              <%- when :date -%>
+                <td class="date filtering_value">
+                  <%= t(date.from) %>
+                  <%= filter[attr][:from] %>
+                  <br />
+                  <%= t(date.until) %>
+                  <%= filter[attr][:until] %>
+                </td>
+              <% else %>
+                <td class="filtering_value">
+                  <%= filter[attr] %>
+                </td>
               <% end %>
             <% else %>
               <td></td>
@@ -91,6 +111,25 @@
                                    'all',
                                    filter[attr].nil? %>
               <%= label_tag 'filter_'+attr.to_s+'_all', t('all') %>
+            <%- when :integer -%>
+              <%- filter[attr] ||= {} -%>
+              <%= label_tag "filter[#{attr}][min]",
+                            t('formats.attribute_name:', :attribute => 'min') %>
+              <%= number_field_tag "filter[#{attr}][min]", filter[attr][:min] %>
+              <br />
+              <%= label_tag "filter[#{attr}][max]",
+                            t('formats.attribute_name:', :attribute => 'max') %>
+              <%= number_field_tag "filter[#{attr}][max]", filter[attr][:max] %>
+            <%- when :date -%>
+              <%- filter[attr] ||= {} -%>
+              <%= label_tag "filter[#{attr}][from]", t(date.from) %>
+              <%= text_field_tag "filter[#{attr}][from]",
+                                 filter[attr][:from], :type => 'date' %>
+              <br />
+              <%= label_tag "filter[#{attr}][until]", t(date.until) %>
+              <%= text_field_tag "filter[#{attr}][until]",
+                                 filter[attr][:until], :type => 'date' %>
+            <%- else -%>
             <%- end -%>
           </td>
         <% end %>

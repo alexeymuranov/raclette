@@ -58,11 +58,13 @@
       <%- case column_type -%>
       <%- when :boolean -%>
         <%= form_builder.check_box attribute, input_html_options -%>
+      <%- when :integer -%>
+        <%= form_builder.number_field attribute, input_html_options -%>
       <%- when :date -%>
         <%- input_html_options[:type] = 'date' -%>
         <%= form_builder.text_field attribute, input_html_options -%>
       <%- when :datetime -%>
-        <%- input_html_options[:type] = 'datetime' -%>
+        <%- input_html_options[:type] = 'datetime-local' -%>
         <%= form_builder.text_field attribute, input_html_options -%>
       <%- when :text -%>
         <%= form_builder.text_area attribute, input_html_options -%>

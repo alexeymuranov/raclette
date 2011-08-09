@@ -16,6 +16,9 @@ fr:
       - :day
       - :month
       - :year
+    # Custom:
+    from: "du"
+    until: "jusqu'au"
 
   time:
     formats:
