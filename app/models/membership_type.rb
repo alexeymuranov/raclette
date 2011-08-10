@@ -54,4 +54,7 @@ class MembershipType < ActiveRecord::Base
 
   validates :duration_months,
                 :uniqueness => { :scope => [ :active, :reduced, :unlimited ] }
+
+  # Scopes:
+	scope :default_order, order('duration_months DESC, unique_title ASC')
 end

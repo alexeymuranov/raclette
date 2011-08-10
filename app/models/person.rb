@@ -75,7 +75,7 @@ class Person < ActiveRecord::Base
                 :presence => true
 
   validates :last_name, :first_name, :nickname_or_other,
-                :length   => { :maximum => 32 }
+                :length => { :maximum => 32 }
 
   validates :name_title, :length    => { :maximum => 16 },
                          :allow_nil => true
@@ -94,9 +94,40 @@ class Person < ActiveRecord::Base
   validates :nickname_or_other,
                 :uniqueness => { :scope => [ :last_name, :first_name ] }
 
+  # Scopes:
+  scope :default_order, order('people.last_name ASC, people.first_name ASC')
+
+  # Public class methods:
+  def self.virtual_attribute_to_sql(attr)  # for scoping
+    @@virtual_attributes_sql_alternatives ||= {
+        :full_name => "(people.last_name + ', ' + people.first_name)"
+      }.with_indifferent_access
+    @@virtual_attributes_sql_alternatives[attr]
+  end
+  # NOTE: the SQL alternative is not necessarily equivalent.
+  # For example, the full_name alternative does not include the name_title.
+
+  def self.attribute_to_column_name_or_sql_expression(attr)
+    column_as_string = attr.to_s
+    if self.column_names.include?(column_as_string)
+      [ self.table_name, column_as_string ].join('.')
+    else
+      self.virtual_attribute_to_sql(attr)
+    end
+  end
+
+  # Public instance methods:
   def full_name
-    @full_name ||= nickname_or_other.nil? ?
-        "#{last_name}, #{first_name}" :
-        "#{last_name}, #{first_name} '#{nickname_or_other}'"
+    prefix = name_title ? "#{name_title} " : ''
+    suffix = nickname_or_other ? " '#{nickname_or_other}'" : ''
+    "#{prefix}#{last_name}, #{first_name}#{suffix}"
+  end
+
+  def formatted_email
+    "#{full_name} <#{email}>"
+  end
+
+  def personal_phone
+    mobile_phone || home_phone
   end
 end

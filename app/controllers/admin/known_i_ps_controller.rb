@@ -5,13 +5,11 @@ class Admin::KnownIPsController < AdminController
   def index
     @attributes = [ :ip, :description ]
 
-    @column_types = {}
-    @attributes.each do |attr|
-      @column_types[attr] = Admin::KnownIP.columns_hash[attr.to_s].type
-    end
+    set_column_types
+    set_users_column_headers
 
     # Sort:
-    @known_ips = sort(Admin::KnownIP.scoped, :known_ips)  # table_name = :known_ips
+    @known_ips = sort(Admin::KnownIP.scoped, :known_ips)  # html_table_id = :known_ips
 
     # @title = t('admin.known_i_ps.index.title')
   end
@@ -31,11 +29,8 @@ class Admin::KnownIPsController < AdminController
                                :secretary,
                                :a_person ]
 
-    @safe_users_column_types = {}
-    @safe_users_attributes.each do |attr|
-      @safe_users_column_types[attr] =
-          Admin::User.columns_hash[attr.to_s].type
-    end
+    set_users_column_types
+    set_users_column_headers
 
     @title = t('admin.known_i_ps.show.title', :ip => @known_ip.ip)
   end
@@ -53,10 +48,10 @@ class Admin::KnownIPsController < AdminController
   end
 
   def create
-    @acceptable_attributs = [ 'ip', 'description' ]
+    @acceptable_attributes = [ 'ip', 'description' ]
 
     params[:admin_known_ip].keep_if do |key, value|
-      @acceptable_attributs.include? key
+      @acceptable_attributes.include? key
     end
 
     @known_ip = Admin::KnownIP.new(params[:admin_known_ip])
@@ -73,10 +68,10 @@ class Admin::KnownIPsController < AdminController
   end
 
   def update
-    @acceptable_attributs = [ 'ip', 'description' ]
+    @acceptable_attributes = [ 'ip', 'description' ]
 
     params[:admin_known_ip].keep_if do |key, value|
-      @acceptable_attributs.include? key
+      @acceptable_attributes.include? key
     end
 
     @known_ip = Admin::KnownIP.find(params[:id])
@@ -103,16 +98,16 @@ class Admin::KnownIPsController < AdminController
 
   private
 
-    def table_name_to_class(table_name)
-      case table_name
+    def html_table_id_to_class(html_table_id)
+      case html_table_id
       when :known_ips then Admin::KnownIP
       when :safe_users then Admin::User
       else nil
       end
     end
 
-    def default_sort_column(table_name)
-      case table_name
+    def default_sort_column(html_table_id)
+      case html_table_id
       when :known_ips then :ip
       when :safe_users then :username
       else nil
@@ -120,15 +115,65 @@ class Admin::KnownIPsController < AdminController
     end
 
     def render_new_properly
+      set_column_types
+
       @title = t('admin.known_i_ps.new.title')
 
       render :new
     end
 
     def render_edit_properly
+      set_column_types
+
       @title = t('admin.known_i_ps.edit.title', :ip => @known_ip.ip)
 
       render :edit
+    end
+
+    def set_column_types
+      @column_types = {}
+      Admin::KnownIP.columns_hash.each do |key, value|
+        @column_types[key.intern] = value.type
+      end
+    end
+
+    def set_column_headers
+      @column_headers = {}
+      @column_types.each do |attr, type|
+        human_name = Admin::KnownIP.human_attribute_name(attr)
+
+        case type
+        when :boolean
+          @column_headers[attr] = I18n.t('formats.attribute_name?',
+                                         :attribute => human_name)
+        else
+          @column_headers[attr] = I18n.t('formats.attribute_name:',
+                                         :attribute => human_name)
+        end
+      end
+    end
+
+    def set_users_column_types
+      @users_column_types = {}
+      Admin::User.columns_hash.each do |key, value|
+        @users_column_types[key.intern] = value.type
+      end
+    end
+
+    def set_users_column_headers
+      @users_column_headers = {}
+      @users_column_types.each do |attr, type|
+        human_name = Admin::User.human_attribute_name(attr)
+
+        case type
+        when :boolean
+          @users_column_headers[attr] = I18n.t('formats.attribute_name?',
+                                               :attribute => human_name)
+        else
+          @users_column_headers[attr] = I18n.t('formats.attribute_name:',
+                                               :attribute => human_name)
+        end
+      end
     end
 
 end

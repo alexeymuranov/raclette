@@ -2,6 +2,7 @@
 #   models:
 #   attributes:
 #   column_types:
+#   column_headers:
 
 xml.instruct! :xml, :version    => '1.0',
                     :encoding   => 'UTF-8',
@@ -35,7 +36,7 @@ xml.Workbook(
       # Header
       xml.Row 'ss:StyleID' => 'MyTableHeading' do
         attributes.each do |attr|
-          xml.Cell { xml.Data Admin::User.human_attribute_name(attr), 'ss:Type' => 'String' }
+          xml.Cell { xml.Data column_headers[attr], 'ss:Type' => 'String' }
         end
       end
 

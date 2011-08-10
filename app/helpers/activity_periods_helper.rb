@@ -1,0 +1,2 @@
+module ActivityPeriodsHelper
+end

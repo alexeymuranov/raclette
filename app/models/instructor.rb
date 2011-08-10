@@ -37,6 +37,21 @@ class Instructor < ActiveRecord::Base
 
   accepts_nested_attributes_for :person
 
+  # Delegations:
+  delegate :last_name,
+           :first_name,
+           :name_title,
+           :nickname_or_other,
+           :full_name,
+           :birthyear,
+           :email,
+           :mobile_phone,
+           :home_phone,
+           :work_phone,
+           :personal_phone,
+           :primary_address,
+           :to => :person
+
   # Validations:
   validates :person_id, :presence => true
 
@@ -47,4 +62,7 @@ class Instructor < ActiveRecord::Base
                     :allow_nil => true
 
   validates :person_id, :uniqueness => true
+
+  # Scopes:
+	scope :default_order, order('person_id DESC')
 end

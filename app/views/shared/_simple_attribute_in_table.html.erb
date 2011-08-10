@@ -4,9 +4,13 @@
 -%>
 
 <%- case column_type -%>
-<%- when :boolean -%>
+<%- when :boolean, :delegated_boolean, :virtual_boolean -%>
   <td class="boolean">
     <%= boolean_to_picto value, size=2 -%>
+  </td>
+<%- when :integer, :delegated_integer, :virtual_integer -%>
+  <td class="number">
+    <%= value -%>
   </td>
 <%- else -%>
   <td><%= value -%></td>

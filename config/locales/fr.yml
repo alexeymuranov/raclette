@@ -248,7 +248,7 @@ fr:
         last_name: "Nom"
         first_name: "Prénom"
         name_title: "Titre"
-        nickname_or_other: ""
+        nickname_or_other: "Surnom"
         birthyear: "Année de naissance"
         email: "Adresse e-mail"
         mobile_phone: "Tél. portable"
@@ -256,14 +256,20 @@ fr:
         work_phone: "Tél. bureau"
         address:
           <<: *address_attributes
+        # Virtual attributes:
+        full_name: "Nom complet"
       instructor:
         person:
           <<: *person_attributes
+        <<: *person_attributes
       lesson_supervision: &lesson_supervision_attributes
         unique_names: "Name(s)"
         instructors_count: "Instructors"
         comment: "Comment"
       member:
+        person:
+          <<: *person_attributes
+        <<: *person_attributes
         been_member_by: "Adhérent depuis"
         account_deactivated: "Désactivé(e)"
         latest_membership_obtained_on: "Adhérence obtenue"
@@ -276,8 +282,9 @@ fr:
         last_entry_date: "Dernière entrée"
         payed_tickets_count: "Tickets payés"
         free_tickets_count: "Tickets gratuits"
-        person:
-          <<: *person_attributes
+        # Virtual attributes:
+        account_active: "Compte actif"
+        tickets_count: "Nombre des tickets"
       membership_type: &membership_type_attributes
         unique_title: "Titre"
         active: "Active"
@@ -446,6 +453,7 @@ fr:
     render_in_format: "Rendre en %{format}"
     render_resources_in_format: "Rendre les %{resources} en %{file_format}"
     filter: "Filtrer"
+    clear: "Annuler"
     repaginate: "Paginer"
     show_email_addresses: "Afficher les adresses e-mail"
     hide_email_addresses: "Cacher les adresses e-mail"
@@ -627,7 +635,10 @@ fr:
       header: "Écran de contrôle"
 
   register:
-    overview:
+    choose_person:
+      title: "Caisse"
+      header: "Caisse des entrées et règlements"
+    compose_transaction:
       title: "Caisse"
       header: "Caisse des entrées et règlements"
       tabs:
@@ -746,15 +757,21 @@ fr:
     index:
       title: "Adhérents"
       header: "Adhérents"
+      count_total: "%{count} adhérents en total"
+      count_filtered: "%{count} adhérents filtrés sur %{total}"
+      subheaders:
+        mailing_list: "Adresses e-mail des adhérents filtrés"
+      terms:
+        filtered_members: "adhérents filtrés"
     show:
-      title: ""
-      header: ""
+      title: "%{name}"
+      header: "Adhérent(e) %{name}"
     new:
-      title: ""
-      header: ""
+      title: "Nouveau(elle) adhérent(e)"
+      header: "Ajouter un(e) adhérent(e)"
     edit:
-      title: ""
-      header: ""
+      title: "%{name} - mise à jour"
+      header: "Mise à jour de l'adhérent(e) %{name}"
 
   membership_types:
     index:

@@ -1,0 +1,17 @@
+<h1><%= t '.header' %></h1>
+
+<p>En construction...</p>
+
+<section>
+
+  <h2><%= t 'members.index.title' %></h2>
+
+  <ul class="compact">
+    <%- @members.each do |member| -%>
+      <li><%= link_to select_pictogram+' '+known_ip.ip+note,
+                      { :action => :compose_transaction },
+                      :class => 'select resource' %></li>
+    <%- end -%>
+  </ul>
+
+</section>

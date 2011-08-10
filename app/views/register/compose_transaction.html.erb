@@ -1,3 +1,5 @@
+<h1><%= t '.header' %></h1>
+
 <header>
   <nav class="tabs">
     <ul class="tabs"><!-- no space!
@@ -5,12 +7,12 @@
         <%- if i == @tab -%>
        --><li class="tab current">
             <span>
-              <%= t('register.overview.tabs')[i] -%>
+              <%= t('register.compose_transaction.tabs')[i] -%>
             </span>
           </li><!-- no space!
         <%- else -%>
        --><li class="tab">
-            <%= link_to t('register.overview.tabs')[i],
+            <%= link_to t('register.compose_transaction.tabs')[i],
                         :tab => i -%>
           </li><!-- no space!
         <%- end -%>
@@ -18,3 +20,5 @@
  --></ul>
   </nav>
 </header>
+
+<p>En construction...</p>

@@ -1,15 +1,15 @@
 <%= form_for(@known_ip) do |f| %>
 
-  <%= render 'validation_error_messages' %>
+  <%= render 'shared/validation_error_messages', :target => @known_ip %>
 
   <%= field_set_tag do %>
     <dl class="form_fields">
-      <% [:ip, :description ].each do |attribute| %>
+      <% [ :ip, :description ].each do |attribute| %>
 
         <%= render 'shared/attribute_in_form',
                    :form_builder => f,
-                   :model        => @known_ip,
-                   :attribute    => attribute %>
+                   :attribute    => attribute,
+                   :column_type  => @column_types[attribute] %>
 
 
       <% end %>

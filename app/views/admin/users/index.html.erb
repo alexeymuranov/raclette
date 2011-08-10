@@ -14,12 +14,12 @@
 <div id="users_table">
 
   <%= render 'shared/filtered_index_table',
-             :models       => @users,
-             :attributes   => @attributes,
-             :column_types => @column_types,
-             :klass        => Admin::User,
-             :table_name   => :users,
-             :filter       => @filter %>
+             :models         => @users,
+             :attributes     => @attributes,
+             :column_types   => @column_types,
+             :column_headers => @column_headers,
+             :html_table_id  => :users,
+             :filter         => @filter %>
 
 </div>
 

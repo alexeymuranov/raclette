@@ -1,8 +1,8 @@
 <%# Locals:
-      klass:
-      table_name:
       attributes:
       column_types:
+      column_headers:
+      html_table_id:
       selected_models:
       unselected_models:
       id_prefix:
@@ -20,10 +20,10 @@
       <th class='empty boolean'></th>
 
       <%= render 'shared/table_headers',
-                 :attributes   => attributes,
-                 :column_types => column_types,
-                 :klass        => klass,
-                 :table_name   => table_name %>
+                 :attributes     => attributes,
+                 :column_types   => column_types,
+                 :column_headers => column_headers,
+                 :html_table_id  => html_table_id %>
 
     </tr>
   </thead>

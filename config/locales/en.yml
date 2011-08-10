@@ -298,9 +298,12 @@ en:
         work_phone: "Work phone"
         address:
           <<: *address_attributes
+        # Virtual attributes:
+        full_name: "Full name"
       instructor:
         person:
           <<: *person_attributes
+        <<: *person_attributes
       lesson_supervision: &lesson_supervision_attributes
         unique_names: "Name(s)"
         instructors_count: "Instructors"
@@ -308,6 +311,7 @@ en:
       member:
         person:
           <<: *person_attributes
+        <<: *person_attributes
         been_member_by: "Member since"
         account_deactivated: "Deactivated"
         latest_membership_obtained_on: "Membership obtained"
@@ -320,6 +324,9 @@ en:
         last_entry_date: "Last entry"
         payed_tickets_count: "Payed tickets"
         free_tickets_count: "Free tickets"
+        # Virtual attributes:
+        account_active: "Account active"
+        tickets_count: "Tickets count"
       membership_type: &membership_type_attributes
         unique_title: "Title"
         active: "Active"
@@ -488,6 +495,7 @@ en:
     render_in_format: "Render in %{format}"
     render_resources_in_format: "Render the %{resources} in %{file_format}"
     filter: "Filter"
+    clear: "Clear"
     repaginate: "Paginate"
     show_email_addresses: "Show e-mail addresses"
     hide_email_addresses: "Hide e-mail addresses"
@@ -669,7 +677,10 @@ en:
       header: "Monitor"
 
   register:
-    overview:
+    choose_person:
+      title: "Register"
+      header: "Payment and Entry Register"
+    compose_transaction:
       title: "Register"
       header: "Payment and Entry Register"
       tabs:
@@ -788,15 +799,21 @@ en:
     index:
       title: "Members"
       header: "Members"
+      count_total: "%{count} members total"
+      count_filtered: "%{count} members filtered out of %{total}"
+      subheaders:
+        mailing_list: "E-mail addresses of the filtered members"
+      terms:
+        filtered_members: "filtered members"
     show:
-      title: ""
-      header: ""
+      title: "%{name}"
+      header: "Member %{name}"
     new:
-      title: ""
-      header: ""
+      title: "New member"
+      header: "New member"
     edit:
-      title: ""
-      header: ""
+      title: "Update %{name}"
+      header: "Update member %{name}"
 
   membership_types:
     index:

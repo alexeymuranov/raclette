@@ -47,6 +47,9 @@ input:not([type="submit"]), textarea {
     background-color: white;
     color: black; }
 
+input[type="number"], select.number {
+  text-align: right; }
+
 div#welcome_logo {
   text-align: center; }
 
@@ -388,12 +391,6 @@ body div.container section dl.form_fields div.item, body div.container section d
     background-color: #b0c4de; }
   body div.container section dl.form_fields div.item:nth-child(even) dd, body div.container section dl.show div.item:nth-child(even) dd {
     background-color: #dfdfff; }
-body div.container section dl.form_fields div.field dd.input.required:after {
-  content: "*"; }
-body div.container section dl.form_fields div.field dd.input.required.readonly:after {
-  content: "*!"; }
-body div.container section dl.form_fields div.field dd.input.readonly:after {
-  content: "!"; }
 body div.container section input[type="checkbox"]:not(:checked) + *.checkbox_conditional {
   display: none; }
 body div.container section table {
@@ -413,8 +410,10 @@ body div.container section table {
       border: solid 1px #8ca9cf; }
     body div.container section table thead th, body div.container section table tfoot th {
       background-color: #b0c4de; }
-    body div.container section table thead th.boolean, body div.container section table thead:not(.form_fields) td.boolean, body div.container section table tfoot th.boolean, body div.container section table tfoot:not(.form_fields) td.boolean {
+    body div.container section table thead th, body div.container section table thead td.boolean:not(.field), body div.container section table tfoot th, body div.container section table tfoot td.boolean:not(.field) {
       text-align: center; }
+    body div.container section table thead td.number, body div.container section table tfoot td.number {
+      text-align: right; }
     body div.container section table thead td, body div.container section table tfoot td {
       background-color: #d4dfed; }
     body div.container section table thead td.actions, body div.container section table tfoot td.actions {
@@ -436,6 +435,8 @@ body div.container section table {
       # -o-transition: all 2s ease 0s; }
   body div.container section table tbody tr td.boolean, body div.container section table tbody tr th.boolean {
     text-align: center; }
+  body div.container section table tbody tr td.number {
+    text-align: rigth; }
   body div.container section table tbody tr:nth-child(odd) td, body div.container section table tbody tr:nth-child(odd) th {
     background-color: #f8f8ff; }
   body div.container section table tbody tr:nth-child(even) td, body div.container section table tbody tr:nth-child(even) th {
@@ -486,7 +487,7 @@ body div.container section fieldset {
   body div.container section fieldset legend {
     margin: 0 10px;
     padding: 0px 5px; }
-body div.container section form *.actions {
+body div.container section *.actions {
   text-align: center; }
 body div.container section div.link_group {
   border-radius: 5px;

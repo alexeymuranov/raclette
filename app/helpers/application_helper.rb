@@ -111,11 +111,17 @@ module ApplicationHelper
                             :style => css_style
   end
 
-  def sortable(table_name, column, title = nil, html_options = {})
+  def select_pictogram(size=1)
+    css_style = (size == 1) ? '' : "font-size:#{(100*size).to_i}%;"
+    content_tag :span, '☛', :class => 'pictogram',
+                            :style => css_style
+  end
+
+  def sortable(html_table_id, column, title = nil, html_options = {})
     title ||= column.to_s.titleize
 
-    if column.intern == sort_column(table_name)  # is column the current sort column?
-      if sort_direction(table_name) == :asc  # is the current sort direction asc?
+    if column.intern == sort_column(html_table_id)  # is column the current sort column?
+      if sort_direction(html_table_id) == :asc  # is the current sort direction asc?
         sort_indicator = '▲ '
         direction_on_click = :desc
         css_class = 'sort current asc'
@@ -132,10 +138,10 @@ module ApplicationHelper
 
     options = params.deep_merge :page      => 1,
                                 :sort      =>
-                                    { table_name =>
+                                    { html_table_id =>
                                         { :column    => column,
                                           :direction => direction_on_click } },
-                                :anchor     => table_name,
+                                :anchor     => html_table_id,
                                 :query_type => 'sort'
 
     if html_options[:class].blank?
@@ -148,12 +154,12 @@ module ApplicationHelper
   end
 
   def set_params_in_hidden_form_fields(hash)
-    query_string = hash.except(:controller, :action).to_query
+    query_string = hash.except(:controller, :action, :utf8).to_query
     generated_html = ''.html_safe
     query_string.split(/[&;]+/).each do |single_option|
       unless single_option.blank?
-        a = single_option.split('=')
-        generated_html += hidden_field_tag(a[0], a[1])
+        a = single_option.split('=', 2)
+        generated_html += hidden_field_tag(a.first, a.last)
       end
     end
     generated_html

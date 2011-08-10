@@ -1,0 +1,2 @@
+module WeeklyEventsHelper
+end

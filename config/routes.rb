@@ -5,9 +5,20 @@ Raclette::Application.routes.draw do
   delete 'logout', :controller => :sessions, :action => :destroy
 
   get 'monitor/overview'
-  get 'register/overview'
+  get 'register/choose_person'
+  get 'register/compose_transaction'
+  post 'register/create_transaction'
   get 'secretary_tools/overview'
   get 'manager_tools/overview'
+
+  resources :activity_periods
+  resources :events
+  resources :instructors
+  resources :lesson_supervisions
+  resources :members
+  resources :membership_types
+  resources :memberships
+  resources :weekly_events
 
   # scope :module => :admin do  # an alternative for admin namespace
   namespace :admin do

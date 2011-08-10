@@ -1,0 +1,22 @@
+<%# Locals:
+      target:
+-%>
+
+<% if target.errors.any? %>
+  <div id="error_explanation">
+    <h2>
+      <%= target.errors.count == 1 ?
+              t('activerecord.errors.template.header.one',
+                :model => target.class.human_name) :
+              t('activerecord.errors.template.header.other',
+                :count => target.errors.count,
+                :model => target.class.human_name) %>
+    </h2>
+
+    <ul>
+      <% target.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+    </ul>
+  </div>
+<% end %>

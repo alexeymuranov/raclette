@@ -129,4 +129,7 @@ class Event < ActiveRecord::Base
 
   validates :description, :length    => { :maximum => 255 },
                           :allow_nil => true
+
+  # Scopes:
+	scope :default_order, order('date DESC, end_time DESC, start_time DESC')
 end

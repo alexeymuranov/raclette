@@ -2,11 +2,11 @@
       models:
       attributes:
       column_types:
-      klass:
-      table_name:
+      column_headers:
+      html_table_id:
 -%>
 
-<%= content_tag :table, :id => table_name, :class => 'records' do %>
+<%= content_tag :table, :id => html_table_id, :class => 'records' do %>
   <colgroup class="attributes">
     <% attributes.size.times do %><col /><% end %>
   </colgroup>
@@ -14,10 +14,10 @@
     <tr>
 
       <%= render 'shared/sorting_table_headers',
-                 :attributes   => attributes,
-                 :column_types => column_types,
-                 :klass        => klass,
-                 :table_name   => table_name %>
+                 :attributes     => attributes,
+                 :column_types   => column_types,
+                 :column_headers => column_headers,
+                 :html_table_id  => html_table_id %>
 
     </tr>
   </thead>

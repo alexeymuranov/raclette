@@ -2,8 +2,8 @@
       models:
       attributes:
       column_types:
-      klass:
-      table_name:
+      column_headers:
+      html_table_id:
       filter:
 -%>
 
@@ -13,9 +13,10 @@
   <%= label_tag :per_page, t('field_labels.per_page') %>
   <%= select_tag :per_page,
                  options_for_select([5, 10, 25, 50, 100, 250, 500, 1000],
-                 params[:per_page]) %>
+                                    params[:per_page]),
+                 :class => 'number' %>
   <span class="actions">
-    <%= hidden_field_tag 'query_type', 'repaginate' %>
+    <%= hidden_field_tag :query_type, 'repaginate' %>
     <%= content_tag :button,
                     t('buttons.repaginate'),
                     :name  => 'button',
@@ -26,137 +27,179 @@
 
 <%= paginate models %>
 
-<%= form_tag(nil, :method => :get) do %>
+<%= form_tag(nil, :id     => (filter_form_id = "#{html_table_id}_filter"),
+                  :method => :get) do %>
   <%= set_params_in_hidden_form_fields params.except(:filter) %>
+        <%= hidden_field_tag :query_type, 'filter', :form  => filter_form_id %>
+  <%# Other input fields are outside
+      (with the help of "form" HTML attribute) %>
+<% end %>
 
-  <%= content_tag :table,
-                  :id    => table_name,
-                  :class => (filter.blank? ? '' : 'filtered ')+'records' do %>
-    <colgroup class="attributes">
-      <% attributes.size.times do %><col /><% end %>
-    </colgroup>
-    <colgroup><col /><col /></colgroup>
-    <thead>
-      <tr>
+<%= content_tag :table,
+                :id    => html_table_id,
+                :class => (filter.blank? ? '' : 'filtered ')+'records' do %>
+  <colgroup class="attributes">
+    <% attributes.size.times do %><col /><% end %>
+  </colgroup>
+  <colgroup><col /><col /></colgroup>
+  <thead>
+    <tr>
 
-        <%= render 'shared/sorting_table_headers',
-                   :attributes   => attributes,
-                   :column_types => column_types,
-                   :klass        => klass,
-                   :table_name   => table_name %>
+      <%= render 'shared/sorting_table_headers',
+                 :attributes     => attributes,
+                 :column_types   => column_types,
+                 :column_headers => column_headers,
+                 :html_table_id  => html_table_id %>
 
-        <th class="empty"></th>
-        <th class="empty"></th>
-      </tr>
-      <% unless filter.blank? %>
-        <tr>
-          <% attributes.each do |attr| %>
-            <% unless filter[attr].nil? %>
-              <%- case column_types[attr] -%>
-              <%- when :string -%>
-                <td class="filtering_value">
-                  <%= filter[attr] %>
-                </td>
-              <%- when :boolean -%>
-                <td class="boolean filtering_value">
-                  <%= boolean_to_yes_no(filter[attr]) %>
-                </td>
-              <%- when :integer -%>
-                <td class="integer filtering_value">
-                  <%= t('formats.attribute_name:', :attribute => 'min') %>
-                  <%= filter[attr][:min] %>
-                  <br />
-                  <%= t('formats.attribute_name:', :attribute => 'max') %>
-                  <%= filter[attr][:max] %>
-                </td>
-              <%- when :date -%>
-                <td class="date filtering_value">
-                  <%= t(date.from) %>
-                  <%= filter[attr][:from] %>
-                  <br />
-                  <%= t(date.until) %>
-                  <%= filter[attr][:until] %>
-                </td>
-              <% else %>
-                <td class="filtering_value">
-                  <%= filter[attr] %>
-                </td>
-              <% end %>
-            <% else %>
-              <td></td>
-            <% end %>
-          <% end %>
-          <td class="empty"></td>
-          <td class="empty"></td>
-        </tr>
-      <% end %>
+      <th class="empty"></th>
+      <th class="empty"></th>
+    </tr>
+    <% unless filter.blank? %>
       <tr>
         <% attributes.each do |attr| %>
-          <td class="field">
+          <% unless filter[attr].blank? %>
             <%- case column_types[attr] -%>
-            <%- when :string -%>
-              <%= text_field_tag "filter[#{attr}]", filter[attr] %>
-            <%- when :boolean -%>
-              <%= radio_button_tag "filter[#{attr}]",
-                                   'yes',
-                                   filter[attr] %>
-              <%= label_tag 'filter_'+attr.to_s+'_yes', t('yes') %>
-              <br />
-              <%= radio_button_tag "filter[#{attr}]",
-                                   'no',
-                                   filter[attr] == false %>
-              <%= label_tag 'filter_'+attr.to_s+'_no', t('no') %>
-              <br />
-              <%= radio_button_tag "filter[#{attr}]",
-                                   'all',
-                                   filter[attr].nil? %>
-              <%= label_tag 'filter_'+attr.to_s+'_all', t('all') %>
-            <%- when :integer -%>
-              <%- filter[attr] ||= {} -%>
-              <%= label_tag "filter[#{attr}][min]",
-                            t('formats.attribute_name:', :attribute => 'min') %>
-              <%= number_field_tag "filter[#{attr}][min]", filter[attr][:min] %>
-              <br />
-              <%= label_tag "filter[#{attr}][max]",
-                            t('formats.attribute_name:', :attribute => 'max') %>
-              <%= number_field_tag "filter[#{attr}][max]", filter[attr][:max] %>
-            <%- when :date -%>
-              <%- filter[attr] ||= {} -%>
-              <%= label_tag "filter[#{attr}][from]", t(date.from) %>
-              <%= text_field_tag "filter[#{attr}][from]",
-                                 filter[attr][:from], :type => 'date' %>
-              <br />
-              <%= label_tag "filter[#{attr}][until]", t(date.until) %>
-              <%= text_field_tag "filter[#{attr}][until]",
-                                 filter[attr][:until], :type => 'date' %>
-            <%- else -%>
-            <%- end -%>
+            <%- when :string, :delegated_string, :virtual_string -%>
+              <td class="filtering_value">
+                <%= filter[attr] %>
+              </td>
+            <%- when :boolean, :delegated_boolean, :virtual_boolean -%>
+              <td class="boolean filtering_value">
+                <%= boolean_to_yes_no(filter[attr]) %>
+              </td>
+            <%- when :integer, :delegated_integer, :virtual_integer -%>
+              <td class="number filtering_value">
+                <%- if filter[attr][:min] -%>
+                  <%= t('formats.attribute_name:', :attribute => 'min') %>
+                  <%= filter[attr][:min] %><!-- no space!
+               --><br />
+                <%- end -%>
+                <%- if filter[attr][:max] -%>
+                  <%= t('formats.attribute_name:', :attribute => 'max') %>
+                  <%= filter[attr][:max] %>
+                <%- end -%>
+              </td>
+            <%- when :date, :delegated_date, :virtual_date -%>
+              <td class="date filtering_value">
+                <%- if filter[attr][:from] -%>
+                  <%= t(date.from) %>
+                  <%= filter[attr][:from] %><!-- no space!
+               --><br />
+                <%- end -%>
+                <%- if filter[attr][:until] -%>
+                  <%= t(date.until) %>
+                  <%= filter[attr][:until] %>
+                <%- end -%>
+              </td>
+            <% else %>
+              <td class="filtering_value">
+                <%= filter[attr] %>
+              </td>
+            <% end %>
+          <% else %>
+            <td></td>
+          <% end %>
+        <% end %>
+        <td class="empty"></td>
+        <td class="empty"></td>
+      </tr>
+    <% end %>
+    <tr>
+      <% attributes.each do |attr| %>
+        <%- case column_types[attr] -%>
+        <%- when :string, :delegated_string, :virtual_string -%>
+          <td class="text field">
+            <%= text_field_tag "filter[#{attr}]",
+                               filter[attr],
+                               :form => filter_form_id %>
           </td>
-        <% end %>
-        <td class="empty"></td>
-        <td class="empty"></td>
-      </tr>
-      <tr>
-        <%= content_tag :td, :colspan => attributes.size,
-                             :class   => 'actions' do %>
-          <%= hidden_field_tag 'query_type', 'filter' %>
-          <%= content_tag :button,
-                          t('buttons.filter'),
-                          :name  => 'button',
-                          :type  => 'submit',
-                          :value => 'filter_button' %>
-        <% end %>
-        <td class="empty"></td>
-        <td class="empty"></td>
-      </tr>
-    </thead>
+        <%- when :boolean, :delegated_boolean, :virtual_boolean -%>
+          <td class="boolean field">
+            <%= radio_button_tag "filter[#{attr}]",
+                                 'yes',
+                                 filter[attr],
+                                 :form => filter_form_id %>
+            <%= label_tag 'filter_'+attr.to_s+'_yes', t('yes') %><!-- no space!
+         --><br />
+            <%= radio_button_tag "filter[#{attr}]",
+                                 'no',
+                                 filter[attr] == false,
+                                 :form => filter_form_id %>
+            <%= label_tag 'filter_'+attr.to_s+'_no', t('no') %><!-- no space!
+         --><br />
+            <%= radio_button_tag "filter[#{attr}]",
+                                 'all',
+                                 filter[attr].nil?,
+                                 :form => filter_form_id %>
+            <%= label_tag 'filter_'+attr.to_s+'_all', t('all') %>
+          </td>
+        <%- when :integer, :delegated_integer, :virtual_integer -%>
+          <td class="number field">
+            <%- filter[attr] ||= {} -%>
+            <%= label_tag "filter[#{attr}][min]",
+                          t('formats.attribute_name:', :attribute => 'min') %>
+            <%= number_field_tag "filter[#{attr}][min]",
+                                 filter[attr][:min],
+                                 :form => filter_form_id,
+                                 :size => 6 %><!-- no space!
+         --><br />
+            <%= label_tag "filter[#{attr}][max]",
+                          t('formats.attribute_name:', :attribute => 'max') %>
+            <%= number_field_tag "filter[#{attr}][max]",
+                                 filter[attr][:max],
+                                 :form => filter_form_id,
+                                 :size => 6 %>
+          </td>
+        <%- when :date, :delegated_date, :virtual_date -%>
+          <td class="date field">
+            <%- filter[attr] ||= {} -%>
+            <%= label_tag "filter[#{attr}][from]", t(date.from) %>
+            <%= text_field_tag "filter[#{attr}][from]",
+                               filter[attr][:from],
+                               :form => filter_form_id,
+                               :type => 'date' %><!-- no space!
+         --><br />
+            <%= label_tag "filter[#{attr}][until]", t(date.until) %>
+            <%= text_field_tag "filter[#{attr}][until]",
+                               filter[attr][:until],
+                               :form => filter_form_id,
+                               :type => 'date' %>
+          </td>
+        <%- else -%>
+          <td>
+          </td>
+        <%- end -%>
+      <% end %>
+      <td class="empty"></td>
+      <td class="empty"></td>
+    </tr>
+    <tr>
+      <%= content_tag :td, :colspan => attributes.size,
+                           :class   => 'actions' do %>
+        <%= hidden_field_tag :query_type, 'filter', :form  => filter_form_id %>
+        <%= content_tag :button,
+                        t('buttons.filter'),
+                        :form  => filter_form_id,
+                        :name  => 'button',
+                        :type  => 'submit',
+                        :value => 'filter_button' %>
+        <%= content_tag :button,
+                        t('buttons.clear'),
+                        :form  => filter_form_id,
+                        :name  => 'button',
+                        :type  => 'submit',
+                        :value => 'clear_button' %>
+      <% end %>
+      <td class="empty"></td>
+      <td class="empty"></td>
+    </tr>
+  </thead>
 
-    <%= render 'shared/index_table_body',
-               :models       => models,
-               :attributes   => attributes,
-               :column_types => column_types %>
+  <%= render 'shared/index_table_body',
+             :models       => models,
+             :attributes   => attributes,
+             :column_types => column_types %>
 
-  <% end %>
-<% end %>
+<% end # </table> %>
 
 <%= paginate models %>

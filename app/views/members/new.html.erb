@@ -1,0 +1,17 @@
+<h1><%= t '.header' %></h1>
+
+<%= render 'form' %>
+
+<footer>
+  <%= link_to list_all_pictogram(3)+' '+t('members.index.header'),
+              members_path,
+              :class => 'display resource' %>
+</footer>
+
+<%# End of the main body of the view %>
+
+<% content_for :side_menu_list_items do %>
+  <li><%= link_to list_all_pictogram+' '+t('members.index.title'),
+                  members_path,
+                  :class => 'display resource' %></li>
+<% end %>

@@ -40,4 +40,7 @@ class CommitteeMembership < ActiveRecord::Base
 
   validates :comment, :length    => { :maximum => 255 },
                       :allow_nil => true
+
+  # Scopes:
+	scope :default_order, order('end_date DESC, start_date DESC')
 end

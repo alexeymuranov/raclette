@@ -1,6 +1,6 @@
 <%= form_for(@user) do |f| %>
 
-  <%= render 'validation_error_messages' %>
+  <%= render 'shared/validation_error_messages', :target => @user %>
 
   <%= render 'common_form_fields', :f => f %>
 
@@ -9,14 +9,14 @@
 
       <%= render 'shared/attribute_in_form',
                  :form_builder       => f,
-                 :model              => @user,
                  :attribute          => :password,
+                 :column_type        => @column_types[:password],
                  :input_html_options => { :type => :password } %>
 
       <%= render 'shared/attribute_in_form',
                  :form_builder       => f,
-                 :model              => @user,
                  :attribute          => :password_confirmation,
+                 :column_type        => @column_types[:password_confirmation],
                  :input_html_options => { :type => :password } %>
 
     </dl>

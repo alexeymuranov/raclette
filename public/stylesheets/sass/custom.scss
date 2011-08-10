@@ -108,6 +108,10 @@ input:not([type="submit"]), textarea {
   }
 }
 
+input[type="number"], select.number {
+  text-align: right;
+}
+
 div#welcome_logo {
   text-align: center;
 }
@@ -621,23 +625,6 @@ body div.container section {
     }
   }
 
-  dl.form_fields {
-    div.field dd.input {
-
-      &.required:after {
-        content: "*";
-      }
-
-      &.required.readonly:after {
-        content: "*!";
-      }      
-
-      &.readonly:after {
-        content: "!";
-      }      
-    }
-  }
-
   input[type="checkbox"]:not(:checked) + *.checkbox_conditional {
     display: none;
   }
@@ -671,8 +658,12 @@ body div.container section {
         background-color: $table-head-bg-color;
       }
 
-      th.boolean, &:not(.form_fields) td.boolean {
+      th, td.boolean:not(.field) {
         text-align: center;
+      }
+
+      td.number {
+        text-align: right;
       }
 
       td {
@@ -707,6 +698,10 @@ body div.container section {
     tbody tr {
       td.boolean, th.boolean {
         text-align: center;
+      }
+
+      td.number {
+        text-align: rigth;
       }
 
       &:nth-child(odd) {
@@ -807,7 +802,7 @@ body div.container section {
     }
   }
 
-  form *.actions {
+  *.actions {
     text-align: center;
   }
 

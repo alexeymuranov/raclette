@@ -1,18 +1,18 @@
 <%= field_set_tag t('admin.users.edit.subheaders.user_data') do %>
   <dl class="form_fields">
-    <% [:username, :full_name ].each do |attribute| %>
+    <% [ :username, :full_name ].each do |attribute| %>
 
       <%= render 'shared/attribute_in_form',
                  :form_builder => f,
-                 :model        => @user,
-                 :attribute    => attribute %>
+                 :attribute    => attribute,
+                 :column_type  => @column_types[attribute] %>
 
     <% end %>
 
     <%= render 'shared/attribute_in_form',
                :form_builder       => f,
-               :model              => @user,
                :attribute          => :email,
+               :column_type        => @column_types[:email],
                :input_html_options => { :type => :email } %>
 
     <% is_current_user = (@user == current_user) %>
@@ -21,8 +21,8 @@
 
       <%= render 'shared/attribute_in_form',
                  :form_builder       => f,
-                 :model              => @user,
                  :attribute          => attribute,
+                 :column_type        => @column_types[attribute],
                  :input_html_options => { :disabled => is_current_user } %>
 
     <% end %>
@@ -31,8 +31,8 @@
 
       <%= render 'shared/attribute_in_form',
                  :form_builder => f,
-                 :model        => @user,
-                 :attribute    => attribute %>
+                 :attribute    => attribute,
+                 :column_type  => @column_types[attribute] %>
 
     <% end %>
  </dl>
@@ -41,10 +41,10 @@
 <%= field_set_tag t('admin.users.edit.subheaders.authorized_ips') do %>
 
   <%= render 'shared/selection_form',
-             :klass             => Admin::KnownIP,
-             :table_name        => :known_ips,
              :attributes        => @known_ips_attributes,
              :column_types      => @known_ips_column_types,
+             :column_headers    => @known_ips_column_headers,
+             :html_table_id     => :known_ips,
              :selected_models   => @safe_ips,
              :unselected_models => @other_ips,
              :id_prefix         => 'admin_user_safe_ip_ids',
@@ -57,8 +57,8 @@
 
     <%= render 'shared/attribute_in_form',
                :form_builder       => f,
-               :model              => @user,
                :attribute          => :comments,
+               :column_type        => @column_types[:comments],
                :input_html_options => { :maxlength => 1000 } %>
 
   </dl>

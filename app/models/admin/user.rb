@@ -103,7 +103,7 @@ class Admin::User < ActiveRecord::Base
   before_update :hash_new_password_with_salt_unless_nil
 
   # Scopes:
-	scope :default_order, order('admin_users.username ASC')
+	scope :default_order, order('username ASC')
   scope :admins, where(:admin => true)
   scope :managers, where(:manager => true)
   scope :secretaries, where(:secretary => true)
@@ -121,7 +121,7 @@ class Admin::User < ActiveRecord::Base
   end
 
   def formatted_email
-    @formatted_email ||= "#{full_name} <#{email}>"
+    "#{full_name} <#{email}>"
   end
 
   # Private methods:

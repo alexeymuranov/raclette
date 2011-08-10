@@ -56,4 +56,13 @@ class Membership < ActiveRecord::Base
 
   validates :membership_type_id,
                 :uniqueness => { :scope => :activity_period_id }
+
+  # Delegations:
+  delegate :start_date,
+           :duration_months,
+           :end_date,
+           :to => :activity_period
+
+  # Scopes:
+	scope :default_order, order('activity_period_id DESC')
 end

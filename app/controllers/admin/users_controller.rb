@@ -4,9 +4,14 @@ class Admin::UsersController < AdminController
 
   def index
     @query_type = params[:query_type]
+    @submit_button = params[:button]
     params.delete(:query_type)
-    # params.delete(:commit)
-    # params.delete(:button)
+    params.delete(:commit)
+    params.delete(:button)
+
+    if @query_type == 'filter' && @submit_button == 'clear_button'
+      params.delete(:filter)
+    end
 
     @attributes = [ :username,
                     :full_name,
@@ -16,16 +21,13 @@ class Admin::UsersController < AdminController
                     :secretary,
                     :a_person ]
 
-    @column_types = {}
-    @attributes.each do |attr|
-      @column_types[attr] = Admin::User.columns_hash[attr.to_s].type
-    end
+    set_column_types
 
     # Filter:
-    @all_filtered_users = filter(Admin::User.scoped)
+    @all_filtered_users = filter(Admin::User.scoped, :users)  # html_table_id = :users
 
     # Sort:
-    @all_filtered_users = sort(@all_filtered_users, :users)  # table_name = :users
+    @all_filtered_users = sort(@all_filtered_users, :users)  # html_table_id = :users
 
     # Paginate:
     @users = paginate(@all_filtered_users)
@@ -37,8 +39,6 @@ class Admin::UsersController < AdminController
       @mailing_list = @mailing_list_users.collect(&:formatted_email).join(', ')
     end
 
-    # @title = t('admin.users.index.title')  # or: Admin::User.human_name.pluralize
-
     @attributes_for_download = [ :username,
                                  :full_name,
                                  :email,
@@ -48,14 +48,12 @@ class Admin::UsersController < AdminController
                                  :secretary,
                                  :a_person ]
 
-    @column_types = {}
-    @attributes_for_download.each do |attr|
-      @column_types[attr] =
-          Admin::User.columns_hash[attr.to_s].type
-    end
+    set_column_headers
+    set_column_headers_for_download
 
     respond_to do |requested_format|
       requested_format.html do
+        # @title = t('admin.users.index.title')  # or: Admin::User.human_name.pluralize
         render :index
       end
 
@@ -66,24 +64,29 @@ class Admin::UsersController < AdminController
 
       requested_format.js do
         case @query_type
-        # when 'filter', 'sort'
-        # when 'repaginate'
         when 'show_email_addresses', 'hide_email_addresses'
           render :update_email_list
-        # else
         end
       end
 
       requested_format.ms_excel_2003_xml do
         render_ms_excel_2003_xml_for_download\
-            Admin::User, @all_filtered_users,
-            @attributes_for_download, @column_types  # defined in ApplicationController
+            @all_filtered_users,
+            @attributes_for_download, @column_types,
+            @column_headers_for_download,
+            "#{Admin::User.human_name.pluralize}"\
+            " #{Time.now.strftime('%Y-%m-%d %k_%M')}"\
+            ".excel2003.xml"  # defined in ApplicationController
       end
 
       requested_format.csv do
         render_csv_for_download\
-            Admin::User, @all_filtered_users,
-            @attributes_for_download  # defined in ApplicationController
+            @all_filtered_users,
+            @attributes_for_download,
+            @column_headers_for_download,
+            "#{Admin::User.human_name.pluralize}"\
+            " #{Time.now.strftime('%Y-%m-%d %k_%M')}"\
+            ".csv"  # defined in ApplicationController
       end
     end
   end
@@ -107,11 +110,10 @@ class Admin::UsersController < AdminController
         unless @user.last_signed_in_at.blank?
 
     @safe_ips_attributes = [ :ip, :description ]
-    @safe_ips_column_types = {}
-    @safe_ips_attributes.each do |attr|
-      @safe_ips_column_types[attr] =
-          Admin::KnownIP.columns_hash[attr.to_s].type
-    end
+
+    set_column_types
+    set_known_ips_column_types
+    set_known_ips_column_headers
 
     @title = t('admin.users.show.title', :username => @user.username)
   end
@@ -138,13 +140,13 @@ class Admin::UsersController < AdminController
     params[:admin_user].delete(:comments)\
         if params[:admin_user][:comments].blank?
 
-    @acceptable_attributs = [ 'username', 'full_name', 'email',
+    @acceptable_attributes = [ 'username', 'full_name', 'email',
         'account_deactivated', 'admin', 'manager', 'secretary', 'a_person',
         'comments',
         'password', 'password_confirmation',
         'safe_ip_ids' ]
 
-    params[:admin_user].slice!(*@acceptable_attributs)
+    params[:admin_user].slice!(*@acceptable_attributes)
 
     @user = Admin::User.new(params[:admin_user])
 
@@ -182,13 +184,13 @@ class Admin::UsersController < AdminController
       params[:admin_user].except!(:new_password, :new_password_confirmation)
     end
 
-    @acceptable_attributs = [ 'username', 'full_name', 'email',
+    @acceptable_attributes = [ 'username', 'full_name', 'email',
         'account_deactivated', 'admin', 'manager', 'secretary', 'a_person',
         'comments',
         'current_password', 'new_password', 'new_password_confirmation',
         'safe_ip_ids' ]
 
-    params[:admin_user].slice!(*@acceptable_attributs)
+    params[:admin_user].slice!(*@acceptable_attributes)
 
     current_password = params[:current_password]
 
@@ -220,29 +222,11 @@ class Admin::UsersController < AdminController
 
   private
 
-    def table_name_to_class(table_name)
-      case table_name
-      when :users then Admin::User
-      when :safe_ips then Admin::KnownIP
-      else nil
-      end
-    end
-
-    def default_sort_column(table_name)
-      case table_name
-      when :users then :username
-      when :safe_ips then :ip
-      else nil
-      end
-    end
-
     def render_new_properly
+      set_column_types
       @known_ips_attributes = [ :ip, :description ]
-      @known_ips_column_types = {}
-      @known_ips_attributes.each do |attr|
-        @known_ips_column_types[attr] =
-            Admin::KnownIP.columns_hash[attr.to_s].type
-      end
+      set_known_ips_column_types
+      set_known_ips_column_headers
 
       @safe_ips = nil
       @other_ips = Admin::KnownIP.order(sort_sql(:safe_ips))
@@ -253,12 +237,10 @@ class Admin::UsersController < AdminController
     end
 
     def render_edit_properly
+      set_column_types
       @known_ips_attributes = [ :ip, :description ]
-      @known_ips_column_types = {}
-      @known_ips_attributes.each do |attr|
-        @known_ips_column_types[attr] =
-            Admin::KnownIP.columns_hash[attr.to_s].type
-      end
+      set_known_ips_column_types
+      set_known_ips_column_headers
 
       @safe_ips = @user.safe_ips.order(sort_sql(:safe_ips))
       @other_ips = Admin::KnownIP.order(sort_sql(:safe_ips)) - @safe_ips
@@ -266,6 +248,73 @@ class Admin::UsersController < AdminController
       @title =  t('admin.users.edit.title', :username => @user.username)
 
       render :edit
+    end
+
+    def html_table_id_to_class(html_table_id)
+      case html_table_id
+      when :users then Admin::User
+      when :safe_ips then Admin::KnownIP
+      else nil
+      end
+    end
+
+    def default_sort_column(html_table_id)
+      case html_table_id
+      when :users then :username
+      when :safe_ips then :ip
+      else nil
+      end
+    end
+
+    def set_column_types
+      @column_types = {}
+      Admin::User.columns_hash.each do |key, value|
+        @column_types[key.intern] = value.type
+      end
+    end
+
+    def set_column_headers
+      @column_headers = {}
+      @column_types.each do |attr, type|
+        human_name = Admin::User.human_attribute_name(attr)
+
+        case type
+        when :boolean
+          @column_headers[attr] = I18n.t('formats.attribute_name?',
+                                         :attribute => human_name)
+        else
+          @column_headers[attr] = I18n.t('formats.attribute_name:',
+                                         :attribute => human_name)
+        end
+      end
+    end
+
+    def set_column_headers_for_download
+      set_column_headers
+      @column_headers_for_download = @column_headers
+    end
+
+    def set_known_ips_column_types
+      @known_ips_column_types = {}
+      Admin::KnownIP.columns_hash.each do |key, value|
+        @known_ips_column_types[key.intern] = value.type
+      end
+    end
+
+    def set_known_ips_column_headers
+      @known_ips_column_headers = {}
+      @known_ips_column_types.each do |attr, type|
+        human_name = Admin::KnownIP.human_attribute_name(attr)
+
+        case type
+        when :boolean
+          @known_ips_column_headers[attr] = I18n.t('formats.attribute_name?',
+                                                   :attribute => human_name)
+        else
+          @known_ips_column_headers[attr] = I18n.t('formats.attribute_name:',
+                                                   :attribute => human_name)
+        end
+      end
     end
 
 end

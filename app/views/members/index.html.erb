@@ -1,0 +1,48 @@
+<hgroup>
+  <h1><%= t '.header' %></h1>
+
+  <h2 id="members_count">
+    <% if @filter.blank? %>
+      <%= t '.count_total', :count => Member.count %>
+    <% else %>
+      <%= t '.count_filtered', :count => @all_filtered_members.size,
+                               :total => Member.count %>
+    <% end %>
+  </h2>
+</hgroup>
+
+<div id="users_table">
+
+  <%= render 'shared/filtered_index_table',
+             :models         => @members,
+             :attributes     => @attributes,
+             :column_types   => @column_types,
+             :column_headers => @column_headers,
+             :html_table_id  => :members,
+             :filter         => @filter %>
+
+</div>
+
+<%= render('downloads') %>
+
+<div id="users_mailing_list">
+
+  <%= render('emailing_list') %>
+
+</div>
+
+<footer>
+  <%= link_to add_pictogram(2)+' '+t('members.new.header'),
+              new_member_path,
+              :title => t('actions.create'),
+              :class => 'add resource' %>
+</footer>
+
+<%# End of the main body of the view %>
+
+<% content_for :side_menu_list_items do %>
+  <li><%= link_to add_pictogram+' '+t('members.new.title'),
+                  new_member_path,
+                  :title => t('actions.create'),
+                  :class => 'add resource' %></li>
+<% end %>

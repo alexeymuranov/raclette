@@ -1,42 +1,52 @@
 <%# Locals:
       form_builder:
-      model:
       attribute:
+      column_type (optional):
+      # field_labels (optional):
       input_html_options (optional):
 -%>
 
 <% input_html_options = {} unless local_assigns.has_key? :input_html_options %>
 
-<% input_parent_css_classes = [] %>
-
+<% model = form_builder.object %>
 <% klass = model.class %>
+
+<% unless local_assigns.has_key?(:column_type) %>
+  <% unless (column = columns_hash[attribute.to_s]).nil? %>
+    <% column_type = column.type %>
+  <% else %>
+    <% column_type = nil %>
+  <% end %>
+<% end %>
+
+<% if input_html_options[:class].blank? %>
+  <% input_css_classes = [] %>
+<% else %>
+  <% input_css_classes = input_html_options[:class].split(' ') %>
+<% end %>
+
+<% input_parent_css_classes = [] %>
 
 <% if klass.validators_on(attribute).map(&:class).include?(
           ActiveModel::Validations::PresenceValidator) %>
-  <% input_parent_css_classes << 'required' %>
+  <% input_css_classes << 'required' %>
   <% input_html_options[:required] = 'required' %>
 <% end %>
 
 <% if readonly = klass.readonly_attributes.include?(attribute.to_s) %>
-  <% input_parent_css_classes << 'readonly' %>
+  <% input_css_classes << 'readonly' %>
 <% end %>
 
-<% if editable = !readonly || model.new_record? %>
-  <% input_parent_css_classes << 'input' %>
-<% end %>
+<% editable = !readonly || model.new_record? %>
 
-<% if klass.column_names.include?(attribute.to_s) %>
-  <% column_type = model.column_for_attribute(attribute).type %>
-<% else %>
-  <% column_type = nil %>
-<% end %>
+<% input_html_options[:class] = input_css_classes.join(' ') %>
 
 <div class="item field">
   <dt>
-    <% human_name = model.class.human_attribute_name(attribute) %>
+    <% human_name = klass.human_attribute_name(attribute) %>
 
     <%- case column_type -%>
-    <%- when :boolean -%>
+    <%- when :boolean, :delegated_boolean, :virtual_boolean -%>
       <%- label_content = t('formats.attribute_name?', :attribute => human_name) -%>
     <%- else -%>
       <%- label_content = t('formats.attribute_name:', :attribute => human_name) -%>
@@ -49,24 +59,24 @@
     <%- end -%>
   </dt>
 
-  <%- if column_type == :text -%>
+  <%- if [ :text, :delegated_text, :virtual_text ].include? column_type -%>
     <%- input_parent_css_classes << 'long_text' -%>
   <%- end -%>
 
   <%= content_tag :dd, :class => input_parent_css_classes.join(' ') do -%>
     <%- if editable -%>
       <%- case column_type -%>
-      <%- when :boolean -%>
+      <%- when :boolean, :delegated_boolean, :virtual_boolean -%>
         <%= form_builder.check_box attribute, input_html_options -%>
-      <%- when :integer -%>
+      <%- when :integer, :delegated_integer, :virtual_integer -%>
         <%= form_builder.number_field attribute, input_html_options -%>
-      <%- when :date -%>
+      <%- when :date, :delegated_date, :virtual_date -%>
         <%- input_html_options[:type] = 'date' -%>
         <%= form_builder.text_field attribute, input_html_options -%>
-      <%- when :datetime -%>
+      <%- when :datetime, :delegated_datetime, :virtual_datetime -%>
         <%- input_html_options[:type] = 'datetime-local' -%>
         <%= form_builder.text_field attribute, input_html_options -%>
-      <%- when :text -%>
+      <%- when :text, :delegated_text, :virtual_text -%>
         <%= form_builder.text_area attribute, input_html_options -%>
       <%- else -%>
         <%= form_builder.text_field attribute, input_html_options -%>
@@ -75,11 +85,11 @@
       <%- value = model.public_send(attribute) -%>
 
       <%- case column_type -%>
-      <%- when :boolean -%>
+      <%- when :boolean, :delegated_boolean, :virtual_boolean -%>
         <%= boolean_to_picto(value, size=2) %>
-      <%- when :date -%>
+      <%- when :date, :delegated_date, :virtual_date -%>
         <%= l value, :format => :long %>
-      <%- when :datetime -%>
+      <%- when :datetime, :delegated_datetime, :virtual_datetime -%>
         <%= l value, :format => :custom %>
       <%- else -%>
         <%= value %>

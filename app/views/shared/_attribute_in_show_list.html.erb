@@ -5,13 +5,13 @@
 
 <div class="item">
   <%- case model.column_for_attribute(attribute).type -%>
-  <%- when :boolean -%>
+  <%- when :boolean, :delegated_boolean, :virtual_boolean -%>
     <dt>
       <%= t 'formats.attribute_name?',
             :attribute => model.class.human_attribute_name(attribute) %>
     </dt>
     <dd><%= boolean_to_yes_no(model.public_send(attribute)) %></dd>
-  <%- when :datetime -%>
+  <%- when :datetime, :delegated_datetime, :virtual_datetime -%>
     <dt>
       <%= t 'formats.attribute_name:',
             :attribute => model.class.human_attribute_name(attribute) %>

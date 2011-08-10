@@ -1,18 +1,22 @@
 <%# Locals:
-  klass:
-  attributes:
-  column_types:
+      attributes:
+      column_types:
+      column_headers:
 -%>
 
 <% attributes.each do |attr| %>
   <%- case column_types[attr] -%>
-  <%- when :boolean -%>
+  <%- when :boolean, :delegated_boolean, :virtual_boolean -%>
     <th class="boolean">
-      <%= klass.human_attribute_name(attr) %>
+      <%= column_headers[attr] %>
+    </th>
+  <%- when :integer, :delegated_integer, :virtual_integer -%>
+    <th class="number">
+      <%= column_headers[attr] %>
     </th>
   <%- else -%>
     <th>
-      <%= klass.human_attribute_name(attr) %>
+      <%= column_headers[attr] %>
     </th>
   <%- end -%>
 <% end %>

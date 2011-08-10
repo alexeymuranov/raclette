@@ -52,4 +52,7 @@ class ActivityPeriod < ActiveRecord::Base
   validates :unique_title, :uniqueness => { :case_sensitive => false }
 
   validates :duration_months, :uniqueness => { :scope => :start_date }
+
+  # Scopes:
+	scope :default_order, order('end_date DESC, start_date DESC')
 end

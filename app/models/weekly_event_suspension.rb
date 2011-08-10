@@ -37,4 +37,7 @@ class WeeklyEventSuspension < ActiveRecord::Base
 
   validates :suspend_from, :suspend_until,
                 :uniqueness => { :scope => :weekly_event_id }
+
+  # Scopes:
+	scope :default_order, order('suspend_until DESC, suspend_from DESC')
 end

@@ -1,18 +1,23 @@
 <%# Locals:
-  klass:
-  attributes:
-  column_types:
+      attributes:
+      column_types:
+      column_headers:
+      html_table_id:
 -%>
 
 <% attributes.each do |attr| %>
   <%- case column_types[attr] -%>
-  <%- when :boolean -%>
+  <%- when :boolean, :delegated_boolean, :virtual_boolean -%>
     <th class="boolean">
-      <%= sortable table_name, attr, klass.human_attribute_name(attr) %>
+      <%= sortable html_table_id, attr, column_headers[attr] %>
+    </th>
+  <%- when :integer, :delegated_integer, :virtual_integer -%>
+    <th class="number">
+      <%= sortable html_table_id, attr, column_headers[attr] %>
     </th>
   <%- else -%>
     <th>
-      <%= sortable table_name, attr, klass.human_attribute_name(attr) %>
+      <%= sortable html_table_id, attr, column_headers[attr] %>
     </th>
   <%- end -%>
 <% end %>
