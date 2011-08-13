@@ -1,3 +1,5 @@
+## encoding: UTF-8
+
 module SessionsHelper
 
   def log_in(user, client_ip)

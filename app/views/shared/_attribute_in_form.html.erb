@@ -71,11 +71,11 @@
       <%- when :integer, :delegated_integer, :virtual_integer -%>
         <%= form_builder.number_field attribute, input_html_options -%>
       <%- when :date, :delegated_date, :virtual_date -%>
-        <%- input_html_options[:type] = 'date' -%>
-        <%= form_builder.text_field attribute, input_html_options -%>
+        <%#- input_html_options[:type] = 'date' -%>
+        <%= form_builder.date_select attribute, input_html_options -%>
       <%- when :datetime, :delegated_datetime, :virtual_datetime -%>
-        <%- input_html_options[:type] = 'datetime-local' -%>
-        <%= form_builder.text_field attribute, input_html_options -%>
+        <%#- input_html_options[:type] = 'datetime-local' -%>
+        <%= form_builder.datetime_select attribute, input_html_options -%>
       <%- when :text, :delegated_text, :virtual_text -%>
         <%= form_builder.text_area attribute, input_html_options -%>
       <%- else -%>

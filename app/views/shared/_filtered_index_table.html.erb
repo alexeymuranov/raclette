@@ -154,13 +154,13 @@
           <td class="date field">
             <%- filter[attr] ||= {} -%>
             <%= label_tag "filter[#{attr}][from]", t(date.from) %>
-            <%= text_field_tag "filter[#{attr}][from]",
+            <%= date_select "filter[#{attr}][from]",
                                filter[attr][:from],
                                :form => filter_form_id,
                                :type => 'date' %><!-- no space!
          --><br />
             <%= label_tag "filter[#{attr}][until]", t(date.until) %>
-            <%= text_field_tag "filter[#{attr}][until]",
+            <%= date_select "filter[#{attr}][until]",
                                filter[attr][:until],
                                :form => filter_form_id,
                                :type => 'date' %>

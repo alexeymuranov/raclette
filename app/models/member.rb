@@ -167,11 +167,11 @@ class Member < ActiveRecord::Base
         :name_title        => "people.name_title",
         :nickname_or_other => "people.nickname_or_other",
         :email             => "people.email",
-        :full_name         => "(people.last_name + ', ' + people.first_name)",
+        :full_name         => "(people.last_name || ', ' || people.first_name)",
         :account_active    => "(members.account_deactivated = 'f')",
         :tickets_count     => "(members.payed_tickets_count + "\
                               "members.free_tickets_count)"
-      }.with_indifferent_access
+      }.with_indifferent_access  # uses PostgreSQL syntax
     @@virtual_attributes_sql_alternatives[attr]
   end
   # NOTE: the SQL alternative is not necessarily equivalent.
