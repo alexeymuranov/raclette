@@ -95,16 +95,17 @@ class Admin::UsersController < AdminController
     @user = Admin::User.find(params[:id])
     @safe_ips = @user.safe_ips.order(sort_sql(:safe_ips))
 
-    @key_attributes = [ :username ]
-    @other_main_attributes = [ :full_name,
-                               :email,
-                               :account_deactivated,
-                               :admin,
-                               :manager,
-                               :secretary,
-                               :a_person ]
-    @other_main_attributes << :person_id if @user.a_person?
-    @other_main_attributes << :comments
+    @main_attributes = [ :username,
+                         :full_name,
+                         :email,
+                         :account_deactivated,
+                         :admin,
+                         :manager,
+                         :secretary,
+                         :a_person ]
+    @main_attributes << :person_id if @user.a_person?
+    @main_attributes << :comments
+
     @other_attributes = []
     @other_attributes << :last_signed_in_at\
         unless @user.last_signed_in_at.blank?
@@ -290,8 +291,11 @@ class Admin::UsersController < AdminController
     end
 
     def set_column_headers_for_download
-      set_column_headers
-      @column_headers_for_download = @column_headers
+      @column_headers_for_download = {}
+      @column_types.each do |attr, type|
+        @column_headers_for_download[attr] =
+            Admin::User.human_attribute_name(attr)
+      end
     end
 
     def set_known_ips_column_types

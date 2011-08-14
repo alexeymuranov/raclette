@@ -3,11 +3,11 @@
 <%= render 'edit_form' %>
 
 <footer>
-  <%= link_to show_pictogram(3)+' '+t('admin.users.show.header',
+  <%= link_to show_pictogram(3) + ' ' + t('admin.users.show.header',
                                       :username => @user.username),
               @user,
               :class => 'display resource' %>
-  <%= link_to list_all_pictogram(3)+' '+t('admin.users.index.header'),
+  <%= link_to list_all_pictogram(3) + ' ' + t('admin.users.index.header'),
               admin_users_path,
               :class => 'display resource' %>
 </footer>
@@ -15,7 +15,7 @@
 <%# End of the main body of the view %>
 
 <% content_for :side_menu_list_items do %>
-  <li><%= link_to list_all_pictogram+' '+t('admin.users.index.title'),
+  <li><%= link_to list_all_pictogram + ' ' + t('admin.users.index.title'),
                   admin_users_path,
                   :class => 'display resource' %></li>
 <% end %>

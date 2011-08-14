@@ -38,6 +38,9 @@ span.pictogram {
   vertical-align: middle;
   color: inherit; }
 
+span.label_marks {
+  color: black; }
+
 input:not([type="submit"]), textarea {
   background-color: white; }
   input:not([type="submit"]):focus, textarea:focus {
@@ -380,16 +383,17 @@ body div.container section dl.form_fields div.item, body div.container section d
     padding: 0 5px; }
   body div.container section dl.form_fields div.item dd, body div.container section dl.show div.item dd {
     display: table-cell;
-    padding: 0 5px; }
+    padding: 0 5px;
+    color: black; }
   body div.container section dl.form_fields div.item dd.long_text, body div.container section dl.show div.item dd.long_text {
     vertical-align: top; }
-  body div.container section dl.form_fields div.item:nth-child(odd) dt, body div.container section dl.show div.item:nth-child(odd) dt {
+  body div.container section dl.form_fields div.item:nth-of-type(odd) dt, body div.container section dl.show div.item:nth-of-type(odd) dt {
     background-color: #d4dfed; }
-  body div.container section dl.form_fields div.item:nth-child(odd) dd, body div.container section dl.show div.item:nth-child(odd) dd {
+  body div.container section dl.form_fields div.item:nth-of-type(odd) dd, body div.container section dl.show div.item:nth-of-type(odd) dd {
     background-color: #f8f8ff; }
-  body div.container section dl.form_fields div.item:nth-child(even) dt, body div.container section dl.show div.item:nth-child(even) dt {
+  body div.container section dl.form_fields div.item:nth-of-type(even) dt, body div.container section dl.show div.item:nth-of-type(even) dt {
     background-color: #b0c4de; }
-  body div.container section dl.form_fields div.item:nth-child(even) dd, body div.container section dl.show div.item:nth-child(even) dd {
+  body div.container section dl.form_fields div.item:nth-of-type(even) dd, body div.container section dl.show div.item:nth-of-type(even) dd {
     background-color: #dfdfff; }
 body div.container section input[type="checkbox"]:not(:checked) + *.checkbox_conditional {
   display: none; }
@@ -398,11 +402,13 @@ body div.container section table {
   border: solid 1px #8ca9cf;
   width: auto;
   margin: 0; }
-  body div.container section table tr th, body div.container section table tr td {
+  body div.container section table th, body div.container section table td {
     padding: 0 5px; }
-    body div.container section table tr th a.resource, body div.container section table tr th a.sort, body div.container section table tr td a.resource, body div.container section table tr td a.sort {
+    body div.container section table th a.resource, body div.container section table th a.sort, body div.container section table td a.resource, body div.container section table td a.sort {
       display: block;
       margin: 0 -5px; }
+  body div.container section table td.number {
+    text-align: right; }
   body div.container section table thead, body div.container section table tfoot {
     font-style: normal;
     border: solid 1px #8ca9cf; }
@@ -412,8 +418,6 @@ body div.container section table {
       background-color: #b0c4de; }
     body div.container section table thead th, body div.container section table thead td.boolean:not(.field), body div.container section table tfoot th, body div.container section table tfoot td.boolean:not(.field) {
       text-align: center; }
-    body div.container section table thead td.number, body div.container section table tfoot td.number {
-      text-align: right; }
     body div.container section table thead td, body div.container section table tfoot td {
       background-color: #d4dfed; }
     body div.container section table thead td.actions, body div.container section table tfoot td.actions {
@@ -437,9 +441,9 @@ body div.container section table {
     text-align: center; }
   body div.container section table tbody tr td.number {
     text-align: rigth; }
-  body div.container section table tbody tr:nth-child(odd) td, body div.container section table tbody tr:nth-child(odd) th {
+  body div.container section table tbody tr:nth-of-type(odd) td, body div.container section table tbody tr:nth-of-type(odd) th {
     background-color: #f8f8ff; }
-  body div.container section table tbody tr:nth-child(even) td, body div.container section table tbody tr:nth-child(even) th {
+  body div.container section table tbody tr:nth-of-type(even) td, body div.container section table tbody tr:nth-of-type(even) th {
     background-color: #dfdfff; }
   body div.container section table caption {
     text-align: center;
@@ -452,9 +456,9 @@ body div.container section table.records thead, body div.container section table
     font-size: 9pt;
     border-left: solid 1px #8ca9cf;
     border-right: solid 1px #8ca9cf; }
-body div.container section table.records tbody tr:nth-child(odd) td.operation {
+body div.container section table.records tbody tr:nth-of-type(odd) td.operation {
   background-color: #d4dfed; }
-body div.container section table.records tbody tr:nth-child(even) td.operation {
+body div.container section table.records tbody tr:nth-of-type(even) td.operation {
   background-color: #b0c4de; }
 body div.container section table.records tbody tr td.nothing {
   text-align: center; }
@@ -466,9 +470,9 @@ body div.container section table.grid col {
   border: solid 1px #8ca9cf; }
 body div.container section table.grid thead th {
   border: solid 1px #8ca9cf; }
-body div.container section table.grid tbody tr:nth-child(odd) th {
+body div.container section table.grid tbody tr:nth-of-type(odd) th {
   background-color: #d4dfed; }
-body div.container section table.grid tbody tr:nth-child(even) th {
+body div.container section table.grid tbody tr:nth-of-type(even) th {
   background-color: #b0c4de; }
 body div.container section table.filtered {
   box-shadow: 0 0 3px 0 red;

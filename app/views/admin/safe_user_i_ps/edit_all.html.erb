@@ -3,7 +3,7 @@
 <%= render 'form' %>
 
 <footer>
-  <%= link_to list_all_pictogram(3)+' '+t('admin.safe_user_i_ps.index.header'),
+  <%= link_to list_all_pictogram(3) + ' ' + t('admin.safe_user_i_ps.index.header'),
               admin_safe_user_ips_path,
               :title => t('actions.read'),
               :class => 'display resource' %>
@@ -13,7 +13,7 @@
 
 <% content_for :side_menu_list_items do %>
   <li>
-    <%= link_to list_all_pictogram+' '+t('admin.safe_user_i_ps.index.title'),
+    <%= link_to list_all_pictogram + ' ' + t('admin.safe_user_i_ps.index.title'),
                 admin_safe_user_ips_path,
                 :title => t('actions.read'),
                 :class => 'display resource' %>

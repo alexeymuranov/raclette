@@ -1,2 +1,34 @@
-<h1>Members#show</h1>
-<p>Find me in app/views/members/show.html.erb</p>
+<h1><%= t '.header', :name => @member.full_name %></h1>
+
+<dl class="show">
+
+  <% @attributes.each do |attr| %>
+    <%= render 'shared/attribute_in_show_list',
+               :model       => @member,
+               :attribute   => attr,
+               :column_type => @column_types[attr] %>
+  <% end %>
+
+</dl>
+
+<footer>
+  <%= link_to edit_pictogram(3) + ' ' + t('members.edit.header',
+                                      :name => @member.full_name),
+              edit_member_path(@member),
+              :class => 'modify resource' %>
+  <%= link_to list_all_pictogram(3) + ' ' + t('members.index.header'),
+              members_path,
+              :class => 'display resource' %>
+</footer>
+
+<%# End of the main body of the view %>
+
+<% content_for :side_menu_list_items do %>
+  <li><%= link_to list_all_pictogram + ' ' + t('members.index.title'),
+                  members_path,
+                  :class => 'display resource' %></li>
+  <li><%= link_to add_pictogram + ' ' + t('members.new.title'),
+                  new_member_path,
+                  :title => t('actions.create'),
+                  :class => 'add resource' %></li>
+<% end %>

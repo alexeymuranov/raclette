@@ -32,9 +32,9 @@ module TablesMarkupHelper
     if html_options[:class].blank?
       html_options[:class] = css_class
     else
-      html_options[:class] += " #{css_class}"
+      html_options[:class] << " #{css_class}"
     end
 
-    link_to sort_indicator+title, options, html_options
+    link_to sort_indicator + title, options, html_options
   end
 end

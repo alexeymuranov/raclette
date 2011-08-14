@@ -37,7 +37,7 @@
 
 <%= content_tag :table,
                 :id    => html_table_id,
-                :class => (filter.blank? ? '' : 'filtered ')+'records' do %>
+                :class => (filter.blank? ? '' : 'filtered ') + 'records' do %>
   <colgroup class="attributes">
     <% attributes.size.times do %><col /><% end %>
   </colgroup>
@@ -119,19 +119,19 @@
                                  'yes',
                                  filter[attr],
                                  :form => filter_form_id %>
-            <%= label_tag 'filter_'+attr.to_s+'_yes', t('yes') %><!-- no space!
+            <%= label_tag 'filter_' + attr.to_s + '_yes', t('yes') %><!-- no space!
          --><br />
             <%= radio_button_tag "filter[#{attr}]",
                                  'no',
                                  filter[attr] == false,
                                  :form => filter_form_id %>
-            <%= label_tag 'filter_'+attr.to_s+'_no', t('no') %><!-- no space!
+            <%= label_tag 'filter_' + attr.to_s + '_no', t('no') %><!-- no space!
          --><br />
             <%= radio_button_tag "filter[#{attr}]",
                                  'all',
                                  filter[attr].nil?,
                                  :form => filter_form_id %>
-            <%= label_tag 'filter_'+attr.to_s+'_all', t('all') %>
+            <%= label_tag 'filter_' + attr.to_s + '_all', t('all') %>
           </td>
         <%- when :integer, :delegated_integer, :virtual_integer -%>
           <td class="number field">

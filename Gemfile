@@ -7,6 +7,8 @@ gem 'rails'
 
 gem 'sqlite3'
 
+# gem 'unicode'  # using built-in Multibyte instead
+
 gem 'kaminari'  # pagination
 
 gem 'sass'  # generate CSS

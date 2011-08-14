@@ -8,6 +8,8 @@ fr:
       default: "%d/%m/%Y"
       short: "%e %b"
       long: "%e %B %Y"
+      # Custom:
+      custom: "%A le %d %B %Y"
     day_names: [dimanche, lundi, mardi, mercredi, jeudi, vendredi, samedi]
     abbr_day_names: [dim, lun, mar, mer, jeu, ven, sam]
     month_names: [~, janvier, février, mars, avril, mai, juin, juillet, août, septembre, octobre, novembre, décembre]
@@ -258,6 +260,7 @@ fr:
           <<: *address_attributes
         # Virtual attributes:
         full_name: "Nom complet"
+        ordered_full_name: "Nom complet"
       instructor:
         person:
           <<: *person_attributes
@@ -270,6 +273,7 @@ fr:
         person:
           <<: *person_attributes
         <<: *person_attributes
+        person_id: "Id personnel"
         been_member_by: "Adhérent depuis"
         account_deactivated: "Désactivé(e)"
         latest_membership_obtained_on: "Adhérence obtenue"

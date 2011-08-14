@@ -1,2 +1,21 @@
-<h1>Members#edit</h1>
-<p>Find me in app/views/members/edit.html.erb</p>
+<h1><%= t '.header', :name => @member.full_name %></h1>
+
+<%= render 'form' %>
+
+<footer>
+  <%= link_to show_pictogram(3) + ' ' + t('members.show.header',
+                                          :name => @member.full_name),
+              @member,
+              :class => 'display resource' %>
+  <%= link_to list_all_pictogram(3) + ' ' + t('members.index.header'),
+              members_path,
+              :class => 'display resource' %>
+</footer>
+
+<%# End of the main body of the view %>
+
+<% content_for :side_menu_list_items do %>
+  <li><%= link_to list_all_pictogram + ' ' + t('members.index.title'),
+                  members_path,
+                  :class => 'display resource' %></li>
+<% end %>

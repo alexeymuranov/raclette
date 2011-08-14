@@ -6,19 +6,19 @@
 
   <section>
 
-    <h3><%= link_to list_all_pictogram(2)+' '+t('members.index.title'),
+    <h3><%= link_to list_all_pictogram(2) + ' ' + t('members.index.title'),
                     members_path,
                     :class => 'display resource' %></h3>
 
     <ul class="compact">
       <%- @members.each do |member| -%>
-        <li><%= link_to show_pictogram(2)+' '+member.full_name, member,
+        <li><%= link_to show_pictogram(2) + ' ' + member.full_name, member,
                         :class => 'display resource' %></li>
       <%- end -%>
     </ul>
 
     <footer>
-      <%= link_to add_pictogram(2)+' '+t('members.new.header'),
+      <%= link_to add_pictogram(2) + ' ' + t('members.new.header'),
                   new_member_path,
                   :title => t('actions.create'),
                   :class => 'add resource' %>
@@ -28,19 +28,19 @@
 
   <section>
 
-    <h3><%= link_to list_all_pictogram(2)+' '+t('events.index.title'),
+    <h3><%= link_to list_all_pictogram(2) + ' ' + t('events.index.title'),
                     events_path,
                     :class => 'display resource' %></h3>
 
     <ul class="compact">
       <%- @events.each do |event| -%>
-        <li><%= link_to show_pictogram(2)+' '+event.title, event,
+        <li><%= link_to show_pictogram(2) + ' ' + event.title, event,
                         :class => 'display resource' %></li>
       <%- end -%>
     </ul>
 
     <footer>
-      <%= link_to add_pictogram(2)+' '+t('events.new.header'),
+      <%= link_to add_pictogram(2) + ' ' + t('events.new.header'),
                   new_event_path,
                   :title => t('actions.create'),
                   :class => 'add resource' %>
@@ -60,12 +60,12 @@
 
 <% content_for :side_menu_list_items do %>
   <li>
-    <%= link_to list_all_pictogram+' '+t('members.index.title'),
+    <%= link_to list_all_pictogram + ' ' + t('members.index.title'),
                 members_path,
                 :class => 'display resource' %>
   </li>
   <li>
-    <%= link_to list_all_pictogram+' '+t('events.index.title'),
+    <%= link_to list_all_pictogram + ' ' + t('events.index.title'),
                 events_path,
                 :class => 'display resource' %>
   </li>

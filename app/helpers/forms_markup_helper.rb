@@ -8,7 +8,7 @@ module FormsMarkupHelper
     query_string.split(/[&;]+/).each do |single_option|
       unless single_option.blank?
         a = single_option.split('=', 2)
-        generated_html += hidden_field_tag(a.first, a.last)
+        generated_html << hidden_field_tag(a.first, a.last)
       end
     end
     generated_html
@@ -59,7 +59,7 @@ module FormsMarkupHelper
         label_itself + label_marks
       end
     end
-    
+
     # input_field_helpers = field_helpers - %w(label check_box radio_button fields_for hidden_field)
     # input_field_helpers.each do |helper|
     #   define_method helper do |field, *args|

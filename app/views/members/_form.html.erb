@@ -1,10 +1,12 @@
 <%= form_for(@member) do |f| %>
 
+  <%= render('shared/validation_error_messages', :target => @member.person)\
+          unless @member.person.nil? %>
   <%= render 'shared/validation_error_messages', :target => @member %>
 
   <dl class="form_fields">
     <%= f.fields_for(:person) do |person_fields| %>
-      <% [ :last_name, :first_name, :name_title, :nickname_or_other ].each do |attribute| %>
+      <% [ :first_name, :last_name, :name_title, :nickname_or_other ].each do |attribute| %>
 
         <%= render 'shared/attribute_in_form',
                    :form_builder => person_fields,
@@ -12,15 +14,16 @@
                    :column_type  => @column_types[attribute] %>
 
       <% end %>
+
+      <%= render 'shared/attribute_in_form',
+                 :form_builder       => person_fields,
+                 :attribute          => :email,
+                 :column_type        => @column_types[:email],
+                 :input_html_options => { :type => :email } %>
+
     <% end %>
 
-    <%= render 'shared/attribute_in_form',
-               :form_builder       => f,
-               :attribute          => :email,
-               :column_type        => @column_types[:email],
-               :input_html_options => { :type => :email } %>
-
-    <% [ :been_member_by ].each do |attribute| %>
+    <% [ :been_member_by, :free_tickets_count ].each do |attribute| %>
 
       <%= render 'shared/attribute_in_form',
                  :form_builder => f,

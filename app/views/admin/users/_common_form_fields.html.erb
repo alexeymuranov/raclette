@@ -40,7 +40,7 @@
 
 <%= field_set_tag t('admin.users.edit.subheaders.authorized_ips') do %>
 
-  <%= render 'shared/selection_form',
+  <%= render 'shared/selection_index_table_form',
              :attributes        => @known_ips_attributes,
              :column_types      => @known_ips_column_types,
              :column_headers    => @known_ips_column_headers,

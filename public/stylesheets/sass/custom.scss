@@ -25,6 +25,8 @@ $focus-input-glow-color: Red;
 $focus-input-bg-color: White;
 $focus-input-text-color: Black;
 $login_form-focus-glow-color: Blue;
+$label_marks-color: Black;
+$data-color: Black;
 
 /* Lengths: */
 
@@ -98,6 +100,10 @@ span.pictogram {
   color: inherit;
 }
 
+span.label_marks {
+  color: $label_marks-color;
+}
+
 input:not([type="submit"]), textarea {
   background-color: $input-bg-color;
 
@@ -131,7 +137,7 @@ aside#developper_links {
   position: absolute;
   top: 5px;
   left: 1125px;
-  
+
   a {
     position: absolute;
     opacity: 0.5;
@@ -343,7 +349,7 @@ body > div.container > header {
     &:hover {
       opacity: 1;
     }
-    
+
     nav {
       background-color: $section-bg-color
     }
@@ -484,7 +490,7 @@ body > div.container section nav.tabs {
         text-decoration: none;
       }
     }
-    
+
     li.current {
       span {
         display: inline-block;
@@ -563,7 +569,7 @@ body div.container section {
     font-size: $h3-font-size;
     font-weight: bold;
   }
-  
+
   p {
     padding: 5px;
     background-color: $table-data-bg-color;
@@ -581,7 +587,7 @@ body div.container section {
   dl.form_fields {
     margin: 0 auto;
   }
-    
+
   dl.form_fields div.item, dl.show div.item {
     display: table-row;
 
@@ -598,13 +604,14 @@ body div.container section {
     dd {
       display: table-cell;
       padding: 0 5px;
+      color: $data-color;
     }
 
     dd.long_text {
       vertical-align: top;
     }
 
-    &:nth-child(odd) {
+    &:nth-of-type(odd) {
       dt {
         background-color: $alt-table-head-bg-color;
       }
@@ -614,7 +621,7 @@ body div.container section {
       }
     }
 
-    &:nth-child(even) {
+    &:nth-of-type(even) {
       dt {
         background-color: $table-head-bg-color;
       }
@@ -635,15 +642,17 @@ body div.container section {
     width: auto;
     margin: 0;
 
-    tr {
-      th, td {
-        padding: 0 5px;
+    th, td {
+      padding: 0 5px;
 
-        a.resource, a.sort {
-          display: block;
-          margin: 0 -5px;
-        }
+      a.resource, a.sort {
+        display: block;
+        margin: 0 -5px;
       }
+    }
+
+    td.number {
+      text-align: right;
     }
 
     thead, tfoot {
@@ -660,10 +669,6 @@ body div.container section {
 
       th, td.boolean:not(.field) {
         text-align: center;
-      }
-
-      td.number {
-        text-align: right;
       }
 
       td {
@@ -704,13 +709,13 @@ body div.container section {
         text-align: rigth;
       }
 
-      &:nth-child(odd) {
+      &:nth-of-type(odd) {
         td, th {
           background-color: $table-data-bg-color;
         }
       }
 
-      &:nth-child(even) {
+      &:nth-of-type(even) {
         td, th {
           background-color: $alt-table-data-bg-color;
         }
@@ -730,7 +735,7 @@ body div.container section {
 
     thead, tfoot {
       font-size: $table-header-font-size;
-      
+
       th:not(:empty), td:not(:empty) {
         font-size: $table-header-font-size;
         border-left: solid 1px $table-border-color;
@@ -739,18 +744,18 @@ body div.container section {
     }
 
     tbody tr {
-      &:nth-child(odd) {
+      &:nth-of-type(odd) {
         td.operation {
           background-color: $alt-table-head-bg-color;
         }
       }
 
-      &:nth-child(even) {
+      &:nth-of-type(even) {
         td.operation {
           background-color: $table-head-bg-color;
         }
       }
-      
+
       td.nothing {
         text-align: center;
       }
@@ -772,18 +777,18 @@ body div.container section {
       border: solid 1px $table-border-color;
     }
 
-    tbody tr:nth-child(odd) th {
+    tbody tr:nth-of-type(odd) th {
       background-color: $alt-table-head-bg-color;
     }
 
-    tbody tr:nth-child(even) th {
+    tbody tr:nth-of-type(even) th {
       background-color: $table-head-bg-color;
     }
   }
 
   table.filtered {
     @include box-shadow(0, 0, 3px, 0, $emphasis-glow-color);
-    
+
     thead tr td.filtering_value, tfoot tr td.filtering_value {
       font-size: $body-font-size;
       color: $emphasis-text-color;
@@ -832,7 +837,7 @@ body div.container section {
     span {
       display: inline-block;
       margin: 0 10px;
-      
+
       &.page {
         font-weight: bold;
       }
@@ -866,6 +871,7 @@ body div.container section {
 
     &:hover {
       color: $section-bg-color;
+      background-color: $common-navigation-link-color;
       text-shadow: none;
     }
   }
@@ -941,7 +947,7 @@ pre {
 
 div.field_with_errors {
   display: inline;
-  
+
   label {
     color: Red;
     text-decoration: underline;

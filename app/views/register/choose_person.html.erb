@@ -8,7 +8,7 @@
 
   <ul class="compact">
     <%- @members.each do |member| -%>
-      <li><%= link_to select_pictogram+' '+known_ip.ip+note,
+      <li><%= link_to select_pictogram + ' ' + member.ordered_full_name,
                       { :action => :compose_transaction },
                       :class => 'select resource' %></li>
     <%- end -%>

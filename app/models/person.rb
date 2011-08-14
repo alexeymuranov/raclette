@@ -24,19 +24,19 @@ class Person < ActiveRecord::Base
 
   attr_readonly :id, :last_name
 
-  # attr_accessible( # :id,
-                   # :last_name,
-                   # :first_name,
-                   # :name_title,
-                   # :nickname_or_other,
+  attr_accessible( # :id,
+                   :last_name,
+                   :first_name,
+                   :name_title,
+                   :nickname_or_other,
                    # :birthyear
-                   # :email,
+                   :email,
                    # :mobile_phone,
                    # :home_phone,
                    # :work_phone,
                    # :primary_address_id,
                    # :full_name  # virtual attribute
-                 # )  ## all attributes listed here
+                 )  ## all attributes listed here
 
   # Associations:
   has_many :users, :dependent  => :nullify,
@@ -93,6 +93,7 @@ class Person < ActiveRecord::Base
 
   validates :nickname_or_other,
                 :uniqueness => { :scope => [ :last_name, :first_name ] }
+                # :allow_nil  => true
 
   # Scopes:
   scope :default_order, order('people.last_name ASC, people.first_name ASC')
@@ -118,9 +119,18 @@ class Person < ActiveRecord::Base
 
   # Public instance methods:
   def full_name
-    prefix = name_title ? "#{name_title} " : ''
-    suffix = nickname_or_other ? " '#{nickname_or_other}'" : ''
-    "#{prefix}#{last_name}, #{first_name}#{suffix}"
+    [ name_title,
+      first_name,
+      nickname_or_other.blank? ? nil : "'#{nickname_or_other}'",
+      last_name ].reject(&:blank?).join(' ')
+  end
+
+  def ordered_full_name
+    [ name_title,
+      "#{last_name.mb_chars.upcase.to_s},",
+      first_name,
+      nickname_or_other.blank? ? nil : "'#{nickname_or_other}'" ]\
+        .reject(&:blank?).join(' ')
   end
 
   def formatted_email

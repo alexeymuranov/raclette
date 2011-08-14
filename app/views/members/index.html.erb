@@ -11,7 +11,7 @@
   </h2>
 </hgroup>
 
-<div id="users_table">
+<div id="members_table">
 
   <%= render 'shared/filtered_index_table',
              :models         => @members,
@@ -25,14 +25,14 @@
 
 <%= render('downloads') %>
 
-<div id="users_mailing_list">
+<div id="members_mailing_list">
 
   <%= render('emailing_list') %>
 
 </div>
 
 <footer>
-  <%= link_to add_pictogram(2)+' '+t('members.new.header'),
+  <%= link_to add_pictogram(2) + ' ' + t('members.new.header'),
               new_member_path,
               :title => t('actions.create'),
               :class => 'add resource' %>
@@ -41,7 +41,7 @@
 <%# End of the main body of the view %>
 
 <% content_for :side_menu_list_items do %>
-  <li><%= link_to add_pictogram+' '+t('members.new.title'),
+  <li><%= link_to add_pictogram + ' ' + t('members.new.title'),
                   new_member_path,
                   :title => t('actions.create'),
                   :class => 'add resource' %></li>

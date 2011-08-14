@@ -5,7 +5,7 @@
 -%>
 
 <th scope=row>
-  <%= label_tag id_prefix+"_#{model.id}", model.public_send(attributes[0]) %>
+  <%= label_tag id_prefix + "_#{model.id}", model.public_send(attributes[0]) %>
 </th>
 
 <% attributes[1..-1].each do |attr| %>

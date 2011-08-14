@@ -12,34 +12,21 @@
 <% klass = model.class %>
 
 <% unless local_assigns.has_key?(:column_type) %>
-  <% unless (column = columns_hash[attribute.to_s]).nil? %>
+  <% unless (column = klass.columns_hash[attribute.to_s]).nil? %>
     <% column_type = column.type %>
   <% else %>
     <% column_type = nil %>
   <% end %>
 <% end %>
 
-<% if input_html_options[:class].blank? %>
-  <% input_css_classes = [] %>
-<% else %>
-  <% input_css_classes = input_html_options[:class].split(' ') %>
-<% end %>
-
 <% input_parent_css_classes = [] %>
 
-<% if klass.validators_on(attribute).map(&:class).include?(
+<% required = klass.validators_on(attribute).map(&:class).include?(
           ActiveModel::Validations::PresenceValidator) %>
-  <% input_css_classes << 'required' %>
-  <% input_html_options[:required] = 'required' %>
-<% end %>
-
-<% if readonly = klass.readonly_attributes.include?(attribute.to_s) %>
-  <% input_css_classes << 'readonly' %>
-<% end %>
-
+<% readonly = klass.readonly_attributes.include?(attribute.to_s) %>
 <% editable = !readonly || model.new_record? %>
 
-<% input_html_options[:class] = input_css_classes.join(' ') %>
+<% input_html_options[:required] = 'required' if required %>
 
 <div class="item field">
   <dt>

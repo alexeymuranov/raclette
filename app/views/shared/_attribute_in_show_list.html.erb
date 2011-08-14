@@ -1,27 +1,75 @@
 <%# Locals:
       model:
       attribute:
+      column_type(optional):
 -%>
 
+<% klass = model.class %>
+
+<% unless local_assigns.has_key?(:column_type) %>
+  <% unless (column = klass.columns_hash[attribute.to_s]).nil? %>
+    <% column_type = column.type %>
+  <% else %>
+    <% column_type = nil %>
+  <% end %>
+<% end %>
+
+<% readonly = klass.readonly_attributes.include?(attribute.to_s) %>
+
 <div class="item">
-  <%- case model.column_for_attribute(attribute).type -%>
+  <%- case column_type -%>
   <%- when :boolean, :delegated_boolean, :virtual_boolean -%>
     <dt>
       <%= t 'formats.attribute_name?',
-            :attribute => model.class.human_attribute_name(attribute) %>
+            :attribute => klass.human_attribute_name(attribute) %>
     </dt>
-    <dd><%= boolean_to_yes_no(model.public_send(attribute)) %></dd>
-  <%- when :datetime, :delegated_datetime, :virtual_datetime -%>
+    <dd class="boolean">
+      <% shown_value = boolean_to_yes_no(model.public_send(attribute)) %>
+      <% if readonly %>
+        <b><%= shown_value %></b>
+      <% else %>
+        <%= shown_value %>
+      <% end %>
+    </dd>
+  <%- when :date, :delegated_date, :virtual_date,
+           :datetime, :delegated_datetime, :virtual_datetime -%>
     <dt>
       <%= t 'formats.attribute_name:',
-            :attribute => model.class.human_attribute_name(attribute) %>
+            :attribute => klass.human_attribute_name(attribute) %>
     </dt>
-    <dd><%= l model.public_send(attribute), :format => :custom %></dd>
+    <dd>
+      <% shown_value = l model.public_send(attribute), :format => :custom %>
+      <% if readonly %>
+        <b><%= shown_value %></b>
+      <% else %>
+        <%= shown_value %>
+      <% end %>
+    </dd>
+  <%- when :integer, :delegated_integer, :virtual_integer -%>
+    <dt>
+      <%= t 'formats.attribute_name:',
+            :attribute => klass.human_attribute_name(attribute) %>
+    </dt>
+    <dd>
+      <% shown_value = model.public_send(attribute) %>
+      <% if readonly %>
+        <b><%= shown_value %></b>
+      <% else %>
+        <%= shown_value %>
+      <% end %>
+    </dd>
   <%- else -%>
     <dt>
       <%= t 'formats.attribute_name:',
-            :attribute => model.class.human_attribute_name(attribute) %>
+            :attribute => klass.human_attribute_name(attribute) %>
     </dt>
-    <dd><%= model.public_send(attribute) %></dd>
+    <dd>
+      <% shown_value = model.public_send(attribute) %>
+      <% if readonly %>
+        <b><%= shown_value %></b>
+      <% else %>
+        <%= shown_value %>
+      <% end %>
+    </dd>
   <%- end -%>
 </div>

@@ -18,8 +18,7 @@ class Admin::KnownIPsController < AdminController
     @known_ip = Admin::KnownIP.find(params[:id])
     @safe_users = @known_ip.safe_users.order(sort_sql(:safe_users))
 
-    @key_attributes = [ :ip ]
-    @other_main_attributes = [ :description ]
+    @attributes = [ :ip, :description ]
 
     @safe_users_attributes = [ :username,
                                :full_name,

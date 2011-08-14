@@ -8,6 +8,8 @@ en:
       default: "%Y-%m-%d"
       short: "%b %d"
       long: "%B %d, %Y"
+      # Custom:
+      custom: "%A %d %B %Y"
 
     day_names:
       - Sunday
@@ -300,6 +302,7 @@ en:
           <<: *address_attributes
         # Virtual attributes:
         full_name: "Full name"
+        ordered_full_name: "Full name"
       instructor:
         person:
           <<: *person_attributes
@@ -312,6 +315,7 @@ en:
         person:
           <<: *person_attributes
         <<: *person_attributes
+        person_id: "Personal Id"
         been_member_by: "Member since"
         account_deactivated: "Deactivated"
         latest_membership_obtained_on: "Membership obtained"
@@ -451,12 +455,12 @@ en:
           <<: *person_attributes
 
   # For kaminari gem:
-  views:  
+  views:
     pagination:
       first: "|◀◀ First page"
       last: "Last page ▶▶|"
-      previous: "◀ Previous page"  
-      next: "Next page ▶"  
+      previous: "◀ Previous page"
+      next: "Next page ▶"
       truncate: "…"
 
 ################################################################

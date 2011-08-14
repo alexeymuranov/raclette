@@ -4,17 +4,13 @@
   <h2><%= t 'admin.users.show.subheaders.user_data' %></h2>
 
   <dl class="show">
-    <% @key_attributes.each do |attr| %>
-      <%= render 'shared/readonly_attribute_in_show_list',
-                 :attribute => attr,
-                 :model     => @user %>
-    <% end %>
 
-    <% @other_main_attributes.each do |attr| %>
+    <% @main_attributes.each do |attr| %>
       <%= render 'shared/attribute_in_show_list',
                  :attribute => attr,
                  :model     => @user %>
     <% end %>
+
   </dl>
 </section>
 
@@ -45,11 +41,11 @@
 </section>
 
 <footer>
-  <%= link_to edit_pictogram(3)+' '+t('admin.users.edit.header',
-                                      :username => @user.username),
+  <%= link_to edit_pictogram(3) + ' ' + t('admin.users.edit.header',
+                                          :username => @user.username),
               edit_admin_user_path(@user),
               :class => 'modify resource' %>
-  <%= link_to list_all_pictogram(3)+' '+t('admin.users.index.header'),
+  <%= link_to list_all_pictogram(3) + ' ' + t('admin.users.index.header'),
               admin_users_path,
               :class => 'display resource' %>
 </footer>
@@ -57,10 +53,10 @@
 <%# End of the main body of the view %>
 
 <% content_for :side_menu_list_items do %>
-  <li><%= link_to list_all_pictogram+' '+t('admin.users.index.title'),
+  <li><%= link_to list_all_pictogram + ' ' + t('admin.users.index.title'),
                   admin_users_path,
                   :class => 'display resource' %></li>
-  <li><%= link_to add_pictogram+' '+t('admin.users.new.title'),
+  <li><%= link_to add_pictogram + ' ' + t('admin.users.new.title'),
                   new_admin_user_path,
                   :title => t('actions.create'),
                   :class => 'add resource' %></li>

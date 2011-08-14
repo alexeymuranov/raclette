@@ -30,7 +30,7 @@ class Member < ActiveRecord::Base
 
   attr_accessible( # :id,
                    # :person_id,
-                   # :been_member_by,
+                   :been_member_by,
                    # :shares_tickets_with_member_id,
                    # :account_deactivated,
                    # :latest_membership_obtained_on,
@@ -42,7 +42,7 @@ class Member < ActiveRecord::Base
                    # :last_payment_date,
                    # :last_entry_date,
                    # :payed_tickets_count,
-                   # :free_tickets_count,
+                   :free_tickets_count,
                    :last_name,         # delegated attribute
                    :first_name,        # delegated attribute
                    :name_title,        # delegated attribute
@@ -53,7 +53,8 @@ class Member < ActiveRecord::Base
                    :home_phone,        # delegated attribute
                    :work_phone,        # delegated attribute
                    :personal_phone,    # delegated attribute
-                   :primary_address    # delegated attribute
+                   :primary_address,   # delegated attribute
+                   :person_attributes  # association attribute
                  )  ## all attributes listed here
 
   # Associations:
@@ -101,28 +102,19 @@ class Member < ActiveRecord::Base
 
   # Delegations:
   delegate :last_name,
-           :'last_name=',
            :first_name,
-           :'first_name=',
            :name_title,
-           :'name_title=',
            :nickname_or_other,
-           :'nickname_or_other=',
            :full_name,
+           :ordered_full_name,
            :birthyear,
-           :'birthyear=',
            :email,
-           :'email=',
            :formatted_email,
            :mobile_phone,
-           :'mobile_phone=',
            :home_phone,
-           :'home_phone=',
            :work_phone,
-           :'work_phone=',
            :personal_phone,
            :primary_address,
-           :'primary_address=',
            :to => :person
 
   delegate :unique_title, :duration_months,
@@ -167,7 +159,7 @@ class Member < ActiveRecord::Base
         :name_title        => "people.name_title",
         :nickname_or_other => "people.nickname_or_other",
         :email             => "people.email",
-        :full_name         => "(people.last_name || ', ' || people.first_name)",
+        :ordered_full_name => "(people.last_name || ', ' || people.first_name)",
         :account_active    => "(members.account_deactivated = 'f')",
         :tickets_count     => "(members.payed_tickets_count + "\
                               "members.free_tickets_count)"
@@ -175,7 +167,8 @@ class Member < ActiveRecord::Base
     @@virtual_attributes_sql_alternatives[attr]
   end
   # NOTE: the SQL alternative is not necessarily equivalent.
-  # For example, the full_name alternative does not include the name_title.
+  # For example, the ordered_full_name alternative does not include
+  # the name_title.
 
   def self.attribute_to_column_name_or_sql_expression(attr)
     column_as_string = attr.to_s
@@ -194,7 +187,7 @@ class Member < ActiveRecord::Base
   alias_method :'account_active?', :account_active
 
   def tickets_count
-    payed_tickets_count+free_tickets_count
+    payed_tickets_count + free_tickets_count
   end
 
   def current_membership
