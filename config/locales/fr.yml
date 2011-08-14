@@ -192,10 +192,9 @@ fr:
 
     # Custom:
     models:
-      admin:
-        user: "Utilisateur"
-        known_ip: "Adresse IP connue"
-        safe_user_ip: "Adresse IP autorisée"
+      "admin/user": "Utilisateur"
+      "admin/known_ip": "Adresse IP connue"
+      "admin/safe_user_ip": "Adresse IP autorisée"
       person: "Personne"
       address: "Adresse"
       instructor: "Intervenant"
@@ -216,29 +215,28 @@ fr:
       event_entry: "Entrée"
       event_cashier: "Chargé des entrées"
     attributes:
-      admin:
-        user:
-          username: "Nom d'utilisateur"
-          full_name: "Nom complet"
-          "a_person": "Personne"
-          person_id: "Id personnelle"
-          email: "Adresse e-mail"
-          "account_deactivated": "Désactivé(e)"
-          "admin": "Administrateur"
-          "manager": "Gestionnaire"
-          "secretary": "Secrétaire"
-          last_signed_in_at: "S'est connecté(e) la dernière fois"
-          last_signed_in_from_ip: "S'est connecté(e) la dernière fois de l'IP"
-          comments: "Remarques"
-          password: "Mot de passe"
-          password_confirmation: "Confirmation du mot de passe"
-          new_password: "Nouveau mot de passe"
-          new_password_confirmation: "Confirmation du nouveau mot de passe"
-          safe_ips: "Adresses IP autorisées"
-        known_ip:
-          ip: "Adresse IP"
-          description: "Description"
-          safe_users: "Utilisateurs autorisés"
+      "admin/user":
+        username: "Nom d'utilisateur"
+        full_name: "Nom complet"
+        "a_person": "Personne"
+        person_id: "Id personnelle"
+        email: "Adresse e-mail"
+        "account_deactivated": "Désactivé(e)"
+        "admin": "Administrateur"
+        "manager": "Gestionnaire"
+        "secretary": "Secrétaire"
+        last_signed_in_at: "S'est connecté(e) la dernière fois"
+        last_signed_in_from_ip: "S'est connecté(e) la dernière fois de l'IP"
+        comments: "Remarques"
+        password: "Mot de passe"
+        password_confirmation: "Confirmation du mot de passe"
+        new_password: "Nouveau mot de passe"
+        new_password_confirmation: "Confirmation du nouveau mot de passe"
+        safe_ips: "Adresses IP autorisées"
+      "admin/known_ip":
+        ip: "Adresse IP"
+        description: "Description"
+        safe_users: "Utilisateurs autorisés"
       address: &address_attributes
         names: "Nom(s)"
         address_type: "Type"
@@ -256,22 +254,22 @@ fr:
         mobile_phone: "Tél. portable"
         home_phone: "Tél. domicile"
         work_phone: "Tél. bureau"
-        address:
-          <<: *address_attributes
+        # address:
+        #   <<: *address_attributes
         # Virtual attributes:
         full_name: "Nom complet"
         ordered_full_name: "Nom complet"
       instructor:
-        person:
-          <<: *person_attributes
+        # person:
+        #   <<: *person_attributes
         <<: *person_attributes
       lesson_supervision: &lesson_supervision_attributes
         unique_names: "Name(s)"
         instructors_count: "Instructors"
         comment: "Comment"
       member:
-        person:
-          <<: *person_attributes
+        # person:
+        #   <<: *person_attributes
         <<: *person_attributes
         person_id: "Id personnel"
         been_member_by: "Adhérent depuis"
@@ -307,10 +305,10 @@ fr:
         over: "Finie"
         description: "Description"
       membership:
-        membership_type:
-          <<: *membership_type_attributes
-        activity_period:
-          <<: *activity_period_attributes
+        # membership_type:
+        #   <<: *membership_type_attributes
+        # activity_period:
+        #   <<: *activity_period_attributes
         initial_price: "Prix"
         current_price: "Prix actuel"
         tickets_count_limit: "Limite de tickets"
@@ -329,16 +327,16 @@ fr:
         entry_fee_tickets: ""
         over: "Fini"
         description: "Description"
-        lesson_supervision:
-          <<: *lesson_supervision_attributes
-        address:
-          <<: *address_attributes
+        # lesson_supervision:
+        #   <<: *lesson_supervision_attributes
+        # address:
+        #   <<: *address_attributes
       weekly_event_suspension:
         suspend_from: "De"
         suspend_until: "Jusqu'au"
         explanation: "Explication"
-        weekly_event:
-          <<: *weekly_event_attributes
+        # weekly_event:
+        #   <<: *weekly_event_attributes
       event: &event_attributes
         event_type: "Type"
         title: "Titre"
@@ -362,12 +360,12 @@ fr:
         tickets_collected: "Tickets reçus"
         entry_fees_collected: "Payements reçus"
         description: "Description"
-        lesson_supervision:
-          <<: *lesson_supervision_attributes
-        address:
-          <<: *address_attributes
-        weekly_event:
-          <<: *weekly_event_attributes
+        # lesson_supervision:
+        #   <<: *lesson_supervision_attributes
+        # address:
+        #   <<: *address_attributes
+        # weekly_event:
+        #   <<: *weekly_event_attributes
       revenue_account: &revenue_account_attributes
         unique_title: "Titre"
         locked: "Verrouillé"
@@ -377,18 +375,18 @@ fr:
         amount: "Somme"
         amount_updated_on: "Somme mise à jour"
         description: "Description"
-        activity_period:
-          <<: *activity_period_attributes
+        # activity_period:
+        #   <<: *activity_period_attributes
       payment: &payment_attributes
         date: "Date"
         amount: "Somme"
         method: "Méthode"
         cancelled_and_reimbursed: "Rémboursé"
         note: ""
-        payer:
-          <<: *person_attributes
-        revenue_account:
-          <<: *revenue_account_attributes
+        # payer:
+        #   <<: *person_attributes
+        # revenue_account:
+        #   <<: *revenue_account_attributes
       membership_purchase:
         membership_type: "Type d'adhérence"
         membership_expiration_date: "Date de fin d'adhérence"
@@ -399,18 +397,18 @@ fr:
       event_entry:
         event_title: "Titre d'événement"
         date: "Date"
-        event:
-          <<: *event_attributes
-        person:
-          <<: *person_attributes
+        # event:
+        #   <<: *event_attributes
+        # person:
+        #   <<: *person_attributes
       event_cashier:
         name: "Nom"
         started_at: "Début"
         finished_at: "Fin"
-        event:
-          <<: *event_attributes
-        person:
-          <<: *person_attributes
+        # event:
+        #   <<: *event_attributes
+        # person:
+        #   <<: *person_attributes
 
   # For kaminari gem:
   views:

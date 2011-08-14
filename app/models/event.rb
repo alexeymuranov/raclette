@@ -74,7 +74,7 @@ class Event < ActiveRecord::Base
   has_many :event_entries, :dependent  => :nullify,
                            :inverse_of => :event
 
-  has_many :cashiers, :class_name => :EventCashier,
+  has_many :cashiers, :class_name => 'EventCashier',
                       :dependent  => :nullify,
                       :inverse_of => :event
 

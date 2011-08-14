@@ -70,7 +70,7 @@ module PictogramsMarkupHelper
 
   def select_pictogram(size=1)
     css_style = (size == 1) ? '' : "font-size:#{(100*size).to_i}%;"
-    content_tag :span, '☛', :class => 'pictogram',
+    content_tag :span, '→', :class => 'pictogram',
                             :style => css_style
   end
 end

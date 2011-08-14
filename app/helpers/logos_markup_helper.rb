@@ -28,7 +28,7 @@ module LogosMarkupHelper
       'background-color:Green'
     end
   end
-  
+
   def path_logo_links_to(user)
     if user.admin?
       admin_admin_tools_overview_path

@@ -4,4 +4,4 @@
 # If you change this key, all old signed cookies will become invalid!
 # Make sure the secret is at least 30 characters and all random,
 # no regular words or you'll be exposed to dictionary attacks.
-Raclette::Application.config.secret_token = '94939bf8292ea0f0513cef140b789814889202ecdd65caaa7ae0ee9519d4f5815d8fecfd37259430d48bb8ce61e3e084c7d7274e216eb01d0a1be77aa5cb57b7'
+Raclette::Application.config.secret_token = '6aae7344f32338c6431bde15f692e2b06ccaec4d7aa4d5b3701366888476de4f14636656b23be827e4139d923dff945dfeb800c24fc649deb2819eb321eaf112'

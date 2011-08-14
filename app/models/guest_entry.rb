@@ -48,7 +48,7 @@ class GuestEntry < ActiveRecord::Base
                :dependent   => :nullify,
                :inverse_of  => :previous_guest_entry
 
-  belongs_to :previous_entry, :class_name => :GuestEntry,
+  belongs_to :previous_entry, :class_name => 'GuestEntry',
                               :inverse_of => :following_entry
 
   belongs_to :membership_purchase,

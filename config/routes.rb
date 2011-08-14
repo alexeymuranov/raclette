@@ -1,5 +1,4 @@
 Raclette::Application.routes.draw do
-
   get    'login',  :controller => :sessions, :action => :new
   post   'login',  :controller => :sessions, :action => :create
   delete 'logout', :controller => :sessions, :action => :destroy
@@ -26,7 +25,7 @@ Raclette::Application.routes.draw do
     resources :users
 
     resources :known_ips, :controller => :known_i_ps
-    
+
     resources :safe_user_ips, :controller => :safe_user_i_ps, :only => [ :index ] do
       collection do
         get 'edit_all', :action => :edit_all
@@ -38,7 +37,7 @@ Raclette::Application.routes.draw do
   end
 
   root :to => 'monitor#overview'
-    
+
   # The priority is based upon order of creation:
   # first created -> highest priority.
 
@@ -88,7 +87,7 @@ Raclette::Application.routes.draw do
 
   # You can have the root of your site routed with "root"
   # just remember to delete public/index.html.
-  # root :to => "welcome#index"
+  # root :to => 'welcome#index'
 
   # See how all your routes lay out with "rake routes"
 

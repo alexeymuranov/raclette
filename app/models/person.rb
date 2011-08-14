@@ -20,6 +20,8 @@
 #  updated_at         :datetime
 #
 
+require 'assets/app_validations/email_format'
+
 class Person < ActiveRecord::Base
 
   attr_readonly :id, :last_name
@@ -42,7 +44,7 @@ class Person < ActiveRecord::Base
   has_many :users, :dependent  => :nullify,
                    :inverse_of => :person
 
-  has_one :statement, :class_name => :PersonalStatement,
+  has_one :statement, :class_name => 'PersonalStatement',
                       :dependent  => :destroy,
                       :inverse_of => :person
 
@@ -65,7 +67,7 @@ class Person < ActiveRecord::Base
   has_many :event_cashiers, :dependent  => :nullify,
                             :inverse_of => :person
 
-  belongs_to :primary_address, :class_name => :Address,
+  belongs_to :primary_address, :class_name => 'Address',
                                :inverse_of => :people
 
   accepts_nested_attributes_for :primary_address, :statement

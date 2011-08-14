@@ -25,7 +25,7 @@
 #
 
 require 'digest'
-require 'app_validations/email_format'
+require 'assets/app_validations/email_format'
 
 class Admin::User < ActiveRecord::Base
 
@@ -57,7 +57,7 @@ class Admin::User < ActiveRecord::Base
                  )  ## all attributes listed here
 
   # Associations:
-  has_many :safe_user_ips, :class_name => :SafeUserIP,
+  has_many :safe_user_ips, :class_name => 'SafeUserIP',
                            :dependent  => :destroy,
                            :inverse_of => :user
 
@@ -96,7 +96,7 @@ class Admin::User < ActiveRecord::Base
                        :allow_nil => true
 
   validates :username, :uniqueness => { :case_sensitive => false }
-                
+
   # Callbacks:
   before_create :hash_password_with_salt
 
@@ -126,7 +126,7 @@ class Admin::User < ActiveRecord::Base
 
   # Private methods:
   private
-  
+
     def hash_password_with_salt
       self.password_salt = make_salt # if new_record?
       self.password_or_password_hash = hash_with_salt(password)

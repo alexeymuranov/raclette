@@ -14,7 +14,7 @@ class Admin::SafeUserIP < ActiveRecord::Base
   # Associations:
   belongs_to :user, :inverse_of => :safe_user_ips
 
-  belongs_to :known_ip, :class_name => :KnownIP,
+  belongs_to :known_ip, :class_name => 'KnownIP',
                         :inverse_of => :safe_user_ips
 
   # Validations:

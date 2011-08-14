@@ -192,8 +192,7 @@ class MembersController < SecretaryController  # FIXME: untested work in progres
 
   def destroy
     @member = Member.find(params[:id])
-    @member.delete
-    # @member.destroy # does not work
+    @member.destroy
 
     flash[:notice] = t('flash.members.destroy.success',
                        :name => @member.full_name)

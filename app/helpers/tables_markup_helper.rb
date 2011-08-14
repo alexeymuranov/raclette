@@ -21,8 +21,8 @@ module TablesMarkupHelper
       css_class = 'sort'
     end
 
-    options = params.deep_merge :page      => 1,
-                                :sort      =>
+    options = params.deep_merge :page       => 1,
+                                :sort       =>
                                     { html_table_id =>
                                         { :column    => column,
                                           :direction => direction_on_click } },

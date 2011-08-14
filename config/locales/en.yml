@@ -234,10 +234,9 @@ en:
 
     # Custom:
     models:
-      admin:
-        user: "User"
-        known_ip: "Known IP Address"
-        safe_user_ip: "Authorized User IP"
+      "admin/user": "User"
+      "admin/known_ip": "Known IP Address"
+      "admin/safe_user_ip": "Authorized User IP"
       person: "Person"
       address: "Address"
       instructor: "Instructor"
@@ -258,29 +257,28 @@ en:
       event_entry: "Event Entry"
       event_cashier: "Event Cashier"
     attributes:
-      admin:
-        user:
-          username: "Username"
-          full_name: "Full name"
-          "a_person": "Person"
-          person_id: "Personal ID"
-          email: "E-mail address"
-          "account_deactivated": "Deactivated"
-          "admin": "Administrator"
-          "manager": "Manager"
-          "secretary": "Secretary"
-          last_signed_in_at: "Last signed in"
-          last_signed_in_from_ip: "Last signed in from IP"
-          comments: "Comments"
-          password: "Password"
-          password_confirmation: "Password confirmation"
-          new_password: "New password"
-          new_password_confirmation: "New password confirmation"
-          safe_ips: "Authorized IP addresses"
-        known_ip:
-          ip: "IP address"
-          description: "Description"
-          safe_users: "Authorized users"
+      "admin/user":
+        username: "Username"
+        full_name: "Full name"
+        "a_person": "Person"
+        person_id: "Personal ID"
+        email: "E-mail address"
+        "account_deactivated": "Deactivated"
+        "admin": "Administrator"
+        "manager": "Manager"
+        "secretary": "Secretary"
+        last_signed_in_at: "Last signed in"
+        last_signed_in_from_ip: "Last signed in from IP"
+        comments: "Comments"
+        password: "Password"
+        password_confirmation: "Password confirmation"
+        new_password: "New password"
+        new_password_confirmation: "New password confirmation"
+        safe_ips: "Authorized IP addresses"
+      "admin/known_ip":
+        ip: "IP address"
+        description: "Description"
+        safe_users: "Authorized users"
       address: &address_attributes
         names: "Names"
         address_type: "Type"
@@ -298,22 +296,22 @@ en:
         mobile_phone: "Mobile phone"
         home_phone: "Home phone"
         work_phone: "Work phone"
-        address:
-          <<: *address_attributes
+        # address:
+        #   <<: *address_attributes
         # Virtual attributes:
         full_name: "Full name"
         ordered_full_name: "Full name"
       instructor:
-        person:
-          <<: *person_attributes
+        # person:
+        #   <<: *person_attributes
         <<: *person_attributes
       lesson_supervision: &lesson_supervision_attributes
         unique_names: "Name(s)"
         instructors_count: "Instructors"
         comment: "Comment"
       member:
-        person:
-          <<: *person_attributes
+        # person:
+        #   <<: *person_attributes
         <<: *person_attributes
         person_id: "Personal Id"
         been_member_by: "Member since"
@@ -349,10 +347,10 @@ en:
         over: "Ended"
         description: "Description"
       membership:
-        membership_type:
-          <<: *membership_type_attributes
-        activity_period:
-          <<: *activity_period_attributes
+        # membership_type:
+        #   <<: *membership_type_attributes
+        # activity_period:
+        #   <<: *activity_period_attributes
         initial_price: "Initial price"
         current_price: "Current price"
         tickets_count_limit: "Tickets limit"
@@ -371,16 +369,16 @@ en:
         entry_fee_tickets: ""
         over: "Finished"
         description: "Description"
-        lesson_supervision:
-          <<: *lesson_supervision_attributes
-        address:
-          <<: *address_attributes
+        # lesson_supervision:
+        #   <<: *lesson_supervision_attributes
+        # address:
+        #   <<: *address_attributes
       weekly_event_suspension:
         suspend_from: "From"
         suspend_until: "Until"
         explanation: "Explanation"
-        weekly_event:
-          <<: *weekly_event_attributes
+        # weekly_event:
+        #   <<: *weekly_event_attributes
       event: &event_attributes
         event_type: "Type"
         title: "Title"
@@ -404,12 +402,12 @@ en:
         tickets_collected: "Tickets collected"
         entry_fees_collected: "Fees collected"
         description: "Description"
-        lesson_supervision:
-          <<: *lesson_supervision_attributes
-        address:
-          <<: *address_attributes
-        weekly_event:
-          <<: *weekly_event_attributes
+        # lesson_supervision:
+        #   <<: *lesson_supervision_attributes
+        # address:
+        #   <<: *address_attributes
+        # weekly_event:
+        #   <<: *weekly_event_attributes
       revenue_account: &revenue_account_attributes
         unique_title: "Title"
         locked: "Locked"
@@ -419,18 +417,18 @@ en:
         amount: "Amount"
         amount_updated_on: "Amount updated"
         description: "Description"
-        activity_period:
-          <<: *activity_period_attributes
+        # activity_period:
+        #   <<: *activity_period_attributes
       payment: &payment_attributes
         date: "Date"
         amount: "Amount"
         method: "Method"
         cancelled_and_reimbursed: "Reimbursed"
         note: ""
-        payer:
-          <<: *person_attributes
-        revenue_account:
-          <<: *revenue_account_attributes
+        # payer:
+        #   <<: *person_attributes
+        # revenue_account:
+        #   <<: *revenue_account_attributes
       membership_purchase:
         membership_type: "Membership type"
         membership_expiration_date: "Expiration date"
@@ -441,18 +439,18 @@ en:
       event_entry:
         event_title: "Event title"
         date: "Date"
-        event:
-          <<: *event_attributes
-        person:
-          <<: *person_attributes
+        # event:
+        #   <<: *event_attributes
+        # person:
+        #   <<: *person_attributes
       event_cashier:
         name: "Name"
         started_at: "Begin"
         finished_at: "End"
-        event:
-          <<: *event_attributes
-        person:
-          <<: *person_attributes
+        # event:
+        #   <<: *event_attributes
+        # person:
+        #   <<: *person_attributes
 
   # For kaminari gem:
   views:

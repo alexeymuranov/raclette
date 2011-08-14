@@ -113,6 +113,7 @@ class Admin::UsersController < AdminController
     @safe_ips_attributes = [ :ip, :description ]
 
     set_column_types
+    set_column_headers
     set_known_ips_column_types
     set_known_ips_column_headers
 
@@ -225,6 +226,7 @@ class Admin::UsersController < AdminController
 
     def render_new_properly
       set_column_types
+      set_column_headers
       @known_ips_attributes = [ :ip, :description ]
       set_known_ips_column_types
       set_known_ips_column_headers
@@ -239,6 +241,7 @@ class Admin::UsersController < AdminController
 
     def render_edit_properly
       set_column_types
+      set_column_headers
       @known_ips_attributes = [ :ip, :description ]
       set_known_ips_column_types
       set_known_ips_column_headers
