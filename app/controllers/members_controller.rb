@@ -15,16 +15,19 @@ class MembersController < SecretaryController  # FIXME: untested work in progres
 
     @attributes = [ :ordered_full_name,
                     :email,
-                    :account_active,
+                    :account_deactivated,
                     :tickets_count ]
 
     set_column_types
 
     # Filter:
-    @all_filtered_members = filter(Member.default_join, :members)  # html_table_id = :members
+    # html_table_id = :members
+    @all_filtered_members = filter(Member.with_person_and_virtual_attributes,
+                                   :members)
 
     # Sort:
-    @all_filtered_members = sort(@all_filtered_members, :members)  # html_table_id = :members
+    # html_table_id = :members
+    @all_filtered_members = sort(@all_filtered_members, :members)
 
     # Paginate:
     @members = paginate(@all_filtered_members)
@@ -46,7 +49,9 @@ class MembersController < SecretaryController  # FIXME: untested work in progres
 
     respond_to do |requested_format|
       requested_format.html do
-        # @title = t('members.index.title')  # or: Member.human_name.pluralize
+        # @title = t('members.index.title')  # or: Member.model_name.human.pluralize
+        # raise "#{@members.to_sql}"
+
         render :index
       end
 
@@ -67,7 +72,7 @@ class MembersController < SecretaryController  # FIXME: untested work in progres
             @all_filtered_members,
             @attributes_for_download, @column_types,
             @column_headers_for_download,
-            "#{Member.human_name.pluralize}"\
+            "#{Member.model_name.human.pluralize}"\
             " #{Time.now.strftime('%Y-%m-%d %k_%M')}"\
             ".excel2003.xml"  # defined in ApplicationController
       end
@@ -77,7 +82,7 @@ class MembersController < SecretaryController  # FIXME: untested work in progres
             @all_filtered_members,
             @attributes_for_download,
             @column_headers_for_download,
-            "#{Member.human_name.pluralize}"\
+            "#{Member.model_name.human.pluralize}"\
             " #{Time.now.strftime('%Y-%m-%d %k_%M')}"\
             ".csv"  # defined in ApplicationController
       end
@@ -85,7 +90,7 @@ class MembersController < SecretaryController  # FIXME: untested work in progres
   end
 
   def show
-    @member = Member.find(params[:id])
+    @member = Member.with_person_and_virtual_attributes.find(params[:id])
 
     @attributes = [ :person_id,
                     :name_title,
@@ -95,7 +100,7 @@ class MembersController < SecretaryController  # FIXME: untested work in progres
                     :email,
                     :payed_tickets_count,
                     :free_tickets_count,
-                    :account_active,
+                    :account_deactivated,
                     :been_member_by ]
 
     set_column_types
@@ -112,7 +117,7 @@ class MembersController < SecretaryController  # FIXME: untested work in progres
   end
 
   def edit
-    @member = Member.find(params[:id])
+    @member = Member.with_person_and_virtual_attributes.find(params[:id])
 
     render_edit_properly
   end
@@ -161,7 +166,7 @@ class MembersController < SecretaryController  # FIXME: untested work in progres
   end
 
   def update
-    @member = Member.find(params[:id])
+    @member = Member.with_person_and_virtual_attributes.find(params[:id])
 
     params[:member][:safe_ip_ids] ||= []
 
@@ -247,7 +252,7 @@ class MembersController < SecretaryController  # FIXME: untested work in progres
       @column_types.merge!( :full_name           => :virtual_string,
                             :ordered_full_name   => :virtual_string,
                             :email               => :delegated_string,
-                            :account_active      => :virtual_boolean,
+                            :account_deactivated      => :virtual_boolean,
                             :payed_tickets_count => :integer,
                             :free_tickets_count  => :integer,
                             :tickets_count       => :virtual_integer )

@@ -1,0 +1,1 @@
+# Raclette: an alternative to [Galette](http://galette.tuxfamily.org/) "Gestionnaire d'Adhérents en Ligne Extrêmement Tarabiscoté mais Tellement Efficace".

@@ -53,7 +53,7 @@ class Admin::UsersController < AdminController
 
     respond_to do |requested_format|
       requested_format.html do
-        # @title = t('admin.users.index.title')  # or: Admin::User.human_name.pluralize
+        # @title = t('admin.users.index.title')  # or: Admin::User.model_name.human.pluralize
         render :index
       end
 
@@ -74,7 +74,7 @@ class Admin::UsersController < AdminController
             @all_filtered_users,
             @attributes_for_download, @column_types,
             @column_headers_for_download,
-            "#{Admin::User.human_name.pluralize}"\
+            "#{Admin::User.model_name.human.pluralize}"\
             " #{Time.now.strftime('%Y-%m-%d %k_%M')}"\
             ".excel2003.xml"  # defined in ApplicationController
       end
@@ -84,7 +84,7 @@ class Admin::UsersController < AdminController
             @all_filtered_users,
             @attributes_for_download,
             @column_headers_for_download,
-            "#{Admin::User.human_name.pluralize}"\
+            "#{Admin::User.model_name.human.pluralize}"\
             " #{Time.now.strftime('%Y-%m-%d %k_%M')}"\
             ".csv"  # defined in ApplicationController
       end

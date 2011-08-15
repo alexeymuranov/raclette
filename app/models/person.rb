@@ -40,7 +40,7 @@ class Person < ActiveRecord::Base
                    # :full_name  # virtual attribute
                  )  ## all attributes listed here
 
-  # Associations:
+  # Associations
   has_many :users, :dependent  => :nullify,
                    :inverse_of => :person
 
@@ -72,7 +72,7 @@ class Person < ActiveRecord::Base
 
   accepts_nested_attributes_for :primary_address, :statement
 
-  # Validations:
+  # Validations
   validates :last_name, :first_name,
                 :presence => true
 
@@ -95,51 +95,64 @@ class Person < ActiveRecord::Base
 
   validates :nickname_or_other,
                 :uniqueness => { :scope => [ :last_name, :first_name ] }
-                # :allow_nil  => true
 
-  # Scopes:
+  # Some "static" public class methods
+  def self.full_name_sql
+    "(people.name_title || ' ' || people.first_name || ' ' || people.last_name)"
+  end
+
+  def self.ordered_full_name_sql
+    "(people.last_name || ', ' || people.first_name"\
+                     " || ', ' || people.name_title)"
+  end
+
+  def self.formatted_email_sql
+    "(#{full_name_sql} || ' <' || people.email || '>')"
+  end
+
+  def self.virtual_attributes_in_sql
+    @@virtual_attributes_in_sql ||= {
+        :full_name         => self.full_name_sql,
+        :ordered_full_name => self.ordered_full_name_sql,
+        :formatted_email   => self.formatted_email_sql
+      }.with_indifferent_access
+  end
+
+  def self.virtual_sql_attributes
+    [ :full_name, :ordered_full_name, :formatted_email ]
+  end
+
+  def self.virtual_attributes_sql
+    [ "#{self.full_name_sql} AS full_name",
+      "#{self.ordered_full_name_sql} AS ordered_full_name",
+      "#{self.formatted_email_sql} AS formatted_email" ].join(', ')
+  end
+
+  # Scopes
+  scope :with_virtual_attributes, select("people.*, #{virtual_attributes_sql}")
+
   scope :default_order, order('people.last_name ASC, people.first_name ASC')
 
-  # Public class methods:
-  def self.virtual_attribute_to_sql(attr)  # for scoping
-    @@virtual_attributes_sql_alternatives ||= {
-        :full_name => "(people.last_name + ', ' + people.first_name)"
-      }.with_indifferent_access
-    @@virtual_attributes_sql_alternatives[attr]
-  end
-  # NOTE: the SQL alternative is not necessarily equivalent.
-  # For example, the full_name alternative does not include the name_title.
-
+  # Public class methods
   def self.attribute_to_column_name_or_sql_expression(attr)
     column_as_string = attr.to_s
     if self.column_names.include?(column_as_string)
       [ self.table_name, column_as_string ].join('.')
     else
-      self.virtual_attribute_to_sql(attr)
+      self.virtual_attributes_in_sql[attr]
     end
   end
 
-  # Public instance methods:
-  def full_name
+  # Public instance methods
+  # Non-SQL virtual attributes
+  def non_sql_full_name
     [ name_title,
       first_name,
       nickname_or_other.blank? ? nil : "'#{nickname_or_other}'",
       last_name ].reject(&:blank?).join(' ')
   end
 
-  def ordered_full_name
-    [ name_title,
-      "#{last_name.mb_chars.upcase.to_s},",
-      first_name,
-      nickname_or_other.blank? ? nil : "'#{nickname_or_other}'" ]\
-        .reject(&:blank?).join(' ')
-  end
-
-  def formatted_email
-    "#{full_name} <#{email}>"
-  end
-
-  def personal_phone
+  def non_sql_personal_phone
     mobile_phone || home_phone
   end
 end

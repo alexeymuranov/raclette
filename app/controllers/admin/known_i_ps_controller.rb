@@ -6,7 +6,7 @@ class Admin::KnownIPsController < AdminController
     @attributes = [ :ip, :description ]
 
     set_column_types
-    set_users_column_headers
+    set_column_headers
 
     # Sort:
     @known_ips = sort(Admin::KnownIP.scoped, :known_ips)  # html_table_id = :known_ips

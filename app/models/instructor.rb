@@ -27,7 +27,7 @@ class Instructor < ActiveRecord::Base
                    # :employed_until
                  # )  ## all attributes listed here
 
-  # Associations:
+  # Associations
   has_many :lesson_instructors, :dependent  => :destroy,
                                 :inverse_of => :instructor
 
@@ -37,7 +37,7 @@ class Instructor < ActiveRecord::Base
 
   accepts_nested_attributes_for :person
 
-  # Delegations:
+  # Delegations
   delegate :last_name,
            :first_name,
            :name_title,
@@ -52,7 +52,7 @@ class Instructor < ActiveRecord::Base
            :primary_address,
            :to => :person
 
-  # Validations:
+  # Validations
   validates :person_id, :presence => true
 
   validates :presentation, :length    => { :maximum => 32*1024 },
@@ -63,6 +63,7 @@ class Instructor < ActiveRecord::Base
 
   validates :person_id, :uniqueness => true
 
-  # Scopes:
+  # Scopes
+  scope :default_includes, includes(:person)
 	scope :default_order, order('person_id DESC')
 end

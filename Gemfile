@@ -7,7 +7,7 @@ gem 'rails', '3.1.0.rc5'
 
 gem 'kaminari'  # pagination
 
-# gem 'meta_where'  # queries without SQL
+# gem 'squeel'  # queries without SQL (does not work?)
 
 # gem 'spreadsheet'  # to generate XLS (Excel 2003 XML is used instead)
 

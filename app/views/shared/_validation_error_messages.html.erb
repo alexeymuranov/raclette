@@ -7,10 +7,10 @@
     <h2>
       <%= target.errors.count == 1 ?
               t('activerecord.errors.template.header.one',
-                :model => target.class.human_name) :
+                :model => target.class.model_name.human) :
               t('activerecord.errors.template.header.other',
                 :count => target.errors.count,
-                :model => target.class.human_name) %>
+                :model => target.class.model_name.human) %>
     </h2>
 
     <ul>

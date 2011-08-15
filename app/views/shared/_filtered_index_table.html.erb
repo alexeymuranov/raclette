@@ -109,9 +109,9 @@
         <%- case column_types[attr] -%>
         <%- when :string, :delegated_string, :virtual_string -%>
           <td class="text field">
-            <%= text_field_tag "filter[#{attr}]",
-                               filter[attr],
-                               :form => filter_form_id %>
+            <%= search_field_tag "filter[#{attr}]",
+                                 filter[attr],
+                                 :form => filter_form_id %>
           </td>
         <%- when :boolean, :delegated_boolean, :virtual_boolean -%>
           <td class="boolean field">

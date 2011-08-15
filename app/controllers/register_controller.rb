@@ -2,7 +2,7 @@
 
 class RegisterController < ApplicationController
   def choose_person
-    @members = paginate(Member.scoped)
+    @members = paginate(Member.with_person_and_virtual_attributes.default_order)
   end
 
   def compose_transaction

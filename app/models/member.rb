@@ -57,7 +57,7 @@ class Member < ActiveRecord::Base
                    :person_attributes  # association attribute
                  )  ## all attributes listed here
 
-  # Associations:
+  # Associations
   has_one :tickets_lender, :foreign_key => :shares_tickets_with_member_id,
                            :class_name  => 'Member',
                            :dependent   => :nullify,
@@ -100,16 +100,13 @@ class Member < ActiveRecord::Base
 
   accepts_nested_attributes_for :person
 
-  # Delegations:
+  # Delegations
   delegate :last_name,
            :first_name,
            :name_title,
            :nickname_or_other,
-           :full_name,
-           :ordered_full_name,
            :birthyear,
            :email,
-           :formatted_email,
            :mobile_phone,
            :home_phone,
            :work_phone,
@@ -125,7 +122,7 @@ class Member < ActiveRecord::Base
            :to     => :'current_membership.activity_period',
            :prefix => :current_membership
 
-  # Validations:
+  # Validations
   validates :person_id, :been_member_by,
             :payed_tickets_count, :free_tickets_count,
                 :presence => true
@@ -145,52 +142,84 @@ class Member < ActiveRecord::Base
 
   validates :person_id, :uniqueness => true
 
-  # Scopes:
-  scope :default_join, joins(:person)
-  scope :default_order, order('members.person_id')
-  # scope :default_order, joins(:person).order('people.last_name ASC, people.first_name ASC')
+  # Some "static" public class methods
+  def self.full_name_sql
+    Person.full_name_sql
+  end
+
+  def self.ordered_full_name_sql
+    Person.ordered_full_name_sql
+  end
+
+  def self.formatted_email_sql
+    Person.formatted_email_sql
+  end
+
+  def self.tickets_count_sql
+    "(members.payed_tickets_count + members.free_tickets_count)"
+  end
+
+  def self.virtual_sql_attributes
+    Person.virtual_sql_attributes + [ :tickets_count ]
+  end
+
+  def self.virtual_attributes_in_sql
+    @@virtual_attributes_in_sql ||=
+        Person.virtual_attributes_in_sql.merge(
+            :tickets_count     => self.tickets_count_sql,
+            :last_name         => "people.last_name",
+            :first_name        => "people.first_name",
+            :name_title        => "people.name_title",
+            :nickname_or_other => "people.nickname_or_other",
+            :email             => "people.email"
+          ).with_indifferent_access
+  end
+
+  def self.virtual_attributes_sql
+    [ Person.virtual_attributes_sql,
+      "#{self.tickets_count_sql} AS tickets_count" ].join(', ')
+  end
+
+  def virtual_attribute_types(attr)
+    @virtual_attribute_types ||= {
+        :full_name           => :virtual_string,
+        :ordered_full_name   => :virtual_string,
+        :email               => :delegated_string,
+        :payed_tickets_count => :integer,
+        :free_tickets_count  => :integer,
+        :tickets_count       => :virtual_integer }
+  # NOTE: virtual_ includes "delegated_to_virtual_",
+  #       but not "delegated_to_real_".
+  #       "delegated_to_real_" is simply delegated_
+  end
+
+  # Scopes
+  scope :with_person_and_virtual_attributes,
+        joins(:person).select("members.*, people.*, #{virtual_attributes_sql}")
+
+  scope :default_order, joins(:person).order('people.last_name ASC, people.first_name ASC')
   scope :account_active, where(:account_deactivated => false)
 
-  # Public class methods:
-  def self.virtual_attribute_to_sql(attr)  # for scoping
-    @@virtual_attributes_sql_alternatives ||= {
-        :last_name         => "people.last_name",
-        :first_name        => "people.first_name",
-        :name_title        => "people.name_title",
-        :nickname_or_other => "people.nickname_or_other",
-        :email             => "people.email",
-        :ordered_full_name => "(people.last_name || ', ' || people.first_name)",
-        :account_active    => "(members.account_deactivated = 'f')",
-        :tickets_count     => "(members.payed_tickets_count + "\
-                              "members.free_tickets_count)"
-      }.with_indifferent_access  # uses PostgreSQL syntax
-    @@virtual_attributes_sql_alternatives[attr]
-  end
-  # NOTE: the SQL alternative is not necessarily equivalent.
-  # For example, the ordered_full_name alternative does not include
-  # the name_title.
-
+  # Public class methods
   def self.attribute_to_column_name_or_sql_expression(attr)
     column_as_string = attr.to_s
     if self.column_names.include?(column_as_string)
       [ self.table_name, column_as_string ].join('.')
     else
-      self.virtual_attribute_to_sql(attr)
+      self.virtual_attributes_in_sql[attr]
     end
   end
 
-  # Public instance methods:
-  def account_active
+  # Public instance methods
+  # Non-SQL virtual attributes
+  def non_sql_account_active
     !account_deactivated
   end
 
-  alias_method :'account_active?', :account_active
+  alias_method :'non_sql_account_active?', :non_sql_account_active
 
-  def tickets_count
-    payed_tickets_count + free_tickets_count
-  end
-
-  def current_membership
+  def non_sql_current_membership  # FIXME
+    raise "Method not implemented"
     # ???
   end
 end
