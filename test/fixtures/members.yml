@@ -24,33 +24,49 @@
 # Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
 
 one:
-  person_id: 
-  been_member_by: 2011-05-08
-  shares_tickets_with_member_id: 1
+  person_id: 1
+  been_member_by: 2000-01-30
+  shares_tickets_with_member_id: 2
   account_deactivated: false
   latest_membership_obtained_on: 2011-05-08
-  latest_membership_expiration_date: 2011-05-08
-  latest_membership_type: MyString
-  latest_membership_duration_months: 1
+  latest_membership_expiration_date: 2012-09-01
+  latest_membership_type: Associate
+  latest_membership_duration_months: 12
   last_card_printed_on: 2011-05-08
   last_card_delivered: false
   last_payment_date: 2011-05-08
   last_entry_date: 2011-05-08
-  payed_tickets_count: 1
+  payed_tickets_count: 100
   free_tickets_count: 1
 
 two:
-  person_id: 
+  person_id: 3
   been_member_by: 2011-05-08
   shares_tickets_with_member_id: 1
   account_deactivated: false
   latest_membership_obtained_on: 2011-05-08
-  latest_membership_expiration_date: 2011-05-08
-  latest_membership_type: MyString
-  latest_membership_duration_months: 1
+  latest_membership_expiration_date: 2011-09-01
+  latest_membership_type: Active
+  latest_membership_duration_months: 6
   last_card_printed_on: 2011-05-08
   last_card_delivered: false
   last_payment_date: 2011-05-08
   last_entry_date: 2011-05-08
-  payed_tickets_count: 1
-  free_tickets_count: 1
+  payed_tickets_count: 0
+  free_tickets_count: 0
+
+three:
+  person_id: 4
+  been_member_by: 2011-05-08
+  shares_tickets_with_member_id: ~
+  account_deactivated: true
+  latest_membership_obtained_on: 2010-09-01
+  latest_membership_expiration_date: 2011-02-01
+  latest_membership_type: Associate
+  latest_membership_duration_months: 6
+  last_card_printed_on: 2011-05-08
+  last_card_delivered: true
+  last_payment_date: 2011-05-08
+  last_entry_date: 2011-05-08
+  payed_tickets_count: -1
+  free_tickets_count: 10

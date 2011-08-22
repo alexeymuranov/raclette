@@ -1,31 +1,61 @@
 # Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
 
 one:
-  username: MyString
-  full_name: MyString
-  a_person: false
-  person_id: 1
-  email: MyString
+  username: john
+  full_name: "John D"
+  a_person: true
+  person_id: ~
+  email: john@emeil.tru
   account_deactivated: false
-  admin: false
-  manager: false
-  secretary: false
-  password_or_password_hash: MyString
-  password_salt: MyString
-  last_signed_in_at: 2011-05-08 22:29:33
-  comments: MyText
+  admin: true
+  manager: true
+  secretary: true
+  password_or_password_hash: "Monkey9"
+  password_salt: ~
+  last_signed_in_at: ~
+  comments: "This is an admin"
 
 two:
-  username: MyString
-  full_name: MyString
-  a_person: false
+  username: jimm
+  full_name: "Jimmey Thom"
+  a_person: true
   person_id: 1
-  email: MyString
+  email: ~
+  account_deactivated: false
+  admin: false
+  manager: false
+  secretary: true
+  password_or_password_hash: "sldjfglaskdjn"
+  password_salt: ~
+  last_signed_in_at: 2011-05-08 22:29:33
+  comments: "This is a secretary."
+
+three:
+  username: cash_register
+  full_name: "Cash Register"
+  a_person: false
+  person_id: ~
+  email: ~
   account_deactivated: false
   admin: false
   manager: false
   secretary: false
-  password_or_password_hash: MyString
-  password_salt: MyString
+  password_or_password_hash: ""
+  password_salt: ~
   last_signed_in_at: 2011-05-08 22:29:33
-  comments: MyText
+  comments: "This is general access."
+
+four:
+  username: bim
+  full_name: "Bim Bim"
+  a_person: true
+  person_id: 2
+  email: ~
+  account_deactivated: true
+  admin: true
+  manager: false
+  secretary: true
+  password_or_password_hash: "dfgsdg"
+  password_salt: ~
+  last_signed_in_at: 2011-05-08 22:29:33
+  comments: "This was an admin."

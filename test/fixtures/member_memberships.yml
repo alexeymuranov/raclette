@@ -16,9 +16,9 @@
 one:
   member_id: 1
   membership_id: 1
-  obtained_on: 2011-05-08
+  obtained_on: 2009-05-08
 
 two:
   member_id: 1
-  membership_id: 1
+  membership_id: 2
   obtained_on: 2011-05-08

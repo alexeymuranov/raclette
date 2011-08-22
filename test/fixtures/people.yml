@@ -21,25 +21,37 @@
 # Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
 
 one:
-  last_name: MyString
-  first_name: MyString
-  name_title: MyString
-  nickname_or_other: MyString
-  birthyear: 1
-  email: MyString
-  mobile_phone: MyString
-  home_phone: MyString
-  work_phone: MyString
+  last_name: Thom
+  first_name: Jimmey
+  name_title: Mr.
+  nickname_or_other: Jim
+  birthyear: 1999
+  email: dfgds@kljlk.fd
+  mobile_phone: "06 79 64 56 34"
+  home_phone: "09 79 64 56 34"
+  work_phone: "05 79 64 56 34"
   primary_address_id: 1
 
 two:
-  last_name: MyString
-  first_name: MyString
-  name_title: MyString
-  nickname_or_other: MyString
-  birthyear: 1
-  email: MyString
-  mobile_phone: MyString
-  home_phone: MyString
-  work_phone: MyString
-  primary_address_id: 1
+  last_name: Bim
+  first_name: Bim
+  name_title: M.
+  nickname_or_other: ""
+  birthyear: ~
+  email: sdfgs2@dsfgl.fg
+  mobile_phone: ~
+  home_phone: "09 45 54 56 76"
+  work_phone: ~
+  primary_address_id: 2
+
+three:
+  last_name: Babba
+  first_name: Andrra
+  name_title: Mlle.
+  nickname_or_other: ""
+  birthyear: 1978
+  email: fgd@ghd.fgh
+  mobile_phone: ~
+  home_phone: "09 45 54 56 76"
+  work_phone: ~
+  primary_address_id: 2

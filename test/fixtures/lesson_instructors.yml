@@ -24,7 +24,14 @@ one:
 
 two:
   lesson_supervision_id: 1
-  instructor_id: 1
+  instructor_id: 2
   invited: false
+  volunteer: true
+  assistant: true
+
+three:
+  lesson_supervision_id: 2
+  instructor_id: 3
+  invited: true
   volunteer: false
   assistant: false

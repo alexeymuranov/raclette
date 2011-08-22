@@ -1,4 +1,4 @@
-ENV["RAILS_ENV"] = "test"
+ENV['RAILS_ENV'] = 'test'
 require File.expand_path('../../config/environment', __FILE__)
 require 'rails/test_help'
 
@@ -8,6 +8,11 @@ class ActiveSupport::TestCase
   # Note: You'll currently still have to declare fixtures explicitly in integration tests
   # -- they do not yet inherit this setting
   fixtures :all
+
+  # Added by Alexey:
+  set_fixture_class 'admin/known_ips' => Admin::KnownIP
+  # set_fixture_class 'admin/safe_user_ips' => Admin::SafeUserIP
+  # set_fixture_class 'application_journal' => ApplicationJournalRecord  # FIXME!
 
   # Add more helper methods to be used by all tests here...
 end

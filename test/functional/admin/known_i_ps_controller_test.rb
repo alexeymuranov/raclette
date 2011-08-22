@@ -1,6 +1,6 @@
 require 'test_helper'
 
-class Admin::KnownIpsControllerTest < ActionController::TestCase
+class Admin::KnownIPsControllerTest < ActionController::TestCase
   setup do
     @admin_known_ip = admin_known_ips(:one)
   end
@@ -17,7 +17,7 @@ class Admin::KnownIpsControllerTest < ActionController::TestCase
   end
 
   test "should create admin_known_ip" do
-    assert_difference('Admin::KnownIp.count') do
+    assert_difference('Admin::KnownIP.count') do
       post :create, :admin_known_ip => @admin_known_ip.attributes
     end
 
@@ -40,7 +40,7 @@ class Admin::KnownIpsControllerTest < ActionController::TestCase
   end
 
   test "should destroy admin_known_ip" do
-    assert_difference('Admin::KnownIp.count', -1) do
+    assert_difference('Admin::KnownIP.count', -1) do
       delete :destroy, :id => @admin_known_ip.to_param
     end
 

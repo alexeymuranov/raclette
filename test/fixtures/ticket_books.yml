@@ -15,10 +15,10 @@
 
 one:
   membership_type_id: 1
-  tickets_number: 1
-  price: 9.99
+  tickets_number: 30
+  price: 60
 
 two:
   membership_type_id: 1
-  tickets_number: 1
-  price: 9.99
+  tickets_number: 45
+  price: 80

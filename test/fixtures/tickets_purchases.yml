@@ -16,12 +16,12 @@
 
 one:
   member_id: 1
-  tickets_number: 1
+  tickets_number: 30
   ticket_book_id: 1
-  purchase_date: 2011-05-08
+  purchase_date: 2011-04-08
 
 two:
-  member_id: 1
-  tickets_number: 1
-  ticket_book_id: 1
-  purchase_date: 2011-05-08
+  member_id: 2
+  tickets_number: 45
+  ticket_book_id: 2
+  purchase_date: 2011-06-07

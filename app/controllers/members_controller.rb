@@ -32,6 +32,25 @@ class MembersController < SecretaryController  # FIXME: untested work in progres
     # Paginate:
     @members = paginate(@all_filtered_members)
 
+    # Workaround to deal with
+    # Issue #2541 at https://github.com/rails/rails/issues
+    # @members.instance_eval <<-EVAL
+    #   def total_count #:nodoc:
+    #     # #count overrides the #select which could include generated columns referenced in #order, so skip #order here, where it's irrelevant to the result anyway
+    #     c = except(:offset, :limit, :order)
+    #     # Remove includes only if they are irrelevant
+    #     c = c.except(:includes) unless references_eager_loaded_tables?
+    #     # .group returns an OrderdHash that responds to #count
+    #     c = c.count
+    #     c.respond_to?(:count) ? c.count : c
+    #   end
+    # EVAL
+
+    def @all_filtered_members.size
+      all.length
+    end
+    # End of workaround
+
     # Compose mailing list:
     if params[:list_email_addresses]
       @mailing_list_members =
@@ -117,7 +136,7 @@ class MembersController < SecretaryController  # FIXME: untested work in progres
   end
 
   def edit
-    @member = Member.with_person_and_virtual_attributes.find(params[:id])
+    @member = Member.find(params[:id])
 
     render_edit_properly
   end
@@ -133,7 +152,8 @@ class MembersController < SecretaryController  # FIXME: untested work in progres
     # Because members primary key works as foreign key for people
     # (this is not recommended in general),
     # building an associated person and saving the member with person with
-    # "@member.save" does not seem to work (probably causes stack overflow).
+    # "@member.save" does not seem to work in rails 3.0.9
+    # (probably causes stack overflow).
     # The only workaround seems to be to save the person first,
     # assign the foreign key manually, and then save the member.
     @person = Person.new
@@ -156,7 +176,7 @@ class MembersController < SecretaryController  # FIXME: untested work in progres
 
     if @member.save
       flash[:success] = t('flash.members.create.success',
-                          :name => @member.full_name)
+                          :name => @member.non_sql_full_name)
       redirect_to @member
     else
       flash.now[:error] = t('flash.members.create.failure')

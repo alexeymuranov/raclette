@@ -75,7 +75,8 @@ class ApplicationController < ActionController::Base
         when :string, :delegated_string, :virtual_string
           unless params[:filter][attr].blank?
             @filter[attr] = params[:filter][attr].sub(/\%*\z/, '%')
-            models = models.where("#{attr.to_s} LIKE ?", @filter[attr])  # SQL
+            models = models.where("#{column_sql} LIKE ?", @filter[attr])  # SQL
+            # cannot use attr.to_s here, have to use column_sql
             # raise "#{attr.to_s} #{column_sql}"
             # models = models.where(:been_member_by.matches => @filter[attr])  # SQL
           end

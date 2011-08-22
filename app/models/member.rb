@@ -112,6 +112,7 @@ class Member < ActiveRecord::Base
            :work_phone,
            :personal_phone,
            :primary_address,
+           :non_sql_full_name,
            :to => :person
 
   delegate :unique_title, :duration_months,

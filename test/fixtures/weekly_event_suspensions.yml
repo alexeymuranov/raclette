@@ -16,12 +16,12 @@
 
 one:
   weekly_event_id: 1
-  suspend_from: 2011-05-08
-  suspend_until: 2011-05-08
-  explanation: MyString
+  suspend_from: 2011-02-08
+  suspend_until: 2011-02-20
+  explanation: "Voyage"
 
 two:
   weekly_event_id: 1
-  suspend_from: 2011-05-08
-  suspend_until: 2011-05-08
-  explanation: MyString
+  suspend_from: 2011-05-03
+  suspend_until: 2011-05-10
+  explanation: "Malade"

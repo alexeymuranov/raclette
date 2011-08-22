@@ -15,10 +15,10 @@
 
 one:
   member_id: 1
-  content: MyText
-  created_on: 2011-05-08
+  content: "He he"
+  created_on: 2011-01-08
 
 two:
-  member_id: 1
-  content: MyText
-  created_on: 2011-05-08
+  member_id: 2
+  content: "Ho ho"
+  created_on: 2011-05-23

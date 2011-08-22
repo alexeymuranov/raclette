@@ -588,46 +588,48 @@ body div.container section {
     margin: 0 auto;
   }
     
-  dl.form_fields div.item, dl.show div.item {
-    display: table-row;
+  dl.form_fields, dl.show {
+    p.item, div.item {
+      display: table-row;
 
-    &.caption {
-      display: table-caption;
-      text-align: center;
-    }
+      &.caption {
+        display: table-caption;
+        text-align: center;
+      }
 
-    dt {
-      display: table-cell;
-      padding: 0 5px;
-    }
-
-    dd {
-      display: table-cell;
-      padding: 0 5px;
-      color: $data-color;
-    }
-
-    dd.long_text {
-      vertical-align: top;
-    }
-
-    &:nth-of-type(odd) {
       dt {
-        background-color: $alt-table-head-bg-color;
+        display: table-cell;
+        padding: 0 5px;
       }
 
       dd {
-        background-color: $table-data-bg-color;
-      }
-    }
-
-    &:nth-of-type(even) {
-      dt {
-        background-color: $table-head-bg-color;
+        display: table-cell;
+        padding: 0 5px;
+        color: $data-color;
       }
 
-      dd {
-        background-color: $alt-table-data-bg-color;
+      dd.long_text {
+        vertical-align: top;
+      }
+
+      &:nth-of-type(odd) {
+        dt {
+          background-color: $alt-table-head-bg-color;
+        }
+
+        dd {
+          background-color: $table-data-bg-color;
+        }
+      }
+
+      &:nth-of-type(even) {
+        dt {
+          background-color: $table-head-bg-color;
+        }
+
+        dd {
+          background-color: $alt-table-data-bg-color;
+        }
       }
     }
   }

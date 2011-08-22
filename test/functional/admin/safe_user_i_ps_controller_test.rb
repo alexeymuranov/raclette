@@ -1,6 +1,6 @@
 require 'test_helper'
 
-class Admin::SafeUserIpsControllerTest < ActionController::TestCase
+class Admin::SafeUserIPsControllerTest < ActionController::TestCase
   setup do
     @admin_safe_user_ip = admin_safe_user_ips(:one)
   end
@@ -17,7 +17,7 @@ class Admin::SafeUserIpsControllerTest < ActionController::TestCase
   end
 
   test "should create admin_safe_user_ip" do
-    assert_difference('Admin::SafeUserIp.count') do
+    assert_difference('Admin::SafeUserIP.count') do
       post :create, :admin_safe_user_ip => @admin_safe_user_ip.attributes
     end
 
@@ -40,7 +40,7 @@ class Admin::SafeUserIpsControllerTest < ActionController::TestCase
   end
 
   test "should destroy admin_safe_user_ip" do
-    assert_difference('Admin::SafeUserIp.count', -1) do
+    assert_difference('Admin::SafeUserIP.count', -1) do
       delete :destroy, :id => @admin_safe_user_ip.to_param
     end
 

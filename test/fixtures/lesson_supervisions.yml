@@ -14,11 +14,11 @@
 # Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
 
 one:
-  unique_names: MyString
-  instructors_count: 1
-  comment: MyString
+  unique_names: "John and Jane"
+  instructors_count: 2
+  comment: ~
 
 two:
-  unique_names: MyString
+  unique_names: "Bombom"
   instructors_count: 1
-  comment: MyString
+  comment: "Invited"

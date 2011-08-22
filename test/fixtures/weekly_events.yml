@@ -26,35 +26,35 @@
 # Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
 
 one:
-  event_type: MyString
-  title: MyString
+  event_type: Pratica
+  title: "Pratica de jeudi"
   lesson: false
-  week_day: 1
-  start_time: MyString
+  week_day: 4
+  start_time: 21h
   duration_minutes: 1
   end_time: MyString
-  start_on: 2011-05-08
-  end_on: 2011-05-08
-  location: MyString
-  address_id: 1
-  lesson_supervision_id: 1
+  start_on: 2010-09-01
+  end_on: 2011-08-31
+  location: Tangueando
+  address_id: ~
+  lesson_supervision_id: ~
   entry_fee_tickets: 1
   over: false
-  description: MyString
+  description: ~
 
 two:
-  event_type: MyString
-  title: MyString
-  lesson: false
-  week_day: 1
-  start_time: MyString
-  duration_minutes: 1
-  end_time: MyString
-  start_on: 2011-05-08
-  end_on: 2011-05-08
-  location: MyString
-  address_id: 1
+  event_type: "Cours"
+  title: "Cours Marina mardi"
+  lesson: true
+  week_day: 2
+  start_time: 19h30
+  duration_minutes: 60
+  end_time: 20h30
+  start_on: 2011-09-01
+  end_on: 2011-06-30
+  location: Tangueando
+  address_id: ~
   lesson_supervision_id: 1
-  entry_fee_tickets: 1
-  over: false
-  description: MyString
+  entry_fee_tickets: 3
+  over: true
+  description: ~

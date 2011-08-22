@@ -17,17 +17,17 @@
 # Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
 
 one:
-  unique_title: MyString
-  active: false
-  reduced: false
+  unique_title: "Active reduit 12 mois"
+  active: true
+  reduced: true
   unlimited: false
-  duration_months: 1
-  description: MyString
+  duration_months: 12
+  description: ~
 
 two:
-  unique_title: MyString
+  unique_title: "Associate 6 mois"
   active: false
   reduced: false
   unlimited: false
-  duration_months: 1
-  description: MyString
+  duration_months: 6
+  description: ~

@@ -17,17 +17,17 @@
 # Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
 
 one:
-  participant_entry_type: MyString
+  participant_entry_type: MemberEntry
   participant_entry_id: 1
-  event_title: MyString
+  event_title: Milonga
   date: 2011-05-08
   event_id: 1
   person_id: 1
 
 two:
-  participant_entry_type: MyString
+  participant_entry_type: GuestEntry
   participant_entry_id: 1
-  event_title: MyString
+  event_title: Milonga
   date: 2011-05-08
   event_id: 1
-  person_id: 1
+  person_id: ~

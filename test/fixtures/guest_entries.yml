@@ -19,21 +19,21 @@
 # Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
 
 one:
-  first_name: MyString
-  last_name: MyString
-  inviting_member_id: 1
-  previous_entry_id: 1
+  first_name: Somme
+  last_name: Guesttt
+  inviting_member_id: ~
+  previous_entry_id: ~
   toward_membership_purchase_id: 1
-  email: MyString
-  phone: MyString
-  note: MyString
+  email: ~
+  phone: ~
+  note: "First visit"
 
 two:
-  first_name: MyString
-  last_name: MyString
+  first_name: Somme
+  last_name: Guesttt
   inviting_member_id: 1
   previous_entry_id: 1
   toward_membership_purchase_id: 1
-  email: MyString
-  phone: MyString
-  note: MyString
+  email: "dfgd@djfgd.dgf"
+  phone: "06 87 90 90 00"
+  note: "Invited"
