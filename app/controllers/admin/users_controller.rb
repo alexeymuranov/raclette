@@ -24,7 +24,7 @@ class Admin::UsersController < AdminController
     set_column_types
 
     # Filter:
-    @all_filtered_users = filter(Admin::User.scoped, :users)  # html_table_id = :users
+    @all_filtered_users = filter(Admin::User.scoped)
 
     # Sort:
     @all_filtered_users = sort(@all_filtered_users, :users)  # html_table_id = :users

@@ -4,7 +4,7 @@
       column_types:
       column_headers:
       html_table_id:
-      filter:
+      filtering_values:
 -%>
 
 <%= form_tag(nil, :method => :get) do %>
@@ -37,7 +37,7 @@
 
 <%= content_tag :table,
                 :id    => html_table_id,
-                :class => (filter.blank? ? '' : 'filtered ') + 'records' do %>
+                :class => (filtering_values.blank? ? '' : 'filtered ') + 'records' do %>
   <colgroup class="attributes">
     <% attributes.size.times do %><col /><% end %>
   </colgroup>
@@ -54,46 +54,46 @@
       <th class="empty"></th>
       <th class="empty"></th>
     </tr>
-    <% unless filter.blank? %>
+    <% unless filtering_values.blank? %>
       <tr>
         <% attributes.each do |attr| %>
-          <% unless filter[attr].blank? %>
+          <% unless filtering_values[attr].nil? %>
             <%- case column_types[attr] -%>
             <%- when :string, :delegated_string, :virtual_string -%>
               <td class="filtering_value">
-                <%= filter[attr] %>
+                <%= filtering_values[attr] %>
               </td>
             <%- when :boolean, :delegated_boolean, :virtual_boolean -%>
               <td class="boolean filtering_value">
-                <%= boolean_to_yes_no(filter[attr]) %>
+                <%= boolean_to_yes_no(filtering_values[attr]) %>
               </td>
             <%- when :integer, :delegated_integer, :virtual_integer -%>
               <td class="number filtering_value">
-                <%- if filter[attr][:min] -%>
+                <%- if filtering_values[attr][:min] -%>
                   <%= t('formats.attribute_name:', :attribute => 'min') %>
-                  <%= filter[attr][:min] %><!-- no space!
+                  <%= filtering_values[attr][:min] %><!-- no space!
                --><br />
                 <%- end -%>
-                <%- if filter[attr][:max] -%>
+                <%- if filtering_values[attr][:max] -%>
                   <%= t('formats.attribute_name:', :attribute => 'max') %>
-                  <%= filter[attr][:max] %>
+                  <%= filtering_values[attr][:max] %>
                 <%- end -%>
               </td>
             <%- when :date, :delegated_date, :virtual_date -%>
               <td class="date filtering_value">
-                <%- if filter[attr][:from] -%>
+                <%- if filtering_values[attr][:from] -%>
                   <%= t(date.from) %>
-                  <%= filter[attr][:from] %><!-- no space!
+                  <%= filtering_values[attr][:from] %><!-- no space!
                --><br />
                 <%- end -%>
-                <%- if filter[attr][:until] -%>
+                <%- if filtering_values[attr][:until] -%>
                   <%= t(date.until) %>
-                  <%= filter[attr][:until] %>
+                  <%= filtering_values[attr][:until] %>
                 <%- end -%>
               </td>
             <% else %>
               <td class="filtering_value">
-                <%= filter[attr] %>
+                <%= filtering_values[attr] %>
               </td>
             <% end %>
           <% else %>
@@ -110,58 +110,58 @@
         <%- when :string, :delegated_string, :virtual_string -%>
           <td class="text field">
             <%= search_field_tag "filter[#{attr}]",
-                                 filter[attr],
+                                 filtering_values[attr],
                                  :form => filter_form_id %>
           </td>
         <%- when :boolean, :delegated_boolean, :virtual_boolean -%>
           <td class="boolean field">
             <%= radio_button_tag "filter[#{attr}]",
                                  'yes',
-                                 filter[attr],
+                                 filtering_values[attr],
                                  :form => filter_form_id %>
             <%= label_tag 'filter_' + attr.to_s + '_yes', t('yes') %><!-- no space!
          --><br />
             <%= radio_button_tag "filter[#{attr}]",
                                  'no',
-                                 filter[attr] == false,
+                                 filtering_values[attr] == false,
                                  :form => filter_form_id %>
             <%= label_tag 'filter_' + attr.to_s + '_no', t('no') %><!-- no space!
          --><br />
             <%= radio_button_tag "filter[#{attr}]",
                                  'all',
-                                 filter[attr].nil?,
+                                 filtering_values[attr].nil?,
                                  :form => filter_form_id %>
             <%= label_tag 'filter_' + attr.to_s + '_all', t('all') %>
           </td>
         <%- when :integer, :delegated_integer, :virtual_integer -%>
           <td class="number field">
-            <%- filter[attr] ||= {} -%>
+            <%- filtering_values[attr] ||= {} -%>
             <%= label_tag "filter[#{attr}][min]",
                           t('formats.attribute_name:', :attribute => 'min') %>
             <%= number_field_tag "filter[#{attr}][min]",
-                                 filter[attr][:min],
+                                 filtering_values[attr][:min],
                                  :form => filter_form_id,
                                  :size => 6 %><!-- no space!
          --><br />
             <%= label_tag "filter[#{attr}][max]",
                           t('formats.attribute_name:', :attribute => 'max') %>
             <%= number_field_tag "filter[#{attr}][max]",
-                                 filter[attr][:max],
+                                 filtering_values[attr][:max],
                                  :form => filter_form_id,
                                  :size => 6 %>
           </td>
         <%- when :date, :delegated_date, :virtual_date -%>
           <td class="date field">
-            <%- filter[attr] ||= {} -%>
+            <%- filtering_values[attr] ||= {} -%>
             <%= label_tag "filter[#{attr}][from]", t(date.from) %>
             <%= date_select "filter[#{attr}][from]",
-                               filter[attr][:from],
+                               filtering_values[attr][:from],
                                :form => filter_form_id,
                                :type => 'date' %><!-- no space!
          --><br />
             <%= label_tag "filter[#{attr}][until]", t(date.until) %>
             <%= date_select "filter[#{attr}][until]",
-                               filter[attr][:until],
+                               filtering_values[attr][:until],
                                :form => filter_form_id,
                                :type => 'date' %>
           </td>

@@ -96,7 +96,7 @@ class Person < ActiveRecord::Base
   validates :nickname_or_other,
                 :uniqueness => { :scope => [ :last_name, :first_name ] }
 
-  # Some "static" public class methods
+  # Public class methods
   def self.full_name_sql
     "(people.name_title || ' ' || people.first_name || ' ' || people.last_name)"
   end
@@ -110,16 +110,38 @@ class Person < ActiveRecord::Base
     "(#{full_name_sql} || ' <' || people.email || '>')"
   end
 
-  def self.virtual_attributes_in_sql
-    @@virtual_attributes_in_sql ||= {
-        :full_name         => self.full_name_sql,
-        :ordered_full_name => self.ordered_full_name_sql,
-        :formatted_email   => self.formatted_email_sql
-      }.with_indifferent_access
+  def self.sql_for_attributes  # XXX: not all columns included
+    unless @sql_for_attributes
+      @sql_for_attributes = Hash.new { |hash, key|
+        if (key.class == Symbol) && (column = self.columns_hash[key.to_s])
+          hash[key] = "\"#{self.table_name}\".\"#{key.to_s}\""
+        else
+          nil
+        end
+      }
+
+      @sql_for_attributes.merge!(
+          :full_name         => self.full_name_sql,
+          :ordered_full_name => self.ordered_full_name_sql,
+          :formatted_email   => self.formatted_email_sql )
+    end
+    @sql_for_attributes
   end
 
-  def self.virtual_sql_attributes
-    [ :full_name, :ordered_full_name, :formatted_email ]
+  def self.attribute_types
+    unless @attribute_types
+      @attribute_types = Hash.new { |hash, key|
+        if (key.class == Symbol) && (column = self.columns_hash[key.to_s])
+          hash[key] = column.type
+        else
+          nil
+        end
+      }
+      [ :full_name, :ordered_full_name, :formatted_email ].each do |attr|
+        @attribute_types[attr] = :virtual_string
+      end
+    end
+    @attribute_types
   end
 
   def self.virtual_attributes_sql
@@ -132,16 +154,6 @@ class Person < ActiveRecord::Base
   scope :with_virtual_attributes, select("people.*, #{virtual_attributes_sql}")
 
   scope :default_order, order('people.last_name ASC, people.first_name ASC')
-
-  # Public class methods
-  def self.attribute_to_column_name_or_sql_expression(attr)
-    column_as_string = attr.to_s
-    if self.column_names.include?(column_as_string)
-      [ self.table_name, column_as_string ].join('.')
-    else
-      self.virtual_attributes_in_sql[attr]
-    end
-  end
 
   # Public instance methods
   # Non-SQL virtual attributes

@@ -1,6 +1,7 @@
 ## encoding: UTF-8
 
 require 'csv'  # to render CSV
+require 'assets/app_sql_queries/simple_filter'
 
 class ApplicationController < ActionController::Base
   protect_from_forgery
@@ -57,87 +58,29 @@ class ApplicationController < ActionController::Base
       end
     end
 
-    def filter(models, html_table_id)
-      params[:filter] ||= {}
-      @filter = {}
-
-      # return models
-
-      klass = html_table_id_to_class(html_table_id)
-
-      @attributes.each do |attr|
-        if klass.column_names.include?(attr.to_s)
-          column_sql = [ klass.table_name, attr.to_s ].join('.')
-        else
-          column_sql = klass.attribute_to_column_name_or_sql_expression(attr)
-        end
-        case @column_types[attr]
-        when :string, :delegated_string, :virtual_string
-          unless params[:filter][attr].blank?
-            @filter[attr] = params[:filter][attr].sub(/\%*\z/, '%')
-            models = models.where("#{column_sql} LIKE ?", @filter[attr])  # SQL
-            # cannot use attr.to_s here, have to use column_sql
-            # raise "#{attr.to_s} #{column_sql}"
-            # models = models.where(:been_member_by.matches => @filter[attr])  # SQL
-          end
-        when :boolean, :delegated_boolean
-          unless params[:filter][attr].blank?
-            case params[:filter][attr]
-            when 'yes'
-              @filter[attr] = true
-              models = models.where(attr => true)
-            when 'no'
-              @filter[attr] = false
-              models = models.where(attr => false)
-            end
-          end
-        when :virtual_boolean
-          unless params[:filter][attr].blank?
-            case params[:filter][attr]
-            when 'yes'
-              @filter[attr] = true
-              models = models.where("#{column_sql}")
-            when 'no'
-              @filter[attr] = false
-              models = models.where("NOT #{column_sql}")
-            end
-          end
-        when :integer, :delegated_integer, :virtual_integer
-          params[:filter][attr] ||= {}
-
-          unless params[:filter][attr][:min].blank?
-            @filter[attr] ||= {}
-            @filter[attr][:min] = params[:filter][attr][:min].to_i
-            models = models.where("#{column_sql} >= ?", @filter[attr][:min])
-          end
-          unless params[:filter][attr][:max].blank?
-            @filter[attr] ||= {}
-            @filter[attr][:max] = params[:filter][attr][:max].to_i
-            models = models.where("#{column_sql} <= ?", @filter[attr][:max])
-          end
-        when :date, :delegated_date, :virtual_date
-          params[:filter][attr] ||= {}
-
-          unless params[:filter][attr][:from].blank?
-            @filter[attr] ||= {}
-            @filter[attr][:from] = params[:filter][attr][:from]
-            models = models.where("#{column_sql} >= ?", @filter[attr][:from])
-          end
-          unless params[:filter][attr][:until].blank?
-            @filter[attr] ||= {}
-            @filter[attr][:until] = params[:filter][attr][:until]
-            models = models.where("#{column_sql} <= ?", @filter[attr][:until])
-          end
-        end
+    def filter(scoped_collection)
+      klass = scoped_collection.klass
+      
+      @all_filtered_members = Member.with_person_and_virtual_attributes
+      sfilter = SimpleFilter.new
+      if params[:filter]
+        sfilter.filtering_column_types = @column_types\
+            unless @column_types.nil?
+        sfilter.set_filtering_values_from_human_hash(params[:filter], klass)
+        sfilter.filtering_attributes = @attributes
+        sfilter.sql_for_filtering_attributes = @sql_for_attributes\
+            unless @sql_for_attributes.nil?
+        scoped_collection = sfilter.do_filter(scoped_collection)
       end
-      models
+      @filtering_values = sfilter.filtering_values
+      scoped_collection
     end
 
     def sort_column(html_table_id)
       params.deep_merge! :sort => { html_table_id => {} }
 
-      klass = html_table_id_to_class(html_table_id)
-
+      # does it make sence to replace with klass.default_sort_column ?
+      # (would need to define default_sort_column in calsses)
       default_column = default_sort_column(html_table_id)
 
       if (suggested_sort_column = params[:sort][html_table_id][:column]).blank?
@@ -164,8 +107,8 @@ class ApplicationController < ActionController::Base
       "#{sort_direction_sql(html_table_id)}"
     end
 
-    def sort(models, html_table_id)
-      models.order(sort_sql(html_table_id))
+    def sort(scoped_collection, html_table_id)
+      scoped_collection.order(sort_sql(html_table_id))
     end
 
     def paginate(models)

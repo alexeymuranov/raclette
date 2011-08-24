@@ -143,7 +143,7 @@ class Member < ActiveRecord::Base
 
   validates :person_id, :uniqueness => true
 
-  # Some "static" public class methods
+  # Public class methods
   def self.full_name_sql
     Person.full_name_sql
   end
@@ -164,16 +164,53 @@ class Member < ActiveRecord::Base
     Person.virtual_sql_attributes + [ :tickets_count ]
   end
 
-  def self.virtual_attributes_in_sql
-    @@virtual_attributes_in_sql ||=
-        Person.virtual_attributes_in_sql.merge(
-            :tickets_count     => self.tickets_count_sql,
-            :last_name         => "people.last_name",
-            :first_name        => "people.first_name",
-            :name_title        => "people.name_title",
-            :nickname_or_other => "people.nickname_or_other",
-            :email             => "people.email"
-          ).with_indifferent_access
+  def self.sql_for_attributes
+    unless @sql_for_attributes
+      @sql_for_attributes = Hash.new { |hash, key|
+        if (key.class == Symbol) && (column = self.columns_hash[key.to_s])
+          hash[key] = "\"#{table_name}\".\"#{key.to_s}\""
+        else
+          nil
+        end
+      }
+
+      people_table_name = Person.table_name
+
+      [ :last_name, :first_name, :name_title, :nickname_or_other, :email,
+        :full_name, :ordered_full_name, :formatted_email ]\
+          .each do |attr|
+        @sql_for_attributes[attr] = Person.sql_for_attributes[attr]
+      end
+
+      @sql_for_attributes.merge!(:tickets_count => self.tickets_count_sql)
+    end
+    @sql_for_attributes
+  end
+
+  def self.attribute_types
+    unless @vattribute_types
+      @attribute_types = Hash.new { |hash, key|
+        if (key.class == Symbol) && (column = self.columns_hash[key.to_s])
+          hash[key] = column.type
+        else
+          nil
+        end      
+      }
+
+      [ :last_name, :first_name, :name_title, :nickname_or_other, :email]\
+          .each do |attr|
+        @attribute_types[attr] = ('delegated_' +
+                                  Person.columns_hash[attr.to_s].type.to_s)\
+                                  .intern
+      end
+
+      [ :full_name, :ordered_full_name, :formatted_email ].each do |attr|
+        @attribute_types[attr] = :virtual_string
+      end
+      
+      @attribute_types.merge!(:tickets_count => :virtual_integer)
+    end
+    @attribute_types
   end
 
   def self.virtual_attributes_sql
@@ -181,35 +218,13 @@ class Member < ActiveRecord::Base
       "#{self.tickets_count_sql} AS tickets_count" ].join(', ')
   end
 
-  def virtual_attribute_types(attr)
-    @virtual_attribute_types ||= {
-        :full_name           => :virtual_string,
-        :ordered_full_name   => :virtual_string,
-        :email               => :delegated_string,
-        :payed_tickets_count => :integer,
-        :free_tickets_count  => :integer,
-        :tickets_count       => :virtual_integer }
-  # NOTE: virtual_ includes "delegated_to_virtual_",
-  #       but not "delegated_to_real_".
-  #       "delegated_to_real_" is simply delegated_
-  end
-
   # Scopes
   scope :with_person_and_virtual_attributes,
         joins(:person).select("members.*, people.*, #{virtual_attributes_sql}")
 
   scope :default_order, joins(:person).order('people.last_name ASC, people.first_name ASC')
-  scope :account_active, where(:account_deactivated => false)
 
-  # Public class methods
-  def self.attribute_to_column_name_or_sql_expression(attr)
-    column_as_string = attr.to_s
-    if self.column_names.include?(column_as_string)
-      [ self.table_name, column_as_string ].join('.')
-    else
-      self.virtual_attributes_in_sql[attr]
-    end
-  end
+  scope :account_active, where(:account_deactivated => false)
 
   # Public instance methods
   # Non-SQL virtual attributes

@@ -18,12 +18,12 @@ class MembersController < SecretaryController  # FIXME: untested work in progres
                     :account_deactivated,
                     :tickets_count ]
 
-    set_column_types
+    # set_column_types
+    @column_types = Member.attribute_types
+    @sql_for_attributes = Member.sql_for_attributes
 
     # Filter:
-    # html_table_id = :members
-    @all_filtered_members = filter(Member.with_person_and_virtual_attributes,
-                                   :members)
+    @all_filtered_members = filter(Member.with_person_and_virtual_attributes)
 
     # Sort:
     # html_table_id = :members
@@ -242,10 +242,7 @@ class MembersController < SecretaryController  # FIXME: untested work in progres
     end
 
     def render_new_properly
-      @column_types = {}
-      Member.columns_hash.each do |key, value|
-        @column_types[key.intern] = value.type
-      end
+      set_column_types
 
       @title = t('members.new.title')
 
@@ -253,10 +250,7 @@ class MembersController < SecretaryController  # FIXME: untested work in progres
     end
 
     def render_edit_properly
-      @column_types = {}
-      Member.columns_hash.each do |key, value|
-        @column_types[key.intern] = value.type
-      end
+      set_column_types
 
       @title =  t('members.edit.title', :name => @member.full_name)
 
