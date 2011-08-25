@@ -2,16 +2,49 @@
 
 module FormsMarkupHelper
 
-  def set_params_in_hidden_form_fields(hash)
-    query_string = hash.except(:controller, :action, :utf8).to_query
-    generated_html = ''.html_safe
-    query_string.split(/[&;]+/).each do |single_option|
-      unless single_option.blank?
-        a = single_option.split('=', 2)
-        generated_html << hidden_field_tag(a.first, a.last)
+  # Based on: http://marklunds.com/articles/one/314
+  def flatten_hash(hash = params, ancestor_names = [])
+    flat_hash = {}
+    hash.each do |k, v|
+      names = Array.new(ancestor_names)
+      names << k
+      if v.is_a?(Hash)
+        flat_hash.merge!(flatten_hash(v, names))
+      else
+        key = flat_hash_key(names)
+        key += "[]" if v.is_a?(Array)
+        flat_hash[key] = v
       end
     end
-    generated_html
+
+    flat_hash
+  end
+
+  def flat_hash_key(names)
+    names = Array.new(names)
+    name = names.shift.to_s.dup
+    names.each do |n|
+      name << "[#{n}]"
+    end
+    name
+  end
+
+  def hash_as_hidden_fields(hash = params)
+    hash.except!(:controller, :action, :utf8)
+    hidden_fields = []
+    flatten_hash(hash).each do |name, value|
+      value = [value] if !value.is_a?(Array)
+      value.each do |v|
+        hidden_fields << hidden_field_tag(name, v.to_s, :id => nil)
+      end
+    end
+
+    hidden_fields.join("\n").html_safe
+  end
+
+  # My wrapper:
+  def set_params_in_hidden_form_fields(hash) # FIXME: problems with nested hash
+    hash_as_hidden_fields(hash.except(:controller, :action, :utf8))
   end
 
   # Based on http://davidsulc.com/blog/2011/05/01/self-marking-required-fields-in-rails-3/
