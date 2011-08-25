@@ -2,7 +2,7 @@
   <h1><%= t '.header' %></h1>
 
   <h2 id="users_count">
-    <% if @filter.blank? %>
+    <% if @filtering_values.blank? %>
       <%= t '.count_total', :count => Admin::User.count %>
     <% else %>
       <%= t '.count_filtered', :count => @all_filtered_users.size,

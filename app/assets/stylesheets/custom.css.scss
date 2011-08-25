@@ -14,7 +14,7 @@ $view-link-color: Green;
 $add-link-color: Blue;
 $modify-link-color: Red;
 $table-data-bg-color: #F8F8FF; /* #F8F8FF GhostWhite */ /* #F0FFFF; Azure */
-$alt-table-data-bg-color: darken($table-data-bg-color, 5%);
+$alt-table-data-bg-color: darken($table-data-bg-color, 4%);
 $table-head-bg-color: #B0C4DE; /* #B0C4DE LightSteelBlue */
 $alt-table-head-bg-color: lighten($table-head-bg-color, 10%);
 $table-border-color: darken($table-head-bg-color, 10%);

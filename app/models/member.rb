@@ -23,7 +23,8 @@
 #  updated_at                        :datetime
 #
 
-class Member < ActiveRecord::Base
+class Member < AbstractSmarterModel
+
   set_primary_key :person_id
 
   attr_readonly :id, :person_id, :been_member_by
@@ -115,11 +116,11 @@ class Member < ActiveRecord::Base
            :non_sql_full_name,
            :to => :person
 
-  delegate :unique_title, :duration_months,
+  delegate :unique_title, :duration_months,  # FIXME
            :to     => :'current_membership.type',
            :prefix => :current_membership
 
-  delegate :unique_title, :start_date, :duration_months, :end_date,
+  delegate :unique_title, :start_date, :duration_months, :end_date,  # FIXME
            :to     => :'current_membership.activity_period',
            :prefix => :current_membership
 
@@ -144,35 +145,9 @@ class Member < ActiveRecord::Base
   validates :person_id, :uniqueness => true
 
   # Public class methods
-  def self.full_name_sql
-    Person.full_name_sql
-  end
-
-  def self.ordered_full_name_sql
-    Person.ordered_full_name_sql
-  end
-
-  def self.formatted_email_sql
-    Person.formatted_email_sql
-  end
-
-  def self.tickets_count_sql
-    "(members.payed_tickets_count + members.free_tickets_count)"
-  end
-
-  def self.virtual_sql_attributes
-    Person.virtual_sql_attributes + [ :tickets_count ]
-  end
-
-  def self.sql_for_attributes
+  def self.sql_for_attributes  # Extendes the one from AbstractSmarterModel
     unless @sql_for_attributes
-      @sql_for_attributes = Hash.new { |hash, key|
-        if (key.class == Symbol) && (column = self.columns_hash[key.to_s])
-          hash[key] = "\"#{table_name}\".\"#{key.to_s}\""
-        else
-          nil
-        end
-      }
+      super
 
       people_table_name = Person.table_name
 
@@ -182,60 +157,50 @@ class Member < ActiveRecord::Base
         @sql_for_attributes[attr] = Person.sql_for_attributes[attr]
       end
 
-      @sql_for_attributes.merge!(:tickets_count => self.tickets_count_sql)
+      tickets_count_sql = "(#{super[:payed_tickets_count]} + "\
+                           "#{super[:free_tickets_count]})"
+
+      @sql_for_attributes.merge!(:tickets_count => tickets_count_sql)
     end
     @sql_for_attributes
   end
 
-  def self.attribute_types
-    unless @vattribute_types
-      @attribute_types = Hash.new { |hash, key|
-        if (key.class == Symbol) && (column = self.columns_hash[key.to_s])
-          hash[key] = column.type
-        else
-          nil
-        end      
-      }
+  def self.attribute_db_types  # Extendes the one from AbstractSmarterModel
+    unless @attribute_db_types
+      super
 
       [ :last_name, :first_name, :name_title, :nickname_or_other, :email]\
           .each do |attr|
-        @attribute_types[attr] = ('delegated_' +
-                                  Person.columns_hash[attr.to_s].type.to_s)\
-                                  .intern
+        @attribute_db_types[attr] = ('delegated_' +
+                                     Person.columns_hash[attr.to_s].type.to_s)\
+                                    .intern
       end
 
       [ :full_name, :ordered_full_name, :formatted_email ].each do |attr|
-        @attribute_types[attr] = :virtual_string
+        @attribute_db_types[attr] = :virtual_string
       end
-      
-      @attribute_types.merge!(:tickets_count => :virtual_integer)
-    end
-    @attribute_types
-  end
 
-  def self.virtual_attributes_sql
-    [ Person.virtual_attributes_sql,
-      "#{self.tickets_count_sql} AS tickets_count" ].join(', ')
+      @attribute_db_types.merge!(:tickets_count => :virtual_integer)
+    end
+    @attribute_db_types
   end
 
   # Scopes
-  scope :with_person_and_virtual_attributes,
-        joins(:person).select("members.*, people.*, #{virtual_attributes_sql}")
-
-  scope :default_order, joins(:person).order('people.last_name ASC, people.first_name ASC')
+  scope :default_order, joins(:person).merge(Person.default_order)
 
   scope :account_active, where(:account_deactivated => false)
-
+  
   # Public instance methods
   # Non-SQL virtual attributes
   def non_sql_account_active
     !account_deactivated
   end
 
-  alias_method :'non_sql_account_active?', :non_sql_account_active
-
   def non_sql_current_membership  # FIXME
     raise "Method not implemented"
     # ???
   end
+
+  alias_method :'non_sql_account_active?', :non_sql_account_active
+
 end

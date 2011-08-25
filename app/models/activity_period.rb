@@ -34,7 +34,7 @@ class ActivityPeriod < ActiveRecord::Base
                          :inverse_of => :activity_period
 
   has_many :membership_types, :through => :memberships
-  
+
   has_many :revenue_accounts, :dependent  => :nullify,
                               :inverse_of => :activity_period
 
@@ -54,5 +54,5 @@ class ActivityPeriod < ActiveRecord::Base
   validates :duration_months, :uniqueness => { :scope => :start_date }
 
   # Scopes:
-	scope :default_order, order('end_date DESC, start_date DESC')
+  scope :default_order, order('end_date DESC, start_date DESC')
 end

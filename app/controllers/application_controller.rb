@@ -22,29 +22,40 @@ class ApplicationController < ActionController::Base
       @locale = I18n.locale
     end
 
-    def render_ms_excel_2003_xml_for_download(models,
+    def render_ms_excel_2003_xml_for_download(scoped_collection,
                                               attributes,
-                                              column_types,
                                               column_headers,
-                                              filename)
+                                              filename=nil)
+      klass = scoped_collection.klass
+      if klass.superclass == AbstractSmarterModel
+        column_types = klass.attribute_db_types
+      else
+        column_types = {}
+        attributes.each do |attr|
+          column_types[attr] = klass.columns_hash[attr.to_s].type
+        end
+      end
+      filename ||= "#{klass.model_name.human.pluralize}"\
+                   " #{Time.now.in_time_zone.strftime('%Y-%m-%d %k_%M')}"\
+                   ".excel2003.xml"
       send_data render_to_string(
           :template => 'shared/index',
           :locals   =>
-              { :models         => models,
+              { :models         => scoped_collection,
                 :attributes     => attributes,
                 :column_types   => column_types,
                 :column_headers => column_headers}),
-          :filename    => filename,
-          :type        => "#{Mime::MS_EXCEL_2003_XML.to_s}; "\
+          :filename     => filename,
+          :content_type => "#{Mime::MS_EXCEL_2003_XML.to_s}; "\
                           "charset=utf-8",
-          :disposition => 'inline'
+          :disposition  => 'inline'
     end
 
     def render_csv_for_download(models, attributes, column_headers, filename)
       send_data csv_from_collection(models, attributes, column_headers),
-                :filename    => filename,
-                :type        => "#{Mime::CSV.to_s}; charset=utf-8",
-                :disposition => 'inline'
+                :filename     => filename,
+                :content_type => "#{Mime::CSV.to_s}; charset=utf-8",
+                :disposition  => 'inline'
     end
 
     def csv_from_collection(models, attributes, column_headers)
@@ -60,16 +71,11 @@ class ApplicationController < ActionController::Base
 
     def filter(scoped_collection)
       klass = scoped_collection.klass
-      
-      @all_filtered_members = Member.with_person_and_virtual_attributes
+
       sfilter = SimpleFilter.new
       if params[:filter]
-        sfilter.filtering_column_types = @column_types\
-            unless @column_types.nil?
         sfilter.set_filtering_values_from_human_hash(params[:filter], klass)
         sfilter.filtering_attributes = @attributes
-        sfilter.sql_for_filtering_attributes = @sql_for_attributes\
-            unless @sql_for_attributes.nil?
         scoped_collection = sfilter.do_filter(scoped_collection)
       end
       @filtering_values = sfilter.filtering_values

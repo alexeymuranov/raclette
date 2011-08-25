@@ -61,5 +61,5 @@ class Address < ActiveRecord::Base
   validates :street_address, :length    => { :maximum => 255 },
                              :allow_nil => true
   # Scopes:
-	scope :default_order, order('country ASC, city ASC, post_code ASC')
+  scope :default_order, order('country ASC, city ASC, post_code ASC')
 end

@@ -29,8 +29,7 @@ module FormsMarkupHelper
     name
   end
 
-  def hash_as_hidden_fields(hash = params)
-    hash.except!(:controller, :action, :utf8)
+  def hash_as_hidden_fields(hash)
     hidden_fields = []
     flatten_hash(hash).each do |name, value|
       value = [value] if !value.is_a?(Array)
@@ -43,8 +42,13 @@ module FormsMarkupHelper
   end
 
   # My wrapper:
-  def set_params_in_hidden_form_fields(hash) # FIXME: problems with nested hash
-    hash_as_hidden_fields(hash.except(:controller, :action, :utf8))
+  def set_params_in_hidden_form_fields(hash = params)
+    hash_as_hidden_fields(hash.except(:controller,
+                                      :action,
+                                      :utf8,
+                                      :_method,
+                                      :authenticity_token,
+                                      :commit))
   end
 
   # Based on http://davidsulc.com/blog/2011/05/01/self-marking-required-fields-in-rails-3/

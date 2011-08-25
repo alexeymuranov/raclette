@@ -64,5 +64,5 @@ class Membership < ActiveRecord::Base
            :to => :activity_period
 
   # Scopes:
-	scope :default_order, order('activity_period_id DESC')
+  scope :default_order, order('activity_period_id DESC')
 end

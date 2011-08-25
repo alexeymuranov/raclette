@@ -13,7 +13,7 @@ class SessionsController < ApplicationController
 
     if user
       unless user.account_deactivated?
-        client_ip = request.remote_ip
+        client_ip = request.remote_ip.force_encoding('UTF-8')
         path = path_to_return_to
         # clear_return_to  # redundant with reset_session
         reset_session  # security measure

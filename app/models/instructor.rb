@@ -64,6 +64,5 @@ class Instructor < ActiveRecord::Base
   validates :person_id, :uniqueness => true
 
   # Scopes
-  scope :default_includes, includes(:person)
-	scope :default_order, order('person_id DESC')
+  scope :default_order, joins(:person).order('person.last_name ASC')
 end

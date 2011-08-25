@@ -42,5 +42,5 @@ class CommitteeMembership < ActiveRecord::Base
                       :allow_nil => true
 
   # Scopes:
-	scope :default_order, order('end_date DESC, start_date DESC')
+  scope :default_order, order('end_date DESC, start_date DESC')
 end

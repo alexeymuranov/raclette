@@ -18,12 +18,13 @@ class MembersController < SecretaryController  # FIXME: untested work in progres
                     :account_deactivated,
                     :tickets_count ]
 
-    # set_column_types
-    @column_types = Member.attribute_types
+    @column_types = Member.attribute_db_types
     @sql_for_attributes = Member.sql_for_attributes
 
     # Filter:
-    @all_filtered_members = filter(Member.with_person_and_virtual_attributes)
+    @all_filtered_members = filter(Member.joins(:person)\
+                                     .with_virtual_attributes(*@attributes,
+                                                              :formatted_email))
 
     # Sort:
     # html_table_id = :members
@@ -34,34 +35,24 @@ class MembersController < SecretaryController  # FIXME: untested work in progres
 
     # Workaround to deal with
     # Issue #2541 at https://github.com/rails/rails/issues
-    # @members.instance_eval <<-EVAL
-    #   def total_count #:nodoc:
-    #     # #count overrides the #select which could include generated columns referenced in #order, so skip #order here, where it's irrelevant to the result anyway
-    #     c = except(:offset, :limit, :order)
-    #     # Remove includes only if they are irrelevant
-    #     c = c.except(:includes) unless references_eager_loaded_tables?
-    #     # .group returns an OrderdHash that responds to #count
-    #     c = c.count
-    #     c.respond_to?(:count) ? c.count : c
-    #   end
-    # EVAL
-
-    def @all_filtered_members.size
-      all.length
-    end
+    # def @all_filtered_members.size
+    #   all.length
+    # end
     # End of workaround
 
     # Compose mailing list:
     if params[:list_email_addresses]
       @mailing_list_members =
           @all_filtered_members.select { |member| !member.email.blank? }
-      @mailing_list = @mailing_list_members.collect(&:formatted_email).join(', ')
+      @mailing_list = @mailing_list_members.collect(&:formatted_email)\
+                                           .join(', ')
     end
 
     @attributes_for_download = [ :last_name,
                                  :first_name,
                                  :nickname_or_other,
-                                 :email ]
+                                 :email,
+                                 :tickets_count ]
 
     set_column_headers
     set_column_headers_for_download
@@ -69,8 +60,6 @@ class MembersController < SecretaryController  # FIXME: untested work in progres
     respond_to do |requested_format|
       requested_format.html do
         # @title = t('members.index.title')  # or: Member.model_name.human.pluralize
-        # raise "#{@members.to_sql}"
-
         render :index
       end
 
@@ -89,10 +78,10 @@ class MembersController < SecretaryController  # FIXME: untested work in progres
       requested_format.ms_excel_2003_xml do
         render_ms_excel_2003_xml_for_download\
             @all_filtered_members,
-            @attributes_for_download, @column_types,
+            @attributes_for_download,
             @column_headers_for_download,
             "#{Member.model_name.human.pluralize}"\
-            " #{Time.now.strftime('%Y-%m-%d %k_%M')}"\
+            " #{Time.now.in_time_zone.strftime('%Y-%m-%d %k_%M')}"\
             ".excel2003.xml"  # defined in ApplicationController
       end
 
@@ -102,14 +91,13 @@ class MembersController < SecretaryController  # FIXME: untested work in progres
             @attributes_for_download,
             @column_headers_for_download,
             "#{Member.model_name.human.pluralize}"\
-            " #{Time.now.strftime('%Y-%m-%d %k_%M')}"\
+            " #{Time.now.in_time_zone.strftime('%Y-%m-%d %k_%M')}"\
             ".csv"  # defined in ApplicationController
       end
     end
   end
 
   def show
-    @member = Member.with_person_and_virtual_attributes.find(params[:id])
 
     @attributes = [ :person_id,
                     :name_title,
@@ -120,12 +108,16 @@ class MembersController < SecretaryController  # FIXME: untested work in progres
                     :payed_tickets_count,
                     :free_tickets_count,
                     :account_deactivated,
-                    :been_member_by ]
+                    :been_member_by,
+                    :full_name ]
 
-    set_column_types
+    @member = Member.joins(:person).with_virtual_attributes(*@attributes)\
+                    .find(params[:id])
+
+    @column_types = Member.attribute_db_types
     # set_column_headers
 
-    @title = t('members.show.title', :name => @member.full_name)
+    @title = t('members.show.title', :name => @member.non_sql_full_name)
   end
 
   def new
@@ -136,7 +128,8 @@ class MembersController < SecretaryController  # FIXME: untested work in progres
   end
 
   def edit
-    @member = Member.find(params[:id])
+    @member = Member.joins(:person).with_virtual_attributes(:full_name)\
+                    .find(params[:id])
 
     render_edit_properly
   end
@@ -186,20 +179,12 @@ class MembersController < SecretaryController  # FIXME: untested work in progres
   end
 
   def update
-    @member = Member.with_person_and_virtual_attributes.find(params[:id])
+    @member = Member.joins(:person).with_virtual_attributes(:full_name)\
+                    .find(params[:id])
 
-    params[:member][:safe_ip_ids] ||= []
-
-    params[:member].delete(:email)\
+    params[:member][:person_attributes].delete(:email)\
         if params[:member][:email].blank?
 
-    params[:member].delete(:comments)\
-        if params[:member][:comments].blank?
-
-    unless params[:change_password]
-      params.delete(:current_password)
-      params[:member].except!(:new_password, :new_password_confirmation)
-    end
 
     # @acceptable_attributes = [ 'been_member_by', 'person_attributes' ]
     # params[:member].slice!(*@acceptable_attributes)
@@ -220,7 +205,7 @@ class MembersController < SecretaryController  # FIXME: untested work in progres
     @member.destroy
 
     flash[:notice] = t('flash.members.destroy.success',
-                       :name => @member.full_name)
+                       :name => @member.non_sql_full_name)
 
     redirect_to members_url
   end
@@ -242,7 +227,7 @@ class MembersController < SecretaryController  # FIXME: untested work in progres
     end
 
     def render_new_properly
-      set_column_types
+      @column_types = Member.attribute_db_types
 
       @title = t('members.new.title')
 
@@ -250,29 +235,11 @@ class MembersController < SecretaryController  # FIXME: untested work in progres
     end
 
     def render_edit_properly
-      set_column_types
+      @column_types = Member.attribute_db_types
 
-      @title =  t('members.edit.title', :name => @member.full_name)
+      @title =  t('members.edit.title', :name => @member.non_sql_full_name)
 
       render :edit
-    end
-
-    def set_column_types
-      @column_types = {}
-      Member.columns_hash.each do |key, value|
-        @column_types[key.intern] = value.type
-      end
-
-      @column_types.merge!( :full_name           => :virtual_string,
-                            :ordered_full_name   => :virtual_string,
-                            :email               => :delegated_string,
-                            :account_deactivated      => :virtual_boolean,
-                            :payed_tickets_count => :integer,
-                            :free_tickets_count  => :integer,
-                            :tickets_count       => :virtual_integer )
-      # NOTE: virtual_ includes "delegated_to_virtual_",
-      #       but not "delegated_to_real_".
-      #       "delegated_to_real_" is simply delegated_
     end
 
     def set_column_headers

@@ -22,7 +22,7 @@
 
 require 'assets/app_validations/email_format'
 
-class Person < ActiveRecord::Base
+class Person < AbstractSmarterModel
 
   attr_readonly :id, :last_name
 
@@ -97,64 +97,44 @@ class Person < ActiveRecord::Base
                 :uniqueness => { :scope => [ :last_name, :first_name ] }
 
   # Public class methods
-  def self.full_name_sql
-    "(people.name_title || ' ' || people.first_name || ' ' || people.last_name)"
-  end
-
-  def self.ordered_full_name_sql
-    "(people.last_name || ', ' || people.first_name"\
-                     " || ', ' || people.name_title)"
-  end
-
-  def self.formatted_email_sql
-    "(#{full_name_sql} || ' <' || people.email || '>')"
-  end
-
-  def self.sql_for_attributes  # XXX: not all columns included
+  def self.sql_for_attributes  # Extendes the one in AbstractSmarterModel
     unless @sql_for_attributes
-      @sql_for_attributes = Hash.new { |hash, key|
-        if (key.class == Symbol) && (column = self.columns_hash[key.to_s])
-          hash[key] = "\"#{self.table_name}\".\"#{key.to_s}\""
-        else
-          nil
-        end
-      }
+      super
+
+      full_name_sql         =  "(#{super[:name_title]} || ' ' || "\
+                               "#{super[:first_name]} || ' ' || "\
+                               "#{super[:last_name]})"
+
+      ordered_full_name_sql = "(UPPER(#{super[:last_name]}) || ', ' || "\
+                              "#{super[:first_name]} || ', ' || "\
+                              "#{super[:name_title]})"
+
+      formatted_email_sql   = "(#{full_name_sql} || "\
+                              "' <' || #{super[:email]} || '>')"
 
       @sql_for_attributes.merge!(
-          :full_name         => self.full_name_sql,
-          :ordered_full_name => self.ordered_full_name_sql,
-          :formatted_email   => self.formatted_email_sql )
+          :full_name         => full_name_sql,
+          :ordered_full_name => ordered_full_name_sql,
+          :formatted_email   => formatted_email_sql )
     end
     @sql_for_attributes
   end
 
-  def self.attribute_types
-    unless @attribute_types
-      @attribute_types = Hash.new { |hash, key|
-        if (key.class == Symbol) && (column = self.columns_hash[key.to_s])
-          hash[key] = column.type
-        else
-          nil
-        end
-      }
+  def self.attribute_db_types  # Extendes the one in AbstractSmarterModel
+    unless @attribute_db_types
+      super
+
       [ :full_name, :ordered_full_name, :formatted_email ].each do |attr|
-        @attribute_types[attr] = :virtual_string
+        @attribute_db_types[attr] = :virtual_string
       end
     end
-    @attribute_types
-  end
-
-  def self.virtual_attributes_sql
-    [ "#{self.full_name_sql} AS full_name",
-      "#{self.ordered_full_name_sql} AS ordered_full_name",
-      "#{self.formatted_email_sql} AS formatted_email" ].join(', ')
+    @attribute_db_types
   end
 
   # Scopes
-  scope :with_virtual_attributes, select("people.*, #{virtual_attributes_sql}")
-
-  scope :default_order, order('people.last_name ASC, people.first_name ASC')
-
+  scope :default_order, order("UPPER(#{sql_for_attributes[:last_name]}) ASC, "\
+                              "UPPER(#{sql_for_attributes[:first_name]}) ASC")
+  
   # Public instance methods
   # Non-SQL virtual attributes
   def non_sql_full_name

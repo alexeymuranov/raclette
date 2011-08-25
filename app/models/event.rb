@@ -131,5 +131,5 @@ class Event < ActiveRecord::Base
                           :allow_nil => true
 
   # Scopes:
-	scope :default_order, order('date DESC, end_time DESC, start_time DESC')
+  scope :default_order, order('date DESC, end_time DESC, start_time DESC')
 end

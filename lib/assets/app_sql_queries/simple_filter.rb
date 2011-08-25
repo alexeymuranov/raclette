@@ -1,37 +1,25 @@
-class SimpleFilter # FIXME: not ready
-  # filtering_column_types must be set before filtering_values
+class SimpleFilter
 
-  attr_accessor :filtering_attributes,         # Array
-                :filtering_column_types,       # Hash
-                :sql_for_filtering_attributes  # Hash
-
-  attr_reader :filtering_values  # Hash
+  attr_reader   :filtering_values      # Hash
+  attr_accessor :filtering_attributes  # Array
 
   def initialize
-    @filtering_attributes = []
-    @filtering_column_types = {}
     @filtering_values = {}
-    @sql_for_filtering_attributes = {}
+    @filtering_attributes = []
   end
 
-  def set_filtering_values_from_human_hash(human_filtering_values, klass=nil)
-    # if klass  # would adding this be more efficient or logical?
-    #   human_filtering_values.each_key do |attr|
-    #     # set missing column types
-    #   end
-    # end
+  def set_filtering_values_from_human_hash(human_filtering_values, klass)
+
+    a_smarter_model = (klass.superclass == AbstractSmarterModel)
 
     human_filtering_values.each do |attr, value|
       column_name = attr.to_s
       attr = column_name.intern
 
-      unless filtering_column_type = @filtering_column_types[attr]
-        if klass && column = klass.columns_hash[column_name]
-          filtering_column_type = column.type
-          @filtering_column_types[attr] = filtering_column_type
-        else
-          next
-        end
+      if a_smarter_model
+        filtering_column_type = klass.attribute_db_types[attr]
+      else
+        filtering_column_type = klass.columns_hash[column_name].type
       end
 
       case filtering_column_type
@@ -70,17 +58,28 @@ class SimpleFilter # FIXME: not ready
     end
   end
 
-  def do_filter(scoped_collection)
+  def do_filter(scoped_collection, filtering_values=nil,
+                                   filtering_attributes=nil)
     klass = scoped_collection.klass
     table_name = klass.table_name
+    a_smarter_model = (klass.superclass == AbstractSmarterModel)
+    @filtering_values = filtering_values || @filtering_values
+    @filtering_attributes = filtering_attributes || @filtering_attributes\
+                                                 || @filtering_values.keys
+
     @filtering_attributes.each do |attr|
 
       next if (filtering_value = @filtering_values[attr]).nil?
 
       column_name = attr.to_s
-      
-      filtering_column_type = @filtering_column_types[attr]
-      column_sql            = @sql_for_filtering_attributes[attr]
+
+      if a_smarter_model
+        filtering_column_type = klass.attribute_db_types[attr]
+        column_sql            = klass.sql_for_attributes[attr]
+      else
+        filtering_column_type = klass.columns_hash[column_name].type
+        column_sql            = "\"#{table_name}\".\"#{column_name}\""
+      end
 
       unless filtering_column_type && column_sql
         if column = klass.columns_hash[column_name]

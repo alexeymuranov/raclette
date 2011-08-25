@@ -25,6 +25,6 @@ class Admin::KnownIP < ActiveRecord::Base
                  :uniqueness => true
 
   # Scopes:
-	scope :default_order, order('ip ASC')
+  scope :default_order, order('ip ASC')
 
 end

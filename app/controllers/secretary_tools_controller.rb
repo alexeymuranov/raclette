@@ -2,7 +2,8 @@
 
 class SecretaryToolsController < SecretaryController
   def overview
-    @members = Member.with_person_and_virtual_attributes.default_order
+    @members = Member.joins(:person)\
+                     .with_virtual_attributes(:ordered_full_name, :full_name)
     @events = Event.default_order
   end
 end

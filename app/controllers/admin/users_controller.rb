@@ -5,9 +5,7 @@ class Admin::UsersController < AdminController
   def index
     @query_type = params[:query_type]
     @submit_button = params[:button]
-    params.delete(:query_type)
-    params.delete(:commit)
-    params.delete(:button)
+    params.except!(:query_type, :commit, :button)
 
     if @query_type == 'filter' && @submit_button == 'clear_button'
       params.delete(:filter)
@@ -72,10 +70,10 @@ class Admin::UsersController < AdminController
       requested_format.ms_excel_2003_xml do
         render_ms_excel_2003_xml_for_download\
             @all_filtered_users,
-            @attributes_for_download, @column_types,
+            @attributes_for_download,
             @column_headers_for_download,
             "#{Admin::User.model_name.human.pluralize}"\
-            " #{Time.now.strftime('%Y-%m-%d %k_%M')}"\
+            " #{Time.now.in_time_zone.strftime('%Y-%m-%d %k_%M')}"\
             ".excel2003.xml"  # defined in ApplicationController
       end
 
@@ -85,7 +83,7 @@ class Admin::UsersController < AdminController
             @attributes_for_download,
             @column_headers_for_download,
             "#{Admin::User.model_name.human.pluralize}"\
-            " #{Time.now.strftime('%Y-%m-%d %k_%M')}"\
+            " #{Time.now.in_time_zone.strftime('%Y-%m-%d %k_%M')}"\
             ".csv"  # defined in ApplicationController
       end
     end

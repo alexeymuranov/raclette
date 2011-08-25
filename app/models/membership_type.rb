@@ -56,5 +56,5 @@ class MembershipType < ActiveRecord::Base
                 :uniqueness => { :scope => [ :active, :reduced, :unlimited ] }
 
   # Scopes:
-	scope :default_order, order('duration_months DESC, unique_title ASC')
+  scope :default_order, order('duration_months DESC, unique_title ASC')
 end
