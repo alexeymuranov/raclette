@@ -1,6 +1,11 @@
 require 'test_helper'
 
 class ActivityPeriodsControllerTest < ActionController::TestCase
+
+  def setup
+    test_log_in(admin_users(:one), '127.0.0.1')
+  end
+
   test "should get index" do
     get :index
     assert_response :success
@@ -20,5 +25,4 @@ class ActivityPeriodsControllerTest < ActionController::TestCase
     get :edit
     assert_response :success
   end
-
 end

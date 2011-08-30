@@ -15,4 +15,8 @@ class ActiveSupport::TestCase
   # set_fixture_class 'application_journal' => ApplicationJournalRecord  # FIXME!
 
   # Add more helper methods to be used by all tests here...
+
+  def test_log_in(user, client_ip)
+    controller.log_in(user, client_ip)
+  end
 end
