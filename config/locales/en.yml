@@ -452,6 +452,14 @@ en:
         # person:
         #   <<: *person_attributes
 
+  activemodel:
+    models:
+      guest: "Guest"
+    attributes:
+      guest:
+        <<: *person_attributes
+        phone: "Phone"
+
   # For kaminari gem:
   views:
     pagination:
@@ -501,6 +509,7 @@ en:
     repaginate: "Paginate"
     show_email_addresses: "Show e-mail addresses"
     hide_email_addresses: "Hide e-mail addresses"
+    continue: "Continue"
 
   actions:
     create: "Add"
@@ -520,6 +529,8 @@ en:
       destroy:
         success: "%{resource_name} was successfully destroyed."
         failure: "%{resource_name} could not be destroyed."
+      other:
+        failure: "Error!"
     filters:
       require_login: "Please log in to access this page."
       require_secretary: "You must be a secretary to access the section you tried to access."
@@ -682,6 +693,8 @@ en:
     choose_person:
       title: "Register"
       header: "Payment and Entry Register"
+      choose_member: "Choose member"
+      enter_guest: "Enter guest"
     compose_transaction:
       title: "Register"
       header: "Payment and Entry Register"

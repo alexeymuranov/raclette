@@ -1,17 +1,21 @@
 <h1><%= t '.header' %></h1>
 
-<p>En construction...</p>
-
 <section>
-
-  <h2><%= t 'members.index.title' %></h2>
+  <h2><%= t '.choose_member' %></h2>
 
   <ul class="compact">
     <%- @members.each do |member| -%>
       <li><%= link_to select_pictogram + ' ' + member.ordered_full_name,
-                      { :action => :compose_transaction },
+                      { :action    => :compose_transaction,
+                        :member_id => member.id },
                       :class => 'select resource' %></li>
     <%- end -%>
   </ul>
 
+</section>
+
+<section>
+  <h2><%= t '.enter_guest' %></h2>
+  
+  <%= render 'form_for_guest' %>
 </section>

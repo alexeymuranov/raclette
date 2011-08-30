@@ -410,6 +410,14 @@ fr:
         # person:
         #   <<: *person_attributes
 
+  activemodel:
+    models:
+      guest: "Personne exterieure"
+    attributes:
+      guest:
+        <<: *person_attributes
+        phone: "Téléphone"
+
   # For kaminari gem:
   views:
     pagination:
@@ -459,6 +467,7 @@ fr:
     repaginate: "Paginer"
     show_email_addresses: "Afficher les adresses e-mail"
     hide_email_addresses: "Cacher les adresses e-mail"
+    continue: "Continuer"
 
   actions:
     create: "Ajouter"
@@ -478,6 +487,8 @@ fr:
       destroy:
         success: "%{resource_name} supprimé(e) avec succès."
         failure: "%{resource_name} n'a pas pu être supprimé(e)."
+      other:
+        failure: "Une erreur s'est produit!"
     filters:
       require_login: "Vous devez vous connecter pour acceder à cette page."
       require_secretary: "Vous devez être un(e) secrétaire pour acceder à la section que vous avez essayée d'acceder."
@@ -640,6 +651,8 @@ fr:
     choose_person:
       title: "Caisse"
       header: "Caisse des entrées et règlements"
+      choose_member: "Choisir un(e) adhérent(e)"
+      enter_guest: "Saisir une personne exterieure"
     compose_transaction:
       title: "Caisse"
       header: "Caisse des entrées et règlements"

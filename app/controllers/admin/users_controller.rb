@@ -250,7 +250,7 @@ class Admin::UsersController < AdminController
       @safe_ips = @user.safe_ips.order(sort_sql(:safe_ips))
       @other_ips = Admin::KnownIP.order(sort_sql(:safe_ips)) - @safe_ips
 
-      @title =  t('admin.users.edit.title', :username => @user.username)
+      @title = t('admin.users.edit.title', :username => @user.username)
 
       render :edit
     end

@@ -17,12 +17,12 @@
 <section>
   <h2><%= Admin::KnownIP.human_attribute_name(:safe_users) %></h2>
 
-  <%= render 'shared/simple_index_table',
+  <%= render('shared/simple_index_table',
              :models         => @safe_users,
              :attributes     => @safe_users_attributes,
              :column_types   => @users_column_types,
              :column_headers => @users_column_headers,
-             :html_table_id  => :safe_users %>
+             :html_table_id  => :safe_users) unless @safe_users.empty? %>
 
 </section>
 

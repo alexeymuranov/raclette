@@ -13,7 +13,7 @@
         <%- else -%>
        --><li class="tab">
             <%= link_to t('register.compose_transaction.tabs')[i],
-                        :tab => i -%>
+                        params.merge(:tab => i) -%>
           </li><!-- no space!
         <%- end -%>
       <%- end -%>
@@ -21,4 +21,13 @@
   </nav>
 </header>
 
-<p>En construction...</p>
+<% case @tab %>
+<% when 0 %>
+  <%= render 'compose_entry'%>
+<% when 1 %>
+  <%= render 'compose_tickets_purchase'%>
+<% when 2 %>
+  <%= render 'compose_membership_purchase'%>
+<% else %>
+  <p>ERROR!</p>
+<% end %>
