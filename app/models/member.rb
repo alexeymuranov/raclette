@@ -29,20 +29,7 @@ class Member < AbstractSmarterModel
 
   attr_readonly :id, :person_id, :been_member_by
 
-  attr_accessible( # :id,
-                   # :person_id,
-                   :been_member_by,
-                   # :shares_tickets_with_member_id,
-                   # :account_deactivated,
-                   # :latest_membership_obtained_on,
-                   # :latest_membership_expiration_date,
-                   # :latest_membership_type,
-                   # :latest_membership_duration_months,
-                   # :last_card_printed_on,
-                   # :last_card_delivered,
-                   # :last_payment_date,
-                   # :last_entry_date,
-                   # :payed_tickets_count,
+  attr_accessible( :been_member_by,
                    :free_tickets_count,
                    :last_name,         # delegated attribute
                    :first_name,        # delegated attribute
@@ -55,8 +42,8 @@ class Member < AbstractSmarterModel
                    :work_phone,        # delegated attribute
                    :personal_phone,    # delegated attribute
                    :primary_address,   # delegated attribute
-                   :person_attributes  # association attribute
-                 )  ## all attributes listed here
+                   :person_attributes, # association attribute
+                   :as => [ :secretary, :manager ] )
 
   # Associations
   has_one :tickets_lender, :foreign_key => :shares_tickets_with_member_id,
@@ -116,13 +103,13 @@ class Member < AbstractSmarterModel
            :non_sql_full_name,
            :to => :person
 
-  delegate :unique_title, :duration_months,  # FIXME
-           :to     => :'current_membership.type',
-           :prefix => :current_membership
+  # delegate :unique_title, :duration_months,  # FIXME
+  #          :to     => :'current_membership.type',
+  #          :prefix => :current_membership
 
-  delegate :unique_title, :start_date, :duration_months, :end_date,  # FIXME
-           :to     => :'current_membership.activity_period',
-           :prefix => :current_membership
+  # delegate :unique_title, :start_date, :duration_months, :end_date,  # FIXME
+  #          :to     => :'current_membership.activity_period',
+  #          :prefix => :current_membership
 
   # Validations
   validates :person_id, :been_member_by,

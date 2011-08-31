@@ -1,5 +1,5 @@
 class CreateMembershipPurchases < ActiveRecord::Migration
-  def self.up
+  def up
     create_table :membership_purchases do |t|
       t.integer :member_id,                     :null => false
       t.string  :membership_type, :limit => 32, :null => false
@@ -21,7 +21,7 @@ class CreateMembershipPurchases < ActiveRecord::Migration
     add_index :membership_purchases, :purchase_date
   end
 
-  def self.down
+  def down
     drop_table :membership_purchases
   end
 end

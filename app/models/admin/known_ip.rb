@@ -5,10 +5,9 @@ class Admin::KnownIP < ActiveRecord::Base
 
   attr_readonly :id, :ip
 
-  attr_accessible( # :id,
-                   :ip,
-                   :description
-                 )  ## all attributes listed here
+  attr_accessible( :ip,
+                   :description,
+                   :as => :admin )
 
   # Associations:
   has_many :safe_user_ips, :foreign_key => :known_ip_id,

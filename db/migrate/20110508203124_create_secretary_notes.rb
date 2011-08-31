@@ -1,5 +1,5 @@
 class CreateSecretaryNotes < ActiveRecord::Migration
-  def self.up
+  def up
     create_table :secretary_notes do |t|
       t.string   :note_type,      :limit => 32, :null => false
       t.string   :something_type, :limit => 32, :null => false
@@ -22,7 +22,7 @@ class CreateSecretaryNotes < ActiveRecord::Migration
     add_index :secretary_notes, :message_updated_at
   end
 
-  def self.down
+  def down
     drop_table :secretary_notes
   end
 end

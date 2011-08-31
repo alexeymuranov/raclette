@@ -1,5 +1,5 @@
 class CreateAddresses < ActiveRecord::Migration
-  def self.up
+  def up
     create_table :addresses do |t|
       t.string :names,          :limit =>  64, :null => false
       t.string :address_type,   :limit =>  32
@@ -18,7 +18,7 @@ class CreateAddresses < ActiveRecord::Migration
     add_index :addresses, [ :post_code, :country ]
   end
 
-  def self.down
+  def down
     drop_table :addresses
   end
 end

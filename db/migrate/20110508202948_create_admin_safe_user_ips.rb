@@ -1,5 +1,5 @@
 class CreateAdminSafeUserIps < ActiveRecord::Migration
-  def self.up
+  def up
     create_table :admin_safe_user_ips do |t|
       t.integer  :known_ip_id, :null => false
       t.integer  :user_id,     :null => false
@@ -13,7 +13,7 @@ class CreateAdminSafeUserIps < ActiveRecord::Migration
                   :unique => true
   end
 
-  def self.down
+  def down
     drop_table :admin_safe_user_ips
   end
 end

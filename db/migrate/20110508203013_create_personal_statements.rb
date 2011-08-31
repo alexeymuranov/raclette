@@ -1,5 +1,5 @@
 class CreatePersonalStatements < ActiveRecord::Migration
-  def self.up
+  def up
     create_table :personal_statements, :primary_key => :person_id do |t|
       t.primary_key :person_id
       t.date        :birthday
@@ -18,7 +18,7 @@ class CreatePersonalStatements < ActiveRecord::Migration
     add_index :personal_statements, :volunteer
   end
 
-  def self.down
+  def down
     drop_table :personal_statements
   end
 end

@@ -1,5 +1,5 @@
 class CreateMembershipTypes < ActiveRecord::Migration
-  def self.up
+  def up
     create_table :membership_types do |t|
       t.string  :unique_title,        :limit =>  32, :null => false
       t.boolean :active,    :default => false,       :null => false
@@ -22,7 +22,7 @@ class CreateMembershipTypes < ActiveRecord::Migration
     add_index :membership_types, :duration_months
   end
 
-  def self.down
+  def down
     drop_table :membership_types
   end
 end

@@ -26,19 +26,12 @@ class Person < AbstractSmarterModel
 
   attr_readonly :id, :last_name
 
-  attr_accessible( # :id,
-                   :last_name,
+  attr_accessible( :last_name,
                    :first_name,
                    :name_title,
                    :nickname_or_other,
-                   # :birthyear
                    :email,
-                   # :mobile_phone,
-                   # :home_phone,
-                   # :work_phone,
-                   # :primary_address_id,
-                   # :full_name  # virtual attribute
-                 )  ## all attributes listed here
+                   :as => [ :secretary, :manager ] )
 
   # Associations
   has_many :users, :dependent  => :nullify,

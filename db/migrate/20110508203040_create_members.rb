@@ -1,5 +1,5 @@
 class CreateMembers < ActiveRecord::Migration
-  def self.up
+  def up
     create_table :members, :primary_key => :person_id do |t|
       t.primary_key :person_id
       t.date        :been_member_by,       :null => false
@@ -47,7 +47,7 @@ class CreateMembers < ActiveRecord::Migration
                            '_last_card_delivered_and_l_c_printed_on'
   end
 
-  def self.down
+  def down
     drop_table :members
   end
 end

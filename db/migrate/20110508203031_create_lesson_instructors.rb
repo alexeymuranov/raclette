@@ -1,5 +1,5 @@
 class CreateLessonInstructors < ActiveRecord::Migration
-  def self.up
+  def up
     create_table :lesson_instructors do |t|
       t.integer :lesson_supervision_id,        :null => false
       t.integer :instructor_id,                :null => false
@@ -20,7 +20,7 @@ class CreateLessonInstructors < ActiveRecord::Migration
     add_index :lesson_instructors, :assistant
   end
 
-  def self.down
+  def down
     drop_table :lesson_instructors
   end
 end

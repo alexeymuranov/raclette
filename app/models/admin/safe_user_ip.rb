@@ -5,11 +5,9 @@ class Admin::SafeUserIP < ActiveRecord::Base
 
   attr_readonly :id, :known_ip_id, :user_id
 
-  attr_accessible( # :id,
-                   :known_ip_id,
-                   :user_id#,
-                   # :last_signed_in_at
-                 )  ## all attributes listed here
+  attr_accessible( :known_ip_id,
+                   :user_id,
+                   :as => :admin )
 
   # Associations:
   belongs_to :user, :inverse_of => :safe_user_ips

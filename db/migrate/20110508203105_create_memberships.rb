@@ -1,5 +1,5 @@
 class CreateMemberships < ActiveRecord::Migration
-  def self.up
+  def up
     create_table :memberships do |t|
       t.integer :membership_type_id, :null => false
       t.integer :activity_period_id, :null => false
@@ -16,7 +16,7 @@ class CreateMemberships < ActiveRecord::Migration
     add_index :memberships, :membership_type_id
   end
 
-  def self.down
+  def down
     drop_table :memberships
   end
 end

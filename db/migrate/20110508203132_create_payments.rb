@@ -1,5 +1,5 @@
 class CreatePayments < ActiveRecord::Migration
-  def self.up
+  def up
     create_table :payments do |t|
       t.string  :payable_type, :limit =>  32,                 :null => false
       t.integer :payable_id
@@ -23,7 +23,7 @@ class CreatePayments < ActiveRecord::Migration
     add_index :payments, [ :cancelled_and_reimbursed, :cancelled_on ]
   end
 
-  def self.down
+  def down
     drop_table :payments
   end
 end

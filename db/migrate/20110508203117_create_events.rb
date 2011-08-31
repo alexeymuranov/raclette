@@ -1,5 +1,5 @@
 class CreateEvents < ActiveRecord::Migration
-  def self.up
+  def up
     create_table :events do |t|
       t.string  :event_type,           :limit =>  32, :null => false
       t.string  :title,                :limit =>  64
@@ -46,7 +46,7 @@ class CreateEvents < ActiveRecord::Migration
     add_index :events, [ :over, :date ]
   end
 
-  def self.down
+  def down
     drop_table :events
   end
 end

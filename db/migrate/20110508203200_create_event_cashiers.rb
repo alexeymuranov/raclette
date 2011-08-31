@@ -1,5 +1,5 @@
 class CreateEventCashiers < ActiveRecord::Migration
-  def self.up
+  def up
     create_table :event_cashiers do |t|
       t.integer  :event_id
       t.string   :name, :limit => 64, :null => false
@@ -17,7 +17,7 @@ class CreateEventCashiers < ActiveRecord::Migration
     add_index :event_cashiers, :finished_at
   end
 
-  def self.down
+  def down
     drop_table :event_cashiers
   end
 end

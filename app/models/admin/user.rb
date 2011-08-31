@@ -33,28 +33,22 @@ class Admin::User < ActiveRecord::Base
 
   attr_accessor :password, :new_password
 
-  attr_accessible( # :id,
-                   :username,
+  attr_accessible( :username,
                    :full_name,
                    :a_person,
-                   # :person_id,
                    :email,
                    :account_deactivated,
                    :admin,
                    :manager,
                    :secretary,
-                   # :password_or_password_hash,
-                   # :password_salt,
-                   # :last_signed_in_at,
-                   # :last_signed_in_from_ip,
                    :comments,
                    :safe_ip_ids,                # association attribute
                    :person,                     # association attribute
                    :password,                   # virtual attribute
                    :password_confirmation,      # virtual attribute
                    :new_password,               # virtual attribute
-                   :new_password_confirmation   # virtual attribute
-                 )  ## all attributes listed here
+                   :new_password_confirmation,  # virtual attribute
+                   :as => :admin )
 
   # Associations:
   has_many :safe_user_ips, :class_name => 'SafeUserIP',

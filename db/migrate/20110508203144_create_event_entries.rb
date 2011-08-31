@@ -1,5 +1,5 @@
 class CreateEventEntries < ActiveRecord::Migration
-  def self.up
+  def up
     create_table :event_entries do |t|
       t.string  :participant_entry_type, :limit => 32, :null => false
       t.integer :participant_entry_id
@@ -23,7 +23,7 @@ class CreateEventEntries < ActiveRecord::Migration
     add_index :event_entries, :person_id
   end
 
-  def self.down
+  def down
     drop_table :event_entries
   end
 end

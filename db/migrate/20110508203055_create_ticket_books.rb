@@ -1,5 +1,5 @@
 class CreateTicketBooks < ActiveRecord::Migration
-  def self.up
+  def up
     create_table :ticket_books do |t|
       t.integer :membership_type_id,                  :null => false
       t.integer :tickets_number, :limit => 2,         :null => false
@@ -12,7 +12,7 @@ class CreateTicketBooks < ActiveRecord::Migration
                   :unique => true
   end
 
-  def self.down
+  def down
     drop_table :ticket_books
   end
 end

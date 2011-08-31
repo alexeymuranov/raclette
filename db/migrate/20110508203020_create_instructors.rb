@@ -1,5 +1,5 @@
 class CreateInstructors < ActiveRecord::Migration
-  def self.up
+  def up
     create_table :instructors, :primary_key => :person_id do |t|
       t.primary_key :person_id
       t.text        :presentation
@@ -15,7 +15,7 @@ class CreateInstructors < ActiveRecord::Migration
     add_index :instructors, :employed_until
   end
 
-  def self.down
+  def down
     drop_table :instructors
   end
 end

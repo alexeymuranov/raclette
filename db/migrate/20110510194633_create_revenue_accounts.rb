@@ -1,5 +1,5 @@
 class CreateRevenueAccounts < ActiveRecord::Migration
-  def self.up
+  def up
     create_table :revenue_accounts do |t|
       t.string  :unique_title, :limit =>  64, :null => false
       t.boolean :locked, :default => false,   :null => false
@@ -24,7 +24,7 @@ class CreateRevenueAccounts < ActiveRecord::Migration
     add_index :revenue_accounts, :closed_on
   end
 
-  def self.down
+  def down
     drop_table :revenue_accounts
   end
 end

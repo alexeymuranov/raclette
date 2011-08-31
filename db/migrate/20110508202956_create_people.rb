@@ -1,5 +1,5 @@
 class CreatePeople < ActiveRecord::Migration
-  def self.up
+  def up
     create_table :people do |t|
       t.string  :last_name,         :limit =>  32, :null => false
       t.string  :first_name,        :limit =>  32, :null => false
@@ -24,7 +24,7 @@ class CreatePeople < ActiveRecord::Migration
     add_index :people, :primary_address_id
   end
 
-  def self.down
+  def down
     drop_table :people
   end
 end

@@ -1,5 +1,5 @@
 class CreateCommitteeMemberships < ActiveRecord::Migration
-  def self.up
+  def up
     create_table :committee_memberships do |t|
       t.integer :person_id,               :null => false
       t.string  :function, :limit =>  64, :null => false
@@ -17,7 +17,7 @@ class CreateCommitteeMemberships < ActiveRecord::Migration
     add_index :committee_memberships, [ :quit, :end_date ]
   end
 
-  def self.down
+  def down
     drop_table :committee_memberships
   end
 end

@@ -1,5 +1,5 @@
 class CreateMemberShortHistories < ActiveRecord::Migration
-  def self.up
+  def up
     create_table :member_short_histories, :primary_key => :member_id do |t|
       t.primary_key :member_id
       t.date        :last_active_membership_expiration_date
@@ -23,7 +23,7 @@ class CreateMemberShortHistories < ActiveRecord::Migration
     add_index :member_short_histories, :prev_membership_duration_months
   end
 
-  def self.down
+  def down
     drop_table :member_short_histories
   end
 end

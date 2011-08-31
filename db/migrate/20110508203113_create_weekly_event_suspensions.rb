@@ -1,5 +1,5 @@
 class CreateWeeklyEventSuspensions < ActiveRecord::Migration
-  def self.up
+  def up
     create_table :weekly_event_suspensions do |t|
       t.integer :weekly_event_id, :null => false
       t.date    :suspend_from,    :null => false
@@ -21,7 +21,7 @@ class CreateWeeklyEventSuspensions < ActiveRecord::Migration
     add_index :weekly_event_suspensions, :suspend_until
   end
 
-  def self.down
+  def down
     drop_table :weekly_event_suspensions
   end
 end

@@ -1,5 +1,5 @@
 class CreateWeeklyEvents < ActiveRecord::Migration
-  def self.up
+  def up
     create_table :weekly_events do |t|
       t.string  :event_type,        :limit =>  32, :null => false
       t.string  :title,             :limit =>  64, :null => false
@@ -35,7 +35,7 @@ class CreateWeeklyEvents < ActiveRecord::Migration
     add_index :weekly_events, [ :over, :end_on ]
   end
 
-  def self.down
+  def down
     drop_table :weekly_events
   end
 end

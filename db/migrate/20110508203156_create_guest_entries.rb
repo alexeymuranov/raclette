@@ -1,5 +1,5 @@
 class CreateGuestEntries < ActiveRecord::Migration
-  def self.up
+  def up
     create_table :guest_entries do |t|
       t.string  :first_name, :limit =>  32, :null => false
       t.string  :last_name,  :limit =>  32
@@ -21,7 +21,7 @@ class CreateGuestEntries < ActiveRecord::Migration
     add_index :guest_entries, :toward_membership_purchase_id
   end
 
-  def self.down
+  def down
     drop_table :guest_entries
   end
 end

@@ -1,5 +1,5 @@
 class CreateApplicationJournalRecords < ActiveRecord::Migration
-  def self.up
+  def up
     create_table :application_journal do |t|
       t.string   :action,         :limit =>  64, :null => false
       t.string   :username,       :limit =>  32, :null => false
@@ -14,7 +14,7 @@ class CreateApplicationJournalRecords < ActiveRecord::Migration
     end
   end
 
-  def self.down
+  def down
     drop_table :application_journal
   end
 end

@@ -1,5 +1,5 @@
 class CreateTicketsPurchases < ActiveRecord::Migration
-  def self.up
+  def up
     create_table :tickets_purchases do |t|
       t.integer :member_id,                   :null => false
       t.integer :tickets_number, :limit => 2, :null => false
@@ -14,7 +14,7 @@ class CreateTicketsPurchases < ActiveRecord::Migration
     add_index :tickets_purchases, :purchase_date
   end
 
-  def self.down
+  def down
     drop_table :tickets_purchases
   end
 end

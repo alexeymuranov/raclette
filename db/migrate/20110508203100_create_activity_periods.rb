@@ -1,5 +1,5 @@
 class CreateActivityPeriods < ActiveRecord::Migration
-  def self.up
+  def up
     create_table :activity_periods do |t|
       t.string  :unique_title,    :limit =>  64, :null => false
       t.date    :start_date,                     :null => false
@@ -20,7 +20,7 @@ class CreateActivityPeriods < ActiveRecord::Migration
     add_index :activity_periods, [ :over, :end_date ]
   end
 
-  def self.down
+  def down
     drop_table :activity_periods
   end
 end

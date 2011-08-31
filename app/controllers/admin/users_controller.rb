@@ -151,7 +151,7 @@ class Admin::UsersController < AdminController
 
     params[:admin_user].slice!(*@acceptable_attributes)
 
-    @user = Admin::User.new(params[:admin_user])
+    @user = Admin::User.new(params[:admin_user], :as => :admin)
 
     if @user.save
       flash[:success] = t('flash.admin.users.create.success',
@@ -198,7 +198,7 @@ class Admin::UsersController < AdminController
     current_password = params[:current_password]
 
     if current_password.nil? || @user.has_password?(current_password)
-      if @user.update_attributes(params[:admin_user])
+      if @user.update_attributes(params[:admin_user], :as => :admin)
         flash[:notice] = t('flash.admin.users.update.success',
                            :username => @user.username)
         redirect_to @user

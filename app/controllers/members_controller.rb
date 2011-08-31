@@ -154,8 +154,10 @@ class MembersController < SecretaryController  # FIXME: untested work in progres
     params[:member][:person_attributes].delete(:email)\
       if params[:member][:person_attributes][:email].blank?
 
-    @person.attributes = params[:member][:person_attributes]
-    @member.attributes = params[:member].except(:person_attributes)
+    @person.assign_attributes(params[:member][:person_attributes],
+                              :as => :secretary)
+    @member.assign_attributes(params[:member].except(:person_attributes),
+                              :as => :secretary)
 
     unless @person.save
       flash.now[:error] = t('flash.members.create.failure')
@@ -189,7 +191,7 @@ class MembersController < SecretaryController  # FIXME: untested work in progres
     # @acceptable_attributes = [ 'been_member_by', 'person_attributes' ]
     # params[:member].slice!(*@acceptable_attributes)
 
-    if @member.update_attributes(params[:member])
+    if @member.update_attributes(params[:member], :as => :secretary)
       flash[:notice] = t('flash.members.update.success',
                          :name => @member.full_name)
       redirect_to @member
