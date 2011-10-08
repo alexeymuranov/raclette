@@ -21,6 +21,10 @@ end
 
 gem 'jquery-rails'
 
+gem 'haml'  # use HAML templating (sister project of SASS) instead of ERB
+
+gem 'draper'  # This gem provides decorators (much like presenters)
+
 # Use unicorn as the web server
 # gem 'unicorn'
 

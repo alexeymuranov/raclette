@@ -14,7 +14,7 @@ class SimpleFilter
 
     human_filtering_values.each do |attr, value|
       column_name = attr.to_s
-      attr = column_name.intern
+      attr = column_name.to_sym
 
       if a_smarter_model
         filtering_column_type = klass.attribute_db_types[attr]

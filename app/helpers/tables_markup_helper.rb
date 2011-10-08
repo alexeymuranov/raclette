@@ -5,7 +5,7 @@ module TablesMarkupHelper
   def sortable(html_table_id, column, title = nil, html_options = {})
     title ||= column.to_s.titleize
 
-    if column.intern == sort_column(html_table_id)  # is column the current sort column?
+    if column.to_sym == sort_column(html_table_id)  # is column the current sort column?
       if sort_direction(html_table_id) == :asc  # is the current sort direction asc?
         sort_indicator = '▲ '
         direction_on_click = :desc

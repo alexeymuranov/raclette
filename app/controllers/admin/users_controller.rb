@@ -274,7 +274,7 @@ class Admin::UsersController < AdminController
     def set_column_types
       @column_types = {}
       Admin::User.columns_hash.each do |key, value|
-        @column_types[key.intern] = value.type
+        @column_types[key.to_sym] = value.type
       end
     end
 
@@ -305,7 +305,7 @@ class Admin::UsersController < AdminController
     def set_known_ips_column_types
       @known_ips_column_types = {}
       Admin::KnownIP.columns_hash.each do |key, value|
-        @known_ips_column_types[key.intern] = value.type
+        @known_ips_column_types[key.to_sym] = value.type
       end
     end
 

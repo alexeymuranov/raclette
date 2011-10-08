@@ -39,7 +39,13 @@ module Raclette
     # Configure sensitive parameters which will be filtered from the log file.
     config.filter_parameters += [:password]
 
-    # Enable the asset pipeline
+    # Enable the asset pipeline.
     config.assets.enabled = true
+
+    # Disable helper generation.
+    config.generators do |g|
+      g.template_engine :haml
+      g.helper          false
+    end
   end
 end

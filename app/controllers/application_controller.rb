@@ -92,7 +92,7 @@ class ApplicationController < ActionController::Base
       if (suggested_sort_column = params[:sort][html_table_id][:column]).blank?
         default_column
       elsif @attributes.map(&:to_s).include?(suggested_sort_column)
-        suggested_sort_column.intern
+        suggested_sort_column.to_sym
       else
         default_column
       end

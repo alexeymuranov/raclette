@@ -160,7 +160,7 @@ class Member < AbstractSmarterModel
           .each do |attr|
         @attribute_db_types[attr] = ('delegated_' +
                                      Person.columns_hash[attr.to_s].type.to_s)\
-                                    .intern
+                                    .to_sym
       end
 
       [ :full_name, :ordered_full_name, :formatted_email ].each do |attr|
@@ -176,7 +176,7 @@ class Member < AbstractSmarterModel
   scope :default_order, joins(:person).merge(Person.default_order)
 
   scope :account_active, where(:account_deactivated => false)
-  
+
   # Public instance methods
   # Non-SQL virtual attributes
   def non_sql_account_active
