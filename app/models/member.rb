@@ -1,28 +1,5 @@
 ## encoding: UTF-8
 
-# == Schema Information
-# Schema version: 20110618120707
-#
-# Table name: members
-#
-#  person_id                         :integer         not null, primary key
-#  been_member_by                    :date            not null
-#  shares_tickets_with_member_id     :integer
-#  account_deactivated               :boolean         not null
-#  latest_membership_obtained_on     :date
-#  latest_membership_expiration_date :date
-#  latest_membership_type            :string(32)
-#  latest_membership_duration_months :integer(1)      default(12)
-#  last_card_printed_on              :date
-#  last_card_delivered               :boolean
-#  last_payment_date                 :date
-#  last_entry_date                   :date
-#  payed_tickets_count               :integer(2)      default(0), not null
-#  free_tickets_count                :integer(2)      default(0), not null
-#  created_at                        :datetime
-#  updated_at                        :datetime
-#
-
 class Member < AbstractSmarterModel
 
   set_primary_key :person_id
@@ -191,3 +168,25 @@ class Member < AbstractSmarterModel
   alias_method :'non_sql_account_active?', :non_sql_account_active
 
 end
+# == Schema Information
+#
+# Table name: members
+#
+#  person_id                         :integer         not null, primary key
+#  been_member_by                    :date            not null
+#  shares_tickets_with_member_id     :integer
+#  account_deactivated               :boolean         default(FALSE), not null
+#  latest_membership_obtained_on     :date
+#  latest_membership_expiration_date :date
+#  latest_membership_type            :string(32)
+#  latest_membership_duration_months :integer(1)      default(12)
+#  last_card_printed_on              :date
+#  last_card_delivered               :boolean         default(FALSE)
+#  last_payment_date                 :date
+#  last_entry_date                   :date
+#  payed_tickets_count               :integer(2)      default(0), not null
+#  free_tickets_count                :integer(2)      default(0), not null
+#  created_at                        :datetime
+#  updated_at                        :datetime
+#
+

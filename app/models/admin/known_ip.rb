@@ -11,7 +11,7 @@ class Admin::KnownIP < ActiveRecord::Base
 
   # Associations:
   has_many :safe_user_ips, :foreign_key => :known_ip_id,
-                           :class_name  => :SafeUserIP,
+                           :class_name  => 'SafeUserIP',
                            :dependent   => :destroy,
                            :inverse_of  => :known_ip
 

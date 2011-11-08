@@ -1,18 +1,5 @@
 ## encoding: UTF-8
 
-# == Schema Information
-# Schema version: 20110618120707
-#
-# Table name: lesson_supervisions
-#
-#  id                :integer         not null, primary key
-#  unique_names      :string(128)     not null
-#  instructors_count :integer(1)      default(1), not null
-#  comment           :string(255)
-#  created_at        :datetime
-#  updated_at        :datetime
-#
-
 class LessonSupervision < ActiveRecord::Base
 
   attr_readonly :id, :unique_names, :instructors_count
@@ -48,3 +35,15 @@ class LessonSupervision < ActiveRecord::Base
 
   validates :unique_names, :uniqueness => { :case_sensitive => false }
 end
+# == Schema Information
+#
+# Table name: lesson_supervisions
+#
+#  id                :integer         not null, primary key
+#  unique_names      :string(128)     not null
+#  instructors_count :integer(1)      default(1), not null
+#  comment           :string(255)
+#  created_at        :datetime
+#  updated_at        :datetime
+#
+

@@ -1,21 +1,5 @@
 ## encoding: UTF-8
 
-# == Schema Information
-# Schema version: 20110618120707
-#
-# Table name: secretary_notes
-#
-#  id                 :integer         not null, primary key
-#  note_type          :string(32)      not null
-#  something_type     :string(32)      not null
-#  something_id       :integer
-#  created_on         :date            not null
-#  message            :text
-#  message_updated_at :datetime        not null
-#  created_at         :datetime
-#  updated_at         :datetime
-#
-
 class SecretaryNote < ActiveRecord::Base
 
   attr_readonly :id, :note_type, :something_type, :something_id, :created_on
@@ -46,3 +30,18 @@ class SecretaryNote < ActiveRecord::Base
   validates :something_id,
                 :uniqueness => { :scope => [ :note_type, :something_type ] }
 end
+# == Schema Information
+#
+# Table name: secretary_notes
+#
+#  id                 :integer         not null, primary key
+#  note_type          :string(32)      not null
+#  something_type     :string(32)      not null
+#  something_id       :integer
+#  created_on         :date            not null
+#  message            :text
+#  message_updated_at :datetime        not null
+#  created_at         :datetime
+#  updated_at         :datetime
+#
+

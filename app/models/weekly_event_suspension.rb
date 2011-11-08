@@ -1,19 +1,5 @@
 ## encoding: UTF-8
 
-# == Schema Information
-# Schema version: 20110618120707
-#
-# Table name: weekly_event_suspensions
-#
-#  id              :integer         not null, primary key
-#  weekly_event_id :integer         not null
-#  suspend_from    :date            not null
-#  suspend_until   :date            not null
-#  explanation     :string(255)
-#  created_at      :datetime
-#  updated_at      :datetime
-#
-
 class WeeklyEventSuspension < ActiveRecord::Base
 
   attr_readonly :id, :weekly_event_id, :suspend_from
@@ -41,3 +27,16 @@ class WeeklyEventSuspension < ActiveRecord::Base
   # Scopes:
   scope :default_order, order('suspend_until DESC, suspend_from DESC')
 end
+# == Schema Information
+#
+# Table name: weekly_event_suspensions
+#
+#  id              :integer         not null, primary key
+#  weekly_event_id :integer         not null
+#  suspend_from    :date            not null
+#  suspend_until   :date            not null
+#  explanation     :string(255)
+#  created_at      :datetime
+#  updated_at      :datetime
+#
+

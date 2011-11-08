@@ -1,23 +1,28 @@
 require 'test_helper'
 
 class MembersControllerTest < ActionController::TestCase
+
+  setup do
+    @member = members(:one)
+  end
+
   test "should get index" do
-    get :index
+    get :index, {}, { :user_id => 1 }
     assert_response :success
   end
 
   test "should get show" do
-    get :show
+    get :show, { :id => @member.to_param }, { :user_id => 1 }
     assert_response :success
   end
 
   test "should get new" do
-    get :new
+    get :new, {}, { :user_id => 1 }
     assert_response :success
   end
 
   test "should get edit" do
-    get :edit
+    get :edit, { :id => @member.to_param }, { :user_id => 1 }
     assert_response :success
   end
 

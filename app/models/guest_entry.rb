@@ -1,23 +1,5 @@
 ## encoding: UTF-8
 
-# == Schema Information
-# Schema version: 20110618120707
-#
-# Table name: guest_entries
-#
-#  id                            :integer         not null, primary key
-#  first_name                    :string(32)      not null
-#  last_name                     :string(32)
-#  inviting_member_id            :integer
-#  previous_entry_id             :integer
-#  toward_membership_purchase_id :integer
-#  email                         :string(255)
-#  phone                         :string(32)
-#  note                          :string(255)
-#  created_at                    :datetime
-#  updated_at                    :datetime
-#
-
 class GuestEntry < ActiveRecord::Base
 
   attr_readonly :id, :first_name
@@ -38,13 +20,13 @@ class GuestEntry < ActiveRecord::Base
                         :dependent => :nullify
 
   has_one :following_entry, :foreign_key => :previous_entry_id,
-                            :class_name  => :GuestEntry,
+                            :class_name  => 'GuestEntry',
                             :dependent   => :nullify,
                             :inverse_of  => :previous_entry
 
   has_many :following_event_entry_reservations,
                :foreign_key => :previous_guest_entry_id,
-               :class_name  => :EventEntryReservation,
+               :class_name  => 'EventEntryReservation',
                :dependent   => :nullify,
                :inverse_of  => :previous_guest_entry
 
@@ -74,3 +56,20 @@ class GuestEntry < ActiveRecord::Base
   validates :previous_entry_id, :uniqueness => true,
                                 :allow_nil  => true
 end
+# == Schema Information
+#
+# Table name: guest_entries
+#
+#  id                            :integer         not null, primary key
+#  first_name                    :string(32)      not null
+#  last_name                     :string(32)
+#  inviting_member_id            :integer
+#  previous_entry_id             :integer
+#  toward_membership_purchase_id :integer
+#  email                         :string(255)
+#  phone                         :string(32)
+#  note                          :string(255)
+#  created_at                    :datetime
+#  updated_at                    :datetime
+#
+

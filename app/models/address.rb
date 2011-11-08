@@ -1,21 +1,5 @@
 ## encoding: UTF-8
 
-# == Schema Information
-# Schema version: 20110618120707
-#
-# Table name: addresses
-#
-#  id             :integer         not null, primary key
-#  names          :string(64)      not null
-#  address_type   :string(32)
-#  country        :string(32)      not null
-#  city           :string(32)
-#  post_code      :string(16)
-#  street_address :string(255)
-#  created_at     :datetime
-#  updated_at     :datetime
-#
-
 class Address < ActiveRecord::Base
 
   attr_readonly :id, :country
@@ -63,3 +47,18 @@ class Address < ActiveRecord::Base
   # Scopes:
   scope :default_order, order('country ASC, city ASC, post_code ASC')
 end
+# == Schema Information
+#
+# Table name: addresses
+#
+#  id             :integer         not null, primary key
+#  names          :string(64)      not null
+#  address_type   :string(32)
+#  country        :string(32)      not null
+#  city           :string(32)
+#  post_code      :string(16)
+#  street_address :string(255)
+#  created_at     :datetime
+#  updated_at     :datetime
+#
+

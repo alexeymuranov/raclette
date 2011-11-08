@@ -1,18 +1,5 @@
 ## encoding: UTF-8
 
-# == Schema Information
-# Schema version: 20110618120707
-#
-# Table name: member_entries
-#
-#  id             :integer         not null, primary key
-#  member_id      :integer         not null
-#  guests_invited :integer         default(0)
-#  tickets_used   :integer(1)      default(0), not null
-#  created_at     :datetime
-#  updated_at     :datetime
-#
-
 class MemberEntry < ActiveRecord::Base
 
   attr_readonly :id, :member_id
@@ -37,3 +24,15 @@ class MemberEntry < ActiveRecord::Base
 
   validates :tickets_used, :inclusion => 0..100
 end
+# == Schema Information
+#
+# Table name: member_entries
+#
+#  id             :integer         not null, primary key
+#  member_id      :integer         not null
+#  guests_invited :integer         default(0)
+#  tickets_used   :integer(1)      default(0), not null
+#  created_at     :datetime
+#  updated_at     :datetime
+#
+

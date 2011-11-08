@@ -1,20 +1,5 @@
 ## encoding: UTF-8
 
-# == Schema Information
-# Schema version: 20110618120707
-#
-# Table name: membership_purchases
-#
-#  id                         :integer         not null, primary key
-#  member_id                  :integer         not null
-#  membership_type            :string(32)      not null
-#  membership_expiration_date :date            not null
-#  membership_id              :integer
-#  purchase_date              :date            not null
-#  created_at                 :datetime
-#  updated_at                 :datetime
-#
-
 class MembershipPurchase < ActiveRecord::Base
 
   attr_readonly :id, :member_id, :membership_type,
@@ -49,3 +34,17 @@ class MembershipPurchase < ActiveRecord::Base
   validates :membership_id, :uniqueness => { :scope => :member_id },
                             :allow_nil  => true
 end
+# == Schema Information
+#
+# Table name: membership_purchases
+#
+#  id                         :integer         not null, primary key
+#  member_id                  :integer         not null
+#  membership_type            :string(32)      not null
+#  membership_expiration_date :date            not null
+#  membership_id              :integer
+#  purchase_date              :date            not null
+#  created_at                 :datetime
+#  updated_at                 :datetime
+#
+

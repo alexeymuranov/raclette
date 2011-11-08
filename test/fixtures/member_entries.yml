@@ -1,16 +1,3 @@
-# == Schema Information
-# Schema version: 20110618120707
-#
-# Table name: member_entries
-#
-#  id             :integer         not null, primary key
-#  member_id      :integer         not null
-#  guests_invited :integer         default(0)
-#  tickets_used   :integer(1)      default(0), not null
-#  created_at     :datetime
-#  updated_at     :datetime
-#
-
 # Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
 
 one:
@@ -22,3 +9,15 @@ two:
   member_id: 1
   guests_invited: 1
   tickets_used: 1
+# == Schema Information
+#
+# Table name: member_entries
+#
+#  id             :integer         not null, primary key
+#  member_id      :integer         not null
+#  guests_invited :integer         default(0)
+#  tickets_used   :integer(1)      default(0), not null
+#  created_at     :datetime
+#  updated_at     :datetime
+#
+

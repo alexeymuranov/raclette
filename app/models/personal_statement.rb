@@ -1,22 +1,5 @@
 ## encoding: UTF-8
 
-# == Schema Information
-# Schema version: 20110618120707
-#
-# Table name: personal_statements
-#
-#  person_id                  :integer         not null, primary key
-#  birthday                   :date
-#  accept_email_announcements :boolean
-#  volunteer                  :boolean
-#  volunteer_as               :string(255)
-#  preferred_language         :string(32)
-#  occupation                 :string(64)
-#  remark                     :string(255)
-#  created_at                 :datetime
-#  updated_at                 :datetime
-#
-
 class PersonalStatement < ActiveRecord::Base
   set_primary_key :person_id
 
@@ -51,3 +34,19 @@ class PersonalStatement < ActiveRecord::Base
 
   validates :person_id, :uniqueness => true
 end
+# == Schema Information
+#
+# Table name: personal_statements
+#
+#  person_id                  :integer         not null, primary key
+#  birthday                   :date
+#  accept_email_announcements :boolean         default(FALSE)
+#  volunteer                  :boolean         default(FALSE)
+#  volunteer_as               :string(255)
+#  preferred_language         :string(32)
+#  occupation                 :string(64)
+#  remark                     :string(255)
+#  created_at                 :datetime
+#  updated_at                 :datetime
+#
+

@@ -1,24 +1,5 @@
 ## encoding: UTF-8
 
-# == Schema Information
-# Schema version: 20110618120707
-#
-# Table name: revenue_accounts
-#
-#  id                 :integer         not null, primary key
-#  unique_title       :string(64)      not null
-#  locked             :boolean         not null
-#  activity_period_id :integer
-#  opened_on          :date
-#  closed_on          :date
-#  main               :boolean         not null
-#  amount             :decimal(7, 2)   default(0.0), not null
-#  amount_updated_on  :date
-#  description        :string(255)
-#  created_at         :datetime
-#  updated_at         :datetime
-#
-
 class RevenueAccount < ActiveRecord::Base
 
   attr_readonly :id, :opened_on
@@ -52,3 +33,21 @@ class RevenueAccount < ActiveRecord::Base
 
   validates :unique_title, :uniqueness => { :case_sensitive => false }
 end
+# == Schema Information
+#
+# Table name: revenue_accounts
+#
+#  id                 :integer         not null, primary key
+#  unique_title       :string(64)      not null
+#  locked             :boolean         default(FALSE), not null
+#  activity_period_id :integer
+#  opened_on          :date
+#  closed_on          :date
+#  main               :boolean         default(FALSE), not null
+#  amount             :decimal(7, 2)   default(0.0), not null
+#  amount_updated_on  :date
+#  description        :string(255)
+#  created_at         :datetime
+#  updated_at         :datetime
+#
+

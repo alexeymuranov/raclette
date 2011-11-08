@@ -1,29 +1,5 @@
 ## encoding: UTF-8
 
-# == Schema Information
-# Schema version: 20110618120707
-#
-# Table name: admin_users
-#
-#  id                        :integer         not null, primary key
-#  username                  :string(32)      not null
-#  full_name                 :string(64)      not null
-#  a_person                  :boolean
-#  person_id                 :integer
-#  email                     :string(255)
-#  account_deactivated       :boolean         not null
-#  admin                     :boolean         not null
-#  manager                   :boolean         not null
-#  secretary                 :boolean         not null
-#  password_or_password_hash :string(255)     default(""), not null
-#  password_salt             :string(255)
-#  last_signed_in_at         :datetime
-#  comments                  :text
-#  created_at                :datetime
-#  updated_at                :datetime
-#  last_signed_in_from_ip    :string(15)
-#
-
 require 'digest'
 require 'assets/app_validations/email_format'
 
@@ -146,3 +122,26 @@ class Admin::User < ActiveRecord::Base
     end
 
 end
+# == Schema Information
+#
+# Table name: admin_users
+#
+#  id                        :integer         not null, primary key
+#  username                  :string(32)      not null
+#  full_name                 :string(64)      not null
+#  a_person                  :boolean
+#  person_id                 :integer
+#  email                     :string(255)
+#  account_deactivated       :boolean         default(FALSE), not null
+#  admin                     :boolean         default(FALSE), not null
+#  manager                   :boolean         default(FALSE), not null
+#  secretary                 :boolean         default(FALSE), not null
+#  password_or_password_hash :string(255)     default(""), not null
+#  password_salt             :string(255)
+#  last_signed_in_at         :datetime
+#  comments                  :text
+#  created_at                :datetime
+#  updated_at                :datetime
+#  last_signed_in_from_ip    :string(15)
+#
+

@@ -1,25 +1,5 @@
 ## encoding: UTF-8
 
-# == Schema Information
-# Schema version: 20110618120707
-#
-# Table name: people
-#
-#  id                 :integer         not null, primary key
-#  last_name          :string(32)      not null
-#  first_name         :string(32)      not null
-#  name_title         :string(16)
-#  nickname_or_other  :string(32)      default(""), not null
-#  birthyear          :integer(2)
-#  email              :string(255)
-#  mobile_phone       :string(32)
-#  home_phone         :string(32)
-#  work_phone         :string(32)
-#  primary_address_id :integer
-#  created_at         :datetime
-#  updated_at         :datetime
-#
-
 require 'assets/app_validations/email_format'
 
 class Person < AbstractSmarterModel
@@ -141,3 +121,22 @@ class Person < AbstractSmarterModel
     mobile_phone || home_phone
   end
 end
+# == Schema Information
+#
+# Table name: people
+#
+#  id                 :integer         not null, primary key
+#  last_name          :string(32)      not null
+#  first_name         :string(32)      not null
+#  name_title         :string(16)
+#  nickname_or_other  :string(32)      default(""), not null
+#  birthyear          :integer(2)
+#  email              :string(255)
+#  mobile_phone       :string(32)
+#  home_phone         :string(32)
+#  work_phone         :string(32)
+#  primary_address_id :integer
+#  created_at         :datetime
+#  updated_at         :datetime
+#
+

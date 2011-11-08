@@ -1,18 +1,5 @@
 ## encoding: UTF-8
 
-# == Schema Information
-# Schema version: 20110618120707
-#
-# Table name: member_messages
-#
-#  id         :integer         not null, primary key
-#  member_id  :integer         not null
-#  content    :text            not null
-#  created_on :date            not null
-#  created_at :datetime
-#  updated_at :datetime
-#
-
 class MemberMessage < ActiveRecord::Base
 
   attr_readonly :id, :member_id
@@ -34,3 +21,15 @@ class MemberMessage < ActiveRecord::Base
 
   validates :member_id, :uniqueness => true
 end
+# == Schema Information
+#
+# Table name: member_messages
+#
+#  id         :integer         not null, primary key
+#  member_id  :integer         not null
+#  content    :text            not null
+#  created_on :date            not null
+#  created_at :datetime
+#  updated_at :datetime
+#
+

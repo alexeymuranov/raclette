@@ -6,3 +6,16 @@ class InstructorTest < ActiveSupport::TestCase
     assert true
   end
 end
+# == Schema Information
+#
+# Table name: instructors
+#
+#  person_id      :integer         not null, primary key
+#  presentation   :text
+#  photo          :binary
+#  employed_from  :date
+#  employed_until :date
+#  created_at     :datetime
+#  updated_at     :datetime
+#
+

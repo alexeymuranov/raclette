@@ -1,25 +1,5 @@
 ## encoding: UTF-8
 
-# == Schema Information
-# Schema version: 20110618120707
-#
-# Table name: payments
-#
-#  id                       :integer         not null, primary key
-#  payable_type             :string(32)      not null
-#  payable_id               :integer
-#  date                     :date            not null
-#  amount                   :decimal(4, 1)   not null
-#  method                   :string(32)      not null
-#  revenue_account_id       :integer
-#  payer_person_id          :integer
-#  cancelled_and_reimbursed :boolean         not null
-#  cancelled_on             :date
-#  note                     :string(255)
-#  created_at               :datetime
-#  updated_at               :datetime
-#
-
 class Payment < ActiveRecord::Base
 
   attr_readonly :id, :payable_type, :date, :amount, :method
@@ -44,7 +24,7 @@ class Payment < ActiveRecord::Base
   belongs_to :revenue_account, :inverse_of  => :payments
 
   belongs_to :payer, :foreign_key => :payer_person_id,
-                     :class_name  => :Person,
+                     :class_name  => 'Person',
                      :inverse_of  => :payments
 
   # Validations:
@@ -65,3 +45,22 @@ class Payment < ActiveRecord::Base
   validates :payable_id, :uniqueness => { :scope => :payable_type },
                          :allow_nil  => true
 end
+# == Schema Information
+#
+# Table name: payments
+#
+#  id                       :integer         not null, primary key
+#  payable_type             :string(32)      not null
+#  payable_id               :integer
+#  date                     :date            not null
+#  amount                   :decimal(4, 1)   not null
+#  method                   :string(32)      not null
+#  revenue_account_id       :integer
+#  payer_person_id          :integer
+#  cancelled_and_reimbursed :boolean         default(FALSE), not null
+#  cancelled_on             :date
+#  note                     :string(255)
+#  created_at               :datetime
+#  updated_at               :datetime
+#
+

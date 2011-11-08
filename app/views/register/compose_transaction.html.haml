@@ -1,0 +1,21 @@
+%h1= t '.header'
+%header
+  %nav.tabs
+    %ul.tabs
+      - 3.times do |i|
+        - if i == @tab
+          %li.tab.current>
+            %span= t('register.compose_transaction.tabs')[i]
+        - else
+          %li.tab>
+            = link_to t('register.compose_transaction.tabs')[i],
+                      params.merge(:tab => i)
+- case @tab
+- when 0
+  = render 'compose_entry'
+- when 1
+  = render 'compose_tickets_purchase'
+- when 2
+  = render 'compose_membership_purchase'
+- else
+  %p ERROR!

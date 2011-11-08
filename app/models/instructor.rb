@@ -1,19 +1,5 @@
 ## encoding: UTF-8
 
-# == Schema Information
-# Schema version: 20110618120707
-#
-# Table name: instructors
-#
-#  person_id      :integer         not null, primary key
-#  presentation   :text
-#  photo          :binary
-#  employed_from  :date
-#  employed_until :date
-#  created_at     :datetime
-#  updated_at     :datetime
-#
-
 class Instructor < ActiveRecord::Base
   set_primary_key :person_id
 
@@ -66,3 +52,16 @@ class Instructor < ActiveRecord::Base
   # Scopes
   scope :default_order, joins(:person).order('person.last_name ASC')
 end
+# == Schema Information
+#
+# Table name: instructors
+#
+#  person_id      :integer         not null, primary key
+#  presentation   :text
+#  photo          :binary
+#  employed_from  :date
+#  employed_until :date
+#  created_at     :datetime
+#  updated_at     :datetime
+#
+
