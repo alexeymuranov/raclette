@@ -4,15 +4,6 @@ class ActivityPeriod < ActiveRecord::Base
 
   attr_readonly :id, :start_date, :duration_months, :end_date
 
-  # attr_accessible( # :id,
-                   # :unique_title,
-                   # :start_date,
-                   # :duration_months,
-                   # :end_date,
-                   # :over,
-                   # :description
-                 # )  ## all attributes listed here
-
   # Associations:
   has_many :memberships, :dependent  => :destroy,
                          :inverse_of => :activity_period

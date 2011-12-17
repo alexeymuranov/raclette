@@ -1,9 +1,11 @@
 ## encoding: UTF-8
 
-# require 'admin/known_i_p'      # To solve a problem with autoloading
-# require 'admin/safe_user_i_p'  # To solve a problem with autoloading
-
 class Admin::KnownIPsController < AdminController
+
+  common_writable_attributes = Set[ 'ip', 'description' ]
+
+  param_accessible :create => { :admin_known_ip => common_writable_attributes },
+                   :update => { :admin_known_ip => common_writable_attributes }
 
   def index
     @attributes = [ :ip, :description ]
@@ -56,7 +58,7 @@ class Admin::KnownIPsController < AdminController
       @acceptable_attributes.include? key
     end
 
-    @known_ip = Admin::KnownIP.new(params[:admin_known_ip], :as => :admin)
+    @known_ip = Admin::KnownIP.new(params[:admin_known_ip])
 
     if @known_ip.save
       flash[:success] = t('flash.admin.known_i_ps.create.success',
@@ -78,7 +80,7 @@ class Admin::KnownIPsController < AdminController
 
     @known_ip = Admin::KnownIP.find(params[:id])
 
-    if @known_ip.update_attributes(params[:admin_known_ip], :as => :admin)
+    if @known_ip.update_attributes(params[:admin_known_ip])
       flash[:notice] =  t('flash.admin.known_i_ps.update.success',
                           :ip => @known_ip.ip)
       redirect_to @known_ip

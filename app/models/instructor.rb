@@ -5,14 +5,6 @@ class Instructor < ActiveRecord::Base
 
   attr_readonly :id, :person_id
 
-  # attr_accessible( # :id,
-                   # :person_id,
-                   # :presentation,
-                   # :photo,
-                   # :employed_from,
-                   # :employed_until
-                 # )  ## all attributes listed here
-
   # Associations
   has_many :lesson_instructors, :dependent  => :destroy,
                                 :inverse_of => :instructor

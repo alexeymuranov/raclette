@@ -1,9 +1,10 @@
 ## encoding: UTF-8
 
-# require 'admin/known_i_p'      # To solve a problem with autoloading
-# require 'admin/safe_user_i_p'  # To solve a problem with autoloading
-
 class Admin::SafeUserIPsController < AdminController
+
+  param_accessible :update_all => {
+                     :safe_user_ids_for_known_ips => Set[
+                       'known_ip_id', 'user_id' ] }
 
   def index
     @users = Admin::User.default_order

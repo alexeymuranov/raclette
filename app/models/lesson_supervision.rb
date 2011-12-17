@@ -4,12 +4,6 @@ class LessonSupervision < ActiveRecord::Base
 
   attr_readonly :id, :unique_names, :instructors_count
 
-  # attr_accessible( # :id,
-                   # :unique_names,
-                   # :instructors_count,
-                   # :comment
-                 # )  ## all attributes listed here
-
   # Associations:
   has_many :lesson_instructors, :dependent  => :destroy,
                                 :inverse_of => :lesson_supervision

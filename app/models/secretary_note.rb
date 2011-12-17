@@ -4,15 +4,6 @@ class SecretaryNote < ActiveRecord::Base
 
   attr_readonly :id, :note_type, :something_type, :something_id, :created_on
 
-  # attr_accessible( # :id,
-                   # :note_type,
-                   # :something_type,
-                   # :something_id,
-                   # :created_on
-                   # :message,
-                   # :message_updated_at
-                 # )  ## all attributes listed here
-
   # Associations:
   belongs_to :something, :polymorphic => true
 

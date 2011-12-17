@@ -5,14 +5,6 @@ class MembershipPurchase < ActiveRecord::Base
   attr_readonly :id, :member_id, :membership_type,
                 :membership_expiration_date, :purchase_date
 
-  # attr_accessible( # :id,
-                   # :member_id,
-                   # :membership_type,
-                   # :membership_expiration_date,
-                   # :membership_id,
-                   # :purchase_date
-                 # )  ## all attributes listed here
-
   # Associations:
   has_many :payments, :as        => :payable,
                       :dependent => :nullify

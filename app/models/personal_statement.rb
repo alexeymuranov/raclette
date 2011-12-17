@@ -5,17 +5,6 @@ class PersonalStatement < ActiveRecord::Base
 
   attr_readonly :id, :person_id
 
-  # attr_accessible( # :id,
-                   # :person_id,
-                   # :birthday
-                   # :accept_email_announcements,
-                   # :volunteer,
-                   # :volunteer_as,
-                   # :preferred_language,
-                   # :occupation,
-                   # :remark
-                 # )  ## all attributes listed here
-
   # Associations:
   belongs_to :person, :inverse_of => :statement
 

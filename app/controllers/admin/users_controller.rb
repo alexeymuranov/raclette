@@ -1,9 +1,24 @@
 ## encoding: UTF-8
 
-# require 'admin/known_i_p'  # To solve a problem with autoloading
-# require 'admin/safe_user_i_p'  # To solve a problem with autoloading
-
 class Admin::UsersController < AdminController
+
+  param_accessible :create => {
+                     :admin_user => Set[
+                       'username', 'full_name', 'email',
+                       'account_deactivated',
+                       'admin', 'manager', 'secretary', 'a_person',
+                       'comments',
+                       'password', 'password_confirmation',
+                       'safe_ip_ids' ] },
+                   # :index => { :admin_user => Set[] },  # experimenting
+                   :update => {
+                     :admin_user => Set[
+                       'username', 'full_name', 'email',
+                       'account_deactivated',
+                       'admin', 'manager', 'secretary', 'a_person',
+                       'comments',
+                       'current_password', 'new_password', 'new_password_confirmation',
+                       'safe_ip_ids' ] }
 
   def index
     @query_type = params[:query_type]
@@ -143,15 +158,7 @@ class Admin::UsersController < AdminController
     params[:admin_user].delete(:comments)\
         if params[:admin_user][:comments].blank?
 
-    @acceptable_attributes = [ 'username', 'full_name', 'email',
-        'account_deactivated', 'admin', 'manager', 'secretary', 'a_person',
-        'comments',
-        'password', 'password_confirmation',
-        'safe_ip_ids' ]
-
-    params[:admin_user].slice!(*@acceptable_attributes)
-
-    @user = Admin::User.new(params[:admin_user], :as => :admin)
+    @user = Admin::User.new(params[:admin_user])
 
     if @user.save
       flash[:success] = t('flash.admin.users.create.success',
@@ -187,18 +194,10 @@ class Admin::UsersController < AdminController
       params[:admin_user].except!(:new_password, :new_password_confirmation)
     end
 
-    @acceptable_attributes = [ 'username', 'full_name', 'email',
-        'account_deactivated', 'admin', 'manager', 'secretary', 'a_person',
-        'comments',
-        'current_password', 'new_password', 'new_password_confirmation',
-        'safe_ip_ids' ]
-
-    params[:admin_user].slice!(*@acceptable_attributes)
-
     current_password = params[:current_password]
 
     if current_password.nil? || @user.has_password?(current_password)
-      if @user.update_attributes(params[:admin_user], :as => :admin)
+      if @user.update_attributes(params[:admin_user])
         flash[:notice] = t('flash.admin.users.update.success',
                            :username => @user.username)
         redirect_to @user

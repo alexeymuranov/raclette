@@ -1,6 +1,12 @@
 source 'http://rubygems.org'
 
-gem 'rails', '~> 3.1.0'
+# gem 'rails', '~> 3.1.0'
+
+# Bundle local Rails instead:
+# gem 'rails', '~> 3.1.0', :path => "../../rails"
+
+# Bundle my GitHub working Rails branch instead:
+gem 'rails', '~> 3.1.0', :git => 'git://github.com/alexeymuranov/rails.git', :branch => 'my_work_fixes'
 
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
@@ -35,15 +41,16 @@ gem 'draper'  # This gem provides decorators (much like presenters)
 group :development do
   gem 'sqlite3'
   # To use debugger
-  # gem 'ruby-debug19', :require => 'ruby-debug'
-  gem 'annotate', :git => 'git://github.com/ctran/annotate_models.git'  # annotate models
+  # gem 'ruby-debug19', :require => 'ruby-debug'  # brocken since rails 3.1.1 ?
+  # gem 'annotate', :git => 'git://github.com/ctran/annotate_models.git'  # annotate models
+  gem 'annotate'   # annotate models
   gem 'rails-erd'  # generate PDF documenting models
 end
 
 group :test do
   # Pretty printed test output
   gem 'turn',     :require => false
-  gem 'minitest', :require => false  # had to add manually to get rid of some errors
+  # gem 'minitest', :require => false  # had to add manually to get rid of some errors
   gem 'spork'                        # added to speed up test running
 end
 

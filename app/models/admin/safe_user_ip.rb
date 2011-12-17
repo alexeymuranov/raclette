@@ -1,13 +1,9 @@
 ## encoding: UTF-8
 
 class Admin::SafeUserIP < ActiveRecord::Base
-  set_table_name :admin_safe_user_ips
+  self.table_name = :admin_safe_user_ips
 
   attr_readonly :id, :known_ip_id, :user_id
-
-  attr_accessible( :known_ip_id,
-                   :user_id,
-                   :as => :admin )
 
   # Associations:
   belongs_to :user, :inverse_of => :safe_user_ips

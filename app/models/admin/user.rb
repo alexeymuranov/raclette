@@ -9,23 +9,6 @@ class Admin::User < ActiveRecord::Base
 
   attr_accessor :password, :new_password
 
-  attr_accessible( :username,
-                   :full_name,
-                   :a_person,
-                   :email,
-                   :account_deactivated,
-                   :admin,
-                   :manager,
-                   :secretary,
-                   :comments,
-                   :safe_ip_ids,                # association attribute
-                   :person,                     # association attribute
-                   :password,                   # virtual attribute
-                   :password_confirmation,      # virtual attribute
-                   :new_password,               # virtual attribute
-                   :new_password_confirmation,  # virtual attribute
-                   :as => :admin )
-
   # Associations:
   has_many :safe_user_ips, :class_name => 'SafeUserIP',
                            :dependent  => :destroy,
