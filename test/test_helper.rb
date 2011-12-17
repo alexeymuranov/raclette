@@ -7,13 +7,11 @@ class ActiveSupport::TestCase
   #
   # Note: You'll currently still have to declare fixtures explicitly in integration tests
   # -- they do not yet inherit this setting
-  # fixtures :all
-  fixtures :'admin/users', :members
+  fixtures :all
 
-  # Added by Alexey:
-  # set_fixture_class :'admin/known_ips'     => Admin::KnownIP
-  # set_fixture_class :'admin/safe_user_ips' => Admin::SafeUserIP
-  # set_fixture_class :application_journal   => ApplicationJournalRecord  # FIXME!
+  set_fixture_class :'admin/known_ips'     => Admin::KnownIP,
+                    :'admin/safe_user_ips' => Admin::SafeUserIP,
+                    :application_journal   => ApplicationJournalRecord
 
   # Add more helper methods to be used by all tests here...
 
