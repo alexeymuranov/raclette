@@ -4,8 +4,9 @@ class Admin::KnownIPsController < AdminController
 
   common_writable_attributes = Set[ 'ip', 'description' ]
 
-  param_accessible :create => { :admin_known_ip => common_writable_attributes },
-                   :update => { :admin_known_ip => common_writable_attributes }
+  param_accessible :create => { 'admin_known_ip' => common_writable_attributes },
+                   :update => { 'id' => nil,
+                                'admin_known_ip' => common_writable_attributes }
 
   def index
     @attributes = [ :ip, :description ]
@@ -52,11 +53,11 @@ class Admin::KnownIPsController < AdminController
   end
 
   def create
-    @acceptable_attributes = [ 'ip', 'description' ]
+    # @acceptable_attributes = [ 'ip', 'description' ]
 
-    params[:admin_known_ip].keep_if do |key, value|
-      @acceptable_attributes.include? key
-    end
+    # params[:admin_known_ip].keep_if do |key, value|
+    #   @acceptable_attributes.include? key
+    # end
 
     @known_ip = Admin::KnownIP.new(params[:admin_known_ip])
 
@@ -72,11 +73,11 @@ class Admin::KnownIPsController < AdminController
   end
 
   def update
-    @acceptable_attributes = [ 'ip', 'description' ]
+    # @acceptable_attributes = [ 'ip', 'description' ]
 
-    params[:admin_known_ip].keep_if do |key, value|
-      @acceptable_attributes.include? key
-    end
+    # params[:admin_known_ip].keep_if do |key, value|
+    #   @acceptable_attributes.include? key
+    # end
 
     @known_ip = Admin::KnownIP.find(params[:id])
 

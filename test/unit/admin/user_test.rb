@@ -1,6 +1,19 @@
 require 'test_helper'
 
 class Admin::UserTest < ActiveSupport::TestCase
+
+#   test "authenticate method should return nil on email/password mismatch" do
+#     assert false, "TODO: test empty"
+#   end
+#
+#   test "authenticate method should return nil for an email address with no user" do
+#     assert false, "TODO: test empty"
+#   end
+#
+#   test "should return the user on email/password match" do
+#     assert false, "TODO: test empty"
+#   end
+
   # Replace this with your real tests.
   test "the truth" do
     assert true

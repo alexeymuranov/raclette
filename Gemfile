@@ -2,19 +2,19 @@ source 'http://rubygems.org'
 
 # gem 'rails', '~> 3.1.0'
 
-# Bundle local Rails instead:
-# gem 'rails', '~> 3.1.0', :path => "../../rails"
-
-# Bundle my GitHub working Rails branch instead:
-gem 'rails', '~> 3.1.0', :git => 'git://github.com/alexeymuranov/rails.git', :branch => 'my_work_fixes'
-
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
+
+# Bundle my "fixed" Rails branch on GitHub instead:
+gem 'rails', '~> 3.1.0', :git => 'git://github.com/alexeymuranov/rails.git', :branch => 'my-stable-fixes'
+
+# Bundle Rails from my local directory instead:
+# gem 'rails', '~> 3.1.0', :path => "../../rails"
 
 # gem 'will_paginate'  # pagination
 gem 'kaminari'  # pagination
 
-# gem 'squeel'  # queries without SQL (does not work?)
+# gem 'squeel'  # queries without SQL
 
 # gem 'spreadsheet'  # to generate XLS (Excel 2003 XML is used instead)
 
@@ -28,9 +28,9 @@ end
 
 gem 'jquery-rails'
 
-gem 'haml'  # use HAML templating (sister project of SASS) instead of ERB
+gem 'haml'  # use HAML templats instead of ERB
 
-gem 'draper'  # This gem provides decorators (much like presenters)
+gem 'draper'  # provides decorators (similar to presenters)
 
 # Use unicorn as the web server
 # gem 'unicorn'
@@ -44,14 +44,14 @@ group :development do
   # gem 'ruby-debug19', :require => 'ruby-debug'  # brocken since rails 3.1.1 ?
   # gem 'annotate', :git => 'git://github.com/ctran/annotate_models.git'  # annotate models
   gem 'annotate'   # annotate models
-  gem 'rails-erd'  # generate PDF documenting models
+  gem 'rails-erd'  # generate models' diagram in PDF
 end
 
 group :test do
   # Pretty printed test output
   gem 'turn',     :require => false
-  # gem 'minitest', :require => false  # had to add manually to get rid of some errors
-  gem 'spork'                        # added to speed up test running
+  gem 'minitest', :require => false  # had to add manually to get rid of some errors
+  # gem 'spork'                        # speeds up running tests
 end
 
 group :production do

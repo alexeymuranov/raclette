@@ -4,6 +4,7 @@ class MembersControllerTest < ActionController::TestCase
 
   setup do
     @member = members(:one)
+    test_log_in(admin_users(:one), "127.0.0.1")
   end
 
   test "should get index" do
@@ -25,5 +26,4 @@ class MembersControllerTest < ActionController::TestCase
     get :edit, { :id => @member.to_param }, { :user_id => 1 }
     assert_response :success
   end
-
 end

@@ -1,5 +1,6 @@
 # Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
 
+# NOTE: for each "member" there must be a "person" with id equal to the "member"'s person_id
 one:
   person_id: 1
   been_member_by: 2000-01-30

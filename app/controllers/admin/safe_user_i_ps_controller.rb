@@ -3,7 +3,7 @@
 class Admin::SafeUserIPsController < AdminController
 
   param_accessible :update_all => {
-                     :safe_user_ids_for_known_ips => Set[
+                     'safe_user_ids_for_known_ips' => Set[
                        'known_ip_id', 'user_id' ] }
 
   def index

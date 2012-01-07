@@ -3,7 +3,7 @@
 class Admin::UsersController < AdminController
 
   param_accessible :create => {
-                     :admin_user => Set[
+                     'admin_user' => Set[
                        'username', 'full_name', 'email',
                        'account_deactivated',
                        'admin', 'manager', 'secretary', 'a_person',
@@ -12,7 +12,7 @@ class Admin::UsersController < AdminController
                        'safe_ip_ids' ] },
                    # :index => { :admin_user => Set[] },  # experimenting
                    :update => {
-                     :admin_user => Set[
+                     'admin_user' => Set[
                        'username', 'full_name', 'email',
                        'account_deactivated',
                        'admin', 'manager', 'secretary', 'a_person',

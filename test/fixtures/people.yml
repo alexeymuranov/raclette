@@ -1,6 +1,7 @@
 # Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
 
 one:
+  id: 1
   last_name: Thom
   first_name: Jimmey
   name_title: Mr.
@@ -13,6 +14,7 @@ one:
   primary_address_id: 1
 
 two:
+  id: 3
   last_name: Bim
   first_name: Bim
   name_title: M.
@@ -25,6 +27,7 @@ two:
   primary_address_id: 2
 
 three:
+  id: 4
   last_name: Babba
   first_name: Andrra
   name_title: Mlle.
