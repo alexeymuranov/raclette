@@ -13,11 +13,10 @@ class ParamSecurityFilter
         #                             :utf8               => nil,
         #                             :_method            => nil,
         #                             :authenticity_token => nil }
-
-        @param_whitelist_filter = Hash::new
         # path_parameters.keys.each { |key| @param_whitelist_filter[key] = nil }
+        # @param_whitelist_filter.merge!(filter)
 
-        @param_whitelist_filter = param_security_rules[:whitelist][action_name.to_sym]
+        @param_whitelist_filter = filter
       end
     end
   end

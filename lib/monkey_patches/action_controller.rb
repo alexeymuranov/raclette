@@ -36,20 +36,20 @@ class ActionController::Base
 
   before_filter :filter_params
 
+  attr_reader :original_params
+
   def filter_params
     @original_params = params
     self.params = param_filters.inject(params) do |mem, filter|
       filter.process(mem)
     end
-  end
-
-  def unfiltered_params
-    @original_params
+    # params[:original_params] = @original_params # for debugging
+    # params[:param_security_rules] = self.class.param_security_rules # for debugging
   end
 
   # Define filter(s) which operating on incoming params. Can be overridden to
   # extend/customise the filter list.
   def param_filters
-    [param_security_filter]
+    [ param_security_filter ]
   end
 end

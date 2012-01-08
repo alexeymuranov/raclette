@@ -3,11 +3,12 @@ require 'test_helper'
 class MonitorControllerTest < ActionController::TestCase
 
   def setup
-    test_log_in(admin_users(:one), "127.0.0.1")
+    @user_admin = admin_users(:one)
+    # test_log_in(@user_admin, "127.0.0.1")
   end
 
   test "should get overview" do
-    get :overview
+    get :overview, {}, { :user_id => @user_admin.to_param }
     assert_response :success
   end
 end

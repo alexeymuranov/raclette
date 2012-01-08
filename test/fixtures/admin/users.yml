@@ -16,7 +16,7 @@ one:
   last_signed_in_at: ~
   comments: "This is an admin"
 
-two:
+user_secretary:
   username: jimm
   full_name: "Jimmey Thom"
   a_person: true
@@ -31,7 +31,7 @@ two:
   last_signed_in_at: 2011-05-08 22:29:33
   comments: "This is a secretary."
 
-three:
+any_cashier:
   username: cash_register
   full_name: "Cash Register"
   a_person: false
@@ -60,3 +60,19 @@ four:
   password_salt: ~
   last_signed_in_at: 2011-05-08 22:29:33
   comments: "This was an admin."
+
+user_manager:
+  username: dum
+  full_name: "Dum Doom"
+  a_person: true
+  person_id: 4
+  email: ~
+  account_deactivated: false
+  admin: false
+  manager: true
+  secretary: false
+  password_or_password_hash: "dfgsdg"
+  password_salt: ~
+  last_signed_in_at: 2011-05-09 22:29:33
+  comments: "This is a manager."
+

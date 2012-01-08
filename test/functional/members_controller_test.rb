@@ -3,8 +3,9 @@ require 'test_helper'
 class MembersControllerTest < ActionController::TestCase
 
   setup do
+    @user_admin = admin_users(:one)
     @member = members(:one)
-    test_log_in(admin_users(:one), "127.0.0.1")
+    # test_log_in(@user_admin, "127.0.0.1")
   end
 
   test "should get index" do
@@ -13,7 +14,8 @@ class MembersControllerTest < ActionController::TestCase
   end
 
   test "should get show" do
-    get :show, { :id => @member.to_param }, { :user_id => 1 }
+    get :show, { :id => @member.to_param },
+               { :user_id => @user_admin.to_param }
     assert_response :success
   end
 
@@ -23,7 +25,8 @@ class MembersControllerTest < ActionController::TestCase
   end
 
   test "should get edit" do
-    get :edit, { :id => @member.to_param }, { :user_id => 1 }
+    get :edit, { :id => @member.to_param },
+               { :user_id => @user_admin.to_param }
     assert_response :success
   end
 end

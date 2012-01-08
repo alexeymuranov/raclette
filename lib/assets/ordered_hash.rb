@@ -1,2 +1,1 @@
-class OrderedHash < Hash
-end
+class OrderedHash < Hash; end

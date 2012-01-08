@@ -9,7 +9,7 @@ source 'http://rubygems.org'
 gem 'rails', '~> 3.1.0', :git => 'git://github.com/alexeymuranov/rails.git', :branch => 'my-stable-fixes'
 
 # Bundle Rails from my local directory instead:
-# gem 'rails', '~> 3.1.0', :path => "../../rails"
+# gem 'rails', '~> 3.1.0', :path => "~/Development/rails"
 
 # gem 'will_paginate'  # pagination
 gem 'kaminari'  # pagination
@@ -48,9 +48,9 @@ group :development do
 end
 
 group :test do
-  # Pretty printed test output
-  gem 'turn',     :require => false
-  gem 'minitest', :require => false  # had to add manually to get rid of some errors
+  # Pretty printed test output:
+  gem 'turn',     :require => false  # disable for now, to get used to the usual test output
+  # gem 'minitest', :require => false  # had to add manually to get rid of some errors
   # gem 'spork'                        # speeds up running tests
 end
 
