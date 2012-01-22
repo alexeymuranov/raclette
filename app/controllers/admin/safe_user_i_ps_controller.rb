@@ -2,7 +2,7 @@
 
 class Admin::SafeUserIPsController < AdminController
 
-  param_accessible :update_all => Set['safe_user_ids_for_known_ips']
+  param_accessible(Set['safe_user_ids_for_known_ips'], :only => :update_all)
 
   def index
     @users = Admin::User.default_order

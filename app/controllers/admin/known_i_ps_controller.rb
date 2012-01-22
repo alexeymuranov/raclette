@@ -2,11 +2,11 @@
 
 class Admin::KnownIPsController < AdminController
 
-  common_writable_attributes = Set[ 'ip', 'description' ]
+  # common_writable_attributes = Set[ 'ip', 'description' ]
 
-  param_accessible :create => { 'admin_known_ip' => common_writable_attributes },
-                   :update => { 'id' => nil,
-                                'admin_known_ip' => common_writable_attributes }
+  param_accessible({ 'admin_known_ip' => Set['ip', 'description'] },
+                     :only => [:create, :update])
+  param_accessible({ 'id' => nil }, :only => :update)
 
   def index
     @attributes = [ :ip, :description ]

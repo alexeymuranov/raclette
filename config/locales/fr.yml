@@ -412,11 +412,12 @@ fr:
 
   activemodel:
     models:
-      guest: "Personne exterieure"
+      guest: "Invité"
     attributes:
       guest:
         <<: *person_attributes
         phone: "Téléphone"
+        note: "Remarque"
 
   # For kaminari gem:
   views:
@@ -652,7 +653,7 @@ fr:
       title: "Caisse"
       header: "Caisse des entrées et règlements"
       choose_member: "Choisir un(e) adhérent(e)"
-      enter_guest: "Saisir une personne exterieure"
+      enter_guest: "Saisir un(e) invité(e)"
     compose_transaction:
       title: "Caisse"
       header: "Caisse des entrées et règlements"

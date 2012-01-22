@@ -6,7 +6,7 @@ source 'http://rubygems.org'
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
 
 # Bundle my "fixed" Rails branch on GitHub instead:
-gem 'rails', '~> 3.1.0', :git => 'git://github.com/alexeymuranov/rails.git', :branch => 'my-stable-fixes'
+gem 'rails', '~> 3.1.0', :git => 'git://github.com/alexeymuranov/rails.git', :branch => 'backport-to-3-1'
 
 # Bundle Rails from my local directory instead:
 # gem 'rails', '~> 3.1.0', :path => "~/Development/rails"
@@ -28,7 +28,9 @@ end
 
 gem 'jquery-rails'
 
-gem 'haml'  # use HAML templats instead of ERB
+gem 'haml'  # use HAML templates (instead of ERB)
+
+# gem 'slim' # use Slim templates (instead of HAML and ERB)
 
 gem 'draper'  # provides decorators (similar to presenters)
 

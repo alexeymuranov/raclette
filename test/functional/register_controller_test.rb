@@ -7,18 +7,18 @@ class RegisterControllerTest < ActionController::TestCase
     # test_log_in(@user_admin, "127.0.0.1")
   end
 
-#   test "should get choose_person" do
-#     get :choose_person, {}, { :user_id => @user_admin.to_param }
-#     assert_response :success
-#   end
+  test "should get choose_person" do
+    get :choose_person, {}, { :user_id => @user_admin.to_param }
+    assert_response :success
+  end
 
-#   test "should get compose_transaction" do
-#     get :compose_transaction, {}, { :user_id => @user_admin.to_param }
-#     assert_response :success
-#   end
+  test "should get compose_transaction" do
+    get :compose_transaction, {}, { :user_id => @user_admin.to_param }
+    assert_response :success
+  end
 
-#   test "should create transaction" do
-#     post :create_transaction, {}, { :user_id => @user_admin.to_param }
-#     assert_response :success
-#   end
+  # test "should create transaction" do
+  #   post :create_transaction, {}, { :user_id => @user_admin.to_param }
+  #   assert_response :success
+  # end
 end

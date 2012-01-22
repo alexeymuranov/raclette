@@ -22,9 +22,39 @@ class Hash
 
   module MyDirtyHack
 
+    def deep_except!(other_hash)
+      other_hash = other_hash.to_set if other_hash.is_a?(Array)
+      other_hash = other_hash.to_hash if other_hash.is_a?(Set)
+      other_hash.each_pair do |key, other_value|
+        if has_key?(key)
+          if other_value.nil?
+            delete(key)
+          else
+            self[key].deep_except!(other_value)
+          end
+        end
+      end
+      self
+    end
+
+    def deep_except(other_hash)
+      other_hash = other_hash.to_set if other_hash.is_a?(Array)
+      other_hash = other_hash.to_hash if other_hash.is_a?(Set)
+      result = self.class.new
+      each_pair do |key, value|
+        if other_hash.has_key?(key)
+          other_value = other_hash[key]
+          result[key] = value.deep_except(other_value) unless other_value.nil?
+        else
+          result[key] = value
+        end
+      end
+      result
+    end
+
     def deep_filter!(filter)
       return self if filter.nil?
-      filter = Set.new(filter) if filter.is_a?(Array)
+      filter = filter.to_set if filter.is_a?(Array)
       filter = filter.to_hash if filter.is_a?(Set)
       each_pair do |key, value|
         if filter.has_key?(key)
@@ -37,18 +67,14 @@ class Hash
     end
 
     def deep_filter(filter)
-      return dup if filter.nil?
-      filter = Set.new(filter) if filter.is_a?(Array)
+      return deep_dup if filter.nil?
+      filter = filter.to_set if filter.is_a?(Array)
       filter = filter.to_hash if filter.is_a?(Set)
-      result = Hash::new
+      result = self.class.new
       each_pair do |key, value|
         result[key] = value.deep_filter(filter[key]) if filter.has_key?(key) && value.is_a?(Hash)
       end
       result
-    end
-
-    def to_set
-      Set.new(keys)
     end
   end
 

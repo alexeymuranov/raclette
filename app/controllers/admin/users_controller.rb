@@ -2,23 +2,19 @@
 
 class Admin::UsersController < AdminController
 
-  param_accessible :create => {
-                     'admin_user' => Set[
+  param_accessible({ 'admin_user' => Set[
                        'username', 'full_name', 'email',
                        'account_deactivated',
                        'admin', 'manager', 'secretary', 'a_person',
-                       'comments',
-                       'password', 'password_confirmation',
-                       'safe_ip_ids' ] },
-                   # :index => { :admin_user => Set[] },  # experimenting
-                   :update => {
-                     'admin_user' => Set[
-                       'username', 'full_name', 'email',
-                       'account_deactivated',
-                       'admin', 'manager', 'secretary', 'a_person',
-                       'comments',
-                       'current_password', 'new_password', 'new_password_confirmation',
-                       'safe_ip_ids' ] }
+                       'comments', 'safe_ip_ids'] },
+                     :only => [:create, :update])
+  param_accessible({ 'admin_user' => Set['password', 'password_confirmation'] },
+                     :only => :create)
+  param_accessible({ 'admin_user' => Set['current_password', 'new_password',
+                       'new_password_confirmation'] },
+                     :only => :update )
+
+  # param_accessible( { :admin_user => Set[] }, :only => :index ) # experimenting
 
   def index
     @query_type = params[:query_type]

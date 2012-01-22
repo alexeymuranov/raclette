@@ -459,6 +459,7 @@ en:
       guest:
         <<: *person_attributes
         phone: "Phone"
+        note: "Note"
 
   # For kaminari gem:
   views:

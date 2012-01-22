@@ -1,27 +1,19 @@
 require 'set'
 
 require 'monkey_patches/my_dirty_hacks'
+require 'assets/app_param_filters/param_security_rules'
 
 class ParamSecurityFilter
 
   def initialize(param_security_rules, action_name)
-    if param_security_rules.is_a?(Hash)
-      filter = param_security_rules[:whitelist][action_name.to_sym]
-      unless filter.nil?
-        # @param_whitelist_filter = { :controller         => nil,
-        #                             :action             => nil,
-        #                             :utf8               => nil,
-        #                             :_method            => nil,
-        #                             :authenticity_token => nil }
-        # path_parameters.keys.each { |key| @param_whitelist_filter[key] = nil }
-        # @param_whitelist_filter.merge!(filter)
-
-        @param_whitelist_filter = filter
-      end
-    end
+    @filter = param_security_rules.bwlist_for_action(action_name.to_sym) unless param_security_rules.nil?
   end
 
   def process(param_hash)
-    param_hash.deep_filter! @param_whitelist_filter
+    if @filter.whitelist
+      param_hash.deep_filter! @filter.whitelist
+    else
+      param_hash.deep_except! @filter.blacklist
+    end unless @filter.nil? || @filter.void?
   end
 end
