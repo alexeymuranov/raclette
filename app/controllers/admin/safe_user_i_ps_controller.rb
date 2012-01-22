@@ -21,9 +21,10 @@ class Admin::SafeUserIPsController < AdminController
   def update_all
     params[:safe_user_ids_for_known_ips] ||= {}
 
+    # raise params.inspect
     Admin::KnownIP.all.each do |known_ip|
-      known_ip.safe_user_ids =
-          params[:safe_user_ids_for_known_ips][known_ip.id.to_s]
+      new_safe_user_ids = params[:safe_user_ids_for_known_ips][known_ip.to_param]
+      known_ip.safe_user_ids = new_safe_user_ids # does not work in rails 3.2
     end
 
     redirect_to admin_safe_user_ips_path

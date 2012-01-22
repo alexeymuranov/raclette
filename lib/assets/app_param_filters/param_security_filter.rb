@@ -1,8 +1,3 @@
-require 'set'
-
-require 'monkey_patches/my_dirty_hacks'
-require 'assets/app_param_filters/param_security_rules'
-
 class ParamSecurityFilter
 
   def initialize(param_security_rules, action_name)
@@ -11,9 +6,9 @@ class ParamSecurityFilter
 
   def process(param_hash)
     if @filter.whitelist
-      param_hash.deep_filter! @filter.whitelist
+      param_hash.my_deep_filter! @filter.whitelist
     else
-      param_hash.deep_except! @filter.blacklist
+      param_hash.my_deep_except! @filter.blacklist
     end unless @filter.nil? || @filter.void?
   end
 end

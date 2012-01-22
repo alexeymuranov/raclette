@@ -70,12 +70,10 @@
             <%- when :integer, :delegated_integer, :virtual_integer -%>
               <td class="number filtering_value">
                 <%- if filtering_values[attr][:min] -%>
-                  <%= t('formats.attribute_name:', :attribute => 'min') %>
-                  <%= filtering_values[attr][:min] %><!-- no space!
-               --><br />
+                  <%= filtering_values[attr][:min] %>
                 <%- end -%>
+                ..
                 <%- if filtering_values[attr][:max] -%>
-                  <%= t('formats.attribute_name:', :attribute => 'max') %>
                   <%= filtering_values[attr][:max] %>
                 <%- end -%>
               </td>

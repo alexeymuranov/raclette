@@ -1,7 +1,7 @@
 ## encoding: UTF-8
 
 class MemberShortHistory < ActiveRecord::Base
-  set_primary_key :member_id
+  self.primary_key = 'member_id'
 
   attr_readonly :id, :member_id
 

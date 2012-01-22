@@ -12,48 +12,50 @@ class Admin::KnownIPsControllerTest < ActionController::TestCase
   end
 
   test "should get index" do
-    get :index, {}, { :user_id => @user_admin.to_param }
+    session[:user_id] = @user_admin.to_param
+    get :index
     assert_response :success
     assert_not_nil assigns(:known_ips)
   end
 
   test "should get new" do
-    get :new, {}, { :user_id => @user_admin.to_param }
+    session[:user_id] = @user_admin.to_param
+    get :new
     assert_response :success
   end
 
   test "should create admin_known_ip" do
     assert_difference('Admin::KnownIP.count') do
-      post :create, { :admin_known_ip => @new_known_ip.attributes },
-                    { :user_id => @user_admin.to_param }
+      session[:user_id] = @user_admin.to_param
+      post :create, { :admin_known_ip => @new_known_ip.attributes }
     end
 
     assert_redirected_to admin_known_ip_path(assigns(:known_ip))
   end
 
   test "should show admin_known_ip" do
-    get :show, { :id => @known_ip.to_param },
-               { :user_id => @user_admin.to_param }
+    session[:user_id] = @user_admin.to_param
+    get :show, { :id => @known_ip.to_param }
     assert_response :success
   end
 
   test "should get edit" do
-    get :edit, { :id => @known_ip.to_param },
-               { :user_id => @user_admin.to_param }
+    session[:user_id] = @user_admin.to_param
+    get :edit, { :id => @known_ip.to_param }
     assert_response :success
   end
 
   test "should update admin_known_ip" do
+    session[:user_id] = @user_admin.to_param
     put :update, { :id => @known_ip.to_param,
-                   :admin_known_ip => @new_known_ip.attributes },
-                 { :user_id => @user_admin.to_param }
+                   :admin_known_ip => @new_known_ip.attributes }
     assert_redirected_to admin_known_ip_path(assigns(:known_ip))
   end
 
   test "should destroy admin_known_ip" do
     assert_difference('Admin::KnownIP.count', -1) do
-      delete :destroy, { :id => @known_ip.to_param },
-                       { :user_id => @user_admin.to_param }
+      session[:user_id] = @user_admin.to_param
+      delete :destroy, { :id => @known_ip.to_param }
     end
 
     assert_redirected_to admin_known_ips_path

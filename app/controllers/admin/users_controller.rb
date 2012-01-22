@@ -9,8 +9,9 @@ class Admin::UsersController < AdminController
                        'comments', 'safe_ip_ids'] },
                      :only => [:create, :update])
   param_accessible({ 'admin_user' => Set['password', 'password_confirmation'] },
-                     :only => :create)
-  param_accessible({ 'admin_user' => Set['current_password', 'new_password',
+                     :only => :create )
+  param_accessible({ 'id'         => nil,
+                     'admin_user' => Set['current_password', 'new_password',
                        'new_password_confirmation'] },
                      :only => :update )
 
@@ -36,7 +37,7 @@ class Admin::UsersController < AdminController
     set_column_types
 
     # Filter:
-    @all_filtered_users = filter(Admin::User.scoped)
+    @all_filtered_users = filter(Admin::User.scoped, :users)
 
     # Sort:
     @all_filtered_users = sort(@all_filtered_users, :users)  # html_table_id = :users
@@ -262,6 +263,14 @@ class Admin::UsersController < AdminController
       case html_table_id
       when :users then :username
       when :safe_ips then :ip
+      else nil
+      end
+    end
+
+    def all_sortable_columns(html_table_id)
+      case html_table_id
+      when :users then @attributes
+      when :safe_ips then @safe_ips_attributes
       else nil
       end
     end

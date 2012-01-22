@@ -1,16 +1,16 @@
 # Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
 
 one:
-  known_ip_id: 1
-  user_id: 1
+  known_ip: one
+  user: one
   last_signed_in_at: 2011-05-08 22:29:48
 
 two:
-  known_ip_id: 1
-  user_id: 2
+  known_ip: one
+  user: user_secretary
   last_signed_in_at: 2011-05-08 22:29:48
 
-two:
-  known_ip_id: 2
-  user_id: 2
+three:
+  known_ip: two
+  user: user_secretary
   last_signed_in_at: ~

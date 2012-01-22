@@ -2,8 +2,6 @@
 
 class Admin::KnownIPsController < AdminController
 
-  # common_writable_attributes = Set[ 'ip', 'description' ]
-
   param_accessible({ 'admin_known_ip' => Set['ip', 'description'] },
                      :only => [:create, :update])
   param_accessible({ 'id' => nil }, :only => :update)
@@ -22,8 +20,6 @@ class Admin::KnownIPsController < AdminController
 
   def show
     @known_ip = Admin::KnownIP.find(params[:id])
-    @safe_users = @known_ip.safe_users.order(sort_sql(:safe_users))
-
     @attributes = [ :ip, :description ]
 
     @safe_users_attributes = [ :username,
@@ -33,6 +29,8 @@ class Admin::KnownIPsController < AdminController
                                :manager,
                                :secretary,
                                :a_person ]
+
+    @safe_users = @known_ip.safe_users.order(sort_sql(:safe_users))
 
     set_users_column_types
     set_users_column_headers
@@ -53,12 +51,6 @@ class Admin::KnownIPsController < AdminController
   end
 
   def create
-    # @acceptable_attributes = [ 'ip', 'description' ]
-
-    # params[:admin_known_ip].keep_if do |key, value|
-    #   @acceptable_attributes.include? key
-    # end
-
     @known_ip = Admin::KnownIP.new(params[:admin_known_ip])
 
     if @known_ip.save
@@ -73,12 +65,6 @@ class Admin::KnownIPsController < AdminController
   end
 
   def update
-    # @acceptable_attributes = [ 'ip', 'description' ]
-
-    # params[:admin_known_ip].keep_if do |key, value|
-    #   @acceptable_attributes.include? key
-    # end
-
     @known_ip = Admin::KnownIP.find(params[:id])
 
     if @known_ip.update_attributes(params[:admin_known_ip])
@@ -115,6 +101,14 @@ class Admin::KnownIPsController < AdminController
       case html_table_id
       when :known_ips then :ip
       when :safe_users then :username
+      else nil
+      end
+    end
+
+    def all_sortable_columns(html_table_id)
+      case html_table_id
+      when :known_ips then @attributes
+      when :safe_users then @safe_users_attributes
       else nil
       end
     end

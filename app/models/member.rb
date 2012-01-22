@@ -2,7 +2,7 @@
 
 class Member < AbstractSmarterModel
 
-  set_primary_key :person_id
+  self.primary_key = 'person_id'
 
   attr_readonly :id, :person_id, :been_member_by
 

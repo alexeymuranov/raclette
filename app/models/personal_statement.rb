@@ -1,7 +1,7 @@
 ## encoding: UTF-8
 
 class PersonalStatement < ActiveRecord::Base
-  set_primary_key :person_id
+  self.primary_key = 'person_id'
 
   attr_readonly :id, :person_id
 

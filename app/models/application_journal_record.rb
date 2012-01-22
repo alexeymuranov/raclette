@@ -1,7 +1,7 @@
 ## encoding: UTF-8
 
 class ApplicationJournalRecord < ActiveRecord::Base
-  self.table_name = :application_journal
+  self.table_name = 'application_journal'
 
   attr_readonly :id, :action, :username, :user_id, :ip,
                 :something_type, :something_id, :details, :generated_at

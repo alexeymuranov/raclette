@@ -7,7 +7,7 @@ class Object
 
   module MyDirtyHack
 
-    def deep_value(*keys)
+    def my_deep_value(*keys)
       obj = self
       obj = obj[keys.shift] until keys.empty? || obj.nil?
       obj
@@ -22,29 +22,41 @@ class Hash
 
   module MyDirtyHack
 
-    def deep_except!(other_hash)
-      other_hash = other_hash.to_set if other_hash.is_a?(Array)
-      other_hash = other_hash.to_hash if other_hash.is_a?(Set)
+    module ClassMethods
+      def my_deep_set_or_array_to_hash(deep_enum)
+        result = {}
+        deep_enum = deep_enum.to_set if deep_enum.is_a?(Array)
+        deep_enum = deep_enum.my_to_hash if deep_enum.is_a?(Set)
+        deep_enum.each_pair do |key, value|
+          if value.nil?
+            result[key] = nil
+          else
+            result[key] = my_deep_set_or_array_to_hash(value)
+          end
+        end
+        result.deep_dup
+      end
+    end
+
+    def my_deep_except!(other_hash)
       other_hash.each_pair do |key, other_value|
         if has_key?(key)
           if other_value.nil?
             delete(key)
           else
-            self[key].deep_except!(other_value)
+            self[key].my_deep_except!(other_value)
           end
         end
       end
       self
     end
 
-    def deep_except(other_hash)
-      other_hash = other_hash.to_set if other_hash.is_a?(Array)
-      other_hash = other_hash.to_hash if other_hash.is_a?(Set)
+    def my_deep_except(other_hash)
       result = self.class.new
       each_pair do |key, value|
         if other_hash.has_key?(key)
           other_value = other_hash[key]
-          result[key] = value.deep_except(other_value) unless other_value.nil?
+          result[key] = value.my_deep_except(other_value) unless other_value.nil?
         else
           result[key] = value
         end
@@ -52,13 +64,11 @@ class Hash
       result
     end
 
-    def deep_filter!(filter)
+    def my_deep_filter!(filter)
       return self if filter.nil?
-      filter = filter.to_set if filter.is_a?(Array)
-      filter = filter.to_hash if filter.is_a?(Set)
       each_pair do |key, value|
         if filter.has_key?(key)
-          value.deep_filter!(filter[key]) if value.is_a?(Hash)
+          value.my_deep_filter!(filter[key]) if value.is_a?(Hash)
         else
           delete(key)
         end
@@ -66,19 +76,18 @@ class Hash
       self
     end
 
-    def deep_filter(filter)
+    def my_deep_filter(filter)
       return deep_dup if filter.nil?
-      filter = filter.to_set if filter.is_a?(Array)
-      filter = filter.to_hash if filter.is_a?(Set)
       result = self.class.new
       each_pair do |key, value|
-        result[key] = value.deep_filter(filter[key]) if filter.has_key?(key) && value.is_a?(Hash)
+        result[key] = value.my_deep_filter(filter[key]) if filter.has_key?(key) && value.is_a?(Hash)
       end
       result
     end
   end
 
   include MyDirtyHack
+  extend MyDirtyHack::ClassMethods
 end
 
 class Array
@@ -89,8 +98,8 @@ class Set
 
   module MyDirtyHack
 
-    def to_hash
-      hash = Hash::new
+    def my_to_hash
+      hash = {}
       each { |element| hash[element] = nil }
       hash
     end
@@ -99,14 +108,14 @@ class Set
   include MyDirtyHack
 end
 
-class String
-
-  module MyDirtyHack
-
-    def to_a
-      chars.to_a
-    end
-  end
-
-  include MyDirtyHack
-end
+# class String  # XXX: redefining #to_a once caused a difficult to track bug!
+#
+#   module MyDirtyHack
+#
+#     def my_to_a
+#       chars.to_a
+#     end
+#   end
+#
+#   include MyDirtyHack
+# end

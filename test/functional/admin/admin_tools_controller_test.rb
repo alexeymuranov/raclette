@@ -8,7 +8,8 @@ class Admin::AdminToolsControllerTest < ActionController::TestCase
   end
 
   test "should get overview" do
-    get :overview, {}, { :user_id => @user_admin.to_param }
+    session[:user_id] = @user_admin.to_param
+    get :overview
     assert_response :success
   end
 end

@@ -71,13 +71,13 @@ class ApplicationController < ActionController::Base
       end
     end
 
-    def filter(scoped_collection)
+    def filter(scoped_collection, html_table_id)
       klass = scoped_collection.klass
 
       sfilter = SimpleFilter.new
       if params[:filter]
         sfilter.set_filtering_values_from_human_hash(params[:filter], klass)
-        sfilter.filtering_attributes = @attributes
+        sfilter.filtering_attributes = all_sortable_columns(html_table_id)
         scoped_collection = sfilter.do_filter(scoped_collection)
       end
       @filtering_values = sfilter.filtering_values
@@ -93,7 +93,7 @@ class ApplicationController < ActionController::Base
 
       if (suggested_sort_column = params[:sort][html_table_id][:column]).blank?
         default_column
-      elsif @attributes.map(&:to_s).include?(suggested_sort_column)
+      elsif all_sortable_columns(html_table_id).map(&:to_s).include?(suggested_sort_column)
         suggested_sort_column.to_sym
       else
         default_column

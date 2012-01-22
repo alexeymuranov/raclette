@@ -22,13 +22,12 @@ class MembersController < SecretaryController  # FIXME: untested work in progres
     @sql_for_attributes = Member.sql_for_attributes
 
     # Filter:
-    @all_filtered_members = filter(Member.joins(:person)\
-                                     .with_virtual_attributes(*@attributes,
-                                                              :formatted_email))
+    @all_filtered_members = Member.joins(:person).
+      with_virtual_attributes(*@attributes, :formatted_email)
+    @all_filtered_members = filter(@all_filtered_members, :members) # html_table_id = :members
 
     # Sort:
-    # html_table_id = :members
-    @all_filtered_members = sort(@all_filtered_members, :members)
+    @all_filtered_members = sort(@all_filtered_members, :members) # html_table_id = :members
 
     # Paginate:
     @members = paginate(@all_filtered_members)
@@ -224,6 +223,13 @@ class MembersController < SecretaryController  # FIXME: untested work in progres
     def default_sort_column(html_table_id)
       case html_table_id
       when :members then :ordered_full_name
+      else nil
+      end
+    end
+
+    def all_sortable_columns(html_table_id)
+      case html_table_id
+      when :members then @attributes
       else nil
       end
     end

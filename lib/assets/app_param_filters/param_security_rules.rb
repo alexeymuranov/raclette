@@ -60,7 +60,7 @@ class ParamSecurityRules
 
   def remember_actions(actions)
     actions.each do |action|
-      @remembered_actions_bwls[action] = @other_actions_bwl.deep_dup\
+      @remembered_actions_bwls[action] = @other_actions_bwl.clone\
         unless @remembered_actions_bwls.has_key?(action)
     end
   end
@@ -85,28 +85,30 @@ class ParamSecurityRules
 
   def set_whitelist_for_actions(action_params, actions)
     actions.each do |action|
-      @remembered_actions_bwls[action] = @other_actions_bwl.clone\
-        unless @remembered_actions_bwls.has_key?(action)
+      unless @remembered_actions_bwls.has_key?(action)
+        @remembered_actions_bwls[action] = @other_actions_bwl.clone
+      end
       bwlist = @remembered_actions_bwls[action]
       if bwlist.void?
         bwlist.whitelist = action_params
-      elsif bwlist.whitelist
+      elsif bwlist.whitelist?
         bwlist.whitelist = bwlist.whitelist.deep_merge(action_params)
       else
-        bwlist.blacklist = bwlist.blacklist.deep_except(action_params)
+        bwlist.blacklist = bwlist.blacklist.my_deep_except(action_params)
       end
     end
   end
 
   def set_blacklist_for_actions(action_params, actions)
     actions.each do |action|
-      @remembered_actions_bwls[action] = @other_actions_bwl.clone\
-        unless @remembered_actions_bwls.has_key?(action)
+      unless @remembered_actions_bwls.has_key?(action)
+        @remembered_actions_bwls[action] = @other_actions_bwl.clone
+      end
       bwlist = @remembered_actions_bwls[action]
       if bwlist.void?
         bwlist.blacklist = action_params
-      elsif bwlist.whitelist
-        bwlist.whitelist = bwlist.whitelist.deep_except(action_params)
+      elsif bwlist.whitelist?
+        bwlist.whitelist = bwlist.whitelist.my_deep_except(action_params)
       else
         bwlist.blacklist = bwlist.blacklist.deep_merge(action_params)
       end
@@ -116,21 +118,21 @@ class ParamSecurityRules
   def set_whitelist_for_other_actions(action_params)
     if @other_actions_bwl.void?
       @other_actions_bwl.whitelist = action_params
-    elsif @other_actions_bwl.whitelist
+    elsif @other_actions_bwl.whitelist?
       @other_actions_bwl.whitelist =
         @other_actions_bwl.whitelist.deep_merge(action_params)
     else
       @other_actions_bwl.blacklist =
-        @other_actions_bwl.blacklist.deep_except(action_params)
+        @other_actions_bwl.blacklist.my_deep_except(action_params)
     end
   end
 
   def set_blacklist_for_other_actions(action_params)
     if @other_actions_bwl.void?
       @other_actions_bwl.blacklist = action_params
-    elsif @other_actions_bwl.whitelist
+    elsif @other_actions_bwl.whitelist?
       @other_actions_bwl.whitelist =
-        @other_actions_bwl.whitelist.deep_except(action_params)
+        @other_actions_bwl.whitelist.my_deep_except(action_params)
     else
       @other_actions_bwl.blacklist =
         @other_actions_bwl.blacklist.deep_merge(action_params)

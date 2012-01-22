@@ -10,7 +10,7 @@ class Admin::User < ActiveRecord::Base
   attr_accessor :password, :new_password
 
   # Associations:
-  has_many :safe_user_ips, :class_name => 'SafeUserIP',
+  has_many :safe_user_ips, :class_name => :SafeUserIP,
                            :dependent  => :destroy,
                            :inverse_of => :user
 
