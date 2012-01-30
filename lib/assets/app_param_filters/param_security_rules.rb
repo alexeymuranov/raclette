@@ -43,7 +43,7 @@ class ParamSecurityRules
       @blacklist.nil? && @whitelist.nil?
     end
 
-    def initialize_clone(source)
+    def initialize_copy(source)
       super
       if whitelist?
         @whitelist = @whitelist.deep_dup 
@@ -60,7 +60,7 @@ class ParamSecurityRules
 
   def remember_actions(actions)
     actions.each do |action|
-      @remembered_actions_bwls[action] = @other_actions_bwl.clone\
+      @remembered_actions_bwls[action] = @other_actions_bwl.dup\
         unless @remembered_actions_bwls.has_key?(action)
     end
   end
@@ -86,7 +86,7 @@ class ParamSecurityRules
   def set_whitelist_for_actions(action_params, actions)
     actions.each do |action|
       unless @remembered_actions_bwls.has_key?(action)
-        @remembered_actions_bwls[action] = @other_actions_bwl.clone
+        @remembered_actions_bwls[action] = @other_actions_bwl.dup
       end
       bwlist = @remembered_actions_bwls[action]
       if bwlist.void?
@@ -94,7 +94,7 @@ class ParamSecurityRules
       elsif bwlist.whitelist?
         bwlist.whitelist = bwlist.whitelist.deep_merge(action_params)
       else
-        bwlist.blacklist = bwlist.blacklist.my_deep_except(action_params)
+        bwlist.blacklist = bwlist.blacklist.my_deep_remove(action_params)
       end
     end
   end
@@ -102,13 +102,13 @@ class ParamSecurityRules
   def set_blacklist_for_actions(action_params, actions)
     actions.each do |action|
       unless @remembered_actions_bwls.has_key?(action)
-        @remembered_actions_bwls[action] = @other_actions_bwl.clone
+        @remembered_actions_bwls[action] = @other_actions_bwl.dup
       end
       bwlist = @remembered_actions_bwls[action]
       if bwlist.void?
         bwlist.blacklist = action_params
       elsif bwlist.whitelist?
-        bwlist.whitelist = bwlist.whitelist.my_deep_except(action_params)
+        bwlist.whitelist = bwlist.whitelist.my_deep_remove(action_params)
       else
         bwlist.blacklist = bwlist.blacklist.deep_merge(action_params)
       end
@@ -123,7 +123,7 @@ class ParamSecurityRules
         @other_actions_bwl.whitelist.deep_merge(action_params)
     else
       @other_actions_bwl.blacklist =
-        @other_actions_bwl.blacklist.my_deep_except(action_params)
+        @other_actions_bwl.blacklist.my_deep_remove(action_params)
     end
   end
 
@@ -132,7 +132,7 @@ class ParamSecurityRules
       @other_actions_bwl.blacklist = action_params
     elsif @other_actions_bwl.whitelist?
       @other_actions_bwl.whitelist =
-        @other_actions_bwl.whitelist.my_deep_except(action_params)
+        @other_actions_bwl.whitelist.my_deep_remove(action_params)
     else
       @other_actions_bwl.blacklist =
         @other_actions_bwl.blacklist.deep_merge(action_params)

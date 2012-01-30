@@ -24,7 +24,7 @@ class ActionController::Base
 
       def param_accessible(action_params, options={})
         self.param_security_rules ||= ParamSecurityRules.new
-        action_params = Hash.my_deep_set_or_array_to_hash(action_params)
+        action_params = Hash.my_deep_collection_to_hash(action_params)
         if only_actions = options[:only]
           only_actions = normalize_action_name_collection(only_actions)
           param_security_rules.set_whitelist_for_actions(action_params,

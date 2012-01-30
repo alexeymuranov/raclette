@@ -8,7 +8,7 @@ class ParamSecurityFilter
     if @filter.whitelist
       param_hash.my_deep_filter! @filter.whitelist
     else
-      param_hash.my_deep_except! @filter.blacklist
+      param_hash.my_deep_remove! @filter.blacklist
     end unless @filter.nil? || @filter.void?
   end
 end

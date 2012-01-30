@@ -10,7 +10,7 @@ class Admin::UsersController < AdminController
                      :only => [:create, :update])
   param_accessible({ 'admin_user' => Set['password', 'password_confirmation'] },
                      :only => :create )
-  param_accessible({ 'id'         => nil,
+  param_accessible({ 'id'         => true,
                      'admin_user' => Set['current_password', 'new_password',
                        'new_password_confirmation'] },
                      :only => :update )

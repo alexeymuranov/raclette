@@ -23,66 +23,80 @@ class Hash
   module MyDirtyHack
 
     module ClassMethods
-      def my_deep_set_or_array_to_hash(deep_enum)
+      def my_deep_collection_to_hash(deep_enum)
         result = {}
-        deep_enum = deep_enum.to_set if deep_enum.is_a?(Array)
-        deep_enum = deep_enum.my_to_hash if deep_enum.is_a?(Set)
+        unless deep_enum.is_a?(Hash)
+          deep_enum = deep_enum.to_set unless deep_enum.is_a?(Set)
+          deep_enum = deep_enum.my_to_hash
+        end
         deep_enum.each_pair do |key, value|
-          if value.nil?
-            result[key] = nil
-          else
-            result[key] = my_deep_set_or_array_to_hash(value)
-          end
+          result[key] = value.is_a?(Enumerable) ? my_deep_collection_to_hash(value) : value
         end
         result.deep_dup
       end
     end
 
-    def my_deep_except!(other_hash)
-      other_hash.each_pair do |key, other_value|
-        if has_key?(key)
-          if other_value.nil?
-            delete(key)
+    # Returns a new hash with keys and nested keys indicated by +key_hash+ removed.
+    # Example:
+    #
+    #   h = { :a => 1, :b => { :c => 2, :d => 3 }, :e => 4 }
+    #   kh = { :a => true, :b => { :c => true } }
+    #   h.deep_remove(kh)
+    #   # => { :b => { :d => 3}, :e => 4 }
+    def my_deep_remove(key_hash)
+      new_hash = self.class.new
+      each_pair do |k,v|
+        unless key_hash.has_key?(k) && ov = key_hash[k]
+          new_hash[k] = v.is_a?(Hash) ? v.deep_dup : v
+        else
+          new_hash[k] = v.deep_remove(ov) if ov.is_a?(Hash)
+        end
+      end
+      new_hash
+    end
+  
+    # Returns a new hash with keys and nested keys indicated by +key_hash+ removed.
+    # Modifies the receiver in place.
+    def my_deep_remove!(key_hash)
+      key_hash.each_pair do |k,ov|
+        if ov
+          if ov.is_a?(Hash)
+            self[k].deep_remove!(ov)
           else
-            self[key].my_deep_except!(other_value)
+            delete(k)
           end
         end
       end
       self
     end
-
-    def my_deep_except(other_hash)
-      result = self.class.new
-      each_pair do |key, value|
-        if other_hash.has_key?(key)
-          other_value = other_hash[key]
-          result[key] = value.my_deep_except(other_value) unless other_value.nil?
-        else
-          result[key] = value
+    # Returns a new hash where only keys and nested keys indicated by +key_hash+ are kept.
+    # Example:
+    #
+    #   h = { :a => 1, :b => { :c => 2, :d => 3 }, :e => 4 }
+    #   kh = { :a => true, :b => { :c => true } }
+    #   h.deep_filter(kh)
+    #   # => { :a => 1, :b => { :c => 2} }
+    def my_deep_filter(key_hash)
+      new_hash = self.class.new
+      each_pair do |k,v|
+        if ov = key_hash[k]
+          new_hash[k] = ov.is_a?(Hash) ? v.my_deep_filter(ov) : (v.is_a?(Hash) ? v.deep_dup : v)
         end
       end
-      result
+      new_hash
     end
-
-    def my_deep_filter!(filter)
-      return self if filter.nil?
-      each_pair do |key, value|
-        if filter.has_key?(key)
-          value.my_deep_filter!(filter[key]) if value.is_a?(Hash)
+  
+    # Returns a new hash where only keys and nested keys indicated by +key_hash+ are kept.
+    # Modifies the receiver in place.
+    def my_deep_filter!(key_hash)
+      each_pair do |k,v|
+        if ov = key_hash[k]
+          v.my_deep_filter!(ov) if ov.is_a?(Hash)
         else
-          delete(key)
+          delete(k)
         end
       end
       self
-    end
-
-    def my_deep_filter(filter)
-      return deep_dup if filter.nil?
-      result = self.class.new
-      each_pair do |key, value|
-        result[key] = value.my_deep_filter(filter[key]) if filter.has_key?(key) && value.is_a?(Hash)
-      end
-      result
     end
   end
 
@@ -100,7 +114,7 @@ class Set
 
     def my_to_hash
       hash = {}
-      each { |element| hash[element] = nil }
+      each { |element| hash[element] = true }
       hash
     end
   end
