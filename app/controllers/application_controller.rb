@@ -71,54 +71,6 @@ class ApplicationController < ActionController::Base
       end
     end
 
-    def filter(scoped_collection, html_table_id)
-      klass = scoped_collection.klass
-
-      sfilter = SimpleFilter.new
-      if params[:filter]
-        sfilter.set_filtering_values_from_human_hash(params[:filter], klass)
-        sfilter.filtering_attributes = all_sortable_columns(html_table_id)
-        scoped_collection = sfilter.do_filter(scoped_collection)
-      end
-      @filtering_values = sfilter.filtering_values
-      scoped_collection
-    end
-
-    def sort_column(html_table_id)
-      params.deep_merge! :sort => { html_table_id => {} }
-
-      # does it make sence to replace with klass.default_sort_column ?
-      # (would need to define default_sort_column in calsses)
-      default_column = default_sort_column(html_table_id)
-
-      if (suggested_sort_column = params[:sort][html_table_id][:column]).blank?
-        default_column
-      elsif all_sortable_columns(html_table_id).map(&:to_s).include?(suggested_sort_column)
-        suggested_sort_column.to_sym
-      else
-        default_column
-      end
-    end
-
-    def sort_direction(html_table_id)
-      params.deep_merge! :sort => { html_table_id => {} }
-
-      params[:sort][html_table_id][:direction] == 'desc' ? :desc : :asc
-    end
-
-    def sort_direction_sql(html_table_id)
-      sort_direction(html_table_id).to_s.upcase
-    end
-
-    def sort_sql(html_table_id)
-      "#{sort_column(html_table_id).to_s} "\
-      "#{sort_direction_sql(html_table_id)}"
-    end
-
-    def sort(scoped_collection, html_table_id)
-      scoped_collection.order(sort_sql(html_table_id))
-    end
-
     def paginate(models)
       if params[:per_page].to_i > 1000
          params[:per_page] = 1000

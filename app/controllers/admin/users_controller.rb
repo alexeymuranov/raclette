@@ -37,10 +37,15 @@ class Admin::UsersController < AdminController
     set_column_types
 
     # Filter:
-    @all_filtered_users = filter(Admin::User.scoped, :users)
+    @all_filtered_users = Admin::User.filter(Admin::User.scoped, params[:filter], @attributes)
+    @filtering_values = Admin::User.last_filter_values
 
     # Sort:
-    @all_filtered_users = sort(@all_filtered_users, :users)  # html_table_id = :users
+    Admin::User.all_sorting_columns = @attributes
+    sort_params = (params[:sort] && params[:sort][:users]) || {}
+    @all_filtered_users = Admin::User.sort(@all_filtered_users, sort_params)
+    @sorting_column = Admin::User.last_sort_column
+    @sorting_direction = Admin::User.last_sort_direction
 
     # Paginate:
     @users = paginate(@all_filtered_users)
@@ -106,8 +111,7 @@ class Admin::UsersController < AdminController
 
   def show
     @user = Admin::User.find(params[:id])
-    @safe_ips = @user.safe_ips.order(sort_sql(:safe_ips))
-
+    
     @main_attributes = [ :username,
                          :full_name,
                          :email,
@@ -124,6 +128,11 @@ class Admin::UsersController < AdminController
         unless @user.last_signed_in_at.blank?
 
     @safe_ips_attributes = [ :ip, :description ]
+
+    ip_sort_params = (params[:sort] && params[:sort][:safe_ips]) || {}
+    @safe_ips = Admin::KnownIP.sort(@user.safe_ips, ip_sort_params)
+    @sorting_column = Admin::KnownIP.last_sort_column
+    @sorting_direction = Admin::KnownIP.last_sort_direction
 
     set_column_types
     set_column_headers
@@ -224,12 +233,16 @@ class Admin::UsersController < AdminController
     def render_new_properly
       set_column_types
       set_column_headers
-      @known_ips_attributes = [ :ip, :description ]
+      # NOTE: this seems redundant because coincides with KnownIP.all_sorting_columns
+      @known_ips_attributes = [:ip, :description]
       set_known_ips_column_types
       set_known_ips_column_headers
 
       @safe_ips = nil
-      @other_ips = Admin::KnownIP.order(sort_sql(:safe_ips))
+      ip_sort_params = (params[:sort] && params[:sort][:safe_ips]) || {}
+      @other_ips = Admin::KnownIP.sort(Admin::KnownIP.scoped, ip_sort_params)
+      @sorting_column = Admin::KnownIP.last_sort_column
+      @sorting_direction = Admin::KnownIP.last_sort_direction
 
       @title = t('admin.users.new.title')
 
@@ -239,40 +252,19 @@ class Admin::UsersController < AdminController
     def render_edit_properly
       set_column_types
       set_column_headers
-      @known_ips_attributes = [ :ip, :description ]
+      @known_ips_attributes = [:ip, :description]
       set_known_ips_column_types
       set_known_ips_column_headers
 
-      @safe_ips = @user.safe_ips.order(sort_sql(:safe_ips))
-      @other_ips = Admin::KnownIP.order(sort_sql(:safe_ips)) - @safe_ips
+      ip_sort_params = (params[:sort] && params[:sort][:safe_ips]) || {}
+      @safe_ips = Admin::KnownIP.sort(@user.safe_ips, ip_sort_params)
+      @other_ips = Admin::KnownIP.sort(Admin::KnownIP.scoped, ip_sort_params) - @safe_ips
+      @sorting_column = Admin::KnownIP.last_sort_column
+      @sorting_direction = Admin::KnownIP.last_sort_direction
 
       @title = t('admin.users.edit.title', :username => @user.username)
 
       render :edit
-    end
-
-    def html_table_id_to_class(html_table_id)
-      case html_table_id
-      when :users then Admin::User
-      when :safe_ips then Admin::KnownIP
-      else nil
-      end
-    end
-
-    def default_sort_column(html_table_id)
-      case html_table_id
-      when :users then :username
-      when :safe_ips then :ip
-      else nil
-      end
-    end
-
-    def all_sortable_columns(html_table_id)
-      case html_table_id
-      when :users then @attributes
-      when :safe_ips then @safe_ips_attributes
-      else nil
-      end
     end
 
     def set_column_types

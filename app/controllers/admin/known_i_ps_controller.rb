@@ -7,13 +7,17 @@ class Admin::KnownIPsController < AdminController
   param_accessible({ 'id' => true }, :only => :update)
 
   def index
-    @attributes = [ :ip, :description ]
+    @attributes = [:ip, :description]
 
     set_column_types
     set_column_headers
 
     # Sort:
-    @known_ips = sort(Admin::KnownIP.scoped, :known_ips)  # html_table_id = :known_ips
+    @known_ips = Admin::KnownIP.scoped
+    sort_params = (params[:sort] && params[:sort][:known_ips]) || {}
+    @known_ips = Admin::KnownIP.sort(@known_ips, sort_params)
+    @sorting_column = Admin::KnownIP.last_sort_column
+    @sorting_direction = Admin::KnownIP.last_sort_direction
 
     # @title = t('admin.known_i_ps.index.title')
   end
@@ -30,7 +34,13 @@ class Admin::KnownIPsController < AdminController
                                :secretary,
                                :a_person ]
 
-    @safe_users = @known_ip.safe_users.order(sort_sql(:safe_users))
+    # Sort safe users:
+    @safe_users = @known_ip.safe_users
+    Admin::User.all_sorting_columns = @safe_users_attributes
+    sort_params = (params[:sort] && params[:sort][:safe_users]) || {}
+    @safe_users = Admin::User.sort(@safe_users, sort_params)
+    @sorting_column = Admin::User.last_sort_column
+    @sorting_direction = Admin::User.last_sort_direction
 
     set_users_column_types
     set_users_column_headers
@@ -88,30 +98,6 @@ class Admin::KnownIPsController < AdminController
   end
 
   private
-
-    def html_table_id_to_class(html_table_id)
-      case html_table_id
-      when :known_ips then Admin::KnownIP
-      when :safe_users then Admin::User
-      else nil
-      end
-    end
-
-    def default_sort_column(html_table_id)
-      case html_table_id
-      when :known_ips then :ip
-      when :safe_users then :username
-      else nil
-      end
-    end
-
-    def all_sortable_columns(html_table_id)
-      case html_table_id
-      when :known_ips then @attributes
-      when :safe_users then @safe_users_attributes
-      else nil
-      end
-    end
 
     def render_new_properly
       set_column_types

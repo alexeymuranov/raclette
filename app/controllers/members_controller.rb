@@ -24,10 +24,15 @@ class MembersController < SecretaryController  # FIXME: untested work in progres
     # Filter:
     @all_filtered_members = Member.joins(:person).
       with_virtual_attributes(*@attributes, :formatted_email)
-    @all_filtered_members = filter(@all_filtered_members, :members) # html_table_id = :members
+    @all_filtered_members = Member.filter(@all_filtered_members, params[:filter], @attributes)
+    @filtering_values = Member.last_filter_values
 
     # Sort:
-    @all_filtered_members = sort(@all_filtered_members, :members) # html_table_id = :members
+    Member.all_sorting_columns = @attributes
+    sort_params = (params[:sort] && params[:sort][:members]) || {}
+    @all_filtered_members = Member.sort(@all_filtered_members, sort_params)
+    @sorting_column = Member.last_sort_column
+    @sorting_direction = Member.last_sort_direction
 
     # Paginate:
     @members = paginate(@all_filtered_members)
@@ -212,27 +217,6 @@ class MembersController < SecretaryController  # FIXME: untested work in progres
   end
 
   private
-
-    def html_table_id_to_class(html_table_id)
-      case html_table_id
-      when :members then Member
-      else nil
-      end
-    end
-
-    def default_sort_column(html_table_id)
-      case html_table_id
-      when :members then :ordered_full_name
-      else nil
-      end
-    end
-
-    def all_sortable_columns(html_table_id)
-      case html_table_id
-      when :members then @attributes
-      else nil
-      end
-    end
 
     def render_new_properly
       @column_types = Member.attribute_db_types

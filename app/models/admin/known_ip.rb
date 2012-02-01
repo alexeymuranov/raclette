@@ -1,7 +1,12 @@
 ## encoding: UTF-8
 
+require 'assets/app_active_record_extensions/sorting'
+
 class Admin::KnownIP < ActiveRecord::Base
   self.table_name = 'admin_known_ips'
+  extend Sorting
+  self.all_sorting_columns = [:ip, :description]
+  self.default_sorting_column = :ip
 
   attr_readonly :id, :ip
 

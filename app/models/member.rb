@@ -1,6 +1,13 @@
 ## encoding: UTF-8
 
+require 'assets/app_active_record_extensions/filtering'
+require 'assets/app_active_record_extensions/sorting'
+
 class Member < AbstractSmarterModel
+  extend Filtering
+  extend Sorting
+  self.default_sorting_column = :ordered_full_name
+  self.all_sorting_columns = []
 
   self.primary_key = 'person_id'
 

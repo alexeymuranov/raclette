@@ -2,8 +2,14 @@
 
 require 'digest'
 require 'assets/app_validations/email_format'
+require 'assets/app_active_record_extensions/filtering'
+require 'assets/app_active_record_extensions/sorting'
 
 class Admin::User < ActiveRecord::Base
+  extend Filtering
+  extend Sorting
+  self.default_sorting_column = :username
+  self.all_sorting_columns = []
 
   attr_readonly :id, :username
 
