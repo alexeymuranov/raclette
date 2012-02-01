@@ -475,6 +475,8 @@ fr:
     read: "Afficher"
     update: "Mettre à jour"
     delete: "Supprimer"
+    download: "Télécharger"
+    "download_resources:": "Télécharger %{resources} :"
 
   questions:
     "are_you_sure?": "Vous êtes sûr ?"

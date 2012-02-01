@@ -517,6 +517,8 @@ en:
     read: "View"
     update: "Update"
     delete: "Delete"
+    download: "Download"
+    "download_resources:": "Download %{resources}:"
 
   questions:
     "are_you_sure?": "Are you sure?"
