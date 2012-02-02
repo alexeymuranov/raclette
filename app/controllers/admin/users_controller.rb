@@ -7,7 +7,7 @@ class Admin::UsersController < AdminController
                        'account_deactivated',
                        'admin', 'manager', 'secretary', 'a_person',
                        'comments', 'safe_ip_ids'] },
-                     :only => [:create, :update])
+                     :only => [:create, :update] )
   param_accessible({ 'admin_user' => Set['password', 'password_confirmation'] },
                      :only => :create )
   param_accessible({ 'id'         => true,
@@ -111,7 +111,7 @@ class Admin::UsersController < AdminController
 
   def show
     @user = Admin::User.find(params[:id])
-    
+
     @main_attributes = [ :username,
                          :full_name,
                          :email,

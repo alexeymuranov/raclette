@@ -11,7 +11,7 @@ class Admin::User < ActiveRecord::Base
   self.default_sorting_column = :username
   self.all_sorting_columns = []
 
-  attr_readonly :id, :username
+  attr_readonly :id, :username, :a_person
 
   attr_accessor :password, :new_password
 

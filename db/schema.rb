@@ -1,3 +1,4 @@
+# encoding: UTF-8
 # This file is auto-generated from the current state of the database. Instead
 # of editing this file, please use the migrations feature of Active Record to
 # incrementally modify your database, and then regenerate this schema definition.
@@ -10,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110618120707) do
+ActiveRecord::Schema.define(:version => 20120202210522) do
 
   create_table "activity_periods", :force => true do |t|
     t.string   "unique_title",    :limit => 64,                    :null => false
@@ -69,7 +70,7 @@ ActiveRecord::Schema.define(:version => 20110618120707) do
   create_table "admin_users", :force => true do |t|
     t.string   "username",                  :limit => 32,                    :null => false
     t.string   "full_name",                 :limit => 64,                    :null => false
-    t.boolean  "a_person"
+    t.boolean  "a_person",                                                   :null => false
     t.integer  "person_id"
     t.string   "email"
     t.boolean  "account_deactivated",                     :default => false, :null => false

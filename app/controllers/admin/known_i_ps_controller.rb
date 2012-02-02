@@ -3,8 +3,8 @@
 class Admin::KnownIPsController < AdminController
 
   param_accessible({ 'admin_known_ip' => Set['ip', 'description'] },
-                     :only => [:create, :update])
-  param_accessible({ 'id' => true }, :only => :update)
+                     :only => [:create, :update] )
+  param_accessible({ 'id' => true }, :only => :update )
 
   def index
     @attributes = [:ip, :description]
