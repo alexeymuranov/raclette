@@ -2,7 +2,7 @@
 
 class Admin::KnownIPsController < AdminController
 
-  param_accessible({ 'admin_known_ip' => Set['ip', 'description'] },
+  param_accessible({ 'known_ip' => Set['ip', 'description'] },
                      :only => [:create, :update] )
   param_accessible({ 'id' => true }, :only => :update )
 
@@ -61,7 +61,7 @@ class Admin::KnownIPsController < AdminController
   end
 
   def create
-    @known_ip = Admin::KnownIP.new(params[:admin_known_ip])
+    @known_ip = Admin::KnownIP.new(params[:known_ip])
 
     if @known_ip.save
       flash[:success] = t('flash.admin.known_i_ps.create.success',
@@ -77,7 +77,7 @@ class Admin::KnownIPsController < AdminController
   def update
     @known_ip = Admin::KnownIP.find(params[:id])
 
-    if @known_ip.update_attributes(params[:admin_known_ip])
+    if @known_ip.update_attributes(params[:known_ip])
       flash[:notice] =  t('flash.admin.known_i_ps.update.success',
                           :ip => @known_ip.ip)
       redirect_to @known_ip

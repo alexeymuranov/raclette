@@ -45,7 +45,7 @@ class Admin::UsersControllerTest < ActionController::TestCase
         expected_difference = 1
       end
       params_hash = { :id         => @another_user.to_param,
-                      :admin_user =>  {
+                      :user =>  {
                         :secretary   => new_secretary_status,
                         :safe_ip_ids => new_safe_ip_ids } }
 
@@ -55,7 +55,7 @@ class Admin::UsersControllerTest < ActionController::TestCase
       end
 
       assert Admin::User.find(@another_user.id).secretary? == new_secretary_status
-      
+
       assert_redirected_to @another_user
     end
   end

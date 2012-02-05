@@ -1,4 +1,4 @@
-<%= form_for(@member) do |f| %>
+<%= form_for @member do |f| %>
 
   <%= render('shared/validation_error_messages', :target => @member.person)\
           unless @member.person.nil? %>

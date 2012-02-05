@@ -2,20 +2,20 @@
 
 class Admin::UsersController < AdminController
 
-  param_accessible({ 'admin_user' => Set[
+  param_accessible({ 'user' => Set[
                        'username', 'full_name', 'email',
                        'account_deactivated',
                        'admin', 'manager', 'secretary', 'a_person',
                        'comments', 'safe_ip_ids'] },
                      :only => [:create, :update] )
-  param_accessible({ 'admin_user' => Set['password', 'password_confirmation'] },
+  param_accessible({ 'user' => Set['password', 'password_confirmation'] },
                      :only => :create )
   param_accessible({ 'id'         => true,
-                     'admin_user' => Set['current_password', 'new_password',
+                     'user' => Set['current_password', 'new_password',
                        'new_password_confirmation'] },
                      :only => :update )
 
-  # param_accessible( { :admin_user => Set[] }, :only => :index ) # experimenting
+  # param_accessible( { 'user' => Set[] }, :only => :index ) # experimenting
 
   def index
     @query_type = params[:query_type]
@@ -156,15 +156,15 @@ class Admin::UsersController < AdminController
 
   def create
 
-    params[:admin_user][:safe_ip_ids] ||= []
+    params[:user][:safe_ip_ids] ||= []
 
-    params[:admin_user].delete(:email)\
-        if params[:admin_user][:email].blank?
+    params[:user].delete(:email)\
+        if params[:user][:email].blank?
 
-    params[:admin_user].delete(:comments)\
-        if params[:admin_user][:comments].blank?
+    params[:user].delete(:comments)\
+        if params[:user][:comments].blank?
 
-    @user = Admin::User.new(params[:admin_user])
+    @user = Admin::User.new(params[:user])
 
     if @user.save
       flash[:success] = t('flash.admin.users.create.success',
@@ -180,30 +180,30 @@ class Admin::UsersController < AdminController
   def update
     @user = Admin::User.find(params[:id])
 
-    params[:admin_user][:safe_ip_ids] ||= []
+    params[:user][:safe_ip_ids] ||= []
 
-    params[:admin_user].delete(:email)\
-        if params[:admin_user][:email].blank?
+    params[:user].delete(:email)\
+        if params[:user][:email].blank?
 
-    params[:admin_user].delete(:comments)\
-        if params[:admin_user][:comments].blank?
+    params[:user].delete(:comments)\
+        if params[:user][:comments].blank?
 
     if @user == current_user
-      params[:admin_user].except!(:account_deactivated, :admin)
+      params[:user].except!(:account_deactivated, :admin)
     else
       params.delete(:change_password)
-      params[:admin_user].except!(:new_password, :new_password_confirmation)
+      params[:user].except!(:new_password, :new_password_confirmation)
     end
 
     unless params[:change_password]
       params.delete(:current_password)
-      params[:admin_user].except!(:new_password, :new_password_confirmation)
+      params[:user].except!(:new_password, :new_password_confirmation)
     end
 
     current_password = params[:current_password]
 
     if current_password.nil? || @user.has_password?(current_password)
-      if @user.update_attributes(params[:admin_user])
+      if @user.update_attributes(params[:user])
         flash[:notice] = t('flash.admin.users.update.success',
                            :username => @user.username)
         redirect_to @user
@@ -225,7 +225,7 @@ class Admin::UsersController < AdminController
     flash[:notice] = t('flash.admin.users.destroy.success',
                        :username => @user.username)
 
-    redirect_to admin_users_url
+    redirect_to users_url
   end
 
   private

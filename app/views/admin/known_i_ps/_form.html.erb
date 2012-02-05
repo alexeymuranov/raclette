@@ -1,4 +1,4 @@
-<%= form_for(@known_ip) do |f| %>
+<%= form_for @known_ip, :as => :known_ip do |f| %>
 
   <%= render 'shared/validation_error_messages', :target => @known_ip %>
 

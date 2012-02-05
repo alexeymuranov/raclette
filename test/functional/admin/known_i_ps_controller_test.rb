@@ -27,7 +27,7 @@ class Admin::KnownIPsControllerTest < ActionController::TestCase
   test "should create admin_known_ip" do
     assert_difference('Admin::KnownIP.count') do
       session[:user_id] = @user_admin.to_param
-      post :create, { :admin_known_ip => @new_known_ip.attributes }
+      post :create, { :known_ip => @new_known_ip.attributes }
     end
 
     assert_redirected_to admin_known_ip_path(assigns(:known_ip))
@@ -48,7 +48,7 @@ class Admin::KnownIPsControllerTest < ActionController::TestCase
   test "should update admin_known_ip" do
     session[:user_id] = @user_admin.to_param
     put :update, { :id => @known_ip.to_param,
-                   :admin_known_ip => @new_known_ip.attributes }
+                   :known_ip => @new_known_ip.attributes }
     assert_redirected_to admin_known_ip_path(assigns(:known_ip))
   end
 
