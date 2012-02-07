@@ -1,7 +1,7 @@
 ## encoding: UTF-8
 
-require 'assets/app_active_record_extensions/filtering'
-require 'assets/app_active_record_extensions/sorting'
+require 'app_active_record_extensions/filtering'
+require 'app_active_record_extensions/sorting'
 
 class Member < AbstractSmarterModel
   extend Filtering

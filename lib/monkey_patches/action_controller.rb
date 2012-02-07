@@ -1,8 +1,8 @@
 # Based on http://jonathanleighton.com/articles/2011/mass-assignment-security-shouldnt-happen-in-the-model/
 
 require 'set'
-require 'assets/app_param_filters/param_security_filter'
-require 'assets/app_param_filters/param_security_rules'
+require 'app_param_filters/param_security_filter'
+require 'app_param_filters/param_security_rules'
 
 class ActionController::Base
 
@@ -51,7 +51,7 @@ class ActionController::Base
           end
           action_names.map!(&:to_sym)
         end
- 
+
     end
 
     # def reset_param_security_rules

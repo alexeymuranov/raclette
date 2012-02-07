@@ -1,4 +1,4 @@
-require 'assets/app_sql_queries/simple_filter'
+require 'app_sql_queries/simple_filter'
 
 # Class methods for ActiveRecord descendants
 module Filtering

@@ -1,9 +1,9 @@
 ## encoding: UTF-8
 
 require 'digest'
-require 'assets/app_validations/email_format'
-require 'assets/app_active_record_extensions/filtering'
-require 'assets/app_active_record_extensions/sorting'
+require 'app_validations/email_format'
+require 'app_active_record_extensions/filtering'
+require 'app_active_record_extensions/sorting'
 
 class Admin::User < ActiveRecord::Base
   extend Filtering

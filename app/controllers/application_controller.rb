@@ -2,7 +2,7 @@
 
 require 'set'  # to be able to use Set
 require 'csv'  # to render CSV
-require 'assets/app_sql_queries/simple_filter'
+require 'app_sql_queries/simple_filter'
 require 'monkey_patches/action_controller'
 
 class ApplicationController < ActionController::Base

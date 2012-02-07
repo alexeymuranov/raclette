@@ -1,6 +1,6 @@
 ## encoding: UTF-8
 
-require 'assets/app_validations/email_format'
+require 'app_validations/email_format'
 
 class Person < AbstractSmarterModel
 
@@ -107,7 +107,7 @@ class Person < AbstractSmarterModel
   # Scopes
   scope :default_order, order("UPPER(#{sql_for_attributes[:last_name]}) ASC, "\
                               "UPPER(#{sql_for_attributes[:first_name]}) ASC")
-  
+
   # Public instance methods
   # Non-SQL virtual attributes
   def non_sql_full_name

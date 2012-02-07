@@ -1,7 +1,7 @@
 # Standard classes are modified here
 
 require 'set'
-require 'assets/types'
+require 'types'
 
 class Object
 
@@ -54,7 +54,7 @@ class Hash
       end
       new_hash
     end
-  
+
     # Returns a new hash with keys and nested keys indicated by +key_hash+ removed.
     # Modifies the receiver in place.
     def my_deep_remove!(key_hash)
@@ -85,7 +85,7 @@ class Hash
       end
       new_hash
     end
-  
+
     # Returns a new hash where only keys and nested keys indicated by +key_hash+ are kept.
     # Modifies the receiver in place.
     def my_deep_filter!(key_hash)
