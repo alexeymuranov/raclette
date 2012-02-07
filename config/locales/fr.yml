@@ -218,7 +218,7 @@ fr:
       "admin/user":
         username: "Nom d'utilisateur"
         full_name: "Nom complet"
-        "a_person": "Personne"
+        "a_person": "Individu"
         person_id: "Id personnelle"
         email: "Adresse e-mail"
         "account_deactivated": "Désactivé(e)"

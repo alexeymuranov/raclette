@@ -36,48 +36,49 @@ class Admin::UsersController < AdminController
 
     set_column_types
 
+    @users = Admin::User.scoped
+
     # Filter:
-    @all_filtered_users = Admin::User.filter(Admin::User.scoped, params[:filter], @attributes)
+    @users = Admin::User.filter(@users, params[:filter], @attributes)
     @filtering_values = Admin::User.last_filter_values
 
     # Sort:
     Admin::User.all_sorting_columns = @attributes
     sort_params = (params[:sort] && params[:sort][:users]) || {}
-    @all_filtered_users = Admin::User.sort(@all_filtered_users, sort_params)
+    @users = Admin::User.sort(@users, sort_params)
     @sorting_column = Admin::User.last_sort_column
     @sorting_direction = Admin::User.last_sort_direction
 
-    # Paginate:
-    @users = paginate(@all_filtered_users)
-
     # Compose mailing list:
     if params[:list_email_addresses]
-      @mailing_list_users =
-          @all_filtered_users.select { |user| !user.email.blank? }
+      @mailing_list_users = @users.select { |user| !user.email.blank? }
       @mailing_list = @mailing_list_users.collect(&:formatted_email).join(', ')
     end
 
-    @attributes_for_download = [ :username,
-                                 :full_name,
-                                 :email,
-                                 :account_deactivated,
-                                 :admin,
-                                 :manager,
-                                 :secretary,
-                                 :a_person ]
-
-    set_column_headers
-    set_column_headers_for_download
-
     respond_to do |requested_format|
       requested_format.html do
+        set_column_headers
+
+        # Paginate:
+        @users = paginate(@users)
+
         # @title = t('admin.users.index.title')  # or: Admin::User.model_name.human.pluralize
         render :index
       end
 
+      @attributes = [:username,
+                     :full_name,
+                     :email,
+                     :account_deactivated,
+                     :admin,
+                     :manager,
+                     :secretary,
+                     :a_person]
+      set_column_headers
+
       requested_format.xml do
-        render :xml  => @all_filtered_users,
-               :only => @attributes_for_download
+        render :xml  => @users,
+               :only => @attributes
       end
 
       requested_format.js do
@@ -89,9 +90,9 @@ class Admin::UsersController < AdminController
 
       requested_format.ms_excel_2003_xml do
         render_ms_excel_2003_xml_for_download\
-            @all_filtered_users,
-            @attributes_for_download,
-            @column_headers_for_download,
+            @users,
+            @attributes,
+            @column_headers,
             "#{Admin::User.model_name.human.pluralize}"\
             " #{Time.now.in_time_zone.strftime('%Y-%m-%d %k_%M')}"\
             ".excel2003.xml"  # defined in ApplicationController
@@ -99,9 +100,9 @@ class Admin::UsersController < AdminController
 
       requested_format.csv do
         render_csv_for_download\
-            @all_filtered_users,
-            @attributes_for_download,
-            @column_headers_for_download,
+            @users,
+            @attributes,
+            @column_headers,
             "#{Admin::User.model_name.human.pluralize}"\
             " #{Time.now.in_time_zone.strftime('%Y-%m-%d %k_%M')}"\
             ".csv"  # defined in ApplicationController
@@ -258,7 +259,8 @@ class Admin::UsersController < AdminController
 
       ip_sort_params = (params[:sort] && params[:sort][:safe_ips]) || {}
       @safe_ips = Admin::KnownIP.sort(@user.safe_ips, ip_sort_params)
-      @other_ips = Admin::KnownIP.sort(Admin::KnownIP.scoped, ip_sort_params) - @safe_ips
+      @other_ips = Admin::KnownIP.sort(Admin::KnownIP.scoped, ip_sort_params) -
+        @safe_ips
       @sorting_column = Admin::KnownIP.last_sort_column
       @sorting_direction = Admin::KnownIP.last_sort_direction
 
@@ -287,14 +289,6 @@ class Admin::UsersController < AdminController
           @column_headers[attr] = I18n.t('formats.attribute_name:',
                                          :attribute => human_name)
         end
-      end
-    end
-
-    def set_column_headers_for_download
-      @column_headers_for_download = {}
-      @column_types.each do |attr, type|
-        @column_headers_for_download[attr] =
-            Admin::User.human_attribute_name(attr)
       end
     end
 

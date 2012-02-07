@@ -21,55 +21,49 @@ class MembersController < SecretaryController  # FIXME: untested work in progres
     @column_types = Member.attribute_db_types
     @sql_for_attributes = Member.sql_for_attributes
 
-    # Filter:
-    @all_filtered_members = Member.joins(:person).
+    @members = Member.joins(:person).
       with_virtual_attributes(*@attributes, :formatted_email)
-    @all_filtered_members = Member.filter(@all_filtered_members, params[:filter], @attributes)
+
+    # Filter:
+    @members = Member.filter(@members, params[:filter], @attributes)
     @filtering_values = Member.last_filter_values
 
     # Sort:
     Member.all_sorting_columns = @attributes
     sort_params = (params[:sort] && params[:sort][:members]) || {}
-    @all_filtered_members = Member.sort(@all_filtered_members, sort_params)
+    @members = Member.sort(@members, sort_params)
     @sorting_column = Member.last_sort_column
     @sorting_direction = Member.last_sort_direction
 
-    # Paginate:
-    @members = paginate(@all_filtered_members)
-
-    # Workaround to deal with
-    # Issue #2541 at https://github.com/rails/rails/issues
-    # def @all_filtered_members.size
-    #   all.length
-    # end
-    # End of workaround
-
     # Compose mailing list:
     if params[:list_email_addresses]
-      @mailing_list_members =
-          @all_filtered_members.select { |member| !member.email.blank? }
-      @mailing_list = @mailing_list_members.collect(&:formatted_email)\
-                                           .join(', ')
+      @mailing_list_members = @members.select { |member| !member.email.blank? }
+      @mailing_list = @mailing_list_members.collect(&:formatted_email).
+        join(', ')
     end
 
-    @attributes_for_download = [ :last_name,
-                                 :first_name,
-                                 :nickname_or_other,
-                                 :email,
-                                 :tickets_count ]
-
-    set_column_headers
-    set_column_headers_for_download
 
     respond_to do |requested_format|
       requested_format.html do
+        # Paginate:
+        @members = paginate(@members)
+
+        set_column_headers
         # @title = t('members.index.title')  # or: Member.model_name.human.pluralize
         render :index
       end
 
+      # For download:
+      @attributes = [ :last_name,
+                      :first_name,
+                      :nickname_or_other,
+                      :email,
+                      :tickets_count ]
+      set_column_headers
+
       requested_format.xml do
-        render :xml  => @all_filtered_members,
-               :only => @attributes_for_download
+        render :xml  => @members,
+               :only => @attributes
       end
 
       requested_format.js do
@@ -81,9 +75,9 @@ class MembersController < SecretaryController  # FIXME: untested work in progres
 
       requested_format.ms_excel_2003_xml do
         render_ms_excel_2003_xml_for_download\
-            @all_filtered_members,
-            @attributes_for_download,
-            @column_headers_for_download,
+            @members,
+            @attributes,
+            @column_headers,
             "#{Member.model_name.human.pluralize}"\
             " #{Time.now.in_time_zone.strftime('%Y-%m-%d %k_%M')}"\
             ".excel2003.xml"  # defined in ApplicationController
@@ -91,9 +85,9 @@ class MembersController < SecretaryController  # FIXME: untested work in progres
 
       requested_format.csv do
         render_csv_for_download\
-            @all_filtered_members,
-            @attributes_for_download,
-            @column_headers_for_download,
+            @members,
+            @attributes,
+            @column_headers,
             "#{Member.model_name.human.pluralize}"\
             " #{Time.now.in_time_zone.strftime('%Y-%m-%d %k_%M')}"\
             ".csv"  # defined in ApplicationController
@@ -247,13 +241,6 @@ class MembersController < SecretaryController  # FIXME: untested work in progres
           @column_headers[attr] = I18n.t('formats.attribute_name:',
               :attribute => @column_headers[attr])
         end
-      end
-    end
-
-    def set_column_headers_for_download
-      @column_headers_for_download = {}
-      @attributes_for_download.each do |attr|
-        @column_headers_for_download[attr] = Member.human_attribute_name(attr)
       end
     end
 

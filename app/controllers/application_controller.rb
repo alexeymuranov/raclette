@@ -14,7 +14,6 @@ class ApplicationController < ActionController::Base
   before_filter :require_login
   before_filter :set_locale
 
-  helper_method :sort_column, :sort_direction
 
   private
 
@@ -71,13 +70,13 @@ class ApplicationController < ActionController::Base
       end
     end
 
-    def paginate(models)
-      if params[:per_page].to_i > 1000
-         params[:per_page] = 1000
-      else
-        params[:per_page] ||= 25
-      end
-      models.page(params[:page]).per(params[:per_page])
+    def paginate(models, options={})
+      per_page = options[:per_page] || params[:per_page]
+      per_page = per_page ? per_page.to_i : 25
+      per_page = 1000 if per_page.to_i > 1000
+      page = options[:page] || params[:page]
+      page = page ? page.to_i : 1
+      models.page(page).per(per_page)
     end
 
     def approximate_time
