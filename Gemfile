@@ -18,6 +18,8 @@ gem 'kaminari'  # pagination
 
 # gem 'spreadsheet'  # to generate XLS (Excel 2003 XML is used instead)
 
+gem 'inherited_resources'  # for lazy resourceful controllers
+
 # Gems used only for assets and not required
 # in production environments by default.
 group :assets do
