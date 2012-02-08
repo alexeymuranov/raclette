@@ -1,12 +1,12 @@
 = form_for @guest, :url => 'compose_transaction', :method => :get do |f|
-  = render 'shared/validation_error_messages', :target => @guest
+  = render 'shared/error_messages/validation', :target => @guest
   %dl.form_fields
     - [ :first_name, :last_name, :email, :phone ].each do |attribute|
-      = render 'shared/attribute_in_form',
+      = render 'shared/forms/attribute',
                :form_builder => f,
                :attribute    => attribute,
                :column_type  => :string
-    = render 'shared/attribute_in_form',
+    = render 'shared/forms/attribute',
              :form_builder => f,
              :attribute    => :note,
              :column_type  => :text

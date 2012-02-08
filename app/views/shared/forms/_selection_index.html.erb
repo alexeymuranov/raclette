@@ -19,7 +19,7 @@
     <tr>
       <th class='empty boolean'></th>
 
-      <%= render 'shared/table_headers',
+      <%= render 'shared/tables/headers',
                  :attributes     => attributes,
                  :column_types   => column_types,
                  :column_headers => column_headers,
@@ -36,7 +36,7 @@
                             :id => id_prefix + "_#{mod.id}" %>
         </td>
 
-        <%= render 'shared/attributes_in_selection_index_table_form',
+        <%= render 'shared/forms/attributes_in_selection_index',
                    :model        => mod,
                    :attributes   => attributes,
                    :column_types => column_types,
@@ -52,7 +52,7 @@
                             :id => id_prefix + "_#{mod.id}" %>
         </td>
 
-        <%= render 'shared/attributes_in_selection_index_table_form',
+        <%= render 'shared/forms/attributes_in_selection_index',
                    :model        => mod,
                    :attributes   => attributes,
                    :column_types => column_types,

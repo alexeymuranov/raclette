@@ -1,7 +1,7 @@
 <%= form_tag({ :action => :update_all }, :method => :put) do |f| %>
   <%= field_set_tag do %>
 
-    <%= render 'shared/association_grid_form',
+    <%= render 'shared/forms/association_grid',
                :models1                => @known_ips,
                :models2                => @users,
                :association_attribute1 => :safe_users,

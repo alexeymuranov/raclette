@@ -3,7 +3,7 @@
 <dl class="show">
 
   <% @attributes.each do |attr| %>
-    <%= render 'shared/attribute_in_show_list',
+    <%= render 'shared/lists/attribute_in_show',
                :model       => @member,
                :attribute   => attr,
                :column_type => @column_types[attr] %>

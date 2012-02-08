@@ -1,6 +1,6 @@
 <h1><%= t '.header' %></h1>
 
-<%= render 'shared/association_grid_table',
+<%= render 'shared/tables/association_grid',
            :models1                => @known_ips,
            :models2                => @users,
            :association_attribute1 => :safe_users,

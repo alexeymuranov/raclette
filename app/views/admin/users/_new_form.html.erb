@@ -1,19 +1,19 @@
 <%= form_for @user, :as => :user do |f| %>
 
-  <%= render 'shared/validation_error_messages', :target => @user %>
+  <%= render 'shared/error_messages/validation', :target => @user %>
 
   <%= render 'common_form_fields', :f => f %>
 
   <%= field_set_tag t('admin.users.new.subheaders.password') do %>
     <dl class="form_fields">
 
-      <%= render 'shared/attribute_in_form',
+      <%= render 'shared/forms/attribute',
                  :form_builder       => f,
                  :attribute          => :password,
                  :column_type        => @column_types[:password],
                  :input_html_options => { :type => :password } %>
 
-      <%= render 'shared/attribute_in_form',
+      <%= render 'shared/forms/attribute',
                  :form_builder       => f,
                  :attribute          => :password_confirmation,
                  :column_type        => @column_types[:password_confirmation],

@@ -6,7 +6,7 @@
   <dl class="show">
 
     <% @attributes.each do |attr| %>
-      <%= render 'shared/attribute_in_show_list',
+      <%= render 'shared/lists/attribute_in_show',
                  :attribute => attr,
                  :model     => @known_ip %>
     <% end %>
@@ -17,7 +17,7 @@
 <section>
   <h2><%= Admin::KnownIP.human_attribute_name(:safe_users) %></h2>
 
-  <%= render('shared/simple_index_table',
+  <%= render('shared/tables/simple_index',
              :models         => @safe_users,
              :attributes     => @safe_users_attributes,
              :column_types   => @users_column_types,

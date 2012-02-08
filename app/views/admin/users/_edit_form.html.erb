@@ -1,6 +1,6 @@
 <%= form_for @user, :as => :user do |f| %>
 
-  <%= render 'shared/validation_error_messages', :target => @user %>
+  <%= render 'shared/error_messages/validation', :target => @user %>
 
   <%= render 'common_form_fields', :f => f %>
 
@@ -10,7 +10,7 @@
       <%= check_box_tag :change_password %>
       <dl class="checkbox_conditional form_fields">
 
-        <%= render 'shared/input_in_form',
+        <%= render 'shared/forms/input',
                    :name               => :current_password,
                    :value              => nil,
                    :label_content      => t('field_labels.current_password'),
@@ -18,13 +18,13 @@
                                             :size      => 30,
                                             :maxlength => 255 } %>
 
-        <%= render 'shared/attribute_in_form',
+        <%= render 'shared/forms/attribute',
                    :form_builder       => f,
                    :attribute          => :new_password,
                    :column_type        => @column_types[:new_password],
                    :input_html_options => { :type => :password } %>
 
-        <%= render 'shared/attribute_in_form',
+        <%= render 'shared/forms/attribute',
                    :form_builder       => f,
                    :attribute          => :new_password_confirmation,
                    :column_type        => @column_types[:new_password_confirmation],

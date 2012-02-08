@@ -45,7 +45,7 @@
   <thead>
     <tr>
 
-      <%= render 'shared/sorting_table_headers',
+      <%= render 'shared/tables/sorting_headers',
                  :attributes     => attributes,
                  :column_types   => column_types,
                  :column_headers => column_headers,
@@ -193,7 +193,7 @@
     </tr>
   </thead>
 
-  <%= render 'shared/index_table_body',
+  <%= render 'shared/tables/index_body',
              :models       => models,
              :attributes   => attributes,
              :column_types => column_types %>

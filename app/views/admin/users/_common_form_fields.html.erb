@@ -2,14 +2,14 @@
   <dl class="form_fields">
     <% [ :username, :full_name ].each do |attribute| %>
 
-      <%= render 'shared/attribute_in_form',
+      <%= render 'shared/forms/attribute',
                  :form_builder => f,
                  :attribute    => attribute,
                  :column_type  => @column_types[attribute] %>
 
     <% end %>
 
-    <%= render 'shared/attribute_in_form',
+    <%= render 'shared/forms/attribute',
                :form_builder       => f,
                :attribute          => :email,
                :column_type        => @column_types[:email],
@@ -19,7 +19,7 @@
 
     <% [ :account_deactivated, :admin ].each do |attribute| %>
 
-      <%= render 'shared/attribute_in_form',
+      <%= render 'shared/forms/attribute',
                  :form_builder       => f,
                  :attribute          => attribute,
                  :column_type        => @column_types[attribute],
@@ -29,7 +29,7 @@
 
     <% [ :manager, :secretary, :a_person ].each do |attribute| %>
 
-      <%= render 'shared/attribute_in_form',
+      <%= render 'shared/forms/attribute',
                  :form_builder => f,
                  :attribute    => attribute,
                  :column_type  => @column_types[attribute] %>
@@ -40,7 +40,7 @@
 
 <%= field_set_tag t('admin.users.edit.subheaders.authorized_ips') do %>
 
-  <%= render 'shared/selection_index_table_form',
+  <%= render 'shared/forms/selection_index',
              :attributes        => @known_ips_attributes,
              :column_types      => @known_ips_column_types,
              :column_headers    => @known_ips_column_headers,
@@ -55,7 +55,7 @@
 <%= field_set_tag t('admin.users.edit.subheaders.comments') do %>
   <dl class="form_fields">
 
-    <%= render 'shared/attribute_in_form',
+    <%= render 'shared/forms/attribute',
                :form_builder       => f,
                :attribute          => :comments,
                :column_type        => @column_types[:comments],
