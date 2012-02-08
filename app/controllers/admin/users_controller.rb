@@ -26,13 +26,25 @@ class Admin::UsersController < AdminController
       params.delete(:filter)
     end
 
-    @attributes = [ :username,
-                    :full_name,
-                    :account_deactivated,
-                    :admin,
-                    :manager,
-                    :secretary,
-                    :a_person ]
+    case request.format
+    when 'html'
+      @attributes = [:username,
+                     :full_name,
+                     :account_deactivated,
+                     :admin,
+                     :manager,
+                     :secretary,
+                     :a_person]
+    when 'xml', 'csv', 'ms_excel_2003_xml'
+      @attributes = [:username,
+                     :full_name,
+                     :email,
+                     :account_deactivated,
+                     :admin,
+                     :manager,
+                     :secretary,
+                     :a_person]
+    end
 
     set_column_types
 
@@ -55,9 +67,10 @@ class Admin::UsersController < AdminController
       @mailing_list = @mailing_list_users.collect(&:formatted_email).join(', ')
     end
 
+    set_column_headers
+
     respond_to do |requested_format|
       requested_format.html do
-        set_column_headers
 
         # Paginate:
         @users = paginate(@users)
@@ -65,16 +78,6 @@ class Admin::UsersController < AdminController
         # @title = t('admin.users.index.title')  # or: Admin::User.model_name.human.pluralize
         render :index
       end
-
-      @attributes = [:username,
-                     :full_name,
-                     :email,
-                     :account_deactivated,
-                     :admin,
-                     :manager,
-                     :secretary,
-                     :a_person]
-      set_column_headers
 
       requested_format.xml do
         render :xml  => @users,
@@ -113,14 +116,14 @@ class Admin::UsersController < AdminController
   def show
     @user = Admin::User.find(params[:id])
 
-    @main_attributes = [ :username,
-                         :full_name,
-                         :email,
-                         :account_deactivated,
-                         :admin,
-                         :manager,
-                         :secretary,
-                         :a_person ]
+    @main_attributes = [:username,
+                        :full_name,
+                        :email,
+                        :account_deactivated,
+                        :admin,
+                        :manager,
+                        :secretary,
+                        :a_person]
     @main_attributes << :person_id if @user.a_person?
     @main_attributes << :comments
 
@@ -128,7 +131,7 @@ class Admin::UsersController < AdminController
     @other_attributes << :last_signed_in_at\
         unless @user.last_signed_in_at.blank?
 
-    @safe_ips_attributes = [ :ip, :description ]
+    @safe_ips_attributes = [:ip, :description]
 
     ip_sort_params = (params[:sort] && params[:sort][:safe_ips]) || {}
     @safe_ips = Admin::KnownIP.sort(@user.safe_ips, ip_sort_params)

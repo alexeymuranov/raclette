@@ -18,7 +18,9 @@ gem 'kaminari'  # pagination
 
 # gem 'spreadsheet'  # to generate XLS (Excel 2003 XML is used instead)
 
-gem 'inherited_resources'  # for lazy resourceful controllers
+# gem 'inherited_resources'  # for lazy resourceful controllers
+# gem 'active_presenter'  # lets see what it is good for (seems broken)
+gem 'active_conductor'  # and this too
 
 # Gems used only for assets and not required
 # in production environments by default.

@@ -151,13 +151,13 @@
         <%- when :date, :delegated_date, :virtual_date -%>
           <td class="date field">
             <%- filtering_values[attr] ||= {} -%>
-            <%= label_tag "filter[#{attr}][from]", t(date.from) %>
+            <%= label_tag "filter[#{attr}][from]", t('date.from') %>
             <%= date_select "filter[#{attr}][from]",
                                filtering_values[attr][:from],
                                :form => filter_form_id,
                                :type => 'date' %><!-- no space!
          --><br />
-            <%= label_tag "filter[#{attr}][until]", t(date.until) %>
+            <%= label_tag "filter[#{attr}][until]", t('date.until') %>
             <%= date_select "filter[#{attr}][until]",
                                filtering_values[attr][:until],
                                :form => filter_form_id,

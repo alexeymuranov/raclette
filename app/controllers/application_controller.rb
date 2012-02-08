@@ -14,10 +14,9 @@ class ApplicationController < ActionController::Base
   before_filter :require_login
   before_filter :set_locale
 
-
   private
 
-    def set_locale  # before filter
+    def set_locale  # before_filter
       # if params[:locale] is nil, then I18n.default_locale will be used
       I18n.locale = params[:locale]
       @locale = I18n.locale

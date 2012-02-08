@@ -1,6 +1,14 @@
 ## encoding: UTF-8
 
-class Instructor < ActiveRecord::Base
+require 'app_active_record_extensions/filtering'
+require 'app_active_record_extensions/sorting'
+
+class Instructor < AbstractSmarterModel
+  extend Filtering
+  extend Sorting
+  self.default_sorting_column = :ordered_full_name
+  self.all_sorting_columns = []
+
   self.primary_key = 'person_id'
 
   attr_readonly :id, :person_id
@@ -40,6 +48,40 @@ class Instructor < ActiveRecord::Base
                     :allow_nil => true
 
   validates :person_id, :uniqueness => true
+
+  # Public class methods
+  def self.sql_for_attributes  # Extendes the one from AbstractSmarterModel
+    unless @sql_for_attributes
+      super
+
+      people_table_name = Person.table_name
+
+      [ :last_name, :first_name, :name_title, :nickname_or_other, :email,
+        :full_name, :ordered_full_name, :formatted_email ]\
+          .each do |attr|
+        @sql_for_attributes[attr] = Person.sql_for_attributes[attr]
+      end
+    end
+    @sql_for_attributes
+  end
+
+  def self.attribute_db_types  # Extendes the one from AbstractSmarterModel
+    unless @attribute_db_types
+      super
+
+      [ :last_name, :first_name, :name_title, :nickname_or_other, :email]\
+          .each do |attr|
+        @attribute_db_types[attr] = ('delegated_' +
+                                     Person.columns_hash[attr.to_s].type.to_s)\
+                                    .to_sym
+      end
+
+      [ :full_name, :ordered_full_name, :formatted_email ].each do |attr|
+        @attribute_db_types[attr] = :virtual_string
+      end
+    end
+    @attribute_db_types
+  end
 
   # Scopes
   scope :default_order, joins(:person).order('person.last_name ASC')

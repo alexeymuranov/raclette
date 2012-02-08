@@ -13,10 +13,19 @@ class MembersController < SecretaryController  # FIXME: untested work in progres
       params.delete(:filter)
     end
 
-    @attributes = [ :ordered_full_name,
-                    :email,
-                    :account_deactivated,
-                    :tickets_count ]
+    case request.format
+    when 'html'
+      @attributes = [:ordered_full_name,
+                     :email,
+                     :account_deactivated,
+                     :tickets_count]
+    when 'xml', 'csv', 'ms_excel_2003_xml'
+      @attributes = [:last_name,
+                     :first_name,
+                     :nickname_or_other,
+                     :email,
+                     :tickets_count]
+    end
 
     @column_types = Member.attribute_db_types
     @sql_for_attributes = Member.sql_for_attributes
@@ -30,6 +39,8 @@ class MembersController < SecretaryController  # FIXME: untested work in progres
 
     # Sort:
     Member.all_sorting_columns = @attributes
+    Member.default_sorting_column = ( request.format == 'html' ?
+                                      :ordered_full_name : :last_name )
     sort_params = (params[:sort] && params[:sort][:members]) || {}
     @members = Member.sort(@members, sort_params)
     @sorting_column = Member.last_sort_column
@@ -42,28 +53,15 @@ class MembersController < SecretaryController  # FIXME: untested work in progres
         join(', ')
     end
 
+    set_column_headers
 
     respond_to do |requested_format|
       requested_format.html do
         # Paginate:
         @members = paginate(@members)
 
-        set_column_headers
         # @title = t('members.index.title')  # or: Member.model_name.human.pluralize
         render :index
-      end
-
-      # For download:
-      @attributes = [ :last_name,
-                      :first_name,
-                      :nickname_or_other,
-                      :email,
-                      :tickets_count ]
-      set_column_headers
-
-      requested_format.xml do
-        render :xml  => @members,
-               :only => @attributes
       end
 
       requested_format.js do
@@ -71,6 +69,12 @@ class MembersController < SecretaryController  # FIXME: untested work in progres
         when 'show_email_addresses', 'hide_email_addresses'
           render :update_email_list
         end
+      end
+
+      # For download:
+      requested_format.xml do
+        render :xml  => @members,
+               :only => @attributes
       end
 
       requested_format.ms_excel_2003_xml do
@@ -97,17 +101,17 @@ class MembersController < SecretaryController  # FIXME: untested work in progres
 
   def show
 
-    @attributes = [ :person_id,
-                    :name_title,
-                    :first_name,
-                    :last_name,
-                    :nickname_or_other,
-                    :email,
-                    :payed_tickets_count,
-                    :free_tickets_count,
-                    :account_deactivated,
-                    :been_member_by,
-                    :full_name ]
+    @attributes = [:person_id,
+                   :name_title,
+                   :first_name,
+                   :last_name,
+                   :nickname_or_other,
+                   :email,
+                   :payed_tickets_count,
+                   :free_tickets_count,
+                   :account_deactivated,
+                   :been_member_by,
+                   :full_name]
 
     @member = Member.joins(:person).with_virtual_attributes(*@attributes)\
                     .find(params[:id])

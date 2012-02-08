@@ -8,10 +8,10 @@ module ApplicationHelper
     controller_i18n_scope = controller.class.name\
                                       .sub(/Controller$/, '')\
                                       .gsub('::', '.').underscore
-    # XXX: There exists a protected method controller_i18n_scope in Rails::Generators::ResourceHelpers.
+    # NOTE: there exists a protected method controller_i18n_scope in Rails::Generators::ResourceHelpers.
 
     @title ||= t("#{controller_i18n_scope}.#{action_name}.title")
-    # XXX: Using conroller_name instead of controller_i18n_scope does not work (loses module part).
+    # NOTE: using conroller_name instead of controller_i18n_scope does not work (loses module part).
 
     @title.nil? ? base_title : "#{base_title} | #{@title}"
   end

@@ -13,22 +13,6 @@ class Member < AbstractSmarterModel
 
   attr_readonly :id, :person_id, :been_member_by
 
-  attr_accessible( :been_member_by,
-                   :free_tickets_count,
-                   :last_name,         # delegated attribute
-                   :first_name,        # delegated attribute
-                   :name_title,        # delegated attribute
-                   :nickname_or_other, # delegated attribute
-                   :birthyear,         # delegated attribute
-                   :email,             # delegated attribute
-                   :mobile_phone,      # delegated attribute
-                   :home_phone,        # delegated attribute
-                   :work_phone,        # delegated attribute
-                   :personal_phone,    # delegated attribute
-                   :primary_address,   # delegated attribute
-                   :person_attributes, # association attribute
-                   :as => [ :secretary, :manager ] )
-
   # Associations
   has_one :tickets_lender, :foreign_key => :shares_tickets_with_member_id,
                            :class_name  => 'Member',

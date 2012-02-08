@@ -1,5 +1,4 @@
 class AbstractSmarterModel < ActiveRecord::Base  # FIXME: not ready?
-
   self.abstract_class = true
 
   # Provides SQL identifiers for attrubutes corresponding to columns
