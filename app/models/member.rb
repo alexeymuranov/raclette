@@ -3,13 +3,15 @@
 require 'app_active_record_extensions/filtering'
 require 'app_active_record_extensions/sorting'
 
-class Member < AbstractSmarterModel
-  extend Filtering
-  extend Sorting
+class Member < ActiveRecord::Base
+  include Filtering
+  include Sorting
   self.default_sorting_column = :ordered_full_name
   self.all_sorting_columns = []
 
   self.primary_key = 'person_id'
+
+  include AbstractPerson # TODO: take advatage of AbstractPerson here instead of AbstractSmarterModel
 
   attr_readonly :id, :person_id, :been_member_by
 
@@ -100,7 +102,7 @@ class Member < AbstractSmarterModel
   validates :person_id, :uniqueness => true
 
   # Public class methods
-  def self.sql_for_attributes  # Extendes the one from AbstractSmarterModel
+  def self.sql_for_attributes  # Extends the one from AbstractSmarterModel
     unless @sql_for_attributes
       super
 
@@ -120,7 +122,7 @@ class Member < AbstractSmarterModel
     @sql_for_attributes
   end
 
-  def self.attribute_db_types  # Extendes the one from AbstractSmarterModel
+  def self.attribute_db_types  # Extends the one from AbstractSmarterModel
     unless @attribute_db_types
       super
 

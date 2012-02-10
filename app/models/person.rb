@@ -2,7 +2,9 @@
 
 require 'app_validations/email_format'
 
-class Person < AbstractSmarterModel
+class Person < ActiveRecord::Base
+
+  include AbstractSmarterModel
 
   attr_readonly :id, :last_name
 
