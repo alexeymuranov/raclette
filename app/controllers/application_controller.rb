@@ -2,7 +2,6 @@
 
 require 'set'  # to be able to use Set
 require 'csv'  # to render CSV
-require 'app_sql_queries/simple_filter'
 require 'monkey_patches/action_controller'
 
 class ApplicationController < ActionController::Base
@@ -13,6 +12,48 @@ class ApplicationController < ActionController::Base
 
   before_filter :require_login
   before_filter :set_locale
+
+  ActionController.add_renderer :csv do |obj, options| # FIXME:WIP
+    # filename = options[:filename] || 'data'
+    # str = obj.respond_to?(:to_csv) ? obj.to_csv : obj.to_s
+    # send_data str, :type => Mime::CSV,
+    #   :disposition => "attachment; filename=#{filename}.csv"
+    self.content_type ||= Mime::CSV
+    klass = obj.klass
+    csv = csv_from_collection(obj, options[:attributes],
+                                   options[:column_headers])
+    filename = options[:filename] || "#{klass.model_name.human.pluralize}"\
+      " #{Time.now.in_time_zone.strftime('%Y-%m-%d %k_%M')}.csv"
+    self.response_body = csv
+    send_data csv, :filename     => filename,
+                   :content_type => "#{Mime::CSV}; charset=utf-8",
+                   :disposition  => 'inline'
+  end
+
+  ActionController.add_renderer :ms_excel_2003_xml do |obj, options| # FIXME:WIP
+    self.content_type ||= Mime::MS_EXCEL_2003_XML
+    klass = obj.klass
+    if obj.is_a?(AbstractSmarterModel)
+      column_types = klass.attribute_db_types
+    else
+      column_types = {}
+      attributes.each do |attr|
+        column_types[attr] = klass.columns_hash[attr.to_s].type
+      end
+    end
+    ms_excel_2003_xml = render_to_string(
+      :template    => 'shared/index',
+      :locals      => { :models         => obj,
+                        :attributes     => options[:attributes],
+                        :column_types   => column_types,
+                        :column_headers => options[:column_headers] })
+    filename = options[:filename] || "#{klass.model_name.human.pluralize}"\
+      " #{Time.now.in_time_zone.strftime('%Y-%m-%d %k_%M')}.excel2003.xml"
+    send_data ms_excel_2003_xml,
+              :filename     => filename,
+              :content_type => "#{Mime::MS_EXCEL_2003_XML}; charset=utf-8",
+              :disposition  => 'inline'
+  end
 
   private
 
@@ -27,7 +68,7 @@ class ApplicationController < ActionController::Base
                                               column_headers,
                                               filename=nil)
       klass = scoped_collection.klass
-      if klass.superclass == AbstractSmarterModel
+      if scoped_collection.is_a?(AbstractSmarterModel)
         column_types = klass.attribute_db_types
       else
         column_types = {}
@@ -44,17 +85,16 @@ class ApplicationController < ActionController::Base
               { :models         => scoped_collection,
                 :attributes     => attributes,
                 :column_types   => column_types,
-                :column_headers => column_headers}),
+                :column_headers => column_headers }),
           :filename     => filename,
-          :content_type => "#{Mime::MS_EXCEL_2003_XML.to_s}; "\
-                          "charset=utf-8",
+          :content_type => "#{Mime::MS_EXCEL_2003_XML}; charset=utf-8",
           :disposition  => 'inline'
     end
 
     def render_csv_for_download(models, attributes, column_headers, filename)
       send_data csv_from_collection(models, attributes, column_headers),
                 :filename     => filename,
-                :content_type => "#{Mime::CSV.to_s}; charset=utf-8",
+                :content_type => "#{Mime::CSV}; charset=utf-8",
                 :disposition  => 'inline'
     end
 
