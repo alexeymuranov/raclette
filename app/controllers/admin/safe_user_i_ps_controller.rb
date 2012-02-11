@@ -26,6 +26,6 @@ class Admin::SafeUserIPsController < AdminController
       known_ip.safe_user_ids = new_safe_user_ids
     end
 
-    redirect_to admin_safe_user_ips_path
+    redirect_to :action => :index
   end
 end

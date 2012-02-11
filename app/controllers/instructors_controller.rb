@@ -156,7 +156,7 @@ class InstructorsController < ManagerController
     if @instructor.save
       flash[:success] = t('flash.instructors.create.success',
                           :name => @instructor.non_sql_full_name)
-      redirect_to @instructor
+      redirect_to :action => :show, :id => @instructor
     else
       flash.now[:error] = t('flash.instructors.create.failure')
 
@@ -174,7 +174,7 @@ class InstructorsController < ManagerController
     if @instructor.update_attributes(params[:instructor])
       flash[:notice] = t('flash.instructors.update.success',
                          :name => @instructor.full_name)
-      redirect_to @instructor
+      redirect_to :action => :show, :id => @instructor
     else
       flash.now[:error] = t('flash.instructors.update.failure')
 
@@ -189,7 +189,7 @@ class InstructorsController < ManagerController
     flash[:notice] = t('flash.instructors.destroy.success',
                        :name => @instructor.non_sql_full_name)
 
-    redirect_to instructors_url
+    redirect_to :action => :index
   end
 
   private

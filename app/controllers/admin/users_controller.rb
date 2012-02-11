@@ -167,7 +167,7 @@ class Admin::UsersController < AdminController
     if @user.save
       flash[:success] = t('flash.admin.users.create.success',
                           :username => @user.username)
-      redirect_to @user
+      redirect_to :action => :show, :id => @user
     else
       flash.now[:error] = t('flash.admin.users.create.failure')
 
@@ -204,7 +204,7 @@ class Admin::UsersController < AdminController
       if @user.update_attributes(params[:user])
         flash[:notice] = t('flash.admin.users.update.success',
                            :username => @user.username)
-        redirect_to @user
+        redirect_to :action => :show, :id => @user
       else
         flash.now[:error] = t('flash.admin.users.update.failure')
 
@@ -223,7 +223,7 @@ class Admin::UsersController < AdminController
     flash[:notice] = t('flash.admin.users.destroy.success',
                        :username => @user.username)
 
-    redirect_to users_url
+    redirect_to :action => :index
   end
 
   private

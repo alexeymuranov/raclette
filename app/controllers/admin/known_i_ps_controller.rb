@@ -66,7 +66,7 @@ class Admin::KnownIPsController < AdminController
     if @known_ip.save
       flash[:success] = t('flash.admin.known_i_ps.create.success',
                           :ip => @known_ip.ip)
-      redirect_to @known_ip
+      redirect_to :action => :show, :id => @known_ip
     else
       flash.now[:error] = t('flash.admin.known_i_ps.create.failure')
 
@@ -80,7 +80,7 @@ class Admin::KnownIPsController < AdminController
     if @known_ip.update_attributes(params[:known_ip])
       flash[:notice] =  t('flash.admin.known_i_ps.update.success',
                           :ip => @known_ip.ip)
-      redirect_to @known_ip
+      redirect_to :action => :show, :id => @known_ip
     else
       flash.now[:error] = t('flash.admin.known_i_ps.update.failure')
 
@@ -94,7 +94,7 @@ class Admin::KnownIPsController < AdminController
     flash[:notice] = t('flash.admin.known_i_ps.destroy.success',
                        :ip => @known_ip.ip)
 
-    redirect_to admin_known_ips_url
+    redirect_to :action => :index
   end
 
   private

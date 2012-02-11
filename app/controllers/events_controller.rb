@@ -118,7 +118,7 @@ class EventsController < SecretaryController
     if @event.save
       flash[:success] = t('flash.events.create.success',
                           :title => @event.title)
-      redirect_to @event
+      redirect_to :action => :show, :id => @event
     else
       flash.now[:error] = t('flash.events.create.failure')
 
@@ -132,7 +132,7 @@ class EventsController < SecretaryController
     if @event.update_attributes(params[:event])
       flash[:notice] = t('flash.events.update.success',
                          :title => @event.title)
-      redirect_to @event
+      redirect_to :action => :show, :id => @event
     else
       flash.now[:error] = t('flash.events.update.failure')
 
@@ -147,7 +147,7 @@ class EventsController < SecretaryController
     flash[:notice] = t('flash.events.destroy.success',
                        :title => @event.title)
 
-    redirect_to events_url
+    redirect_to :action => :index
   end
 
   private

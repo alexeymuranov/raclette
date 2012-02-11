@@ -170,7 +170,7 @@ class MembersController < SecretaryController  # FIXME: untested work in progres
     if @member.save
       flash[:success] = t('flash.members.create.success',
                           :name => @member.non_sql_full_name)
-      redirect_to @member
+      redirect_to :action => :show, :id => @member
     else
       flash.now[:error] = t('flash.members.create.failure')
 
@@ -188,7 +188,7 @@ class MembersController < SecretaryController  # FIXME: untested work in progres
     if @member.update_attributes(params[:member])
       flash[:notice] = t('flash.members.update.success',
                          :name => @member.full_name)
-      redirect_to @member
+      redirect_to :action => :show, :id => @member
     else
       flash.now[:error] = t('flash.members.update.failure')
 
@@ -203,7 +203,7 @@ class MembersController < SecretaryController  # FIXME: untested work in progres
     flash[:notice] = t('flash.members.destroy.success',
                        :name => @member.non_sql_full_name)
 
-    redirect_to members_url
+    redirect_to :action => :index
   end
 
   private
