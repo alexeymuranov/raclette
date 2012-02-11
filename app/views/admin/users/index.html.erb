@@ -5,7 +5,7 @@
     <% if @filtering_values.blank? %>
       <%= t '.count_total', :count => Admin::User.count %>
     <% else %>
-      <%= t '.count_filtered', :count => @all_filtered_users.size,
+      <%= t '.count_filtered', :count => @users.size,
                                :total => Admin::User.count %>
     <% end %>
   </h2>

@@ -5,7 +5,7 @@
     <% if @filtering_values.blank? %>
       <%= t '.count_total', :count => Member.count %>
     <% else %>
-      <%= t '.count_filtered', :count => @all_filtered_members.size,
+      <%= t '.count_filtered', :count => @members.size,
                                :total => Member.count %>
     <% end %>
   </h2>
