@@ -23,12 +23,12 @@ class MembersController < SecretaryController  # FIXME: untested work in progres
     end
 
     case request.format
-    when 'html'
+    when Mime::HTML
       @attributes = [:ordered_full_name,
                      :email,
                      :account_deactivated,
                      :tickets_count]
-    when 'xml', 'csv', 'ms_excel_2003_xml'
+    when Mime::XML, Mime::CSV, Mime::MS_EXCEL_2003_XML
       @attributes = [:last_name,
                      :first_name,
                      :nickname_or_other,
@@ -103,7 +103,6 @@ class MembersController < SecretaryController  # FIXME: untested work in progres
   end
 
   def show
-
     @attributes = [:person_id,
                    :name_title,
                    :first_name,
@@ -184,7 +183,7 @@ class MembersController < SecretaryController  # FIXME: untested work in progres
                     .find(params[:id])
 
     params[:member][:person_attributes].delete(:email)\
-        if params[:member][:email].blank?
+        if params[:member][:person_attributes][:email].blank?
 
     if @member.update_attributes(params[:member])
       flash[:notice] = t('flash.members.update.success',

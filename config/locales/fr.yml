@@ -197,7 +197,7 @@ fr:
       "admin/safe_user_ip": "Adresse IP autorisée"
       person: "Personne"
       address: "Adresse"
-      instructor: "Intervenant"
+      instructor: "Professeur"
       lesson_supervision: "Encadrement de cours"
       committee_membership: "Participation au CA"
       member: "Adhérent"
@@ -263,10 +263,14 @@ fr:
         # person:
         #   <<: *person_attributes
         <<: *person_attributes
+        presentation: "Présentation"
+        photo: "Photo"
+        employed_from: "Travaille depuis"
+        employed_until: "Travaille jusqu'au"
       lesson_supervision: &lesson_supervision_attributes
-        unique_names: "Name(s)"
-        instructors_count: "Instructors"
-        comment: "Comment"
+        unique_names: "Nom(s)"
+        instructors_count: "Professeurs"
+        comment: "Remarque"
       member:
         # person:
         #   <<: *person_attributes
@@ -633,7 +637,7 @@ fr:
 
   navigation_links:
     sign_out: "Se deconnecter"
- 
+
   sessions:
     new:
       title: "Connection"

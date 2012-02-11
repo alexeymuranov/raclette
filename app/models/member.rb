@@ -109,11 +109,11 @@ class Member < ActiveRecord::Base
     unless @sql_for_attributes
       super
 
-      [ :last_name, :first_name, :name_title, :nickname_or_other, :email,
-        :full_name, :ordered_full_name, :formatted_email ]\
-          .each do |attr|
-        @sql_for_attributes[attr] = Person.sql_for_attributes[attr]
-      end
+      # [ :last_name, :first_name, :name_title, :nickname_or_other, :email,
+      #   :full_name, :ordered_full_name, :formatted_email ]\
+      #     .each do |attr|
+      #   @sql_for_attributes[attr] = Person.sql_for_attributes[attr]
+      # end
 
       tickets_count_sql = "(#{super[:payed_tickets_count]} + "\
                            "#{super[:free_tickets_count]})"
@@ -127,16 +127,16 @@ class Member < ActiveRecord::Base
     unless @attribute_db_types
       super
 
-      [ :last_name, :first_name, :name_title, :nickname_or_other, :email]\
-          .each do |attr|
-        @attribute_db_types[attr] = ('delegated_' +
-                                     Person.columns_hash[attr.to_s].type.to_s)\
-                                    .to_sym
-      end
+      # [ :last_name, :first_name, :name_title, :nickname_or_other, :email]\
+      #     .each do |attr|
+      #   @attribute_db_types[attr] = ('delegated_' +
+      #                                Person.columns_hash[attr.to_s].type.to_s)\
+      #                               .to_sym
+      # end
 
-      [ :full_name, :ordered_full_name, :formatted_email ].each do |attr|
-        @attribute_db_types[attr] = :virtual_string
-      end
+      # [ :full_name, :ordered_full_name, :formatted_email ].each do |attr|
+      #   @attribute_db_types[attr] = :virtual_string
+      # end
 
       @attribute_db_types.merge!(:tickets_count => :virtual_integer)
     end

@@ -8,13 +8,6 @@ class Person < ActiveRecord::Base
 
   attr_readonly :id, :last_name
 
-  attr_accessible( :last_name,
-                   :first_name,
-                   :name_title,
-                   :nickname_or_other,
-                   :email,
-                   :as => [ :secretary, :manager ] )
-
   # Associations
   has_many :users, :dependent  => :nullify,
                    :inverse_of => :person

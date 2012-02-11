@@ -27,7 +27,7 @@ class Admin::UsersController < AdminController
     end
 
     case request.format
-    when 'html'
+    when Mime::HTML
       @attributes = [:username,
                      :full_name,
                      :account_deactivated,
@@ -35,7 +35,7 @@ class Admin::UsersController < AdminController
                      :manager,
                      :secretary,
                      :a_person]
-    when 'xml', 'csv', 'ms_excel_2003_xml'
+    when Mime::XML, Mime::CSV, Mime::MS_EXCEL_2003_XML
       @attributes = [:username,
                      :full_name,
                      :email,

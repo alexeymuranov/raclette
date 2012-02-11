@@ -11,7 +11,7 @@ module AbstractSmarterModel  # NOTE:WIP
     def sql_for_attributes
       unless @sql_for_attributes
         @sql_for_attributes = Hash.new { |hash, key|
-          if (key.class == Symbol) && (column = self.columns_hash[key.to_s])
+          if (key.is_a?(Symbol)) && (column = self.columns_hash[key.to_s])
             hash[key] = "\"#{self.table_name}\".\"#{key.to_s}\""
           else
             nil
@@ -30,7 +30,7 @@ module AbstractSmarterModel  # NOTE:WIP
     def attribute_db_types
       unless @attribute_db_types
         @attribute_db_types = Hash.new { |hash, key|
-          if (key.class == Symbol) && (column = self.columns_hash[key.to_s])
+          if (key.is_a?(Symbol)) && (column = self.columns_hash[key.to_s])
             hash[key] = column.type
           else
             nil
@@ -48,18 +48,15 @@ module AbstractSmarterModel  # NOTE:WIP
     end
 
     def native_and_named_attributes_sql(*attributes)
-      if attributes.blank?
-        "\"#{table_name}\".*"
-      else
-        "\"#{table_name}\".*, #{named_virtual_attributes_sql(*attributes)}"
-      end
+      "\"#{table_name}\".*, #{named_virtual_attributes_sql(*attributes)}"
     end
     
     # Cannot use `scope` with `lambda` here because `lambda` would bind
     # to the current ... scope (not in the above sense :)), in particular,
     # `self` would be `AbstractSmarterModel` in all descendants.
     def with_virtual_attributes(*attributes)
-      select(native_and_named_attributes_sql(*attributes))  # a Relation
+      attributes.blank? ? scoped :
+        select(native_and_named_attributes_sql(*attributes))  # a Relation
     end
   end
 end

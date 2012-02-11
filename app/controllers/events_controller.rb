@@ -11,12 +11,12 @@ class EventsController < SecretaryController
     end
 
     case request.format
-    when 'html'
+    when Mime::HTML
       @attributes = [:title, :event_type,
                      :date,
                      :start_time,
                      :supervisors]
-    when 'xml', 'csv', 'ms_excel_2003_xml'
+    when Mime::XML, Mime::CSV, Mime::MS_EXCEL_2003_XML
       @attributes = [:title, :event_type,
                      :date,
                      :start_time,

@@ -33,7 +33,7 @@ class ApplicationController < ActionController::Base
   ActionController.add_renderer :ms_excel_2003_xml do |obj, options| # FIXME:WIP
     self.content_type ||= Mime::MS_EXCEL_2003_XML
     klass = obj.klass
-    if obj.is_a?(AbstractSmarterModel)
+    if klass < AbstractSmarterModel
       column_types = klass.attribute_db_types
     else
       column_types = {}
@@ -68,7 +68,7 @@ class ApplicationController < ActionController::Base
                                               column_headers,
                                               filename=nil)
       klass = scoped_collection.klass
-      if scoped_collection.is_a?(AbstractSmarterModel)
+      if klass < AbstractSmarterModel
         column_types = klass.attribute_db_types
       else
         column_types = {}
@@ -91,7 +91,7 @@ class ApplicationController < ActionController::Base
           :disposition  => 'inline'
     end
 
-    def render_csv_for_download(models, attributes, column_headers, filename)
+    def render_csv_for_download(models, attributes, column_headers, filename=nil)
       send_data csv_from_collection(models, attributes, column_headers),
                 :filename     => filename,
                 :content_type => "#{Mime::CSV}; charset=utf-8",

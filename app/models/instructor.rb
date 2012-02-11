@@ -55,36 +55,36 @@ class Instructor < ActiveRecord::Base
 
   # @@people_table_name = Person.table_name
 
-  def self.sql_for_attributes  # Extends the one from AbstractSmarterModel
-    unless @sql_for_attributes
-      super
+  # def self.sql_for_attributes  # Extends the one from AbstractSmarterModel
+  #   unless @sql_for_attributes
+  #     super
 
-      [ :last_name, :first_name, :name_title, :nickname_or_other, :email,
-        :full_name, :ordered_full_name, :formatted_email ]\
-          .each do |attr|
-        @sql_for_attributes[attr] = Person.sql_for_attributes[attr]
-      end
-    end
-    @sql_for_attributes
-  end
+  #     # [ :last_name, :first_name, :name_title, :nickname_or_other, :email,
+  #     #   :full_name, :ordered_full_name, :formatted_email ]\
+  #     #     .each do |attr|
+  #     #   @sql_for_attributes[attr] = Person.sql_for_attributes[attr]
+  #     # end
+  #   end
+  #   @sql_for_attributes
+  # end
 
-  def self.attribute_db_types  # Extends the one from AbstractSmarterModel
-    unless @attribute_db_types
-      super
+  # def self.attribute_db_types  # Extends the one from AbstractSmarterModel
+  #   unless @attribute_db_types
+  #     super
 
-      [ :last_name, :first_name, :name_title, :nickname_or_other, :email]\
-          .each do |attr|
-        @attribute_db_types[attr] = ('delegated_' +
-                                     Person.columns_hash[attr.to_s].type.to_s)\
-                                    .to_sym
-      end
+  #     # [ :last_name, :first_name, :name_title, :nickname_or_other, :email]\
+  #     #     .each do |attr|
+  #     #   @attribute_db_types[attr] = ('delegated_' +
+  #     #                                Person.columns_hash[attr.to_s].type.to_s)\
+  #     #                               .to_sym
+  #     # end
 
-      [ :full_name, :ordered_full_name, :formatted_email ].each do |attr|
-        @attribute_db_types[attr] = :virtual_string
-      end
-    end
-    @attribute_db_types
-  end
+  #     # [ :full_name, :ordered_full_name, :formatted_email ].each do |attr|
+  #     #   @attribute_db_types[attr] = :virtual_string
+  #     # end
+  #   end
+  #   @attribute_db_types
+  # end
 
   # Scopes
   scope :default_order, joins(:person).merge(Person.default_order)

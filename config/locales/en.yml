@@ -305,6 +305,10 @@ en:
         # person:
         #   <<: *person_attributes
         <<: *person_attributes
+        presentation: "Presentation"
+        photo: "Photo"
+        employed_from: "Employed from"
+        employed_until: "Employed until"
       lesson_supervision: &lesson_supervision_attributes
         unique_names: "Name(s)"
         instructors_count: "Instructors"
