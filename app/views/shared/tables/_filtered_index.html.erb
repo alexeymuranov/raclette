@@ -54,54 +54,6 @@
       <th class="empty"></th>
       <th class="empty"></th>
     </tr>
-    <% unless filtering_values.blank? %>
-      <tr>
-        <% attributes.each do |attr| %>
-          <% unless filtering_values[attr].nil? %>
-            <%- case column_types[attr] -%>
-            <%- when :string, :delegated_string, :virtual_string -%>
-              <td class="filtering_value">
-                <%= filtering_values[attr] %>
-              </td>
-            <%- when :boolean, :delegated_boolean, :virtual_boolean -%>
-              <td class="boolean filtering_value">
-                <%= boolean_to_yes_no(filtering_values[attr]) %>
-              </td>
-            <%- when :integer, :delegated_integer, :virtual_integer -%>
-              <td class="number filtering_value">
-                <%- if filtering_values[attr][:min] -%>
-                  <%= filtering_values[attr][:min] %>
-                <%- end -%>
-                ..
-                <%- if filtering_values[attr][:max] -%>
-                  <%= filtering_values[attr][:max] %>
-                <%- end -%>
-              </td>
-            <%- when :date, :delegated_date, :virtual_date -%>
-              <td class="date filtering_value">
-                <%- if filtering_values[attr][:from] -%>
-                  <%= t(date.from) %>
-                  <%= filtering_values[attr][:from] %><!-- no space!
-               --><br />
-                <%- end -%>
-                <%- if filtering_values[attr][:until] -%>
-                  <%= t(date.until) %>
-                  <%= filtering_values[attr][:until] %>
-                <%- end -%>
-              </td>
-            <% else %>
-              <td class="filtering_value">
-                <%= filtering_values[attr] %>
-              </td>
-            <% end %>
-          <% else %>
-            <td></td>
-          <% end %>
-        <% end %>
-        <td class="empty"></td>
-        <td class="empty"></td>
-      </tr>
-    <% end %>
     <tr>
       <% attributes.each do |attr| %>
         <%- case column_types[attr] -%>
@@ -191,6 +143,54 @@
       <td class="empty"></td>
       <td class="empty"></td>
     </tr>
+    <% unless filtering_values.blank? %>
+      <tr>
+        <% attributes.each do |attr| %>
+          <% unless filtering_values[attr].nil? %>
+            <%- case column_types[attr] -%>
+            <%- when :string, :delegated_string, :virtual_string -%>
+              <td class="filtering_value">
+                <%= filtering_values[attr] %>
+              </td>
+            <%- when :boolean, :delegated_boolean, :virtual_boolean -%>
+              <td class="boolean filtering_value">
+                <%= boolean_to_yes_no(filtering_values[attr]) %>
+              </td>
+            <%- when :integer, :delegated_integer, :virtual_integer -%>
+              <td class="number filtering_value">
+                <%- if filtering_values[attr][:min] -%>
+                  <%= filtering_values[attr][:min] %>
+                <%- end -%>
+                ..
+                <%- if filtering_values[attr][:max] -%>
+                  <%= filtering_values[attr][:max] %>
+                <%- end -%>
+              </td>
+            <%- when :date, :delegated_date, :virtual_date -%>
+              <td class="date filtering_value">
+                <%- if filtering_values[attr][:from] -%>
+                  <%= t(date.from) %>
+                  <%= filtering_values[attr][:from] %><!-- no space!
+               --><br />
+                <%- end -%>
+                <%- if filtering_values[attr][:until] -%>
+                  <%= t(date.until) %>
+                  <%= filtering_values[attr][:until] %>
+                <%- end -%>
+              </td>
+            <% else %>
+              <td class="filtering_value">
+                <%= filtering_values[attr] %>
+              </td>
+            <% end %>
+          <% else %>
+            <td></td>
+          <% end %>
+        <% end %>
+        <td class="empty"></td>
+        <td class="empty"></td>
+      </tr>
+    <% end %>
   </thead>
 
   <%= render 'shared/tables/index_body',
