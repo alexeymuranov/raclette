@@ -1,2 +1,21 @@
-<h1>Events#edit</h1>
-<p>Find me in app/views/events/edit.html.erb</p>
+<h1><%= t '.header', :title => @event.title %></h1>
+
+<%= render 'form' %>
+
+<footer>
+  <%= link_to show_pictogram(3) + ' ' + t('events.show.header',
+                                          :title => @event.title),
+              @event,
+              :class => 'display resource' %>
+  <%= link_to list_all_pictogram(3) + ' ' + t('events.index.header'),
+              events_path,
+              :class => 'display resource' %>
+</footer>
+
+<%# End of the main body of the view %>
+
+<% content_for :side_menu_list_items do %>
+  <li><%= link_to list_all_pictogram + ' ' + t('events.index.title'),
+                  events_path,
+                  :class => 'display resource' %></li>
+<% end %>

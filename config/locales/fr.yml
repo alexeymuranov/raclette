@@ -20,7 +20,7 @@ fr:
       - :year
     # Custom:
     from: "du"
-    until: "jusqu'au"
+    until: "au"
 
   time:
     formats:
@@ -747,15 +747,21 @@ fr:
     index:
       title: "Professeurs"
       header: "Professeurs"
+      count_total: "%{count} professeurs en total"
+      count_filtered: "%{count} professeurs filtrés sur %{total}"
+      subheaders:
+        mailing_list: "Adresses e-mail des professeurs filtrés"
+      terms:
+        filtered_instructors: "professeurs filtrés"
     show:
-      title: ""
-      header: ""
+      title: "%{name}"
+      header: "Professeur %{name}"
     new:
-      title: ""
-      header: ""
+      title: "Nouveau(elle) professeur"
+      header: "Ajouter un(e) professeur"
     edit:
-      title: ""
-      header: ""
+      title: "%{name} - mise à jour"
+      header: "Mise à jour de professeur %{name}"
 
   lesson_supervisions:
     index:
@@ -879,12 +885,16 @@ fr:
     index:
       title: "Événements"
       header: "Événements"
+      count_total: "%{count} événements en total"
+      count_filtered: "%{count} événements filtrés sur %{total}"
+      terms:
+        filtered_events: "événements filtrés"
     show:
-      title: ""
-      header: ""
+      title: "%{title}"
+      header: "Événement %{title}"
     new:
-      title: ""
-      header: ""
+      title: "Nouveau événement"
+      header: "Ajouter un événement"
     edit:
-      title: ""
-      header: ""
+      title: "%{title} - mise à jour"
+      header: "Mise à jour de l'événement %{title}"

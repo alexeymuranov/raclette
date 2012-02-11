@@ -1,6 +1,14 @@
 ## encoding: UTF-8
 
+require 'app_active_record_extensions/filtering'
+require 'app_active_record_extensions/sorting'
+
 class Event < ActiveRecord::Base
+  include Filtering
+  include Sorting
+  self.default_sorting_column = :start_time
+  self.all_sorting_columns = []
+  include AbstractSmarterModel
 
   attr_readonly :id, :event_type, :lesson, :weekly
 
@@ -27,7 +35,7 @@ class Event < ActiveRecord::Base
   validates :event_type, :length    => { :maximum => 32 },
                          :inclusion => %w[ Cours
                                            Atelier
-                                           Practica
+                                           Pratica
                                            SoiréeSpécial
                                            Initiation ]
 

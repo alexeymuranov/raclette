@@ -1,2 +1,17 @@
-<h1>Events#new</h1>
-<p>Find me in app/views/events/new.html.erb</p>
+<h1><%= t '.header' %></h1>
+
+<%= render 'form' %>
+
+<footer>
+  <%= link_to list_all_pictogram(3) + ' ' + t('events.index.header'),
+              events_path,
+              :class => 'display resource' %>
+</footer>
+
+<%# End of the main body of the view %>
+
+<% content_for :side_menu_list_items do %>
+  <li><%= link_to list_all_pictogram + ' ' + t('events.index.title'),
+                  events_path,
+                  :class => 'display resource' %></li>
+<% end %>

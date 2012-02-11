@@ -789,15 +789,21 @@ en:
     index:
       title: "Instructors"
       header: "Instructors"
+      count_total: "%{count} instructors total"
+      count_filtered: "%{count} instructors filtered out of %{total}"
+      subheaders:
+        mailing_list: "E-mail addresses of the filtered instructors"
+      terms:
+        filtered_instructors: "filtered instructors"
     show:
-      title: ""
-      header: ""
+      title: "%{name}"
+      header: "Instructor %{name}"
     new:
-      title: ""
-      header: ""
+      title: "New instructor"
+      header: "New instructor"
     edit:
-      title: ""
-      header: ""
+      title: "Update %{name}"
+      header: "Update instructor %{name}"
 
   lesson_supervisions:
     index:
@@ -921,12 +927,16 @@ en:
     index:
       title: "Events"
       header: "Events"
+      count_total: "%{count} events total"
+      count_filtered: "%{count} events filtered out of %{total}"
+      terms:
+        filtered_events: "filtered events"
     show:
-      title: ""
-      header: ""
+      title: "%{title}"
+      header: "Event %{title}"
     new:
-      title: ""
-      header: ""
+      title: "New event"
+      header: "New event"
     edit:
-      title: ""
-      header: ""
+      title: "Update %{title}"
+      header: "Update event %{title}"
