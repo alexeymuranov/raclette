@@ -3,6 +3,7 @@
       attributes:
       column_types:
       column_headers:
+      resources_controller_name:
       html_table_id:
 -%>
 
@@ -23,8 +24,9 @@
   </thead>
 
   <%= render 'shared/tables/simple_index_body',
-             :models       => models,
-             :attributes   => attributes,
-             :column_types => column_types %>
+             :models          => models,
+             :attributes      => attributes,
+             :column_types    => column_types,
+             :controller_name => resources_controller_name %>
 
 <% end %>

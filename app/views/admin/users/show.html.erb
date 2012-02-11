@@ -18,11 +18,12 @@
   <h2><%= Admin::User.human_attribute_name(:safe_ips) %></h2>
 
   <%= render('shared/tables/simple_index',
-             :models         => @safe_ips,
-             :attributes     => @safe_ips_attributes,
-             :column_types   => @known_ips_column_types,
-             :column_headers => @known_ips_column_headers,
-             :html_table_id  => :safe_ips) unless @safe_ips.empty? %>
+             :models                    => @safe_ips,
+             :attributes                => @safe_ips_attributes,
+             :column_types              => @known_ips_column_types,
+             :column_headers            => @known_ips_column_headers,
+             :resources_controller_name => Admin::KnownIPsController.controller_path,
+             :html_table_id             => :safe_ips) unless @safe_ips.empty? %>
 
 </section>
 

@@ -6,6 +6,8 @@
       key2:
       description1:
       description2:
+      controller_name1:
+      controller_name2:
 -%>
 
 <table class="grid">
@@ -18,7 +20,7 @@
       <th class="empty"></th>
       <% models2.each do |mod2| %>
         <th>
-          <%= link_to mod2.public_send(key2), mod2,
+          <%= link_to mod2.public_send(key2), { :controller => controller_name2, :action => :show, :id => mod2 },
                       :title => mod2.public_send(description2),
                       :class => 'display resource' %>
         </th>
@@ -29,7 +31,7 @@
     <% models1.each do |mod1| %>
       <tr>
         <th scope=row>
-          <%= link_to mod1.public_send(key1), mod1,
+          <%= link_to mod1.public_send(key1), { :controller => controller_name1, :action => :show, :id => mod1 },
                       :title => mod1.public_send(description1),
                       :class => 'display resource' %>
         </th>

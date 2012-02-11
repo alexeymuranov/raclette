@@ -2,6 +2,7 @@
       models:
       attributes:
       column_types:
+      controller_name:
 -%>
 
 <tbody>
@@ -16,9 +17,10 @@
       <tr>
 
         <%= render 'shared/tables/attributes_in_index',
-                   :model        => mod,
-                   :attributes   => attributes,
-                   :column_types => column_types %>
+                   :model           => mod,
+                   :attributes      => attributes,
+                   :column_types    => column_types,
+                   :controller_name => controller_name %>
 
       </tr>
 

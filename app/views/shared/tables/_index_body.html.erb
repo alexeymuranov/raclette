@@ -2,7 +2,10 @@
       models:
       attributes:
       column_types:
+      controller_name:
 -%>
+
+<% controller_name ||= controller.controller_name %>
 
 <tbody>
   <% if models.blank? %>
@@ -22,13 +25,13 @@
                    :column_types => column_types %>
 
         <td class="operation">
-          <%= link_to edit_pictogram(2), [ :edit, mod ],
+          <%= link_to edit_pictogram(2), { :action => :edit, :id => mod },
                       :title => t('actions.update'),
                       :class => 'modify resource' %>
         </td>
 
         <td class="operation">
-          <%= link_to delete_pictogram(2),  mod,
+          <%= link_to delete_pictogram(2), { :action => :destroy, :id => mod },
                       :confirm => t('questions.are_you_sure?'),
                       :method  => :delete,
                       :title   => t('actions.delete'),
