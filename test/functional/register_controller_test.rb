@@ -8,17 +8,20 @@ class RegisterControllerTest < ActionController::TestCase
   end
 
   test "should get choose_person" do
-    get :choose_person, {}, { :user_id => @user_admin.to_param }
+    session[:user_id] = @user_admin.to_param
+    get :choose_person
     assert_response :success
   end
 
   test "should get compose_transaction" do
-    get :compose_transaction, {}, { :user_id => @user_admin.to_param }
+    session[:user_id] = @user_admin.to_param
+    get :compose_transaction
     assert_response :success
   end
 
   # test "should create transaction" do
-  #   post :create_transaction, {}, { :user_id => @user_admin.to_param }
+  #   session[:user_id] = @user_admin.to_param
+  #   post :create_transaction
   #   assert_response :success
   # end
 end

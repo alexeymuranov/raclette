@@ -9,24 +9,26 @@ class InstructorsControllerTest < ActionController::TestCase
   end
 
   test "should get index" do
-    get :index, {}, { :user_id => @user_admin.to_param }
+    session[:user_id] = @user_admin.to_param
+    get :index
     assert_response :success
   end
 
   test "should get show" do
-    get :show, { :id => @instructor.to_param },
-               { :user_id => @user_admin.to_param }
+    session[:user_id] = @user_admin.to_param
+    get :show, { :id => @instructor.to_param }
     assert_response :success
   end
 
   test "should get new" do
-    get :new, {}, { :user_id => @user_admin.to_param }
+    session[:user_id] = @user_admin.to_param
+    get :new
     assert_response :success
   end
 
   test "should get edit" do
-    get :edit, { :id => @instructor.to_param },
-               { :user_id => @user_admin.to_param }
+    session[:user_id] = @user_admin.to_param
+    get :edit, { :id => @instructor.to_param }
     assert_response :success
   end
 end
