@@ -33,7 +33,7 @@
 
 <footer>
   <%= link_to add_pictogram(2) + ' ' + t('admin.users.new.header'),
-              new_admin_user_path,
+              new_user_path,
               :title => t('actions.create'),
               :class => 'add resource' %>
 </footer>
@@ -42,7 +42,7 @@
 
 <% content_for :side_menu_list_items do %>
   <li><%= link_to add_pictogram + ' ' + t('admin.users.new.title'),
-                  new_admin_user_path,
+                  new_user_path,
                   :title => t('actions.create'),
                   :class => 'add resource' %></li>
 <% end %>

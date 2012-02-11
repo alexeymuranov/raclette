@@ -4,7 +4,7 @@
 
 <footer>
   <%= link_to list_all_pictogram(3) + ' ' + t('admin.users.index.header'),
-              admin_users_path,
+              users_path,
               :class => 'display resource' %>
 </footer>
 
@@ -12,6 +12,6 @@
 
 <% content_for :side_menu_list_items do %>
   <li><%= link_to list_all_pictogram + ' ' + t('admin.users.index.title'),
-                  admin_users_path,
+                  users_path,
                   :class => 'display resource' %></li>
 <% end %>

@@ -19,8 +19,8 @@ Raclette::Application.routes.draw do
   resources :memberships
   resources :weekly_events
 
-  # scope :module => :admin do  # an alternative for admin namespace
-  namespace :admin do
+  scope '/admin', :module => :admin do  # an alternative for admin namespace
+  # namespace :admin do
 
     resources :users
 

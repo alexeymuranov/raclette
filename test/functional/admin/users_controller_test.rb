@@ -56,7 +56,7 @@ class Admin::UsersControllerTest < ActionController::TestCase
 
       assert Admin::User.find(@another_user.id).secretary? == new_secretary_status
 
-      assert_redirected_to @another_user
+      assert_redirected_to :action => :show, :id => @another_user
     end
   end
 end

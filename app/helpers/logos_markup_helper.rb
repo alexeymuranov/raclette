@@ -31,7 +31,7 @@ module LogosMarkupHelper
 
   def path_logo_links_to(user)
     if user.admin?
-      admin_admin_tools_overview_path
+      admin_tools_overview_path
     elsif user.manager?
       root_path
     elsif user.secretary?

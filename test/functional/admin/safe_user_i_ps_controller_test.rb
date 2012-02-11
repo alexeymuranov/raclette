@@ -43,7 +43,8 @@ class Admin::SafeUserIPsControllerTest < ActionController::TestCase
         session[:user_id] = @user_admin.to_param
         put :update_all, params_hash
       end
-      assert_redirected_to admin_safe_user_ips_path
+
+      assert_redirected_to :action => :index
     end
   end
 end

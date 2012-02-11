@@ -30,7 +30,8 @@ class Admin::KnownIPsControllerTest < ActionController::TestCase
       post :create, { :known_ip => @new_known_ip.attributes }
     end
 
-    assert_redirected_to admin_known_ip_path(assigns(:known_ip))
+    assert_not_nil assigns(:known_ip)
+    assert_redirected_to :action => :show, :id => assigns(:known_ip)
   end
 
   test "should show admin_known_ip" do
@@ -49,7 +50,9 @@ class Admin::KnownIPsControllerTest < ActionController::TestCase
     session[:user_id] = @user_admin.to_param
     put :update, { :id => @known_ip.to_param,
                    :known_ip => @new_known_ip.attributes }
-    assert_redirected_to admin_known_ip_path(assigns(:known_ip))
+
+    assert_not_nil assigns(:known_ip)
+    assert_redirected_to :action => :show, :id => assigns(:known_ip)
   end
 
   test "should destroy admin_known_ip" do
@@ -58,6 +61,6 @@ class Admin::KnownIPsControllerTest < ActionController::TestCase
       delete :destroy, { :id => @known_ip.to_param }
     end
 
-    assert_redirected_to admin_known_ips_path
+    assert_redirected_to :action => :index
   end
 end
