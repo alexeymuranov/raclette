@@ -11,7 +11,7 @@ class Instructor < ActiveRecord::Base
 
   self.primary_key = 'person_id'
 
-  include AbstractSmarterModel
+  include AbstractPerson # TODO: take advatage of AbstractPerson here instead of AbstractSmarterModel
 
   attr_readonly :id, :person_id
 
@@ -30,7 +30,6 @@ class Instructor < ActiveRecord::Base
            :first_name,
            :name_title,
            :nickname_or_other,
-           :full_name,
            :birthyear,
            :email,
            :mobile_phone,
@@ -38,6 +37,7 @@ class Instructor < ActiveRecord::Base
            :work_phone,
            :personal_phone,
            :primary_address,
+           :non_sql_full_name,
            :to => :person
 
   # Validations
@@ -52,11 +52,12 @@ class Instructor < ActiveRecord::Base
   validates :person_id, :uniqueness => true
 
   # Public class methods
+
+  # @@people_table_name = Person.table_name
+
   def self.sql_for_attributes  # Extends the one from AbstractSmarterModel
     unless @sql_for_attributes
       super
-
-      people_table_name = Person.table_name
 
       [ :last_name, :first_name, :name_title, :nickname_or_other, :email,
         :full_name, :ordered_full_name, :formatted_email ]\
@@ -86,7 +87,7 @@ class Instructor < ActiveRecord::Base
   end
 
   # Scopes
-  scope :default_order, joins(:person).order('person.last_name ASC')
+  scope :default_order, joins(:person).merge(Person.default_order)
 end
 # == Schema Information
 #

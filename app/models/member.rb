@@ -102,11 +102,12 @@ class Member < ActiveRecord::Base
   validates :person_id, :uniqueness => true
 
   # Public class methods
+
+  # @@people_table_name = Person.table_name
+
   def self.sql_for_attributes  # Extends the one from AbstractSmarterModel
     unless @sql_for_attributes
       super
-
-      people_table_name = Person.table_name
 
       [ :last_name, :first_name, :name_title, :nickname_or_other, :email,
         :full_name, :ordered_full_name, :formatted_email ]\
@@ -144,7 +145,6 @@ class Member < ActiveRecord::Base
 
   # Scopes
   scope :default_order, joins(:person).merge(Person.default_order)
-
   scope :account_active, where(:account_deactivated => false)
 
   # Public instance methods
