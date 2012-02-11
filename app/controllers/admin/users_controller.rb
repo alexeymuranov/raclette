@@ -95,20 +95,14 @@ class Admin::UsersController < AdminController
         render_ms_excel_2003_xml_for_download\
             @users,
             @attributes,
-            @column_headers,
-            "#{Admin::User.model_name.human.pluralize}"\
-            " #{Time.now.in_time_zone.strftime('%Y-%m-%d %k_%M')}"\
-            ".excel2003.xml"  # defined in ApplicationController
+            @column_headers  # defined in ApplicationController
       end
 
       requested_format.csv do
         render_csv_for_download\
             @users,
             @attributes,
-            @column_headers,
-            "#{Admin::User.model_name.human.pluralize}"\
-            " #{Time.now.in_time_zone.strftime('%Y-%m-%d %k_%M')}"\
-            ".csv"  # defined in ApplicationController
+            @column_headers  # defined in ApplicationController
       end
     end
   end

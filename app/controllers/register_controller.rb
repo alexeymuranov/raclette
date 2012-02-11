@@ -16,7 +16,6 @@ class RegisterController < ApplicationController
                       .find(params[:member_id])
     elsif params[:guest]
       @guest = Guest.new(params[:guest])
-      # raise @guest.attributes.inspect
     end
     
     unless @member || @guest

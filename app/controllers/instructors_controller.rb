@@ -79,20 +79,14 @@ class InstructorsController < ManagerController
         render_ms_excel_2003_xml_for_download\
             @instructors,
             @attributes,
-            @column_headers,
-            "#{Instructor.model_name.human.pluralize}"\
-            " #{Time.now.in_time_zone.strftime('%Y-%m-%d %k_%M')}"\
-            ".excel2003.xml"  # defined in ApplicationController
+            @column_headers  # defined in ApplicationController
       end
 
       requested_format.csv do
         render_csv_for_download\
             @instructors,
             @attributes,
-            @column_headers,
-            "#{Instructor.model_name.human.pluralize}"\
-            " #{Time.now.in_time_zone.strftime('%Y-%m-%d %k_%M')}"\
-            ".csv"  # defined in ApplicationController
+            @column_headers  # defined in ApplicationController
       end
     end
   end

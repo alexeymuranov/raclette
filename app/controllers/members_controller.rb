@@ -2,6 +2,15 @@
 
 class MembersController < SecretaryController  # FIXME: untested work in progress
 
+  param_accessible({ 'member' => Set[
+                       'person_attributes',
+                       'last_name', 'first_name', 'name_title',
+                       'nickname_or_other', 'email',
+                       'free_tickets_count', 'account_deactivated'] },
+                     :only => [:create, :update] )
+  param_accessible({ 'member' => 'been_member_by' },
+                     :only => :create )
+
   def index
     @query_type = params[:query_type]
     @submit_button = params[:button]
@@ -81,20 +90,14 @@ class MembersController < SecretaryController  # FIXME: untested work in progres
         render_ms_excel_2003_xml_for_download\
             @members,
             @attributes,
-            @column_headers,
-            "#{Member.model_name.human.pluralize}"\
-            " #{Time.now.in_time_zone.strftime('%Y-%m-%d %k_%M')}"\
-            ".excel2003.xml"  # defined in ApplicationController
+            @column_headers  # defined in ApplicationController
       end
 
       requested_format.csv do
         render_csv_for_download\
             @members,
             @attributes,
-            @column_headers,
-            "#{Member.model_name.human.pluralize}"\
-            " #{Time.now.in_time_zone.strftime('%Y-%m-%d %k_%M')}"\
-            ".csv"  # defined in ApplicationController
+            @column_headers  # defined in ApplicationController
       end
     end
   end
@@ -141,9 +144,6 @@ class MembersController < SecretaryController  # FIXME: untested work in progres
     params[:member].delete(:email)\
         if params[:member][:email].blank?
 
-    # @acceptable_attributes = [ 'been_member_by', 'person_attributes' ]
-    # params[:member].slice!(*@acceptable_attributes)
-
     # Because members primary key works as foreign key for people
     # (this is not recommended in general),
     # building an associated person and saving the member with person with
@@ -156,17 +156,14 @@ class MembersController < SecretaryController  # FIXME: untested work in progres
     params[:member][:person_attributes].delete(:email)\
       if params[:member][:person_attributes][:email].blank?
 
-    @person.assign_attributes(params[:member][:person_attributes],
-                              :as => :secretary)
-    @member.assign_attributes(params[:member].except(:person_attributes),
-                              :as => :secretary)
+    @person.assign_attributes(params[:member][:person_attributes])
+    @member.assign_attributes(params[:member].except(:person_attributes))
 
     unless @person.save
       flash.now[:error] = t('flash.members.create.failure')
       @member.person = @person  # seems safe here
 
-      render_new_properly
-      return  # i believe render itself does not stop exectition of the method
+      render_new_properly and return
     end
 
     @member.person_id = @person.id
@@ -189,11 +186,7 @@ class MembersController < SecretaryController  # FIXME: untested work in progres
     params[:member][:person_attributes].delete(:email)\
         if params[:member][:email].blank?
 
-
-    # @acceptable_attributes = [ 'been_member_by', 'person_attributes' ]
-    # params[:member].slice!(*@acceptable_attributes)
-
-    if @member.update_attributes(params[:member], :as => :secretary)
+    if @member.update_attributes(params[:member])
       flash[:notice] = t('flash.members.update.success',
                          :name => @member.full_name)
       redirect_to @member
