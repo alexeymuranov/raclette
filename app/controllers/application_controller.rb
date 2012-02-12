@@ -56,15 +56,13 @@ class ApplicationController < ActionController::Base
               :disposition  => 'inline'
   end
 
-  class UserResource < Admin::User
-    include ActiveModelUtilities
+  module KnowingYourController  # NOTE: does not seem very useful
+    def included(base)
+      base.extend(ClassMethods)
+    end
 
-    has_many :safe_ips, :class_name => :KnownIPResource,
-                        :through    => :safe_user_ips,
-                        :source     => :known_ip
-
-    def self.controller_path
-      @controller_path ||= Admin::UsersController.controller_path
+    module ClassMethods
+      attr_accessor :controller_path
     end
 
     def controller_path
@@ -74,7 +72,9 @@ class ApplicationController < ActionController::Base
 
   class KnownIPResource < Admin::KnownIP
     include ActiveModelUtilities
+    include KnowingYourController
 
+    # Override class name of the associated model:
     has_many :safe_users, :class_name => :UserResource,
                           :through    => :safe_user_ips,
                           :source     => :user
@@ -82,38 +82,37 @@ class ApplicationController < ActionController::Base
     def self.controller_path
       @controller_path ||= Admin::KnownIPsController.controller_path
     end
+  end
 
-    def controller_path
-      self.class.controller_path
+  class UserResource < Admin::User
+    include ActiveModelUtilities
+    include KnowingYourController
+
+    has_many :safe_ips, :class_name => :KnownIPResource,
+                        :through    => :safe_user_ips,
+                        :source     => :known_ip
+
+    def self.controller_path
+      @controller_path ||= Admin::UsersController.controller_path
     end
   end
 
   class EventResource < Event
     include ActiveModelUtilities
+    include KnowingYourController
 
     def self.controller_path
       @controller_path ||= EventsController.controller_path
-    end
-
-    def controller_path
-      self.class.controller_path
     end
   end
 
   class GuestResource < Guest
     include ActiveModelUtilities
-
-    def self.controller_path
-      @controller_path ||= GuestController.controller_path
-    end
-
-    def controller_path
-      self.class.controller_path
-    end
   end
 
   class InstructorResource < Instructor
     include ActiveModelUtilities
+    include KnowingYourController
 
     # Override association class:
     belongs_to :person, :class_name => :PersonResource,
@@ -122,14 +121,11 @@ class ApplicationController < ActionController::Base
     def self.controller_path
       @controller_path ||= InstructorsController.controller_path
     end
-
-    def controller_path
-      self.class.controller_path
-    end
   end
 
   class MemberResource < Member
     include ActiveModelUtilities
+    include KnowingYourController
 
     # Override association class:
     belongs_to :person, :class_name => :PersonResource,
@@ -138,14 +134,11 @@ class ApplicationController < ActionController::Base
     def self.controller_path
       @controller_path ||= MembersController.controller_path
     end
-
-    def controller_path
-      self.class.controller_path
-    end
   end
 
   class PersonResource < Person
     include ActiveModelUtilities
+    include KnowingYourController
   end
 
   private

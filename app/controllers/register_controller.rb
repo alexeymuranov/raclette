@@ -9,16 +9,6 @@ class RegisterController < ApplicationController
     self.default_sorting_column = :ordered_full_name
   end
 
-  class GuestResource < self::GuestResource
-    def self.controller_path
-      @controller_path ||= GuestController.controller_path
-    end
-
-    def controller_path
-      self.class.controller_path
-    end
-  end
-
   def choose_person
     render_choose_person_properly
   end

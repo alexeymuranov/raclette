@@ -2,7 +2,7 @@
 
 class Admin::KnownIPsController < AdminController
 
-  class UserResource < Admin::User
+  class UserResource < self::UserResource
     self.all_sorting_columns = [:username,
                                 :full_name,
                                 :account_deactivated,
