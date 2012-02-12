@@ -47,7 +47,7 @@
     <%- end -%>
   </dt>
 
-  <%- if [ :text, :delegated_text, :virtual_text ].include? column_type -%>
+  <%- if [:text, :delegated_text, :virtual_text].include? column_type -%>
     <%- input_parent_css_classes << 'long_text' -%>
   <%- end -%>
 
