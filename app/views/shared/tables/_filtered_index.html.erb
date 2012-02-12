@@ -146,7 +146,7 @@
     <% unless filtering_values.blank? %>
       <tr>
         <% attributes.each do |attr| %>
-          <% unless filtering_values[attr].nil? %>
+          <% unless filtering_values[attr].blank? %>
             <%- case column_types[attr] -%>
             <%- when :string, :delegated_string, :virtual_string -%>
               <td class="filtering_value">

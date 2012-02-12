@@ -10,13 +10,11 @@ class SimpleFilter
 
   def set_filtering_values_from_human_hash(human_filtering_values, klass)
 
-    a_smarter_model = (klass.superclass == AbstractSmarterModel)
-
     human_filtering_values.each do |attr, value|
       column_name = attr.to_s
       attr = column_name.to_sym
 
-      if a_smarter_model
+      if klass < AbstractSmarterModel
         filtering_column_type = klass.attribute_db_types[attr]
       else
         filtering_column_type = klass.columns_hash[column_name].type
@@ -62,7 +60,6 @@ class SimpleFilter
                                    filtering_attributes=nil)
     klass = scoped_collection.klass
     table_name = klass.table_name
-    a_smarter_model = (klass.superclass == AbstractSmarterModel)
     @filtering_values = filtering_values || @filtering_values
     @filtering_attributes = filtering_attributes || @filtering_attributes\
                                                  || @filtering_values.keys
@@ -73,7 +70,7 @@ class SimpleFilter
 
       column_name = attr.to_s
 
-      if a_smarter_model
+      if klass < AbstractSmarterModel
         filtering_column_type = klass.attribute_db_types[attr]
         column_sql            = klass.sql_for_attributes[attr]
       else
