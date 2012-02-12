@@ -2,22 +2,12 @@
 
 class EventsController < SecretaryController
 
-  class EventResource < Event
-    include ActiveModelUtilities
-
+  class EventResource < self::EventResource
     self.all_sorting_columns = [:title, :event_type,
                                 :date,
                                 :start_time,
                                 :supervisors]
     self.default_sorting_column = :date
-
-    def self.controller_path
-      @controller_path ||= EventsController.controller_path
-    end
-
-    def controller_path
-      self.class.controller_path
-    end
   end
 
   def index

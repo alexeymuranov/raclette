@@ -2,9 +2,7 @@
 
 class MembersController < SecretaryController
 
-  class MemberResource < Member
-    include ActiveModelUtilities
-
+  class MemberResource < self::MemberResource
     self.all_sorting_columns = [:ordered_full_name,
                                 :email,
                                 :account_deactivated,
@@ -12,20 +10,8 @@ class MembersController < SecretaryController
     self.default_sorting_column = :ordered_full_name
 
     # Override association class:
-    belongs_to :person, :class_name => :PersonResource,
-                        :inverse_of => :member
-
-    def self.controller_path
-      @controller_path ||= MembersController.controller_path
-    end
-
-    def controller_path
-      self.class.controller_path
-    end
-  end
-
-  class PersonResource < Person
-    include ActiveModelUtilities
+    # belongs_to :person, :class_name => :PersonResource,
+    #                     :inverse_of => :member
   end
 
   param_accessible({ 'member' => Set[

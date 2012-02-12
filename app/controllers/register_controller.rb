@@ -2,27 +2,14 @@
 
 class RegisterController < ApplicationController
 
-  # XXX: Experimantal
-  class MemberResource < Member
-    include ActiveModelUtilities
-
+  class MemberResource < self::MemberResource
     self.all_sorting_columns = [:ordered_full_name,
                                 :email,
                                 :employed_from]
     self.default_sorting_column = :ordered_full_name
-
-    def self.controller_path
-      @controller_path ||= MemberController.controller_path
-    end
-
-    def controller_path
-      self.class.controller_path
-    end
   end
 
-  class GuestResource < Guest
-    include ActiveModelUtilities
-
+  class GuestResource < self::GuestResource
     def self.controller_path
       @controller_path ||= GuestController.controller_path
     end

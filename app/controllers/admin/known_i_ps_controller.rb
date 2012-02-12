@@ -3,8 +3,6 @@
 class Admin::KnownIPsController < AdminController
 
   class UserResource < Admin::User
-    include ActiveModelUtilities
-
     self.all_sorting_columns = [:username,
                                 :full_name,
                                 :account_deactivated,
@@ -13,33 +11,15 @@ class Admin::KnownIPsController < AdminController
                                 :secretary,
                                 :a_person]
     self.default_sorting_column = :username
-
-    def self.controller_path
-      @controller_path ||= Admin::UsersController.controller_path
-    end
-
-    def controller_path
-      self.class.controller_path
-    end
   end
 
-  class KnownIPResource < Admin::KnownIP
-    include ActiveModelUtilities
-
+  class KnownIPResource < self::KnownIPResource
     self.all_sorting_columns = [:ip, :description]
     self.default_sorting_column = :ip
 
-    has_many :safe_users, :class_name => :UserResource,
-                          :through    => :safe_user_ips,
-                          :source     => :user
-
-    def self.controller_path
-      @controller_path ||= Admin::KnownIPsController.controller_path
-    end
-
-    def controller_path
-      self.class.controller_path
-    end
+    # has_many :safe_users, :class_name => :UserResource,
+    #                       :through    => :safe_user_ips,
+    #                       :source     => :user
   end
 
   param_accessible({ 'known_ip' => Set['ip', 'description'] },

@@ -2,29 +2,15 @@
 
 class InstructorsController < ManagerController
 
-  class InstructorResource < Instructor
-    include ActiveModelUtilities
-
+  class InstructorResource < self::InstructorResource
     # Override association class:
-    belongs_to :person, :class_name => :PersonResource,
-                        :inverse_of => :instructor
+    # belongs_to :person, :class_name => :PersonResource,
+    #                     :inverse_of => :instructor
 
     self.all_sorting_columns = [:ordered_full_name,
                                 :email,
                                 :employed_from]
     self.default_sorting_column = :ordered_full_name
-
-    def self.controller_path
-      @controller_path ||= InstructorsController.controller_path
-    end
-
-    def controller_path
-      self.class.controller_path
-    end
-  end
-
-  class PersonResource < Person
-    include ActiveModelUtilities
   end
 
   def index

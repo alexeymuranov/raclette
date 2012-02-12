@@ -56,6 +56,98 @@ class ApplicationController < ActionController::Base
               :disposition  => 'inline'
   end
 
+  class UserResource < Admin::User
+    include ActiveModelUtilities
+
+    has_many :safe_ips, :class_name => :KnownIPResource,
+                        :through    => :safe_user_ips,
+                        :source     => :known_ip
+
+    def self.controller_path
+      @controller_path ||= Admin::UsersController.controller_path
+    end
+
+    def controller_path
+      self.class.controller_path
+    end
+  end
+
+  class KnownIPResource < Admin::KnownIP
+    include ActiveModelUtilities
+
+    has_many :safe_users, :class_name => :UserResource,
+                          :through    => :safe_user_ips,
+                          :source     => :user
+
+    def self.controller_path
+      @controller_path ||= Admin::KnownIPsController.controller_path
+    end
+
+    def controller_path
+      self.class.controller_path
+    end
+  end
+
+  class EventResource < Event
+    include ActiveModelUtilities
+
+    def self.controller_path
+      @controller_path ||= EventsController.controller_path
+    end
+
+    def controller_path
+      self.class.controller_path
+    end
+  end
+
+  class GuestResource < Guest
+    include ActiveModelUtilities
+
+    def self.controller_path
+      @controller_path ||= GuestController.controller_path
+    end
+
+    def controller_path
+      self.class.controller_path
+    end
+  end
+
+  class InstructorResource < Instructor
+    include ActiveModelUtilities
+
+    # Override association class:
+    belongs_to :person, :class_name => :PersonResource,
+                        :inverse_of => :instructor
+
+    def self.controller_path
+      @controller_path ||= InstructorsController.controller_path
+    end
+
+    def controller_path
+      self.class.controller_path
+    end
+  end
+
+  class MemberResource < Member
+    include ActiveModelUtilities
+
+    # Override association class:
+    belongs_to :person, :class_name => :PersonResource,
+                        :inverse_of => :member
+
+    def self.controller_path
+      @controller_path ||= MembersController.controller_path
+    end
+
+    def controller_path
+      self.class.controller_path
+    end
+  end
+
+  class PersonResource < Person
+    include ActiveModelUtilities
+  end
+
   private
 
     def set_locale  # before_filter
