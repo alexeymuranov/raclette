@@ -2,7 +2,6 @@
 
 class MembersController < SecretaryController
 
-  # XXX: Experimantal
   class MemberResource < Member
     include ActiveModelUtilities
 
@@ -25,7 +24,7 @@ class MembersController < SecretaryController
     end
   end
 
-  class PersonResource < Person  # FIXME: how to use this??
+  class PersonResource < Person
     include ActiveModelUtilities
   end
 

@@ -2,7 +2,6 @@
 
 class Admin::UsersController < AdminController
 
-  # XXX: Experimantal
   class UserResource < Admin::User
     include ActiveModelUtilities
 
@@ -14,6 +13,10 @@ class Admin::UsersController < AdminController
                                 :secretary,
                                 :a_person]
     self.default_sorting_column = :username
+
+    has_many :safe_ips, :class_name => :KnownIPResource,
+                        :through    => :safe_user_ips,
+                        :source     => :known_ip
 
     def self.controller_path
       @controller_path ||= Admin::UsersController.controller_path

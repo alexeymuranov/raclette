@@ -2,7 +2,6 @@
 
 class Admin::SafeUserIPsController < AdminController
 
-  # XXX: Experimantal
   class UserResource < Admin::User
     include ActiveModelUtilities
 

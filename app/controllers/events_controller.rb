@@ -2,7 +2,6 @@
 
 class EventsController < SecretaryController
 
-  # XXX: Experimantal
   class EventResource < Event
     include ActiveModelUtilities
 

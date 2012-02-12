@@ -2,13 +2,13 @@
       model:
       attributes:
       column_types:
-      controller_name:
 -%>
 
-<% controller_name ||= controller.controller_name %>
-
 <th scope=row>
-  <%= link_to model.public_send(attributes[0]), { :controller => controller_name, :action => :show, :id => model },
+  <%= link_to model.public_send(attributes[0]),
+              { :controller => model.controller_path,
+                :action     => :show,
+                :id         => model },
               :title => t('actions.read'),
               :class => 'display resource' %>
 </th>

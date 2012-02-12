@@ -2,7 +2,6 @@
 
 class InstructorsController < ManagerController
 
-  # XXX: Experimantal
   class InstructorResource < Instructor
     include ActiveModelUtilities
 
@@ -24,7 +23,7 @@ class InstructorsController < ManagerController
     end
   end
 
-  class PersonResource < Person  # FIXME: how to use this??
+  class PersonResource < Person
     include ActiveModelUtilities
   end
 
