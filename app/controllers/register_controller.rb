@@ -2,6 +2,36 @@
 
 class RegisterController < ApplicationController
 
+  # XXX: Experimantal
+  class MemberResource < Member
+    include ActiveModelUtilities
+
+    self.all_sorting_columns = [:ordered_full_name,
+                                :email,
+                                :employed_from]
+    self.default_sorting_column = :ordered_full_name
+
+    def self.controller_path
+      @controller_path ||= MemberController.controller_path
+    end
+
+    def controller_path
+      self.class.controller_path
+    end
+  end
+
+  class GuestResource < Guest
+    include ActiveModelUtilities
+
+    def self.controller_path
+      @controller_path ||= GuestController.controller_path
+    end
+
+    def controller_path
+      self.class.controller_path
+    end
+  end
+
   def choose_person
     render_choose_person_properly
   end
@@ -11,11 +41,11 @@ class RegisterController < ApplicationController
     @tab = 0 unless (0..2).include?(@tab)
     
     if params[:member_id]
-      @member = Member.joins(:person)\
+      @member = MemberResource.joins(:person)\
                       .with_virtual_attributes(:full_name)\
                       .find(params[:member_id])
     elsif params[:guest]
-      @guest = Guest.new(params[:guest])
+      @guest = GuestResource.new(params[:guest])
     end
     
     unless @member || @guest
@@ -38,10 +68,10 @@ class RegisterController < ApplicationController
   private
 
     def render_choose_person_properly
-      @members = paginate(Member.joins(:person)\
+      @members = paginate(MemberResource.joins(:person)\
                                 .with_virtual_attributes(:ordered_full_name)\
                                 .default_order)
-      @guest ||= Guest.new(params[:guest])
+      @guest ||= GuestResource.new(params[:guest])
       @title = t('register.choose_person.title')
 
       render :choose_person

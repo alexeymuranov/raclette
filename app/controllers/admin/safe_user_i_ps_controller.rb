@@ -4,6 +4,8 @@ class Admin::SafeUserIPsController < AdminController
 
   # XXX: Experimantal
   class UserResource < Admin::User
+    include ActiveModelUtilities
+
     self.all_sorting_columns = [:username,
                                 :full_name,
                                 :account_deactivated,
@@ -23,6 +25,8 @@ class Admin::SafeUserIPsController < AdminController
   end
 
   class KnownIPResource < Admin::KnownIP
+    include ActiveModelUtilities
+
     self.all_sorting_columns = [:ip, :description]
     self.default_sorting_column = :ip
 

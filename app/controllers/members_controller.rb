@@ -1,6 +1,33 @@
 ## encoding: UTF-8
 
-class MembersController < SecretaryController  # FIXME: untested work in progress
+class MembersController < SecretaryController
+
+  # XXX: Experimantal
+  class MemberResource < Member
+    include ActiveModelUtilities
+
+    self.all_sorting_columns = [:ordered_full_name,
+                                :email,
+                                :account_deactivated,
+                                :tickets_count]
+    self.default_sorting_column = :ordered_full_name
+
+    # Override association class:
+    belongs_to :person, :class_name => :PersonResource,
+                        :inverse_of => :member
+
+    def self.controller_path
+      @controller_path ||= MembersController.controller_path
+    end
+
+    def controller_path
+      self.class.controller_path
+    end
+  end
+
+  class PersonResource < Person  # FIXME: how to use this??
+    include ActiveModelUtilities
+  end
 
   param_accessible({ 'member' => Set[
                        'person_attributes',
@@ -36,24 +63,24 @@ class MembersController < SecretaryController  # FIXME: untested work in progres
                      :tickets_count]
     end
 
-    @column_types = Member.attribute_db_types
-    @sql_for_attributes = Member.sql_for_attributes
+    @column_types = MemberResource.attribute_db_types
+    @sql_for_attributes = MemberResource.sql_for_attributes
 
-    @members = Member.joins(:person).
+    @members = MemberResource.joins(:person).
       with_virtual_attributes(*@attributes, :formatted_email)
 
     # Filter:
-    @members = Member.filter(@members, params[:filter], @attributes)
-    @filtering_values = Member.last_filter_values
+    @members = MemberResource.filter(@members, params[:filter], @attributes)
+    @filtering_values = MemberResource.last_filter_values
 
     # Sort:
-    Member.all_sorting_columns = @attributes
-    Member.default_sorting_column = ( request.format == 'html' ?
+    MemberResource.all_sorting_columns = @attributes
+    MemberResource.default_sorting_column = ( request.format == 'html' ?
                                       :ordered_full_name : :last_name )
     sort_params = (params[:sort] && params[:sort][:members]) || {}
-    @members = Member.sort(@members, sort_params)
-    @sorting_column = Member.last_sort_column
-    @sorting_direction = Member.last_sort_direction
+    @members = MemberResource.sort(@members, sort_params)
+    @sorting_column = MemberResource.last_sort_column
+    @sorting_direction = MemberResource.last_sort_direction
 
     # Compose mailing list:
     if params[:list_email_addresses]
@@ -69,7 +96,7 @@ class MembersController < SecretaryController  # FIXME: untested work in progres
         # Paginate:
         @members = paginate(@members)
 
-        # @title = t('members.index.title')  # or: Member.model_name.human.pluralize
+        # @title = t('members.index.title')  # or: MemberResource.model_name.human.pluralize
         render :index
       end
 
@@ -115,26 +142,25 @@ class MembersController < SecretaryController  # FIXME: untested work in progres
                    :been_member_by,
                    :full_name]
 
-    @member = Member.joins(:person).with_virtual_attributes(*@attributes)\
+    @member = MemberResource.joins(:person).with_virtual_attributes(*@attributes)\
                     .find(params[:id])
 
-    @column_types = Member.attribute_db_types
+    @column_types = MemberResource.attribute_db_types
     # set_column_headers
 
     @title = t('members.show.title', :name => @member.non_sql_full_name)
   end
 
   def new
-    @member = Member.new
+    @member = MemberResource.new
     @member.build_person
 
     render_new_properly
   end
 
   def edit
-    @member = Member.joins(:person).with_virtual_attributes(:full_name)\
+    @member = MemberResource.joins(:person).with_virtual_attributes(:full_name)\
                     .find(params[:id])
-
     render_edit_properly
   end
 
@@ -151,7 +177,7 @@ class MembersController < SecretaryController  # FIXME: untested work in progres
     # The only workaround seems to be to save the person first,
     # assign the foreign key manually, and then save the member.
     @person = Person.new
-    @member = Member.new
+    @member = MemberResource.new
     params[:member][:person_attributes].delete(:email)\
       if params[:member][:person_attributes][:email].blank?
 
@@ -179,7 +205,7 @@ class MembersController < SecretaryController  # FIXME: untested work in progres
   end
 
   def update
-    @member = Member.joins(:person).with_virtual_attributes(:full_name)\
+    @member = MemberResource.joins(:person).with_virtual_attributes(:full_name)\
                     .find(params[:id])
 
     params[:member][:person_attributes].delete(:email)\
@@ -197,7 +223,7 @@ class MembersController < SecretaryController  # FIXME: untested work in progres
   end
 
   def destroy
-    @member = Member.find(params[:id])
+    @member = MemberResource.find(params[:id])
     @member.destroy
 
     flash[:notice] = t('flash.members.destroy.success',
@@ -209,7 +235,7 @@ class MembersController < SecretaryController  # FIXME: untested work in progres
   private
 
     def render_new_properly
-      @column_types = Member.attribute_db_types
+      @column_types = MemberResource.attribute_db_types
 
       @title = t('members.new.title')
 
@@ -217,7 +243,7 @@ class MembersController < SecretaryController  # FIXME: untested work in progres
     end
 
     def render_edit_properly
-      @column_types = Member.attribute_db_types
+      @column_types = MemberResource.attribute_db_types
 
       @title =  t('members.edit.title', :name => @member.non_sql_full_name)
 
@@ -227,7 +253,7 @@ class MembersController < SecretaryController  # FIXME: untested work in progres
     def set_column_headers
       @column_headers = {}
       @attributes.each do |attr|
-        @column_headers[attr] = Member.human_attribute_name(attr)
+        @column_headers[attr] = MemberResource.human_attribute_name(attr)
 
         case @column_types[attr]
         when :boolean, :delegated_boolean, :virtual_boolean

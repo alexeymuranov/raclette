@@ -21,18 +21,12 @@
 
 <% input_parent_css_classes = [] %>
 
-<% validators = klass.validators_on(attribute) %>
-<% validator_classes = validators.map(&:class) %>
-<% required = validator_classes.include?(
-     ActiveModel::Validations::PresenceValidator) %>
-<% readonly = klass.readonly_attributes.include?(attribute.to_s) %>
-<% editable = !readonly || model.new_record? %>
-<% inclusion_validator = validators.find { |v|
-     v.is_a?(ActiveModel::Validations::InclusionValidator) } %>
-<% select_from = inclusion_validator ? inclusion_validator.options[:in] : nil %>
+<% required = klass.attr_required?(attribute) %>
+<% readonly = klass.attr_readonly?(attribute) %>
+<% editable = model.attr_editable?(attribute) %>
+<% select_from = klass.possible_values_of(attribute) %>
 <% select_from = nil unless select_from.respond_to?(:size) &&
                             (select_size = select_from.size) <= 50 %>
-
 <% input_html_options[:required] = 'required' if required %>
 
 <div class="item field">

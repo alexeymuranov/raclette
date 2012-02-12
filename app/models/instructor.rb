@@ -7,7 +7,6 @@ class Instructor < ActiveRecord::Base
   include Filtering
   include Sorting
   self.default_sorting_column = :ordered_full_name
-  self.all_sorting_columns = []
 
   self.primary_key = 'person_id'
 

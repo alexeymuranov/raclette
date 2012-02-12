@@ -3,6 +3,7 @@
 require 'set'  # to be able to use Set
 require 'csv'  # to render CSV
 require 'monkey_patches/action_controller'
+require 'app_utilities/active_model_utilities'
 
 class ApplicationController < ActionController::Base
   protect_from_forgery

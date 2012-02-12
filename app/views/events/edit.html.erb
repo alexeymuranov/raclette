@@ -5,7 +5,7 @@
 <footer>
   <%= link_to show_pictogram(3) + ' ' + t('events.show.header',
                                           :title => @event.title),
-              @event,
+              event_path(@event),
               :class => 'display resource' %>
   <%= link_to list_all_pictogram(3) + ' ' + t('events.index.header'),
               events_path,

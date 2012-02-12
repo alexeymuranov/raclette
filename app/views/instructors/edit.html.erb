@@ -5,7 +5,7 @@
 <footer>
   <%= link_to show_pictogram(3) + ' ' + t('instructors.show.header',
                                           :name => @instructor.full_name),
-              @instructor,
+              instructor_path(@instructor),
               :class => 'display resource' %>
   <%= link_to list_all_pictogram(3) + ' ' + t('instructors.index.header'),
               instructors_path,

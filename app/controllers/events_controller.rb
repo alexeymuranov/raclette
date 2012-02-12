@@ -1,6 +1,26 @@
 ## encoding: UTF-8
 
 class EventsController < SecretaryController
+
+  # XXX: Experimantal
+  class EventResource < Event
+    include ActiveModelUtilities
+
+    self.all_sorting_columns = [:title, :event_type,
+                                :date,
+                                :start_time,
+                                :supervisors]
+    self.default_sorting_column = :date
+
+    def self.controller_path
+      @controller_path ||= EventsController.controller_path
+    end
+
+    def controller_path
+      self.class.controller_path
+    end
+  end
+
   def index
     @query_type = params[:query_type]
     @submit_button = params[:button]
@@ -31,18 +51,18 @@ class EventsController < SecretaryController
 
     set_column_types
 
-    @events = Event.scoped
+    @events = EventResource.scoped
 
     # Filter:
-    @events = Event.filter(@events, params[:filter], @attributes)
-    @filtering_values = Event.last_filter_values
+    @events = EventResource.filter(@events, params[:filter], @attributes)
+    @filtering_values = EventResource.last_filter_values
 
     # Sort:
-    Event.all_sorting_columns = @attributes
+    EventResource.all_sorting_columns = @attributes
     sort_params = (params[:sort] && params[:sort][:events]) || {}
-    @events = Event.sort(@events, sort_params)
-    @sorting_column = Event.last_sort_column
-    @sorting_direction = Event.last_sort_direction
+    @events = EventResource.sort(@events, sort_params)
+    @sorting_column = EventResource.last_sort_column
+    @sorting_direction = EventResource.last_sort_direction
 
     set_column_headers
 
@@ -52,7 +72,7 @@ class EventsController < SecretaryController
         # Paginate:
         @events = paginate(@events)
 
-        # @title = t('admin.users.index.title')  # or: Event.model_name.human.pluralize
+        # @title = t('admin.users.index.title')  # or: EventResource.model_name.human.pluralize
         render :index
       end
 
@@ -91,28 +111,28 @@ class EventsController < SecretaryController
                    :tickets_collected,
                    :entry_fees_collected]
 
-    @event = Event.find(params[:id])
+    @event = EventResource.find(params[:id])
 
-    @column_types = Event.attribute_db_types
+    @column_types = EventResource.attribute_db_types
     # set_column_headers
 
     @title = t('events.show.title', :title => @event.title)
   end
 
   def new
-    @event = Event.new
+    @event = EventResource.new
 
     render_new_properly
   end
 
   def edit
-    @event = Event.find(params[:id])
+    @event = EventResource.find(params[:id])
 
     render_edit_properly
   end
 
   def create
-    @event = Event.new
+    @event = EventResource.new
     params[:event][:lesson] = ( %w(Cours Atelier Initiation).include?(
                                   params[:event][:event_type]) ?
                                 true : false )
@@ -130,7 +150,7 @@ class EventsController < SecretaryController
   end
 
   def update
-    @event = Event.find(params[:id])
+    @event = EventResource.find(params[:id])
 
     if @event.update_attributes(params[:event])
       flash[:notice] = t('flash.events.update.success',
@@ -144,7 +164,7 @@ class EventsController < SecretaryController
   end
 
   def destroy
-    @event = Event.find(params[:id])
+    @event = EventResource.find(params[:id])
     @event.destroy
 
     flash[:notice] = t('flash.events.destroy.success',
@@ -167,7 +187,7 @@ class EventsController < SecretaryController
                      :entries_count,
                      :tickets_collected,
                      :entry_fees_collected]
-      @column_types = Event.attribute_db_types
+      @column_types = EventResource.attribute_db_types
 
       @title = t('events.new.title')
 
@@ -186,7 +206,7 @@ class EventsController < SecretaryController
                      :entries_count,
                      :tickets_collected,
                      :entry_fees_collected]
-      @column_types = Event.attribute_db_types
+      @column_types = EventResource.attribute_db_types
 
       @title =  t('events.edit.title', :title => @event.title)
 
@@ -195,7 +215,7 @@ class EventsController < SecretaryController
 
     def set_column_types
       @column_types = {}
-      Event.columns_hash.each do |key, value|
+      EventResource.columns_hash.each do |key, value|
         @column_types[key.to_sym] = value.type
       end
     end
@@ -203,7 +223,7 @@ class EventsController < SecretaryController
     def set_column_headers
       @column_headers = {}
       @column_types.each do |attr, type|
-        human_name = Event.human_attribute_name(attr)
+        human_name = EventResource.human_attribute_name(attr)
 
         case type
         when :boolean

@@ -6,8 +6,8 @@ require 'app_active_record_extensions/sorting'
 class Event < ActiveRecord::Base
   include Filtering
   include Sorting
-  self.default_sorting_column = :start_time
-  self.all_sorting_columns = []
+  self.default_sorting_column = :date
+
   include AbstractSmarterModel
 
   attr_readonly :id, :event_type, :lesson, :weekly

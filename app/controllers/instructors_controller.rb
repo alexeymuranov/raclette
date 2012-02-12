@@ -2,6 +2,32 @@
 
 class InstructorsController < ManagerController
 
+  # XXX: Experimantal
+  class InstructorResource < Instructor
+    include ActiveModelUtilities
+
+    # Override association class:
+    belongs_to :person, :class_name => :PersonResource,
+                        :inverse_of => :instructor
+
+    self.all_sorting_columns = [:ordered_full_name,
+                                :email,
+                                :employed_from]
+    self.default_sorting_column = :ordered_full_name
+
+    def self.controller_path
+      @controller_path ||= InstructorsController.controller_path
+    end
+
+    def controller_path
+      self.class.controller_path
+    end
+  end
+
+  class PersonResource < Person  # FIXME: how to use this??
+    include ActiveModelUtilities
+  end
+
   def index
     @query_type = params[:query_type]
     @submit_button = params[:button]
@@ -25,24 +51,24 @@ class InstructorsController < ManagerController
                      :employed_from]
     end
 
-    @column_types = Instructor.attribute_db_types
-    @sql_for_attributes = Instructor.sql_for_attributes
+    @column_types = InstructorResource.attribute_db_types
+    @sql_for_attributes = InstructorResource.sql_for_attributes
 
-    @instructors = Instructor.joins(:person).
+    @instructors = InstructorResource.joins(:person).
       with_virtual_attributes(*@attributes, :formatted_email)
 
     # Filter:
-    @instructors = Instructor.filter(@instructors, params[:filter], @attributes)
-    @filtering_values = Instructor.last_filter_values
+    @instructors = InstructorResource.filter(@instructors, params[:filter], @attributes)
+    @filtering_values = InstructorResource.last_filter_values
 
     # Sort:
-    Instructor.all_sorting_columns = @attributes
-    Instructor.default_sorting_column = ( request.format == 'html' ?
+    InstructorResource.all_sorting_columns = @attributes
+    InstructorResource.default_sorting_column = ( request.format == 'html' ?
                                           :ordered_full_name : :last_name )
     sort_params = (params[:sort] && params[:sort][:instructors]) || {}
-    @instructors = Instructor.sort(@instructors, sort_params)
-    @sorting_column = Instructor.last_sort_column
-    @sorting_direction = Instructor.last_sort_direction
+    @instructors = InstructorResource.sort(@instructors, sort_params)
+    @sorting_column = InstructorResource.last_sort_column
+    @sorting_direction = InstructorResource.last_sort_direction
 
     # Compose mailing list:
     if params[:list_email_addresses]
@@ -58,7 +84,7 @@ class InstructorsController < ManagerController
         # Paginate:
         @instructors = paginate(@instructors)
 
-        # @title = t('instructors.index.title')  # or: Instructor.model_name.human.pluralize
+        # @title = t('instructors.index.title')  # or: InstructorResource.model_name.human.pluralize
         render :index
       end
 
@@ -101,26 +127,26 @@ class InstructorsController < ManagerController
                    :full_name,
                    :employed_from]
 
-    @instructor = Instructor.joins(:person).with_virtual_attributes(*@attributes)\
+    @instructor = InstructorResource.joins(:person).with_virtual_attributes(*@attributes)\
                     .find(params[:id])
 
-    @column_types = Instructor.attribute_db_types
+    @column_types = InstructorResource.attribute_db_types
     # set_column_headers
 
     @title = t('instructors.show.title', :name => @instructor.non_sql_full_name)
   end
 
   def new
-    @instructor = Instructor.new
+    @instructor = InstructorResource.new
     @instructor.build_person
 
     render_new_properly
   end
 
   def edit
-    @instructor = Instructor.joins(:person).with_virtual_attributes(:full_name)\
+    @instructor = InstructorResource.joins(:person).with_virtual_attributes(:full_name)\
                     .find(params[:id])
-
+    # print "\n\nv>>> #{@instructor.class.inspect} <<<v\n\n"
     render_edit_properly
   end
 
@@ -137,7 +163,7 @@ class InstructorsController < ManagerController
     # The only workaround seems to be to save the person first,
     # assign the foreign key manually, and then save the instructor.
     @person = Person.new
-    @instructor = Instructor.new
+    @instructor = InstructorResource.new
     params[:instructor][:person_attributes].delete(:email)\
       if params[:instructor][:person_attributes][:email].blank?
 
@@ -165,7 +191,7 @@ class InstructorsController < ManagerController
   end
 
   def update
-    @instructor = Instructor.joins(:person).with_virtual_attributes(:full_name)\
+    @instructor = InstructorResource.joins(:person).with_virtual_attributes(:full_name)\
                     .find(params[:id])
 
     params[:instructor][:person_attributes].delete(:email)\
@@ -183,7 +209,7 @@ class InstructorsController < ManagerController
   end
 
   def destroy
-    @instructor = Instructor.find(params[:id])
+    @instructor = InstructorResource.find(params[:id])
     @instructor.destroy
 
     flash[:notice] = t('flash.instructors.destroy.success',
@@ -195,7 +221,7 @@ class InstructorsController < ManagerController
   private
 
     def render_new_properly
-      @column_types = Instructor.attribute_db_types
+      @column_types = InstructorResource.attribute_db_types
 
       @title = t('instructors.new.title')
 
@@ -203,7 +229,7 @@ class InstructorsController < ManagerController
     end
 
     def render_edit_properly
-      @column_types = Instructor.attribute_db_types
+      @column_types = InstructorResource.attribute_db_types
 
       @title =  t('instructors.edit.title', :name => @instructor.non_sql_full_name)
 
@@ -213,7 +239,7 @@ class InstructorsController < ManagerController
     def set_column_headers
       @column_headers = {}
       @attributes.each do |attr|
-        @column_headers[attr] = Instructor.human_attribute_name(attr)
+        @column_headers[attr] = InstructorResource.human_attribute_name(attr)
 
         case @column_types[attr]
         when :boolean, :delegated_boolean, :virtual_boolean
