@@ -113,6 +113,9 @@ class EventsController < SecretaryController
 
   def create
     @event = Event.new
+    params[:event][:lesson] = ( %w(Cours Atelier Initiation).include?(
+                                  params[:event][:event_type]) ?
+                                true : false )
     @event.assign_attributes(params[:event])
 
     if @event.save
@@ -154,7 +157,6 @@ class EventsController < SecretaryController
 
     def render_new_properly
       @attributes = [:title, :event_type,
-                     :lesson,
                      :date,
                      :start_time,
                      :duration_minutes,
@@ -174,7 +176,6 @@ class EventsController < SecretaryController
 
     def render_edit_properly
       @attributes = [:title, :event_type,
-                     :lesson,
                      :date,
                      :start_time,
                      :duration_minutes,
