@@ -21,10 +21,17 @@
 
 <% input_parent_css_classes = [] %>
 
-<% required = klass.validators_on(attribute).map(&:class).include?(
-          ActiveModel::Validations::PresenceValidator) %>
+<% validators = klass.validators_on(attribute) %>
+<% validator_classes = validators.map(&:class) %>
+<% required = validator_classes.include?(
+     ActiveModel::Validations::PresenceValidator) %>
 <% readonly = klass.readonly_attributes.include?(attribute.to_s) %>
 <% editable = !readonly || model.new_record? %>
+<% inclusion_validator = validators.find { |v|
+     v.is_a?(ActiveModel::Validations::InclusionValidator) } %>
+<% select_from = inclusion_validator ? inclusion_validator.options[:in] : nil %>
+<% select_from = nil unless select_from.respond_to?(:size) &&
+                            (select_size = select_from.size) <= 50 %>
 
 <% input_html_options[:required] = 'required' if required %>
 
@@ -52,21 +59,27 @@
 
   <%= content_tag :dd, :class => input_parent_css_classes.join(' ') do -%>
     <%- if editable -%>
-      <%- case column_type -%>
-      <%- when :boolean, :delegated_boolean, :virtual_boolean -%>
-        <%= form_builder.check_box attribute, input_html_options -%>
-      <%- when :integer, :delegated_integer, :virtual_integer -%>
-        <%= form_builder.number_field attribute, input_html_options -%>
-      <%- when :date, :delegated_date, :virtual_date -%>
-        <%#- input_html_options[:type] = 'date' -%>
-        <%= form_builder.date_select attribute, input_html_options -%>
-      <%- when :datetime, :delegated_datetime, :virtual_datetime -%>
-        <%#- input_html_options[:type] = 'datetime-local' -%>
-        <%= form_builder.datetime_select attribute, input_html_options -%>
-      <%- when :text, :delegated_text, :virtual_text -%>
-        <%= form_builder.text_area attribute, input_html_options -%>
+      <%- if select_from -%>
+        <%= form_builder.select attribute,
+                                options_for_select(select_from),
+                                input_html_options -%>
       <%- else -%>
-        <%= form_builder.text_field attribute, input_html_options -%>
+        <%- case column_type -%>
+        <%- when :boolean, :delegated_boolean, :virtual_boolean -%>
+          <%= form_builder.check_box attribute, input_html_options -%>
+        <%- when :integer, :delegated_integer, :virtual_integer -%>
+          <%= form_builder.number_field attribute, input_html_options -%>
+        <%- when :date, :delegated_date, :virtual_date -%>
+          <%#- input_html_options[:type] = 'date' -%>
+          <%= form_builder.date_select attribute, input_html_options -%>
+        <%- when :datetime, :delegated_datetime, :virtual_datetime -%>
+          <%#- input_html_options[:type] = 'datetime-local' -%>
+          <%= form_builder.datetime_select attribute, input_html_options -%>
+        <%- when :text, :delegated_text, :virtual_text -%>
+          <%= form_builder.text_area attribute, input_html_options -%>
+        <%- else -%>
+          <%= form_builder.text_field attribute, input_html_options -%>
+        <%- end -%>
       <%- end -%>
     <%- else -%>
       <%- value = model.public_send(attribute) -%>
