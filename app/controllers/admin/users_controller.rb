@@ -11,10 +11,6 @@ class Admin::UsersController < AdminController
                                 :secretary,
                                 :a_person]
     self.default_sorting_column = :username
-
-    # has_many :safe_ips, :class_name => :KnownIPResource,
-    #                     :through    => :safe_user_ips,
-    #                     :source     => :known_ip
   end
 
   class KnownIPResource < self::KnownIPResource

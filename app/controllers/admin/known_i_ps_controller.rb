@@ -16,10 +16,6 @@ class Admin::KnownIPsController < AdminController
   class KnownIPResource < self::KnownIPResource
     self.all_sorting_columns = [:ip, :description]
     self.default_sorting_column = :ip
-
-    # has_many :safe_users, :class_name => :UserResource,
-    #                       :through    => :safe_user_ips,
-    #                       :source     => :user
   end
 
   param_accessible({ 'known_ip' => Set['ip', 'description'] },

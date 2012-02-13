@@ -3,10 +3,6 @@
 class InstructorsController < ManagerController
 
   class InstructorResource < self::InstructorResource
-    # Override association class:
-    # belongs_to :person, :class_name => :PersonResource,
-    #                     :inverse_of => :instructor
-
     self.all_sorting_columns = [:ordered_full_name,
                                 :email,
                                 :employed_from]

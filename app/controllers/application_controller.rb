@@ -3,13 +3,13 @@
 require 'set'  # to be able to use Set
 require 'csv'  # to render CSV
 require 'monkey_patches/action_controller'
-require 'app_utilities/active_model_utilities'
 
 class ApplicationController < ActionController::Base
   protect_from_forgery
 
   include ApplicationHelper
   include SessionsHelper
+  include Accessors
 
   before_filter :require_login
   before_filter :set_locale
@@ -54,91 +54,6 @@ class ApplicationController < ActionController::Base
               :filename     => filename,
               :content_type => "#{Mime::MS_EXCEL_2003_XML}; charset=utf-8",
               :disposition  => 'inline'
-  end
-
-  module KnowingYourController  # NOTE: does not seem very useful
-    def included(base)
-      base.extend(ClassMethods)
-    end
-
-    module ClassMethods
-      attr_accessor :controller_path
-    end
-
-    def controller_path
-      self.class.controller_path
-    end
-  end
-
-  class KnownIPResource < Admin::KnownIP
-    include ActiveModelUtilities
-    include KnowingYourController
-
-    # Override class name of the associated model:
-    has_many :safe_users, :class_name => :UserResource,
-                          :through    => :safe_user_ips,
-                          :source     => :user
-
-    def self.controller_path
-      @controller_path ||= Admin::KnownIPsController.controller_path
-    end
-  end
-
-  class UserResource < Admin::User
-    include ActiveModelUtilities
-    include KnowingYourController
-
-    has_many :safe_ips, :class_name => :KnownIPResource,
-                        :through    => :safe_user_ips,
-                        :source     => :known_ip
-
-    def self.controller_path
-      @controller_path ||= Admin::UsersController.controller_path
-    end
-  end
-
-  class EventResource < Event
-    include ActiveModelUtilities
-    include KnowingYourController
-
-    def self.controller_path
-      @controller_path ||= EventsController.controller_path
-    end
-  end
-
-  class GuestResource < Guest
-    include ActiveModelUtilities
-  end
-
-  class InstructorResource < Instructor
-    include ActiveModelUtilities
-    include KnowingYourController
-
-    # Override association class:
-    belongs_to :person, :class_name => :PersonResource,
-                        :inverse_of => :instructor
-
-    def self.controller_path
-      @controller_path ||= InstructorsController.controller_path
-    end
-  end
-
-  class MemberResource < Member
-    include ActiveModelUtilities
-    include KnowingYourController
-
-    # Override association class:
-    belongs_to :person, :class_name => :PersonResource,
-                        :inverse_of => :member
-
-    def self.controller_path
-      @controller_path ||= MembersController.controller_path
-    end
-  end
-
-  class PersonResource < Person
-    include ActiveModelUtilities
-    include KnowingYourController
   end
 
   private

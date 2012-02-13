@@ -8,10 +8,6 @@ class MembersController < SecretaryController
                                 :account_deactivated,
                                 :tickets_count]
     self.default_sorting_column = :ordered_full_name
-
-    # Override association class:
-    # belongs_to :person, :class_name => :PersonResource,
-    #                     :inverse_of => :member
   end
 
   param_accessible({ 'member' => Set[
