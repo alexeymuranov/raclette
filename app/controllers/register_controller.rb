@@ -110,7 +110,11 @@ class RegisterController < ApplicationController
 
       case @tab
       when 0  # entree
-        @event ||= Event.first  # FIXME!
+        @events = Event.all  # FIXME!
+        if @events.blank?
+          render_choose_person_properly and return
+        end
+        @event ||= @events.first  # FIXME!
         @event_entry = EventEntry.new(
           :event_id    => @event.id,
           :event_title => @event.title,
@@ -121,7 +125,6 @@ class RegisterController < ApplicationController
         else
           @event_entry.participant_entry_type = 'GuestEntry'
         end
-        @events = Event.all  # FIXME!
       when 1  # tickets
         @tickets_purchase = TicketsPurchase.new
       when 2  # membership
