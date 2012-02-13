@@ -1,16 +1,18 @@
 ## encoding: UTF-8
 
-require 'set'  # to be able to use Set
+require 'set'
 require 'app_utilities/active_model_utilities'
 
 module Accessors
-  module KnowingYourController
+  module ControllerAware
     def self.included(base)
       base.extend(ClassMethods)
     end
 
     module ClassMethods
-      attr_accessor :controller_class  # To be redefined in classes
+      def controller_class  # To be redefined in classes
+        "#{base_class.name.pluralize}Controller".constantize
+      end
 
       def controller_path
         controller_class.controller_path
@@ -25,7 +27,7 @@ module Accessors
   # Active Record:
   class KnownIPResource < Admin::KnownIP
     include ActiveModelUtilities
-    include KnowingYourController
+    include ControllerAware
 
     # attr_accessible( :ip,
                      # :description,
@@ -37,13 +39,13 @@ module Accessors
                           :source     => :user
 
     def self.controller_class
-      @controller_class || Admin::KnownIPsController
+      Admin::KnownIPsController
     end
   end
 
   class UserResource < Admin::User
     include ActiveModelUtilities
-    include KnowingYourController
+    include ControllerAware
 
     # attr_accessible( :username,
                      # :full_name,
@@ -67,13 +69,13 @@ module Accessors
                         :source     => :known_ip
 
     def self.controller_class
-      @controller_class || Admin::UsersController
+      Admin::UsersController
     end
   end
 
   class EventResource < Event
     include ActiveModelUtilities
-    include KnowingYourController
+    include ControllerAware
 
     # attr_accessible( # :id,
                      # :event_type,
@@ -104,13 +106,13 @@ module Accessors
                    # )
 
     def self.controller_class
-      @controller_class || EventsController
+      EventsController
     end
   end
 
   class InstructorResource < Instructor
     include ActiveModelUtilities
-    include KnowingYourController
+    include ControllerAware
 
     # attr_accessible( # :id,
                      # :person_id,
@@ -124,13 +126,13 @@ module Accessors
                         :inverse_of => :instructor
 
     def self.controller_class
-      @controller_class || InstructorsController
+      InstructorsController
     end
   end
 
   class MemberResource < Member
     include ActiveModelUtilities
-    include KnowingYourController
+    include ControllerAware
 
     # attr_accessible( :been_member_by,
                      # :free_tickets_count,
@@ -152,13 +154,13 @@ module Accessors
                         :inverse_of => :member
 
     def self.controller_class
-      @controller_class || MembersController
+      MembersController
     end
   end
 
   class PersonResource < Person
     include ActiveModelUtilities
-    include KnowingYourController
+    include ControllerAware
 
     # attr_accessible( :last_name,
                      # :first_name,
