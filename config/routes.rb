@@ -6,7 +6,9 @@ Raclette::Application.routes.draw do
   get 'monitor/overview'
   get 'register/choose_person'
   get 'register/compose_transaction'
-  post 'register/create_transaction'
+  post 'register/create_event_entry'
+  post 'register/create_tickets_purchase'
+  post 'register/create_membership_purchase'
   get 'secretary_tools/overview'
   get 'manager_tools/overview'
 

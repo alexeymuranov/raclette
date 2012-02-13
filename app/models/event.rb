@@ -75,8 +75,43 @@ class Event < ActiveRecord::Base
   validates :description, :length    => { :maximum => 255 },
                           :allow_nil => true
 
+  # Public class methods
+
+  def self.sql_for_attributes  # Extends the one from AbstractSmarterModel
+    unless @sql_for_attributes
+      super
+
+      long_title_sql = "(#{super[:date]} || ': ' || "\
+                       "#{super[:title]})"
+
+      @sql_for_attributes.merge!(:long_title => long_title_sql)
+    end
+    @sql_for_attributes
+  end
+
+  def self.attribute_db_types  # Extends the one from AbstractSmarterModel
+    unless @attribute_db_types
+      super
+
+      [ :long_title ].each do |attr|
+        @attribute_db_types[attr] = :virtual_string
+      end
+    end
+    @attribute_db_types
+  end
+
   # Scopes:
   scope :default_order, order('date DESC, end_time DESC, start_time DESC')
+
+  # Public instance methods
+  # Non-SQL virtual attributes
+  def non_sql_long_title
+    if lesson_supervision && !lesson_supervision.unique_names.blank?
+      "#{date} : #{title} (#{lesson_supervision.unique_names})"
+    else
+      "#{date} : #{title}"
+    end
+  end
 end
 # == Schema Information
 #

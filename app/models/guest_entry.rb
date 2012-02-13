@@ -9,17 +9,17 @@ class GuestEntry < ActiveRecord::Base
                         :dependent => :nullify
 
   has_one :following_entry, :foreign_key => :previous_entry_id,
-                            :class_name  => 'GuestEntry',
+                            :class_name  => :GuestEntry,
                             :dependent   => :nullify,
                             :inverse_of  => :previous_entry
 
   has_many :following_event_entry_reservations,
                :foreign_key => :previous_guest_entry_id,
-               :class_name  => 'EventEntryReservation',
+               :class_name  => :EventEntryReservation,
                :dependent   => :nullify,
                :inverse_of  => :previous_guest_entry
 
-  belongs_to :previous_entry, :class_name => 'GuestEntry',
+  belongs_to :previous_entry, :class_name => :GuestEntry,
                               :inverse_of => :following_entry
 
   belongs_to :membership_purchase,

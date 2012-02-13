@@ -1,4 +1,6 @@
-= form_for @guest, :url => 'compose_transaction', :method => :get do |f|
+= form_for @guest, :as     => :guest,
+                   :url    => 'compose_transaction',
+                   :method => :get do |f|
   = render 'shared/error_messages/validation', :target => @guest
   %dl.form_fields
     - [ :first_name, :last_name, :email, :phone ].each do |attribute|

@@ -19,9 +19,21 @@ class RegisterControllerTest < ActionController::TestCase
     assert_response :success
   end
 
-  # test "should create transaction" do
+  # test "should create event_entry" do
   #   session[:user_id] = @user_admin.to_param
-  #   post :create_transaction
+  #   post :create_event_entry
+  #   assert_response :success
+  # end
+
+  # test "should create tickets_purchase" do
+  #   session[:user_id] = @user_admin.to_param
+  #   post :create_tickets_purchase
+  #   assert_response :success
+  # end
+
+  # test "should create membership_purchase" do
+  #   session[:user_id] = @user_admin.to_param
+  #   post :create_membership_purchase
   #   assert_response :success
   # end
 end

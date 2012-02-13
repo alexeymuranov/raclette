@@ -44,6 +44,22 @@ module SessionsHelper
     clear_return_to
   end
 
+  def current_event=(event)
+    @current_event_id = event.id
+    session[:current_event_id] = @current_event_id
+    @current_event = event
+  end
+
+  def current_event
+    if current_event_id
+      @current_event ||= Event.find(current_event_id)
+    end
+  end
+
+  def current_event_id
+    @current_event_id ||= current_event_id_from_session
+  end
+
   private
 
     # def user_from_remember_token
@@ -52,6 +68,10 @@ module SessionsHelper
 
     def user_from_session
       Admin::User.find(session[:user_id]) if session[:user_id]
+    end
+
+    def current_event_id_from_session
+      session[:current_event_id]
     end
 
     # def remember_token
