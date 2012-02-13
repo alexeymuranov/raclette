@@ -18,20 +18,20 @@ class Admin::UsersController < AdminController
     self.default_sorting_column = :ip
   end
 
-  param_accessible({ 'user' => Set[
+  param_accessible({ 'user' => [
                        'username', 'full_name', 'email',
                        'account_deactivated',
                        'admin', 'manager', 'secretary', 'a_person',
                        'comments', 'safe_ip_ids'] },
                      :only => [:create, :update] )
-  param_accessible({ 'user' => Set['password', 'password_confirmation'] },
+  param_accessible({ 'user' => ['password', 'password_confirmation'] },
                      :only => :create )
   param_accessible({ 'id'         => true,
-                     'user' => Set['current_password', 'new_password',
+                     'user' => ['current_password', 'new_password',
                        'new_password_confirmation'] },
                      :only => :update )
 
-  # param_accessible( { 'user' => Set[] }, :only => :index ) # experimenting
+  # param_accessible( { 'user' => [] }, :only => :index ) # experimenting
 
   def index
     @query_type = params[:query_type]

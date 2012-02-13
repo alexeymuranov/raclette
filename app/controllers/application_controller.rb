@@ -2,7 +2,6 @@
 
 require 'set'  # to be able to use Set
 require 'csv'  # to render CSV
-require 'monkey_patches/action_controller'
 
 class ApplicationController < ActionController::Base
   protect_from_forgery
