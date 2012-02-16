@@ -50,7 +50,7 @@ class RegisterController < ApplicationController
         :guests_invited => false,
         :tickets_used   => @event.entry_fee_tickets )
       @event_entry.participant_entry = @member_entry
-    when 'GuestEntree'
+    when 'GuestEntry'
       @guest_entry = GuestEntry.new(
         :first_name => params[:guest][:first_name] )
       @event_entry.participant_entry = @guest_entry
@@ -109,7 +109,7 @@ class RegisterController < ApplicationController
         "#{@guest.first_name} (#{t('activemodel.models.guest')})"
 
       case @tab
-      when 0  # entree
+      when 0  # entry
         @events = Event.all  # FIXME!
         if @events.blank?
           render_choose_person_properly and return
