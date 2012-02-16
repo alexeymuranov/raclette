@@ -2,7 +2,7 @@
 
 class Admin::UsersController < AdminController
 
-  class UserResource < self::UserResource
+  class User < self::User
     self.all_sorting_columns = [:username,
                                 :full_name,
                                 :account_deactivated,
@@ -13,7 +13,7 @@ class Admin::UsersController < AdminController
     self.default_sorting_column = :username
   end
 
-  class KnownIPResource < self::KnownIPResource
+  class KnownIP < self::KnownIP
     self.all_sorting_columns = [:ip, :description]
     self.default_sorting_column = :ip
   end
@@ -64,18 +64,18 @@ class Admin::UsersController < AdminController
 
     set_column_types
 
-    @users = UserResource.scoped
+    @users = User.scoped
 
     # Filter:
-    @users = UserResource.filter(@users, params[:filter], @attributes)
-    @filtering_values = UserResource.last_filter_values
+    @users = User.filter(@users, params[:filter], @attributes)
+    @filtering_values = User.last_filter_values
 
     # Sort:
-    UserResource.all_sorting_columns = @attributes
+    User.all_sorting_columns = @attributes
     sort_params = (params[:sort] && params[:sort][:users]) || {}
-    @users = UserResource.sort(@users, sort_params)
-    @sorting_column = UserResource.last_sort_column
-    @sorting_direction = UserResource.last_sort_direction
+    @users = User.sort(@users, sort_params)
+    @sorting_column = User.last_sort_column
+    @sorting_direction = User.last_sort_direction
 
     # Compose mailing list:
     if params[:list_email_addresses]
@@ -91,7 +91,7 @@ class Admin::UsersController < AdminController
         # Paginate:
         @users = paginate(@users)
 
-        # @title = t('admin.users.index.title')  # or: UserResource.model_name.human.pluralize
+        # @title = t('admin.users.index.title')  # or: User.model_name.human.pluralize
         render :index
       end
 
@@ -124,7 +124,7 @@ class Admin::UsersController < AdminController
   end
 
   def show
-    @user = UserResource.find(params[:id])
+    @user = User.find(params[:id])
 
     @main_attributes = [:username,
                         :full_name,
@@ -144,9 +144,9 @@ class Admin::UsersController < AdminController
     @safe_ips_attributes = [:ip, :description]
 
     ip_sort_params = (params[:sort] && params[:sort][:safe_ips]) || {}
-    @safe_ips = KnownIPResource.sort(@user.safe_ips, ip_sort_params)
-    @sorting_column = KnownIPResource.last_sort_column
-    @sorting_direction = KnownIPResource.last_sort_direction
+    @safe_ips = KnownIP.sort(@user.safe_ips, ip_sort_params)
+    @sorting_column = KnownIP.last_sort_column
+    @sorting_direction = KnownIP.last_sort_direction
 
     set_column_types
     set_column_headers
@@ -157,13 +157,13 @@ class Admin::UsersController < AdminController
   end
 
   def new
-    @user = UserResource.new
+    @user = User.new
 
     render_new_properly
   end
 
   def edit
-    @user = UserResource.find(params[:id])
+    @user = User.find(params[:id])
 
     render_edit_properly
   end
@@ -178,7 +178,7 @@ class Admin::UsersController < AdminController
     params[:user].delete(:comments)\
         if params[:user][:comments].blank?
 
-    @user = UserResource.new(params[:user])
+    @user = User.new(params[:user])
 
     if @user.save
       flash[:success] = t('flash.admin.users.create.success',
@@ -192,7 +192,7 @@ class Admin::UsersController < AdminController
   end
 
   def update
-    @user = UserResource.find(params[:id])
+    @user = User.find(params[:id])
 
     params[:user][:safe_ip_ids] ||= []
 
@@ -234,7 +234,7 @@ class Admin::UsersController < AdminController
   end
 
   def destroy
-    @user = UserResource.find(params[:id])
+    @user = User.find(params[:id])
     @user.destroy
     flash[:notice] = t('flash.admin.users.destroy.success',
                        :username => @user.username)
@@ -254,9 +254,9 @@ class Admin::UsersController < AdminController
 
       @safe_ips = nil
       ip_sort_params = (params[:sort] && params[:sort][:safe_ips]) || {}
-      @other_ips = KnownIPResource.sort(KnownIPResource.scoped, ip_sort_params)
-      @sorting_column = KnownIPResource.last_sort_column
-      @sorting_direction = KnownIPResource.last_sort_direction
+      @other_ips = KnownIP.sort(KnownIP.scoped, ip_sort_params)
+      @sorting_column = KnownIP.last_sort_column
+      @sorting_direction = KnownIP.last_sort_direction
 
       @title = t('admin.users.new.title')
 
@@ -271,11 +271,11 @@ class Admin::UsersController < AdminController
       set_known_ips_column_headers
 
       ip_sort_params = (params[:sort] && params[:sort][:safe_ips]) || {}
-      @safe_ips = KnownIPResource.sort(@user.safe_ips, ip_sort_params)
-      @other_ips = KnownIPResource.sort(KnownIPResource.scoped, ip_sort_params) -
+      @safe_ips = KnownIP.sort(@user.safe_ips, ip_sort_params)
+      @other_ips = KnownIP.sort(KnownIP.scoped, ip_sort_params) -
         @safe_ips
-      @sorting_column = KnownIPResource.last_sort_column
-      @sorting_direction = KnownIPResource.last_sort_direction
+      @sorting_column = KnownIP.last_sort_column
+      @sorting_direction = KnownIP.last_sort_direction
 
       @title = t('admin.users.edit.title', :username => @user.username)
 
@@ -284,7 +284,7 @@ class Admin::UsersController < AdminController
 
     def set_column_types
       @column_types = {}
-      UserResource.columns_hash.each do |key, value|
+      User.columns_hash.each do |key, value|
         @column_types[key.to_sym] = value.type
       end
     end
@@ -292,7 +292,7 @@ class Admin::UsersController < AdminController
     def set_column_headers
       @column_headers = {}
       @column_types.each do |attr, type|
-        human_name = UserResource.human_attribute_name(attr)
+        human_name = User.human_attribute_name(attr)
 
         case type
         when :boolean
@@ -307,7 +307,7 @@ class Admin::UsersController < AdminController
 
     def set_known_ips_column_types
       @known_ips_column_types = {}
-      KnownIPResource.columns_hash.each do |key, value|
+      KnownIP.columns_hash.each do |key, value|
         @known_ips_column_types[key.to_sym] = value.type
       end
     end
@@ -315,7 +315,7 @@ class Admin::UsersController < AdminController
     def set_known_ips_column_headers
       @known_ips_column_headers = {}
       @known_ips_column_types.each do |attr, type|
-        human_name = KnownIPResource.human_attribute_name(attr)
+        human_name = KnownIP.human_attribute_name(attr)
 
         case type
         when :boolean

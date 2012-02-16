@@ -2,7 +2,7 @@
 
 class Admin::SafeUserIPsController < AdminController
 
-  class UserResource < self::UserResource
+  class User < self::User
     self.all_sorting_columns = [:username,
                                 :full_name,
                                 :account_deactivated,
@@ -13,7 +13,7 @@ class Admin::SafeUserIPsController < AdminController
     self.default_sorting_column = :username
   end
 
-  class KnownIPResource < self::KnownIPResource
+  class KnownIP < self::KnownIP
     self.all_sorting_columns = [:ip, :description]
     self.default_sorting_column = :ip
   end
@@ -21,15 +21,15 @@ class Admin::SafeUserIPsController < AdminController
   param_accessible(Set['safe_user_ids_for_known_ips'], :only => :update_all)
 
   def index
-    @users = UserResource.default_order
-    @known_ips = KnownIPResource.default_order
+    @users = User.default_order
+    @known_ips = KnownIP.default_order
 
     # @title = t('admin.safe_user_i_ps.index.title')
   end
 
   def edit_all
-    @users = UserResource.default_order
-    @known_ips = KnownIPResource.default_order
+    @users = User.default_order
+    @known_ips = KnownIP.default_order
 
     # @title = t('admin.safe_user_i_ps.edit_all.title')
   end
@@ -37,7 +37,7 @@ class Admin::SafeUserIPsController < AdminController
   def update_all
     params[:safe_user_ids_for_known_ips] ||= {}
 
-    KnownIPResource.all.each do |known_ip|
+    KnownIP.all.each do |known_ip|
       new_safe_user_ids = params[:safe_user_ids_for_known_ips][known_ip.to_param]
       known_ip.safe_user_ids = new_safe_user_ids
     end

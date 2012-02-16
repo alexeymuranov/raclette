@@ -2,7 +2,7 @@
 
 class RegisterController < ApplicationController
 
-  class MemberResource < self::MemberResource
+  class Member < self::Member
     self.all_sorting_columns = [:ordered_full_name,
                                 :email,
                                 :employed_from]
@@ -85,19 +85,19 @@ class RegisterController < ApplicationController
 
     def set_person_from_params
       if params[:member_id]
-        @member = MemberResource.joins(:person)\
+        @member = Member.joins(:person)\
                         .with_virtual_attributes(:full_name)\
                         .find(params[:member_id])
       elsif params[:guest]
-        @guest = GuestResource.new(params[:guest])
+        @guest = Guest.new(params[:guest])
       end
     end
 
     def render_choose_person_properly
-      @members = paginate(MemberResource.joins(:person)\
+      @members = paginate(Member.joins(:person)\
                                 .with_virtual_attributes(:ordered_full_name)\
                                 .default_order)
-      @guest ||= GuestResource.new(params[:guest])
+      @guest ||= Guest.new(params[:guest])
       @title = t('register.choose_person.title')
 
       render :choose_person

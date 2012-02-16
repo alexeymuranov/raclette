@@ -2,7 +2,7 @@
 
 class MembersController < SecretaryController
 
-  class MemberResource < self::MemberResource
+  class Member < self::Member
     self.all_sorting_columns = [:ordered_full_name,
                                 :email,
                                 :account_deactivated,
@@ -44,24 +44,24 @@ class MembersController < SecretaryController
                      :tickets_count]
     end
 
-    @column_types = MemberResource.attribute_db_types
-    @sql_for_attributes = MemberResource.sql_for_attributes
+    @column_types = Member.attribute_db_types
+    @sql_for_attributes = Member.sql_for_attributes
 
-    @members = MemberResource.joins(:person).
+    @members = Member.joins(:person).
       with_virtual_attributes(*@attributes, :formatted_email)
 
     # Filter:
-    @members = MemberResource.filter(@members, params[:filter], @attributes)
-    @filtering_values = MemberResource.last_filter_values
+    @members = Member.filter(@members, params[:filter], @attributes)
+    @filtering_values = Member.last_filter_values
 
     # Sort:
-    MemberResource.all_sorting_columns = @attributes
-    MemberResource.default_sorting_column = ( request.format == 'html' ?
+    Member.all_sorting_columns = @attributes
+    Member.default_sorting_column = ( request.format == 'html' ?
                                       :ordered_full_name : :last_name )
     sort_params = (params[:sort] && params[:sort][:members]) || {}
-    @members = MemberResource.sort(@members, sort_params)
-    @sorting_column = MemberResource.last_sort_column
-    @sorting_direction = MemberResource.last_sort_direction
+    @members = Member.sort(@members, sort_params)
+    @sorting_column = Member.last_sort_column
+    @sorting_direction = Member.last_sort_direction
 
     # Compose mailing list:
     if params[:list_email_addresses]
@@ -77,7 +77,7 @@ class MembersController < SecretaryController
         # Paginate:
         @members = paginate(@members)
 
-        # @title = t('members.index.title')  # or: MemberResource.model_name.human.pluralize
+        # @title = t('members.index.title')  # or: Member.model_name.human.pluralize
         render :index
       end
 
@@ -123,24 +123,24 @@ class MembersController < SecretaryController
                    :been_member_by,
                    :full_name]
 
-    @member = MemberResource.joins(:person).with_virtual_attributes(*@attributes)\
+    @member = Member.joins(:person).with_virtual_attributes(*@attributes)\
                     .find(params[:id])
 
-    @column_types = MemberResource.attribute_db_types
+    @column_types = Member.attribute_db_types
     # set_column_headers
 
     @title = t('members.show.title', :name => @member.non_sql_full_name)
   end
 
   def new
-    @member = MemberResource.new
+    @member = Member.new
     @member.build_person
 
     render_new_properly
   end
 
   def edit
-    @member = MemberResource.joins(:person).with_virtual_attributes(:full_name)\
+    @member = Member.joins(:person).with_virtual_attributes(:full_name)\
                     .find(params[:id])
     render_edit_properly
   end
@@ -158,7 +158,7 @@ class MembersController < SecretaryController
     # The only workaround seems to be to save the person first,
     # assign the foreign key manually, and then save the member.
     @person = Person.new
-    @member = MemberResource.new
+    @member = Member.new
     params[:member][:person_attributes].delete(:email)\
       if params[:member][:person_attributes][:email].blank?
 
@@ -186,7 +186,7 @@ class MembersController < SecretaryController
   end
 
   def update
-    @member = MemberResource.joins(:person).with_virtual_attributes(:full_name)\
+    @member = Member.joins(:person).with_virtual_attributes(:full_name)\
                     .find(params[:id])
 
     params[:member][:person_attributes].delete(:email)\
@@ -204,7 +204,7 @@ class MembersController < SecretaryController
   end
 
   def destroy
-    @member = MemberResource.find(params[:id])
+    @member = Member.find(params[:id])
     @member.destroy
 
     flash[:notice] = t('flash.members.destroy.success',
@@ -216,7 +216,7 @@ class MembersController < SecretaryController
   private
 
     def render_new_properly
-      @column_types = MemberResource.attribute_db_types
+      @column_types = Member.attribute_db_types
 
       @title = t('members.new.title')
 
@@ -224,7 +224,7 @@ class MembersController < SecretaryController
     end
 
     def render_edit_properly
-      @column_types = MemberResource.attribute_db_types
+      @column_types = Member.attribute_db_types
 
       @title =  t('members.edit.title', :name => @member.non_sql_full_name)
 
@@ -234,7 +234,7 @@ class MembersController < SecretaryController
     def set_column_headers
       @column_headers = {}
       @attributes.each do |attr|
-        @column_headers[attr] = MemberResource.human_attribute_name(attr)
+        @column_headers[attr] = Member.human_attribute_name(attr)
 
         case @column_types[attr]
         when :boolean, :delegated_boolean, :virtual_boolean

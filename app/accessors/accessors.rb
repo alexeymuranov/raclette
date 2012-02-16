@@ -25,7 +25,7 @@ module Accessors
   end
 
   # Active Record:
-  class KnownIPResource < Admin::KnownIP
+  class KnownIP < ::Admin::KnownIP
     include ActiveModelUtilities
     include ControllerAware
 
@@ -33,8 +33,9 @@ module Accessors
                      # :description,
                      # :as => :admin )
 
-    # Redefine class name of the associated model:
-    has_many :safe_users, :class_name => :UserResource,
+    # XXX: this is to pick up `User` from the current scope.
+    # TODO:understand what this actually does and why it is needed.
+    has_many :safe_users, :class_name => :User,
                           :through    => :safe_user_ips,
                           :source     => :user
 
@@ -43,7 +44,7 @@ module Accessors
     end
   end
 
-  class UserResource < Admin::User
+  class User < ::Admin::User
     include ActiveModelUtilities
     include ControllerAware
 
@@ -64,7 +65,9 @@ module Accessors
                      # :new_password_confirmation,  # virtual attribute
                      # :as => :admin )
 
-    has_many :safe_ips, :class_name => :KnownIPResource,
+    # XXX: this is to pick up `KnownIP` from the current scope.
+    # TODO:understand what this actually does and why it is needed.
+    has_many :safe_ips, :class_name => :KnownIP,
                         :through    => :safe_user_ips,
                         :source     => :known_ip
 
@@ -73,7 +76,7 @@ module Accessors
     end
   end
 
-  class EventResource < Event
+  class Event < ::Event
     include ActiveModelUtilities
     include ControllerAware
 
@@ -110,7 +113,7 @@ module Accessors
     end
   end
 
-  class InstructorResource < Instructor
+  class Instructor < ::Instructor
     include ActiveModelUtilities
     include ControllerAware
 
@@ -122,7 +125,9 @@ module Accessors
                      # :employed_until
                    # )
 
-    belongs_to :person, :class_name => :PersonResource,
+    # XXX: this is to pick up `Person` from the current scope.
+    # TODO:understand what this actually does and why it is needed.
+    belongs_to :person, :class_name => :Person,
                         :inverse_of => :instructor
 
     def self.controller_class
@@ -130,7 +135,7 @@ module Accessors
     end
   end
 
-  class MemberResource < Member
+  class Member < ::Member
     include ActiveModelUtilities
     include ControllerAware
 
@@ -150,7 +155,9 @@ module Accessors
                      # :person_attributes, # association attribute
                      # :as => [:secretary, :manager] )
 
-    belongs_to :person, :class_name => :PersonResource,
+    # XXX: this is to pick up `Person` from the current scope.
+    # TODO:understand what this actually does and why it is needed.
+    belongs_to :person, :class_name => :Person,
                         :inverse_of => :member
 
     def self.controller_class
@@ -158,7 +165,7 @@ module Accessors
     end
   end
 
-  class PersonResource < Person
+  class Person < ::Person
     include ActiveModelUtilities
     include ControllerAware
 
@@ -171,7 +178,7 @@ module Accessors
   end
 
   # Active Model:
-  class GuestResource < Guest
+  class Guest < ::Guest
     include ActiveModelUtilities
   end
 end
