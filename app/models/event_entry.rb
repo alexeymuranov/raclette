@@ -20,13 +20,14 @@ class EventEntry < ActiveRecord::Base
                 :presence => true
 
   validates :participant_entry_type, :length    => { :maximum => 32 },
-                                     :inclusion => %w[ MemberEntree
-                                                       GuestEntree ]
+                                     :inclusion => %w[ MemberEntry
+                                                       GuestEntry ]
 
   validates :event_title, :length => { :maximum => 64 }
 
   validates :participant_entry_id,
-                :uniqueness => { :scope => :participant_entry_type }
+                :uniqueness => { :scope => :participant_entry_type },
+                :allow_nil  => true
 
   validates :person_id, :uniqueness => { :scope => :event_id },
                         :allow_nil  => true
