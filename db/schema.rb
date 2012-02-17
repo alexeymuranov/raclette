@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120202210522) do
+ActiveRecord::Schema.define(:version => 20120217193147) do
 
   create_table "activity_periods", :force => true do |t|
     t.string   "unique_title",    :limit => 64,                    :null => false
@@ -57,9 +57,9 @@ ActiveRecord::Schema.define(:version => 20120202210522) do
   add_index "admin_known_ips", ["ip"], :name => "index_admin_known_ips_on_ip", :unique => true
 
   create_table "admin_safe_user_ips", :force => true do |t|
-    t.integer  "known_ip_id",       :null => false
-    t.integer  "user_id",           :null => false
-    t.datetime "last_signed_in_at"
+    t.integer  "known_ip_id",  :null => false
+    t.integer  "user_id",      :null => false
+    t.datetime "last_used_at"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -84,6 +84,7 @@ ActiveRecord::Schema.define(:version => 20120202210522) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "last_signed_in_from_ip",    :limit => 15
+    t.datetime "last_seen_at"
   end
 
   add_index "admin_users", ["a_person"], :name => "index_admin_users_on_a_person"

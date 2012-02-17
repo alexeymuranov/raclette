@@ -3,14 +3,14 @@
 one:
   known_ip: one
   user: one
-  last_signed_in_at: 2011-05-08 22:29:48
+  last_used_at: 2011-05-08 22:29:48
 
 two:
   known_ip: one
   user: user_secretary
-  last_signed_in_at: 2011-05-08 22:29:48
+  last_used_at: 2011-05-08 22:29:48
 
 three:
   known_ip: two
   user: user_secretary
-  last_signed_in_at: ~
+  last_used_at: ~
