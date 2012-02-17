@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120217193147) do
+ActiveRecord::Schema.define(:version => 20120217230122) do
 
   create_table "activity_periods", :force => true do |t|
     t.string   "unique_title",    :limit => 64,                    :null => false
@@ -148,6 +148,7 @@ ActiveRecord::Schema.define(:version => 20120217193147) do
     t.integer  "person_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "validated_by_user",      :limit => 32
   end
 
   add_index "event_entries", ["date"], :name => "index_event_entries_on_date"
@@ -337,6 +338,7 @@ ActiveRecord::Schema.define(:version => 20120217193147) do
     t.date     "purchase_date",                            :null => false
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "validated_by_user",          :limit => 32
   end
 
   add_index "membership_purchases", ["member_id", "membership_id"], :name => "index_membership_purchases_on_member_id_and_membership_id", :unique => true
@@ -492,12 +494,13 @@ ActiveRecord::Schema.define(:version => 20120217193147) do
   add_index "ticket_books", ["membership_type_id", "tickets_number"], :name => "index_ticket_books_on_membership_type_id_and_tickets_number", :unique => true
 
   create_table "tickets_purchases", :force => true do |t|
-    t.integer  "member_id",                   :null => false
-    t.integer  "tickets_number", :limit => 2, :null => false
+    t.integer  "member_id",                       :null => false
+    t.integer  "tickets_number",    :limit => 2,  :null => false
     t.integer  "ticket_book_id"
-    t.date     "purchase_date",               :null => false
+    t.date     "purchase_date",                   :null => false
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "validated_by_user", :limit => 32
   end
 
   add_index "tickets_purchases", ["member_id"], :name => "index_tickets_purchases_on_member_id"
