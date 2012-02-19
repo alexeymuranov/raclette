@@ -2,53 +2,36 @@
 
 module FormsMarkupHelper
 
-  # Based on: http://marklunds.com/articles/one/314
-  def flatten_hash(hash = params, ancestor_names = [])
+  # Originally based on http://marklunds.com/articles/one/314
+  def spread_param_hash(hash, key_prefix = '')
+    format_key = key_prefix.blank? ? lambda { |k| k.to_s } :
+                                     lambda { |k| key_prefix + "[#{k}]" }
     flat_hash = {}
     hash.each do |k, v|
-      names = Array.new(ancestor_names)
-      names << k
+      k = format_key.call(k)
       if v.is_a?(Hash)
-        flat_hash.merge!(flatten_hash(v, names))
+        flat_hash.merge!(spread_param_hash(v, k))
       else
-        key = flat_hash_key(names)
-        key += "[]" if v.is_a?(Array)
-        flat_hash[key] = v
+        flat_hash[k] = v
       end
     end
-
     flat_hash
   end
 
-  def flat_hash_key(names)
-    names = Array.new(names)
-    name = names.shift.to_s.dup
-    names.each do |n|
-      name << "[#{n}]"
-    end
-    name
-  end
-
-  def hash_as_hidden_fields(hash)
-    hidden_fields = []
-    flatten_hash(hash).each do |name, value|
-      value = [value] if !value.is_a?(Array)
-      value.each do |v|
-        hidden_fields << hidden_field_tag(name, v.to_s, :id => nil)
+  def hidden_field_tags_from_param_hash(hash, options = {})
+    hidden_field_tags = []
+    spread_param_hash(hash).each do |name, value|
+      if value.is_a?(Array)
+        name << '[]'
+        value.each do |v|
+          hidden_field_tags << hidden_field_tag(name, v, options)
+        end
+      else
+        hidden_field_tags << hidden_field_tag(name, value, options)
       end
     end
 
-    hidden_fields.join("\n").html_safe
-  end
-
-  # My wrapper:
-  def set_params_in_hidden_form_fields(hash = params)
-    hash_as_hidden_fields(hash.except(:controller,
-                                      :action,
-                                      :utf8,
-                                      :_method,
-                                      :authenticity_token,
-                                      :commit))
+    hidden_field_tags.join("\n").html_safe
   end
 
   # Based on http://davidsulc.com/blog/2011/05/01/self-marking-required-fields-in-rails-3/
