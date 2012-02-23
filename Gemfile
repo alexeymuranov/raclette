@@ -62,3 +62,6 @@ end
 group :production do
   gem 'pg'  # PostgreSQL for Heroku
 end
+
+# Temporarily included because versions 1.0.2, 1.0.3 seem broken:
+gem 'journey', '1.0.1' # not needed

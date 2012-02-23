@@ -1,0 +1,21 @@
+<h1><%= t '.header', :title => @ticket_book.title %></h1>
+
+<%= render 'form' %>
+
+<footer>
+  <%= link_to show_pictogram(3) + ' ' + t('ticket_books.show.header',
+                                          :title => @ticket_book.title),
+              ticket_book_path(@ticket_book),
+              :class => 'display resource' %>
+  <%= link_to list_all_pictogram(3) + ' ' + t('ticket_books.index.header'),
+              ticket_books_path,
+              :class => 'display resource' %>
+</footer>
+
+<%# End of the main body of the view %>
+
+<% content_for :side_menu_list_items do %>
+  <li><%= link_to list_all_pictogram + ' ' + t('ticket_books.index.title'),
+                  ticket_books_path,
+                  :class => 'display resource' %></li>
+<% end %>

@@ -1,0 +1,20 @@
+%h2= t('register.new_membership_purchase.title')
+= form_for @membership_purchase, :as  => :membership_purchase,
+                                 :url => 'create_membership_purchase' do |f|
+  = render 'shared/error_messages/validation', :target => @membership_purchase
+  %dl.form_fields
+    = f.hidden_field :participant_entry_type
+    = f.hidden_field :event_title
+    = f.hidden_field :date
+    = f.hidden_field :person_id if @member
+    = hidden_field_tag "guest[first_name]", @guest.first_name if @guest
+    = f.select :membership_type,
+        options_from_collection_for_select(@membership_types,
+          :id, :title, :selected => @membership_type.id )
+    = f.select :activity_period,
+        options_from_collection_for_select(@activity_periods,
+          :id, :title, :selected => @activity_period.id )
+  .actions
+    = f.submit t('buttons.continue')
+%footer
+  = link_to t('register.choose_person.title'), :action => :choose_person

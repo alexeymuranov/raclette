@@ -495,7 +495,7 @@ fr:
         success: "%{resource_name} supprimé(e) avec succès."
         failure: "%{resource_name} n'a pas pu être supprimé(e)."
       other:
-        failure: "Une erreur s'est produit!"
+        failure: "Une erreur s'est produit !"
     filters:
       require_login: "Vous devez vous connecter pour acceder à cette page."
       require_secretary: "Vous devez être un(e) secrétaire pour acceder à la section que vous avez essayée d'acceder."
@@ -520,7 +520,7 @@ fr:
           wrong_password: "Le mot de passe est invalide, l'utilisateur n'a pas été mis à jour."
         destroy:
           success: "L'utilisateur « %{username} » est supprimé."
-          failure: "Une erreur s'est produit!"
+          failure: "Une erreur s'est produit !"
       known_i_ps:
         create:
           success: "L'adresse IP %{ip} a été enregistrée."
@@ -530,107 +530,123 @@ fr:
           failure: "L'adresse IP n'a pas été mise à jour."
         destroy:
           success: "L'adresse IP %{ip} est supprimée."
-          failure: "Une erreur s'est produit!"
+          failure: "Une erreur s'est produit !"
     instructors:
       create:
         success: "Le modèle est enregistré."
-        failure: "Une erreur s'est produit!"
+        failure: "Une erreur s'est produit !"
       update:
         success: "Le modèle est mis à jour."
-        failure: "Une erreur s'est produit!"
+        failure: "Une erreur s'est produit !"
       destroy:
         success: "Le modèle est supprimé."
-        failure: "Une erreur s'est produit!"
+        failure: "Une erreur s'est produit !"
     lesson_supervisions:
       create:
         success: "Le modèle est enregistré."
-        failure: "Une erreur s'est produit!"
+        failure: "Une erreur s'est produit !"
       update:
         success: "Le modèle est mis à jour."
-        failure: "Une erreur s'est produit!"
+        failure: "Une erreur s'est produit !"
       destroy:
         success: "Le modèle est supprimé."
-        failure: "Une erreur s'est produit!"
+        failure: "Une erreur s'est produit !"
     members:
       create:
         success: "Le modèle est enregistré."
-        failure: "Une erreur s'est produit!"
+        failure: "Une erreur s'est produit !"
       update:
         success: "Le modèle est mis à jour."
-        failure: "Une erreur s'est produit!"
+        failure: "Une erreur s'est produit !"
       destroy:
         success: "Le modèle est supprimé."
-        failure: "Une erreur s'est produit!"
+        failure: "Une erreur s'est produit !"
     membership_types:
       create:
         success: "Le modèle est enregistré."
-        failure: "Une erreur s'est produit!"
+        failure: "Une erreur s'est produit !"
       update:
         success: "Le modèle est mis à jour."
-        failure: "Une erreur s'est produit!"
+        failure: "Une erreur s'est produit !"
       destroy:
         success: "Le modèle est supprimé."
-        failure: "Une erreur s'est produit!"
+        failure: "Une erreur s'est produit !"
     ticket_books:
       create:
         success: "Le modèle est enregistré."
-        failure: "Une erreur s'est produit!"
+        failure: "Une erreur s'est produit !"
       update:
         success: "Le modèle est mis à jour."
-        failure: "Une erreur s'est produit!"
+        failure: "Une erreur s'est produit !"
       destroy:
         success: "Le modèle est supprimé."
-        failure: "Une erreur s'est produit!"
+        failure: "Une erreur s'est produit !"
     activity_periods:
       create:
         success: "Le modèle est enregistré."
-        failure: "Une erreur s'est produit!"
+        failure: "Une erreur s'est produit !"
       update:
         success: "Le modèle est mis à jour."
-        failure: "Une erreur s'est produit!"
+        failure: "Une erreur s'est produit !"
       destroy:
         success: "Le modèle est supprimé."
-        failure: "Une erreur s'est produit!"
+        failure: "Une erreur s'est produit !"
     memberships:
       create:
         success: "Le modèle est enregistré."
-        failure: "Une erreur s'est produit!"
+        failure: "Une erreur s'est produit !"
       update:
         success: "Le modèle est mis à jour."
-        failure: "Une erreur s'est produit!"
+        failure: "Une erreur s'est produit !"
       destroy:
         success: "Le modèle est supprimé."
-        failure: "Une erreur s'est produit!"
+        failure: "Une erreur s'est produit !"
     weekly_events:
       create:
         success: "Le modèle est enregistré."
-        failure: "Une erreur s'est produit!"
+        failure: "Une erreur s'est produit !"
       update:
         success: "Le modèle est mis à jour."
-        failure: "Une erreur s'est produit!"
+        failure: "Une erreur s'est produit !"
       destroy:
         success: "Le modèle est supprimé."
-        failure: "Une erreur s'est produit!"
+        failure: "Une erreur s'est produit !"
     weekly_event_suspensions:
       create:
         success: "Le modèle est enregistré."
-        failure: "Une erreur s'est produit!"
+        failure: "Une erreur s'est produit !"
       update:
         success: "Le modèle est mis à jour."
-        failure: "Une erreur s'est produit!"
+        failure: "Une erreur s'est produit !"
       destroy:
         success: "Le modèle est supprimé."
-        failure: "Une erreur s'est produit!"
+        failure: "Une erreur s'est produit !"
     events:
       create:
         success: "Le modèle est enregistré."
-        failure: "Une erreur s'est produit!"
+        failure: "Une erreur s'est produit !"
       update:
         success: "Le modèle est mis à jour."
-        failure: "Une erreur s'est produit!"
+        failure: "Une erreur s'est produit !"
       destroy:
         success: "Le modèle est supprimé."
-        failure: "Une erreur s'est produit!"
+        failure: "Une erreur s'est produit !"
+    register:
+      new_event_entree:
+        bad_person_data: &bad_person_data_for_register "La personne n'a été pas bien définie !"
+      new_tickets_purchase:
+        bad_person_data: *bad_person_data_for_register
+      new_membership_purchase:
+        bad_person_data: *bad_person_data_for_register
+      create_event_entree:
+        success: "%{person_name} est bienvenu(e) à %{event_title}."
+        failure: "Une erreur s'est produit !"
+      create_tickets_purchase:
+        success: "%{person_name} a maintenant %{number} tickets."
+        failure: "Une erreur s'est produit !"
+      create_membership_purchase:
+        success: "%{person_name} a maintenant %{membership_title} jusqu'au %{date}."
+        failure: "Une erreur s'est produit !"
 
   external_links:
     tangueando_site: "Site Tangueando"
@@ -663,10 +679,12 @@ fr:
     compose_transaction:
       title: "Caisse"
       header: "Caisse des entrées et règlements"
-      tabs:
-        - "Entrées"
-        - "Tickets"
-        - "Adhésions"
+    new_entry:
+      title: "Entrée"
+    new_ticket_purchase:
+      title: "Tickets"
+    new_membership_purchase:
+      title: "Adhésion"
 
   secretary_tools:
     overview:

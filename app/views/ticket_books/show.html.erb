@@ -1,0 +1,34 @@
+<h1><%= t '.header', :title => @ticket_book.title %></h1>
+
+<dl class="show">
+
+  <% @attributes.each do |attr| %>
+    <%= render 'shared/lists/attribute_in_show',
+               :model       => @ticket_book,
+               :attribute   => attr,
+               :column_type => @column_types[attr] %>
+  <% end %>
+
+</dl>
+
+<footer>
+  <%= link_to edit_pictogram(3) + ' ' + t('ticket_books.edit.header',
+                                      :title => @ticket_book.title),
+              edit_ticket_book_path(@ticket_book),
+              :class => 'modify resource' %>
+  <%= link_to list_all_pictogram(3) + ' ' + t('ticket_books.index.header'),
+              ticket_books_path,
+              :class => 'display resource' %>
+</footer>
+
+<%# End of the main body of the view %>
+
+<% content_for :side_menu_list_items do %>
+  <li><%= link_to list_all_pictogram + ' ' + t('ticket_books.index.title'),
+                  ticket_books_path,
+                  :class => 'display resource' %></li>
+  <li><%= link_to add_pictogram + ' ' + t('ticket_books.new.title'),
+                  new_ticket_book_path,
+                  :title => t('actions.create'),
+                  :class => 'add resource' %></li>
+<% end %>

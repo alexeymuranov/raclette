@@ -137,7 +137,7 @@ aside#developper_links {
   position: absolute;
   top: 5px;
   left: 1125px;
-  
+
   a {
     position: absolute;
     opacity: 0.5;
@@ -349,7 +349,7 @@ body > div.container > header {
     &:hover {
       opacity: 1;
     }
-    
+
     nav {
       background-color: $section-bg-color
     }
@@ -490,8 +490,8 @@ body > div.container section nav.tabs {
         text-decoration: none;
       }
     }
-    
-    li.current {
+
+    li.active {
       span {
         display: inline-block;
         padding: 5px;
@@ -569,7 +569,7 @@ body div.container section {
     font-size: $h3-font-size;
     font-weight: bold;
   }
-  
+
   p {
     padding: 5px;
     background-color: $table-data-bg-color;
@@ -587,7 +587,7 @@ body div.container section {
   dl.form_fields {
     margin: 0 auto;
   }
-    
+
   dl.form_fields, dl.show {
     p.item, div.item {
       display: table-row;
@@ -737,7 +737,7 @@ body div.container section {
 
     thead, tfoot {
       font-size: $table-header-font-size;
-      
+
       th:not(:empty), td:not(:empty) {
         font-size: $table-header-font-size;
         border-left: solid 1px $table-border-color;
@@ -757,7 +757,7 @@ body div.container section {
           background-color: $table-head-bg-color;
         }
       }
-      
+
       td.nothing {
         text-align: center;
       }
@@ -790,7 +790,7 @@ body div.container section {
 
   table.filtered {
     @include box-shadow(0, 0, 3px, 0, $emphasis-glow-color);
-    
+
     thead tr td.filtering_value, tfoot tr td.filtering_value {
       font-size: $body-font-size;
       color: $emphasis-text-color;
@@ -839,7 +839,7 @@ body div.container section {
     span {
       display: inline-block;
       margin: 0 10px;
-      
+
       &.page {
         font-weight: bold;
       }
@@ -949,7 +949,7 @@ pre {
 
 div.field_with_errors {
   display: inline;
-  
+
   label {
     color: Red;
     text-decoration: underline;

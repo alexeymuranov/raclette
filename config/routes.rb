@@ -6,8 +6,8 @@ Raclette::Application.routes.draw do
   get 'monitor/overview'
   get 'register/choose_person'
   get 'register/compose_transaction'
-  post 'register/create_event_entry'
-  post 'register/create_tickets_purchase'
+  post 'register/create_entry'
+  post 'register/create_ticket_purchase'
   post 'register/create_membership_purchase'
   get 'secretary_tools/overview'
   get 'manager_tools/overview'
@@ -19,6 +19,7 @@ Raclette::Application.routes.draw do
   resources :members
   resources :membership_types
   resources :memberships
+  resources :ticket_books
   resources :weekly_events
 
   scope '/admin', :module => :admin do  # an alternative for admin namespace

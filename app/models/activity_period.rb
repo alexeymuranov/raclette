@@ -1,6 +1,13 @@
 ## encoding: UTF-8
 
+require 'app_active_record_extensions/filtering'
+require 'app_active_record_extensions/sorting'
+
 class ActivityPeriod < ActiveRecord::Base
+  include Filtering
+  include Sorting
+
+  include AbstractSmarterModel
 
   attr_readonly :id, :start_date, :duration_months, :end_date
 

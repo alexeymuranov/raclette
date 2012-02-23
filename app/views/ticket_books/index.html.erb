@@ -1,0 +1,40 @@
+<hgroup>
+  <h1><%= t '.header' %></h1>
+
+  <h2 id="ticket_books_count">
+    <% if @filtering_values.blank? %>
+      <%= t '.count_total', :count => TicketBook.count %>
+    <% else %>
+      <%= t '.count_filtered', :count => @ticket_books.size,
+                               :total => TicketBook.count %>
+    <% end %>
+  </h2>
+</hgroup>
+
+<div id="ticket_books_table">
+
+  <%= render 'shared/tables/filtered_index',
+             :models           => @ticket_books,
+             :attributes       => @attributes,
+             :column_types     => @column_types,
+             :column_headers   => @column_headers,
+             :html_table_id    => :ticket_books,
+             :filtering_values => @filtering_values %>
+
+</div>
+
+<footer>
+  <%= link_to add_pictogram(2) + ' ' + t('ticket_books.new.header'),
+              new_ticket_book_path,
+              :title => t('actions.create'),
+              :class => 'add resource' %>
+</footer>
+
+<%# End of the main body of the view %>
+
+<% content_for :side_menu_list_items do %>
+  <li><%= link_to add_pictogram + ' ' + t('ticket_books.new.title'),
+                  new_ticket_book_path,
+                  :title => t('actions.create'),
+                  :class => 'add resource' %></li>
+<% end %>

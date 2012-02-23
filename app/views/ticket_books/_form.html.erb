@@ -1,0 +1,22 @@
+<%= form_for @ticket_book, :as => :ticket_book,
+             :url => ticket_book_path(@ticket_book) do |f| %>
+
+  <%= render 'shared/error_messages/validation', :target => @ticket_book %>
+
+  <dl class="form_fields">
+
+    <% @attributes.each do |attribute| %>
+
+      <%= render 'shared/forms/attribute',
+                 :form_builder => f,
+                 :attribute    => attribute,
+                 :column_type  => @column_types[attribute] %>
+
+    <% end %>
+
+  </dl>
+
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

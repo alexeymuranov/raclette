@@ -1,2 +1,34 @@
-<h1>ActivityPeriods#show</h1>
-<p>Find me in app/views/activity_periods/show.html.erb</p>
+<h1><%= t '.header', :title => @activity_period.unique_title %></h1>
+
+<dl class="show">
+
+  <% @attributes.each do |attr| %>
+    <%= render 'shared/lists/attribute_in_show',
+               :model       => @activity_period,
+               :attribute   => attr,
+               :column_type => @column_types[attr] %>
+  <% end %>
+
+</dl>
+
+<footer>
+  <%= link_to edit_pictogram(3) + ' ' + t('activity_periods.edit.header',
+                                      :title => @activity_period.unique_title),
+              edit_activity_period_path(@activity_period),
+              :class => 'modify resource' %>
+  <%= link_to list_all_pictogram(3) + ' ' + t('activity_periods.index.header'),
+              activity_periods_path,
+              :class => 'display resource' %>
+</footer>
+
+<%# End of the main body of the view %>
+
+<% content_for :side_menu_list_items do %>
+  <li><%= link_to list_all_pictogram + ' ' + t('activity_periods.index.title'),
+                  activity_periods_path,
+                  :class => 'display resource' %></li>
+  <li><%= link_to add_pictogram + ' ' + t('activity_periods.new.title'),
+                  new_activity_period_path,
+                  :title => t('actions.create'),
+                  :class => 'add resource' %></li>
+<% end %>

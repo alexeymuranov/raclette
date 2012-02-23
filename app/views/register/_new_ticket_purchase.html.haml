@@ -1,0 +1,16 @@
+%h2= t('register.new_ticket_purchase.title')
+= form_for @tickets_purchase, :as  => :tickets_purchase,
+                              :url => 'create_ticket_purchase' do |f|
+  = render 'shared/error_messages/validation', :target => @tickets_purchase
+  %dl.form_fields
+    = f.hidden_field :participant_entry_type
+    = f.hidden_field :event_title
+    = f.hidden_field :date
+    = f.hidden_field :member_id
+    = f.select :ticket_book,
+        options_from_collection_for_select(@ticket_books,
+          :id, :tickets_number, :selected => @tickets_purchase.ticket_book.id )
+  .actions
+    = f.submit t('buttons.continue')
+%footer
+  = link_to t('register.choose_person.title'), :action => :choose_person

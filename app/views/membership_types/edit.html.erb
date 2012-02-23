@@ -1,2 +1,21 @@
-<h1>MembershipTypes#edit</h1>
-<p>Find me in app/views/membership_types/edit.html.erb</p>
+<h1><%= t '.header', :title => @membership_type.unique_title %></h1>
+
+<%= render 'form' %>
+
+<footer>
+  <%= link_to show_pictogram(3) + ' ' + t('membership_types.show.header',
+                                          :title => @membership_type.unique_title),
+              membership_type_path(@membership_type),
+              :class => 'display resource' %>
+  <%= link_to list_all_pictogram(3) + ' ' + t('membership_types.index.header'),
+              membership_types_path,
+              :class => 'display resource' %>
+</footer>
+
+<%# End of the main body of the view %>
+
+<% content_for :side_menu_list_items do %>
+  <li><%= link_to list_all_pictogram + ' ' + t('membership_types.index.title'),
+                  membership_types_path,
+                  :class => 'display resource' %></li>
+<% end %>

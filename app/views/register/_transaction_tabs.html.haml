@@ -1,0 +1,15 @@
+%header
+  %nav.tabs
+    %ul.tabs
+      - @tabs.each do |tab|
+        - tab_title = t(:title, :scope => [:register, tab])
+        - if tab == @tab
+          %li.tab.active>
+            %span= tab_title
+        - else
+          %li.tab>
+            /TODO:use forms with hidden fields for tabs?/
+            = link_to tab_title,
+                params.slice(:person_id, :guest,
+                  :event_id).merge( :action => 'compose_transaction',
+                                    :tab    => tab )

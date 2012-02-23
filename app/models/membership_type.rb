@@ -1,6 +1,13 @@
 ## encoding: UTF-8
 
+require 'app_active_record_extensions/filtering'
+require 'app_active_record_extensions/sorting'
+
 class MembershipType < ActiveRecord::Base
+  include Filtering
+  include Sorting
+
+  include AbstractSmarterModel
 
   attr_readonly :id, :active, :reduced, :unlimited, :duration_months
 

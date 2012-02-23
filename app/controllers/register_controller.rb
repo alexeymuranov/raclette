@@ -32,7 +32,7 @@ class RegisterController < ApplicationController
     render_compose_transaction_properly
   end
 
-  def create_event_entry
+  def create_entry
     event_entry_attributes = params[:event_entry] || {}
     event_id = event_entry_attributes[:event_id]
     if event_id && @event = Event.find(event_id)
@@ -41,7 +41,7 @@ class RegisterController < ApplicationController
       flash.now[:error] = t('flash.actions.other.failure')
       render_choose_person_properly and return
     end
-    
+
     @event_entry = EventEntry.new(event_entry_attributes)
     case @event_entry.participant_entry_type
     when 'MemberEntry'
@@ -62,26 +62,53 @@ class RegisterController < ApplicationController
     else
       flash.now[:error] = t('flash.actions.other.failure')
       if @member || @guest
-        @tab = 1
+        @tab = 'new_entry'
         render_compose_transaction_properly
       else
         render_choose_person_properly
       end
-    end    
+    end
   end
 
-  def create_tickets_purchase
+  def create_ticket_purchase  # FIXME
+    tickets_purchase_attributes = params[:tickets_purchase] || {}
+
+    @tickets_purchase = TicketsPurchase.new(tickets_purchase_attributes)
+    if @tickets_purchase.save
+      flash[:success] = t('flash.actions.create.success',
+                          :resource_name => TicketsPurchase.model_name.human )
+      redirect_to :action => :choose_person
+    else
+      flash.now[:error] = t('flash.actions.other.failure')
+      if @member
+        @tab = 'new_ticket_purchase'
+        render_compose_transaction_properly
+      else
+        render_choose_person_properly
+      end
+    end
   end
 
-  def create_membership_purchase
+  def create_membership_purchase  # FIXME
+    membership_purchase_attributes = params[:event_entry] || {}
+
+    @membership_purchase = MembershipPurchase.new(event_entry_attributes)
+    if @event_entry.save
+      flash[:success] = t('flash.actions.create.success',
+                          :resource_name => MembershipPurchase.model_name.human )
+      redirect_to :action => :choose_person
+    else
+      flash.now[:error] = t('flash.actions.other.failure')
+      if @member || @guest
+        @tab = 'new_membership_purchase'
+        render_compose_transaction_properly
+      else
+        render_choose_person_properly
+      end
+    end
   end
 
   private
-
-    def set_tab_from_params
-      @tab = params[:tab].to_i
-      @tab = 0 unless (0..2).include?(@tab)
-    end
 
     def set_person_from_params
       if params[:member_id]
@@ -91,6 +118,13 @@ class RegisterController < ApplicationController
       elsif params[:guest]
         @guest = Guest.new(params[:guest])
       end
+    end
+
+    def set_tab_from_params
+      @tab = params[:tab]
+      @tab = 'new_entry' unless
+        @tab == 'new_membership_purchase' ||
+        (@member && @tab == 'new_ticket_purchase')
     end
 
     def render_choose_person_properly
@@ -104,35 +138,78 @@ class RegisterController < ApplicationController
     end
 
     def render_compose_transaction_properly
-      @visitor_name = @member ?
-        @member.full_name :
-        "#{@guest.first_name} (#{t('activemodel.models.guest')})"
+      @tabs = ['new_entry', 'new_ticket_purchase', 'new_membership_purchase']
+
+      if @member
+        @person_name = @member.full_name
+      else
+        @tabs.delete('new_ticket_purchase')
+        @person_name = "#{@guest.first_name} "\
+                       "(#{t('activemodel.models.guest')})"
+      end
+
+      @title = t('register.compose_transaction.title')
 
       case @tab
-      when 0  # entry
-        @events = Event.all  # FIXME!
-        if @events.blank?
-          render_choose_person_properly and return
-        end
-        @event ||= @events.first  # FIXME!
-        @event_entry = EventEntry.new(
-          :event_id    => @event.id,
-          :event_title => @event.title,
-          :date        => @event.date )
-        if @member
-          @event_entry.person_id = @member.person_id
-          @event_entry.participant_entry_type = 'MemberEntry'
-        else
-          @event_entry.participant_entry_type = 'GuestEntry'
-        end
-      when 1  # tickets
-        @tickets_purchase = TicketsPurchase.new
-      when 2  # membership
-        @membership_purchase = MembershipPurchase.new
+      when 'new_entry'
+        render_new_entry_properly
+      when 'new_membership_purchase'
+        render_new_membership_purchase_properly
+      when 'new_ticket_purchase'
+        render_new_ticket_purchase_properly
+      end
+    end
+
+    def render_new_entry_properly
+      @events = Event.all  # FIXME!
+      if @events.blank?
+        render_choose_person_properly and return
+      end
+      @event ||= @events.first  # FIXME!
+      @event_entry = EventEntry.new(
+        :event_id    => @event.id,
+        :event_title => @event.title,
+        :date        => @event.date )
+      if @member
+        @event_entry.person_id = @member.person_id
+        @event_entry.participant_entry_type = 'MemberEntry'
+      else
+        @event_entry.participant_entry_type = 'GuestEntry'
       end
       @title = t('register.compose_transaction.title')
 
-      render :compose_transaction
+      @tab = 'new_entry'
+      render 'compose_transaction'
+    end
+
+    def render_new_ticket_purchase_properly
+      @ticket_books = TicketBook.where(
+        :membership_type_id => @member.non_sql_current_membership.type.id).
+        order('tickets_number ASC')
+      @ticket_book = @ticket_books.first
+      @tickets_purchase = TicketsPurchase.new(
+        :member      => @member,
+        :ticket_book => @ticket_book )
+      @title = t('register.compose_transaction.title')
+
+      @tab = 'new_ticket_purchase'
+      render 'compose_transaction'
+    end
+
+    def render_new_membership_purchase_properly
+      @membership_types = MembershipType.all  # FIXME!
+      @membership_type = @membership_types.first
+      @activity_periods = ActivityPeriods.all  # FIXME!
+      @activity_period = @activity_periods.first
+
+      @membership_purchase = MembershipPurchase.new(
+        :membership_type => @membership_type,
+        :activity_period => @activity_period )
+      @membership_purchase.member_id = @member.person_id if @member
+      @title = t('register.compose_transaction.title')
+
+      @tab = 'new_membership_purchase'
+      render 'compose_transaction'
     end
 
 end

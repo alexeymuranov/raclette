@@ -1,6 +1,6 @@
-%h2= t('register.compose_transaction.tabs')[0]
+%h2= t('register.new_entry.title')
 = form_for @event_entry, :as  => :event_entry,
-                         :url => 'create_event_entry' do |f|
+                         :url => 'create_entry' do |f|
   = render 'shared/error_messages/validation', :target => @event_entry
   %dl.form_fields
     = f.hidden_field :participant_entry_type
@@ -9,8 +9,8 @@
     = f.hidden_field :person_id if @member
     = hidden_field_tag "guest[first_name]", @guest.first_name if @guest
     = f.select :event_id,
-               options_from_collection_for_select(@events,
-                 :id, :non_sql_long_title, :selected => @event_entry.event_id )
+        options_from_collection_for_select(@events,
+          :id, :non_sql_long_title, :selected => @event_entry.event_id )
   .actions
     = f.submit t('buttons.continue')
 %footer

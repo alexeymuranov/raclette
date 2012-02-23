@@ -543,7 +543,7 @@ en:
       require_secretary: "You must be a secretary to access the section you tried to access."
       require_manager: "You must be a manager to access the section you tried to access."
       require_admin: "You must be an admin to access the section you tried to access."
-    
+
     sessions:
       create:
         logged_in: "Your have signed in as '%{username}'."
@@ -673,6 +673,22 @@ en:
     destroy:
       success: "Destroyed."
       failure: "Not destroyed."
+    register:
+      new_event_entree:
+        bad_person_data: &bad_person_data_for_register "The person was not well defined!"
+      new_tickets_purchase:
+        bad_person_data: *bad_person_data_for_register
+      new_membership_purchase:
+        bad_person_data: *bad_person_data_for_register
+      create_event_entree:
+        success: "%{person_name} is welcome to %{event_title}."
+        failure: "Error!"
+      create_tickets_purchase:
+        success: "%{person_name} now has %{number} tickets."
+        failure: "Error!"
+      create_membership_purchase:
+        success: "%{person_name} now has %{membership_title} until %{date}."
+        failure: "Error!"
 
   external_links:
     tangueando_site: "Site Tangueando"
@@ -705,10 +721,12 @@ en:
     compose_transaction:
       title: "Register"
       header: "Payment and Entry Register"
-      tabs:
-        - "Entries"
-        - "Tickets"
-        - "Memberships"
+    new_entry:
+      title: "Entry"
+    new_ticket_purchase:
+      title: "Tickets"
+    new_membership_purchase:
+      title: "Membership"
 
   secretary_tools:
     overview:
@@ -725,7 +743,7 @@ en:
       overview:
         title: "Administrator"
         header: "Admin Tools"
-      
+
     users:
       index:
         title: "Users"

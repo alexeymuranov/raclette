@@ -1,2 +1,17 @@
-<h1>ActivityPeriods#new</h1>
-<p>Find me in app/views/activity_periods/new.html.erb</p>
+<h1><%= t '.header' %></h1>
+
+<%= render 'form' %>
+
+<footer>
+  <%= link_to list_all_pictogram(3) + ' ' + t('activity_periods.index.header'),
+              activity_periods_path,
+              :class => 'display resource' %>
+</footer>
+
+<%# End of the main body of the view %>
+
+<% content_for :side_menu_list_items do %>
+  <li><%= link_to list_all_pictogram + ' ' + t('activity_periods.index.title'),
+                  activity_periods_path,
+                  :class => 'display resource' %></li>
+<% end %>
