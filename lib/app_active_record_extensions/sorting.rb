@@ -4,7 +4,8 @@ module Sorting
   end
 
   module ClassMethods
-    attr_accessor :default_sorting_column, :all_sorting_columns
+    attr_accessor :default_sorting_column, :default_sorting_direction,
+                  :all_sorting_columns
     attr_reader :last_sort_column, :last_sort_direction
     def sort_column(sort_params)
       if (suggested_sort_column = sort_params[:column]).blank?
@@ -16,7 +17,14 @@ module Sorting
     end
 
     def sort_direction(sort_params)
-      sort_params[:direction] == 'DESC' ? :DESC : :ASC
+      case sort_params[:direction]
+      when 'ASC'
+        :ASC
+      when 'DESC'
+        :DESC
+      else
+        default_sorting_direction || :ASC
+      end
     end
 
     def sort(scoped_collection, sort_params)
