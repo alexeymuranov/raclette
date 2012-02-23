@@ -6,29 +6,6 @@
 
   <section>
 
-    <h3><%= link_to list_all_pictogram(2) + ' ' + t('instructors.index.title'),
-                    instructors_path,
-                    :class => 'display resource' %></h3>
-
-    <ul class="compact">
-      <%- @instructors.each do |instructor| -%>
-        <li><%= link_to show_pictogram(2) + ' ' + instructor.full_name,
-                        instructor_path(instructor),
-                        :class => 'display resource' %></li>
-      <%- end -%>
-    </ul>
-
-    <footer>
-      <%= link_to add_pictogram(2) + ' ' + t('instructors.new.header'),
-                  new_instructor_path,
-                  :title => t('actions.create'),
-                  :class => 'add resource' %>
-    </footer>
-
-  </section>
-
-  <section>
-
     <h3><%= link_to list_all_pictogram(2) + ' ' + t('events.index.title'),
                     events_path,
                     :class => 'display resource' %></h3>
@@ -50,6 +27,75 @@
 
   </section>
 
+  <section>
+
+    <h3><%= link_to list_all_pictogram(2) + ' ' + t('membership_types.index.title'),
+                    membership_types_path,
+                    :class => 'display resource' %></h3>
+
+    <ul class="compact">
+      <%- @membership_types.each do |membership_type| -%>
+        <li><%= link_to show_pictogram(2) + ' ' + membership_type.unique_title,
+                        membership_type_path(membership_type),
+                        :class => 'display resource' %></li>
+      <%- end -%>
+    </ul>
+
+    <footer>
+      <%= link_to add_pictogram(2) + ' ' + t('membership_types.new.header'),
+                  new_membership_type_path,
+                  :title => t('actions.create'),
+                  :class => 'add resource' %>
+    </footer>
+
+  </section>
+
+  <section>
+
+    <h3><%= link_to list_all_pictogram(2) + ' ' + t('activity_periods.index.title'),
+                    activity_periods_path,
+                    :class => 'display resource' %></h3>
+
+    <ul class="compact">
+      <%- @activity_periods.each do |activity_period| -%>
+        <li><%= link_to show_pictogram(2) + ' ' + activity_period.unique_title,
+                        activity_period_path(activity_period),
+                        :class => 'display resource' %></li>
+      <%- end -%>
+    </ul>
+
+    <footer>
+      <%= link_to add_pictogram(2) + ' ' + t('activity_periods.new.header'),
+                  new_activity_period_path,
+                  :title => t('actions.create'),
+                  :class => 'add resource' %>
+    </footer>
+
+  </section>
+
+  <section>
+
+    <h3><%= link_to list_all_pictogram(2) + ' ' + t('instructors.index.title'),
+                    instructors_path,
+                    :class => 'display resource' %></h3>
+
+    <ul class="compact">
+      <%- @instructors.each do |instructor| -%>
+        <li><%= link_to show_pictogram(2) + ' ' + instructor.full_name,
+                        instructor_path(instructor),
+                        :class => 'display resource' %></li>
+      <%- end -%>
+    </ul>
+
+    <footer>
+      <%= link_to add_pictogram(2) + ' ' + t('instructors.new.header'),
+                  new_instructor_path,
+                  :title => t('actions.create'),
+                  :class => 'add resource' %>
+    </footer>
+
+  </section>
+
 </section>
 
 <section>
@@ -62,13 +108,23 @@
 
 <% content_for :side_menu_list_items do %>
   <li>
-    <%= link_to list_all_pictogram + ' ' + t('instructors.index.title'),
-                instructors_path,
+    <%= link_to list_all_pictogram + ' ' + t('events.index.title'),
+                events_path,
                 :class => 'display resource' %>
   </li>
   <li>
-    <%= link_to list_all_pictogram + ' ' + t('events.index.title'),
-                events_path,
+    <%= link_to list_all_pictogram + ' ' + t('membership_types.index.title'),
+                membership_types_path,
+                :class => 'display resource' %>
+  </li>
+  <li>
+    <%= link_to list_all_pictogram + ' ' + t('activity_periods.index.title'),
+                activity_periods_path,
+                :class => 'display resource' %>
+  </li>
+  <li>
+    <%= link_to list_all_pictogram + ' ' + t('instructors.index.title'),
+                instructors_path,
                 :class => 'display resource' %>
   </li>
 <% end %>
