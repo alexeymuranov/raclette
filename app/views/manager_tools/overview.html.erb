@@ -29,6 +29,29 @@
 
   <section>
 
+    <h3><%= link_to list_all_pictogram(2) + ' ' + t('weekly_events.index.title'),
+                    weekly_events_path,
+                    :class => 'display resource' %></h3>
+
+    <ul class="compact">
+      <%- @weekly_events.each do |weekly_event| -%>
+        <li><%= link_to show_pictogram(2) + ' ' + weekly_event.title,
+                        weekly_event_path(weekly_event),
+                        :class => 'display resource' %></li>
+      <%- end -%>
+    </ul>
+
+    <footer>
+      <%= link_to add_pictogram(2) + ' ' + t('weekly_events.new.header'),
+                  new_weekly_event_path,
+                  :title => t('actions.create'),
+                  :class => 'add resource' %>
+    </footer>
+
+  </section>
+
+  <section>
+
     <h3><%= link_to list_all_pictogram(2) + ' ' + t('membership_types.index.title'),
                     membership_types_path,
                     :class => 'display resource' %></h3>
@@ -110,6 +133,11 @@
   <li>
     <%= link_to list_all_pictogram + ' ' + t('events.index.title'),
                 events_path,
+                :class => 'display resource' %>
+  </li>
+  <li>
+    <%= link_to list_all_pictogram + ' ' + t('weekly_events.index.title'),
+                weekly_events_path,
                 :class => 'display resource' %>
   </li>
   <li>

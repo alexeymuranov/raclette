@@ -1,3 +1,5 @@
+## encoding: UTF-8
+
 class TicketBooksController < ApplicationController
 
   class TicketBook < self::TicketBook

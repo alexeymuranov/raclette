@@ -1,6 +1,13 @@
 ## encoding: UTF-8
 
+require 'app_active_record_extensions/filtering'
+require 'app_active_record_extensions/sorting'
+
 class WeeklyEvent < ActiveRecord::Base
+  include Filtering
+  include Sorting
+
+  include AbstractSmarterModel
 
   attr_readonly :id, :event_type, :lesson, :start_on
 
@@ -47,6 +54,9 @@ class WeeklyEvent < ActiveRecord::Base
 
   validates :start_on, :end_on,
                 :uniqueness => { :scope => :title }
+
+  # Scopes:
+  scope :default_order, order('end_on DESC, start_on DESC')
 end
 # == Schema Information
 #
