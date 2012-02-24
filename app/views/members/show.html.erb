@@ -1,15 +1,17 @@
 <h1><%= t '.header', :name => @member.full_name %></h1>
 
-<dl class="show">
+<section>
+  <dl class="show">
 
-  <% @attributes.each do |attr| %>
-    <%= render 'shared/lists/attribute_in_show',
-               :model       => @member,
-               :attribute   => attr,
-               :column_type => @column_types[attr] %>
-  <% end %>
+    <% @attributes.each do |attr| %>
+      <%= render 'shared/lists/attribute_in_show',
+                 :model       => @member,
+                 :attribute   => attr,
+                 :column_type => @column_types[attr] %>
+    <% end %>
 
-</dl>
+  </dl>
+</section>
 
 <footer>
   <%= link_to edit_pictogram(3) + ' ' + t('members.edit.header',

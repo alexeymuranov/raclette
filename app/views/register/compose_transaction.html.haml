@@ -1,8 +1,9 @@
 %h1= t '.header'
-%h2= @person_name
+%section
+  %h2= @person_name
+  = render 'transaction_tabs'
 
-= render 'transaction_tabs'
-
-= render @tab
+%section
+  = render @tab
 
 %footer
