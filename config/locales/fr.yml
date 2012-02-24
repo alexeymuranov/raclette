@@ -201,16 +201,16 @@ fr:
       lesson_supervision: "Encadrement de cours"
       committee_membership: "Participation au CA"
       member: "Adhérent"
-      membership_type: "Type d'adhérence"
+      membership_type: "Type d'adhésion"
       ticket_book: "Carnet de tickets"
       activity_period: "Saison"
-      membership: "Adhérence"
+      membership: "Adhésion"
       weekly_event: "Événement hebdomadaire"
       weekly_event_suspension: "Arrêt d'un événement hebdomadaire"
       event: "Événement"
       revenue_account: "Compte de revenus"
       payment: "Payement"
-      membership_purchase: "Achat d'adhérence"
+      membership_purchase: "Achat d'adhésion"
       tickets_purchase: "Achat de tickets"
       event_entry: "Entrée"
       event_cashier: "Chargé des entrées"
@@ -278,10 +278,10 @@ fr:
         person_id: "Id personnel"
         been_member_by: "Adhérent depuis"
         account_deactivated: "Désactivé(e)"
-        latest_membership_obtained_on: "Adhérence obtenue"
-        latest_membership_expiration_date: "Adhérence expire"
-        latest_membership_type: "Type d'adhérence"
-        latest_membership_duration_months: "Term d'adhérence"
+        latest_membership_obtained_on: "Adhésion obtenue"
+        latest_membership_expiration_date: "Adhésion expire"
+        latest_membership_type: "Type d'adhésion"
+        latest_membership_duration_months: "Term d'adhésion"
         last_card_printed_on: "Carte imprimée"
         last_card_delivered: "Carte remise"
         last_payment_date: "Dernier payement"
@@ -328,7 +328,7 @@ fr:
         start_on: "Date début"
         end_on: "Date fin"
         location: "Endroit"
-        entry_fee_tickets: ""
+        entry_fee_tickets: "Prix d'entrée en tickets"
         over: "Fini"
         description: "Description"
         # lesson_supervision:
@@ -392,8 +392,8 @@ fr:
         # revenue_account:
         #   <<: *revenue_account_attributes
       membership_purchase:
-        membership_type: "Type d'adhérence"
-        membership_expiration_date: "Date de fin d'adhérence"
+        membership_type: "Type d'adhésion"
+        membership_expiration_date: "Date de fin d'adhésion"
         purchase_date: "Date d'achat"
       tickets_purchase:
         tickets_number: "Nombre de tickets"
@@ -787,17 +787,17 @@ fr:
 
   lesson_supervisions:
     index:
-      title: "Encadrement des cours"
-      header: "Encadrement des cours"
+      title: "Encadrement de cours"
+      header: "Encadrement de cours"
     show:
-      title: ""
-      header: ""
+      title: "%{title}"
+      header: "Encadrement de cours %{title}"
     new:
-      title: ""
-      header: ""
+      title: "Nouveau encadrement de cours"
+      header: "Ajouter un encadrement de cours"
     edit:
-      title: ""
-      header: ""
+      title: "%{title} - mise à jour"
+      header: "Mise à jour de l'encadrement de cours %{title}"
 
   members:
     index:
@@ -824,84 +824,84 @@ fr:
       title: "Types d'adhésion"
       header: "Types d'adhésion"
     show:
-      title: ""
-      header: ""
+      title: "%{title}"
+      header: "Type d'adhésion %{title}"
     new:
-      title: ""
-      header: ""
+      title: "Nouveau type d'adhésion"
+      header: "Ajouter un type d'adhésion"
     edit:
-      title: ""
-      header: ""
+      title: "%{title} - mise à jour"
+      header: "Mise à jour du type d'adhésion %{title}"
 
   ticket_books:
     index:
       title: "Carnets de tickets"
       header: "Carnets de tickets"
     show:
-      title: ""
-      header: ""
+      title: "%{title}"
+      header: "Carnet de tickets %{title}"
     new:
-      title: ""
-      header: ""
+      title: "Nouveau carnet de tickets"
+      header: "Ajouter un carnet de tickets"
     edit:
-      title: ""
-      header: ""
+      title: "%{title} - mise à jour"
+      header: "Mise à jour du carnet de tickets"
 
   activity_periods:
     index:
       title: "Saisons"
       header: "Saisons"
     show:
-      title: ""
-      header: ""
+      title: "%{title}"
+      header: "Saison %{title}"
     new:
-      title: ""
-      header: ""
+      title: "Nouvelle saison"
+      header: "Nouvelle saison"
     edit:
-      title: ""
-      header: ""
+      title: "%{title} - mise à jour"
+      header: "Mise à jour de la saison %{title}"
 
   memberships:
     index:
       title: "Adhésions"
       header: "Adhésions"
     show:
-      title: ""
-      header: ""
+      title: "%{title}"
+      header: "%{title}"
     new:
-      title: ""
-      header: ""
+      title: "Nouvelle adhésion"
+      header: "Ajouter une adhésion"
     edit:
-      title: ""
-      header: ""
+      title: "%{title} - mise à jour"
+      header: "Mise à jour de l'adhésion %{title}"
 
   weekly_events:
     index:
       title: "Événements hebdomadaires"
       header: "Événements hebdomadaires"
     show:
-      title: ""
-      header: ""
+      title: "%{title}"
+      header: "Événement hebdomadaire %{title}"
     new:
-      title: ""
-      header: ""
+      title: "Nouveau événement hebdomadaire"
+      header: "Ajouter un événement hebdomadaire"
     edit:
-      title: ""
-      header: ""
+      title: "%{title} - mise à jour"
+      header: "Mise à jour de l'événement hebdomadaire %{title}"
 
   weekly_event_suspensions:
     index:
       title: "Arrêts des événements hebdomadaires"
       header: "Arrêts des événements hebdomadaires"
     show:
-      title: ""
-      header: ""
+      title: "%{title}"
+      header: "Arrêt d'un événement hebdomadaire %{title}"
     new:
-      title: ""
-      header: ""
+      title: "Nouveau arrêt d'un événement hebdomadaire"
+      header: "Ajouter un arrêt d'un événement hebdomadaire"
     edit:
-      title: ""
-      header: ""
+      title: "%{title} - mise à jour"
+      header: "Mise à jour de l'arrêt d'un événement hebdomadaire %{title}"
 
   events:
     index:
