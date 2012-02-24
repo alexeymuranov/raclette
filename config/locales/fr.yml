@@ -669,6 +669,7 @@ fr:
     overview:
       title: "Contrôle"
       header: "Écran de contrôle"
+      members_count: "Adhérents :"
 
   register:
     choose_person:

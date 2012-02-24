@@ -711,6 +711,7 @@ en:
     overview:
       title: "Monitor"
       header: "Monitor"
+      members_count: "Members:"
 
   register:
     choose_person:

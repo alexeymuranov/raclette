@@ -1,6 +1,6 @@
 ## encoding: UTF-8
 
-class ActivityPeriodsController < ManagerController  #FIXME!
+class ActivityPeriodsController < ManagerController
 
   class ActivityPeriod < self::ActivityPeriod
     self.all_sorting_columns = [:unique_title,

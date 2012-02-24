@@ -2,5 +2,6 @@
 
 class MonitorController < ApplicationController
   def overview
+    @members_count = Member.count
   end
 end
