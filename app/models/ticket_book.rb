@@ -25,6 +25,9 @@ class TicketBook < ActiveRecord::Base
 
   validates :tickets_number,
                 :uniqueness => { :scope => :membership_type_id }
+
+  # Scopes:
+  scope :default_order, order('tickets_number ASC')
 end
 # == Schema Information
 #

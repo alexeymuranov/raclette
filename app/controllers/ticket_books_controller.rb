@@ -1,6 +1,6 @@
 ## encoding: UTF-8
 
-class TicketBooksController < ApplicationController
+class TicketBooksController < ManagerController
 
   class TicketBook < self::TicketBook
     self.all_sorting_columns = [:tickets_number,
