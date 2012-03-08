@@ -1,0 +1,41 @@
+/* Colors: */
+
+$body-bg-color: Navy;
+$body-text-color: DarkSlateGray;
+$section-bg-color: lighten(#778899, 40%); /* #778899 LightSlateGray */ /* #F5F5F5 WhiteSmoke */
+$alt-section-bg-color: lighten(#778899, 20%); /* LightSlateGray */
+$common-link-color: MediumBlue;
+$common-link-hover-color: Blue;
+$common-navigation-link-color: MediumBlue;
+$common-navigation-link-hover-color: Blue;
+$logout-navigation-link-color: #006400; /* DarkGreen */
+$logout-navigation-link-bg-color: Yellow;
+$disabled-navigation-link-color: Silver;
+$view-link-color: Green;
+$add-link-color: Blue;
+$modify-link-color: Red;
+$table-data-bg-color: #F8F8FF; /* #F8F8FF GhostWhite */ /* #F0FFFF; Azure */
+$alt-table-data-bg-color: darken($table-data-bg-color, 4%);
+$table-head-bg-color: #B0C4DE; /* #B0C4DE LightSteelBlue */
+$alt-table-head-bg-color: lighten($table-head-bg-color, 10%);
+$table-border-color: darken($table-head-bg-color, 10%);
+$input-bg-color: White;
+$emphasis-glow-color: Red;
+$emphasis-text-color: Red;
+$focus-input-glow-color: Red;
+$focus-input-bg-color: White;
+$focus-input-text-color: Black;
+$login_form-focus-glow-color: Blue;
+$label_marks-color: Black;
+$data-color: Black;
+
+/* Lengths: */
+
+$side-menu-font-size: 9pt;
+$table-header-font-size: 9pt;
+$body-font-size: 10pt;
+$main-menu-font-size: 12pt;
+$tabs-font-size: 11pt;
+$h1-font-size: 16pt;
+$h2-font-size: 14pt;
+$h3-font-size: 12pt;

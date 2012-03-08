@@ -36,7 +36,9 @@ gem 'haml'  # use HAML templates (instead of ERB)
 
 # gem 'slim' # use Slim templates (instead of HAML and ERB)
 
-gem 'draper'  # provides decorators (similar to presenters)
+# gem 'draper'  # provides decorators (similar to presenters)
+
+gem 'bourbon'  # better Sass
 
 # Use unicorn as the web server
 # gem 'unicorn'
@@ -64,4 +66,4 @@ group :production do
 end
 
 # Temporarily included because versions 1.0.2, 1.0.3 seem broken:
-gem 'journey', '1.0.1' # not needed
+gem 'journey', '1.0.1' # noramlly was not needed

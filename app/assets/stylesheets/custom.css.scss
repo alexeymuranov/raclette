@@ -1,69 +1,5 @@
-/* Colors: */
-$body-bg-color: Navy;
-$body-text-color: DarkSlateGray;
-$section-bg-color: lighten(#778899, 40%); /* #778899 LightSlateGray */ /* #F5F5F5 WhiteSmoke */
-$alt-section-bg-color: lighten(#778899, 20%); /* LightSlateGray */
-$common-link-color: MediumBlue;
-$common-link-hover-color: Blue;
-$common-navigation-link-color: MediumBlue;
-$common-navigation-link-hover-color: Blue;
-$logout-navigation-link-color: #006400; /* DarkGreen */
-$logout-navigation-link-bg-color: Yellow;
-$disabled-navigation-link-color: Silver;
-$view-link-color: Green;
-$add-link-color: Blue;
-$modify-link-color: Red;
-$table-data-bg-color: #F8F8FF; /* #F8F8FF GhostWhite */ /* #F0FFFF; Azure */
-$alt-table-data-bg-color: darken($table-data-bg-color, 4%);
-$table-head-bg-color: #B0C4DE; /* #B0C4DE LightSteelBlue */
-$alt-table-head-bg-color: lighten($table-head-bg-color, 10%);
-$table-border-color: darken($table-head-bg-color, 10%);
-$input-bg-color: White;
-$emphasis-glow-color: Red;
-$emphasis-text-color: Red;
-$focus-input-glow-color: Red;
-$focus-input-bg-color: White;
-$focus-input-text-color: Black;
-$login_form-focus-glow-color: Blue;
-$label_marks-color: Black;
-$data-color: Black;
-
-/* Lengths: */
-
-$side-menu-font-size: 9pt;
-$table-header-font-size: 9pt;
-$body-font-size: 10pt;
-$main-menu-font-size: 12pt;
-$tabs-font-size: 11pt;
-$h1-font-size: 16pt;
-$h2-font-size: 14pt;
-$h3-font-size: 12pt;
-
-/* Mixins: */
-
-@mixin rounded-border($radius) {
-  border-radius: $radius;
-  -moz-border-radius: $radius;
-  -webkit-border-radius: $radius;
-}
-
-@mixin no-rounded-border {
-  border-radius: none;
-  -moz-border-radius: none;
-  -webkit-border-radius: none;
-}
-
-@mixin box-shadow($x, $y, $blur, $spread, $color) {
-  box-shadow: $x $y $blur $spread $color;
-  -webkit-box-shadow: $x $y $blur $spread $color;
-  -moz-box-shadow: $x $y $blur $spread $color;
-}
-
-@mixin no-box-shadow {
-  box-shadow: none;
-  -webkit-box-shadow: none;
-  -moz-box-shadow: none;
-}
+/* Colors and lengths: */
+@import "application_settings";
 
 /**********/
 /* Style: */
@@ -158,7 +94,7 @@ aside#developper_links {
   }
 
   a#source_code {
-    @include rounded-border(5px);
+    @include border-radius(5px);
     top: 69px;
     left: 0;
     display: block;
@@ -230,7 +166,7 @@ form#login_form {
 /* Header */
 
 body > div.container > header {
-  @include rounded-border(10px);
+  @include border-radius(10px);
   background-color: $section-bg-color;
   font-size: $main-menu-font-size;
   text-align: left;
@@ -288,7 +224,7 @@ body > div.container > header {
   }
 
   a.logout_button, a.logout_button:visited {
-    @include rounded-border(10px);
+    @include border-radius(10px);
     display: inline-block;
     margin: 0;
     padding: 5px 10px;
@@ -319,7 +255,7 @@ body > div.container > header {
   }
 
   div#main_logo div#logo_box {
-    @include rounded-border(10px);
+    @include border-radius(10px);
     display: inline-block;
     padding: 10px;
     opacity: 0.75;
@@ -389,7 +325,7 @@ body > div.container > header {
 /* Footer */
 
 body > div.container > footer {
-  @include rounded-border(10px);
+  @include border-radius(10px);
   background-color: $section-bg-color;
   font-size: $main-menu-font-size;
   text-align: center;
@@ -427,7 +363,7 @@ body > div.container > footer {
 /* Side menu */
 
 nav#side_menu {
-  @include rounded-border(5px);
+  @include border-radius(5px);
   position: fixed;
   top: 110px;
   left: 5px;
@@ -504,12 +440,12 @@ body > div.container section nav.tabs {
 /* Sections */
 
 body > div.container > section {
-  @include rounded-border(10px);
+  @include border-radius(10px);
   background-color: $section-bg-color;
   padding: 10px;
 
   section {
-    @include rounded-border(5px);
+    @include border-radius(5px);
     margin: 5px 0px;
 
     section {
@@ -799,7 +735,7 @@ body div.container section {
   }
 
   fieldset {
-    @include rounded-border(5px);
+    @include border-radius(5px);
     margin: 0.5em 0;
     padding: 10px;
 
@@ -814,7 +750,7 @@ body div.container section {
   }
 
   div.link_group {
-    @include rounded-border(5px);
+    @include border-radius(5px);
     border: dotted 1px;
   }
 
@@ -852,7 +788,7 @@ body div.container section {
       }
 
       a:hover {
-        @include rounded-border(3px);
+        @include border-radius(3px);
         text-shadow: none;
         color: $section-bg-color;
         background-color: $common-navigation-link-color;
@@ -866,7 +802,7 @@ body div.container section {
   }
 
   a.resource, a.resource:visited {
-    @include rounded-border(5px);
+    @include border-radius(5px);
     display: inline-block;
     padding: 5px;
     margin: 0;
