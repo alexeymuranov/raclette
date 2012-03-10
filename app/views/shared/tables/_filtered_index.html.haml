@@ -1,0 +1,196 @@
+-# Locals:
+-#   models:
+-#   attributes:
+-#   column_types:
+-#   column_headers:
+-#   html_table_id:
+-#   filtering_values:
+
+- klass = models.klass
+
+= form_tag(nil, :method => :get) do
+  = hidden_field_tags_from_param_hash params.slice(:filter, :sort)
+
+  = label_tag :per_page, t('field_labels.per_page')
+  = select_tag :per_page,
+                 options_for_select([5, 10, 25, 50, 100, 250, 500, 1000],
+                                    params[:per_page]),
+                 :class => 'number'
+  %span.actions
+    = hidden_field_tag :query_type, 'repaginate'
+    = content_tag :button,
+                  t('buttons.repaginate'),
+                  :name  => 'button',
+                  :type  => 'submit',
+                  :value => 'repaginate_button'
+
+= paginate models
+
+= form_tag(nil, :id     => (filter_form_id = "#{html_table_id}_filter"),
+                :method => :get) do
+  = hidden_field_tags_from_param_hash params.slice(:sort, :per_page)
+  = hidden_field_tag :query_type, 'filter', :form  => filter_form_id
+  -# Other input fields are outside (with the help of "form" HTML attribute)
+
+= content_tag :table,                                                  |
+              :id    => html_table_id,                                 |
+              :class => (filtering_values.blank? ? '' : 'filtered ') + |
+              'records' do                                             |
+  %colgroup.attributes
+    - attributes.size.times do
+      %col
+  %colgroup
+    %col
+    %col
+  %thead
+    %tr
+
+      = render 'shared/tables/sorting_headers',
+               :attributes     => attributes,
+               :column_types   => column_types,
+               :column_headers => column_headers,
+               :html_table_id  => html_table_id
+
+      %th.empty
+      %th.empty
+    %tr
+      - attributes.each do |attr|
+        - select_from = klass.possible_values_of(attr)
+        - select_from = nil unless select_from.respond_to?(:size) &&      |
+                                   (select_size = select_from.size) <= 10 |
+        - if select_from
+          - case column_types[attr]
+          - when :string, :delegated_string, :virtual_string
+            - if filtering_values[attr].is_a?(String)
+              - filtering_values[attr] = filtering_values[attr].sub(/\%\z/, '')
+              - filtering_values[attr] = select_from.find { |c|      |
+                  c.mb_chars.upcase.to_s == filtering_values[attr] } |
+            - css_class = 'text field'
+          - when :boolean, :delegated_boolean, :virtual_boolean
+            - css_class = 'boolean field'
+          - when :integer, :delegated_integer, :virtual_integer
+            - css_class = 'number field'
+          - when :date, :delegated_date, :virtual_date
+            - css_class = 'date field'
+          = content_tag :td, :class => css_class do
+            = select_tag "filter[#{attr}]",
+                         options_for_select(select_from,
+                                            filtering_values[attr]),
+                         :include_blank => true,
+                         :form          => filter_form_id
+        - else
+          - case column_types[attr]
+          - when :string, :delegated_string, :virtual_string
+            %td.text.field
+              = search_field_tag "filter[#{attr}]",
+                                 filtering_values[attr],
+                                 :form => filter_form_id
+          - when :boolean, :delegated_boolean, :virtual_boolean
+            %td.boolean.field
+              = radio_button_tag "filter[#{attr}]",
+                                 'yes',
+                                 filtering_values[attr],
+                                 :form => filter_form_id
+              = label_tag 'filter_' + attr.to_s + '_yes', t('yes')
+              = radio_button_tag "filter[#{attr}]",
+                                 'no',
+                                 filtering_values[attr] == false,
+                                 :form => filter_form_id
+              = label_tag 'filter_' + attr.to_s + '_no', t('no')
+              = radio_button_tag "filter[#{attr}]",
+                                 'all',
+                                 filtering_values[attr].nil? ,
+                                 :form => filter_form_id
+              = label_tag 'filter_' + attr.to_s + '_all', t('all')
+          - when :integer, :delegated_integer, :virtual_integer
+            %td.number.field
+              - filtering_values[attr] ||= {}
+              = label_tag "filter[#{attr}][min]",
+                          t('formats.attribute_name:', :attribute => 'min')
+              = number_field_tag "filter[#{attr}][min]",
+                                 filtering_values[attr][:min],
+                                 :form => filter_form_id,
+                                 :size => 6
+              = label_tag "filter[#{attr}][max]",
+                          t('formats.attribute_name:', :attribute => 'max')
+              = number_field_tag "filter[#{attr}][max]",
+                                 filtering_values[attr][:max],
+                                 :form => filter_form_id,
+                                 :size => 6
+          - when :date, :delegated_date, :virtual_date
+            %td.date.field
+              - filtering_values[attr] ||= {}
+              = label_tag "filter[#{attr}][from]", t('date.from')
+              = date_select "filter[#{attr}][from]",
+                            filtering_values[attr][:from],
+                            :form => filter_form_id,
+                            :type => 'date'
+              = label_tag "filter[#{attr}][until]", t('date.until')
+              = date_select "filter[#{attr}][until]",
+                            filtering_values[attr][:until],
+                            :form => filter_form_id,
+                            :type => 'date'
+          - else
+            %td
+      %td.empty
+      %td.empty
+    %tr
+      = content_tag :td, :colspan => attributes.size,
+                         :class   => 'actions' do
+        = hidden_field_tag :query_type, 'filter', :form  => filter_form_id
+        = content_tag :button,
+                      t('buttons.filter'),
+                      :form  => filter_form_id,
+                      :name  => 'button',
+                      :type  => 'submit',
+                      :value => 'filter_button'
+        = content_tag :button,
+                      t('buttons.clear'),
+                      :form  => filter_form_id,
+                      :name  => 'button',
+                      :type  => 'submit',
+                      :value => 'clear_button'
+      %td.empty
+      %td.empty
+    - unless filtering_values.blank?
+      %tr
+        - attributes.each do |attr|
+          - unless filtering_values[attr].blank?
+            - case column_types[attr]
+            - when :string, :delegated_string, :virtual_string
+              %td.filtering_value
+                = filtering_values[attr]
+            - when :boolean, :delegated_boolean, :virtual_boolean
+              %td.boolean.filtering_value
+                = boolean_to_yes_no(filtering_values[attr])
+            - when :integer, :delegated_integer, :virtual_integer
+              %td.number.filtering_value
+                - if filtering_values[attr][:min]
+                  = filtering_values[attr][:min]
+                \..
+                - if filtering_values[attr][:max]
+                  = filtering_values[attr][:max]
+            - when :date, :delegated_date, :virtual_date
+              %td.date.filtering_value
+                - if filtering_values[attr][:from]
+                  = t(date.from)
+                  = filtering_values[attr][:from]
+                - if filtering_values[attr][:until]
+                  = t(date.until)
+                  = filtering_values[attr][:until]
+            - else
+              %td.filtering_value
+                = filtering_values[attr]
+          - else
+            %td
+        %td.empty
+        %td.empty
+
+  = render 'shared/tables/index_body',
+           :models       => models,
+           :attributes   => attributes,
+           :column_types => column_types
+
+-# end # </table>
+
+= paginate models

@@ -1,0 +1,56 @@
+-# Locals:
+-#   attributes:
+-#   column_types:
+-#   column_headers:
+-#   html_table_id:
+-#   selected_models:
+-#   unselected_models:
+-#   id_prefix:
+-#   array_name:
+
+= content_tag :table, :class => 'form_fields' do
+  %colgroup
+    %col
+  %colgroup.attributes
+    - attributes.size.times do
+      %col
+
+  %thead
+    %tr
+      %th.empty.boolean
+
+      = render 'shared/tables/headers',
+               :attributes     => attributes,
+               :column_types   => column_types,
+               :column_headers => column_headers,
+               :html_table_id  => html_table_id
+
+
+  %tbody
+    - selected_models.each do |mod|
+      %tr.field
+        %td.boolean
+          = check_box_tag array_name + '[]', mod.id, true,
+                            :id => id_prefix + "_#{mod.id}"
+
+        = render 'shared/forms/attributes_in_selection_index',
+                 :model        => mod,
+                 :attributes   => attributes,
+                 :column_types => column_types,
+                 :id_prefix    => id_prefix
+
+    - end unless selected_models.nil?
+
+    - unselected_models.each do |mod|
+      %tr.field
+        %td.boolean
+          = check_box_tag array_name+'[]', mod.id, false,
+                            :id => id_prefix + "_#{mod.id}"
+
+        = render 'shared/forms/attributes_in_selection_index',
+                 :model        => mod,
+                 :attributes   => attributes,
+                 :column_types => column_types,
+                 :id_prefix    => id_prefix
+
+    - end unless unselected_models.nil?

@@ -1,0 +1,18 @@
+-# Locals:
+-#   model:
+-#   attributes:
+-#   column_types:
+
+%th{:scope => "row"}
+  = link_to model.public_send(attributes[0]),
+              { :controller => model.controller_path,
+                :action     => :show,
+                :id         => model },
+              :title => t('actions.read'),
+              :class => 'display resource'
+
+- attributes[1..-1].each do |attr|
+
+  = render 'shared/tables/attribute_in_simple_index',
+             :column_type => column_types[attr],
+             :value       => model.public_send(attr)

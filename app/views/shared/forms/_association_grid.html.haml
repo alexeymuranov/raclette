@@ -1,0 +1,33 @@
+-# Locals:
+-#   models1:
+-#   models2:
+-#   association_attribute1:
+-#   key1:
+-#   key2:
+-#   description1:
+-#   description2:
+-#   id_array_name:
+
+%table.grid.form_fields
+  %colgroup
+    %col
+  %colgroup
+    - models2.size.times do
+      %col
+  %thead
+    %tr
+      %th.empty
+      - models2.each do |mod2|
+        %th
+          = content_tag :span, mod2.public_send(key2),
+                        :title => mod2.public_send(description2)
+  %tbody
+    - models1.each do |mod1|
+      %tr
+        %th{:scope => "row"}
+          = content_tag :span, mod1.public_send(key1),
+                        :title => mod1.public_send(description1)
+        - models2.each do |mod2|
+          %td.boolean
+            = check_box_tag "#{id_array_name}[#{mod1.id}][]", mod2.id,
+                mod1.public_send(association_attribute1).include?(mod2)

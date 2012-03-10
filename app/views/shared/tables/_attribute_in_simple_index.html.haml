@@ -1,0 +1,14 @@
+-# Locals:
+-#   column_type:
+-#   value:
+
+- case column_type
+- when :boolean, :delegated_boolean, :virtual_boolean
+  %td.boolean
+    = boolean_to_picto value, size=2
+- when :integer, :delegated_integer, :virtual_integer
+  %td.number
+    = value
+- else
+  %td
+    = value

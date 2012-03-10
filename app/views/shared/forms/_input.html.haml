@@ -1,0 +1,27 @@
+-# Locals:
+-#   name:
+-#   value:
+-#   label_content:
+-#   input_html_options (optional):
+
+- if local_assigns.has_key?(:input_html_options)
+  - input_html_options.except!(:name, :value)
+- else
+  - input_html_options = {}
+
+.item.field
+  %dt
+    = label_tag name, label_content
+
+  %dd class="input"
+    - case input_html_options[:type]
+    - when 'checkbox'
+      = check_box_tag name, value,
+                        input_html_options[:checked],
+                        input_html_options
+    - when 'email'
+      = email_field_tag name, value, input_html_options
+    - when 'password'
+      = password_field_tag name, value, input_html_options
+    - else
+      = text_field_tag name, value, input_html_options

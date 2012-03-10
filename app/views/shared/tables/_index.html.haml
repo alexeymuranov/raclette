@@ -1,0 +1,30 @@
+-# Locals:
+-#   models:
+-#   attributes:
+-#   column_types:
+-#   column_headers:
+-#   html_table_id:
+
+= content_tag :table, :id => html_table_id, :class => 'records' do
+  %colgroup.attributes
+    - attributes.size.times do
+      %col
+  %colgroup
+    %col
+    %col
+  %thead
+    %tr
+
+      = render 'shared/tables/sorting_headers',
+               :attributes     => attributes,
+               :column_types   => column_types,
+               :column_headers => column_headers,
+               :html_table_id  => html_table_id
+
+      %th.empty
+      %th.empty
+
+  = render 'shared/tables/index_body',
+           :models       => models,
+           :attributes   => attributes,
+           :column_types => column_types

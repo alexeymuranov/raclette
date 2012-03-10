@@ -1,0 +1,81 @@
+-# Locals:
+-#   form_builder:
+-#   attribute:
+-#   column_type (optional):
+-#   # field_labels (optional):
+-#   input_html_options (optional):
+
+- input_html_options = {} unless local_assigns.has_key? :input_html_options
+
+- model = form_builder.object
+- klass = model.class
+
+- unless local_assigns.has_key?(:column_type)
+  - unless (column = klass.columns_hash[attribute.to_s]).nil?
+    - column_type = column.type
+  - else
+    - column_type = nil
+
+- input_parent_css_classes = []
+
+- required = klass.attr_required?(attribute)
+- readonly = klass.attr_readonly?(attribute)
+- editable = model.attr_editable?(attribute)
+- select_from = klass.possible_values_of(attribute)
+- select_from = nil unless select_from.respond_to?(:size) &&      |
+                           (select_size = select_from.size) <= 50 |
+- input_html_options[:required] = 'required' if required
+
+.item.field
+  %dt
+    - human_name = klass.human_attribute_name(attribute)
+
+    - case column_type
+    - when :boolean, :delegated_boolean, :virtual_boolean
+      - label_content = t('formats.attribute_name?', :attribute => human_name)
+    - else
+      - label_content = t('formats.attribute_name:', :attribute => human_name)
+
+    - if editable
+      = form_builder.label attribute, label_content
+    - else
+      %b
+        = label_content
+
+  - if [:text, :delegated_text, :virtual_text].include? column_type
+    - input_parent_css_classes << 'long_text'
+
+  = content_tag :dd, :class => input_parent_css_classes.join(' ') do
+    - if editable
+      - if select_from
+        = form_builder.select attribute,
+                              options_for_select(select_from),
+                              input_html_options
+      - else
+        - case column_type
+        - when :boolean, :delegated_boolean, :virtual_boolean
+          = form_builder.check_box attribute, input_html_options
+        - when :integer, :delegated_integer, :virtual_integer
+          = form_builder.number_field attribute, input_html_options
+        - when :date, :delegated_date, :virtual_date
+          -# input_html_options[:type] = 'date'
+          = form_builder.date_select attribute, input_html_options
+        - when :datetime, :delegated_datetime, :virtual_datetime
+          -# input_html_options[:type] = 'datetime-local'
+          = form_builder.datetime_select attribute, input_html_options
+        - when :text, :delegated_text, :virtual_text
+          = form_builder.text_area attribute, input_html_options
+        - else
+          = form_builder.text_field attribute, input_html_options
+    - else
+      - value = model.public_send(attribute)
+
+      - case column_type
+      - when :boolean, :delegated_boolean, :virtual_boolean
+        = boolean_to_picto(value, size=2)
+      - when :date, :delegated_date, :virtual_date
+        = l value, :format => :long
+      - when :datetime, :delegated_datetime, :virtual_datetime
+        = l value, :format => :custom
+      - else
+        = value
