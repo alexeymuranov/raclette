@@ -58,7 +58,8 @@
 
     <ul class="compact">
       <%- @ticket_books.each do |ticket_book| -%>
-        <li><%= link_to show_pictogram(2) + ' ' + "#{ticket_book.tickets_number} (#(ticket_book.membership_type.title))",
+        <li><%= link_to show_pictogram(2) + ' ' +
+                        "#{ticket_book.tickets_number} (#{ticket_book.membership_type.unique_title})",
                         ticket_book_path(ticket_book),
                         :class => 'display resource' %></li>
       <%- end -%>
