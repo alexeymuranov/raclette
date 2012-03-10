@@ -93,7 +93,7 @@ class Member < ActiveRecord::Base
 
   validates :payed_tickets_count, :inclusion => -100..1000
 
-  validates :free_tickets_count, :inclusion => 0..100
+  validates :free_tickets_count, :inclusion => 0..500
 
   validates :shares_tickets_with_member_id, :uniqueness => true,
                                             :allow_nil  => true
