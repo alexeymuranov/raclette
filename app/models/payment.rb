@@ -5,8 +5,9 @@ class Payment < ActiveRecord::Base
   attr_readonly :id, :payable_type, :date, :amount, :method
 
   # Associations:
-  belongs_to :purchase, :foreign_key => :payable_id,
-                        :polymorphic => true
+  belongs_to :purchase, :foreign_key  => :payable_id,
+                        :polymorphic  => true,
+                        :foreign_type => :payable_type
 
   belongs_to :revenue_account, :inverse_of  => :payments
 
@@ -15,7 +16,7 @@ class Payment < ActiveRecord::Base
                      :inverse_of  => :payments
 
   # Validations:
-  validates :payable_type, :date, :amount, :method,
+  validates :payable_type, :date, :amount,
                 :presence => true
 
   validates :payable_type, :length => { :maximum => 32 }
@@ -24,7 +25,8 @@ class Payment < ActiveRecord::Base
                 :numericality => { :greater_than_or_equal_to => 0 }
 
   validates :method, :length    => { :maximum => 32 },
-                     :inclusion => %w[ Cash Check CreditCard ]
+                     :inclusion => %w[ Cash Check CreditCard ],
+                     :allow_nil => true
 
   validates :note, :length    => { :maximum => 255 },
                    :allow_nil => true

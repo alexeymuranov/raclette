@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120217230122) do
+ActiveRecord::Schema.define(:version => 20120310183959) do
 
   create_table "activity_periods", :force => true do |t|
     t.string   "unique_title",    :limit => 64,                    :null => false
@@ -381,7 +381,7 @@ ActiveRecord::Schema.define(:version => 20120217230122) do
     t.integer  "payable_id"
     t.date     "date",                                                                                    :null => false
     t.decimal  "amount",                                 :precision => 4, :scale => 1,                    :null => false
-    t.string   "method",                   :limit => 32,                                                  :null => false
+    t.string   "method",                   :limit => 32
     t.integer  "revenue_account_id"
     t.integer  "payer_person_id"
     t.boolean  "cancelled_and_reimbursed",                                             :default => false, :null => false
