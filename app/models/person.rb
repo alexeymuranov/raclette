@@ -48,6 +48,7 @@ class Person < ActiveRecord::Base
                 :length => { :maximum => 32 }
 
   validates :name_title, :length    => { :maximum => 16 },
+                         :inclusion => %w[ M. Mlle. Mme. ],
                          :allow_nil => true
 
   validates :birthyear, :inclusion => 1900..2099,
