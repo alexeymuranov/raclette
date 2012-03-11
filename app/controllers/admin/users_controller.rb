@@ -18,20 +18,18 @@ class Admin::UsersController < AdminController
     self.default_sorting_column = :ip
   end
 
-  param_accessible({ 'user' => [
-                       'username', 'full_name', 'email',
-                       'account_deactivated',
-                       'admin', 'manager', 'secretary', 'a_person',
-                       'comments', 'safe_ip_ids'] },
-                     :only => [:create, :update] )
-  param_accessible({ 'user' => ['password', 'password_confirmation'] },
-                     :only => :create )
-  param_accessible({ 'id'         => true,
-                     'user' => ['current_password', 'new_password',
-                       'new_password_confirmation'] },
-                     :only => :update )
-
-  # param_accessible( { 'user' => [] }, :only => :index ) # experimenting
+  # XXX: This breaks `session` hash:
+  # param_accessible [{ 'user' => [ 'username', 'full_name', 'email',
+  #                                 'account_deactivated',
+  #                                 'admin', 'manager', 'secretary', 'a_person',
+  #                                 'comments', 'safe_ip_ids'] }],
+  #                  :only => [:create, :update]
+  # param_accessible [{ 'user' => ['password', 'password_confirmation'] }],
+  #                  :only => :create
+  # param_accessible [ 'id',
+  #                    { 'user' => ['current_password', 'new_password',
+  #                                 'new_password_confirmation'] }],
+  #                  :only => :update
 
   def index
     @query_type = params[:query_type]
