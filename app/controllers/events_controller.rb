@@ -121,11 +121,10 @@ class EventsController < SecretaryController
   end
 
   def create
-    @event = Event.new
     params[:event][:lesson] = ( %w(Cours Atelier Initiation).include?(
                                   params[:event][:event_type]) ?
                                 true : false )
-    @event.assign_attributes(params[:event])
+    @event = Event.new(params[:event])
 
     if @event.save
       flash[:success] = t('flash.events.create.success',
