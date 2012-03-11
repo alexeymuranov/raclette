@@ -2,8 +2,9 @@
 
 class SecretaryToolsController < SecretaryController
   def overview
-    @members = Member.joins(:person)\
-                     .with_virtual_attributes(:ordered_full_name, :full_name).default_order
+    @members = paginate(Member.joins(:person).
+                          with_virtual_attributes(:ordered_full_name,
+                                                  :full_name).default_order)
     @events = Event.default_order
   end
 end
