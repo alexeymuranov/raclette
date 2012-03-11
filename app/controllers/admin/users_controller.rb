@@ -170,11 +170,9 @@ class Admin::UsersController < AdminController
 
     params[:user][:safe_ip_ids] ||= []
 
-    params[:user].delete(:email)\
-        if params[:user][:email].blank?
+    params[:user][:email] = nil if params[:user][:email].blank?
 
-    params[:user].delete(:comments)\
-        if params[:user][:comments].blank?
+    params[:user][:comments] = nil if params[:user][:comments].blank?
 
     @user = User.new(params[:user])
 
@@ -194,11 +192,9 @@ class Admin::UsersController < AdminController
 
     params[:user][:safe_ip_ids] ||= []
 
-    params[:user].delete(:email)\
-        if params[:user][:email].blank?
+    params[:user][:email] = nil if params[:user][:email].blank?
 
-    params[:user].delete(:comments)\
-        if params[:user][:comments].blank?
+    params[:user][:comments] = nil if params[:user][:comments].blank?
 
     if @user == current_user
       params[:user].except!(:account_deactivated, :admin)
@@ -217,7 +213,7 @@ class Admin::UsersController < AdminController
     if current_password.nil? || @user.has_password?(current_password)
       if @user.update_attributes(params[:user])
         flash[:notice] = t('flash.admin.users.update.success',
-                           :username => @user.username)
+                           :username => @user.username )
         redirect_to :action => :show, :id => @user
       else
         flash.now[:error] = t('flash.admin.users.update.failure')
