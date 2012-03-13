@@ -1,0 +1,29 @@
+-# Locals:
+-#   models:
+-#   name_method:
+-#   i18n_controller_scope:
+-#   index_path:
+-#   new_path:
+-#   show_path_method:
+
+%section
+
+  %h3
+    = link_to list_all_pictogram(2) +                                     |
+                ' ' + t('index.title', :scope => i18n_controller_scope ), |
+              index_path,                                                 |
+              :class => 'display resource'                                |
+
+  %ul.compact
+    - models.each do |model|
+      %li
+        = link_to show_pictogram(2) + ' ' + model.public_send(name_method),
+                  show_path_method.call(model),
+                  :class => 'display resource'
+
+  %footer
+    = link_to add_pictogram(2) +                                         |
+                ' ' + t('new.header', :scope => i18n_controller_scope ), |
+              new_path,                                                  |
+              :title => t('actions.create'),                             |
+              :class => 'add resource'                                   |
