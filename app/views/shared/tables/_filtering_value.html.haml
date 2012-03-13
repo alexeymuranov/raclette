@@ -1,0 +1,32 @@
+-# Locals:
+-#   value_or_values:
+-#   column_type:
+
+- unless value_or_values.blank?
+  - case column_type
+  - when :string, :delegated_string, :virtual_string
+    %td.filtering_value
+      = value_or_values
+  - when :boolean, :delegated_boolean, :virtual_boolean
+    %td.boolean.filtering_value
+      = boolean_to_yes_no(value_or_values)
+  - when :integer, :delegated_integer, :virtual_integer
+    %td.number.filtering_value
+      - if value_or_values[:min]
+        = value_or_values[:min]
+      \..
+      - if value_or_values[:max]
+        = value_or_values[:max]
+  - when :date, :delegated_date, :virtual_date
+    %td.date.filtering_value
+      - if value_or_values[:from]
+        = t(date.from)
+        = value_or_values[:from]
+      - if value_or_values[:until]
+        = t(date.until)
+        = value_or_values[:until]
+  - else
+    %td.filtering_value
+      = value_or_values
+- else
+  %td
