@@ -28,6 +28,11 @@ class TicketBook < ActiveRecord::Base
 
   # Scopes:
   scope :default_order, order('tickets_number ASC')
+
+  # Public instance methods
+  def short_title
+    "#{tickets_number} (#{membership_type.unique_title})"
+  end
 end
 # == Schema Information
 #
