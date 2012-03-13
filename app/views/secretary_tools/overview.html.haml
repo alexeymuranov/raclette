@@ -1,0 +1,37 @@
+%h1= t '.header'
+
+%section
+
+  %h2= t 'headers.data'
+
+  = render 'shared/sections/data_section_in_overview',
+           :models                => @members,
+           :name_method           => :full_name,
+           :i18n_controller_scope => 'members',
+           :index_path            => members_path,
+           :new_path              => new_member_path,
+           :show_path_method      => method(:member_path)
+
+  = render 'shared/sections/data_section_in_overview',
+           :models                => @events,
+           :name_method           => :title,
+           :i18n_controller_scope => 'events',
+           :index_path            => events_path,
+           :new_path              => new_event_path,
+           :show_path_method      => method(:event_path)
+
+%section
+
+  %h2= t 'headers.tools'
+
+-# End of the main body of the view
+
+- content_for :side_menu_list_items do
+  %li
+    = link_to list_all_pictogram + ' ' + t('members.index.title'),
+              members_path,
+              :class => 'display resource'
+  %li
+    = link_to list_all_pictogram + ' ' + t('events.index.title'),
+              events_path,
+              :class => 'display resource'

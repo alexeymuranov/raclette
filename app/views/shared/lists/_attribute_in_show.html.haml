@@ -22,8 +22,7 @@
     %dd.boolean
       - shown_value = boolean_to_yes_no(model.public_send(attribute))
       - if readonly
-        %b
-          = shown_value
+        %b= shown_value
       - else
         = shown_value
   - when :date, :delegated_date, :virtual_date,
@@ -34,8 +33,7 @@
     %dd
       - shown_value = l model.public_send(attribute), :format => :custom
       - if readonly
-        %b
-          = shown_value
+        %b= shown_value
       - else
         = shown_value
   - when :integer, :delegated_integer, :virtual_integer
@@ -45,8 +43,7 @@
     %dd
       - shown_value = model.public_send(attribute)
       - if readonly
-        %b
-          = shown_value
+        %b= shown_value
       - else
         = shown_value
   - else
@@ -56,7 +53,6 @@
     %dd
       - shown_value = model.public_send(attribute)
       - if readonly
-        %b
-          = shown_value
+        %b= shown_value
       - else
         = shown_value
