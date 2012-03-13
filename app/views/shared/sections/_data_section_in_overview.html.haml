@@ -14,12 +14,15 @@
               index_path,                                                 |
               :class => 'display resource'                                |
 
-  %ul.compact
-    - models.each do |model|
-      %li
-        = link_to show_pictogram(2) + ' ' + model.public_send(name_method),
-                  show_path_method.call(model),
-                  :class => 'display resource'
+  - if models.is_a?(ActiveRecord::Relation) || models.is_a?(Enumerable)
+    %ul.compact
+      - models.each do |model|
+        %li
+          = link_to show_pictogram(2) + ' ' + model.public_send(name_method),
+                    show_path_method.call(model),
+                    :class => 'display resource'
+  - else
+    %p= models.to_s
 
   %footer
     = link_to add_pictogram(2) +                                         |
