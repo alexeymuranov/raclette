@@ -1,6 +1,23 @@
 %h1= t '.header'
 %section
   %h2= t '.choose_member'
+  = form_tag(nil, :method => :get) do
+    = hidden_field_tags_from_param_hash params.slice(:filter, :sort)
+
+    = label_tag :per_page, t('field_labels.per_page')
+    = select_tag :per_page,
+                   options_for_select([5, 10, 25, 50, 100, 250, 500, 1000],
+                                      params[:per_page]),
+                   :class => 'number'
+    %span.actions
+      = hidden_field_tag :query_type, 'repaginate'
+      = content_tag :button,
+                    t('buttons.repaginate'),
+                    :name  => 'button',
+                    :type  => 'submit',
+                    :value => 'repaginate_button'
+
+  = paginate @members
   %ul.compact
     - @members.each do |member|
       %li= link_to select_pictogram + ' ' + member.ordered_full_name, |
