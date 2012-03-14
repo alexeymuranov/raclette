@@ -4,12 +4,13 @@
       - @tabs.each do |tab|
         - tab_title = t(:title, :scope => [:register, tab])
         - if tab == @tab
-          %li.tab.active>
-            %span= tab_title
+          %li.tab.enabled.active>
+            %span.tab= tab_title
         - else
-          %li.tab>
+          %li.tab.enabled.inactive>
             /TODO:use forms with hidden fields for tabs?/
             = link_to tab_title,
                 params.slice(:person_id, :guest,
                   :event_id).merge( :action => 'compose_transaction',
-                                    :tab    => tab )
+                                    :tab    => tab ),
+                :class => 'tab'
