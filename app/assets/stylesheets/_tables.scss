@@ -1,0 +1,161 @@
+body div.container section {
+  table {
+    border-collapse: collapse;
+    border: solid 1px $table-border-color;
+    width: auto;
+    margin: 0;
+
+    th, td {
+      padding: 0 5px;
+
+      a.resource, a.sort {
+        display: block;
+        margin: 0 -5px;
+      }
+    }
+
+    td.number, td.date {
+      text-align: right;
+    }
+
+    thead, tfoot {
+      font-style: normal;
+      border: solid 1px $table-border-color;
+
+      th, td {
+        border: solid 1px $table-border-color;
+      }
+
+      th {
+        background-color: $table-head-bg-color;
+      }
+
+      th, td.boolean:not(.field) {
+        text-align: center;
+      }
+
+      td {
+        background-color: $alt-table-head-bg-color;
+      }
+
+      td.actions {
+        border-top: solid 1px $table-border-color;
+      }
+
+      th:empty, td:empty {
+        border: none;
+
+        &.empty {
+          background-color: $section-bg-color;
+        }
+      }
+    }
+
+    thead:not(:hover), tfoot:not(:hover) { /* does not work! */
+      tr.form_fields, tr.form_actions {
+        # display: none;
+        # visibility: collapse;
+
+        # transition: all 2s ease 0s;
+        # -moz-transition: all 2s ease 0s; /* Firefox 4 */
+        # -webkit-transition: all 2s ease 0s; /* Safari and Chrome */
+        # -o-transition: all 2s ease 0s;
+      }
+    }
+
+    tbody tr {
+      td.boolean, th.boolean {
+        text-align: center;
+      }
+
+      td.number, td.date {
+        text-align: rigth;
+      }
+
+      &:nth-of-type(odd) {
+        td, th {
+          background-color: $table-data-bg-color;
+        }
+      }
+
+      &:nth-of-type(even) {
+        td, th {
+          background-color: $alt-table-data-bg-color;
+        }
+      }
+    }
+
+    caption {
+      text-align: center;
+      white-space: nowrap;
+    }
+  }
+
+  table.records {
+    colgroup.attributes {
+      border: solid 1px $table-border-color;
+    }
+
+    thead, tfoot {
+      font-size: $table-header-font-size;
+
+      th:not(:empty), td:not(:empty) {
+        font-size: $table-header-font-size;
+        border-left: solid 1px $table-border-color;
+        border-right: solid 1px $table-border-color;
+      }
+    }
+
+    tbody tr {
+      &:nth-of-type(odd) {
+        td.operation {
+          background-color: $alt-table-head-bg-color;
+        }
+      }
+
+      &:nth-of-type(even) {
+        td.operation {
+          background-color: $table-head-bg-color;
+        }
+      }
+
+      td.nothing {
+        text-align: center;
+      }
+    }
+  }
+
+  table.form_fields {
+    width: auto;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  table.grid {
+    col {
+      border: solid 1px $table-border-color;
+    }
+
+    thead th {
+      border: solid 1px $table-border-color;
+    }
+
+    tbody tr:nth-of-type(odd) th {
+      background-color: $alt-table-head-bg-color;
+    }
+
+    tbody tr:nth-of-type(even) th {
+      background-color: $table-head-bg-color;
+    }
+  }
+
+  table.filtered {
+    @include box-shadow(0 0 3px 0 $emphasis-glow-color);
+
+    thead tr td.filtering_value, tfoot tr td.filtering_value {
+      font-size: $body-font-size;
+      color: $emphasis-text-color;
+      background-color: $section-bg-color;
+    }
+  }
+}

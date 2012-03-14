@@ -1,3 +1,273 @@
 @import "bourbon";
-@import "application_settings";
-@import "custom";
+@import "variables"; /* Colors and lengths: */
+@import "links_and_buttons";
+@import "navigations";
+@import "tables";
+@import "lists";
+@import "forms";
+@import "flash_messages";
+@import "form_validation_errors";
+
+/**********/
+/* Style: */
+/**********/
+
+body {
+  background-color: $body-bg-color;
+  color: $body-text-color;
+  font-size: $body-font-size;
+  # font-style: normal;
+  # font-variant: normal;
+  # font-family: 'andale mono', 'lucida console', monospace;
+  font-family: "Helvetica Narrow", Helvetica, sans-serif;
+  # font-family: sans-serif;
+  line-height: 1.5;
+}
+
+.container {
+  width: 960px;
+  margin-left: 160px;
+  margin-botton: auto;
+}
+
+img {
+  vertical-align: middle;
+}
+
+span.pictogram {
+  display: inline-block;
+  font-weight: bold;
+  padding: 0;
+  margin: -100px 0;
+  vertical-align: middle;
+  color: inherit;
+}
+
+span.label_marks {
+  color: $label_marks-color;
+}
+
+div#welcome_logo {
+  text-align: center;
+}
+
+ul.compact {
+  margin: 0;
+  padding: 0;
+
+  li {
+    display: inline-block;
+  }
+}
+
+/* Header */
+
+body > div.container > header {
+  @include border-radius(10px);
+  background-color: $section-bg-color;
+  font-size: $main-menu-font-size;
+  text-align: left;
+  margin: 5px auto;
+
+  /* Logo box */
+
+  div#main_logo {
+    position: fixed;
+    top: 5px;
+    left: 5px;
+    z-index: 1;
+  }
+
+  div#main_logo div#logo_box {
+    @include border-radius(10px);
+    display: inline-block;
+    padding: 10px;
+    opacity: 0.75;
+
+    img {
+      vertical-align: middle;
+    }
+
+    &:hover {
+      opacity: 1;
+    }
+  }
+
+  div#main_logo div#logo_menu {
+    display: none;
+  }
+
+  div#main_logo:hover div#logo_menu {
+    display: block;
+    position: fixed;
+    top: 0;
+    left: 155px;
+    padding: 5px;
+    background-color: transparent;
+    opacity: 0.95;
+
+    &:hover {
+      opacity: 1;
+    }
+  }
+}
+
+/* Footer */
+
+body > div.container > footer {
+  @include border-radius(10px);
+  background-color: $section-bg-color;
+  font-size: $main-menu-font-size;
+  text-align: center;
+  margin: 5px auto;
+
+  ul {
+    margin: 0;
+    padding: 0;
+    font-weight: bold;
+
+    li {
+      display: inline-block;
+      margin: 0;
+      padding: 0;
+
+      ul {
+        display: none;
+      }
+    }
+  }
+}
+
+/* Sections */
+
+body > div.container > section {
+  @include border-radius(10px);
+  background-color: $section-bg-color;
+  padding: 10px;
+
+  section {
+    @include border-radius(5px);
+    margin: 5px 0px;
+
+    section {
+      margin: 5px;
+    }
+  }
+
+  section {
+    border: solid 5px $alt-section-bg-color;
+
+    section {
+      border: solid 3px $alt-section-bg-color;
+
+      section {
+        border: solid 1px $alt-section-bg-color;
+      }
+    }
+  }
+}
+
+body div.container section {
+  h1 {
+    color: inherit;
+    line-height: 1.5;
+    margin-top: 0;
+    margin-bottom: 5px;
+  }
+
+  h2, h3, h4, h5, h6, p {
+    color: inherit;
+    background-color: $alt-section-bg-color;
+    line-height: 1.5;
+    margin-top: 0px;
+    margin-bottom: 0px;
+  }
+
+  hgroup h1 + h2 {
+    background-color: inherit;
+  }
+
+  h2, h3, h4, h5, h6 {
+    background-color: $alt-section-bg-color;
+  }
+
+  h1 {
+    text-align: center;
+    font-size: $h1-font-size;
+    font-weight: bold;
+  }
+
+  h2 {
+    font-size: $h2-font-size;
+    font-weight: bold;
+  }
+
+  h3, h4, h5 {
+    font-size: $h3-font-size;
+    font-weight: bold;
+  }
+
+  p {
+    padding: 5px;
+    background-color: $table-data-bg-color;
+  }
+
+  dl.show, dl.form_fields {
+    display: table;
+    border: solid 1px $table-border-color;
+  }
+
+  dl.show {
+    margin: 0;
+  }
+
+  dl.form_fields {
+    margin: 0 auto;
+  }
+
+  dl.form_fields, dl.show {
+    p.item, div.item {
+      display: table-row;
+
+      &.caption {
+        display: table-caption;
+        text-align: center;
+      }
+
+      dt {
+        display: table-cell;
+        padding: 0 5px;
+      }
+
+      dd {
+        display: table-cell;
+        padding: 0 5px;
+        color: $data-color;
+      }
+
+      dd.long_text {
+        vertical-align: top;
+      }
+
+      &:nth-of-type(odd) {
+        dt {
+          background-color: $alt-table-head-bg-color;
+        }
+
+        dd {
+          background-color: $table-data-bg-color;
+        }
+      }
+
+      &:nth-of-type(even) {
+        dt {
+          background-color: $table-head-bg-color;
+        }
+
+        dd {
+          background-color: $alt-table-data-bg-color;
+        }
+      }
+    }
+  }
+}

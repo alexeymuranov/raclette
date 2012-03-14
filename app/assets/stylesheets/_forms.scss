@@ -1,0 +1,79 @@
+input:not([type="submit"]), textarea {
+  background-color: $input-bg-color;
+
+  &:focus {
+    @include box-shadow(0 0 3px 0 $focus-input-glow-color);
+    background-color: $focus-input-bg-color;
+    color: $focus-input-text-color;
+  }
+}
+
+input[type="number"], select.number {
+  text-align: right;
+}
+
+/* Log-in form */
+
+form#login_form {
+  text-align: center;
+
+  input:focus {
+    @include box-shadow(0 0 3px 0 $login_form-focus-glow-color);
+  }
+
+  fieldset {
+    display: inline-block;
+    text-align: left;
+
+    legend {
+      display: inline;
+      text-align: center;
+    }
+  }
+}
+
+/* Sections */
+
+body > div.container > section {
+  @include border-radius(10px);
+  background-color: $section-bg-color;
+  padding: 10px;
+
+  section {
+    @include border-radius(5px);
+    margin: 5px 0px;
+
+    section {
+      margin: 5px;
+    }
+  }
+
+  section {
+    border: solid 5px $alt-section-bg-color;
+
+    section {
+      border: solid 3px $alt-section-bg-color;
+
+      section {
+        border: solid 1px $alt-section-bg-color;
+      }
+    }
+  }
+}
+
+body div.container section {
+  input[type="checkbox"]:not(:checked) + *.checkbox_conditional {
+    display: none;
+  }
+
+  fieldset {
+    @include border-radius(5px);
+    margin: 0.5em 0;
+    padding: 10px;
+
+    legend {
+      margin: 0 10px;
+      padding: 0px 5px;
+    }
+  }
+}

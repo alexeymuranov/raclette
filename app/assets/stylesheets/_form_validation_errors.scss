@@ -1,0 +1,45 @@
+/* Styles for validation errors, use automatically generated classes and ids */
+
+pre {
+  background-color: WhiteSmoke;
+  padding: 10px;
+  font-size: 10pt;
+}
+
+#notice {
+  color: Green;
+}
+
+#error_explanation {
+  border: 2px solid DarkRed;
+  background-color: LightYellow;
+  margin-bottom: 20px;
+
+  h2 {
+    padding: 5px 5px 5px 15px;
+    background-color: DarkRed;
+    color: White;
+  }
+
+  ul {
+    margin-bottom: 0;
+
+    li {
+      list-style: square;
+    }
+  }
+}
+
+div.field_with_errors {
+  display: inline;
+
+  label {
+    color: Red;
+    text-decoration: underline;
+  }
+
+  .message {
+    color: DarkRed;
+    padding-left: 5px;
+  }
+}

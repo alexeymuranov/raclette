@@ -1,0 +1,168 @@
+/* Links for developpers */
+
+aside#developper_links {
+  position: absolute;
+  top: 5px;
+  left: 1125px;
+
+  a {
+    position: absolute;
+    opacity: 0.5;
+
+    &:hover {
+      opacity: 1;
+    }
+  }
+
+  a#ruby {
+    top: 0;
+    left: 0;
+  }
+
+  a#rails {
+    top: 0;
+    left: 61px;
+  }
+
+  a#source_code {
+    @include border-radius(5px);
+    top: 69px;
+    left: 0;
+    display: block;
+    width: 111px;
+    height: 31px;
+    line-height: 31px;
+    padding: 0;
+    text-align: center;
+    vertical-align: middle;
+    color: Lime;
+    background-color: LightSlateGray;
+    text-decoration: none;
+    font-size: $main-menu-font-size;
+    font-weight: normal;
+
+    &:hover {
+      text-decoration: none;
+    }
+  }
+}
+
+/* In header */
+
+body > div.container > header {
+  a.logout_button, a.logout_button:visited {
+    @include border-radius(10px);
+    display: inline-block;
+    margin: 0;
+    padding: 5px 10px;
+    color: $logout-navigation-link-color;
+    background-color: $logout-navigation-link-bg-color;
+    font-weight: bold;
+    text-decoration: none;
+    float: right;
+
+    &:hover {
+      color: $logout-navigation-link-bg-color;
+      background-color: $logout-navigation-link-color;
+      text-decoration: none;
+    }
+
+    &:active {
+      background-color: lighten($logout-navigation-link-color, 10%);
+    }
+  }
+}
+
+/* In footer */
+
+body > div.container > footer {
+  ul {
+    li {
+      a, a:visited {
+        display: inline-block;
+        padding: 5px;
+        text-decoration: none;
+        color: $common-navigation-link-color;
+
+        &:hover {
+          color: $common-navigation-link-hover-color;
+          text-decoration: underline;
+        }
+      }
+    }
+  }
+}
+
+/* In sections */
+body div.container section {
+  *.actions {
+    text-align: center;
+  }
+
+  div.link_group {
+    @include border-radius(5px);
+    border: dotted 1px;
+  }
+
+  a, a:visited {
+    text-decoration: none;
+    padding: 0 5px;
+    color: $common-link-color;
+    font-weight: bold;
+  }
+
+  a:hover {
+    text-shadow: 0 0 3px $section-bg-color;
+    text-decoration: none;
+    color: $common-link-hover-color;
+  }
+
+  a.resource, a.resource:visited {
+    @include border-radius(5px);
+    display: inline-block;
+    padding: 5px;
+    margin: 0;
+
+    &:hover {
+      color: $section-bg-color;
+      background-color: $common-navigation-link-color;
+      text-shadow: none;
+    }
+  }
+
+  a.display, a.display:visited {
+    color: $view-link-color;
+
+    &:hover {
+      background-color: $view-link-color;
+    }
+
+    &:active {
+      background-color: lighten($view-link-color, 10%);
+    }
+  }
+
+  a.add, a.add:visited {
+    color: $add-link-color;
+
+    &:hover {
+      background-color: $add-link-color;
+    }
+
+    &:active {
+      background-color: lighten($add-link-color, 10%);
+    }
+  }
+
+  a.modify, a.modify:visited {
+    color: $modify-link-color;
+
+    &:hover {
+      background-color: $modify-link-color;
+    }
+
+    &:active {
+      background-color: lighten($modify-link-color, 10%);
+    }
+  }
+}
