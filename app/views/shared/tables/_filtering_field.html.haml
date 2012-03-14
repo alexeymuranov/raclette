@@ -52,7 +52,7 @@
                          :form => filter_form_id
       = label_tag 'filter_' + attr.to_s + '_all', t('all')
   - when :integer, :delegated_integer, :virtual_integer
-    %td.number.field
+    %td.number.field<
       - value_or_values ||= {}
       = label_tag "filter[#{attr}][min]",
                   t('formats.attribute_name:', :attribute => 'min')
@@ -60,7 +60,7 @@
                          value_or_values[:min],
                          :form => filter_form_id,
                          :size => 6
-      %br
+      %br>
       = label_tag "filter[#{attr}][max]",
                   t('formats.attribute_name:', :attribute => 'max')
       = number_field_tag "filter[#{attr}][max]",
@@ -75,7 +75,7 @@
                     value_or_values[:from],
                     :form => filter_form_id,
                     :type => 'date'
-      %br
+      %br>
       = label_tag "filter[#{attr}][until]", t('date.until')
       = date_select "filter[#{attr}][until]",
                     value_or_values[:until],
