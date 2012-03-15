@@ -1,6 +1,9 @@
 %h1= t '.header'
 %section
   %h2= t '.choose_member'
+  - attributes = @members_attributes
+  - column_types = @members_column_types
+  - column_headers = @members_column_headers
   = form_tag(nil, :method => :get) do
     = hidden_field_tags_from_param_hash params.slice(:filter, :sort)
 
@@ -17,7 +20,66 @@
                     :type  => 'submit',
                     :value => 'repaginate_button'
 
+  = form_tag(nil, :id     => (filter_form_id = "member_list_filter"),
+                  :method => :get) do
+    = hidden_field_tags_from_param_hash params.slice(:sort, :per_page)
+    = hidden_field_tag :query_type, 'filter', :form  => filter_form_id
+    -# Other input fields are outside (with the help of "form" HTML attribute)
+
+  %table{ :id    => "member_list_attributes",                            |
+          :class => (@members_filtering_values.blank? ? '' : 'filtered ') |
+                      + 'records'}                                       |
+    %colgroup.attributes
+      - attributes.size.times do
+        %col
+    %thead
+      %tr
+        - attributes.each do |attr|
+
+          = render 'shared/tables/sorting_header',
+                   :attribute     => attr,
+                   :column_type   => column_types[attr],
+                   :column_header => column_headers[attr],
+                   :html_table_id => "member_list_attributes"
+
+      %tr
+        - attributes.each do |attr|
+
+          = render 'shared/tables/filtering_field',
+                   :filter_form_id  => filter_form_id,
+                   :attr            => attr,
+                   :select_from     => Accessors::Member.possible_values_of(attr),
+                   :column_type     => column_types[attr],
+                   :value_or_values => @members_filtering_values[attr]
+
+      %tr
+        = content_tag :td, :colspan => attributes.size,
+                           :class   => 'actions' do
+          = hidden_field_tag :query_type, 'filter', :form  => filter_form_id
+          = content_tag :button,
+                        t('buttons.filter'),
+                        :form  => filter_form_id,
+                        :name  => 'button',
+                        :type  => 'submit',
+                        :value => 'filter_button'
+          = content_tag :button,
+                        t('buttons.clear'),
+                        :form  => filter_form_id,
+                        :name  => 'button',
+                        :type  => 'submit',
+                        :value => 'clear_button'
+      - unless @members_filtering_values.blank?
+        %tr
+          - attributes.each do |attr|
+
+            = render 'shared/tables/filtering_value',
+                     :value_or_values => @members_filtering_values[attr],
+                     :column_type     => column_types[attr]
+
+  -# end # of table
+
   = paginate @members
+
   %ul.compact
     - @members.each do |member|
       %li= link_to select_pictogram + ' ' + member.ordered_full_name, |

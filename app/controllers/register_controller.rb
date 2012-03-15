@@ -10,6 +10,16 @@ class RegisterController < ApplicationController
   end
 
   def choose_person
+    @query_type = params[:query_type]
+    @submit_button = params[:button]
+    params.delete(:query_type)
+    params.delete(:commit)
+    params.delete(:button)
+
+    if @query_type == 'filter' && @submit_button == 'clear_button'
+      params.delete(:filter)
+    end
+
     render_choose_person_properly
   end
 
@@ -131,7 +141,28 @@ class RegisterController < ApplicationController
       @members = paginate(Member.joins(:person)\
                                 .with_virtual_attributes(:ordered_full_name)\
                                 .default_order)
+      # Filter:
+      @members = Member.filter(@members, params[:filter], @attributes)
+      @members_filtering_values = Member.last_filter_values
+
       @guest ||= Guest.new(params[:guest])
+
+      @members_attributes = [ :last_name, :first_name ]
+      @members_column_types = Member.attribute_db_types
+      @members_column_headers = {}
+      @members_attributes.each do |attr|
+        @members_column_headers[attr] = Member.human_attribute_name(attr)
+
+        case @members_column_types[attr]
+        when :boolean, :delegated_boolean, :virtual_boolean
+          @members_column_headers[attr] = I18n.t('formats.attribute_name?',
+              :attribute => @members_column_headers[attr])
+        else
+          @members_column_headers[attr] = I18n.t('formats.attribute_name:',
+              :attribute => @members_column_headers[attr])
+        end
+      end
+
       @title = t('register.choose_person.title')
 
       render :choose_person
