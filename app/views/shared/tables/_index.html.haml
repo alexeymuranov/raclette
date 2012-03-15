@@ -14,12 +14,13 @@
     %col
   %thead
     %tr
+      - attributes.each do |attr|
 
-      = render 'shared/tables/sorting_headers',
-               :attributes     => attributes,
-               :column_types   => column_types,
-               :column_headers => column_headers,
-               :html_table_id  => html_table_id
+        = render 'shared/tables/sorting_header',
+                 :attribute     => attr,
+                 :column_type   => column_types[attr],
+                 :column_header => column_headers[attr],
+                 :html_table_id => html_table_id
 
       %th.empty
       %th.empty

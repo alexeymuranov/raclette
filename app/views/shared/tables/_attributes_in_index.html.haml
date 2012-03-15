@@ -5,11 +5,11 @@
 
 %th{:scope => "row"}
   = link_to model.public_send(attributes[0]),
-              { :controller => model.controller_path,
-                :action     => :show,
-                :id         => model },
-              :title => t('actions.read'),
-              :class => 'display resource'
+            { :controller => model.controller_path,
+              :action     => :show,
+              :id         => model },
+            :title => t('actions.read'),
+            :class => 'display resource'
 
 - attributes[1..-1].each do |attr|
 
