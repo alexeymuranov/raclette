@@ -120,7 +120,7 @@ body > div.container > header {
 
 /* Tabs */
 
-body > div.container section nav.tabs {
+nav.tabs {
   display: block;
   font-size: $tabs-font-size;
 
@@ -131,7 +131,9 @@ body > div.container section nav.tabs {
     li {
       display: inline-block;
       font-weight: bold;
+    }
 
+    li.inactive {
       a, a:visited {
         margin: 0;
         padding: 5px;
@@ -160,19 +162,16 @@ body > div.container section nav.tabs {
 
 /* Pagination */
 
-body div.container section {
+body {
   nav.pagination {
     margin: 0 -5px;
     padding: 0;
     font-size: $body-font-size;
 
-    span {
+    & > span {
       display: inline-block;
       margin: 0 10px;
-
-      &.page {
-        font-weight: bold;
-      }
+      font-weight: bold;
 
       a, a:visited {
         margin: 0 -10px;

@@ -1,6 +1,6 @@
 %header
   %nav.tabs
-    %ul.tabs
+    %ul
       - @tabs.each do |tab|
         - tab_title = t(:title, :scope => [:register, tab])
         - if tab == @tab
