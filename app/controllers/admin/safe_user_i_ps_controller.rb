@@ -26,8 +26,7 @@ class Admin::SafeUserIPsController < AdminController
     self.default_sorting_column = :ip
   end
 
-  # XXX: This breaks `session` hash:
-  # param_accessible 'safe_user_ids_for_known_ips', :only => :update_all
+  param_accessible 'safe_user_ids_for_known_ips', :only => :update_all
 
   def index
     @users = User.default_order
