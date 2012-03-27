@@ -10,14 +10,14 @@ class MembersController < SecretaryController
     self.default_sorting_column = :ordered_full_name
   end
 
-  param_accessible [{ 'member' => [ 'person_attributes',
-                                    'last_name', 'first_name', 'name_title',
-                                    'nickname_or_other', 'email',
-                                    'free_tickets_count',
-                                    'account_deactivated'] }],
-                   :only => [:create, :update]
-  param_accessible [{ 'member' => 'been_member_by' }],
-                   :only => :create
+  # param_accessible [{ 'member' => [ 'person_attributes',
+  #                                   'last_name', 'first_name', 'name_title',
+  #                                   'nickname_or_other', 'email',
+  #                                   'free_tickets_count',
+  #                                   'account_deactivated'] }],
+  #                  :only => [:create, :update]
+  # param_accessible [{ 'member' => 'been_member_by' }],
+  #                  :only => :create
 
   def index
     @query_type = params[:query_type]
