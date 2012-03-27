@@ -3,6 +3,10 @@
   %head
     %meta{ :charset => 'utf-8' }
     %title= title
+    %meta{ :name    => 'description',
+           :content => 'Raclette: Tangueando management application' }
+    %meta{ :name    => 'viewport',
+           :content => 'width=device-width' }
     = csrf_meta_tags
     = render 'layouts/stylesheets'
     = stylesheet_link_tag    'application'
@@ -16,9 +20,10 @@
         - flash.each do |name, msg|
           %div{ :class => "flash #{name}" }= msg
         = render 'layouts/side_menu'
-        -#
-        = yield  # <<<< yielding here! <<<<
-        -#
+        %div{ :role => 'main' }
+
+          = yield  # <<<< yielding here! <<<<
+
       = render 'layouts/footer'
       #debug_params.debug
         ~ debug(params) if Rails.env.development?
