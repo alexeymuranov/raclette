@@ -12,6 +12,8 @@ class MembershipTypesController < ManagerController
     self.default_sorting_column = :duration_months
   end
 
+  param_accessible /.+/
+
   def index
     @query_type = params[:query_type]
     @submit_button = params[:button]

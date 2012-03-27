@@ -1,6 +1,9 @@
 ## encoding: UTF-8
 
 class LessonSupervisionsController < SecretaryController
+
+  param_accessible /.+/
+
   def index
   end
 

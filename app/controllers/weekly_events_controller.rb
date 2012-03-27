@@ -19,6 +19,8 @@ class WeeklyEventsController < ManagerController
     self.default_sorting_column = :end_on
   end
 
+  param_accessible /.+/
+
   def index
     @query_type = params[:query_type]
     @submit_button = params[:button]

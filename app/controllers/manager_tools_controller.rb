@@ -1,6 +1,9 @@
 ## encoding: UTF-8
 
 class ManagerToolsController < ManagerController
+
+  param_accessible /.+/
+
   def overview
     event_count = Event.count
     if event_count > 50

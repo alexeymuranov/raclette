@@ -9,6 +9,8 @@ class InstructorsController < ManagerController
     self.default_sorting_column = :ordered_full_name
   end
 
+  param_accessible /.+/
+
   def index
     @query_type = params[:query_type]
     @submit_button = params[:button]
