@@ -1,0 +1,33 @@
+%h1= t '.header', :name => @member.full_name
+
+%section
+  %dl.show
+
+    - @attributes.each do |attr|
+
+      = render 'shared/lists/attribute_in_show',
+               :model       => @member,
+               :attribute   => attr,
+               :column_type => @column_types[attr]
+
+%footer
+  = link_to edit_pictogram(3) + ' ' + t('members.edit.header',
+                                        :name => @member.full_name),
+            edit_member_path(@member),
+            :class => 'modify resource'
+  = link_to list_all_pictogram(3) + ' ' + t('members.index.header'),
+            members_path,
+            :class => 'display resource'
+
+-# End of the main body of the view
+
+- content_for :side_menu_list_items do
+  %li
+    = link_to list_all_pictogram + ' ' + t('members.index.title'),
+              members_path,
+              :class => 'display resource'
+  %li
+    = link_to add_pictogram + ' ' + t('members.new.title'),
+              new_member_path,
+              :title => t('actions.create'),
+              :class => 'add resource'
