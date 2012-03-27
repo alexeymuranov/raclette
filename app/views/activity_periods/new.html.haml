@@ -1,0 +1,16 @@
+%h1= t '.header'
+
+= render 'form'
+
+%footer
+  = link_to list_all_pictogram(3) + ' ' + t('activity_periods.index.header'),
+            activity_periods_path,
+            :class => 'display resource'
+
+-# End of the main body of the view
+
+- content_for :side_menu_list_items do
+  %li
+    = link_to list_all_pictogram + ' ' + t('activity_periods.index.title'),
+              activity_periods_path,
+              :class => 'display resource'
