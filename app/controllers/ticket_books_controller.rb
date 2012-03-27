@@ -2,7 +2,7 @@
 
 class TicketBooksController < ManagerController
 
-  class TicketBook < self::TicketBook
+  class TicketBook < TicketBook
     self.all_sorting_columns = [:tickets_number,
                                 :price]
     self.default_sorting_column = :start_date

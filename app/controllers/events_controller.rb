@@ -2,7 +2,7 @@
 
 class EventsController < SecretaryController
 
-  class Event < self::Event
+  class Event < Event
     self.all_sorting_columns = [:title, :event_type,
                                 :date,
                                 :start_time,

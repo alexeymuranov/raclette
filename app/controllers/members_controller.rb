@@ -2,7 +2,7 @@
 
 class MembersController < SecretaryController
 
-  class Member < self::Member
+  class Member < Member
     self.all_sorting_columns = [:ordered_full_name,
                                 :email,
                                 :account_deactivated,

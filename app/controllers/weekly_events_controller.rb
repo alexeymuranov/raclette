@@ -2,7 +2,7 @@
 
 class WeeklyEventsController < ManagerController
 
-  class WeeklyEvent < self::WeeklyEvent
+  class WeeklyEvent < WeeklyEvent
     self.all_sorting_columns = [:title,
                                 :event_type,
                                 :lesson,

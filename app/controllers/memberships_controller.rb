@@ -2,7 +2,7 @@
 
 class MembershipsController < ManagerController
 
-  class MembershipType < self::MembershipType
+  class MembershipType < MembershipType
     self.all_sorting_columns = [:username,
                                 :full_name,
                                 :account_deactivated,

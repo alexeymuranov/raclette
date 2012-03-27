@@ -2,7 +2,7 @@
 
 class Admin::KnownIPsController < AdminController
 
-  class User < self::User
+  class User < User
     has_many :safe_ips, :class_name => :KnownIP,
                         :through    => :safe_user_ips,
                         :source     => :known_ip
@@ -17,7 +17,7 @@ class Admin::KnownIPsController < AdminController
     self.default_sorting_column = :username
   end
 
-  class KnownIP < self::KnownIP
+  class KnownIP < KnownIP
     has_many :safe_users, :class_name => :User,
                           :through    => :safe_user_ips,
                           :source     => :user

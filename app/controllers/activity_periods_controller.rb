@@ -2,7 +2,7 @@
 
 class ActivityPeriodsController < ManagerController
 
-  class ActivityPeriod < self::ActivityPeriod
+  class ActivityPeriod < ActivityPeriod
     self.all_sorting_columns = [:unique_title,
                                 :start_date,
                                 :duration_months,
