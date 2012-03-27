@@ -1,0 +1,40 @@
+%hgroup
+  %h1= t '.header'
+
+  %h2#instructors_count
+    - if @filtering_values.blank?
+      = t '.count_total', :count => Instructor.count
+    - else
+      = t '.count_filtered', :count => @instructors.size,
+                             :total => Instructor.count
+
+#instructors_table
+
+  = render 'shared/tables/filtered_index',
+           :models           => @instructors,
+           :attributes       => @attributes,
+           :column_types     => @column_types,
+           :column_headers   => @column_headers,
+           :html_table_id    => :instructors,
+           :filtering_values => @filtering_values
+
+= render('downloads')
+
+#instructors_mailing_list
+
+  = render('emailing_list')
+
+%footer
+  = link_to add_pictogram(2) + ' ' + t('instructors.new.header'),
+            new_instructor_path,
+            :title => t('actions.create'),
+            :class => 'add resource'
+
+-# End of the main body of the view
+
+- content_for :side_menu_list_items do
+  %li
+    = link_to add_pictogram + ' ' + t('instructors.new.title'),
+              new_instructor_path,
+              :title => t('actions.create'),
+              :class => 'add resource'

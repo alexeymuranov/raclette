@@ -1,0 +1,31 @@
+= form_for @instructor, :as  => :instructor,
+                        :url => instructor_path(@instructor) do |f|
+
+  - unless @instructor.person.nil?
+    = render('shared/error_messages/validation', :target => @instructor.person)
+  = render 'shared/error_messages/validation', :target => @instructor
+
+  %dl.form_fields
+    = f.fields_for(:person) do |person_fields|
+      - [ :first_name, :last_name, :name_title, :nickname_or_other ].each do |attribute|
+
+        = render 'shared/forms/attribute',
+                   :form_builder => person_fields,
+                   :attribute    => attribute,
+                   :column_type  => @column_types[attribute]
+
+      = render 'shared/forms/attribute',
+               :form_builder       => person_fields,
+               :attribute          => :email,
+               :column_type        => @column_types[:email],
+               :input_html_options => { :type => :email }
+
+    - [ :employed_from ].each do |attribute|
+
+      = render 'shared/forms/attribute',
+               :form_builder => f,
+               :attribute    => attribute,
+               :column_type  => @column_types[attribute]
+
+  .actions
+    = f.submit
