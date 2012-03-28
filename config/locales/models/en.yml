@@ -1,0 +1,247 @@
+# US English translations for Ruby on Rails "Raclette" apllication
+# Original version downloaded from
+#   https://github.com/svenfuchs/rails-i18n/raw/master/rails/locale/en-US.yml
+
+en:
+  activerecord:
+    # Custom:
+    models:
+      "admin/user": "User"
+      "admin/known_ip": "Known IP Address"
+      "admin/safe_user_ip": "Authorized User IP"
+      person: "Person"
+      address: "Address"
+      instructor: "Instructor"
+      lesson_supervision: "Lesson Supervision"
+      committee_membership: "Committee Membership"
+      member: "Member"
+      membership_type: "Membership Type"
+      ticket_book: "Ticket book"
+      activity_period: "Activity Period"
+      membership: "Membership"
+      weekly_event: "Weekly Event"
+      weekly_event_suspension: "Weekly Event Suspension"
+      event: "Event"
+      revenue_account: "Revenue Account"
+      payment: "Payment"
+      membership_purchase: "Membership Purchase"
+      tickets_purchase: "Tickets Purchase"
+      event_entry: "Event Entry"
+      event_cashier: "Event Cashier"
+    attributes:
+      "admin/user":
+        username: "Username"
+        full_name: "Full name"
+        "a_person": "Person"
+        person_id: "Personal ID"
+        email: "E-mail address"
+        "account_deactivated": "Deactivated"
+        "admin": "Administrator"
+        "manager": "Manager"
+        "secretary": "Secretary"
+        last_signed_in_at: "Last signed in"
+        last_signed_in_from_ip: "Last signed in from IP"
+        comments: "Comments"
+        password: "Password"
+        password_confirmation: "Password confirmation"
+        new_password: "New password"
+        new_password_confirmation: "New password confirmation"
+        safe_ips: "Authorized IP addresses"
+      "admin/known_ip":
+        ip: "IP address"
+        description: "Description"
+        safe_users: "Authorized users"
+      address: &address_attributes
+        names: "Names"
+        address_type: "Type"
+        country: "Country"
+        city: "City"
+        post_code: "Postal code"
+        street_address: "Street"
+      person: &person_attributes
+        last_name: "Last name"
+        first_name: "First name"
+        name_title: "Title"
+        nickname_or_other: "Nickname"
+        birthyear: "Birth year"
+        email: "E-mail address"
+        mobile_phone: "Mobile phone"
+        home_phone: "Home phone"
+        work_phone: "Work phone"
+        # address:
+        #   <<: *address_attributes
+        # Virtual attributes:
+        full_name: "Full name"
+        ordered_full_name: "Full name"
+      instructor:
+        # person:
+        #   <<: *person_attributes
+        <<: *person_attributes
+        presentation: "Presentation"
+        photo: "Photo"
+        employed_from: "Employed from"
+        employed_until: "Employed until"
+      lesson_supervision: &lesson_supervision_attributes
+        unique_names: "Name(s)"
+        instructors_count: "Instructors"
+        comment: "Comment"
+      member:
+        # person:
+        #   <<: *person_attributes
+        <<: *person_attributes
+        person_id: "Personal Id"
+        been_member_by: "Member since"
+        account_deactivated: "Deactivated"
+        latest_membership_obtained_on: "Membership obtained"
+        latest_membership_expiration_date: "Membership expires"
+        latest_membership_type: "Membership type"
+        latest_membership_duration_months: "Membership duration"
+        last_card_printed_on: "Card printed"
+        last_card_delivered: "Card delivered"
+        last_payment_date: "Last payment"
+        last_entry_date: "Last entry"
+        payed_tickets_count: "Payed tickets"
+        free_tickets_count: "Free tickets"
+        # Virtual attributes:
+        account_active: "Account active"
+        tickets_count: "Tickets count"
+      membership_type: &membership_type_attributes
+        unique_title: "Title"
+        active: "Active"
+        reduced: "Reduced"
+        unlimited: "Unlimited"
+        duration_months: "Duration"
+        description: "Description"
+      ticket_book:
+        tickets_number: "Tickets"
+        price: "Price"
+      activity_period: &activity_period_attributes
+        unique_title: "Title"
+        start_date: "Begin"
+        duration_months: "Duration"
+        end_date: "End"
+        over: "Ended"
+        description: "Description"
+      membership:
+        # membership_type:
+        #   <<: *membership_type_attributes
+        # activity_period:
+        #   <<: *activity_period_attributes
+        initial_price: "Initial price"
+        current_price: "Current price"
+        tickets_count_limit: "Tickets limit"
+        members_count: "Members"
+      weekly_event: &weekly_event_attributes
+        event_type: "Type"
+        title: "Title"
+        lesson: "Lesson"
+        week_day: "Week day"
+        start_time: "Begin"
+        duration_minutes: "Duration"
+        end_time: "End"
+        start_on: "Start date"
+        end_on: "End date"
+        location: "Location"
+        entry_fee_tickets: "Entry price in tickets"
+        over: "Finished"
+        description: "Description"
+        # lesson_supervision:
+        #   <<: *lesson_supervision_attributes
+        # address:
+        #   <<: *address_attributes
+      weekly_event_suspension:
+        suspend_from: "From"
+        suspend_until: "Until"
+        explanation: "Explanation"
+        # weekly_event:
+        #   <<: *weekly_event_attributes
+      event: &event_attributes
+        event_type: "Type"
+        title: "Title"
+        locked: "Locked"
+        lesson: "Lesson"
+        date: "Date"
+        start_time: "Begin"
+        duration_minutes: "Duration"
+        end_time: "End"
+        location: "Location"
+        weekly: "Weekly"
+        supervisors: "Responsible"
+        entry_fee_tickets: "Entry price in tickets"
+        member_entry_fee: "Member entry fee"
+        couple_entry_fee: "Couple entry fee"
+        common_entry_fee: "Full entry fee"
+        over: "Over"
+        reservations_count: "Reservations"
+        entries_count: "Entries"
+        member_entries_count: "Member entries"
+        tickets_collected: "Tickets collected"
+        entry_fees_collected: "Fees collected"
+        description: "Description"
+        # lesson_supervision:
+        #   <<: *lesson_supervision_attributes
+        # address:
+        #   <<: *address_attributes
+        # weekly_event:
+        #   <<: *weekly_event_attributes
+      revenue_account: &revenue_account_attributes
+        unique_title: "Title"
+        locked: "Locked"
+        opened_on: "Open"
+        closed_on: "Closed"
+        main: "Main"
+        amount: "Amount"
+        amount_updated_on: "Amount updated"
+        description: "Description"
+        # activity_period:
+        #   <<: *activity_period_attributes
+      payment: &payment_attributes
+        date: "Date"
+        amount: "Amount"
+        method: "Method"
+        cancelled_and_reimbursed: "Reimbursed"
+        note: ""
+        # payer:
+        #   <<: *person_attributes
+        # revenue_account:
+        #   <<: *revenue_account_attributes
+      membership_purchase:
+        membership_type: "Membership type"
+        membership_expiration_date: "Expiration date"
+        purchase_date: "Purchase date"
+      tickets_purchase:
+        tickets_number: "Tickets number"
+        purchase_date: "Purchase date"
+      event_entry:
+        event_title: "Event title"
+        date: "Date"
+        # event:
+        #   <<: *event_attributes
+        # person:
+        #   <<: *person_attributes
+      event_cashier:
+        name: "Name"
+        started_at: "Begin"
+        finished_at: "End"
+        # event:
+        #   <<: *event_attributes
+        # person:
+        #   <<: *person_attributes
+
+  activemodel:
+    models:
+      guest: "Guest"
+    attributes:
+      guest:
+        <<: *person_attributes
+        phone: "Phone"
+        note: "Note"
+
+  # For kaminari gem:
+  views:
+    pagination:
+      first: "|◀◀ First page"
+      last: "Last page ▶▶|"
+      previous: "◀ Previous page"
+      next: "Next page ▶"
+      truncate: "…"
