@@ -1,0 +1,16 @@
+%h1= t '.header'
+
+= render 'shared/tables/association_grid',
+         :models1                => @known_ips,
+         :models2                => @users,
+         :association_attribute1 => :safe_users,
+         :key1                   => :ip,
+         :key2                   => :username,
+         :description1           => :description,
+         :description2           => :full_name
+
+%footer
+  = link_to edit_pictogram(3) + ' ' + t('admin.safe_user_i_ps.edit_all.header'),
+            edit_all_safe_user_ips_path,
+            :title => t('actions.update'),
+            :class => 'modify resource'
