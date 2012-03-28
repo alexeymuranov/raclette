@@ -1,0 +1,16 @@
+-# TODO:report a bug: test environment requires ":url => " here
+= form_for @known_ip, :as => :known_ip, :url => known_ip_path(@known_ip) do |f|
+
+  = render 'shared/error_messages/validation', :target => @known_ip
+
+  = field_set_tag do
+    %dl.form_fields
+      - [ :ip, :description ].each do |attribute|
+
+        = render 'shared/forms/attribute',
+                   :form_builder => f,
+                   :attribute    => attribute,
+                   :column_type  => @column_types[attribute]
+
+  .actions
+    = f.submit

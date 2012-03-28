@@ -1,0 +1,21 @@
+%h1
+  = t '.header', :ip => @known_ip.ip
+
+= render 'form'
+
+%footer
+  = link_to show_pictogram(3) + ' ' + t('admin.known_i_ps.show.header',
+                                      :ip => @known_ip.ip),
+            known_ip_path(@known_ip),
+            :class => 'display resource'
+  = link_to list_all_pictogram(3) + ' ' + t('admin.known_i_ps.index.header'),
+            known_ips_path,
+            :class => 'display resource'
+
+-# End of the main body of the view
+
+- content_for :side_menu_list_items do
+  %li
+    = link_to list_all_pictogram + ' ' + t('admin.known_i_ps.index.title'),
+              known_ips_path,
+              :class => 'display resource'
