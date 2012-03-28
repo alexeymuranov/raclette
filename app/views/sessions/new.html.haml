@@ -1,0 +1,22 @@
+= form_tag(login_path, :id => 'login_form') do
+  = field_set_tag t('.log_in_invitation') do
+    %dl.form_fields
+      .item.field
+        %dt
+          = label_tag :username,
+                      t('formats.attribute_name:',
+                        :attribute => Admin::User.human_attribute_name(:username))
+        %dd= text_field_tag :username
+      .item.field
+        %dt
+          = label_tag :password,
+                      t('formats.attribute_name:',
+                        :attribute => Admin::User.human_attribute_name(:password))
+        %dd= password_field_tag :password
+      .item
+        %dt= t 'sessions.labels.your_ip_address'
+        %dd= @client_ip
+  .actions
+    = submit_tag t('.log_in_button')
+#welcome_logo
+  = logo(2)
