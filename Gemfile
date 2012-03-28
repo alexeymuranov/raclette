@@ -21,6 +21,7 @@ gem 'kaminari'  # pagination
 # gem 'inherited_resources'  # for lazy resourceful controllers
 
 gem 'param_protected'  # for filtering params in the controllers
+gem 'strong_parameters'  # a simpler alternative for mass assignement security
 
 # Gems used only for assets and not required
 # in production environments by default.
