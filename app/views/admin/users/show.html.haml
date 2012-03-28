@@ -1,0 +1,54 @@
+%h1= t '.header', :username => @user.username
+
+%section
+  %h2= t 'admin.users.show.subheaders.user_data'
+
+  %dl.show
+    - @main_attributes.each do |attr|
+
+      = render 'shared/lists/attribute_in_show',
+               :attribute => attr,
+               :model     => @user
+
+%section
+  %h2= Admin::User.human_attribute_name(:safe_ips)
+
+  = render('shared/tables/simple_index',
+           :models                    => @safe_ips,
+           :attributes                => @safe_ips_attributes,
+           :column_types              => @known_ips_column_types,
+           :column_headers            => @known_ips_column_headers,
+           :resources_controller_name => Admin::KnownIPsController.controller_path,
+           :html_table_id             => :safe_ips) unless @safe_ips.empty?
+
+%section
+  %h2= t 'admin.users.show.subheaders.other'
+
+  - unless @other_attributes.blank?
+    %dl.show
+      - @other_attributes.each do |attr|
+        = render 'shared/lists/attribute_in_show',
+                 :attribute => attr,
+                 :model     => @user
+
+%footer
+  = link_to edit_pictogram(3) + ' ' + t('admin.users.edit.header',
+                                        :username => @user.username),
+            edit_user_path(@user),
+            :class => 'modify resource'
+  = link_to list_all_pictogram(3) + ' ' + t('admin.users.index.header'),
+            users_path,
+            :class => 'display resource'
+
+-# End of the main body of the view
+
+- content_for :side_menu_list_items do
+  %li
+    = link_to list_all_pictogram + ' ' + t('admin.users.index.title'),
+              users_path,
+              :class => 'display resource'
+  %li
+    = link_to add_pictogram + ' ' + t('admin.users.new.title'),
+              new_user_path,
+              :title => t('actions.create'),
+              :class => 'add resource'

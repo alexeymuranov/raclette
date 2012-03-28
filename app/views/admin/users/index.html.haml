@@ -1,0 +1,40 @@
+%hgroup
+  %h1= t '.header'
+
+  %h2#users_count
+    - if @filtering_values.blank?
+      = t '.count_total', :count => Admin::User.count
+    - else
+      = t '.count_filtered', :count => @users.size,
+                             :total => Admin::User.count
+
+#users_table
+
+  = render 'shared/tables/filtered_index',
+             :models           => @users,
+             :attributes       => @attributes,
+             :column_types     => @column_types,
+             :column_headers   => @column_headers,
+             :html_table_id    => :users,
+             :filtering_values => @filtering_values
+
+= render('downloads')
+
+#users_mailing_list
+
+  = render('emailing_list')
+
+%footer
+  = link_to add_pictogram(2) + ' ' + t('admin.users.new.header'),
+              new_user_path,
+              :title => t('actions.create'),
+              :class => 'add resource'
+
+-# End of the main body of the view
+
+- content_for :side_menu_list_items do
+  %li
+    = link_to add_pictogram + ' ' + t('admin.users.new.title'),
+              new_user_path,
+              :title => t('actions.create'),
+              :class => 'add resource'

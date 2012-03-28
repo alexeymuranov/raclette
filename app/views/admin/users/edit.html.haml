@@ -1,0 +1,20 @@
+%h1= t '.header', :username => @user.username
+
+= render 'edit_form'
+
+%footer
+  = link_to show_pictogram(3) + ' ' + t('admin.users.show.header',
+                                        :username => @user.username),
+              user_path(@user),
+              :class => 'display resource'
+  = link_to list_all_pictogram(3) + ' ' + t('admin.users.index.header'),
+            users_path,
+            :class => 'display resource'
+
+-# End of the main body of the view
+
+- content_for :side_menu_list_items do
+  %li
+    = link_to list_all_pictogram + ' ' + t('admin.users.index.title'),
+              users_path,
+              :class => 'display resource'
