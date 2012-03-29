@@ -1,4 +1,4 @@
-= form_for @member, :url => member_path(@member) do |f|
+= form_for @member, :as => :member, :url => member_path(@member) do |f|
 
   - unless @member.person.nil?
     = render('shared/error_messages/validation', :target => @member.person)
