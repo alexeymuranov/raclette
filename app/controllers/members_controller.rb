@@ -71,7 +71,7 @@ class MembersController < SecretaryController
         join(', ')
     end
 
-    set_column_headers
+    set_column_headers unless request.format == Mime::JS
 
     respond_to do |requested_format|
       requested_format.html do

@@ -89,7 +89,7 @@ class Admin::UsersController < AdminController
       @mailing_list = @mailing_list_users.collect(&:formatted_email).join(', ')
     end
 
-    set_column_headers
+    set_column_headers unless request.format == Mime::JS
 
     respond_to do |requested_format|
       requested_format.html do
