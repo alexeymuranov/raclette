@@ -39,8 +39,7 @@
     - if editable
       = form_builder.label attribute, label_content
     - else
-      %b
-        = label_content
+      %b= label_content
 
   - if [:text, :delegated_text, :virtual_text].include? column_type
     - input_parent_css_classes << 'long_text'

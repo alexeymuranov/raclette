@@ -17,8 +17,8 @@
     - case input_html_options[:type]
     - when 'checkbox'
       = check_box_tag name, value,
-                        input_html_options[:checked],
-                        input_html_options
+                      input_html_options[:checked],
+                      input_html_options
     - when 'email'
       = email_field_tag name, value, input_html_options
     - when 'password'

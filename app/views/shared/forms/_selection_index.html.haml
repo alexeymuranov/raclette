@@ -31,7 +31,7 @@
       %tr.field
         %td.boolean
           = check_box_tag array_name + '[]', mod.id, true,
-                            :id => id_prefix + "_#{mod.id}"
+                          :id => id_prefix + "_#{mod.id}"
 
         = render 'shared/forms/attributes_in_selection_index',
                  :model        => mod,
@@ -45,7 +45,7 @@
       %tr.field
         %td.boolean
           = check_box_tag array_name+'[]', mod.id, false,
-                            :id => id_prefix + "_#{mod.id}"
+                          :id => id_prefix + "_#{mod.id}"
 
         = render 'shared/forms/attributes_in_selection_index',
                  :model        => mod,
