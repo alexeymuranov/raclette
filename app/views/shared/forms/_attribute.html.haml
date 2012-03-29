@@ -49,7 +49,8 @@
     - if editable
       - if select_from
         = form_builder.select attribute,
-                              options_for_select(select_from),
+                              options_for_select(select_from,
+                                                 model.public_send(attribute)),
                               input_html_options
       - else
         - case column_type
