@@ -1,0 +1,16 @@
+%h1= t '.header', :title => @membership_type.unique_title
+= render 'form'
+%footer
+  = link_to show_pictogram(3) + ' ' + t('membership_types.show.header',
+                                        :title => @membership_type.unique_title),
+            membership_type_path(@membership_type),
+            :class => 'display resource'
+  -#
+  = link_to list_all_pictogram(3) + ' ' + t('membership_types.index.header'),
+            membership_types_path,
+            :class => 'display resource'
+  - content_for :side_menu_list_items do
+    %li
+      = link_to list_all_pictogram + ' ' + t('membership_types.index.title'),
+                membership_types_path,
+                :class => 'display resource'

@@ -1,0 +1,11 @@
+%h1= t '.header'
+= render 'form'
+%footer
+  = link_to list_all_pictogram(3) + ' ' + t('events.index.header'),
+            events_path,
+            :class => 'display resource'
+  - content_for :side_menu_list_items do
+    %li
+      = link_to list_all_pictogram + ' ' + t('events.index.title'),
+                events_path,
+                :class => 'display resource'

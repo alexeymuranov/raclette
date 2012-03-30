@@ -1,0 +1,16 @@
+%h1= t '.header', :title => @weekly_event.title
+= render 'form'
+%footer
+  = link_to show_pictogram(3) + ' ' + t('weekly_events.show.header',
+                                        :title => @weekly_event.title),
+            weekly_event_path(@weekly_event),
+            :class => 'display resource'
+  -#
+  = link_to list_all_pictogram(3) + ' ' + t('weekly_events.index.header'),
+            weekly_events_path,
+            :class => 'display resource'
+  - content_for :side_menu_list_items do
+    %li
+      = link_to list_all_pictogram + ' ' + t('weekly_events.index.title'),
+                weekly_events_path,
+                :class => 'display resource'

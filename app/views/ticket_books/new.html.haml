@@ -1,0 +1,11 @@
+%h1= t '.header'
+= render 'form'
+%footer
+  = link_to list_all_pictogram(3) + ' ' + t('ticket_books.index.header'),
+            ticket_books_path,
+            :class => 'display resource'
+  - content_for :side_menu_list_items do
+    %li
+      = link_to list_all_pictogram + ' ' + t('ticket_books.index.title'),
+                ticket_books_path,
+                :class => 'display resource'

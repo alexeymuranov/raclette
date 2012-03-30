@@ -1,0 +1,27 @@
+%h1= t '.header', :title => @membership_type.unique_title
+%section
+  %dl.show
+    - @attributes.each do |attr|
+      = render 'shared/lists/attribute_in_show',
+        :model       => @membership_type,
+        :attribute   => attr,
+        :column_type => @column_types[attr]
+%footer
+  = link_to edit_pictogram(3) + ' ' + t('membership_types.edit.header',
+                                        :title => @membership_type.unique_title),
+            edit_membership_type_path(@membership_type),
+            :class => 'modify resource'
+  -#
+  = link_to list_all_pictogram(3) + ' ' + t('membership_types.index.header'),
+            membership_types_path,
+            :class => 'display resource'
+  - content_for :side_menu_list_items do
+    %li
+      = link_to list_all_pictogram + ' ' + t('membership_types.index.title'),
+                membership_types_path,
+                :class => 'display resource'
+    %li
+      = link_to add_pictogram + ' ' + t('membership_types.new.title'),
+                new_membership_type_path,
+                :title => t('actions.create'),
+                :class => 'add resource'

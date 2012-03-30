@@ -1,0 +1,27 @@
+%h1= t '.header', :title => @weekly_event.title
+%section
+  %dl.show
+    - @attributes.each do |attr|
+      = render 'shared/lists/attribute_in_show',
+               :model       => @weekly_event,
+               :attribute   => attr,
+               :column_type => @column_types[attr]
+%footer
+  = link_to edit_pictogram(3) + ' ' + t('weekly_events.edit.header',
+                                        :title => @weekly_event.title),
+            edit_weekly_event_path(@weekly_event),
+            :class => 'modify resource'
+  -#
+  = link_to list_all_pictogram(3) + ' ' + t('weekly_events.index.header'),
+            weekly_events_path,
+            :class => 'display resource'
+  - content_for :side_menu_list_items do
+    %li
+      = link_to list_all_pictogram + ' ' + t('weekly_events.index.title'),
+                weekly_events_path,
+                :class => 'display resource'
+    %li
+      = link_to add_pictogram + ' ' + t('weekly_events.new.title'),
+                new_weekly_event_path,
+                :title => t('actions.create'),
+                :class => 'add resource'
