@@ -1,9 +1,11 @@
-body div.container section {
+body div.container {
   table {
     border-collapse: collapse;
     border: solid 1px $table-border-color;
+
     width: auto;
-    margin: 0;
+    margin-left: auto;
+    margin-right: auto;
 
     th, td {
       padding: 0 5px;
