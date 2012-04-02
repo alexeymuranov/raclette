@@ -44,17 +44,18 @@ class Admin::UsersControllerTest < ActionController::TestCase
         new_safe_ip_ids << known_ip.id
         expected_difference = 1
       end
-      params_hash = { :id         => @another_user.to_param,
+      params_hash = { :id   => @another_user.to_param,
                       :user =>  {
                         :secretary   => new_secretary_status,
                         :safe_ip_ids => new_safe_ip_ids } }
 
+      session[:user_id] = @user_admin.to_param
       assert_difference('@another_user.safe_ips.count', expected_difference) do
-        session[:user_id] = @user_admin.to_param
         put :update, params_hash
+        @another_user.reload
       end
 
-      assert Admin::User.find(@another_user.id).secretary? == new_secretary_status
+      assert_same @another_user.secretary?, new_secretary_status
 
       assert_redirected_to :action => :show, :id => @another_user
     end

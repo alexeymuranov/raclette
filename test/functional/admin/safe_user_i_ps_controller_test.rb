@@ -39,9 +39,10 @@ class Admin::SafeUserIPsControllerTest < ActionController::TestCase
                         { @known_ip.to_param =>
                             new_safe_user_ids_for_known_ip } }
 
+      session[:user_id] = @user_admin.to_param
       assert_difference('@known_ip.safe_users.count', expected_difference) do
-        session[:user_id] = @user_admin.to_param
         put :update_all, params_hash
+        @known_ip.reload
       end
 
       assert_redirected_to :action => :index
