@@ -6,7 +6,7 @@ source 'http://rubygems.org'
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
 
 # Bundle my "fixed" Rails branch on GitHub instead:
-gem 'rails', '~> 3.2.0', :git => 'git://github.com/alexeymuranov/rails.git', :branch => 'backport-to-3-2'
+gem 'rails', '~> 3.2.0', :git => 'git://github.com/alexeymuranov/rails.git', :branch => 'backport-to-3-2-2'
 
 # Bundle Rails from my local directory instead:
 # gem 'rails', '~> 3.2.0', :path => "~/Development/rails"
@@ -66,5 +66,5 @@ group :production do
   gem 'pg'  # PostgreSQL for Heroku
 end
 
-# Temporarily included because versions 1.0.2, 1.0.3 seem broken:
+# Temporarily included because versions 1.0.2, 1.0.3 for some reason fail tests:
 gem 'journey', '1.0.1' # noramlly was not needed
