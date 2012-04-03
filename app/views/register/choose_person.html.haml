@@ -82,7 +82,7 @@
   %ul.compact
     - @members.each do |member|
       %li
-        = link_to select_pictogram + ' ' + member.ordered_full_name,
+        = link_to select_pictogram + " #{member.ordered_full_name} (#{member.payed_tickets_count + member.free_tickets_count})",
                   { :action    => :compose_transaction,
                     :member_id => member.id },
                   :class => 'select resource'
