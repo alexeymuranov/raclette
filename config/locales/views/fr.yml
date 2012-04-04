@@ -381,6 +381,8 @@ fr:
     show:
       title: "%{name}"
       header: "Adhérent(e) %{name}"
+      subheaders:
+        member_data: "Données de l'adhérent(e)"
     new:
       title: "Nouveau(elle) adhérent(e)"
       header: "Ajouter un(e) adhérent(e)"

@@ -73,6 +73,7 @@ en:
         # Virtual attributes:
         full_name: "Full name"
         ordered_full_name: "Full name"
+        attended_events: "Attended events"
       instructor:
         # person:
         #   <<: *person_attributes

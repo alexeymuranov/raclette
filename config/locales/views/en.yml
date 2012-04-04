@@ -381,6 +381,8 @@ en:
     show:
       title: "%{name}"
       header: "Member %{name}"
+      subheaders:
+        member_data: "Member data"
     new:
       title: "New member"
       header: "New member"

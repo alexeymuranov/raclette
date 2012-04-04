@@ -1,14 +1,25 @@
 %h1= t '.header', :name => @member.full_name
 
 %section
-  %dl.show
+  %h2= t 'members.show.subheaders.member_data'
 
+  %dl.show
     - @attributes.each do |attr|
 
       = render 'shared/lists/attribute_in_show',
                :model       => @member,
                :attribute   => attr,
                :column_type => @column_types[attr]
+
+%section
+  %h2= Person.human_attribute_name(:attended_events)
+
+  = render('shared/tables/simple_index',
+           :models                    => @attended_events,
+           :attributes                => @attended_events_attributes,
+           :column_types              => @events_column_types,
+           :column_headers            => @events_column_headers,
+           :html_table_id             => :safe_ips) unless @attended_events.empty?
 
 %footer
   = link_to edit_pictogram(3) + ' ' + t('members.edit.header',

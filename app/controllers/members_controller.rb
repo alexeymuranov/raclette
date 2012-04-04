@@ -3,11 +3,22 @@
 class MembersController < SecretaryController
 
   class Member < Member
+    has_many :attended_events, :through    => :event_entries,
+                               :source     => :event,
+                               :class_name => :Event
+
     self.all_sorting_columns = [:ordered_full_name,
                                 :email,
                                 :account_deactivated,
                                 :tickets_count]
     self.default_sorting_column = :ordered_full_name
+  end
+
+  class Event < Event
+    self.all_sorting_columns = [:title, :event_type,
+                                :date,
+                                :start_time]
+    self.default_sorting_column = :date
   end
 
   param_accessible /.+/
@@ -130,6 +141,13 @@ class MembersController < SecretaryController
     @column_types = Member.attribute_db_types
     # set_column_headers
 
+    @attended_events_attributes = [:title, :event_type,
+                                   :date,
+                                   :start_time]
+    @attended_events = @member.attended_events
+    set_events_column_types
+    set_events_column_headers
+
     @title = t('members.show.title', :name => @member.non_sql_full_name)
   end
 
@@ -244,6 +262,29 @@ class MembersController < SecretaryController
         else
           @column_headers[attr] = I18n.t('formats.attribute_name:',
               :attribute => @column_headers[attr])
+        end
+      end
+    end
+
+    def set_events_column_types
+      @events_column_types = {}
+      Event.columns_hash.each do |key, value|
+        @events_column_types[key.to_sym] = value.type
+      end
+    end
+
+    def set_events_column_headers
+      @events_column_headers = {}
+      @events_column_types.each do |attr, type|
+        human_name = Event.human_attribute_name(attr)
+
+        case type
+        when :boolean
+          @events_column_headers[attr] = I18n.t('formats.attribute_name?',
+                                                :attribute => human_name)
+        else
+          @events_column_headers[attr] = I18n.t('formats.attribute_name:',
+                                                :attribute => human_name)
         end
       end
     end
