@@ -6,5 +6,6 @@ class MonitorController < ApplicationController
 
   def overview
     @members_count = Member.count
+    @active_members_count = Member.account_active.count
   end
 end

@@ -140,7 +140,7 @@ class RegisterController < ApplicationController
     end
 
     def render_choose_person_properly
-      @members = paginate(Member.joins(:person)\
+      @members = paginate(Member.account_active.joins(:person)\
                                 .with_virtual_attributes(:ordered_full_name)\
                                 .default_order)
       # Filter:
