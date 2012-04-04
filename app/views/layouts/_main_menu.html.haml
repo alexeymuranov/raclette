@@ -22,16 +22,15 @@
         %li.disabled>
           %span.disabled_link>
             = t("manager_tools.overview.title")
+      %hr>
       - if current_user.admin?
-        %hr
         %li>
           = link_to t("admin.admin_tools.overview.title"),
                     admin_tools_overview_path
       - else
-        %hr
         %li.disabled>
           %span.disabled_link>
             = t("admin.admin_tools.overview.title")
     - else
       %li>
-        = link_to t('sessions.new.log_in_please'), login_path
+        = link_to t("sessions.new.log_in_please"), login_path
