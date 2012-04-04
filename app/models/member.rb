@@ -10,7 +10,7 @@ class Member < ActiveRecord::Base
 
   self.primary_key = 'person_id'
 
-  include AbstractPerson # TODO: take advatage of AbstractPerson here instead of AbstractSmarterModel
+  include AbstractPerson
 
   attr_readonly :id, :person_id, :been_member_by
 
