@@ -32,6 +32,9 @@ class Person < ActiveRecord::Base
   has_many :event_entries, :dependent  => :destroy,
                            :inverse_of => :person
 
+  has_many :attended_events, :through => :event_entries,
+                             :source  => :event
+
   has_many :event_cashiers, :dependent  => :nullify,
                             :inverse_of => :person
 

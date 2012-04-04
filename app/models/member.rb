@@ -50,6 +50,9 @@ class Member < ActiveRecord::Base
 
   belongs_to :person, :inverse_of => :member
 
+  has_many :event_entries,   :through => :person
+  has_many :attended_events, :through => :person
+
   belongs_to :tickets_borrower,
                  :foreign_key => :shares_tickets_with_member_id,
                  :class_name  => 'Member',
