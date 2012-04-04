@@ -14,7 +14,7 @@
   = label_tag :per_page, t('field_labels.per_page')
   = select_tag :per_page,
                  options_for_select([5, 10, 25, 50, 100, 250, 500, 1000],
-                                    params[:per_page]),
+                                    params[:per_page] || klass.default_per_page),
                  :class => 'number'
   %span.actions
     = hidden_field_tag :query_type, 'repaginate'
