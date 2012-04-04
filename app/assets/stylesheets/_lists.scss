@@ -7,3 +7,57 @@ ul.compact {
     width: 33%;
   }
 }
+
+dl.show, dl.form_fields {
+  display: table;
+  border: solid 1px $table-border-color;
+
+  width: auto;
+  margin: 5px auto;
+}
+
+dl.form_fields, dl.show {
+  p.item, div.item {
+    display: table-row;
+
+    &.caption {
+      display: table-caption;
+      text-align: center;
+    }
+
+    dt {
+      display: table-cell;
+      padding: 0 5px;
+    }
+
+    dd {
+      display: table-cell;
+      padding: 0 5px;
+      color: $data-color;
+    }
+
+    dd.long_text {
+      vertical-align: top;
+    }
+
+    &:nth-of-type(odd) {
+      dt {
+        background-color: $alt-table-head-bg-color;
+      }
+
+      dd {
+        background-color: $table-data-bg-color;
+      }
+    }
+
+    &:nth-of-type(even) {
+      dt {
+        background-color: $table-head-bg-color;
+      }
+
+      dd {
+        background-color: $alt-table-data-bg-color;
+      }
+    }
+  }
+}
