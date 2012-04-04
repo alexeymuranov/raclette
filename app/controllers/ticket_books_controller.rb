@@ -37,6 +37,7 @@ class TicketBooksController < ManagerController
                                       params[:filter],
                                       @attributes)
     @filtering_values = TicketBook.last_filter_values
+    @filtered_ticket_books_count = @ticket_books.count
 
     # Sort:
     TicketBook.all_sorting_columns = @attributes

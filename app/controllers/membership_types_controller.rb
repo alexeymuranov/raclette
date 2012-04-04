@@ -48,6 +48,7 @@ class MembershipTypesController < ManagerController
                                               params[:filter],
                                               @attributes)
     @filtering_values = MembershipType.last_filter_values
+    @filtered_membership_types_count = @membership_types.count
 
     # Sort:
     MembershipType.all_sorting_columns = @attributes

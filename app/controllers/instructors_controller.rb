@@ -43,6 +43,7 @@ class InstructorsController < ManagerController
     # Filter:
     @instructors = Instructor.filter(@instructors, params[:filter], @attributes)
     @filtering_values = Instructor.last_filter_values
+    @filtered_instructors_count = @instructors.count
 
     # Sort:
     Instructor.all_sorting_columns = @attributes

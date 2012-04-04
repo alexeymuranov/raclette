@@ -5,7 +5,7 @@
     - if @filtering_values.blank?
       = t '.count_total', :count => Instructor.count
     - else
-      = t '.count_filtered', :count => @instructors.size,
+      = t '.count_filtered', :count => @filtered_instructors_count,
                              :total => Instructor.count
 
 #instructors_table

@@ -47,6 +47,7 @@ class EventsController < SecretaryController
     # Filter:
     @events = Event.filter(@events, params[:filter], @attributes)
     @filtering_values = Event.last_filter_values
+    @filtered_events_count = @events.count
 
     # Sort:
     Event.all_sorting_columns = @attributes

@@ -64,6 +64,7 @@ class WeeklyEventsController < ManagerController
     # Filter:
     @weekly_events = WeeklyEvent.filter(@weekly_events, params[:filter], @attributes)
     @filtering_values = WeeklyEvent.last_filter_values
+    @filtered_weekly_events_count = @weekly_events.count
 
     # Sort:
     WeeklyEvent.all_sorting_columns = @attributes

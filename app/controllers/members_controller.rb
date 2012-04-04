@@ -65,6 +65,7 @@ class MembersController < SecretaryController
     # Filter:
     @members = Member.filter(@members, params[:filter], @attributes)
     @filtering_values = Member.last_filter_values
+    @filtered_members_count = @members.count
 
     # Sort:
     Member.all_sorting_columns = @attributes
