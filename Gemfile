@@ -49,9 +49,7 @@ gem 'bourbon'  # better Sass
 
 group :development do
   gem 'sqlite3'
-  # To use debugger
-  # gem 'ruby-debug19', :require => 'ruby-debug'  # brocken since rails 3.1.1 ?
-  # gem 'annotate', :git => 'git://github.com/ctran/annotate_models.git'  # annotate models
+  gem 'debugger'
   gem 'annotate'   # annotate models
   gem 'rails-erd'  # generate models' diagram in PDF
 end
