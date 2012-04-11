@@ -80,7 +80,6 @@ module Accessors
 
   class ActivityPeriod < ::ActivityPeriod
     include ActiveModelUtilities
-    include ControllerAware
 
     # attr_accessible( # :id,
                      # :unique_title,
@@ -338,7 +337,6 @@ module Accessors
 
   class MembershipType < ::MembershipType
     include ActiveModelUtilities
-    include ControllerAware
 
     # attr_accessible( # :id,
                      # :unique_title,
@@ -352,7 +350,7 @@ module Accessors
     include ControllerAware
 
     def self.controller_class
-      ActivityPeriodsController
+      MembershipTypesController
     end
   end
 
@@ -432,7 +430,6 @@ module Accessors
 
   class TicketBook < ::TicketBook
     include ActiveModelUtilities
-    include ControllerAware
 
     # attr_accessible( # :id,
                      # :membership_type_id,
