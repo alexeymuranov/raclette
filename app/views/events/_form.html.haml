@@ -1,4 +1,4 @@
-= form_for @event, :as => :event, :url => event_path(@event) do |f|
+= form_for @event, :as => :event, :url => @event_form_url do |f|
   = render 'shared/error_messages/validation', :target => @event
   %dl.form_fields
     - @attributes.each do |attribute|

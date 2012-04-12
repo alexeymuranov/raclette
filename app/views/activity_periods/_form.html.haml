@@ -1,5 +1,5 @@
 = form_for @activity_period, :as => :activity_period,
-           :url => activity_period_path(@activity_period) do |f|
+           :url => @activity_period_form_url do |f|
 
   = render 'shared/error_messages/validation', :target => @activity_period
 

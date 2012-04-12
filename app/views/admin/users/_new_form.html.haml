@@ -1,5 +1,5 @@
 -# TODO:report a bug: test environment requires ":url => " here
-= form_for @user, :as => :user, :url => user_path(@user) do |f|
+= form_for @user, :as => :user, :url => users_path do |f|
 
   = render 'shared/error_messages/validation', :target => @user
 

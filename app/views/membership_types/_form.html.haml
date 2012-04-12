@@ -1,5 +1,5 @@
 = form_for @membership_type, :as => :membership_type,
-           :url => membership_type_path(@membership_type) do |f|
+           :url => @membership_type_form_url do |f|
   = render 'shared/error_messages/validation', :target => @membership_type
   %dl.form_fields
     - @attributes.each do |attribute|

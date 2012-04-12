@@ -1,5 +1,5 @@
 = form_for @weekly_event, :as  => :weekly_event,
-                          :url => weekly_event_path(@weekly_event) do |f|
+                          :url => @weekly_event_form_url do |f|
   = render 'shared/error_messages/validation', :target => @weekly_event
   %dl.form_fields
     - @attributes.each do |attribute|

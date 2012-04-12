@@ -1,5 +1,8 @@
 %h1= t '.header', :title => @ticket_book.title
+- @ticket_book_form_url = ticket_book_path(@ticket_book)
+
 = render 'form'
+
 %footer
   = link_to show_pictogram(3) + ' ' + t('ticket_books.show.header',
                                         :title => @ticket_book.title),

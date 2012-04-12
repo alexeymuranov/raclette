@@ -1,5 +1,5 @@
 = form_for @ticket_book, :as  => :ticket_book,
-                         :url => ticket_book_path(@ticket_book) do |f|
+                         :url => @ticket_book_form_url do |f|
   = render 'shared/error_messages/validation', :target => @ticket_book
   %dl.form_fields
     - @attributes.each do |attribute|

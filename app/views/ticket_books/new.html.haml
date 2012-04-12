@@ -1,5 +1,8 @@
 %h1= t '.header'
+- @ticket_book_form_url = ticket_books_path
+
 = render 'form'
+
 %footer
   = link_to list_all_pictogram(3) + ' ' + t('ticket_books.index.header'),
             ticket_books_path,

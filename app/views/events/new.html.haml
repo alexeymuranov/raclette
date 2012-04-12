@@ -1,5 +1,8 @@
 %h1= t '.header'
+- @event_form_url = events_path
+
 = render 'form'
+
 %footer
   = link_to list_all_pictogram(3) + ' ' + t('events.index.header'),
             events_path,

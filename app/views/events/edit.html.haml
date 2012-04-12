@@ -1,5 +1,8 @@
 %h1= t '.header', :title => @event.title
+- @event_form_url = event_path(@event)
+
 = render 'form'
+
 %footer
   = link_to show_pictogram(3) + ' ' + t('events.show.header',
                                         :title => @event.title),

@@ -1,5 +1,5 @@
 -# TODO:report a bug: test environment requires ":url => " here
-= form_for @known_ip, :as => :known_ip, :url => known_ip_path(@known_ip) do |f|
+= form_for @known_ip, :as => :known_ip, :url => @known_ip_form_url do |f|
 
   = render 'shared/error_messages/validation', :target => @known_ip
 

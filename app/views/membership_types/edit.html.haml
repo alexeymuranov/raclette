@@ -1,5 +1,8 @@
 %h1= t '.header', :title => @membership_type.unique_title
+- @membership_type_form_url = membership_type_path(@membership_type)
+
 = render 'form'
+
 %footer
   = link_to show_pictogram(3) + ' ' + t('membership_types.show.header',
                                         :title => @membership_type.unique_title),

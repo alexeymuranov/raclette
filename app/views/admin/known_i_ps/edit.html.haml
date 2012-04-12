@@ -1,5 +1,5 @@
-%h1
-  = t '.header', :ip => @known_ip.ip
+%h1= t('.header', :ip => @known_ip.ip)
+- @known_ip_form_url = known_ip_path(@known_ip)
 
 = render 'form'
 
