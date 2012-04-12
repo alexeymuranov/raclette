@@ -8,7 +8,7 @@ module PictogramsMarkupHelper
   def show_pictogram(size=1)
     # image_tag SHOW_ICON_FILE_NAMES[size], :alt => 'show'
     css_style = (size == 1) ? '' : "font-size:#{(100*size).to_i}%;"
-    content_tag :span, '⇒', :class => 'pictogram',
+    content_tag :span, '○', :class => 'pictogram',
                             :style => css_style
   end
 
@@ -70,7 +70,7 @@ module PictogramsMarkupHelper
 
   def select_pictogram(size=1)
     css_style = (size == 1) ? '' : "font-size:#{(100*size).to_i}%;"
-    content_tag :span, '→', :class => 'pictogram',
+    content_tag :span, '●', :class => 'pictogram',
                             :style => css_style
   end
 end
