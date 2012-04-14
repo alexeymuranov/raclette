@@ -13,19 +13,23 @@ module FilterMarkupHelper  # WIP
       current_prefix = nil
     end
     content_tag(:nav, options) do
-      content_tag :ul do
-        html_output = ''.html_safe
-        prefixes.each do |pref|
-          html_output << content_tag(:li, :class => 'filtering_prefix') do
-            if pref == current_prefix
-              pref
-            else
-              new_params = params.deep_merge( :filter => { str_attr => pref } )
-              link_to(pref, new_params)
+      form_tag(nil, :method => :get ) do
+        hidden_field_tags_from_param_hash(params) +
+        content_tag(:ul) do
+          html_output = ''.html_safe
+          prefixes.each do |pref|
+            html_output << content_tag(:li, :class => 'filtering_prefix') do
+              if pref == current_prefix
+                pref
+              else
+                content_tag(:button, pref, :name  => "filter[#{str_attr}]",
+                                           :value => pref,
+                                           :type => :submit)
+              end
             end
           end
+          html_output.html_safe
         end
-        html_output.html_safe
       end
     end
   end

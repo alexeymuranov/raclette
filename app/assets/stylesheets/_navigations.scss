@@ -197,22 +197,12 @@ nav.filtering_prefixes {
   ul {
     li {
       display: inline-block;
-      margin: 0 5px;
+      margin: 0 2px;
       font-weight: bold;
 
-      a, a:visited {
-        margin: 0 -5px;
-        padding: 0 5px;
-        color: $common-navigation-link-color;
-        text-decoration: none;
-      }
-
-      a:hover {
-        @include border-radius(3px);
-        text-shadow: none;
-        color: $section-bg-color;
-        background-color: $common-navigation-link-color;
-        text-decoration: none;
+      button {
+        font-size: $body-font-size;
+        font-weight: bold;
       }
     }
   }
