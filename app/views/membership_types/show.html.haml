@@ -2,10 +2,12 @@
 %section
   %dl.show
     - @attributes.each do |attr|
+
       = render 'shared/lists/attribute_in_show',
         :model       => @membership_type,
         :attribute   => attr,
         :column_type => @column_types[attr]
+
 %footer
   = link_to edit_pictogram(3) + ' ' + t('membership_types.edit.header',
                                         :title => @membership_type.unique_title),

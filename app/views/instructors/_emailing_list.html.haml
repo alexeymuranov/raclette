@@ -4,8 +4,8 @@
               params.except(:controller, :action).merge( :list_email_addresses => :filtered,
                                                          :query_type           => 'show_email_addresses',
                                                          :anchor               => 'email_addresses' ),
-                :id     => 'email_addresses_show_link',
-                :remote => true
+              :id     => 'email_addresses_show_link',
+              :remote => true
   - else
     %h2= t 'instructors.index.subheaders.mailing_list'
 
@@ -15,5 +15,5 @@
                             :action,
                             :list_email_addresses).merge( :query_type => 'hide_email_addresses',
                                                           :anchor     => 'email_addresses_show_button' ),
-                :id     => 'email_addresses_hide_link',
-                :remote => true
+              :id     => 'email_addresses_hide_link',
+              :remote => true

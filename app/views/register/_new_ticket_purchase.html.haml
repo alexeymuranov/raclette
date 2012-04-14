@@ -1,7 +1,9 @@
 %h2= t('register.new_ticket_purchase.title')
 = form_for @tickets_purchase, :as  => :tickets_purchase,
                               :url => 'create_ticket_purchase' do |f|
+
   = render 'shared/error_messages/validation', :target => @tickets_purchase
+
   %dl.form_fields
     = f.hidden_field :participant_entry_type
     = f.hidden_field :event_title

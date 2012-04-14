@@ -13,12 +13,14 @@
 %section
   %h2= Admin::User.human_attribute_name(:safe_ips)
 
-  = render('shared/tables/simple_index',
-           :models                    => @safe_ips,
-           :attributes                => @safe_ips_attributes,
-           :column_types              => @known_ips_column_types,
-           :column_headers            => @known_ips_column_headers,
-           :html_table_id             => :safe_ips) unless @safe_ips.empty?
+  - unless @safe_ips.empty?
+
+    = render 'shared/tables/simple_index',
+             :models                    => @safe_ips,
+             :attributes                => @safe_ips_attributes,
+             :column_types              => @known_ips_column_types,
+             :column_headers            => @known_ips_column_headers,
+             :html_table_id             => :safe_ips
 
 %section
   %h2= t 'admin.users.show.subheaders.other'
@@ -26,6 +28,7 @@
   - unless @other_attributes.blank?
     %dl.show
       - @other_attributes.each do |attr|
+
         = render 'shared/lists/attribute_in_show',
                  :attribute => attr,
                  :model     => @user

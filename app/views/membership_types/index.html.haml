@@ -7,6 +7,7 @@
       = t '.count_filtered', :count => @filtered_membership_types_count,
                              :total => MembershipType.count
 #membership_types_table
+
   = render 'shared/tables/filtered_index',
            :models           => @membership_types,
            :attributes       => @attributes,
@@ -14,6 +15,7 @@
            :column_headers   => @column_headers,
            :html_table_id    => :membership_types,
            :filtering_values => @filtering_values
+
 %footer
   = link_to add_pictogram(2) + ' ' + t('membership_types.new.header'),
             new_membership_type_path,

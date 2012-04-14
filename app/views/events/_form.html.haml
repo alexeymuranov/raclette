@@ -1,10 +1,14 @@
 = form_for @event, :as => :event, :url => @event_form_url do |f|
+
   = render 'shared/error_messages/validation', :target => @event
+
   %dl.form_fields
     - @attributes.each do |attribute|
+
       = render 'shared/forms/attribute',
                :form_builder => f,
                :attribute    => attribute,
                :column_type  => @column_types[attribute]
+
   .actions
     = f.submit

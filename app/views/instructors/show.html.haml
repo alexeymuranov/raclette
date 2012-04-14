@@ -2,8 +2,8 @@
 
 %section
   %dl.show
-
     - @attributes.each do |attr|
+
       = render 'shared/lists/attribute_in_show',
                :model       => @instructor,
                :attribute   => attr,

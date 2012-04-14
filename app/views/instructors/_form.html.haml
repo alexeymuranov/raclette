@@ -1,8 +1,9 @@
 = form_for @instructor, :as  => :instructor,
                         :url => @instructor_form_url do |f|
-
   - unless @instructor.person.nil?
+
     = render('shared/error_messages/validation', :target => @instructor.person)
+
   = render 'shared/error_messages/validation', :target => @instructor
 
   %dl.form_fields

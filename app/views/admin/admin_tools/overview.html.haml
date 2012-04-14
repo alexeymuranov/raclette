@@ -13,7 +13,6 @@
 
     %ul.compact
       - @users.each do |user|
-        -# TODO:report a bug: "user_path(user)" cannot be replaced with "user" here, despite that it works in development, tests give "undefined method `admin_user_path'" (it should be `user_path')
         %li
           = link_to show_pictogram(2) + ' ' + user.username, user_path(user),
                     :class => 'display resource'
@@ -34,9 +33,8 @@
     %ul.compact
       - @known_ips.each do |known_ip|
         - note = known_ip.description.blank? ? '' : " (#{known_ip.description})"
-        -# TODO:same about "known_ip_path(known_ip)"
         %li
-          = link_to show_pictogram(2) + ' ' + known_ip.ip+note, known_ip_path(known_ip),
+          = link_to show_pictogram(2) + ' ' + known_ip.ip + note, known_ip_path(known_ip),
                     :class => 'display resource'
 
     %footer
@@ -61,13 +59,13 @@
 - content_for :side_menu_list_items do
   %li
     = link_to list_all_pictogram + ' ' + t('admin.users.index.title'),
-                users_path,
-                :class => 'display resource'
+              users_path,
+              :class => 'display resource'
   %li
     = link_to list_all_pictogram + ' ' + t('admin.known_i_ps.index.title'),
-                known_ips_path,
-                :class => 'display resource'
+              known_ips_path,
+              :class => 'display resource'
   %li
     = link_to list_all_pictogram + ' ' + t('admin.safe_user_i_ps.index.title'),
-                safe_user_ips_path,
-                :class => 'display resource'
+              safe_user_ips_path,
+              :class => 'display resource'

@@ -8,7 +8,6 @@
               :remote => true
   - else
     %h2= t 'members.index.subheaders.mailing_list'
-
     %p= @mailing_list
     = link_to t('buttons.hide_email_addresses'),
               params.except(:controller,

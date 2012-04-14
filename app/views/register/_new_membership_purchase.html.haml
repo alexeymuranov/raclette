@@ -1,7 +1,9 @@
 %h2= t('register.new_membership_purchase.title')
 = form_for @membership_purchase, :as  => :membership_purchase,
                                  :url => 'create_membership_purchase' do |f|
+
   = render 'shared/error_messages/validation', :target => @membership_purchase
+
   %dl.form_fields
     = f.hidden_field :participant_entry_type
     = f.hidden_field :event_title

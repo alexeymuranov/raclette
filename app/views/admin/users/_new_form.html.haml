@@ -9,16 +9,16 @@
     %dl.form_fields
 
       = render 'shared/forms/attribute',
-                 :form_builder       => f,
-                 :attribute          => :password,
-                 :column_type        => @column_types[:password],
-                 :input_html_options => { :type => :password }
+               :form_builder       => f,
+               :attribute          => :password,
+               :column_type        => @column_types[:password],
+               :input_html_options => { :type => :password }
 
       = render 'shared/forms/attribute',
-                 :form_builder       => f,
-                 :attribute          => :password_confirmation,
-                 :column_type        => @column_types[:password_confirmation],
-                 :input_html_options => { :type => :password }
+               :form_builder       => f,
+               :attribute          => :password_confirmation,
+               :column_type        => @column_types[:password_confirmation],
+               :input_html_options => { :type => :password }
 
   .actions
     = f.submit

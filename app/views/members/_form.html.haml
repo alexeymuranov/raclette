@@ -1,7 +1,8 @@
 = form_for @member, :as => :member, :url => @member_form_url do |f|
-
   - unless @member.person.nil?
+
     = render('shared/error_messages/validation', :target => @member.person)
+
   = render 'shared/error_messages/validation', :target => @member
 
   %dl.form_fields

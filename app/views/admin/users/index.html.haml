@@ -11,12 +11,12 @@
 #users_table
 
   = render 'shared/tables/filtered_index',
-             :models           => @users,
-             :attributes       => @attributes,
-             :column_types     => @column_types,
-             :column_headers   => @column_headers,
-             :html_table_id    => :users,
-             :filtering_values => @filtering_values
+           :models           => @users,
+           :attributes       => @attributes,
+           :column_types     => @column_types,
+           :column_headers   => @column_headers,
+           :html_table_id    => :users,
+           :filtering_values => @filtering_values
 
 = render('downloads')
 
@@ -26,9 +26,9 @@
 
 %footer
   = link_to add_pictogram(2) + ' ' + t('admin.users.new.header'),
-              new_user_path,
-              :title => t('actions.create'),
-              :class => 'add resource'
+            new_user_path,
+            :title => t('actions.create'),
+            :class => 'add resource'
 
 -# End of the main body of the view
 

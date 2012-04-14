@@ -5,8 +5,8 @@
 %footer
   = link_to show_pictogram(3) + ' ' + t('admin.users.show.header',
                                         :username => @user.username),
-              user_path(@user),
-              :class => 'display resource'
+            user_path(@user),
+            :class => 'display resource'
   = link_to list_all_pictogram(3) + ' ' + t('admin.users.index.header'),
             users_path,
             :class => 'display resource'

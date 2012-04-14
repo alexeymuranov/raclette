@@ -7,6 +7,7 @@
   = label_tag id_prefix + "_#{model.id}", model.public_send(attributes[0])
 
 - attributes[1..-1].each do |attr|
+
   = render 'shared/tables/attribute_in_simple_index',
            :column_type => column_types[attr],
            :value       => model.public_send(attr)

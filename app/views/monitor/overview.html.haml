@@ -1,7 +1,7 @@
 %h1= t '.header'
 %p
-  = t '.active_members_count'
-  =@active_members_count
+  = t('.active_members_count')
+  %strong= @active_members_count
 %p
-  = t '.all_members_count'
+  = t('.all_members_count')
   = @members_count

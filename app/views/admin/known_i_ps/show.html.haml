@@ -23,12 +23,12 @@
 
 %footer
   = link_to edit_pictogram(3) + ' ' + t('admin.known_i_ps.edit.header',
-                                      :ip => @known_ip.ip),
-              edit_known_ip_path(@known_ip),
-              :class => 'modify resource'
+                                        :ip => @known_ip.ip),
+            edit_known_ip_path(@known_ip),
+            :class => 'modify resource'
   = link_to list_all_pictogram(3) + ' ' + t('admin.known_i_ps.index.header'),
-              known_ips_path,
-              :class => 'display resource'
+            known_ips_path,
+            :class => 'display resource'
 
 -# End of the main body of the view
 

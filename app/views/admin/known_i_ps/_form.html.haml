@@ -8,9 +8,9 @@
       - [ :ip, :description ].each do |attribute|
 
         = render 'shared/forms/attribute',
-                   :form_builder => f,
-                   :attribute    => attribute,
-                   :column_type  => @column_types[attribute]
+                 :form_builder => f,
+                 :attribute    => attribute,
+                 :column_type  => @column_types[attribute]
 
   .actions
     = f.submit

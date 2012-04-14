@@ -4,12 +4,13 @@
 - if target.errors.any?
   #error_explanation
     %h2
-      = target.errors.count == 1 ?                       |
-          t('activerecord.errors.template.header.one',   |
-            :model => target.class.model_name.human) :   |
-          t('activerecord.errors.template.header.other', |
-            :count => target.errors.count,               |
-            :model => target.class.model_name.human)     |
+      - if target.errors.count == 1
+        = t('activerecord.errors.template.header.one',
+            :model => target.class.model_name.human)
+      - else
+        = t('activerecord.errors.template.header.other',
+            :count => target.errors.count,
+            :model => target.class.model_name.human)
 
     %ul
       - target.errors.full_messages.each do |msg|

@@ -1,6 +1,9 @@
 %header
+
   = render 'layouts/main_logo'
+
   = render 'layouts/main_menu'
+
   - if current_user
     = link_to t('navigation_links.sign_out'),
               logout_path,
