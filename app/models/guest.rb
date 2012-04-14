@@ -40,7 +40,7 @@ class Guest
   def persisted?
     false
   end
-  
+
   def self.readonly_attributes
     []
   end

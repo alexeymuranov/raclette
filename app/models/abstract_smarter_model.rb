@@ -50,7 +50,7 @@ module AbstractSmarterModel  # NOTE:WIP
     def native_and_named_attributes_sql(*attributes)
       "\"#{table_name}\".*, #{named_virtual_attributes_sql(*attributes)}"
     end
-    
+
     # Cannot use `scope` with `lambda` here because `lambda` would bind
     # to the current ... scope (not in the above sense :)), in particular,
     # `self` would be `AbstractSmarterModel` in all descendants.
