@@ -59,7 +59,7 @@
                        :value_or_values => @members_filtering_values[attr],
                        :column_type     => column_types[attr]
 
-    -# end # of table
+    -# end # </table>
 
   = form_tag(nil, :method => :get) do
     = hidden_field_tags_from_param_hash params.slice(:filter, :sort)

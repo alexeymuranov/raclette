@@ -1,8 +1,8 @@
 %h1= t '.header', :title => @activity_period.unique_title
 
 %dl.show
-
   - @attributes.each do |attr|
+
     = render 'shared/lists/attribute_in_show',
              :model       => @activity_period,
              :attribute   => attr,

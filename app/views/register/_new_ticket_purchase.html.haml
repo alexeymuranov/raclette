@@ -10,8 +10,9 @@
     = f.hidden_field :date
     = f.hidden_field :member_id
     = f.select :ticket_book,
-        options_from_collection_for_select(@ticket_books,
-          :id, :tickets_number, :selected => @tickets_purchase.ticket_book.id )
+               options_from_collection_for_select(@ticket_books,
+                                                  :id, :tickets_number,
+                                                  :selected => @tickets_purchase.ticket_book.id )
   .actions
     = f.submit t('buttons.continue')
 %footer

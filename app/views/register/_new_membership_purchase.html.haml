@@ -9,13 +9,15 @@
     = f.hidden_field :event_title
     = f.hidden_field :date
     = f.hidden_field :person_id if @member
-    = hidden_field_tag "guest[first_name]", @guest.first_name if @guest
+    = hidden_field_tag("guest[first_name]", @guest.first_name) if @guest
     = f.select :membership_type,
-        options_from_collection_for_select(@membership_types,
-          :id, :title, :selected => @membership_type.id )
+               options_from_collection_for_select(@membership_types,
+                                                  :id, :title,
+                                                  :selected => @membership_type.id )
     = f.select :activity_period,
-        options_from_collection_for_select(@activity_periods,
-          :id, :title, :selected => @activity_period.id )
+                options_from_collection_for_select(@activity_periods,
+                                                   :id, :title,
+                                                   :selected => @activity_period.id )
   .actions
     = f.submit t('buttons.continue')
 %footer

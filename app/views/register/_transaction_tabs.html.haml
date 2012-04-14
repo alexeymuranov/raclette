@@ -10,7 +10,7 @@
           %li.tab.enabled.inactive>
             /TODO:use forms with hidden fields for tabs?/
             = link_to tab_title,
-                params.slice(:person_id, :guest,
-                  :event_id).merge( :action => 'compose_transaction',
-                                    :tab    => tab ),
-                :class => 'tab'
+                      params.slice(:person_id, :guest,
+                                   :event_id).merge( :action => 'compose_transaction',
+                                                     :tab    => tab ),
+                      :class => 'tab'

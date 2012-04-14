@@ -8,8 +8,6 @@ module Filtering
   module ClassMethods
     attr_reader :last_filter_values
     def filter(scoped_collection, filter_params, filtering_attributes)
-      # klass = scoped_collection.klass
-
       sfilter = SimpleFilter.new
       if filter_params
         sfilter.set_filtering_values_from_human_hash(filter_params, self)
