@@ -5,8 +5,9 @@
 -#   column_type:
 -#   value_or_values:
 
-- select_from = nil unless select_from.respond_to?(:size) &&      |
-                           (select_size = select_from.size) <= 10 |
+- unless select_from.respond_to?(:size) && (select_size = select_from.size) <= 10
+  - select_from = nil
+
 - if select_from
   - case column_type
   - when :string, :delegated_string, :virtual_string
@@ -21,12 +22,14 @@
     - css_class = 'number field'
   - when :date, :delegated_date, :virtual_date
     - css_class = 'date field'
+
   = content_tag :td, :class => css_class do
     = select_tag "filter[#{attr}]",
                  options_for_select(select_from,
                                     value_or_values),
                  :include_blank => true,
                  :form          => filter_form_id
+
 - else
   - case column_type
   - when :string, :delegated_string, :virtual_string
