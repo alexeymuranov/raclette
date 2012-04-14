@@ -34,7 +34,7 @@ form#login_form {
 
 /* Sections */
 
-body > div.container > section {
+div.container > section {
   @include border-radius(10px);
   background-color: $section-bg-color;
   padding: 10px;
@@ -61,7 +61,7 @@ body > div.container > section {
   }
 }
 
-body div.container section {
+div.container section {
   input[type="checkbox"]:not(:checked) + *.checkbox_conditional {
     display: none;
   }

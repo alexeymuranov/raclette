@@ -27,7 +27,7 @@ nav {
 
 /* Header navigation */
 
-body > div.container > header {
+div.container > header {
   nav.main_menu {
     display: inline-block;
 
@@ -162,37 +162,31 @@ nav.tabs {
 
 /* Pagination */
 
-body {
-  nav.pagination {
-    margin: 0 -5px;
-    padding: 0;
-    font-size: $body-font-size;
-    text-align: center;
+nav.pagination {
+  margin: 0 -5px;
+  padding: 0;
+  font-size: $body-font-size;
+  text-align: center;
 
-    & > span {
-      display: inline-block;
-      margin: 0 10px;
-      font-weight: bold;
+  & > span {
+    display: inline-block;
+    margin: 0 10px;
+    font-weight: bold;
 
-      a, a:visited {
-        margin: 0 -10px;
-        padding: 0 10px;
-        color: $common-navigation-link-color;
-        text-decoration: none;
-      }
-
-      a:hover {
-        @include border-radius(3px);
-        text-shadow: none;
-        color: $section-bg-color;
-        background-color: $common-navigation-link-color;
-        text-decoration: none;
-      }
+    a, a:visited {
+      margin: 0 -10px;
+      padding: 0 10px;
+      color: $common-navigation-link-color;
+      text-decoration: none;
     }
-  }
 
-  td nav.pagination {
-    text-align: center;
+    a:hover {
+      @include border-radius(3px);
+      text-shadow: none;
+      color: $section-bg-color;
+      background-color: $common-navigation-link-color;
+      text-decoration: none;
+    }
   }
 }
 

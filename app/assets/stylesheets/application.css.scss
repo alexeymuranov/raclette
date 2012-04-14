@@ -53,7 +53,7 @@ div#welcome_logo {
 
 /* Header */
 
-body > div.container > header {
+div.container > header {
   @include border-radius(10px);
   background-color: $section-bg-color;
   font-size: $main-menu-font-size;
@@ -105,7 +105,7 @@ body > div.container > header {
 
 /* Footer */
 
-body > div.container > footer {
+div.container > footer {
   @include border-radius(10px);
   background-color: $section-bg-color;
   font-size: $main-menu-font-size;
@@ -131,7 +131,7 @@ body > div.container > footer {
 
 /* Sections */
 
-body > div.container > section {
+div.container > section {
   @include border-radius(10px);
   background-color: $section-bg-color;
   padding: 10px;
@@ -158,7 +158,7 @@ body > div.container > section {
   }
 }
 
-body div.container section {
+div.container section {
   h1 {
     color: inherit;
     line-height: 1.5;

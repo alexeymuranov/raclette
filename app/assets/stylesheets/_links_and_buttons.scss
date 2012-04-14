@@ -49,7 +49,7 @@ aside#developper_links {
 
 /* In header */
 
-body > div.container > header {
+div.container > header {
   a.logout_button, a.logout_button:visited {
     @include border-radius(10px);
     display: inline-block;
@@ -75,7 +75,7 @@ body > div.container > header {
 
 /* In footer */
 
-body > div.container > footer {
+div.container > footer {
   ul {
     li {
       a, a:visited {
@@ -94,7 +94,8 @@ body > div.container > footer {
 }
 
 /* In sections */
-body div.container section {
+
+div.container section {
   *.actions {
     text-align: center;
   }
