@@ -190,6 +190,34 @@ nav.pagination {
   }
 }
 
+/* Filtering */
+
+nav.filtering_prefixes {
+  text-align: center;
+  ul {
+    li {
+      display: inline-block;
+      margin: 0 5px;
+      font-weight: bold;
+
+      a, a:visited {
+        margin: 0 -5px;
+        padding: 0 5px;
+        color: $common-navigation-link-color;
+        text-decoration: none;
+      }
+
+      a:hover {
+        @include border-radius(3px);
+        text-shadow: none;
+        color: $section-bg-color;
+        background-color: $common-navigation-link-color;
+        text-decoration: none;
+      }
+    }
+  }
+}
+
 /* Side menu */
 
 nav#side_menu {

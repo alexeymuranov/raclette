@@ -61,6 +61,8 @@
 
     -# end # </table>
 
+  = filter_by_prefix :last_name, 'A'..'Z', @members_filtering_values
+
   = form_tag(nil, :method => :get) do
     = hidden_field_tags_from_param_hash params.slice(:filter, :sort)
 
