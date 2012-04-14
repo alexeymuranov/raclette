@@ -4,10 +4,12 @@
   - attributes = @members_attributes
   - column_types = @members_column_types
   - column_headers = @members_column_headers
+
+  = filter_by_prefix :last_name, 'A'..'Z', @members_filtering_values
+
   = form_tag(nil, :id     => (filter_form_id = "member_list_filter"),
                   :method => :get) do
-    = hidden_field_tags_from_param_hash params.slice(:sort, :per_page)
-    = hidden_field_tag :query_type, 'filter', :form  => filter_form_id
+    = hidden_field_tags_from_param_hash params.merge( :query_type => 'filter' )
 
     %table{ :id    => "member_list_attributes",                             |
             :class => (@members_filtering_values.blank? ? '' : 'filtered ') |
@@ -60,8 +62,6 @@
                        :column_type     => column_types[attr]
 
     -# end # </table>
-
-  = filter_by_prefix :last_name, 'A'..'Z', @members_filtering_values
 
   = form_tag(nil, :method => :get) do
     = hidden_field_tags_from_param_hash params.slice(:filter, :sort)
