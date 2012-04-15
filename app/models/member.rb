@@ -155,9 +155,8 @@ class Member < ActiveRecord::Base
     !account_deactivated
   end
 
-  def non_sql_current_membership  # FIXME
-    raise "Method not implemented"
-    # ???
+  def current_membership
+    memberships.current.reverse_order_by_expiration_date.first
   end
 
   alias_method :'non_sql_account_active?', :non_sql_account_active

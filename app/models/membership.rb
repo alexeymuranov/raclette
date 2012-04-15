@@ -39,7 +39,10 @@ class Membership < ActiveRecord::Base
            :to => :activity_period
 
   # Scopes:
-  scope :default_order, order('activity_period_id DESC')
+  scope :reverse_order_by_expiration_date,
+        joins(:activity_period).merge(ActivityPeriod.reverse_order_by_end_date)
+  scope :default_order, :reverse_order_by_expiration_date
+  scope :current, joins(:activity_period).merge(ActivityPeriod.current)
 end
 # == Schema Information
 #

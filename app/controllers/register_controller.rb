@@ -217,7 +217,7 @@ class RegisterController < ApplicationController
 
     def render_new_ticket_purchase_properly
       @ticket_books = TicketBook.where(
-        :membership_type_id => @member.non_sql_current_membership.type.id).
+        :membership_type_id => @member.current_membership.type.id).
         order('tickets_number ASC')
       @ticket_book = @ticket_books.first
       @tickets_purchase = TicketsPurchase.new(
@@ -233,7 +233,7 @@ class RegisterController < ApplicationController
       @membership_types = MembershipType.all  # FIXME!
       @membership_type = @membership_types.first
       @activity_periods = ActivityPeriod.all  # FIXME!
-      @activity_period = @activity_periods.first
+      @activity_period = ActivityPeriod.current.reverse_order_by_end_date.first
 
       @membership_purchase = MembershipPurchase.new(
                                :purchase_date => Date.today )
