@@ -5,18 +5,18 @@
   = render 'shared/error_messages/validation', :target => @membership_purchase
 
   %dl.form_fields
-    = f.hidden_field :participant_entry_type
-    = f.hidden_field :event_title
-    = f.hidden_field :date
-    = f.hidden_field :person_id if @member
-    = hidden_field_tag("guest[first_name]", @guest.first_name) if @guest
+    - saved_param_names = [:participant_entry_type, :event_title, :date]
+    - saved_param_names << :person_id if @member
+    - saved_param_names << :guest if @guest
+    = hidden_field_tags_from_hash params.slice(saved_param_names)
+
     = f.select :membership_type,
                options_from_collection_for_select(@membership_types,
-                                                  :id, :title,
+                                                  :id, :unique_title,
                                                   :selected => @membership_type.id )
-    = f.select :activity_period,
+    = select_tag :activity_period,
                 options_from_collection_for_select(@activity_periods,
-                                                   :id, :title,
+                                                   :id, :unique_title,
                                                    :selected => @activity_period.id )
   .actions
     = f.submit t('buttons.continue')

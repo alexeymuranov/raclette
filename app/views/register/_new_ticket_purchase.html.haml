@@ -5,10 +5,11 @@
   = render 'shared/error_messages/validation', :target => @tickets_purchase
 
   %dl.form_fields
-    = f.hidden_field :participant_entry_type
-    = f.hidden_field :event_title
-    = f.hidden_field :date
-    = f.hidden_field :member_id
+    - saved_param_names = [:participant_entry_type, :event_title, :date]
+    - saved_param_names << :person_id if @member
+    - saved_param_names << :guest if @guest
+    = hidden_field_tags_from_hash params.slice(saved_param_names)
+
     = f.select :ticket_book,
                options_from_collection_for_select(@ticket_books,
                                                   :id, :tickets_number,

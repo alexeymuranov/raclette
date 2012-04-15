@@ -232,12 +232,13 @@ class RegisterController < ApplicationController
     def render_new_membership_purchase_properly
       @membership_types = MembershipType.all  # FIXME!
       @membership_type = @membership_types.first
-      @activity_periods = ActivityPeriods.all  # FIXME!
+      @activity_periods = ActivityPeriod.all  # FIXME!
       @activity_period = @activity_periods.first
 
       @membership_purchase = MembershipPurchase.new(
-        :membership_type => @membership_type,
-        :activity_period => @activity_period )
+                               :purchase_date => Date.today )
+      @membership_purchase.validated_by_user = current_user.username if
+        current_user.a_person?
       @membership_purchase.member_id = @member.person_id if @member
       @title = t('register.compose_transaction.title')
 
