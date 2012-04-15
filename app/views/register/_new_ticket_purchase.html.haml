@@ -15,6 +15,6 @@
                                                   :id, :tickets_number,
                                                   :selected => @tickets_purchase.ticket_book.id )
   .actions
-    = f.submit t('buttons.continue')
+    = f.submit t('buttons.continue'), :class => 'easy'
 %footer
   = link_to t('register.choose_person.title'), :action => :choose_person

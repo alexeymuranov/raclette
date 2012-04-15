@@ -12,6 +12,22 @@ input[type="number"], select.number {
   text-align: right;
 }
 
+input[type="submit"].easy {
+  display: inline-block;
+  border: none;
+  @include appearance(button);
+  @include border-radius(10px);
+  padding: 20px;
+  font-size: $tabs-font-size;
+  font-weight: bold;
+  color: $common-navigation-link-color;
+
+  &:hover {
+    color: $section-bg-color;
+    background-color: $common-navigation-link-color;
+  }
+}
+
 /* Log-in form */
 
 form#login_form {

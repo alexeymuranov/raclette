@@ -15,6 +15,6 @@
                                                   :id, :non_sql_long_title,
                                                   :selected => @event_entry.event_id )
   .actions
-    = f.submit t('buttons.continue')
+    = f.submit t('buttons.continue'), :class => 'easy'
 %footer
   = link_to t('register.choose_person.title'), :action => :choose_person

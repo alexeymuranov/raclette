@@ -19,6 +19,6 @@
                                                    :id, :unique_title,
                                                    :selected => @activity_period.id )
   .actions
-    = f.submit t('buttons.continue')
+    = f.submit t('buttons.continue'), :class => 'easy'
 %footer
   = link_to t('register.choose_person.title'), :action => :choose_person
