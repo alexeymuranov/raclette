@@ -19,8 +19,8 @@ body {
   # font-style: normal;
   # font-variant: normal;
   # font-family: 'andale mono', 'lucida console', monospace;
-  font-family: "Helvetica Narrow", Helvetica, sans-serif;
   # font-family: sans-serif;
+  font-family: $body-font-family;
   line-height: 1.5;
 }
 

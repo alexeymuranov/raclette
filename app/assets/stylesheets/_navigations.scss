@@ -122,7 +122,6 @@ div.container > header {
 
 nav.tabs {
   display: block;
-  font-size: $tabs-font-size;
 
   ul {
     margin: 0;
@@ -131,18 +130,29 @@ nav.tabs {
     li {
       display: inline-block;
       font-weight: bold;
+      line-height: 2;
+      font-size: $tabs-font-size;
     }
 
     li.inactive {
-      a, a:visited, button {
+      a.tab, a:visited.tab, button.tab {
+        display: inline-block;
         margin: 0;
         padding: 5px;
         color: $common-navigation-link-color;
-        font-weight: bold;
         text-decoration: none;
+        font-size: inherit;
+        font-weight: inherit;
+        line-height: inherit;
+        vertical-align: baseline;
       }
 
-      a:hover, button:hover {
+      button.tab {
+        border: none;
+        font-family: $body-font-family;
+      }
+
+      a:hover.tab, button:hover.tab {
         text-shadow: none;
         color: $section-bg-color;
         background-color: $common-navigation-link-color;
@@ -151,10 +161,15 @@ nav.tabs {
     }
 
     li.active {
-      span {
+      span.tab {
         display: inline-block;
+        margin: 0;
         padding: 5px;
         background-color: $table-head-bg-color;
+        font-size: inherit;
+        font-weight: inherit;
+        line-height: inherit;
+        vertical-align: baseline;
       }
     }
   }
