@@ -18,7 +18,7 @@ module FormsMarkupHelper
     flat_hash
   end
 
-  def hidden_field_tags_from_param_hash(hash, options = {})
+  def hidden_field_tags_from_hash(hash, options = {})
     hidden_field_tags = []
     spread_param_hash(hash).each do |name, value|
       if value.is_a?(Array)

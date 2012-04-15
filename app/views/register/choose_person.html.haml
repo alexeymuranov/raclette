@@ -9,7 +9,7 @@
 
   = form_tag(nil, :id     => (filter_form_id = "member_list_filter"),
                   :method => :get) do
-    = hidden_field_tags_from_param_hash params.merge( :query_type => 'filter' )
+    = hidden_field_tags_from_hash params.merge( :query_type => 'filter' )
 
     %table{ :id    => "member_list_attributes",                             |
             :class => (@members_filtering_values.blank? ? '' : 'filtered ') |
@@ -64,7 +64,7 @@
     -# end # </table>
 
   = form_tag(nil, :method => :get) do
-    = hidden_field_tags_from_param_hash params.slice(:filter, :sort)
+    = hidden_field_tags_from_hash params.slice(:filter, :sort)
 
     = label_tag :per_page, t('field_labels.per_page')
     = select_tag :per_page,

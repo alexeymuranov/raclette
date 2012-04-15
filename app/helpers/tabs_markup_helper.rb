@@ -7,7 +7,7 @@ module TabsMarkupHelper # WIP
     content_tag(:nav, options) do
       form_tag(nil, :method => :get ) do
         saved_params = params.except(:tab).merge( :request_type => 'activate_tab' )
-        hidden_field_tags_from_param_hash(saved_params) <<
+        hidden_field_tags_from_hash(saved_params) <<
           content_tag(:ul) do
             all_tabs.inject ''.html_safe do |html_output, tab|
               tab_title = t(:title, :scope => [controller_name, tab])

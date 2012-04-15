@@ -6,7 +6,7 @@
              :target => '_blank',
              :style  => 'display:inline' ) do
 
-  = hidden_field_tags_from_param_hash params.slice(:filter, :sort, :per_page)
+  = hidden_field_tags_from_hash params.slice(:filter, :sort, :per_page)
 
   %span.actions
     = hidden_field_tag :query_type, 'render_alternative_format'
@@ -21,7 +21,7 @@
              :target => '_blank',
              :style  => 'display:inline' ) do
 
-  = hidden_field_tags_from_param_hash params.slice(:filter, :sort, :per_page)
+  = hidden_field_tags_from_hash params.slice(:filter, :sort, :per_page)
 
   %span.actions
     = hidden_field_tag :query_type, 'render_alternative_format'
