@@ -134,7 +134,7 @@ nav.tabs {
     }
 
     li.inactive {
-      a, a:visited {
+      a, a:visited, button {
         margin: 0;
         padding: 5px;
         color: $common-navigation-link-color;
@@ -142,7 +142,7 @@ nav.tabs {
         text-decoration: none;
       }
 
-      a:hover {
+      a:hover, button:hover {
         text-shadow: none;
         color: $section-bg-color;
         background-color: $common-navigation-link-color;
