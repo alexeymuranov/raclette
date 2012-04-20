@@ -104,6 +104,33 @@ class Event < ActiveRecord::Base
   scope :default_order, order('date DESC, end_time DESC, start_time DESC')
 
   # Public instance methods
+
+  def initialize(*attributes)
+    if attributes[0].is_a?(WeeklyEvent)
+      super()
+      weekly_event = attributes[0]
+      event_date = attributes[1]
+      if event_date
+        if event_date.wday != weekly_event.week_day
+          raise 'The given date does not match the week day '\
+                'of the given weekly event'
+        else
+          date = event_date
+        end
+      end
+      self.weekly = true
+      [ :event_type, :lesson,
+        :start_time, :end_time, :duration_minutes,
+        :location, :address,
+        :lesson_supervision, :entry_fee_tickets
+      ].each do |attr_name|
+        send "#{attr_name}=", weekly_event.public_send(attr_name)
+      end
+    else
+      super # NOTE: equivalent to super(*attributes)
+    end
+  end
+
   # Non-SQL virtual attributes
   def non_sql_long_title
     if lesson_supervision && !lesson_supervision.unique_names.blank?

@@ -1,6 +1,6 @@
 # Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
 
-one:
+practica_de_jeudi:
   event_type: Pratica
   title: "Pratica de jeudi"
   lesson: false

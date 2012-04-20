@@ -1,9 +1,19 @@
 require 'test_helper'
 
 class EventTest < ActiveSupport::TestCase
-  # Replace this with your real tests.
-  test "the truth" do
-    assert true
+
+  test "should be able to initialize from a weekly event" do
+    weekly_event = weekly_events(:practica_de_jeudi)
+    event = Event.new(weekly_event)
+    assert event.weekly?
+    [ :event_type, :lesson,
+      :start_time, :end_time, :duration_minutes,
+      :location, :address,
+      :lesson_supervision, :entry_fee_tickets
+    ].each do |attr_name|
+      assert_equal event.public_send(attr_name),
+                   weekly_event.public_send(attr_name)
+    end
   end
 end
 # == Schema Information
