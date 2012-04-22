@@ -1,9 +1,21 @@
 require 'test_helper'
 
 class MemberTest < ActiveSupport::TestCase
-  # Replace this with your real tests.
-  test "the truth" do
-    assert true
+
+  test "scopes must scope" do
+    current_members_count = 0
+    Member.all.each do |member|
+      member.memberships.each do |membership|
+        begin_date = membership.activity_period.begin_date
+        end_date = membership.activity_period.end_date
+        today = Date.today
+        if today >= begin_date && today <= end_date
+          current_members_count += 1
+          break
+        end
+      end
+    end
+    assert_equal Member.current.count, current_members_count
   end
 end
 # == Schema Information

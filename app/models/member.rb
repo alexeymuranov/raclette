@@ -126,6 +126,8 @@ class Member < ActiveRecord::Base
   # Scopes
   scope :default_order, joins(:person).merge(Person.default_order)
   scope :account_active, where(:account_deactivated => false)
+  # scope :current, joins(:memberships => :activity_period).merge(Membership.current).uniq  # Experiment. Can be removed?
+  scope :current, joins(:memberships).merge(Membership.current).uniq  # FIXME!
 
   # Public instance methods
   # Non-SQL virtual attributes
