@@ -237,8 +237,9 @@ fr:
     overview:
       title: "Contrôle"
       header: "Écran de contrôle"
-      active_members_count: "Adhérents actifs (comptes actifs) :"
-      all_members_count: "Tous adhérents (dans la base de données) :"
+      current_members_count: "Adhérents à jour :"
+      active_members_count: "Adhérents avec comptes actifs :"
+      all_members_count: "Tous comptes d'adhérents (dans la base de données) :"
 
   register:
     choose_person:

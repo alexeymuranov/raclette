@@ -237,8 +237,9 @@ en:
     overview:
       title: "Monitor"
       header: "Monitor"
-      active_members_count: "Active members (accounts active):"
-      all_members_count: "All members (in the database):"
+      current_members_count: "Current members:"
+      active_members_count: "Active member accounts (accounts not deactivated):"
+      all_members_count: "All member accounts (in the database):"
 
   register:
     choose_person:

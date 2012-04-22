@@ -1,7 +1,18 @@
 %h1= t '.header'
-%p
-  = t('.active_members_count')
-  %strong= @active_members_count
-%p
-  = t('.all_members_count')
-  = @members_count
+%table
+  %tbody
+    %tr
+      %th{ :scope => 'row' }<
+        = t('.current_members_count')
+      %td.number<
+        %strong= Member.current.count
+    %tr
+      %th{ :scope => 'row' }<
+        = t('.active_members_count')
+      %td.number<
+        = Member.account_active.count
+    %tr
+      %th{ :scope => 'row' }<
+        = t('.all_members_count')
+      %td.number<
+        %i= Member.count
