@@ -4,11 +4,11 @@ require 'app_active_record_extensions/filtering'
 require 'app_active_record_extensions/sorting'
 
 class Member < ActiveRecord::Base
+  self.primary_key = 'person_id'
+
   include Filtering
   include Sorting
   self.default_sorting_column = :ordered_full_name
-
-  self.primary_key = 'person_id'
 
   include AbstractPerson
 
@@ -105,21 +105,11 @@ class Member < ActiveRecord::Base
 
   # Public class methods
 
-  # @@people_table_name = Person.table_name
-
   def self.sql_for_attributes  # Extends the one from AbstractSmarterModel
     unless @sql_for_attributes
       super
-
-      # [ :last_name, :first_name, :name_title, :nickname_or_other, :email,
-      #   :full_name, :ordered_full_name, :formatted_email ]\
-      #     .each do |attr|
-      #   @sql_for_attributes[attr] = Person.sql_for_attributes[attr]
-      # end
-
-      tickets_count_sql = "(#{super[:payed_tickets_count]} + "\
-                           "#{super[:free_tickets_count]})"
-
+      tickets_count_sql =
+        "(#{super[:payed_tickets_count]} + #{super[:free_tickets_count]})"
       @sql_for_attributes.merge!(:tickets_count => tickets_count_sql)
     end
     @sql_for_attributes
@@ -128,18 +118,6 @@ class Member < ActiveRecord::Base
   def self.attribute_db_types  # Extends the one from AbstractSmarterModel
     unless @attribute_db_types
       super
-
-      # [ :last_name, :first_name, :name_title, :nickname_or_other, :email]\
-      #     .each do |attr|
-      #   @attribute_db_types[attr] = ('delegated_' +
-      #                                Person.columns_hash[attr.to_s].type.to_s)\
-      #                               .to_sym
-      # end
-
-      # [ :full_name, :ordered_full_name, :formatted_email ].each do |attr|
-      #   @attribute_db_types[attr] = :virtual_string
-      # end
-
       @attribute_db_types.merge!(:tickets_count => :virtual_integer)
     end
     @attribute_db_types

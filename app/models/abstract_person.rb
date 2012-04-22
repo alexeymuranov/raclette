@@ -39,8 +39,8 @@ module AbstractPerson  # NOTE:WIP
         people_table_name = Person.table_name
 
         [ :last_name, :first_name, :name_title, :nickname_or_other, :email,
-          :full_name, :ordered_full_name, :formatted_email ]\
-            .each do |attr|
+          :full_name, :ordered_full_name, :formatted_email
+        ].each do |attr|
           @sql_for_attributes[attr] = Person.sql_for_attributes[attr]
         end
       end
@@ -51,14 +51,14 @@ module AbstractPerson  # NOTE:WIP
       unless @attribute_db_types
         super
 
-        [ :last_name, :first_name, :name_title, :nickname_or_other, :email]\
-            .each do |attr|
-          @attribute_db_types[attr] = ('delegated_' +
-                                       Person.columns_hash[attr.to_s].type.to_s)\
-                                      .to_sym
+        [ :last_name, :first_name, :name_title, :nickname_or_other, :email
+        ].each do |attr|
+          @attribute_db_types[attr] =
+            "delegated_#{Person.columns_hash[attr.to_s].type.to_s}".to_sym
         end
 
-        [ :full_name, :ordered_full_name, :formatted_email ].each do |attr|
+        [ :full_name, :ordered_full_name, :formatted_email
+        ].each do |attr|
           @attribute_db_types[attr] = :virtual_string
         end
       end

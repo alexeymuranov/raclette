@@ -12,7 +12,7 @@ module AbstractSmarterModel  # NOTE:WIP
       unless @sql_for_attributes
         @sql_for_attributes = Hash.new { |hash, key|
           if (key.is_a?(Symbol)) && (column = self.columns_hash[key.to_s])
-            hash[key] = "\"#{self.table_name}\".\"#{key.to_s}\""
+            hash[key] = %("#{self.table_name}"."#{key.to_s}")
           else
             nil
           end
@@ -43,12 +43,12 @@ module AbstractSmarterModel  # NOTE:WIP
     def named_virtual_attributes_sql(*attributes)
       attributes.delete_if { |attr| columns_hash[attr.to_s] }
       attributes.map{ |attr|
-        "#{sql_for_attributes[attr]} AS #{attr.to_s}"
+        %(#{sql_for_attributes[attr]} AS #{attr.to_s})
       }.join(', ')
     end
 
     def native_and_named_attributes_sql(*attributes)
-      "\"#{table_name}\".*, #{named_virtual_attributes_sql(*attributes)}"
+      %("#{table_name}".*, #{named_virtual_attributes_sql(*attributes)})
     end
 
     # Cannot use `scope` with `lambda` here because `lambda` would bind
