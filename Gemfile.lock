@@ -47,7 +47,7 @@ GIT
       thor (~> 0.14.6)
 
 GEM
-  remote: http://rubygems.org/
+  remote: https://rubygems.org/
   specs:
     annotate (2.4.0)
     ansi (1.4.2)
