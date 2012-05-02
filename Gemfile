@@ -22,6 +22,7 @@ gem 'kaminari'  # pagination
 
 gem 'param_protected'  # for filtering params in the controllers
 gem 'strong_parameters'  # a simpler alternative for mass assignement security
+gem 'focused_controller'  # alternative way to define and use controllers
 
 # Gems used only for assets and not required
 # in production environments by default.
