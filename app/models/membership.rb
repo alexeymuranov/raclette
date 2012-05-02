@@ -41,10 +41,6 @@ class Membership < ActiveRecord::Base
            :to => :activity_period
 
   # Scopes:
-  scope :reverse_order_by_expiration_date,
-        joins(:activity_period).
-          merge(ActivityPeriod.reverse_order_by_end_date)
-  scope :default_order, reverse_order_by_expiration_date
   scope :with_type,
         joins('INNER JOIN membership_types ON '\
               'membership_types.id = memberships.membership_type_id')
@@ -54,6 +50,9 @@ class Membership < ActiveRecord::Base
   # The following does not work when used with `merge` from another model
   # (see GitHub rails Issue #5494):
   # scope :with_activity_period, joins(:activity_period)
+  scope :reverse_order_by_expiration_date,
+        with_activity_period.merge(ActivityPeriod.reverse_order_by_end_date)
+  scope :default_order, reverse_order_by_expiration_date
   scope :current, with_activity_period.merge(ActivityPeriod.current)
 
   # default_scope with_type.with_activity_period # FIXME
