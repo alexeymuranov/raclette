@@ -103,6 +103,12 @@ class Member < ActiveRecord::Base
 
   validates :person_id, :uniqueness => true
 
+  # Scopes
+  scope :default_order, joins(:person).merge(Person.default_order)
+  scope :account_active, where(:account_deactivated => false)
+  # scope :current, joins(:memberships => :activity_period).merge(Membership.current).uniq  # Experiment. Can be removed?
+  scope :current, joins(:memberships).merge(Membership.current).uniq  # FIXME!
+
   # Public class methods
 
   def self.sql_for_attributes  # Extends the one from AbstractSmarterModel
@@ -123,12 +129,6 @@ class Member < ActiveRecord::Base
     @attribute_db_types
   end
 
-  # Scopes
-  scope :default_order, joins(:person).merge(Person.default_order)
-  scope :account_active, where(:account_deactivated => false)
-  # scope :current, joins(:memberships => :activity_period).merge(Membership.current).uniq  # Experiment. Can be removed?
-  scope :current, joins(:memberships).merge(Membership.current).uniq  # FIXME!
-
   # Public instance methods
   # Non-SQL virtual attributes
   def non_sql_account_active
@@ -139,6 +139,7 @@ class Member < ActiveRecord::Base
     memberships.current.reverse_order_by_expiration_date.first
   end
 
+  # Aliases
   alias_method :'non_sql_account_active?', :non_sql_account_active
 
 end
