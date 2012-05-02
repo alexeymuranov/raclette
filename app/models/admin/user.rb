@@ -57,7 +57,6 @@ class Admin::User < ActiveRecord::Base
 
   # Callbacks:
   before_create :hash_password_with_salt
-
   before_update :hash_new_password_with_salt_unless_nil
 
   # Scopes:

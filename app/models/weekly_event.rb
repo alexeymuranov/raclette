@@ -2,10 +2,12 @@
 
 require 'app_active_record_extensions/filtering'
 require 'app_active_record_extensions/sorting'
+require 'app_parsers/time_duration_parser'
 
 class WeeklyEvent < ActiveRecord::Base
   include Filtering
   include Sorting
+  include TimeDurationParser
 
   include AbstractSmarterModel
 
@@ -37,7 +39,8 @@ class WeeklyEvent < ActiveRecord::Base
                     :allow_nil => true
 
   validates :start_time, :end_time,
-                :length    => { :maximum => 8 },
+                :length    => { :maximum => 8 }, # may allow to use AM/PM
+                :format    => /\A\d{1,2}[:h]\d{2}?\z/,
                 :allow_nil => true
 
   validates :duration_minutes, :inclusion => 5..(24*60),
@@ -55,8 +58,20 @@ class WeeklyEvent < ActiveRecord::Base
   validates :start_on, :end_on,
                 :uniqueness => { :scope => :title }
 
+  # Callbacks:
+  before_save :calculate_duration
+
   # Scopes:
   scope :default_order, order('end_on DESC, start_on DESC')
+
+  # Private instance methods
+  private
+    def calculate_duration
+      self.duration_minutes = parse_time_duration_to_minutes(end_time) -
+                              parse_time_duration_to_minutes(start_time)
+      self.duration_minutes += 24*60 if duration_minutes < 0
+    end
+
 end
 # == Schema Information
 #

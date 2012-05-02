@@ -2,11 +2,13 @@
 
 require 'app_active_record_extensions/filtering'
 require 'app_active_record_extensions/sorting'
+require 'app_parsers/time_duration_parser'
 
 class Event < ActiveRecord::Base
   include Filtering
   include Sorting
   self.default_sorting_column = :date
+  include TimeDurationParser
 
   include AbstractSmarterModel
 
@@ -19,7 +21,7 @@ class Event < ActiveRecord::Base
   has_many :event_entries, :dependent  => :nullify,
                            :inverse_of => :event
 
-  has_many :cashiers, :class_name => 'EventCashier',
+  has_many :cashiers, :class_name => :EventCashier,
                       :dependent  => :nullify,
                       :inverse_of => :event
 
@@ -44,7 +46,8 @@ class Event < ActiveRecord::Base
                 :allow_nil => true
 
   validates :start_time, :end_time,
-                :length    => { :maximum => 8 },
+                :length    => { :maximum => 8 }, # may allow to use AM/PM
+                :format    => /\A\d{1,2}[:h]\d{2}?\z/,
                 :allow_nil => true
 
   validates :duration_minutes, :inclusion => 5..(24*60),
@@ -75,6 +78,12 @@ class Event < ActiveRecord::Base
   validates :description, :length    => { :maximum => 255 },
                           :allow_nil => true
 
+  # Callbacks:
+  before_save :calculate_duration
+
+  # Scopes:
+  scope :default_order, order('date DESC, end_time DESC, start_time DESC')
+
   # Public class methods
 
   def self.sql_for_attributes  # Extends the one from AbstractSmarterModel
@@ -99,9 +108,6 @@ class Event < ActiveRecord::Base
     end
     @attribute_db_types
   end
-
-  # Scopes:
-  scope :default_order, order('date DESC, end_time DESC, start_time DESC')
 
   # Public instance methods
 
@@ -139,6 +145,15 @@ class Event < ActiveRecord::Base
       "#{date} : #{title}"
     end
   end
+
+  # Private instance methods
+  private
+    def calculate_duration
+      self.duration_minutes = parse_time_duration_to_minutes(end_time) -
+                              parse_time_duration_to_minutes(start_time)
+      self.duration_minutes += 24*60 if duration_minutes < 0
+    end
+
 end
 # == Schema Information
 #
