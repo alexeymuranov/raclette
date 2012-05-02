@@ -171,9 +171,10 @@ class MembersController < SecretaryController
     set_events_column_types
     set_events_column_headers
 
-    @memberships = @member.memberships.joins(:type).joins(:activity_period)
-    @memberships_attributes = [:type_title, :start_date, :duration_months, :end_date]
-    set_memberships_column_types
+    @memberships_attributes = [:title, :duration_months, :end_date]
+    @memberships = @member.memberships.with_type.with_activity_period.
+      with_virtual_attributes(*@memberships_attributes)
+    @memberships_column_types = Membership.attribute_db_types
     set_memberships_column_headers
 
     @title = t('members.show.title', :name => @member.non_sql_full_name)
@@ -317,20 +318,13 @@ class MembersController < SecretaryController
       end
     end
 
-    def set_memberships_column_types
-      @memberships_column_types = {}
-      Membership.columns_hash.each do |key, value|
-        @events_column_types[key.to_sym] = value.type
-      end
-    end
-
     def set_memberships_column_headers
       @memberships_column_headers = {}
-      @memberships_column_types.each do |attr, type|
+      @memberships_attributes.each do |attr|
         human_name = Membership.human_attribute_name(attr)
 
-        case type
-        when :boolean
+        case @memberships_column_types[attr]
+        when  :boolean, :delegated_boolean, :virtual_boolean
           @memberships_column_headers[attr] = I18n.t('formats.attribute_name?',
                                                      :attribute => human_name)
         else

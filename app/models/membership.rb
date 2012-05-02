@@ -2,6 +2,8 @@
 
 class Membership < ActiveRecord::Base
 
+  include AbstractSmarterModel
+
   attr_readonly :id, :membership_type_id, :activity_period_id, :initial_price
 
   # Associations:
@@ -61,7 +63,20 @@ class Membership < ActiveRecord::Base
   def self.sql_for_attributes  # Extends the one from AbstractSmarterModel
     unless @sql_for_attributes
       super
-      @sql_for_attributes.merge!(:type_title => "membership_types.unique_title")
+
+      [:start_date, :duration_months, :end_date].each do |attr|
+        @sql_for_attributes[attr] = ActivityPeriod.sql_for_attributes[attr]
+      end
+
+      @sql_for_attributes[:type_title] =
+        MembershipType.sql_for_attributes[:unique_title]
+
+      title_sql = "(#{@sql_for_attributes[:type_title]} || "\
+                  "', ' || "\
+                  "#{@sql_for_attributes[:start_date]} || "\
+                  "' -- ' || "\
+                  "#{@sql_for_attributes[:end_date]})"
+      @sql_for_attributes[:title] = title_sql
     end
     @sql_for_attributes
   end
@@ -69,15 +84,19 @@ class Membership < ActiveRecord::Base
   def self.attribute_db_types  # Extends the one from AbstractSmarterModel
     unless @attribute_db_types
       super
-      @attribute_db_types.merge!(:type_title => :string)
+      @attribute_db_types.merge!( :start_date      => :delegated_date,
+                                  :duration_months => :delegated_integer,
+                                  :end_date        => :delegated_date,
+                                  :type_title      => :delegated_string,
+                                  :title           => :virtual_string )
     end
     @attribute_db_types
   end
 
   # Public instance methods
-  def type_title
-    type.unique_title
-  end
+  # def type_title
+  #   type.unique_title
+  # end
 end
 # == Schema Information
 #
