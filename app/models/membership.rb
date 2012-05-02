@@ -43,6 +43,9 @@ class Membership < ActiveRecord::Base
         joins(:activity_period).
           merge(ActivityPeriod.reverse_order_by_end_date)
   scope :default_order, reverse_order_by_expiration_date
+  scope :with_type,
+        joins('INNER JOIN membership_types ON '\
+              'membership_types.id = memberships.membership_type_id')
   scope :with_activity_period,
         joins('INNER JOIN activity_periods ON '\
               'activity_periods.id = memberships.activity_period_id')
@@ -50,6 +53,31 @@ class Membership < ActiveRecord::Base
   # (see GitHub rails Issue #5494):
   # scope :with_activity_period, joins(:activity_period)
   scope :current, with_activity_period.merge(ActivityPeriod.current)
+
+  # default_scope with_type.with_activity_period # FIXME
+
+  # Public class methods
+
+  def self.sql_for_attributes  # Extends the one from AbstractSmarterModel
+    unless @sql_for_attributes
+      super
+      @sql_for_attributes.merge!(:type_title => "membership_types.unique_title")
+    end
+    @sql_for_attributes
+  end
+
+  def self.attribute_db_types  # Extends the one from AbstractSmarterModel
+    unless @attribute_db_types
+      super
+      @attribute_db_types.merge!(:type_title => :string)
+    end
+    @attribute_db_types
+  end
+
+  # Public instance methods
+  def type_title
+    type.unique_title
+  end
 end
 # == Schema Information
 #

@@ -21,6 +21,16 @@
            :column_headers            => @events_column_headers,
            :html_table_id             => :attended_events) unless @attended_events.empty?
 
+%section
+  %h2= Member.human_attribute_name(:memberships)
+
+  = render('shared/tables/simple_index',
+           :models                    => @memberships,
+           :attributes                => @memberships_attributes,
+           :column_types              => @memberships_column_types,
+           :column_headers            => @memberships_column_headers,
+           :html_table_id             => :memberships) unless @memberships.empty?
+
 %footer
   = link_to edit_pictogram(3) + ' ' + t('members.edit.header',
                                         :name => @member.full_name),

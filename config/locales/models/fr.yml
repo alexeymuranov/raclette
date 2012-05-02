@@ -106,6 +106,7 @@ fr:
         # Virtual attributes:
         account_active: "Compte actif"
         tickets_count: "Nombre des tickets"
+        memberships: "Adhésions"
       membership_type: &membership_type_attributes
         unique_title: "Titre"
         active: "Active"

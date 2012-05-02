@@ -323,6 +323,12 @@ module Accessors
                      # :tickets_count_limit,
                      # :members_count
                    # )
+
+    include ControllerAware
+
+    def self.controller_class
+      MembershipsController
+    end
   end
 
   class MembershipPurchase < ::MembershipPurchase

@@ -2,6 +2,14 @@
 
 class MembershipsController < ManagerController
 
+  class Membership < Membership
+    belongs_to :activity_period, :class_name => :ActivityPeriod,
+                                 :inverse_of => :memberships
+    belongs_to :type, :foreign_key => :membership_type_id,
+                      :class_name  => :MembershipType,
+                      :inverse_of  => :memberships
+  end
+
   class MembershipType < MembershipType
     self.all_sorting_columns = [:username,
                                 :full_name,

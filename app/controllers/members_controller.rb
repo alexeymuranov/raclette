@@ -7,6 +7,9 @@ class MembersController < SecretaryController
                                :source     => :event,
                                :class_name => :Event
 
+    has_many :memberships, :through    => :member_memberships,
+                           :class_name => :Membership
+
     self.all_sorting_columns = [:ordered_full_name,
                                 :email,
                                 :account_deactivated,
@@ -14,11 +17,30 @@ class MembersController < SecretaryController
     self.default_sorting_column = :ordered_full_name
   end
 
+  class Membership < Membership
+  end
+
   class Event < Event
     self.all_sorting_columns = [:title, :event_type,
                                 :date,
                                 :start_time]
     self.default_sorting_column = :date
+  end
+
+  class MembershipType < MembershipType
+    self.all_sorting_columns = [:username,
+                                :full_name,
+                                :account_deactivated,
+                                :admin,
+                                :manager,
+                                :secretary,
+                                :a_person]
+    self.default_sorting_column = :username
+  end
+
+  class ActivityPeriod < self::ActivityPeriod
+    self.all_sorting_columns = [:ip, :description]
+    self.default_sorting_column = :ip
   end
 
   param_accessible /.+/
@@ -148,6 +170,11 @@ class MembersController < SecretaryController
     @attended_events = @member.attended_events
     set_events_column_types
     set_events_column_headers
+
+    @memberships = @member.memberships.joins(:type).joins(:activity_period)
+    @memberships_attributes = [:type_title, :start_date, :duration_months, :end_date]
+    set_memberships_column_types
+    set_memberships_column_headers
 
     @title = t('members.show.title', :name => @member.non_sql_full_name)
   end
@@ -286,6 +313,29 @@ class MembersController < SecretaryController
         else
           @events_column_headers[attr] = I18n.t('formats.attribute_name:',
                                                 :attribute => human_name)
+        end
+      end
+    end
+
+    def set_memberships_column_types
+      @memberships_column_types = {}
+      Membership.columns_hash.each do |key, value|
+        @events_column_types[key.to_sym] = value.type
+      end
+    end
+
+    def set_memberships_column_headers
+      @memberships_column_headers = {}
+      @memberships_column_types.each do |attr, type|
+        human_name = Membership.human_attribute_name(attr)
+
+        case type
+        when :boolean
+          @memberships_column_headers[attr] = I18n.t('formats.attribute_name?',
+                                                     :attribute => human_name)
+        else
+          @memberships_column_headers[attr] = I18n.t('formats.attribute_name:',
+                                                     :attribute => human_name)
         end
       end
     end
