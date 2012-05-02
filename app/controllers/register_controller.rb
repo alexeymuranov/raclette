@@ -3,9 +3,9 @@
 class RegisterController < ApplicationController
 
   class Member < Member
-    self.all_sorting_columns = [:ordered_full_name,
-                                :email,
-                                :employed_from]
+    self.all_sorting_columns = [ :ordered_full_name,
+                                 :email,
+                                 :employed_from ]
     self.default_sorting_column = :ordered_full_name
   end
 

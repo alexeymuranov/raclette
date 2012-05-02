@@ -3,9 +3,9 @@
 class InstructorsController < ManagerController
 
   class Instructor < Instructor
-    self.all_sorting_columns = [:ordered_full_name,
-                                :email,
-                                :employed_from]
+    self.all_sorting_columns = [ :ordered_full_name,
+                                 :email,
+                                 :employed_from ]
     self.default_sorting_column = :ordered_full_name
   end
 
@@ -24,14 +24,14 @@ class InstructorsController < ManagerController
 
     case request.format
     when Mime::HTML
-      @attributes = [:ordered_full_name,
-                     :email,
-                     :employed_from]
+      @attributes = [ :ordered_full_name,
+                      :email,
+                      :employed_from ]
     when Mime::XML, Mime::CSV, Mime::MS_EXCEL_2003_XML
-      @attributes = [:last_name,
-                     :first_name,
-                     :email,
-                     :employed_from]
+      @attributes = [ :last_name,
+                      :first_name,
+                      :email,
+                      :employed_from ]
     end
 
     @column_types = Instructor.attribute_db_types
@@ -102,14 +102,14 @@ class InstructorsController < ManagerController
   end
 
   def show
-    @attributes = [:person_id,
-                   :name_title,
-                   :first_name,
-                   :last_name,
-                   :nickname_or_other,
-                   :email,
-                   :full_name,
-                   :employed_from]
+    @attributes = [ :person_id,
+                    :name_title,
+                    :first_name,
+                    :last_name,
+                    :nickname_or_other,
+                    :email,
+                    :full_name,
+                    :employed_from ]
 
     @instructor = Instructor.joins(:person).with_virtual_attributes(*@attributes)\
                     .find(params[:id])

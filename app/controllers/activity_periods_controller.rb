@@ -3,11 +3,11 @@
 class ActivityPeriodsController < ManagerController
 
   class ActivityPeriod < ActivityPeriod
-    self.all_sorting_columns = [:unique_title,
-                                :start_date,
-                                :duration_months,
-                                :end_date,
-                                :over]
+    self.all_sorting_columns = [ :unique_title,
+                                 :start_date,
+                                 :duration_months,
+                                 :end_date,
+                                 :over ]
     self.default_sorting_column = :start_date
   end
 
@@ -24,18 +24,18 @@ class ActivityPeriodsController < ManagerController
 
     case request.format
     when Mime::HTML
-      @attributes = [:unique_title,
-                     :start_date,
-                     :duration_months,
-                     :end_date,
-                     :over]
+      @attributes = [ :unique_title,
+                      :start_date,
+                      :duration_months,
+                      :end_date,
+                      :over ]
     when Mime::XML, Mime::CSV, Mime::MS_EXCEL_2003_XML
-      @attributes = [:unique_title,
-                     :start_date,
-                     :duration_months,
-                     :end_date,
-                     :over,
-                     :description]
+      @attributes = [ :unique_title,
+                      :start_date,
+                      :duration_months,
+                      :end_date,
+                      :over,
+                      :description ]
     end
 
     set_column_types
@@ -87,12 +87,12 @@ class ActivityPeriodsController < ManagerController
   end
 
   def show
-    @attributes = [:unique_title,
-                   :start_date,
-                   :duration_months,
-                   :end_date,
-                   :over,
-                   :description]
+    @attributes = [ :unique_title,
+                    :start_date,
+                    :duration_months,
+                    :end_date,
+                    :over,
+                    :description ]
 
     @activity_period = ActivityPeriod.find(params[:id])
 
@@ -157,12 +157,12 @@ class ActivityPeriodsController < ManagerController
   private
 
     def render_new_properly
-      @attributes = [:unique_title,
-                     :start_date,
-                     :duration_months,
-                     :end_date,
-                     :over,
-                     :description]
+      @attributes = [ :unique_title,
+                      :start_date,
+                      :duration_months,
+                      :end_date,
+                      :over,
+                      :description ]
       @column_types = ActivityPeriod.attribute_db_types
 
       @title = t('activity_periods.new.title')
@@ -171,12 +171,12 @@ class ActivityPeriodsController < ManagerController
     end
 
     def render_edit_properly
-      @attributes = [:unique_title,
-                     :start_date,
-                     :duration_months,
-                     :end_date,
-                     :over,
-                     :description]
+      @attributes = [ :unique_title,
+                      :start_date,
+                      :duration_months,
+                      :end_date,
+                      :over,
+                      :description ]
       @column_types = ActivityPeriod.attribute_db_types
 
       @title =  t('activity_periods.edit.title',

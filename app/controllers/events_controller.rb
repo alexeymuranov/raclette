@@ -3,10 +3,10 @@
 class EventsController < SecretaryController
 
   class Event < Event
-    self.all_sorting_columns = [:title, :event_type,
-                                :date,
-                                :start_time,
-                                :supervisors]
+    self.all_sorting_columns = [ :title, :event_type,
+                                 :date,
+                                 :start_time,
+                                 :supervisors ]
     self.default_sorting_column = :date
   end
 
@@ -23,21 +23,21 @@ class EventsController < SecretaryController
 
     case request.format
     when Mime::HTML
-      @attributes = [:title, :event_type,
-                     :date,
-                     :start_time,
-                     :supervisors]
+      @attributes = [ :title, :event_type,
+                      :date,
+                      :start_time,
+                      :supervisors ]
     when Mime::XML, Mime::CSV, Mime::MS_EXCEL_2003_XML
-      @attributes = [:title, :event_type,
-                     :date,
-                     :start_time,
-                     :duration_minutes,
-                     :supervisors,
-                     :location,
-                     :entry_fee_tickets,
-                     :entries_count,
-                     :tickets_collected,
-                     :entry_fees_collected]
+      @attributes = [ :title, :event_type,
+                      :date,
+                      :start_time,
+                      :duration_minutes,
+                      :supervisors,
+                      :location,
+                      :entry_fee_tickets,
+                      :entries_count,
+                      :tickets_collected,
+                      :entry_fees_collected ]
     end
 
     set_column_types
@@ -90,18 +90,18 @@ class EventsController < SecretaryController
   end
 
   def show
-    @attributes = [:title, :event_type,
-                   :lesson,
-                   :date,
-                   :start_time,
-                   :duration_minutes,
-                   :supervisors,
-                   :location,
-                   :weekly,
-                   :entry_fee_tickets,
-                   :entries_count,
-                   :tickets_collected,
-                   :entry_fees_collected]
+    @attributes = [ :title, :event_type,
+                    :lesson,
+                    :date,
+                    :start_time,
+                    :duration_minutes,
+                    :supervisors,
+                    :location,
+                    :weekly,
+                    :entry_fee_tickets,
+                    :entries_count,
+                    :tickets_collected,
+                    :entry_fees_collected ]
 
     @event = Event.find(params[:id])
 
@@ -167,17 +167,17 @@ class EventsController < SecretaryController
   private
 
     def render_new_properly
-      @attributes = [:title, :event_type,
-                     :date,
-                     :start_time,
-                     :duration_minutes,
-                     :supervisors,
-                     :location,
-                     :weekly,
-                     :entry_fee_tickets,
-                     :entries_count,
-                     :tickets_collected,
-                     :entry_fees_collected]
+      @attributes = [ :title, :event_type,
+                      :date,
+                      :start_time,
+                      :duration_minutes,
+                      :supervisors,
+                      :location,
+                      :weekly,
+                      :entry_fee_tickets,
+                      :entries_count,
+                      :tickets_collected,
+                      :entry_fees_collected ]
       @column_types = Event.attribute_db_types
 
       @title = t('events.new.title')
@@ -186,17 +186,17 @@ class EventsController < SecretaryController
     end
 
     def render_edit_properly
-      @attributes = [:title, :event_type,
-                     :date,
-                     :start_time,
-                     :duration_minutes,
-                     :supervisors,
-                     :location,
-                     :weekly,
-                     :entry_fee_tickets,
-                     :entries_count,
-                     :tickets_collected,
-                     :entry_fees_collected]
+      @attributes = [ :title, :event_type,
+                      :date,
+                      :start_time,
+                      :duration_minutes,
+                      :supervisors,
+                      :location,
+                      :weekly,
+                      :entry_fee_tickets,
+                      :entries_count,
+                      :tickets_collected,
+                      :entry_fees_collected ]
       @column_types = Event.attribute_db_types
 
       @title =  t('events.edit.title', :title => @event.title)

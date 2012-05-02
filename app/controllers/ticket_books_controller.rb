@@ -3,8 +3,7 @@
 class TicketBooksController < ManagerController
 
   class TicketBook < TicketBook
-    self.all_sorting_columns = [:tickets_number,
-                                :price]
+    self.all_sorting_columns = [:tickets_number, :price]
     self.default_sorting_column = :start_date
   end
 
@@ -21,11 +20,9 @@ class TicketBooksController < ManagerController
 
     case request.format
     when Mime::HTML
-      @attributes = [:tickets_number,
-                     :price]
+      @attributes = [:tickets_number, :price]
     when Mime::XML, Mime::CSV, Mime::MS_EXCEL_2003_XML
-      @attributes = [:tickets_number,
-                     :price]
+      @attributes = [:tickets_number, :price]
     end
 
     set_column_types
@@ -78,8 +75,7 @@ class TicketBooksController < ManagerController
   end
 
   def show
-    @attributes = [:tickets_number,
-                   :price]
+    @attributes = [:tickets_number, :price]
 
     @ticket_book = TicketBook.find(params[:id])
 
@@ -144,8 +140,7 @@ class TicketBooksController < ManagerController
   private
 
     def render_new_properly
-      @attributes = [:tickets_number,
-                     :price]
+      @attributes = [:tickets_number, :price]
       @column_types = TicketBook.attribute_db_types
 
       @title = t('ticket_books.new.title')
@@ -154,8 +149,7 @@ class TicketBooksController < ManagerController
     end
 
     def render_edit_properly
-      @attributes = [:tickets_number,
-                     :price]
+      @attributes = [:tickets_number, :price]
       @column_types = TicketBook.attribute_db_types
 
       @title =  t('ticket_books.edit.title',

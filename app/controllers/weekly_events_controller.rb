@@ -3,19 +3,19 @@
 class WeeklyEventsController < ManagerController
 
   class WeeklyEvent < WeeklyEvent
-    self.all_sorting_columns = [:title,
-                                :event_type,
-                                :lesson,
-                                :week_day,
-                                :start_time,
-                                :duration_minutes,
-                                :end_time,
-                                :start_on,
-                                :end_on,
-                                :location,
-                                :entry_fee_tickets,
-                                :over,
-                                :description]
+    self.all_sorting_columns = [ :title,
+                                 :event_type,
+                                 :lesson,
+                                 :week_day,
+                                 :start_time,
+                                 :duration_minutes,
+                                 :end_time,
+                                 :start_on,
+                                 :end_on,
+                                 :location,
+                                 :entry_fee_tickets,
+                                 :over,
+                                 :description ]
     self.default_sorting_column = :end_on
   end
 
@@ -32,29 +32,29 @@ class WeeklyEventsController < ManagerController
 
     case request.format
     when Mime::HTML
-      @attributes = [:title,
-                     :event_type,
-                     :lesson,
-                     :week_day,
-                     :start_time,
-                     :duration_minutes,
-                     :location,
-                     :entry_fee_tickets,
-                     :over]
+      @attributes = [ :title,
+                      :event_type,
+                      :lesson,
+                      :week_day,
+                      :start_time,
+                      :duration_minutes,
+                      :location,
+                      :entry_fee_tickets,
+                      :over ]
     when Mime::XML, Mime::CSV, Mime::MS_EXCEL_2003_XML
-      @attributes = [:title,
-                     :event_type,
-                     :lesson,
-                     :week_day,
-                     :start_time,
-                     :duration_minutes,
-                     :end_time,
-                     :start_on,
-                     :end_on,
-                     :location,
-                     :entry_fee_tickets,
-                     :over,
-                     :description]
+      @attributes = [ :title,
+                      :event_type,
+                      :lesson,
+                      :week_day,
+                      :start_time,
+                      :duration_minutes,
+                      :end_time,
+                      :start_on,
+                      :end_on,
+                      :location,
+                      :entry_fee_tickets,
+                      :over,
+                      :description ]
     end
 
     set_column_types
@@ -107,19 +107,19 @@ class WeeklyEventsController < ManagerController
   end
 
   def show
-    @attributes = [:title,
-                   :event_type,
-                   :lesson,
-                   :week_day,
-                   :start_time,
-                   :duration_minutes,
-                   :end_time,
-                   :start_on,
-                   :end_on,
-                   :location,
-                   :entry_fee_tickets,
-                   :over,
-                   :description]
+    @attributes = [ :title,
+                    :event_type,
+                    :lesson,
+                    :week_day,
+                    :start_time,
+                    :duration_minutes,
+                    :end_time,
+                    :start_on,
+                    :end_on,
+                    :location,
+                    :entry_fee_tickets,
+                    :over,
+                    :description ]
 
     @weekly_event = WeeklyEvent.find(params[:id])
 
@@ -186,19 +186,19 @@ class WeeklyEventsController < ManagerController
   private
 
     def render_new_properly
-      @attributes = [:title,
-                     :event_type,
-                     :lesson,
-                     :week_day,
-                     :start_time,
-                     :duration_minutes,
-                     :end_time,
-                     :start_on,
-                     :end_on,
-                     :location,
-                     :entry_fee_tickets,
-                     :over,
-                     :description]
+      @attributes = [ :title,
+                      :event_type,
+                      :lesson,
+                      :week_day,
+                      :start_time,
+                      :duration_minutes,
+                      :end_time,
+                      :start_on,
+                      :end_on,
+                      :location,
+                      :entry_fee_tickets,
+                      :over,
+                      :description ]
       @column_types = WeeklyEvent.attribute_db_types
 
       @title = t('weekly_events.new.title')
@@ -207,19 +207,19 @@ class WeeklyEventsController < ManagerController
     end
 
     def render_edit_properly
-      @attributes = [:title,
-                     :event_type,
-                     :lesson,
-                     :week_day,
-                     :start_time,
-                     :duration_minutes,
-                     :end_time,
-                     :start_on,
-                     :end_on,
-                     :location,
-                     :entry_fee_tickets,
-                     :over,
-                     :description]
+      @attributes = [ :title,
+                      :event_type,
+                      :lesson,
+                      :week_day,
+                      :start_time,
+                      :duration_minutes,
+                      :end_time,
+                      :start_on,
+                      :end_on,
+                      :location,
+                      :entry_fee_tickets,
+                      :over,
+                      :description ]
       @column_types = WeeklyEvent.attribute_db_types
 
       @title =  t('weekly_events.edit.title', :title => @weekly_event.title)

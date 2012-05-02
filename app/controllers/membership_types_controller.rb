@@ -3,12 +3,12 @@
 class MembershipTypesController < ManagerController
 
   class MembershipType < MembershipType
-    self.all_sorting_columns = [:unique_title,
-                                :active,
-                                :reduced,
-                                :unlimited,
-                                :duration_months,
-                                :description]
+    self.all_sorting_columns = [ :unique_title,
+                                 :active,
+                                 :reduced,
+                                 :unlimited,
+                                 :duration_months,
+                                 :description ]
     self.default_sorting_column = :duration_months
   end
 
@@ -25,18 +25,18 @@ class MembershipTypesController < ManagerController
 
     case request.format
     when Mime::HTML
-      @attributes = [:unique_title,
-                     :active,
-                     :reduced,
-                     :unlimited,
-                     :duration_months]
+      @attributes = [ :unique_title,
+                      :active,
+                      :reduced,
+                      :unlimited,
+                      :duration_months ]
     when Mime::XML, Mime::CSV, Mime::MS_EXCEL_2003_XML
-      @attributes = [:unique_title,
-                     :active,
-                     :reduced,
-                     :unlimited,
-                     :duration_months,
-                     :description]
+      @attributes = [ :unique_title,
+                      :active,
+                      :reduced,
+                      :unlimited,
+                      :duration_months,
+                      :description ]
     end
 
     set_column_types
@@ -89,12 +89,12 @@ class MembershipTypesController < ManagerController
   end
 
   def show
-    @attributes = [:unique_title,
-                   :active,
-                   :reduced,
-                   :unlimited,
-                   :duration_months,
-                   :description]
+    @attributes = [ :unique_title,
+                    :active,
+                    :reduced,
+                    :unlimited,
+                    :duration_months,
+                    :description ]
 
     @membership_type = MembershipType.find(params[:id])
 
@@ -159,12 +159,12 @@ class MembershipTypesController < ManagerController
   private
 
     def render_new_properly
-      @attributes = [:unique_title,
-                     :active,
-                     :reduced,
-                     :unlimited,
-                     :duration_months,
-                     :description]
+      @attributes = [ :unique_title,
+                      :active,
+                      :reduced,
+                      :unlimited,
+                      :duration_months,
+                      :description ]
       @column_types = MembershipType.attribute_db_types
 
       @title = t('membership_types.new.title')
@@ -173,12 +173,12 @@ class MembershipTypesController < ManagerController
     end
 
     def render_edit_properly
-      @attributes = [:unique_title,
-                     :active,
-                     :reduced,
-                     :unlimited,
-                     :duration_months,
-                     :description]
+      @attributes = [ :unique_title,
+                      :active,
+                      :reduced,
+                      :unlimited,
+                      :duration_months,
+                      :description ]
       @column_types = MembershipType.attribute_db_types
 
       @title =  t('membership_types.edit.title',

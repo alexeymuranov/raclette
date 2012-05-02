@@ -10,10 +10,10 @@ class MembersController < SecretaryController
     has_many :memberships, :through    => :member_memberships,
                            :class_name => :Membership
 
-    self.all_sorting_columns = [:ordered_full_name,
-                                :email,
-                                :account_deactivated,
-                                :tickets_count]
+    self.all_sorting_columns = [ :ordered_full_name,
+                                 :email,
+                                 :account_deactivated,
+                                 :tickets_count ]
     self.default_sorting_column = :ordered_full_name
   end
 
@@ -21,20 +21,20 @@ class MembersController < SecretaryController
   end
 
   class Event < Event
-    self.all_sorting_columns = [:title, :event_type,
-                                :date,
-                                :start_time]
+    self.all_sorting_columns = [ :title, :event_type,
+                                 :date,
+                                 :start_time ]
     self.default_sorting_column = :date
   end
 
   class MembershipType < MembershipType
-    self.all_sorting_columns = [:username,
-                                :full_name,
-                                :account_deactivated,
-                                :admin,
-                                :manager,
-                                :secretary,
-                                :a_person]
+    self.all_sorting_columns = [ :username,
+                                 :full_name,
+                                 :account_deactivated,
+                                 :admin,
+                                 :manager,
+                                 :secretary,
+                                 :a_person ]
     self.default_sorting_column = :username
   end
 
@@ -66,16 +66,16 @@ class MembersController < SecretaryController
 
     case request.format
     when Mime::HTML
-      @attributes = [:ordered_full_name,
-                     :email,
-                     :account_deactivated,
-                     :tickets_count]
+      @attributes = [ :ordered_full_name,
+                      :email,
+                      :account_deactivated,
+                      :tickets_count ]
     when Mime::XML, Mime::CSV, Mime::MS_EXCEL_2003_XML
-      @attributes = [:last_name,
-                     :first_name,
-                     :nickname_or_other,
-                     :email,
-                     :tickets_count]
+      @attributes = [ :last_name,
+                      :first_name,
+                      :nickname_or_other,
+                      :email,
+                      :tickets_count ]
     end
 
     @column_types = Member.attribute_db_types
@@ -146,17 +146,17 @@ class MembersController < SecretaryController
   end
 
   def show
-    @attributes = [:person_id,
-                   :name_title,
-                   :first_name,
-                   :last_name,
-                   :nickname_or_other,
-                   :email,
-                   :payed_tickets_count,
-                   :free_tickets_count,
-                   :account_deactivated,
-                   :been_member_by,
-                   :full_name]
+    @attributes = [ :person_id,
+                    :name_title,
+                    :first_name,
+                    :last_name,
+                    :nickname_or_other,
+                    :email,
+                    :payed_tickets_count,
+                    :free_tickets_count,
+                    :account_deactivated,
+                    :been_member_by,
+                    :full_name ]
 
     @member = Member.joins(:person).with_virtual_attributes(*@attributes)\
                     .find(params[:id])
@@ -164,9 +164,9 @@ class MembersController < SecretaryController
     @column_types = Member.attribute_db_types
     # set_column_headers
 
-    @attended_events_attributes = [:title, :event_type,
-                                   :date,
-                                   :start_time]
+    @attended_events_attributes = [ :title, :event_type,
+                                    :date,
+                                    :start_time ]
     @attended_events = @member.attended_events
     set_events_column_types
     set_events_column_headers
