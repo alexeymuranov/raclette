@@ -83,9 +83,12 @@ class RegisterController < ApplicationController
   end
 
   def create_ticket_purchase  # FIXME
-    tickets_purchase_attributes = params[:tickets_purchase] || {}
+    @tickets_purchase = TicketsPurchase.new(params[:tickets_purchase])
 
-    @tickets_purchase = TicketsPurchase.new(tickets_purchase_attributes)
+    @tickets_purchase.tickets_number =
+      @tickets_purchase.ticket_book.tickets_number
+    @tickets_purchase.purchase_date = Date.today
+
     if @tickets_purchase.save
       flash[:success] = t('flash.actions.create.success',
                           :resource_name => TicketsPurchase.model_name.human )
@@ -102,10 +105,22 @@ class RegisterController < ApplicationController
   end
 
   def create_membership_purchase  # FIXME
-    membership_purchase_attributes = params[:event_entry] || {}
+    purchase_attributes = params[:membership_purchase]
+    purchase_attributes[:membership_id] = Membership.
+      find_or_create_by_membership_type_id_and_activity_period_id(
+        purchase_attributes[:membership_type_id].to_i,
+        purchase_attributes[:activity_period_id].to_i).id
+    purchase_attributes.except!(:membership_type_id, :activity_period_id)
 
-    @membership_purchase = MembershipPurchase.new(event_entry_attributes)
-    if @event_entry.save
+    @membership_purchase = MembershipPurchase.new(purchase_attributes)
+
+    @membership_purchase.membership_type =
+      @membership_purchase.membership.type.unique_title
+    @membership_purchase.membership_expiration_date =
+      @membership_purchase.membership.end_date
+    @membership_purchase.purchase_date = Date.today
+
+    if @membership_purchase.save
       flash[:success] = t('flash.actions.create.success',
                           :resource_name => MembershipPurchase.model_name.human )
       redirect_to :action => :choose_person
@@ -181,6 +196,11 @@ class RegisterController < ApplicationController
                        "(#{t('activemodel.models.guest')})"
       end
 
+      saved_param_names = [:participant_entry_type, :event_title, :date]
+      saved_param_names << :person_id if @member
+      saved_param_names << :guest if @guest
+      @saved_params = params.slice(saved_param_names)
+
       @title = t('register.compose_transaction.title')
 
       case @tab
@@ -209,9 +229,7 @@ class RegisterController < ApplicationController
       else
         @event_entry.participant_entry_type = 'GuestEntry'
       end
-      @title = t('register.compose_transaction.title')
 
-      @tab = 'new_entry'
       render 'compose_transaction'
     end
 
@@ -223,26 +241,21 @@ class RegisterController < ApplicationController
       @tickets_purchase = TicketsPurchase.new(
         :member      => @member,
         :ticket_book => @ticket_book )
-      @title = t('register.compose_transaction.title')
 
-      @tab = 'new_ticket_purchase'
       render 'compose_transaction'
     end
 
-    def render_new_membership_purchase_properly
+    def render_new_membership_purchase_properly  # FIXME: allow guests to purchase memberships
       @membership_types = MembershipType.all  # FIXME!
       @membership_type = @membership_types.first
-      @activity_periods = ActivityPeriod.all  # FIXME!
+      @activity_periods = ActivityPeriod.not_over  # FIXME!
       @activity_period = ActivityPeriod.current.reverse_order_by_end_date.first
 
-      @membership_purchase = MembershipPurchase.new(
-                               :purchase_date => Date.today )
+      @membership_purchase = MembershipPurchase.new
       @membership_purchase.validated_by_user = current_user.username if
         current_user.a_person?
       @membership_purchase.member_id = @member.person_id if @member
-      @title = t('register.compose_transaction.title')
 
-      @tab = 'new_membership_purchase'
       render 'compose_transaction'
     end
 

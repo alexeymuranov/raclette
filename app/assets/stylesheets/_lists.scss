@@ -16,15 +16,13 @@ ul.compact {
   }
 }
 
-dl.show, dl.form_fields {
+dl.form_fields, dl.show {
   display: table;
   border: solid 1px $table-border-color;
 
   width: auto;
   margin: 5px auto;
-}
 
-dl.form_fields, dl.show {
   p.item, div.item {
     display: table-row;
 

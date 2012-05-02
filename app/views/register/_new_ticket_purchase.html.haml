@@ -4,16 +4,25 @@
 
   = render 'shared/error_messages/validation', :target => @tickets_purchase
 
-  %dl.form_fields
-    - saved_param_names = [:participant_entry_type, :event_title, :date]
-    - saved_param_names << :person_id if @member
-    - saved_param_names << :guest if @guest
-    = hidden_field_tags_from_hash params.slice(saved_param_names)
+  = hidden_field_tags_from_hash :saved_params => @saved_params
 
-    = f.select :ticket_book,
-               options_from_collection_for_select(@ticket_books,
-                                                  :id, :tickets_number,
-                                                  :selected => @tickets_purchase.ticket_book.id )
+  - [:member_id].each do |attr|
+    = f.hidden_field attr unless @tickets_purchase.public_send(attr).nil?
+
+  -# %dl.form_fields
+  -#   %dt
+  -#   %dd
+  -#     = f.select :ticket_book_id,
+  -#         options_from_collection_for_select(@ticket_books,
+  -#           :id, :tickets_number,
+  -#           :selected => @tickets_purchase.ticket_book.id )
+
+  .form_fields
+    = f.select :ticket_book_id,
+        options_from_collection_for_select(@ticket_books,
+          :id, :tickets_number,
+          :selected => @tickets_purchase.ticket_book.id )
+
   .actions
     = f.submit t('buttons.continue'), :class => 'easy'
 %footer

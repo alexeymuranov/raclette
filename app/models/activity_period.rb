@@ -43,6 +43,10 @@ class ActivityPeriod < ActiveRecord::Base
     where("activity_periods.start_date <= ? AND "\
           "activity_periods.end_date >= ?", today, today)
   }
+  scope :not_over, lambda {
+    today = Date.today
+    where("activity_periods.end_date >= ?", today)
+  }
 end
 # == Schema Information
 #

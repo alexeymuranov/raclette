@@ -4,16 +4,26 @@
 
   = render 'shared/error_messages/validation', :target => @event_entry
 
-  %dl.form_fields
-    = f.hidden_field :participant_entry_type
-    = f.hidden_field :event_title
-    = f.hidden_field :date
-    = f.hidden_field :person_id if @member
-    = hidden_field_tag("guest[first_name]", @guest.first_name) if @guest
+  = hidden_field_tags_from_hash :saved_params => @saved_params
+
+  - [:participant_entry_type, :event_title, :date, :person_id].each do |attr|
+    = f.hidden_field attr unless @event_entry.public_send(attr).nil?
+  = hidden_field_tag('guest[first_name]', @guest.first_name) if @guest
+
+  -# %dl.form_fields
+  -#   %dt
+  -#   %dd
+  -#     = f.select :event_id,
+  -#         options_from_collection_for_select(@events,
+  -#           :id, :non_sql_long_title,
+  -#           :selected => @event_entry.event_id )
+
+  .form_fields
     = f.select :event_id,
-               options_from_collection_for_select(@events,
-                                                  :id, :non_sql_long_title,
-                                                  :selected => @event_entry.event_id )
+        options_from_collection_for_select(@events,
+          :id, :non_sql_long_title,
+          :selected => @event_entry.event_id )
+
   .actions
     = f.submit t('buttons.continue'), :class => 'easy'
 %footer

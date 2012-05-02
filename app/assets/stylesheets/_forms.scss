@@ -28,6 +28,29 @@ input[type="submit"].easy {
   }
 }
 
+input[type="checkbox"]:not(:checked) + *.checkbox_conditional {
+  display: none;
+}
+
+fieldset {
+  @include border-radius(5px);
+  margin: 0.5em 0;
+  padding: 10px;
+
+  legend {
+    margin: 0 10px;
+    padding: 0px 5px;
+  }
+}
+
+.form_fields {
+  display: table;
+  border: solid 1px $table-border-color;
+
+  width: auto;
+  margin: 5px auto;
+}
+
 /* Log-in form */
 
 form#login_form {
@@ -44,52 +67,6 @@ form#login_form {
     legend {
       display: inline;
       text-align: center;
-    }
-  }
-}
-
-/* Sections */
-
-div.container > section {
-  @include border-radius(10px);
-  background-color: $section-bg-color;
-  padding: 10px;
-
-  section {
-    @include border-radius(5px);
-    margin: 5px 0px;
-
-    section {
-      margin: 5px;
-    }
-  }
-
-  section {
-    border: solid 5px $alt-section-bg-color;
-
-    section {
-      border: solid 3px $alt-section-bg-color;
-
-      section {
-        border: solid 1px $alt-section-bg-color;
-      }
-    }
-  }
-}
-
-div.container section {
-  input[type="checkbox"]:not(:checked) + *.checkbox_conditional {
-    display: none;
-  }
-
-  fieldset {
-    @include border-radius(5px);
-    margin: 0.5em 0;
-    padding: 10px;
-
-    legend {
-      margin: 0 10px;
-      padding: 0px 5px;
     }
   }
 }
