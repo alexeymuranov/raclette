@@ -36,8 +36,6 @@ module AbstractPerson  # NOTE:WIP
       unless @sql_for_attributes
         super
 
-        people_table_name = Person.table_name
-
         [ :last_name, :first_name, :name_title, :nickname_or_other, :email,
           :full_name, :ordered_full_name, :formatted_email
         ].each do |attr|
