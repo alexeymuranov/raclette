@@ -239,7 +239,7 @@ fr:
       header: "Écran de contrôle"
       current_members_count: "Adhérents à jour :"
       active_members_count: "Adhérents avec comptes actifs :"
-      all_members_count: "Tous comptes d'adhérents (dans la base de données) :"
+      all_members_count: "Tous comptes d'adhérents :"
 
   register:
     choose_person:
