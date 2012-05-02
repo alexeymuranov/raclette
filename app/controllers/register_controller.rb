@@ -186,10 +186,10 @@ class RegisterController < ApplicationController
       case @tab
       when 'new_entry'
         render_new_entry_properly
-      when 'new_membership_purchase'
-        render_new_membership_purchase_properly
       when 'new_ticket_purchase'
         render_new_ticket_purchase_properly
+      when 'new_membership_purchase'
+        render_new_membership_purchase_properly
       end
     end
 
