@@ -10,6 +10,9 @@ ul.compact {
   li {
     display: inline-block;
     width: 33%;
+    a {
+      width: 98%;
+    }
   }
 }
 
