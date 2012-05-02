@@ -19,7 +19,7 @@
            :attributes                => @attended_events_attributes,
            :column_types              => @events_column_types,
            :column_headers            => @events_column_headers,
-           :html_table_id             => :safe_ips) unless @attended_events.empty?
+           :html_table_id             => :attended_events) unless @attended_events.empty?
 
 %footer
   = link_to edit_pictogram(3) + ' ' + t('members.edit.header',
