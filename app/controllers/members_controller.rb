@@ -155,11 +155,12 @@ class MembersController < SecretaryController
                     :payed_tickets_count,
                     :free_tickets_count,
                     :account_deactivated,
-                    :been_member_by,
-                    :full_name ]
+                    :been_member_by ]
+    @extra_attributes = [:full_name]
 
-    @member = Member.joins(:person).with_virtual_attributes(*@attributes)\
-                    .find(params[:id])
+    @member = Member.joins(:person).
+                     with_virtual_attributes(*@attributes, *@extra_attributes).
+                     find(params[:id])
 
     @column_types = Member.attribute_db_types
     # set_column_headers

@@ -133,6 +133,12 @@ en:
         current_price: "Current price"
         tickets_count_limit: "Tickets limit"
         members_count: "Members"
+        # Delegated attributes:
+        start_date: "Begin"
+        end_date: "End"
+        duration_months: "Duration"
+        # Virtual attributes:
+        title: "Title"
       weekly_event: &weekly_event_attributes
         event_type: "Type"
         title: "Title"

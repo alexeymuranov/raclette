@@ -96,7 +96,7 @@ fr:
         latest_membership_obtained_on: "Adhésion obtenue"
         latest_membership_expiration_date: "Adhésion expire"
         latest_membership_type: "Type d'adhésion"
-        latest_membership_duration_months: "Term d'adhésion"
+        latest_membership_duration_months: "Durée d'adhésion"
         last_card_printed_on: "Carte imprimée"
         last_card_delivered: "Carte remise"
         last_payment_date: "Dernier payement"
@@ -112,7 +112,7 @@ fr:
         active: "Active"
         reduced: "Réduite"
         unlimited: "Illimitée"
-        duration_months: "Term"
+        duration_months: "Durée"
         description: "Description"
       ticket_book:
         tickets_number: "Tickets"
@@ -120,7 +120,7 @@ fr:
       activity_period: &activity_period_attributes
         unique_title: "Titre"
         start_date: "Début"
-        duration_months: "Term"
+        duration_months: "Durée"
         end_date: "Fin"
         over: "Finie"
         description: "Description"
@@ -133,6 +133,12 @@ fr:
         current_price: "Prix actuel"
         tickets_count_limit: "Limite de tickets"
         members_count: "Adhérents"
+        # Delegated attributes:
+        start_date: "Début"
+        end_date: "Fin"
+        duration_months: "Durée"
+        # Virtual attributes:
+        title: "Titre"
       weekly_event: &weekly_event_attributes
         event_type: "Type"
         title: "Titre"
