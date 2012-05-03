@@ -9,9 +9,9 @@ ul.compact {
 
   li {
     display: inline-block;
-    width: 33%;
+    width: 33%; // FIXME: stupid length specification
     a {
-      width: 98%;
+      width: 98%; // FIXME: stupid length specification
     }
   }
 }

@@ -131,6 +131,12 @@ div.container section {
     }
   }
 
+  h2, h3 {
+    a.resource {
+      width: 99%; // FIXME: stupid length specification
+    }
+  }
+
   a.display, a.display:visited {
     color: $view-link-color;
 
