@@ -5,7 +5,7 @@ module FormsMarkupHelper
   # Originally based on http://marklunds.com/articles/one/314
   def spread_param_hash(hash, key_prefix = '')
     format_key = key_prefix.blank? ? lambda { |k| k.to_s } :
-                                     lambda { |k| key_prefix + "[#{k}]" }
+                                     lambda { |k| "#{ key_prefix }[#{ k }]" }
     flat_hash = {}
     hash.each do |k, v|
       k = format_key.call(k)
@@ -56,8 +56,8 @@ module FormsMarkupHelper
       klass = object.class
 
       # add a '*' after the field label if the field is required
-      if klass.validators_on(method).map(&:class).include?\
-           ActiveModel::Validations::PresenceValidator
+      if klass.validators_on(method).map(&:class).
+           include?(ActiveModel::Validations::PresenceValidator)
         marks_arr << '*'
         css_classes_arr << 'required'
       end
@@ -68,14 +68,14 @@ module FormsMarkupHelper
         css_classes_arr << 'readonly'
       end
 
-      options[:class] = css_classes_arr.join(' ') unless css_classes_arr == []
+      options[:class] = css_classes_arr.join(' ') unless css_classes_arr.empty?
       label_itself = super(method, content, options, &block)
 
-      if marks_arr == []
+      if marks_arr.empty?
         label_itself
       else
-        label_marks = %Q{<span class="label_marks">#{marks_arr.join}</span>}\
-                        .html_safe
+        label_marks = %(<span class="label_marks">#{ marks_arr.join }</span>).
+                        html_safe
         label_itself + label_marks
       end
     end

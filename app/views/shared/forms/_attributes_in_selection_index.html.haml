@@ -3,7 +3,7 @@
 -#   attributes:
 -#   column_types:
 
-%th{:scope => "row"}
+%th{ :scope => 'row' }
   = label_tag id_prefix + "_#{model.id}", model.public_send(attributes[0])
 
 - attributes[1..-1].each do |attr|

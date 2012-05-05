@@ -23,7 +23,7 @@ dl.form_fields, dl.show {
   width: auto;
   margin: 5px auto;
 
-  p.item, div.item {
+  p.item, div.item, p.dl_item, div.dl_item {
     display: table-row;
 
     &.caption {

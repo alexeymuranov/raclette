@@ -102,7 +102,7 @@ class Event < ActiveRecord::Base
     unless @attribute_db_types
       super
 
-      [ :long_title ].each do |attr|
+      [:long_title].each do |attr|
         @attribute_db_types[attr] = :virtual_string
       end
     end

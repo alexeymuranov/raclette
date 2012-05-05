@@ -63,6 +63,9 @@
         - when :datetime, :delegated_datetime, :virtual_datetime
           -# input_html_options[:type] = 'datetime-local'
           = form_builder.datetime_select attribute, input_html_options
+        - when :time, :delegated_time, :virtual_time
+          -# input_html_options[:type] = 'time'
+          = form_builder.time_select attribute, input_html_options
         - when :text, :delegated_text, :virtual_text
           = form_builder.text_area attribute, input_html_options
         - else

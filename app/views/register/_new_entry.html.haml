@@ -11,12 +11,13 @@
   = hidden_field_tag('guest[first_name]', @guest.first_name) if @guest
 
   -# %dl.form_fields
-  -#   %dt
-  -#   %dd
-  -#     = f.select :event_id,
-  -#         options_from_collection_for_select(@events,
-  -#           :id, :non_sql_long_title,
-  -#           :selected => @event_entry.event_id )
+  -#   .dl_item.field
+  -#     %dt
+  -#     %dd
+  -#       = f.select :event_id,
+  -#           options_from_collection_for_select(@events,
+  -#             :id, :non_sql_long_title,
+  -#             :selected => @event_entry.event_id)
 
   .form_fields
     = f.select :event_id,

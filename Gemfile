@@ -57,7 +57,7 @@ end
 
 group :test do
   # Pretty printed test output:
-  gem 'turn',     :require => false  # disable for now, to get used to the usual test output
+  gem 'turn',     :require => false
   # gem 'spork'                        # speeds up running tests
 end
 

@@ -100,7 +100,7 @@ class ActivityPeriodsController < ManagerController
     # set_column_headers
 
     @title = t('activity_periods.show.title',
-               :title => @activity_period.unique_title )
+               :title => @activity_period.unique_title)
   end
 
   def new

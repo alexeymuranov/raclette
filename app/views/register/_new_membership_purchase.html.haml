@@ -10,28 +10,30 @@
     = f.hidden_field attr unless @membership_purchase.public_send(attr).nil?
 
   -# %dl.form_fields
-  -#   %dt
-  -#   %dd
-  -#     = f.select :membership_type,
-  -#         options_from_collection_for_select(@membership_types,
-  -#           :id, :unique_title,
-  -#           :selected => @membership_type.id )
-  -#   %dt
-  -#   %dd
-  -#     = select_tag :activity_period,
-  -#         options_from_collection_for_select(@activity_periods,
-  -#           :id, :unique_title,
-  -#           :selected => @activity_period.id )
+  -#   .dl_item.field
+  -#     %dt
+  -#     %dd
+  -#       = f.select :membership_type,
+  -#           options_from_collection_for_select(@membership_types,
+  -#             :id, :unique_title,
+  -#             :selected => @membership_type.id)
+  -#   .dl_item.field
+  -#     %dt
+  -#     %dd
+  -#       = select_tag :activity_period,
+  -#           options_from_collection_for_select(@activity_periods,
+  -#             :id, :unique_title,
+  -#             :selected => @activity_period.id)
 
   .form_fields
     = select_tag 'membership_purchase[membership_type_id]',
         options_from_collection_for_select(@membership_types,
           :id, :unique_title,
-          :selected => @membership_type.id )
+          :selected => @membership_type.id)
     = select_tag 'membership_purchase[activity_period_id]',
         options_from_collection_for_select(@activity_periods,
           :id, :unique_title,
-          :selected => @activity_period.id )
+          :selected => @activity_period.id)
 
   .actions
     = f.submit t('buttons.continue'), :class => 'easy'
