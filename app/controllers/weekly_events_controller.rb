@@ -139,11 +139,10 @@ class WeeklyEventsController < ManagerController
   end
 
   def create
-    @weekly_event = WeeklyEvent.new
-    params[:weekly_event][:lesson] = ( %w(Cours Atelier Initiation).include?(
-                                  params[:weekly_event][:weekly_event_type]) ?
-                                true : false )
-    @weekly_event.assign_attributes(params[:weekly_event])
+    attributes = params[:weekly_event]
+    attributes[:lesson] =
+      %w[Cours Atelier Initiation].include?(attributes[:weekly_event_type])
+    @weekly_event = WeeklyEvent.new(attributes)
 
     if @weekly_event.save
       flash[:success] = t('flash.weekly_events.create.success',
