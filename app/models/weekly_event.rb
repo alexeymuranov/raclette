@@ -63,6 +63,19 @@ class WeeklyEvent < ActiveRecord::Base
 
   # Scopes:
   scope :default_order, order('end_on DESC, start_on DESC')
+  scope :not_over, where(:over => false)
+
+  # Public instance methods
+
+  # Non-SQL virtual attributes
+  def non_sql_long_title
+    long_title = "#{ I18n.t('date.day_names')[week_day].capitalize }"\
+                 " : #{ title }"
+    if lesson_supervision && !lesson_supervision.unique_names.blank?
+      long_title << " (#{ lesson_supervision.unique_names })"
+    end
+    long_title
+  end
 
   # Private instance methods
   private

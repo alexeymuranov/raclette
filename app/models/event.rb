@@ -125,7 +125,7 @@ class Event < ActiveRecord::Base
         end
       end
       self.weekly = true
-      [ :event_type, :lesson,
+      [ :event_type, :title, :lesson,
         :start_time, :end_time, :duration_minutes,
         :location, :address,
         :lesson_supervision, :entry_fee_tickets
@@ -139,11 +139,11 @@ class Event < ActiveRecord::Base
 
   # Non-SQL virtual attributes
   def non_sql_long_title
+    long_title = "#{ date } : #{ title }"
     if lesson_supervision && !lesson_supervision.unique_names.blank?
-      "#{date} : #{title} (#{lesson_supervision.unique_names})"
-    else
-      "#{date} : #{title}"
+      long_title << " (#{ lesson_supervision.unique_names })"
     end
+    long_title
   end
 
   # Private instance methods
