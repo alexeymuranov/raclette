@@ -147,7 +147,7 @@ fr:
     updated_at: "Modifié le"
 
   errors:
-    format: "Le %{attribute} %{message}"
+    format: "Le/la %{attribute} %{message}"
     messages: &errors_messages
       inclusion: "n'est pas inclus(e) dans la liste"
       exclusion: "n'est pas disponible"

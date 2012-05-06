@@ -113,7 +113,16 @@ class EventsController < SecretaryController
   end
 
   def new
-    @event = Event.new
+    unless (@weekly_event_id = params[:weekly_event_id]).blank?
+      @weekly_event_id = @weekly_event_id.to_i
+      @weekly_event = WeeklyEvent.find(@weekly_event_id)
+    end
+
+    if @weekly_event
+      @event = Event.new(@weekly_event)
+    else
+      @event = Event.new
+    end
 
     render_new_properly
   end
@@ -125,10 +134,11 @@ class EventsController < SecretaryController
   end
 
   def create
-    params[:event][:lesson] = ( %w(Cours Atelier Initiation).include?(
-                                  params[:event][:event_type]) ?
-                                true : false )
-    @event = Event.new(params[:event])
+    attributes = params[:event]
+    attributes[:lesson] =
+      %w[Cours Atelier Initiation].include?(attributes[:event_type])
+    attributes[:weekly_event_id] = params[:weekly_event_id]
+    @event = Event.new(attributes)
 
     if @event.save
       flash[:success] = t('flash.events.create.success',
@@ -177,6 +187,8 @@ class EventsController < SecretaryController
                       :weekly,
                       :entry_fee_tickets ]
       @column_types = Event.attribute_db_types
+
+      @weekly_events = WeeklyEvent.not_over
 
       @title = t('events.new.title')
 

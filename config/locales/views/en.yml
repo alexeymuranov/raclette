@@ -493,3 +493,6 @@ en:
     edit:
       title: "Update %{title}"
       header: "Update event %{title}"
+    select_weekly_event:
+      select_label: "Select weekly event:"
+      select_button: "Pre-fill"

@@ -1,0 +1,23 @@
+= field_set_tag nil, :form => 'form' do
+
+  %dl.form_fields
+    .dl_item.field
+      %dt
+        = t '.select_label'
+      %dd{ :class => 'input' }
+        = select_tag :weekly_event_id,
+            options_from_collection_for_select(@weekly_events,
+              :id, :non_sql_long_title,
+              :selected => @weekly_event_id),
+            :include_blank => true,
+            :form          => 'form'
+
+  .actions
+    = button_tag t('.select_button'),
+                 :name       => 'button',
+                 :value      => 'select_weekly_event',
+                 :type       => 'submit',
+                 :form       => 'form',
+                 :formaction => url_for(:action => :new),
+                 :formmethod => 'get',
+                 :class      => 'prefill'
