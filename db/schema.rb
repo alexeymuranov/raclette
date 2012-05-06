@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120310183959) do
+ActiveRecord::Schema.define(:version => 20120506154347) do
 
   create_table "activity_periods", :force => true do |t|
     t.string   "unique_title",    :limit => 64,                    :null => false
@@ -163,9 +163,8 @@ ActiveRecord::Schema.define(:version => 20120310183959) do
     t.boolean  "locked",                                                            :default => false, :null => false
     t.boolean  "lesson",                                                                               :null => false
     t.date     "date"
-    t.string   "start_time",            :limit => 8
-    t.integer  "duration_minutes",      :limit => 2
-    t.string   "end_time",              :limit => 8
+    t.time     "start_time",            :limit => 8
+    t.time     "end_time",              :limit => 8
     t.string   "location",              :limit => 64
     t.integer  "address_id"
     t.boolean  "weekly",                                                            :default => false, :null => false
@@ -185,6 +184,7 @@ ActiveRecord::Schema.define(:version => 20120310183959) do
     t.string   "description"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.time     "duration"
   end
 
   add_index "events", ["address_id"], :name => "index_events_on_address_id"
@@ -526,9 +526,8 @@ ActiveRecord::Schema.define(:version => 20120310183959) do
     t.string   "title",                 :limit => 64,                    :null => false
     t.boolean  "lesson",                                                 :null => false
     t.integer  "week_day",              :limit => 1,                     :null => false
-    t.string   "start_time",            :limit => 8
-    t.integer  "duration_minutes",      :limit => 2,  :default => 60
-    t.string   "end_time",              :limit => 8
+    t.time     "start_time",            :limit => 8
+    t.time     "end_time",              :limit => 8
     t.date     "start_on",                                               :null => false
     t.date     "end_on"
     t.string   "location",              :limit => 64
@@ -539,6 +538,7 @@ ActiveRecord::Schema.define(:version => 20120310183959) do
     t.string   "description"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.time     "duration"
   end
 
   add_index "weekly_events", ["address_id"], :name => "index_weekly_events_on_address_id"

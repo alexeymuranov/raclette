@@ -16,7 +16,7 @@ end
 #  lesson                :boolean         not null
 #  week_day              :integer(1)      not null
 #  start_time            :string(8)
-#  duration_minutes      :integer(2)      default(60)
+#  duration              :integer(2)      default(60)
 #  end_time              :string(8)
 #  start_on              :date            not null
 #  end_on                :date

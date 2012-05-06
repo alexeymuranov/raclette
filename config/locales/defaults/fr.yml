@@ -29,6 +29,7 @@ fr:
       long: "%A %d %B %Y %H:%M"
       # Custom:
       custom: "%A le %d %B %Y à %Hh%M"
+      time_of_the_day: "%Hh%M"
     am: 'am'
     pm: 'pm'
 

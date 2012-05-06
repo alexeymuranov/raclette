@@ -40,7 +40,7 @@ class Event < ActiveRecord::Base
   validates :event_type, :length    => { :maximum => 32 },
                          :inclusion => %w[ Cours
                                            Atelier
-                                           Pratica
+                                           Practica
                                            SoiréeSpécial
                                            Initiation ]
 
@@ -48,13 +48,13 @@ class Event < ActiveRecord::Base
                 :length    => { :maximum => 64 },
                 :allow_nil => true
 
-  validates :start_time, :end_time,
-                :length    => { :maximum => 8 }, # may allow to use AM/PM
-                :format    => /\A\d{1,2}[:h]\d{2}?\z/,
-                :allow_nil => true
+  # validates :start_time, :end_time,
+  #               :length    => { :maximum => 8 }, # may allow to use AM/PM
+  #               :format    => /\A\d{1,2}[:h]\d{2}?\z/,
+  #               :allow_nil => true
 
-  validates :duration_minutes, :inclusion => 5..(24*60),
-                               :allow_nil => true
+  validates :duration, :inclusion => 5.minutes..1.day,
+                       :allow_nil => true
 
   validates :supervisors, :length    => { :maximum => 255 },
                           :allow_nil => true
@@ -82,6 +82,9 @@ class Event < ActiveRecord::Base
                           :allow_nil => true
 
   # Callbacks:
+
+  # Workaround, Rails does not treat time columns well:
+  before_save :fix_time_values__strip_date
   before_save :calculate_duration
 
   # Scopes:
@@ -129,7 +132,7 @@ class Event < ActiveRecord::Base
       end
       self.weekly = true
       [ :event_type, :title, :lesson,
-        :start_time, :end_time, :duration_minutes,
+        :start_time, :end_time, :duration,
         :location, :address,
         :lesson_supervision, :entry_fee_tickets
       ].each do |attr_name|
@@ -141,6 +144,7 @@ class Event < ActiveRecord::Base
   end
 
   # Non-SQL virtual attributes
+
   def non_sql_long_title
     long_title = "#{ date } : #{ title }"
     if lesson_supervision && !lesson_supervision.unique_names.blank?
@@ -151,11 +155,20 @@ class Event < ActiveRecord::Base
 
   # Private instance methods
   private
-    def calculate_duration
-      self.duration_minutes = parse_time_duration_to_minutes(end_time) -
-                              parse_time_duration_to_minutes(start_time)
-      self.duration_minutes += 24*60 if duration_minutes < 0
+
+    def fix_time_values__strip_date # NOTE: only nullifies the date
+      self.start_time = start_time.change(:year => 0, :month => 1, :day => 1)
+      self.end_time = end_time.change(:year => 0, :month => 1, :day => 1)
+      # self.start_time = start_time - start_time.beginning_of_day
+      # self.end_time = end_time - end_time.beginning_of_day
     end
+
+    def calculate_duration
+      self.duration = end_time - start_time
+      self.duration += 1.day if duration < 1.day
+      # Workaround:
+      self.duration = Time.gm(0,1,1,0,0,0) + duration
+     end
 
 end
 # == Schema Information
@@ -169,7 +182,7 @@ end
 #  lesson                :boolean         not null
 #  date                  :date
 #  start_time            :string(8)
-#  duration_minutes      :integer(2)
+#  duration              :integer(2)
 #  end_time              :string(8)
 #  location              :string(64)
 #  address_id            :integer

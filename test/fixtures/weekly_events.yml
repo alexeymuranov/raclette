@@ -6,7 +6,7 @@ practica_de_jeudi:
   lesson: false
   week_day: 4
   start_time: 21h
-  duration_minutes: 1
+  duration: 1
   end_time: MyString
   start_on: 2010-09-01
   end_on: 2011-08-31
@@ -23,7 +23,7 @@ two:
   lesson: true
   week_day: 2
   start_time: 19h30
-  duration_minutes: 60
+  duration: 60
   end_time: 20h30
   start_on: 2011-09-01
   end_on: 2011-06-30
@@ -43,7 +43,7 @@ two:
 #  lesson                :boolean         not null
 #  week_day              :integer(1)      not null
 #  start_time            :string(8)
-#  duration_minutes      :integer(2)      default(60)
+#  duration              :integer(2)      default(60)
 #  end_time              :string(8)
 #  start_on              :date            not null
 #  end_on                :date

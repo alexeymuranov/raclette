@@ -12,47 +12,63 @@
     - column_type = nil
 
 - readonly = klass.readonly_attributes.include?(attribute.to_s)
+- value = model.public_send(attribute)
 
 .item
   - case column_type
   - when :boolean, :delegated_boolean, :virtual_boolean
-    %dt
+    %dt<
       = t 'formats.attribute_name?',
           :attribute => klass.human_attribute_name(attribute)
     %dd.boolean
-      - shown_value = boolean_to_yes_no(model.public_send(attribute))
-      - if readonly
-        %b= shown_value
-      - else
-        = shown_value
+      - unless value.nil?
+        - shown_value = boolean_to_yes_no(value)
+        - if readonly
+          %b= shown_value
+        - else
+          = shown_value
   - when :date, :delegated_date, :virtual_date,
          :datetime, :delegated_datetime, :virtual_datetime
-    %dt
+    %dt<
       = t 'formats.attribute_name:',
           :attribute => klass.human_attribute_name(attribute)
     %dd
-      - shown_value = l model.public_send(attribute), :format => :custom
-      - if readonly
-        %b= shown_value
-      - else
-        = shown_value
+      - unless value.nil?
+        - shown_value = l value, :format => :custom
+        %time<
+          - if readonly
+            %b= shown_value
+          - else
+            = shown_value
+  - when :time, :delegated_time, :virtual_time
+    %dt<
+      = t 'formats.attribute_name:',
+          :attribute => klass.human_attribute_name(attribute)
+    %dd
+      - unless value.nil?
+        - shown_value = l value, :format => :time_of_the_day
+        %time<
+          - if readonly
+            %b= shown_value
+          - else
+            = shown_value
   - when :integer, :delegated_integer, :virtual_integer
-    %dt
+    %dt<
       = t 'formats.attribute_name:',
           :attribute => klass.human_attribute_name(attribute)
     %dd
-      - shown_value = model.public_send(attribute)
-      - if readonly
-        %b= shown_value
-      - else
-        = shown_value
+      - unless value.nil?
+        - if readonly
+          %b= value
+        - else
+          = value
   - else
-    %dt
+    %dt<
       = t 'formats.attribute_name:',
           :attribute => klass.human_attribute_name(attribute)
     %dd
-      - shown_value = model.public_send(attribute)
-      - if readonly
-        %b= shown_value
-      - else
-        = shown_value
+      - unless value.nil?
+        - if readonly
+          %b= value
+        - else
+          = value

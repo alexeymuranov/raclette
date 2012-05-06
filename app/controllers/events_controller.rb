@@ -31,7 +31,7 @@ class EventsController < SecretaryController
       @attributes = [ :title, :event_type,
                       :date,
                       :start_time,
-                      :duration_minutes,
+                      :duration,
                       :supervisors,
                       :location,
                       :entry_fee_tickets,
@@ -74,17 +74,15 @@ class EventsController < SecretaryController
       end
 
       requested_format.ms_excel_2003_xml do
-        render_ms_excel_2003_xml_for_download\
-            @events,
-            @attributes,
-            @column_headers  # defined in ApplicationController
+        render_ms_excel_2003_xml_for_download @events,
+                                              @attributes,
+                                              @column_headers
       end
 
       requested_format.csv do
-        render_csv_for_download\
-            @events,
-            @attributes,
-            @column_headers  # defined in ApplicationController
+        render_csv_for_download @events,
+                                @attributes,
+                                @column_headers
       end
     end
   end
@@ -95,7 +93,7 @@ class EventsController < SecretaryController
                     :date,
                     :start_time,
                     :end_time,
-                    # :duration_minutes,
+                    # :duration,
                     :supervisors,
                     :location,
                     :weekly,
@@ -184,7 +182,7 @@ class EventsController < SecretaryController
                       :end_time,
                       :supervisors,
                       :location,
-                      :weekly,
+                      # :weekly,
                       :entry_fee_tickets ]
       @column_types = Event.attribute_db_types
 

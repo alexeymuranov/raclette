@@ -7,7 +7,7 @@ class EventTest < ActiveSupport::TestCase
     event = Event.new(weekly_event)
     assert event.weekly?
     [ :event_type, :lesson,
-      :start_time, :end_time, :duration_minutes,
+      :start_time, :end_time, :duration,
       :location, :address,
       :lesson_supervision, :entry_fee_tickets
     ].each do |attr_name|
@@ -27,7 +27,7 @@ end
 #  lesson                :boolean         not null
 #  date                  :date
 #  start_time            :string(8)
-#  duration_minutes      :integer(2)
+#  duration              :integer(2)
 #  end_time              :string(8)
 #  location              :string(64)
 #  address_id            :integer

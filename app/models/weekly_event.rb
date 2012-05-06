@@ -40,13 +40,13 @@ class WeeklyEvent < ActiveRecord::Base
 
   validates :week_day, :inclusion => 0..6
 
-  validates :start_time, :end_time,
-                :length    => { :maximum => 8 }, # may allow to use AM/PM
-                :format    => /\A\d{1,2}[:h]\d{2}?\z/,
-                :allow_nil => true
+  # validates :start_time, :end_time,
+  #               :length    => { :maximum => 8 }, # may allow to use AM/PM
+  #               :format    => /\A\d{1,2}[:h]\d{2}?\z/,
+  #               :allow_nil => true
 
-  validates :duration_minutes, :inclusion => 5..(24*60),
-                               :allow_nil => true
+  validates :duration, :inclusion => 5.minutes..1.day,
+                       :allow_nil => true
 
   validates :location, :length    => { :maximum => 64 },
                        :allow_nil => true
@@ -61,6 +61,9 @@ class WeeklyEvent < ActiveRecord::Base
                 :uniqueness => { :scope => :title }
 
   # Callbacks:
+
+  # Workaround, Rails does not treat time columns well:
+  before_save :fix_time_values__strip_date
   before_save :calculate_duration
 
   # Scopes:
@@ -81,10 +84,19 @@ class WeeklyEvent < ActiveRecord::Base
 
   # Private instance methods
   private
+
+    def fix_time_values__strip_date # NOTE: only nullifies the date
+      self.start_time = start_time.change(:year => 0, :month => 1, :day => 1)
+      self.end_time = end_time.change(:year => 0, :month => 1, :day => 1)
+      # self.start_time = start_time - start_time.beginning_of_day
+      # self.end_time = end_time - end_time.beginning_of_day
+    end
+
     def calculate_duration
-      self.duration_minutes = parse_time_duration_to_minutes(end_time) -
-                              parse_time_duration_to_minutes(start_time)
-      self.duration_minutes += 24*60 if duration_minutes < 0
+      self.duration = end_time - start_time
+      self.duration += 1.day if duration < 1.day
+      # Workaround:
+      self.duration = Time.gm(0,1,1,0,0,0) + duration
     end
 
 end
@@ -98,7 +110,7 @@ end
 #  lesson                :boolean         not null
 #  week_day              :integer(1)      not null
 #  start_time            :string(8)
-#  duration_minutes      :integer(2)      default(60)
+#  duration              :integer(2)      default(60)
 #  end_time              :string(8)
 #  start_on              :date            not null
 #  end_on                :date
