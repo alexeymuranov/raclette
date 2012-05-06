@@ -175,10 +175,7 @@ class EventsController < SecretaryController
                       :supervisors,
                       :location,
                       :weekly,
-                      :entry_fee_tickets,
-                      :entries_count,
-                      :tickets_collected,
-                      :entry_fees_collected ]
+                      :entry_fee_tickets ]
       @column_types = Event.attribute_db_types
 
       @title = t('events.new.title')

@@ -39,8 +39,7 @@ class WeeklyEventsController < ManagerController
                       :start_time,
                       :duration_minutes,
                       :location,
-                      :entry_fee_tickets,
-                      :over ]
+                      :entry_fee_tickets ]
     when Mime::XML, Mime::CSV, Mime::MS_EXCEL_2003_XML
       @attributes = [ :title,
                       :event_type,
@@ -53,7 +52,6 @@ class WeeklyEventsController < ManagerController
                       :end_on,
                       :location,
                       :entry_fee_tickets,
-                      :over,
                       :description ]
     end
 
@@ -118,7 +116,6 @@ class WeeklyEventsController < ManagerController
                     :end_on,
                     :location,
                     :entry_fee_tickets,
-                    :over,
                     :description ]
 
     @weekly_event = WeeklyEvent.find(params[:id])
@@ -188,7 +185,6 @@ class WeeklyEventsController < ManagerController
     def render_new_properly
       @attributes = [ :title,
                       :event_type,
-                      :lesson,
                       :week_day,
                       :start_time,
                       :end_time,
@@ -196,7 +192,6 @@ class WeeklyEventsController < ManagerController
                       :end_on,
                       :location,
                       :entry_fee_tickets,
-                      :over,
                       :description ]
       @column_types = WeeklyEvent.attribute_db_types
 
@@ -208,7 +203,6 @@ class WeeklyEventsController < ManagerController
     def render_edit_properly
       @attributes = [ :title,
                       :event_type,
-                      :lesson,
                       :week_day,
                       :start_time,
                       :end_time,
@@ -216,7 +210,6 @@ class WeeklyEventsController < ManagerController
                       :end_on,
                       :location,
                       :entry_fee_tickets,
-                      :over,
                       :description ]
       @column_types = WeeklyEvent.attribute_db_types
 
