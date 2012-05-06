@@ -38,6 +38,8 @@ class WeeklyEvent < ActiveRecord::Base
   validates :title, :length    => { :maximum => 64 },
                     :allow_nil => true
 
+  validates :week_day, :inclusion => 0..6
+
   validates :start_time, :end_time,
                 :length    => { :maximum => 8 }, # may allow to use AM/PM
                 :format    => /\A\d{1,2}[:h]\d{2}?\z/,

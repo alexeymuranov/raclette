@@ -3,6 +3,7 @@
 require 'app_active_record_extensions/filtering'
 require 'app_active_record_extensions/sorting'
 require 'app_parsers/time_duration_parser'
+require 'app_validations/event'
 
 class Event < ActiveRecord::Base
   include Filtering
@@ -32,6 +33,8 @@ class Event < ActiveRecord::Base
   belongs_to :lesson_supervision, :inverse_of => :events
 
   # Validations:
+  validates_with EventValidator
+
   validates :event_type, :presence => true
 
   validates :event_type, :length    => { :maximum => 32 },

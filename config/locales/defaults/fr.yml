@@ -171,7 +171,7 @@ fr:
 
       # Custom:
       email_format: "n'est pas bien formé(e)"
-
+      unexpected_week_day: "n'est pas %{week_day}"
 
     template: &errors_template
       header:

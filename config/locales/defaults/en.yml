@@ -215,6 +215,7 @@ en:
 
       # Custom:
       email_format: "is not well-formed"
+      unexpected_week_day: "is not %{week_day}"
 
   activerecord:
     errors:
