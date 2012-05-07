@@ -493,6 +493,6 @@ fr:
     edit:
       title: "%{title} - mise à jour"
       header: "Mise à jour de l'événement %{title}"
-    select_weekly_event:
-      select_label: "Choisir un événement hebdomadaire :"
+    new_form:
+      select_label: "Événement hebdomadaire :"
       select_button: "Pré-remplir"

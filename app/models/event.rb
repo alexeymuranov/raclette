@@ -117,27 +117,32 @@ class Event < ActiveRecord::Base
 
   # Public instance methods
 
+  def set_attributes_from_weekly_event
+    common_attribute_names = [ :event_type, :title, :lesson,
+                               :start_time, :end_time, :duration,
+                               :location, :address,
+                               :lesson_supervision, :entry_fee_tickets ]
+    if weekly_event
+      date = nil if date && date.wday != weekly_event.week_day
+
+      common_attribute_names.each do |attr_name|
+        send "#{attr_name}=", weekly_event.public_send(attr_name)
+      end
+      self.weekly = true
+    else
+      common_attribute_names.each do |attr_name|
+        send "#{attr_name}=", nil
+      end
+      self.weekly = false
+    end
+  end
+
   def initialize(*attributes)
     if attributes[0].is_a?(WeeklyEvent)
       super()
-      weekly_event = attributes[0]
-      event_date = attributes[1]
-      if event_date
-        if event_date.wday != weekly_event.week_day
-          raise 'The given date does not match the week day '\
-                'of the given weekly event'
-        else
-          date = event_date
-        end
-      end
-      self.weekly = true
-      [ :event_type, :title, :lesson,
-        :start_time, :end_time, :duration,
-        :location, :address,
-        :lesson_supervision, :entry_fee_tickets
-      ].each do |attr_name|
-        send "#{attr_name}=", weekly_event.public_send(attr_name)
-      end
+      self.weekly_event = attributes[0]
+      self.date = attributes[1]
+      set_attributes_from_weekly_event
     else
       super # NOTE: equivalent to super(*attributes)
     end

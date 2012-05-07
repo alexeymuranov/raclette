@@ -111,15 +111,10 @@ class EventsController < SecretaryController
   end
 
   def new
-    unless (@weekly_event_id = params[:weekly_event_id]).blank?
-      @weekly_event_id = @weekly_event_id.to_i
-      @weekly_event = WeeklyEvent.find(@weekly_event_id)
-    end
+    @event = Event.new(params[:event])
 
-    if @weekly_event
-      @event = Event.new(@weekly_event)
-    else
-      @event = Event.new
+    if params[:button] == 'select_weekly_event'
+      @event.set_attributes_from_weekly_event
     end
 
     render_new_properly
