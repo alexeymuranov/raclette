@@ -17,7 +17,7 @@ class EventsController < SecretaryController
     @submit_button = params[:button]
     params.except!(:query_type, :commit, :button)
 
-    if @query_type == 'filter' && @submit_button == 'clear_button'
+    if @submit_button == 'clear_button'
       params.delete(:filter)
     end
 

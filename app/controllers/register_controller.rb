@@ -18,7 +18,7 @@ class RegisterController < ApplicationController
     params.delete(:commit)
     params.delete(:button)
 
-    if @query_type == 'filter' && @submit_button == 'clear_button'
+    if @submit_button == 'clear_button'
       params.delete(:filter)
     end
 
