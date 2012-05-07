@@ -41,18 +41,16 @@
           = content_tag :td, :colspan => attributes.size,
                              :class   => 'actions' do
             = hidden_field_tag :query_type, 'filter', :form  => filter_form_id
-            = content_tag :button,
-                          t('buttons.filter'),
-                          :form  => filter_form_id,
-                          :name  => 'button',
-                          :type  => 'submit',
-                          :value => 'filter_button'
-            = content_tag :button,
-                          t('buttons.clear'),
-                          :form  => filter_form_id,
-                          :name  => 'button',
-                          :type  => 'submit',
-                          :value => 'clear_button'
+            = button_tag t('buttons.filter'),
+                         :form  => filter_form_id,
+                         :name  => 'button',
+                         :type  => 'submit',
+                         :value => 'filter_button'
+            = button_tag t('buttons.clear'),
+                         :form  => filter_form_id,
+                         :name  => 'button',
+                         :type  => 'submit',
+                         :value => 'clear_button'
         - unless @members_filtering_values.blank?
           %tr
             - attributes.each do |attr|
