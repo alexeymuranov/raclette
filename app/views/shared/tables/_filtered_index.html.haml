@@ -26,9 +26,9 @@
 
 = paginate models
 
-= form_tag(nil, :id     => (filter_form_id = "#{html_table_id}_filter"),
+= form_tag(nil, :id     => (filter_form_id = "#{ html_table_id }_filter"),
                 :method => :get) do
-  = hidden_field_tags_from_hash params.merge( :query_type => 'filter' )
+  = hidden_field_tags_from_hash params.merge(:query_type => 'filter')
   -# Other input fields are outside, with the help of "form" HTML attribute
 
 = content_tag :table,                                                  |

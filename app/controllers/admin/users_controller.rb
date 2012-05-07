@@ -7,13 +7,13 @@ class Admin::UsersController < AdminController
                         :through    => :safe_user_ips,
                         :source     => :known_ip
 
-    self.all_sorting_columns = [:username,
-                                :full_name,
-                                :account_deactivated,
-                                :admin,
-                                :manager,
-                                :secretary,
-                                :a_person]
+    self.all_sorting_columns = [ :username,
+                                 :full_name,
+                                 :account_deactivated,
+                                 :admin,
+                                 :manager,
+                                 :secretary,
+                                 :a_person ]
     self.default_sorting_column = :username
   end
 
@@ -50,22 +50,22 @@ class Admin::UsersController < AdminController
 
     case request.format
     when Mime::HTML
-      @attributes = [:username,
-                     :full_name,
-                     :account_deactivated,
-                     :admin,
-                     :manager,
-                     :secretary,
-                     :a_person]
+      @attributes = [ :username,
+                      :full_name,
+                      :account_deactivated,
+                      :admin,
+                      :manager,
+                      :secretary,
+                      :a_person ]
     when Mime::XML, Mime::CSV, Mime::MS_EXCEL_2003_XML
-      @attributes = [:username,
-                     :full_name,
-                     :email,
-                     :account_deactivated,
-                     :admin,
-                     :manager,
-                     :secretary,
-                     :a_person]
+      @attributes = [ :username,
+                      :full_name,
+                      :email,
+                      :account_deactivated,
+                      :admin,
+                      :manager,
+                      :secretary,
+                      :a_person ]
     end
 
     set_column_types
@@ -115,17 +115,15 @@ class Admin::UsersController < AdminController
       end
 
       requested_format.ms_excel_2003_xml do
-        render_ms_excel_2003_xml_for_download\
-            @users,
-            @attributes,
-            @column_headers  # defined in ApplicationController
+        render_ms_excel_2003_xml_for_download @users,
+                                              @attributes,
+                                              @column_headers
       end
 
       requested_format.csv do
-        render_csv_for_download\
-            @users,
-            @attributes,
-            @column_headers  # defined in ApplicationController
+        render_csv_for_download @users,
+                                @attributes,
+                                @column_headers
       end
     end
   end
@@ -133,20 +131,20 @@ class Admin::UsersController < AdminController
   def show
     @user = User.find(params[:id])
 
-    @main_attributes = [:username,
-                        :full_name,
-                        :email,
-                        :account_deactivated,
-                        :admin,
-                        :manager,
-                        :secretary,
-                        :a_person]
+    @main_attributes = [ :username,
+                         :full_name,
+                         :email,
+                         :account_deactivated,
+                         :admin,
+                         :manager,
+                         :secretary,
+                         :a_person ]
     @main_attributes << :person_id if @user.a_person?
     @main_attributes << :comments
 
     @other_attributes = []
-    @other_attributes << :last_signed_in_at\
-        unless @user.last_signed_in_at.blank?
+    @other_attributes << :last_signed_in_at unless
+      @user.last_signed_in_at.blank?
 
     @safe_ips_attributes = [:ip, :description]
 
@@ -299,11 +297,11 @@ class Admin::UsersController < AdminController
 
         case type
         when :boolean
-          @column_headers[attr] = I18n.t('formats.attribute_name?',
-                                         :attribute => human_name)
+          @column_headers[attr] =
+            I18n.t('formats.attribute_name?', :attribute => human_name)
         else
-          @column_headers[attr] = I18n.t('formats.attribute_name:',
-                                         :attribute => human_name)
+          @column_headers[attr] =
+            I18n.t('formats.attribute_name:', :attribute => human_name)
         end
       end
     end
@@ -322,11 +320,11 @@ class Admin::UsersController < AdminController
 
         case type
         when :boolean
-          @known_ips_column_headers[attr] = I18n.t('formats.attribute_name?',
-                                                   :attribute => human_name)
+          @known_ips_column_headers[attr] =
+            I18n.t('formats.attribute_name?', :attribute => human_name)
         else
-          @known_ips_column_headers[attr] = I18n.t('formats.attribute_name:',
-                                                   :attribute => human_name)
+          @known_ips_column_headers[attr] =
+            I18n.t('formats.attribute_name:', :attribute => human_name)
         end
       end
     end
