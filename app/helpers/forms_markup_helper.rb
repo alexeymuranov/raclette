@@ -3,14 +3,18 @@
 module FormsMarkupHelper
 
   # Originally based on http://marklunds.com/articles/one/314
-  def spread_param_hash(hash, key_prefix = '')
-    format_key = key_prefix.blank? ? lambda { |k| k.to_s } :
-                                     lambda { |k| "#{ key_prefix }[#{ k }]" }
+  def param_name_value_pairs_from_nested_hash(nested_hash, key_prefix = '')
+    format_key = if key_prefix.blank?
+                   lambda { |k| k.to_s }
+                 else
+                   lambda { |k| "#{ key_prefix }[#{ k }]" }
+                 end
+
     flat_hash = {}
-    hash.each do |k, v|
-      k = format_key.call(k)
+    nested_hash.each_pair do |k, v|
+      k = format_key.(k)
       if v.is_a?(Hash)
-        flat_hash.merge!(spread_param_hash(v, k))
+        flat_hash.merge!(param_name_value_pairs_from_nested_hash(v, k))
       else
         flat_hash[k] = v
       end
@@ -18,9 +22,9 @@ module FormsMarkupHelper
     flat_hash
   end
 
-  def hidden_field_tags_from_hash(hash, options = {})
+  def hidden_fields_from_nested_hash(hash, options = {})
     hidden_field_tags = []
-    spread_param_hash(hash).each do |name, value|
+    param_name_value_pairs_from_nested_hash(hash).each do |name, value|
       if value.is_a?(Array)
         name << '[]'
         value.each do |v|

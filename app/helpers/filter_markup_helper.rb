@@ -16,7 +16,7 @@ module FilterMarkupHelper
       form_tag(nil, :method => :get ) do
         key_name = "filter[#{str_attr}]"
         saved_params = params.except(key_name).merge( :request_type => 'filter' )
-        hidden_field_tags_from_hash(saved_params) <<
+        hidden_fields_from_nested_hash(saved_params) <<
           content_tag(:ul) do
             prefixes.inject ''.html_safe do |html_output, pref|
               html_output << content_tag(:li, :class => 'filtering_prefix') {

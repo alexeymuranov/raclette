@@ -9,7 +9,7 @@
 - klass = models.klass
 
 = form_tag(nil, :method => :get) do
-  = hidden_field_tags_from_hash params.slice(:filter, :sort)
+  = hidden_fields_from_nested_hash params.slice(:filter, :sort)
 
   = label_tag :per_page, t('field_labels.per_page')
   = select_tag :per_page,
@@ -28,7 +28,7 @@
 
 = form_tag(nil, :id     => (filter_form_id = "#{ html_table_id }_filter"),
                 :method => :get) do
-  = hidden_field_tags_from_hash params.merge(:query_type => 'filter')
+  = hidden_fields_from_nested_hash params.merge(:query_type => 'filter')
   -# Other input fields are outside, with the help of "form" HTML attribute
 
 = content_tag :table,                                                  |
