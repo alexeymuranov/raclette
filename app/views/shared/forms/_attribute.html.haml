@@ -60,13 +60,17 @@
         - when :date, :delegated_date, :virtual_date
           -# input_html_options[:type] = 'date'
           = form_builder.date_select attribute,
-                                     { :include_blank => true },
-                                     input_html_options
+              { :include_blank => true,
+                :start_year    => Time.now.year - 1,
+                :end_year      => Time.now.year + 2 },
+              input_html_options
         - when :datetime, :delegated_datetime, :virtual_datetime
           -# input_html_options[:type] = 'datetime-local'
           = form_builder.datetime_select attribute,
-                                         { :include_blank => true },
-                                         input_html_options
+              { :include_blank => true,
+                :start_year    => Time.now.year - 1,
+                :end_year      => Time.now.year + 2 },
+              input_html_options
         - when :time, :delegated_time, :virtual_time
           -# input_html_options[:type] = 'time-local'
           = form_builder.time_select attribute,
