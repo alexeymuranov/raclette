@@ -160,6 +160,12 @@ class InstructorsController < ManagerController
 
     @instructor.person_id = @person.id
 
+    # Create a default one-person lesson supervision:
+    @lesson_supervision = LessonSupervision.create(
+      :unique_names      => @instructor.non_sql_professional_name,
+      :instructors_count => 1)
+    @instructor.lesson_supervisions << @lesson_supervision
+
     if @instructor.save
       flash[:success] = t('flash.instructors.create.success',
                           :name => @instructor.non_sql_full_name)
