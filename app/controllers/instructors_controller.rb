@@ -18,9 +18,7 @@ class InstructorsController < ManagerController
     params.delete(:commit)
     params.delete(:button)
 
-    if @submit_button == 'clear_button'
-      params.delete(:filter)
-    end
+    params.delete(:filter) if @submit_button == 'clear_button'
 
     case request.format
     when Mime::HTML
@@ -47,8 +45,8 @@ class InstructorsController < ManagerController
 
     # Sort:
     Instructor.all_sorting_columns = @attributes
-    Instructor.default_sorting_column = ( request.format == 'html' ?
-                                          :ordered_full_name : :last_name )
+    Instructor.default_sorting_column =
+      request.format == 'html' ? :ordered_full_name : :last_name
     sort_params = (params[:sort] && params[:sort][:instructors]) || {}
     @instructors = Instructor.sort(@instructors, sort_params)
     @sorting_column = Instructor.last_sort_column
@@ -56,9 +54,10 @@ class InstructorsController < ManagerController
 
     # Compose mailing list:
     if params[:list_email_addresses]
-      @mailing_list_instructors = @instructors.select { |instructor| !instructor.email.blank? }
-      @mailing_list = @mailing_list_instructors.collect(&:formatted_email).
-        join(', ')
+      @mailing_list_instructors =
+        @instructors.select { |instructor| !instructor.email.blank? }
+      @mailing_list =
+        @mailing_list_instructors.collect(&:formatted_email).join(', ')
     end
 
     set_column_headers
@@ -86,17 +85,15 @@ class InstructorsController < ManagerController
       end
 
       requested_format.ms_excel_2003_xml do
-        render_ms_excel_2003_xml_for_download\
-            @instructors,
-            @attributes,
-            @column_headers  # defined in ApplicationController
+        render_ms_excel_2003_xml_for_download @instructors,
+                                              @attributes,
+                                              @column_headers
       end
 
       requested_format.csv do
-        render_csv_for_download\
-            @instructors,
-            @attributes,
-            @column_headers  # defined in ApplicationController
+        render_csv_for_download @instructors,
+                                @attributes,
+                                @column_headers
       end
     end
   end
@@ -111,8 +108,9 @@ class InstructorsController < ManagerController
                     :full_name,
                     :employed_from ]
 
-    @instructor = Instructor.joins(:person).with_virtual_attributes(*@attributes)\
-                    .find(params[:id])
+    @instructor =
+      Instructor.joins(:person).with_virtual_attributes(*@attributes).
+                 find(params[:id])
 
     @column_types = Instructor.attribute_db_types
     # set_column_headers
@@ -128,16 +126,15 @@ class InstructorsController < ManagerController
   end
 
   def edit
-    @instructor = Instructor.joins(:person).with_virtual_attributes(:full_name)\
-                    .find(params[:id])
-    # print "\n\nv>>> #{@instructor.class.inspect} <<<v\n\n"
+    @instructor =
+      Instructor.joins(:person).with_virtual_attributes(:full_name).
+                 find(params[:id])
     render_edit_properly
   end
 
   def create
 
-    params[:instructor].delete(:email)\
-        if params[:instructor][:email].blank?
+    params[:instructor].delete(:email) if params[:instructor][:email].blank?
 
     # Because instructors primary key works as foreign key for people
     # (this is not recommended in general),
@@ -148,11 +145,12 @@ class InstructorsController < ManagerController
     # assign the foreign key manually, and then save the instructor.
     @person = Person.new
     @instructor = Instructor.new
-    params[:instructor][:person_attributes].delete(:email)\
-      if params[:instructor][:person_attributes][:email].blank?
+    params[:instructor][:person_attributes].delete(:email) if
+      params[:instructor][:person_attributes][:email].blank?
 
     @person.assign_attributes(params[:instructor][:person_attributes])
-    @instructor.assign_attributes(params[:instructor].except(:person_attributes))
+    @instructor.assign_attributes(
+      params[:instructor].except(:person_attributes))
 
     unless @person.save
       flash.now[:error] = t('flash.instructors.create.failure')
@@ -166,7 +164,8 @@ class InstructorsController < ManagerController
     if @instructor.save
       flash[:success] = t('flash.instructors.create.success',
                           :name => @instructor.non_sql_full_name)
-      redirect_to :action => :show, :id => @instructor
+      redirect_to :action => :show,
+                  :id     => @instructor.id
     else
       flash.now[:error] = t('flash.instructors.create.failure')
 
@@ -175,16 +174,19 @@ class InstructorsController < ManagerController
   end
 
   def update
-    @instructor = Instructor.joins(:person).with_virtual_attributes(:full_name)\
-                    .find(params[:id])
+    @instructor =
+      Instructor.joins(:person).with_virtual_attributes(:full_name).
+                 find(params[:id])
 
-    params[:instructor][:person_attributes].delete(:email)\
-        if params[:instructor][:person_attributes][:email].blank?
+    params[:instructor][:person_attributes].delete(:email) if
+      params[:instructor][:person_attributes][:email].blank?
 
     if @instructor.update_attributes(params[:instructor])
       flash[:notice] = t('flash.instructors.update.success',
                          :name => @instructor.full_name)
-      redirect_to :action => :show, :id => @instructor
+
+      redirect_to :action => :show,
+                  :id     => @instructor.id
     else
       flash.now[:error] = t('flash.instructors.update.failure')
 
@@ -215,7 +217,8 @@ class InstructorsController < ManagerController
     def render_edit_properly
       @column_types = Instructor.attribute_db_types
 
-      @title =  t('instructors.edit.title', :name => @instructor.non_sql_full_name)
+      @title =  t('instructors.edit.title',
+                  :name => @instructor.non_sql_full_name)
 
       render :edit
     end
