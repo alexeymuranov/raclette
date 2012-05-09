@@ -99,8 +99,7 @@ class InstructorsController < ManagerController
   end
 
   def show
-    @attributes = [ :person_id,
-                    :name_title,
+    @attributes = [ :name_title,
                     :first_name,
                     :last_name,
                     :nickname_or_other,
