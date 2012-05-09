@@ -99,7 +99,7 @@ class Event < ActiveRecord::Base
       long_title_sql = "(#{super[:date]} || ': ' || "\
                        "#{super[:title]})"
 
-      @sql_for_attributes.merge!(:long_title => long_title_sql)
+      @sql_for_attributes[:long_title] = long_title_sql
     end
     @sql_for_attributes
   end
