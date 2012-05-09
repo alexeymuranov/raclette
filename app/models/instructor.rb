@@ -37,6 +37,14 @@ class Instructor < ActiveRecord::Base
 
   # Scopes
   scope :default_order, joins(:person).merge(Person.default_order)
+
+  # Public instance methods
+  # Non-SQL virtual attributes
+  def non_sql_professional_name
+    [ first_name,
+      nickname_or_other.blank? ? nil : "'#{nickname_or_other}'",
+      last_name ].reject(&:blank?).join(' ')
+  end
 end
 # == Schema Information
 #
