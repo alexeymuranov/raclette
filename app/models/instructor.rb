@@ -18,7 +18,7 @@ class Instructor < ActiveRecord::Base
   has_many :lesson_instructors, :dependent  => :destroy,
                                 :inverse_of => :instructor
 
-  has_many :lesson_supervisons, :through => :lesson_instructors
+  has_many :lesson_supervisions, :through => :lesson_instructors
 
   belongs_to :person, :inverse_of => :instructor
 
