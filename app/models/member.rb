@@ -61,19 +61,6 @@ class Member < ActiveRecord::Base
   accepts_nested_attributes_for :person
 
   # Delegations
-  delegate :last_name,
-           :first_name,
-           :name_title,
-           :nickname_or_other,
-           :birthyear,
-           :email,
-           :mobile_phone,
-           :home_phone,
-           :work_phone,
-           :personal_phone,
-           :primary_address,
-           :non_sql_full_name,
-           :to => :person
 
   # delegate :unique_title, :duration_months,  # FIXME
   #          :to     => :'current_membership.type',
