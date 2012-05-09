@@ -53,6 +53,15 @@ en:
   questions:
     "are_you_sure?": "Are you sure?"
 
+  # For kaminari gem:
+  views:
+    pagination:
+      first: "|◀◀ First page"
+      last: "Last page ▶▶|"
+      previous: "◀ Previous page"
+      next: "Next page ▶"
+      truncate: "…"
+
   flash:
     actions:
       create:
@@ -494,5 +503,4 @@ en:
       title: "Update %{title}"
       header: "Update event %{title}"
     new_form:
-      select_label: "Weekly event:"
       select_button: "Pre-fill"

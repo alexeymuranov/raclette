@@ -153,6 +153,7 @@ fr:
         entry_fee_tickets: "Prix d'entrée en tickets"
         over: "Fini"
         description: "Description"
+        lesson_supervision: "Professeur(s)"
         # lesson_supervision:
         #   <<: *lesson_supervision_attributes
         # address:
@@ -161,6 +162,7 @@ fr:
         suspend_from: "De"
         suspend_until: "Jusqu'au"
         explanation: "Explication"
+        weekly_event: "Événement hebdomadaire"
         # weekly_event:
         #   <<: *weekly_event_attributes
       event: &event_attributes
@@ -186,10 +188,12 @@ fr:
         tickets_collected: "Tickets reçus"
         entry_fees_collected: "Payements reçus"
         description: "Description"
+        lesson_supervision: "Professeur(s)"
         # lesson_supervision:
         #   <<: *lesson_supervision_attributes
         # address:
         #   <<: *address_attributes
+        weekly_event: "Événement hebdomadaire"
         # weekly_event:
         #   <<: *weekly_event_attributes
       revenue_account: &revenue_account_attributes
@@ -244,12 +248,3 @@ fr:
         <<: *person_attributes
         phone: "Téléphone"
         note: "Remarque"
-
-  # For kaminari gem:
-  views:
-    pagination:
-      first: "|◀◀ première page"
-      last: "dernière page ▶▶|"
-      previous: "◀ page précédente"
-      next: "page suivante ▶"
-      truncate: "…"
