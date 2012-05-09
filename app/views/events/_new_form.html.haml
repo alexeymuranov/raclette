@@ -7,7 +7,8 @@
     %dl.form_fields
       .dl_item.field
         %dt
-          = t '.select_label'
+          = t 'formats.attribute_name:',
+              :attribute => Event.human_attribute_name(:weekly_event)
         %dd{ :class => 'input' }
           = f.select_for_belongs_to :weekly_event,
                                     @weekly_events, :non_sql_long_title,
@@ -21,6 +22,15 @@
                          :formaction => url_for(:action => :new),
                          :formmethod => 'get',
                          :class      => 'prefill'
+
+      .dl_item.field
+        %dt
+          = t 'formats.attribute_name:',
+              :attribute => Event.human_attribute_name(:lesson_supervision)
+        %dd{ :class => 'input' }
+          = f.select_for_belongs_to :lesson_supervision,
+                                    LessonSupervision, :unique_names,
+                                    :include_blank => true
 
       - @attributes.each do |attribute|
 
