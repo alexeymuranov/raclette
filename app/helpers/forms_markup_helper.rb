@@ -104,6 +104,27 @@ module FormsMarkupHelper
       select(foreign_key, choices, options, html_options)
     end
 
+    # FIXME:untested
+    # NOTE:not clear if this helper makes any sense
+    # def select_for_has_many(assoc_name, collection, text_method,
+    #                         options = {}, html_options = {})
+    #   klass = object.class
+    #   reflection = klass.reflect_on_association(assoc_name)
+    #   ids_param_name = "#{reflection.name.to_s.singularize}_ids[]"
+
+    #   choices =
+    #     collection.all.collect { |m| [m.public_send(text_method), m.id] }
+
+    #   unless options.key?(:include_blank)
+    #     options[:include_blank] = true
+    #   end
+
+    #   select(ids_param_name, choices, options, html_options)
+    # end
+
+    # Useful web page:
+    # http://code.alexreisner.com/articles/form-builders-in-rails.html
+    #
     # input_field_helpers = field_helpers - %w(label check_box radio_button fields_for hidden_field)
     # input_field_helpers.each do |helper|
     #   define_method helper do |field, *args|
