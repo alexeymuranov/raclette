@@ -84,18 +84,20 @@ module FormsMarkupHelper
       end
     end
 
-    # TODO:
     def select_for_belongs_to(assoc_name, collection, text_method,
                               options = {}, html_options = {})
       klass = object.class
       reflection = klass.reflect_on_association(assoc_name)
       foreign_key = reflection.foreign_key
-      choices = collection.all.collect { |m|
-                  [m.public_send(text_method), m.id]
-                }
-      unless options.key?(:include_blank) ||
-             klass.validators_on(foreign_key).map(&:class).
-               include?(ActiveModel::Validations::PresenceValidator)
+
+      choices =
+        collection.all.collect { |m| [m.public_send(text_method), m.id] }
+
+      required =
+        klass.validators_on(foreign_key).map(&:class).
+              include?(ActiveModel::Validations::PresenceValidator)
+
+      unless options.key?(:include_blank) || required
         options[:include_blank] = true
       end
 
