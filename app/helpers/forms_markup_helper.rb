@@ -105,22 +105,21 @@ module FormsMarkupHelper
     end
 
     # FIXME:untested
-    # NOTE:not clear if this helper makes any sense
-    # def select_for_has_many(assoc_name, collection, text_method,
-    #                         options = {}, html_options = {})
-    #   klass = object.class
-    #   reflection = klass.reflect_on_association(assoc_name)
-    #   ids_param_name = "#{reflection.name.to_s.singularize}_ids[]"
+    def select_for_habtm(assoc_name, collection, text_method,
+                         options = {}, html_options = {})
+      klass = object.class
+      reflection = klass.reflect_on_association(assoc_name)
+      ids_attr_name = "#{reflection.name.to_s.singularize}_ids"
 
-    #   choices =
-    #     collection.all.collect { |m| [m.public_send(text_method), m.id] }
+      choices =
+        collection.all.collect { |m| [m.public_send(text_method), m.id] }
 
-    #   unless options.key?(:include_blank)
-    #     options[:include_blank] = true
-    #   end
+      unless options.key?(:include_blank)
+        options[:include_blank] = true
+      end
 
-    #   select(ids_param_name, choices, options, html_options)
-    # end
+      select("#{ ids_attr_name }[]", choices, options, html_options)
+    end
 
     # Useful web page:
     # http://code.alexreisner.com/articles/form-builders-in-rails.html
