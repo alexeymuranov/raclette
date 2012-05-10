@@ -9,6 +9,9 @@ class TicketBook < ActiveRecord::Base
 
   include AbstractSmarterModel
 
+  # To use number_to_currency
+  include ActionView::Helpers::NumberHelper # NOTE: weird???
+
   attr_readonly :id, :membership_type_id, :tickets_number
 
   # Associations:
@@ -30,8 +33,10 @@ class TicketBook < ActiveRecord::Base
   scope :default_order, order('tickets_number ASC')
 
   # Public instance methods
-  def short_title
-    "#{tickets_number} (#{membership_type.unique_title})"
+  # Non-SQL virtual attributes
+  def non_sql_long_title
+    "#{ tickets_number } (#{ membership_type.unique_title })"\
+    " : #{ number_to_currency(price, :unit => '€') }"
   end
 end
 # == Schema Information
