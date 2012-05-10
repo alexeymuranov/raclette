@@ -83,7 +83,7 @@ class TicketBooksController < ManagerController
     # set_column_headers
 
     @title = t('ticket_books.show.title',
-               :title => @ticket_book.unique_title )
+               :title => @ticket_book.non_sql_long_title)
   end
 
   def new
@@ -104,7 +104,7 @@ class TicketBooksController < ManagerController
 
     if @ticket_book.save
       flash[:success] = t('flash.ticket_books.create.success',
-                          :title => @ticket_book.unique_title)
+                          :title => @ticket_book.non_sql_long_title)
       redirect_to :action => :show, :id => @ticket_book
     else
       flash.now[:error] = t('flash.ticket_books.create.failure')
@@ -118,7 +118,7 @@ class TicketBooksController < ManagerController
 
     if @ticket_book.update_attributes(params[:ticket_book])
       flash[:notice] = t('flash.ticket_books.update.success',
-                         :title => @ticket_book.unique_title)
+                         :title => @ticket_book.non_sql_long_title)
       redirect_to :action => :show, :id => @ticket_book
     else
       flash.now[:error] = t('flash.ticket_books.update.failure')
@@ -132,7 +132,7 @@ class TicketBooksController < ManagerController
     @ticket_book.destroy
 
     flash[:notice] = t('flash.ticket_books.destroy.success',
-                       :title => @ticket_book.unique_title)
+                       :title => @ticket_book.non_sql_long_title)
 
     redirect_to :action => :index
   end
@@ -153,7 +153,7 @@ class TicketBooksController < ManagerController
       @column_types = TicketBook.attribute_db_types
 
       @title =  t('ticket_books.edit.title',
-                  :title => @ticket_book.unique_title)
+                  :title => @ticket_book.non_sql_long_title)
 
       render :edit
     end

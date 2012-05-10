@@ -22,7 +22,7 @@
 
   = render 'shared/sections/data_section_in_overview',
            :models                => @ticket_books,
-           :name_method           => :short_title,
+           :name_method           => :non_sql_long_title,
            :i18n_controller_scope => 'ticket_books',
            :index_path            => ticket_books_path,
            :new_path              => new_ticket_book_path,

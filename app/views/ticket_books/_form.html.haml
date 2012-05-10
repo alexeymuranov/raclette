@@ -4,6 +4,14 @@
   = render 'shared/error_messages/validation', :target => @ticket_book
 
   %dl.form_fields
+    .dl_item.field
+      %dt
+        = t 'formats.attribute_name:',
+            :attribute => TicketBook.human_attribute_name(:membership_type)
+      %dd{ :class => 'input' }
+        = f.select_for_belongs_to :membership_type,
+                                  MembershipType, :unique_title
+
     - @attributes.each do |attribute|
 
       = render 'shared/forms/attribute',
