@@ -371,13 +371,13 @@ fr:
       header: "Encadrement de cours"
     show:
       title: "%{title}"
-      header: "Encadrement de cours %{title}"
+      header: "Encadrement de cours par %{title}"
     new:
       title: "Nouveau encadrement de cours"
       header: "Ajouter un encadrement de cours"
     edit:
       title: "%{title} - mise à jour"
-      header: "Mise à jour de l'encadrement de cours %{title}"
+      header: "Mise à jour de l'encadrement de cours par %{title}"
 
   members:
     index:

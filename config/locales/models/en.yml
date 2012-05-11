@@ -84,8 +84,9 @@ en:
         employed_until: "Employed until"
       lesson_supervision: &lesson_supervision_attributes
         unique_names: "Name(s)"
-        instructors_count: "Instructors"
+        instructors_count: "Instructors number"
         comment: "Comment"
+        instructors: "Instructors"
       member:
         # person:
         #   <<: *person_attributes

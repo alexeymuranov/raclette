@@ -84,8 +84,9 @@ fr:
         employed_until: "Travaille jusqu'au"
       lesson_supervision: &lesson_supervision_attributes
         unique_names: "Nom(s)"
-        instructors_count: "Professeurs"
+        instructors_count: "Quantité de professeurs"
         comment: "Remarque"
+        instructors: "Professeurs"
       member:
         # person:
         #   <<: *person_attributes

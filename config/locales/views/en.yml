@@ -371,13 +371,13 @@ en:
       header: "Lesson Supervisions"
     show:
       title: "%{title}"
-      header: "%{title}"
+      header: "Lesson supervision by %{title}"
     new:
       title: "New lesson supervision"
       header: "New lesson supervision"
     edit:
       title: "Update %{title}"
-      header: "Update lesson supervision %{title}"
+      header: "Update lesson supervision by %{title}"
 
   members:
     index:
