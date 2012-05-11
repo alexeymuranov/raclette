@@ -1,6 +1,13 @@
 ## encoding: UTF-8
 
+require 'app_active_record_extensions/filtering'
+require 'app_active_record_extensions/sorting'
+
 class LessonSupervision < ActiveRecord::Base
+  include Filtering
+  include Sorting
+
+  include AbstractSmarterModel
 
   attr_readonly :id, :unique_names, :instructors_count
 
@@ -28,6 +35,9 @@ class LessonSupervision < ActiveRecord::Base
                       :allow_nil => true
 
   validates :unique_names, :uniqueness => { :case_sensitive => false }
+
+  # Scopes:
+  scope :default_order, order('instructors_count ASC, unique_names ASC')
 end
 # == Schema Information
 #

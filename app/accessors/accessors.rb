@@ -247,6 +247,14 @@ module Accessors
                      # :instructors_count,
                      # :comment
                    # )
+    has_many :instructors, :class_name => :Instructor,
+                           :through    => :lesson_instructors
+
+    include ControllerAware
+
+    def self.controller_class
+      LessonSupervisionsController
+    end
   end
 
   class Member < ::Member
