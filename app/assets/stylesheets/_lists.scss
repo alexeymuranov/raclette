@@ -42,7 +42,7 @@ dl.form_fields, dl.show {
       color: $data-color;
     }
 
-    dd.long_text {
+    dd.long_text, dd.select_multiple {
       vertical-align: top;
     }
 
