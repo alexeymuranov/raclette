@@ -19,5 +19,7 @@ class SecretaryToolsController < SecretaryController
     else
       @events = Event.default_order
     end
+
+     @lesson_supervisions = LessonSupervision.default_order
   end
 end

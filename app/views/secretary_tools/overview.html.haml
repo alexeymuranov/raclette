@@ -20,6 +20,14 @@
            :new_path              => new_event_path,
            :show_path_method      => method(:event_path)
 
+  = render 'shared/sections/data_section_in_overview',
+           :models                => @lesson_supervisions,
+           :name_method           => :unique_names,
+           :i18n_controller_scope => 'lesson_supervisions',
+           :index_path            => lesson_supervisions_path,
+           :new_path              => new_lesson_supervision_path,
+           :show_path_method      => method(:lesson_supervision_path)
+
 %section
 
   %h2= t 'headers.tools'

@@ -4,11 +4,11 @@ require 'app_active_record_extensions/filtering'
 require 'app_active_record_extensions/sorting'
 
 class Instructor < ActiveRecord::Base
+  self.primary_key = 'person_id'
+
   include Filtering
   include Sorting
   self.default_sorting_column = :ordered_full_name
-
-  self.primary_key = 'person_id'
 
   include AbstractPerson
 

@@ -136,7 +136,8 @@ class EventsController < SecretaryController
     if @event.save
       flash[:success] = t('flash.events.create.success',
                           :title => @event.title)
-      redirect_to :action => :show, :id => @event
+      redirect_to :action => :show,
+                  :id     => @event
     else
       flash.now[:error] = t('flash.events.create.failure')
 

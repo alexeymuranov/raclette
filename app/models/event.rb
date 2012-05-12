@@ -2,14 +2,14 @@
 
 require 'app_active_record_extensions/filtering'
 require 'app_active_record_extensions/sorting'
-require 'app_parsers/time_duration_parser'
+# require 'app_parsers/time_duration_parser'
 require 'app_validations/event'
 
 class Event < ActiveRecord::Base
   include Filtering
   include Sorting
   self.default_sorting_column = :date
-  include TimeDurationParser
+  # include TimeDurationParser
 
   include AbstractSmarterModel
 

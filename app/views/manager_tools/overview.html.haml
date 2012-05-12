@@ -5,14 +5,6 @@
   %h2= t 'headers.data'
 
   = render 'shared/sections/data_section_in_overview',
-           :models                => @events,
-           :name_method           => :title,
-           :i18n_controller_scope => 'events',
-           :index_path            => events_path,
-           :new_path              => new_event_path,
-           :show_path_method      => method(:event_path)
-
-  = render 'shared/sections/data_section_in_overview',
            :models                => @weekly_events,
            :name_method           => :title,
            :i18n_controller_scope => 'weekly_events',

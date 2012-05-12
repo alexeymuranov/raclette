@@ -49,7 +49,7 @@ class Admin::KnownIPsController < AdminController
 
   def show
     @known_ip = KnownIP.find(params[:id])
-    @attributes = [ :ip, :description ]
+    @attributes = [:ip, :description]
 
     @safe_users_attributes = [ :username,
                                :full_name,

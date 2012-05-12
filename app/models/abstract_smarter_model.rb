@@ -1,4 +1,4 @@
-module AbstractSmarterModel  # NOTE:WIP
+module AbstractSmarterModel
   def self.included(base)
     base.extend ClassMethods
   end

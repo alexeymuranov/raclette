@@ -130,17 +130,15 @@ class MembersController < SecretaryController
       end
 
       requested_format.ms_excel_2003_xml do
-        render_ms_excel_2003_xml_for_download\
-            @members,
-            @attributes,
-            @column_headers  # defined in ApplicationController
+        render_ms_excel_2003_xml_for_download @members,
+                                              @attributes,
+                                              @column_headers
       end
 
       requested_format.csv do
-        render_csv_for_download\
-            @members,
-            @attributes,
-            @column_headers  # defined in ApplicationController
+        render_csv_for_download @members,
+                                @attributes,
+                                @column_headers
       end
     end
   end
@@ -165,11 +163,9 @@ class MembersController < SecretaryController
     @column_types = Member.attribute_db_types
     # set_column_headers
 
-    @attended_events_attributes = [ :title, :event_type,
-                                    :date,
-                                    :start_time ]
+    @attended_events_attributes = [ :title, :event_type, :date, :start_time ]
     @attended_events = @member.attended_events
-    set_events_column_types
+    @events_column_types = Event.attribute_db_types
     set_events_column_headers
 
     @memberships_attributes = [:title, :duration_months, :end_date]
@@ -189,15 +185,14 @@ class MembersController < SecretaryController
   end
 
   def edit
-    @member = Member.joins(:person).with_virtual_attributes(:full_name)\
-                    .find(params[:id])
+    @member = Member.joins(:person).with_virtual_attributes(:full_name).
+                     find(params[:id])
     render_edit_properly
   end
 
   def create
 
-    params[:member].delete(:email)\
-        if params[:member][:email].blank?
+    params[:member].delete(:email) if params[:member][:email].blank?
 
     # Because members primary key works as foreign key for people
     # (this is not recommended in general),
@@ -208,8 +203,8 @@ class MembersController < SecretaryController
     # assign the foreign key manually, and then save the member.
     @person = Person.new
     @member = Member.new
-    params[:member][:person_attributes].delete(:email)\
-      if params[:member][:person_attributes][:email].blank?
+    params[:member][:person_attributes].delete(:email) if
+      params[:member][:person_attributes][:email].blank?
 
     @person.assign_attributes(params[:member][:person_attributes])
     @member.assign_attributes(params[:member].except(:person_attributes))
@@ -226,7 +221,8 @@ class MembersController < SecretaryController
     if @member.save
       flash[:success] = t('flash.members.create.success',
                           :name => @member.non_sql_full_name)
-      redirect_to :action => :show, :id => @member
+      redirect_to :action => :show,
+                  :id     => @member
     else
       flash.now[:error] = t('flash.members.create.failure')
 
@@ -235,16 +231,18 @@ class MembersController < SecretaryController
   end
 
   def update
-    @member = Member.joins(:person).with_virtual_attributes(:full_name)\
-                    .find(params[:id])
+    @member = Member.joins(:person).with_virtual_attributes(:full_name).
+                     find(params[:id])
 
-    params[:member][:person_attributes].delete(:email)\
-        if params[:member][:person_attributes][:email].blank?
+    params[:member][:person_attributes].delete(:email) if
+      params[:member][:person_attributes][:email].blank?
 
     if @member.update_attributes(params[:member])
       flash[:notice] = t('flash.members.update.success',
                          :name => @member.full_name)
-      redirect_to :action => :show, :id => @member
+
+      redirect_to :action => :show,
+                  :id     => @member
     else
       flash.now[:error] = t('flash.members.update.failure')
 
@@ -305,10 +303,10 @@ class MembersController < SecretaryController
 
     def set_events_column_headers
       @events_column_headers = {}
-      @events_column_types.each do |attr, type|
+      @attended_events_attributes.each do |attr|
         human_name = Event.human_attribute_name(attr)
 
-        case type
+        case @events_column_types[attr]
         when :boolean
           @events_column_headers[attr] = I18n.t('formats.attribute_name?',
                                                 :attribute => human_name)
