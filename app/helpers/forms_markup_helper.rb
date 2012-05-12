@@ -90,9 +90,6 @@ module FormsMarkupHelper
       reflection = klass.reflect_on_association(assoc_name)
       foreign_key = reflection.foreign_key
 
-      choices =
-        collection.all.collect { |m| [m.public_send(text_method), m.id] }
-
       required =
         klass.validators_on(foreign_key).map(&:class).
               include?(ActiveModel::Validations::PresenceValidator)
@@ -101,30 +98,28 @@ module FormsMarkupHelper
         options[:include_blank] = true
       end
 
-      select(foreign_key, choices, options, html_options)
+      collection_select(foreign_key, collection.all, :id, text_method,
+                        options, html_options)
     end
 
-    # FIXME:untested
     def select_for_habtm(assoc_name, collection, text_method,
                          options = {}, html_options = {})
       klass = object.class
       reflection = klass.reflect_on_association(assoc_name)
-      ids_attr_name = "#{reflection.name.to_s.singularize}_ids"
+      ids_attr_name = "#{ reflection.name.to_s.singularize }_ids"
 
-      choices =
-        collection.all.collect { |m| [m.public_send(text_method), m.id] }
+      html_options[:multiple] = true
 
-      unless options.key?(:include_blank)
-        options[:include_blank] = true
-      end
+      options.delete(:include_blank)
 
-      select("#{ ids_attr_name }[]", choices, options, html_options)
+      collection_select(ids_attr_name, collection.all, :id, text_method,
+                        options, html_options)
     end
 
     # Useful web page:
     # http://code.alexreisner.com/articles/form-builders-in-rails.html
     #
-    # input_field_helpers = field_helpers - %w(label check_box radio_button fields_for hidden_field)
+    # input_field_helpers = field_helpers - %w[label check_box radio_button fields_for hidden_field]
     # input_field_helpers.each do |helper|
     #   define_method helper do |field, *args|
     #     options = args.detect{ |a| a.is_a?(Hash) } || {}
