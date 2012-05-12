@@ -1,0 +1,15 @@
+= form_for @lesson_supervision, :as  => :lesson_supervision,
+                                :url => @lesson_supervision_form_url do |f|
+
+  = render 'shared/error_messages/validation', :target => @lesson_supervision
+
+  %dl.form_fields
+    - @attributes.each do |attribute|
+
+      = render 'shared/forms/attribute',
+               :form_builder => f,
+               :attribute    => attribute,
+               :column_type  => @column_types[attribute]
+
+  .actions
+    = f.submit

@@ -9,7 +9,9 @@ class LessonSupervision < ActiveRecord::Base
 
   include AbstractSmarterModel
 
-  attr_readonly :id, :unique_names, :instructors_count
+  # XXX: temporary workaround to override 'counter cache':
+  # attr_readonly :id, :unique_names, :instructors_count
+  attr_readonly :id, :unique_names
 
   # Associations:
   has_many :lesson_instructors, :dependent  => :destroy,

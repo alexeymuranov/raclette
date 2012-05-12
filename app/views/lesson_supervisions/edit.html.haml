@@ -1,4 +1,18 @@
-%h1
-  LessonSupervisions#edit
-%p
-  Find me in app/views/lesson_supervisions/edit.html.erb
+%h1= t '.header', :title => @lesson_supervision.unique_names
+- @lesson_supervision_form_url = lesson_supervision_path(@lesson_supervision)
+
+= render 'edit_form'
+
+%footer
+  = link_to show_pictogram(3) + ' ' + t('lesson_supervisions.show.header',
+                                        :title => @lesson_supervision.unique_names),
+            lesson_supervision_path(@lesson_supervision),
+            :class => 'display resource'
+  = link_to list_all_pictogram(3) + ' ' + t('lesson_supervisions.index.header'),
+            lesson_supervisions_path,
+            :class => 'display resource'
+  - content_for :side_menu_list_items do
+    %li
+      = link_to list_all_pictogram + ' ' + t('lesson_supervisions.index.title'),
+                lesson_supervisions_path,
+                :class => 'display resource'

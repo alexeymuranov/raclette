@@ -1,4 +1,39 @@
-%h1
-  LessonSupervisions#show
-%p
-  Find me in app/views/lesson_supervisions/show.html.erb
+%h1= t '.header', :title => @lesson_supervision.unique_names
+%section
+  %dl.show
+    - @attributes.each do |attr|
+
+      = render 'shared/lists/attribute_in_show',
+               :model       => @lesson_supervision,
+               :attribute   => attr,
+               :column_type => @column_types[attr]
+
+%section
+  %h2= LessonSupervision.human_attribute_name(:instructors)
+
+  - unless @instructors.empty?
+    = render('shared/tables/simple_index',
+             :models                    => @instructors,
+             :attributes                => @instructors_attributes,
+             :column_types              => @instructors_column_types,
+             :column_headers            => @instructors_column_headers,
+             :html_table_id             => :instructors)
+
+%footer
+  = link_to edit_pictogram(3) + ' ' + t('lesson_supervisions.edit.header',
+                                        :title => @lesson_supervision.unique_names),
+            edit_lesson_supervision_path(@lesson_supervision),
+            :class => 'modify resource'
+  = link_to list_all_pictogram(3) + ' ' + t('lesson_supervisions.index.header'),
+            lesson_supervisions_path,
+            :class => 'display resource'
+  - content_for :side_menu_list_items do
+    %li
+      = link_to list_all_pictogram + ' ' + t('lesson_supervisions.index.title'),
+                lesson_supervisions_path,
+                :class => 'display resource'
+    %li
+      = link_to add_pictogram + ' ' + t('lesson_supervisions.new.title'),
+                new_lesson_supervision_path,
+                :title => t('actions.create'),
+                :class => 'add resource'

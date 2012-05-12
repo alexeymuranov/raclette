@@ -1,4 +1,29 @@
-%h1
-  LessonSupervisions#index
-%p
-  Find me in app/views/lesson_supervisions/index.html.erb
+%hgroup
+  %h1= t '.header'
+  %h2#lesson_supervisions_count
+    - if @filtering_values.blank?
+      = t '.count_total', :count => TicketBook.count
+    - else
+      = t '.count_filtered', :count => @filtered_lesson_supervisions_count,
+                             :total => TicketBook.count
+#lesson_supervisions_table
+
+  = render 'shared/tables/filtered_index',
+           :models           => @lesson_supervisions,
+           :attributes       => @attributes,
+           :column_types     => @column_types,
+           :column_headers   => @column_headers,
+           :html_table_id    => :lesson_supervisions,
+           :filtering_values => @filtering_values
+
+%footer
+  = link_to add_pictogram(2) + ' ' + t('lesson_supervisions.new.header'),
+            new_lesson_supervision_path,
+            :title => t('actions.create'),
+            :class => 'add resource'
+  - content_for :side_menu_list_items do
+    %li
+      = link_to add_pictogram + ' ' + t('lesson_supervisions.new.title'),
+                new_lesson_supervision_path,
+                :title => t('actions.create'),
+                :class => 'add resource'
