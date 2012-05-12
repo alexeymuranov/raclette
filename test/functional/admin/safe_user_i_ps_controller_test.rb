@@ -20,7 +20,7 @@ class Admin::SafeUserIPsControllerTest < ActionController::TestCase
 
   test "should get edit_all" do
     session[:user_id] = @user_admin.to_param
-    get :edit_all, { :id => @safe_user_ip.to_param }
+    get :edit_all
     assert_response :success
   end
 
