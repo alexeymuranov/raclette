@@ -6,7 +6,7 @@ source 'https://rubygems.org'
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
 
 # Bundle my "fixed" Rails branch on GitHub instead:
-gem 'rails', '~> 3.2.0', :git => 'git://github.com/alexeymuranov/rails.git', :branch => 'backport-to-3-2-2'
+gem 'rails', '~> 3.2.0', :git => 'git://github.com/alexeymuranov/rails.git', :branch => 'backport-to-3-2'
 
 # Bundle Rails from my local directory instead:
 # gem 'rails', '~> 3.2.0', :path => "~/Development/rails"
@@ -20,7 +20,7 @@ gem 'kaminari'  # pagination
 
 # gem 'inherited_resources'  # for lazy resourceful controllers
 
-gem 'param_protected'  # for filtering params in the controllers
+# gem 'param_protected'  # for filtering params in the controllers
 gem 'strong_parameters'  # a simpler alternative for mass assignement security
 gem 'focused_controller'  # alternative way to define and use controllers
 

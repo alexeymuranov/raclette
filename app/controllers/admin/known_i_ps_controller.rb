@@ -26,7 +26,7 @@ class Admin::KnownIPsController < AdminController
     self.default_sorting_column = :ip
   end
 
-  param_accessible /.+/
+  # param_accessible /.+/
   # param_accessible [{ 'known_ip' => ['ip', 'description'] }],
   #                  :only => [:create, :update]
   # param_accessible 'id', :only => :update

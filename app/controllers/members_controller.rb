@@ -43,7 +43,7 @@ class MembersController < SecretaryController
     self.default_sorting_column = :ip
   end
 
-  param_accessible /.+/
+  # param_accessible /.+/
   # param_accessible [{ 'member' => [ 'person_attributes',
   #                                   'last_name', 'first_name', 'name_title',
   #                                   'nickname_or_other', 'email',

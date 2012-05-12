@@ -9,7 +9,7 @@ class RegisterController < ApplicationController
     self.default_sorting_column = :ordered_full_name
   end
 
-  param_accessible /.+/
+  # param_accessible /.+/
 
   def choose_person
     @query_type = params[:query_type]

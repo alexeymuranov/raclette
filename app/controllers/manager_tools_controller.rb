@@ -2,7 +2,7 @@
 
 class ManagerToolsController < ManagerController
 
-  param_accessible /.+/
+  # param_accessible /.+/
 
   def overview
     @weekly_events = WeeklyEvent.default_order

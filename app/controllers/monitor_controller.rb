@@ -2,7 +2,7 @@
 
 class MonitorController < ApplicationController
 
-  param_accessible /.+/
+  # param_accessible /.+/
 
   def overview
     # @members_count = Member.count

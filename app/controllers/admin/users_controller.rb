@@ -26,7 +26,7 @@ class Admin::UsersController < AdminController
     self.default_sorting_column = :ip
   end
 
-  param_accessible /.+/
+  # param_accessible /.+/
   # param_accessible [{ 'user' => [ 'username', 'full_name', 'email',
   #                                 'account_deactivated',
   #                                 'admin', 'manager', 'secretary', 'a_person',

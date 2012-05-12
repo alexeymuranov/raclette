@@ -3,7 +3,7 @@
 class SessionsController < ApplicationController
   skip_before_filter :require_login, :only => [:new, :create]
 
-  param_accessible ['username', 'password'], :only => :create
+  # param_accessible ['username', 'password'], :only => :create
 
   def new
     # @session = ActiveRecord::SessionStore::Session.new  # how to use SessionStore?

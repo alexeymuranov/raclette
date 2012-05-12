@@ -19,7 +19,7 @@ class LessonSupervisionsController < SecretaryController
     self.default_sorting_column = :first_name
   end
 
-  param_accessible /.+/
+  # param_accessible /.+/
 
   def index
     @query_type = params[:query_type]

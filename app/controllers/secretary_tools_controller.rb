@@ -2,7 +2,7 @@
 
 class SecretaryToolsController < SecretaryController
 
-  param_accessible /.+/
+  # param_accessible /.+/
 
   def overview
     member_count = Member.count
