@@ -7,7 +7,8 @@ class MemberMembership < ActiveRecord::Base
   # Associations:
   belongs_to :member, :inverse_of => :member_memberships
 
-  belongs_to :membership, :inverse_of => :member_memberships
+  belongs_to :membership, :inverse_of    => :member_memberships,
+                          :counter_cache => :members_count
 
   # Validations:
   validates :member_id, :membership_id, :obtained_on,
