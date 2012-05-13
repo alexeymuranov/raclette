@@ -1,0 +1,54 @@
+-# Locals:
+-#   klass:
+-#   associated_models1:
+-#   associated_models2:
+-#   find_by_ids_method:
+-#   attribute_presentation_helper:
+-#   key1:
+-#   key2:
+-#   description1:
+-#   description2:
+
+%table.grid
+  %caption
+  %colgroup
+    %col
+  %colgroup
+    - associated_models2.size.times do
+      %col
+  %thead
+    %tr
+      %th.empty
+      - associated_models2.each do |mod2|
+        %th
+          = link_to mod2.public_send(key2),
+                    { :controller => mod2.controller_path,
+                      :action     => :show,
+                      :id         => mod2 },
+                    :title => mod2.public_send(description2),
+                    :class => 'display resource'
+  %tbody
+    - associated_models1.each do |mod1|
+      %tr
+        %th{:scope => "row"}
+          = link_to mod1.public_send(key1),
+                    { :controller => mod1.controller_path,
+                      :action     => :show,
+                      :id         => mod1 },
+                    :title => mod1.public_send(description1),
+                    :class => 'display resource'
+        - associated_models2.each do |mod2|
+          %td.grid_index
+            - if model = klass.public_send(find_by_ids_method, mod1.id, mod2.id)
+              = link_to send(attribute_presentation_helper, model),
+                        { :controller => model.controller_path,
+                          :action     => :show,
+                          :id         => model },
+                        :title => t('actions.read'),
+                        :class => 'display resource'
+            - else
+              = link_to add_pictogram(2) + ' ' + t('actions.create'),
+                        { :controller => klass.controller_path,
+                          :action     => :new },
+                        :title => t('actions.create'),
+                        :class => 'add resource'
