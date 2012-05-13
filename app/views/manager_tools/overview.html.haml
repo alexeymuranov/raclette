@@ -20,6 +20,15 @@
            :new_path              => new_ticket_book_path,
            :show_path_method      => method(:ticket_book_path)
 
+  -# FIXME:
+  = render 'shared/sections/data_section_in_overview',
+           :models                => @memberships,
+           :name_method           => nil,
+           :i18n_controller_scope => 'memberships',
+           :index_path            => memberships_path,
+           :new_path              => false,
+           :show_path_method      => false
+
   = render 'shared/sections/data_section_in_overview',
            :models                => @membership_types,
            :name_method           => :unique_title,
