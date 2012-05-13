@@ -12,7 +12,7 @@ class Person < ActiveRecord::Base
   has_many :users, :dependent  => :nullify,
                    :inverse_of => :person
 
-  has_one :statement, :class_name => 'PersonalStatement',
+  has_one :statement, :class_name => :PersonalStatement,
                       :dependent  => :destroy,
                       :inverse_of => :person
 
@@ -38,17 +38,17 @@ class Person < ActiveRecord::Base
   has_many :event_cashiers, :dependent  => :nullify,
                             :inverse_of => :person
 
-  belongs_to :primary_address, :class_name => 'Address',
+  belongs_to :primary_address, :class_name => :Address,
                                :inverse_of => :people
 
   accepts_nested_attributes_for :primary_address, :statement
 
   # Validations
   validates :last_name, :first_name,
-                :presence => true
+            :presence => true
 
   validates :last_name, :first_name, :nickname_or_other,
-                :length => { :maximum => 32 }
+            :length => { :maximum => 32 }
 
   validates :name_title, :length    => { :maximum => 16 },
                          :inclusion => %w[ M. Mlle. Mme. ],
@@ -66,28 +66,27 @@ class Person < ActiveRecord::Base
                 :allow_nil => true
 
   validates :nickname_or_other,
-                :uniqueness => { :scope => [ :last_name, :first_name ] }
+            :uniqueness => { :scope => [ :last_name, :first_name ] }
 
   # Public class methods
   def self.sql_for_attributes  # Extendes the one in AbstractSmarterModel
     unless @sql_for_attributes
       super
 
-      full_name_sql         =  "(#{super[:name_title]} || ' ' || "\
-                               "#{super[:first_name]} || ' ' || "\
-                               "#{super[:last_name]})"
+      full_name_sql         =  "(#{ super[:name_title] } || ' ' || "\
+                               "#{ super[:first_name] } || ' ' || "\
+                               "#{ super[:last_name] })"
 
-      ordered_full_name_sql = "(UPPER(#{super[:last_name]}) || ', ' || "\
-                              "#{super[:first_name]} || ', ' || "\
-                              "#{super[:name_title]})"
+      ordered_full_name_sql = "(UPPER(#{ super[:last_name] }) || ', ' || "\
+                              "#{ super[:first_name] } || ', ' || "\
+                              "#{ super[:name_title] })"
 
-      formatted_email_sql   = "(#{full_name_sql} || "\
-                              "' <' || #{super[:email]} || '>')"
+      formatted_email_sql   = "(#{ full_name_sql } || "\
+                              "' <' || #{ super[:email] } || '>')"
 
-      @sql_for_attributes.merge!(
-          :full_name         => full_name_sql,
-          :ordered_full_name => ordered_full_name_sql,
-          :formatted_email   => formatted_email_sql )
+      @sql_for_attributes.merge! :full_name         => full_name_sql,
+                                 :ordered_full_name => ordered_full_name_sql,
+                                 :formatted_email   => formatted_email_sql
     end
     @sql_for_attributes
   end
@@ -104,15 +103,16 @@ class Person < ActiveRecord::Base
   end
 
   # Scopes
-  scope :default_order, order("UPPER(#{sql_for_attributes[:last_name]}) ASC, "\
-                              "UPPER(#{sql_for_attributes[:first_name]}) ASC")
+  scope :default_order,
+        order("UPPER(#{ sql_for_attributes[:last_name] }) ASC, "\
+              "UPPER(#{ sql_for_attributes[:first_name] }) ASC")
 
   # Public instance methods
   # Non-SQL virtual attributes
   def non_sql_full_name
     [ name_title,
       first_name,
-      nickname_or_other.blank? ? nil : "'#{nickname_or_other}'",
+      nickname_or_other.blank? ? nil : "'#{ nickname_or_other }'",
       last_name ].reject(&:blank?).join(' ')
   end
 

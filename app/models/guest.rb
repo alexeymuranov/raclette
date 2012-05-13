@@ -11,7 +11,7 @@ class Guest
   validates :first_name, :presence => true
 
   validates :first_name, :last_name,
-                :length => { :maximum => 32 }
+            :length => { :maximum => 32 }
 
   validates :email, :length       => { :maximum => 255 },
                     :email_format => true,
@@ -28,7 +28,7 @@ class Guest
     @attributes = {}
     attributes.each_pair do |name, value|
       name = name.to_sym
-      public_send("#{name}=", value)
+      public_send("#{ name }=", value)
       @attributes[name] = public_send(name)
     end unless attributes.nil?
   end

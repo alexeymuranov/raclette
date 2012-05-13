@@ -11,14 +11,12 @@ class MembershipsController < ManagerController # FIXME!
   end
 
   class MembershipType < MembershipType
-    self.all_sorting_columns = [ :username,
-                                 :full_name,
-                                 :account_deactivated,
-                                 :admin,
-                                 :manager,
-                                 :secretary,
-                                 :a_person ]
-    self.default_sorting_column = :username
+    self.all_sorting_columns = [ :unique_title,
+                                 :duration_months,
+                                 :active,
+                                 :reduced,
+                                 :unlimited ]
+    self.default_sorting_column = :unique_title
   end
 
   class ActivityPeriod < self::ActivityPeriod

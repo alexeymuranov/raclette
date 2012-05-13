@@ -22,7 +22,7 @@ class TicketBook < ActiveRecord::Base
 
   # Validations:
   validates :membership_type_id, :tickets_number, :price,
-                :presence => true
+            :presence => true
 
   validates :price, :numericality => { :greater_than => 0 }
 

@@ -12,7 +12,7 @@ class MemberEntry < ActiveRecord::Base
 
   # Validations:
   validates :member_id, :guests_invited, :tickets_used,
-                :presence => true
+            :presence => true
 
   validates :guests_invited, :inclusion => 0..10
 

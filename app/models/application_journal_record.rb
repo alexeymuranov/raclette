@@ -13,7 +13,7 @@ class ApplicationJournalRecord < ActiveRecord::Base
 
   # Validations:
   validates :action, :username, :ip, :something_type, :generated_at,
-                :presence => true
+            :presence => true
 
   validates :action, :length => { :maximum => 64 }
 

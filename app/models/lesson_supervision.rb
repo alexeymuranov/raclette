@@ -27,7 +27,7 @@ class LessonSupervision < ActiveRecord::Base
 
   # Validations:
   validates :unique_names, :instructors_count,
-                :presence => true
+            :presence => true
 
   validates :unique_names, :length => 1..128
 

@@ -45,8 +45,8 @@ class Event < ActiveRecord::Base
                                            Initiation ]
 
   validates :title, :location,
-                :length    => { :maximum => 64 },
-                :allow_nil => true
+            :length    => { :maximum => 64 },
+            :allow_nil => true
 
   # validates :start_time, :end_time,
   #               :length    => { :maximum => 8 }, # may allow to use AM/PM
@@ -63,20 +63,20 @@ class Event < ActiveRecord::Base
                                 :allow_nil => true
 
   validates :member_entry_fee, :couple_entry_fee, :common_entry_fee,
-                :numericality => { :greater_than_or_equal_to => 0 },
-                :allow_nil    => true
+            :numericality => { :greater_than_or_equal_to => 0 },
+            :allow_nil    => true
 
   validates :entries_count, :member_entries_count,
-                :inclusion => 0..10000,
-                :allow_nil => true
+            :inclusion => 0..10000,
+            :allow_nil => true
 
   validates :tickets_collected,
-                :numericality => { :greater_than_or_equal_to => 0 },
-                :allow_nil    => true
+            :numericality => { :greater_than_or_equal_to => 0 },
+            :allow_nil    => true
 
   validates :entry_fees_collected,
-                :numericality => { :greater_than_or_equal_to => 0 },
-                :allow_nil    => true
+            :numericality => { :greater_than_or_equal_to => 0 },
+            :allow_nil    => true
 
   validates :description, :length    => { :maximum => 255 },
                           :allow_nil => true
@@ -96,8 +96,7 @@ class Event < ActiveRecord::Base
     unless @sql_for_attributes
       super
 
-      long_title_sql = "(#{super[:date]} || ': ' || "\
-                       "#{super[:title]})"
+      long_title_sql = "(#{ super[:date] } || ': ' || #{ super[:title] })"
 
       @sql_for_attributes[:long_title] = long_title_sql
     end
@@ -126,12 +125,12 @@ class Event < ActiveRecord::Base
       date = nil if date && date.wday != weekly_event.week_day
 
       common_attribute_names.each do |attr_name|
-        send "#{attr_name}=", weekly_event.public_send(attr_name)
+        send "#{ attr_name }=", weekly_event.public_send(attr_name)
       end
       self.weekly = true
     else
       common_attribute_names.each do |attr_name|
-        send "#{attr_name}=", nil
+        send "#{ attr_name }=", nil
       end
       self.weekly = false
     end

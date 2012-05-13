@@ -24,7 +24,8 @@ module AbstractPerson  # NOTE:WIP
                   :to => :person
 
     # Validations
-    base.validates :person_id, :presence => true, :uniqueness => true
+    base.validates :person_id, :presence   => true,
+                               :uniqueness => true
 
     # Scopes
     base.scope :default_order, base.joins(:person).merge(Person.default_order)

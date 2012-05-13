@@ -27,7 +27,7 @@ class Admin::User < ActiveRecord::Base
 
   # Validations:
   validates :username, :full_name,
-                :presence => true
+            :presence => true
 
   validates :password, :confirmation => true,
                        :length       => { :maximum => 128 },

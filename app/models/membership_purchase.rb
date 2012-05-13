@@ -19,7 +19,7 @@ class MembershipPurchase < ActiveRecord::Base
   # Validations:
   validates :member_id, :membership_type, :membership_expiration_date,
             :purchase_date,
-                :presence => true
+            :presence => true
 
   validates :membership_type, :length => { :maximum => 32 }
 

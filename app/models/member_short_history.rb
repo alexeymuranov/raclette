@@ -11,7 +11,7 @@ class MemberShortHistory < ActiveRecord::Base
   # Validations:
   validates :member_id, :prev_membership_expiration_date,
             :prev_membership_type, :prev_membership_duration_months,
-                :presence => true
+            :presence => true
 
   validates :prev_membership_type, :length    => { :maximum => 32 },
                                    :allow_nil => true

@@ -23,7 +23,7 @@ class MembershipType < ActiveRecord::Base
 
   # Validations:
   validates :unique_title, :duration_months,
-                :presence => true
+            :presence => true
 
   validates :unique_title, :length => 1..32
 
@@ -35,7 +35,7 @@ class MembershipType < ActiveRecord::Base
   validates :unique_title, :uniqueness => { :case_sensitive => false }
 
   validates :duration_months,
-                :uniqueness => { :scope => [ :active, :reduced, :unlimited ] }
+            :uniqueness => { :scope => [ :active, :reduced, :unlimited ] }
 
   # Scopes:
   scope :default_order, order('duration_months DESC, unique_title ASC')

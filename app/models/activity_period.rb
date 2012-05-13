@@ -23,7 +23,7 @@ class ActivityPeriod < ActiveRecord::Base
 
   # Validations:
   validates :unique_title, :start_date, :duration_months, :end_date,
-                :presence => true
+            :presence => true
 
   validates :unique_title, :length => 1..64
 

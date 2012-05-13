@@ -17,7 +17,7 @@ class EventEntry < ActiveRecord::Base
 
   # Validations:
   validates :participant_entry_type, :event_title, :date,
-                :presence => true
+            :presence => true
 
   validates :participant_entry_type, :length    => { :maximum => 32 },
                                      :inclusion => %w[ MemberEntry
@@ -26,8 +26,8 @@ class EventEntry < ActiveRecord::Base
   validates :event_title, :length => { :maximum => 64 }
 
   validates :participant_entry_id,
-                :uniqueness => { :scope => :participant_entry_type },
-                :allow_nil  => true
+            :uniqueness => { :scope => :participant_entry_type },
+            :allow_nil  => true
 
   validates :person_id, :uniqueness => { :scope => :event_id },
                         :allow_nil  => true

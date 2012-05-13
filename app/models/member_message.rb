@@ -9,7 +9,7 @@ class MemberMessage < ActiveRecord::Base
 
   # Validations:
   validates :member_id, :content, :created_on,
-                :presence => true
+            :presence => true
 
   validates :content, :length => { :maximum => 1024 }
 

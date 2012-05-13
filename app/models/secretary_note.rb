@@ -10,16 +10,16 @@ class SecretaryNote < ActiveRecord::Base
   # Validations:
   validates :note_type, :something_type, :something_id, :created_on,
             :message_updated_at,
-                :presence => true
+            :presence => true
 
   validates :note_type, :something_type,
-                :length => { :maximum => 32 }
+            :length => { :maximum => 32 }
 
   validates :message, :length    => { :maximum => 1024 },
                       :allow_nil => true
 
   validates :something_id,
-                :uniqueness => { :scope => [ :note_type, :something_type ] }
+            :uniqueness => { :scope => [ :note_type, :something_type ] }
 end
 # == Schema Information
 #

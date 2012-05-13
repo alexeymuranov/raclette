@@ -11,7 +11,7 @@ class EventCashier < ActiveRecord::Base
 
   # Validations:
   validates :name, :started_at,
-                :presence => true
+            :presence => true
 
   validates :name, :length => { :maximum => 64 }
 

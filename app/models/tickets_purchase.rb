@@ -14,7 +14,7 @@ class TicketsPurchase < ActiveRecord::Base
 
   # Validations:
   validates :member_id, :tickets_number, :purchase_date,
-                :presence  => true
+            :presence  => true
 
   validates :tickets_number, :inclusion => 1..1000
 end

@@ -42,7 +42,7 @@ class Instructor < ActiveRecord::Base
   # Non-SQL virtual attributes
   def non_sql_professional_name
     [ first_name,
-      nickname_or_other.blank? ? nil : "'#{nickname_or_other}'",
+      nickname_or_other.blank? ? nil : "'#{ nickname_or_other }'",
       last_name ].reject(&:blank?).join(' ')
   end
 end

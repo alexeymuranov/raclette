@@ -12,7 +12,7 @@ class RevenueAccount < ActiveRecord::Base
 
   # Validations:
   validates :unique_title, :opened_on, :amount, :amount_updated_on,
-                :presence => true
+            :presence => true
 
   validates :unique_title, :length => 1..64
 

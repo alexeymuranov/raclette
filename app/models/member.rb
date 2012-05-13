@@ -53,10 +53,9 @@ class Member < ActiveRecord::Base
   has_many :event_entries,   :through => :person
   has_many :attended_events, :through => :person
 
-  belongs_to :tickets_borrower,
-                 :foreign_key => :shares_tickets_with_member_id,
-                 :class_name  => :Member,
-                 :inverse_of  => :tickets_lender
+  belongs_to :tickets_borrower, :foreign_key => :shares_tickets_with_member_id,
+                                :class_name  => :Member,
+                                :inverse_of  => :tickets_lender
 
   accepts_nested_attributes_for :person
 
@@ -73,7 +72,7 @@ class Member < ActiveRecord::Base
   # Validations
   validates :person_id, :been_member_by,
             :payed_tickets_count, :free_tickets_count,
-                :presence => true
+            :presence => true
 
   validates :latest_membership_type, :length    => { :maximum => 32 },
                                      :allow_nil => true
@@ -98,20 +97,20 @@ class Member < ActiveRecord::Base
 
   # Public class methods
 
-  def self.sql_for_attributes  # Extends the one from AbstractSmarterModel
+  def self.sql_for_attributes
     unless @sql_for_attributes
       super
       tickets_count_sql =
-        "(#{super[:payed_tickets_count]} + #{super[:free_tickets_count]})"
-      @sql_for_attributes.merge!(:tickets_count => tickets_count_sql)
+        "(#{ super[:payed_tickets_count] } + #{ super[:free_tickets_count] })"
+      @sql_for_attributes[:tickets_count] = tickets_count_sql
     end
     @sql_for_attributes
   end
 
-  def self.attribute_db_types  # Extends the one from AbstractSmarterModel
+  def self.attribute_db_types
     unless @attribute_db_types
       super
-      @attribute_db_types.merge!(:tickets_count => :virtual_integer)
+      @attribute_db_types[:tickets_count] = :virtual_integer
     end
     @attribute_db_types
   end

@@ -13,7 +13,7 @@ class Admin::SafeUserIP < ActiveRecord::Base
 
   # Validations:
   validates :known_ip_id, :user_id,
-                :presence => true
+            :presence => true
 
   validates :known_ip_id, :uniqueness => { :scope => :user_id }
 

@@ -17,7 +17,7 @@ class Address < ActiveRecord::Base
 
   # Validations:
   validates :names, :country,
-                :presence => true
+            :presence => true
 
   validates :names, :length => { :maximum => 64 }
 

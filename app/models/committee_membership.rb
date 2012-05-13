@@ -9,7 +9,7 @@ class CommitteeMembership < ActiveRecord::Base
 
   # Validations:
   validates :person_id, :function, :start_date,
-                :presence => true
+            :presence => true
 
   validates :function, :length => 1..64
 

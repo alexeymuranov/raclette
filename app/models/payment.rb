@@ -12,17 +12,16 @@ class Payment < ActiveRecord::Base
   belongs_to :revenue_account, :inverse_of  => :payments
 
   belongs_to :payer, :foreign_key => :payer_person_id,
-                     :class_name  => 'Person',
+                     :class_name  => :Person,
                      :inverse_of  => :payments
 
   # Validations:
   validates :payable_type, :date, :amount,
-                :presence => true
+            :presence => true
 
   validates :payable_type, :length => { :maximum => 32 }
 
-  validates :amount,
-                :numericality => { :greater_than_or_equal_to => 0 }
+  validates :amount, :numericality => { :greater_than_or_equal_to => 0 }
 
   validates :method, :length    => { :maximum => 32 },
                      :inclusion => %w[ Cash Check CreditCard ],

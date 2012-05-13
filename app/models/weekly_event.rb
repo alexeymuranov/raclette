@@ -58,7 +58,7 @@ class WeeklyEvent < ActiveRecord::Base
                           :allow_nil => true
 
   validates :start_on, :end_on,
-                :uniqueness => { :scope => :title }
+            :uniqueness => { :scope => :title }
 
   # Callbacks:
 

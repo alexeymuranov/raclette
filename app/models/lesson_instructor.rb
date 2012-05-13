@@ -11,10 +11,10 @@ class LessonInstructor < ActiveRecord::Base
 
   # Validations:
   validates :lesson_supervision_id, :instructor_id,
-                :presence => true
+            :presence => true
 
   validates :instructor_id,
-                :uniqueness => { :scope => :lesson_supervision_id }
+            :uniqueness => { :scope => :lesson_supervision_id }
 end
 # == Schema Information
 #

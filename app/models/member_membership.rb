@@ -11,7 +11,7 @@ class MemberMembership < ActiveRecord::Base
 
   # Validations:
   validates :member_id, :membership_id, :obtained_on,
-                :presence => true
+            :presence => true
 
   validates :membership_id, :uniqueness => { :scope => :member_id }
 end
