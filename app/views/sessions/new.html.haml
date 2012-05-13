@@ -17,6 +17,7 @@
         %dt= t 'sessions.labels.your_ip_address'
         %dd= @client_ip
   .actions
-    = submit_tag t('.log_in_button')
-#welcome_logo
-  = logo(2)
+    %button{ :name  => 'button', :value => 'log_in',
+             :type  => 'submit', :class => 'image_button' }
+      #welcome_logo
+        = logo(2)
