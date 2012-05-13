@@ -31,7 +31,7 @@
     - human_name = klass.human_attribute_name(attribute)
 
     - case column_type
-    - when :boolean, :delegated_boolean, :virtual_boolean
+    - when :boolean
       - label_content = t('formats.attribute_name?', :attribute => human_name)
     - else
       - label_content = t('formats.attribute_name:', :attribute => human_name)
@@ -41,7 +41,7 @@
     - else
       %b= label_content
 
-  - if [:text, :delegated_text, :virtual_text].include? column_type
+  - if column_type == :text
     - input_parent_css_classes << 'long_text'
 
   = content_tag :dd, :class => input_parent_css_classes.join(' ') do
@@ -53,30 +53,30 @@
                               input_html_options
       - else
         - case column_type
-        - when :boolean, :delegated_boolean, :virtual_boolean
+        - when :boolean
           = form_builder.check_box attribute, input_html_options
-        - when :integer, :delegated_integer, :virtual_integer
+        - when :integer
           = form_builder.number_field attribute, input_html_options
-        - when :date, :delegated_date, :virtual_date
+        - when :date
           -# input_html_options[:type] = 'date'
           = form_builder.date_select attribute,
               { :include_blank => true,
                 :start_year    => Time.now.year - 1,
                 :end_year      => Time.now.year + 2 },
               input_html_options
-        - when :datetime, :delegated_datetime, :virtual_datetime
+        - when :datetime
           -# input_html_options[:type] = 'datetime-local'
           = form_builder.datetime_select attribute,
               { :include_blank => true,
                 :start_year    => Time.now.year - 1,
                 :end_year      => Time.now.year + 2 },
               input_html_options
-        - when :time, :delegated_time, :virtual_time
+        - when :time
           -# input_html_options[:type] = 'time-local'
           = form_builder.time_select attribute,
                                      { :include_blank => true },
                                      input_html_options
-        - when :text, :delegated_text, :virtual_text
+        - when :text
           = form_builder.text_area attribute, input_html_options
         - else
           = form_builder.text_field attribute, input_html_options
@@ -84,11 +84,11 @@
       - value = model.public_send(attribute)
 
       - case column_type
-      - when :boolean, :delegated_boolean, :virtual_boolean
+      - when :boolean
         = boolean_to_picto(value, size=2)
-      - when :date, :delegated_date, :virtual_date
+      - when :date
         = l value, :format => :long
-      - when :datetime, :delegated_datetime, :virtual_datetime
+      - when :datetime
         = l value, :format => :custom
       - else
         = value

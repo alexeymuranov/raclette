@@ -16,7 +16,7 @@
 
 .item
   - case column_type
-  - when :boolean, :delegated_boolean, :virtual_boolean
+  - when :boolean
     %dt<
       = t 'formats.attribute_name?',
           :attribute => klass.human_attribute_name(attribute)
@@ -27,8 +27,7 @@
           %b= shown_value
         - else
           = shown_value
-  - when :date, :delegated_date, :virtual_date,
-         :datetime, :delegated_datetime, :virtual_datetime
+  - when :date, :datetime
     %dt<
       = t 'formats.attribute_name:',
           :attribute => klass.human_attribute_name(attribute)
@@ -40,7 +39,7 @@
             %b= shown_value
           - else
             = shown_value
-  - when :time, :delegated_time, :virtual_time
+  - when :time
     %dt<
       = t 'formats.attribute_name:',
           :attribute => klass.human_attribute_name(attribute)
@@ -52,7 +51,7 @@
             %b= shown_value
           - else
             = shown_value
-  - when :integer, :delegated_integer, :virtual_integer
+  - when :integer
     %dt<
       = t 'formats.attribute_name:',
           :attribute => klass.human_attribute_name(attribute)

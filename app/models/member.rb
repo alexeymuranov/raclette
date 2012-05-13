@@ -110,7 +110,7 @@ class Member < ActiveRecord::Base
   def self.attribute_db_types
     unless @attribute_db_types
       super
-      @attribute_db_types[:tickets_count] = :virtual_integer
+      @attribute_db_types[:tickets_count] = :integer
     end
     @attribute_db_types
   end

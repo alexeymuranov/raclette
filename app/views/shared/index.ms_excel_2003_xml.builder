@@ -47,9 +47,9 @@ xml.Workbook(
         xml.Row do
           attributes.each do |attr|
             case column_types[attr]
-            when :boolean, :delegated_boolean
+            when :boolean
               xml.Cell { xml.Data boolean_to_0_1(mod.public_send(attr)), 'ss:Type' => 'Boolean' }
-            when :integer, :delegated_integer, :virtual_integer
+            when :integer
               xml.Cell { xml.Data mod.public_send(attr), 'ss:Type' => 'Number' }
             else
               xml.Cell { xml.Data mod.public_send(attr), 'ss:Type' => 'String' }

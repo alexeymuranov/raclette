@@ -234,7 +234,7 @@ class InstructorsController < ManagerController
         @column_headers[attr] = Instructor.human_attribute_name(attr)
 
         case @column_types[attr]
-        when :boolean, :delegated_boolean, :virtual_boolean
+        when :boolean
           @column_headers[attr] = I18n.t('formats.attribute_name?',
               :attribute => @column_headers[attr])
         else

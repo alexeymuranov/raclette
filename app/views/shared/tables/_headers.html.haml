@@ -5,10 +5,10 @@
 
 - attributes.each do |attr|
   - case column_types[attr]
-  - when :boolean, :delegated_boolean, :virtual_boolean
+  - when :boolean
     %th.boolean
       = column_headers[attr]
-  - when :integer, :delegated_integer, :virtual_integer
+  - when :integer
     %th.number
       = column_headers[attr]
   - else

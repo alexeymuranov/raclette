@@ -83,11 +83,11 @@ class Membership < ActiveRecord::Base
   def self.attribute_db_types  # Extends the one from AbstractSmarterModel
     unless @attribute_db_types
       super
-      @attribute_db_types.merge! :start_date      => :delegated_date,
-                                 :duration_months => :delegated_integer,
-                                 :end_date        => :delegated_date,
-                                 :type_title      => :delegated_string,
-                                 :title           => :virtual_string
+      @attribute_db_types.merge! :start_date      => :date,
+                                 :duration_months => :integer,
+                                 :end_date        => :date,
+                                 :type_title      => :string,
+                                 :title           => :string
     end
     @attribute_db_types
   end

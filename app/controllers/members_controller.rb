@@ -284,7 +284,7 @@ class MembersController < SecretaryController
         @column_headers[attr] = Member.human_attribute_name(attr)
 
         case @column_types[attr]
-        when :boolean, :delegated_boolean, :virtual_boolean
+        when :boolean
           @column_headers[attr] = I18n.t('formats.attribute_name?',
               :attribute => @column_headers[attr])
         else
@@ -323,7 +323,7 @@ class MembersController < SecretaryController
         human_name = Membership.human_attribute_name(attr)
 
         case @memberships_column_types[attr]
-        when  :boolean, :delegated_boolean, :virtual_boolean
+        when  :boolean
           @memberships_column_headers[attr] = I18n.t('formats.attribute_name?',
                                                      :attribute => human_name)
         else

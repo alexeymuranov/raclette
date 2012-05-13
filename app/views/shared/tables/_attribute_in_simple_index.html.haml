@@ -3,10 +3,10 @@
 -#   value:
 
 - case column_type
-- when :boolean, :delegated_boolean, :virtual_boolean
+- when :boolean
   %td.boolean
     = boolean_to_picto value, size=2
-- when :integer, :delegated_integer, :virtual_integer
+- when :integer
   %td.number
     = value
 - else

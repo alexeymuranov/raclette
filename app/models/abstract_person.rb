@@ -53,12 +53,12 @@ module AbstractPerson  # NOTE:WIP
         [ :last_name, :first_name, :name_title, :nickname_or_other, :email
         ].each do |attr|
           @attribute_db_types[attr] =
-            "delegated_#{Person.columns_hash[attr.to_s].type.to_s}".to_sym
+            "#{ Person.columns_hash[attr.to_s].type.to_s }".to_sym
         end
 
         [ :full_name, :ordered_full_name, :formatted_email
         ].each do |attr|
-          @attribute_db_types[attr] = :virtual_string
+          @attribute_db_types[attr] = :string
         end
       end
       @attribute_db_types

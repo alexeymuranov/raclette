@@ -96,7 +96,7 @@ class Person < ActiveRecord::Base
       super
 
       [:full_name, :ordered_full_name, :formatted_email].each do |attr|
-        @attribute_db_types[attr] = :virtual_string
+        @attribute_db_types[attr] = :string
       end
     end
     @attribute_db_types

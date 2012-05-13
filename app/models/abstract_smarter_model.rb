@@ -7,7 +7,7 @@ module AbstractSmarterModel
     # Provides SQL identifiers for attrubutes corresponding to columns
     # in the standard form "table_name"."column_name".
     # Can be extended in subclasses to include SQL expressions for
-    # virtual or delegated attributes.
+    # virtual columns.
     def sql_for_attributes
       unless @sql_for_attributes
         @sql_for_attributes = Hash.new { |hash, key|
@@ -24,9 +24,7 @@ module AbstractSmarterModel
     # Returns standard types (`:string`, `:integer`, etc.) for attrubutes
     # corresponding to columns by essentially calling
     # `#columns_hash[attribute].type`.
-    # Can be extended in subclasses to "virtual" types
-    # (`:virtual_string`, `:delegated_integer`, etc.)
-    # for virtual or delegated attributes.
+    # Can be extended in subclasses to virtual columns.
     def attribute_db_types
       unless @attribute_db_types
         @attribute_db_types = Hash.new { |hash, key|
@@ -40,15 +38,15 @@ module AbstractSmarterModel
       @attribute_db_types
     end
 
-    def named_virtual_attributes_sql(*attributes)
+    def virtual_attributes_sql(*attributes)
       attributes.delete_if { |attr| columns_hash[attr.to_s] }
       attributes.map{ |attr|
         "#{ sql_for_attributes[attr] } AS #{ attr.to_s }"
       }.join(', ')
     end
 
-    def native_and_named_attributes_sql(*attributes)
-      "#{ table_name }.*, #{ named_virtual_attributes_sql(*attributes) }"
+    def with_virtual_attributes_sql(*attributes)
+      %("#{ table_name }".*, #{ virtual_attributes_sql(*attributes) })
     end
 
     # Cannot use `scope` with `lambda` here because `lambda` would bind
@@ -56,7 +54,7 @@ module AbstractSmarterModel
     # `self` would be `AbstractSmarterModel` in all descendants.
     def with_virtual_attributes(*attributes)
       attributes.blank? ? scoped :
-        select(native_and_named_attributes_sql(*attributes))  # a Relation
+        select(with_virtual_attributes_sql(*attributes))
     end
   end
 end

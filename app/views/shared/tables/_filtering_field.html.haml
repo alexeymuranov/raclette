@@ -10,17 +10,17 @@
 
 - if select_from
   - case column_type
-  - when :string, :delegated_string, :virtual_string
+  - when :string
     - if value_or_values.is_a?(String)
       - value_or_values = value_or_values.sub(/\%\z/, '')
       - value_or_values = select_from.find { |c|      |
           c.mb_chars.upcase.to_s == value_or_values } |
     - css_class = 'text field'
-  - when :boolean, :delegated_boolean, :virtual_boolean
+  - when :boolean
     - css_class = 'boolean field'
-  - when :integer, :delegated_integer, :virtual_integer
+  - when :integer
     - css_class = 'number field'
-  - when :date, :delegated_date, :virtual_date
+  - when :date
     - css_class = 'date field'
 
   = content_tag :td, :class => css_class do
@@ -32,12 +32,12 @@
 
 - else
   - case column_type
-  - when :string, :delegated_string, :virtual_string
+  - when :string
     %td.text.field
       = search_field_tag "filter[#{attr}]",
                          value_or_values,
                          :form => filter_form_id
-  - when :boolean, :delegated_boolean, :virtual_boolean
+  - when :boolean
     %td.boolean.field
       = radio_button_tag "filter[#{attr}]",
                          'yes',
@@ -54,7 +54,7 @@
                          value_or_values.nil? ,
                          :form => filter_form_id
       = label_tag 'filter_' + attr.to_s + '_all', t('all')
-  - when :integer, :delegated_integer, :virtual_integer
+  - when :integer
     %td.number.field<
       - value_or_values ||= {}
       = label_tag "filter[#{attr}][min]",
@@ -70,7 +70,7 @@
                          value_or_values[:max],
                          :form => filter_form_id,
                          :size => 6
-  - when :date, :delegated_date, :virtual_date
+  - when :date
     %td.date.field
       - value_or_values ||= {}
       = label_tag "filter[#{attr}][from]", t('date.from')

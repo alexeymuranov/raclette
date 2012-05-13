@@ -171,7 +171,7 @@ class RegisterController < ApplicationController
         @members_column_headers[attr] = Member.human_attribute_name(attr)
 
         case @members_column_types[attr]
-        when :boolean, :delegated_boolean, :virtual_boolean
+        when :boolean
           @members_column_headers[attr] = I18n.t('formats.attribute_name?',
               :attribute => @members_column_headers[attr])
         else

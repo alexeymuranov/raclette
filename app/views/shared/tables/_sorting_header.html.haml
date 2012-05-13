@@ -5,10 +5,10 @@
 -#   html_table_id:
 
 - case column_type
-- when :boolean, :delegated_boolean, :virtual_boolean
+- when :boolean
   %th.boolean
     = sortable html_table_id, attribute, column_header
-- when :integer, :delegated_integer, :virtual_integer
+- when :integer
   %th.number
     = sortable html_table_id, attribute, column_header
 - else
