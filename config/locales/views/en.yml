@@ -208,22 +208,22 @@ en:
     destroy:
       success: "Destroyed."
       failure: "Not destroyed."
-    register:
-      new_event_entry:
-        bad_person_data: &bad_person_data_for_register "The person was not well defined!"
-      new_tickets_purchase:
-        bad_person_data: *bad_person_data_for_register
-      new_membership_purchase:
-        bad_person_data: *bad_person_data_for_register
-      create_event_entry:
-        success: "%{person_name} is welcome to %{event_title}."
-        failure: "Error!"
-      create_tickets_purchase:
-        success: "%{person_name} now has %{number} tickets."
-        failure: "Error!"
-      create_membership_purchase:
-        success: "%{person_name} now has %{membership_title} until %{date}."
-        failure: "Error!"
+  register:
+    new_event_entry:
+      bad_person_data: &bad_person_data_for_register "The person was not well defined!"
+    new_tickets_purchase:
+      bad_person_data: *bad_person_data_for_register
+    new_membership_purchase:
+      bad_person_data: *bad_person_data_for_register
+    create_event_entry:
+      success: "%{person_name} is welcome to %{event_title}."
+      failure: "Error!"
+    create_tickets_purchase:
+      success: "%{person_name} now has %{number} tickets."
+      failure: "Error!"
+    create_membership_purchase:
+      success: "%{person_name} now has %{membership_title} until %{date}."
+      failure: "Error!"
 
   external_links:
     tangueando_site: "Site Tangueando"
