@@ -45,12 +45,12 @@
                          :form  => filter_form_id,
                          :name  => 'button',
                          :type  => 'submit',
-                         :value => 'filter_button'
+                         :value => 'filter'
             = button_tag t('buttons.clear'),
                          :form  => filter_form_id,
                          :name  => 'button',
                          :type  => 'submit',
-                         :value => 'clear_button'
+                         :value => 'clear'
         - unless @members_filtering_values.blank?
           %tr
             - attributes.each do |attr|

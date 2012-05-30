@@ -14,11 +14,17 @@ class ActivityPeriodsController < ManagerController
   def index
     @query_type = params[:query_type]
     @submit_button = params[:button]
-    params.except!(:query_type, :commit, :button)
 
-    if @submit_button == 'clear_button'
+    if @submit_button == 'clear'
       params.delete(:filter)
     end
+
+    if  @submit_button == 'filter' || @submit_button == 'clear'
+      params.delete(:page)
+    end
+
+    # FIXME: strange if this is necessary:
+    params.except!(:query_type, :commit, :button)
 
     case request.format
     when Mime::HTML
