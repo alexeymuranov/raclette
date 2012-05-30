@@ -10,7 +10,6 @@ class EventsController < SecretaryController
     self.default_sorting_column = :date
   end
 
-  # param_accessible /.+/
 
   def index
     @query_type = params[:query_type]

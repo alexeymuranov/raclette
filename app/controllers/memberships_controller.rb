@@ -24,9 +24,6 @@ class MembershipsController < ManagerController # FIXME!
     self.default_sorting_column = :ip
   end
 
-  # param_accessible /.+/
-  #param_accessible(Set['membership_type_ids_for_activity_periods'], :only => :update_all)
-
   def index
     @membership_types = MembershipType.default_order
     @activity_periods = ActivityPeriod.default_order

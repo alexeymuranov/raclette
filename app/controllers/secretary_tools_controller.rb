@@ -2,8 +2,6 @@
 
 class SecretaryToolsController < SecretaryController
 
-  # param_accessible /.+/
-
   def overview
     member_count = Member.count
     if member_count > 50

@@ -26,9 +26,6 @@ class Admin::SafeUserIPsController < AdminController
     self.default_sorting_column = :ip
   end
 
-  # param_accessible /.+/
-  # param_accessible 'safe_user_ids_for_known_ips', :only => :update_all
-
   def index
     @users = User.default_order
     @known_ips = KnownIP.default_order

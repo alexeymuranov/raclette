@@ -5,8 +5,6 @@ require 'csv'  # to render CSV
 
 class ApplicationController < ActionController::Base
   protect_from_forgery
-  # param_accessible [ 'authenticity_token', 'utf8', 'controller', 'action', '_method', 'id' ]
-  # param_accessible [ 'authenticity_token', 'utf8', '_method', 'id', 'page', 'per_page', 'filter' ]
 
   include ApplicationHelper
   include SessionsHelper
