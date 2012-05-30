@@ -1,0 +1,25 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  event: one
+  people_number: 1
+  names: MyString
+  member_id: 1
+  previous_guest_entry_id: 1
+  contact_email: MyString
+  contact_phone: MyString
+  amount_payed: 9.99
+  cancelled: false
+  note: MyString
+
+two:
+  event: two
+  people_number: 1
+  names: MyString
+  member_id: 1
+  previous_guest_entry_id: 1
+  contact_email: MyString
+  contact_phone: MyString
+  amount_payed: 9.99
+  cancelled: false
+  note: MyString
