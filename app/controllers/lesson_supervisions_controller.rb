@@ -97,7 +97,6 @@ class LessonSupervisionsController < SecretaryController
     @lesson_supervision = LessonSupervision.find(params[:id])
 
     @column_types = LessonSupervision.attribute_db_types
-    # set_column_headers
 
     @instructors_attributes = [:first_name, :last_name, :email]
     @instructors = @lesson_supervision.instructors.default_order

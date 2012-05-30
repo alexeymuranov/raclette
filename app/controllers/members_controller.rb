@@ -155,7 +155,6 @@ class MembersController < SecretaryController
                      find(params[:id])
 
     @column_types = Member.attribute_db_types
-    # set_column_headers
 
     @attended_events_attributes = [ :title, :event_type, :date, :start_time ]
     @attended_events = @member.attended_events
@@ -285,13 +284,6 @@ class MembersController < SecretaryController
           @column_headers[attr] = I18n.t('formats.attribute_name:',
               :attribute => @column_headers[attr])
         end
-      end
-    end
-
-    def set_events_column_types
-      @events_column_types = {}
-      Event.columns_hash.each do |key, value|
-        @events_column_types[key.to_sym] = value.type
       end
     end
 

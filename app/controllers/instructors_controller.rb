@@ -117,7 +117,6 @@ class InstructorsController < ManagerController
                  find(params[:id])
 
     @column_types = Instructor.attribute_db_types
-    # set_column_headers
 
     @title = t('instructors.show.title', :name => @instructor.non_sql_full_name)
   end

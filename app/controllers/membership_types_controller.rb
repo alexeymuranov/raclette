@@ -103,7 +103,6 @@ class MembershipTypesController < ManagerController
     @membership_type = MembershipType.find(params[:id])
 
     @column_types = MembershipType.attribute_db_types
-    # set_column_headers
 
     @title = t('membership_types.show.title',
                :title => @membership_type.unique_title )

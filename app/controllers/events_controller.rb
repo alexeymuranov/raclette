@@ -110,7 +110,6 @@ class EventsController < SecretaryController
     @event = Event.find(params[:id])
 
     @column_types = Event.attribute_db_types
-    # set_column_headers
 
     @title = t('events.show.title', :title => @event.title)
   end

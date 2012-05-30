@@ -101,7 +101,6 @@ class ActivityPeriodsController < ManagerController
     @activity_period = ActivityPeriod.find(params[:id])
 
     @column_types = ActivityPeriod.attribute_db_types
-    # set_column_headers
 
     @title = t('activity_periods.show.title',
                :title => @activity_period.unique_title)

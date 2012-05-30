@@ -84,7 +84,6 @@ class TicketBooksController < ManagerController
     @ticket_book = TicketBook.find(params[:id])
 
     @column_types = TicketBook.attribute_db_types
-    # set_column_headers
 
     @title = t('ticket_books.show.title',
                :title => @ticket_book.non_sql_long_title)

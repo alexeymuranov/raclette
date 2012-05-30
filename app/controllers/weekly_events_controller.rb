@@ -125,7 +125,6 @@ class WeeklyEventsController < ManagerController
     @weekly_event = WeeklyEvent.find(params[:id])
 
     @column_types = WeeklyEvent.attribute_db_types
-    # set_column_headers
 
     @title = t('weekly_events.show.title', :title => @weekly_event.title)
   end
