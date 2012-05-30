@@ -3,6 +3,7 @@
 class Membership < ActiveRecord::Base
 
   include AbstractSmarterModel
+  include AbstractHumanizedModel
 
   attr_readonly :id, :membership_type_id, :activity_period_id, :initial_price
 

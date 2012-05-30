@@ -12,6 +12,7 @@ class Event < ActiveRecord::Base
   # include TimeDurationParser
 
   include AbstractSmarterModel
+  include AbstractHumanizedModel
 
   attr_readonly :id, :event_type, :lesson, :weekly
 

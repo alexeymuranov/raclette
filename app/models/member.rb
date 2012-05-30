@@ -11,6 +11,7 @@ class Member < ActiveRecord::Base
   self.default_sorting_column = :ordered_full_name
 
   include AbstractPerson
+  include AbstractHumanizedModel
 
   attr_readonly :id, :person_id, :been_member_by
 

@@ -8,6 +8,7 @@ class TicketBook < ActiveRecord::Base
   include Sorting
 
   include AbstractSmarterModel
+  include AbstractHumanizedModel
 
   # To use number_to_currency
   include ActionView::Helpers::NumberHelper # NOTE: weird???

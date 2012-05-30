@@ -8,6 +8,7 @@ class ActivityPeriod < ActiveRecord::Base
   include Sorting
 
   include AbstractSmarterModel
+  include AbstractHumanizedModel
 
   attr_readonly :id, :start_date, :duration_months, :end_date
 

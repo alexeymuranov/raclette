@@ -12,6 +12,7 @@ class Person < ActiveRecord::Base
   self.default_sorting_column = :ordered_full_name
 
   include AbstractSmarterModel
+  include AbstractHumanizedModel
 
   attr_readonly :id, :last_name
 

@@ -8,6 +8,7 @@ class MembershipType < ActiveRecord::Base
   include Sorting
 
   include AbstractSmarterModel
+  include AbstractHumanizedModel
 
   attr_readonly :id, :active, :reduced, :unlimited, :duration_months
 

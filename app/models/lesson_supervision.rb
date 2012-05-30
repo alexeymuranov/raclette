@@ -8,6 +8,7 @@ class LessonSupervision < ActiveRecord::Base
   include Sorting
 
   include AbstractSmarterModel
+  include AbstractHumanizedModel
 
   # XXX: temporary workaround to override 'counter cache':
   # attr_readonly :id, :unique_names, :instructors_count
