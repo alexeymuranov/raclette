@@ -65,7 +65,7 @@ class InstructorsController < ManagerController
         @mailing_list_instructors.collect(&:formatted_email).join(', ')
     end
 
-    set_column_headers
+    @column_headers = Instructor.human_column_headers
 
     respond_to do |requested_format|
       requested_format.html do
@@ -230,22 +230,6 @@ class InstructorsController < ManagerController
                   :name => @instructor.non_sql_full_name)
 
       render :edit
-    end
-
-    def set_column_headers
-      @column_headers = {}
-      @attributes.each do |attr|
-        @column_headers[attr] = Instructor.human_attribute_name(attr)
-
-        case @column_types[attr]
-        when :boolean
-          @column_headers[attr] = I18n.t('formats.attribute_name?',
-              :attribute => @column_headers[attr])
-        else
-          @column_headers[attr] = I18n.t('formats.attribute_name:',
-              :attribute => @column_headers[attr])
-        end
-      end
     end
 
 end

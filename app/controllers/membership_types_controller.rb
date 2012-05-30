@@ -43,7 +43,7 @@ class MembershipTypesController < ManagerController
                       :description ]
     end
 
-    set_column_types
+    @column_types = MembershipType.attribute_db_types
 
     @membership_types = MembershipType.scoped
 
@@ -61,7 +61,7 @@ class MembershipTypesController < ManagerController
     @sorting_column = MembershipType.last_sort_column
     @sorting_direction = MembershipType.last_sort_direction
 
-    set_column_headers
+    @column_headers = MembershipType.human_column_headers
 
     respond_to do |requested_format|
       requested_format.html do
@@ -188,29 +188,6 @@ class MembershipTypesController < ManagerController
                   :title => @membership_type.unique_title)
 
       render :edit
-    end
-
-    def set_column_types
-      @column_types = {}
-      MembershipType.columns_hash.each do |key, value|
-        @column_types[key.to_sym] = value.type
-      end
-    end
-
-    def set_column_headers
-      @column_headers = {}
-      @column_types.each do |attr, type|
-        human_name = MembershipType.human_attribute_name(attr)
-
-        case type
-        when :boolean
-          @column_headers[attr] = I18n.t('formats.attribute_name?',
-                                         :attribute => human_name)
-        else
-          @column_headers[attr] = I18n.t('formats.attribute_name:',
-                                         :attribute => human_name)
-        end
-      end
     end
 
 end

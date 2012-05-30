@@ -8,6 +8,9 @@ class Admin::KnownIP < ActiveRecord::Base
   include Sorting
   self.default_sorting_column = :ip
 
+  include AbstractSmarterModel
+  include AbstractHumanizedModel
+
   attr_readonly :id, :ip
 
   # Associations:

@@ -99,7 +99,9 @@ class MembersController < SecretaryController
         join(', ')
     end
 
-    set_column_headers unless request.format == Mime::JS
+    unless request.format == Mime::JS
+      @column_headers = Member.human_column_headers
+    end
 
     respond_to do |requested_format|
       requested_format.html do
@@ -159,13 +161,13 @@ class MembersController < SecretaryController
     @attended_events_attributes = [ :title, :event_type, :date, :start_time ]
     @attended_events = @member.attended_events
     @events_column_types = Event.attribute_db_types
-    set_events_column_headers
+    @events_column_headers = Event.human_column_headers
 
     @memberships_attributes = [:title, :duration_months, :end_date]
     @memberships = @member.memberships.with_type.with_activity_period.
       with_virtual_attributes(*@memberships_attributes)
     @memberships_column_types = Membership.attribute_db_types
-    set_memberships_column_headers
+    @memberships_column_headers = Membership.human_column_headers
 
     @title = t('members.show.title', :name => @member.non_sql_full_name)
   end
@@ -269,54 +271,6 @@ class MembersController < SecretaryController
       @title =  t('members.edit.title', :name => @member.non_sql_full_name)
 
       render :edit
-    end
-
-    def set_column_headers
-      @column_headers = {}
-      @attributes.each do |attr|
-        @column_headers[attr] = Member.human_attribute_name(attr)
-
-        case @column_types[attr]
-        when :boolean
-          @column_headers[attr] = I18n.t('formats.attribute_name?',
-              :attribute => @column_headers[attr])
-        else
-          @column_headers[attr] = I18n.t('formats.attribute_name:',
-              :attribute => @column_headers[attr])
-        end
-      end
-    end
-
-    def set_events_column_headers
-      @events_column_headers = {}
-      @attended_events_attributes.each do |attr|
-        human_name = Event.human_attribute_name(attr)
-
-        case @events_column_types[attr]
-        when :boolean
-          @events_column_headers[attr] = I18n.t('formats.attribute_name?',
-                                                :attribute => human_name)
-        else
-          @events_column_headers[attr] = I18n.t('formats.attribute_name:',
-                                                :attribute => human_name)
-        end
-      end
-    end
-
-    def set_memberships_column_headers
-      @memberships_column_headers = {}
-      @memberships_attributes.each do |attr|
-        human_name = Membership.human_attribute_name(attr)
-
-        case @memberships_column_types[attr]
-        when  :boolean
-          @memberships_column_headers[attr] = I18n.t('formats.attribute_name?',
-                                                     :attribute => human_name)
-        else
-          @memberships_column_headers[attr] = I18n.t('formats.attribute_name:',
-                                                     :attribute => human_name)
-        end
-      end
     end
 
 end

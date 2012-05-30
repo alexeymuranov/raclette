@@ -45,7 +45,7 @@ class EventsController < SecretaryController
                       :entry_fees_collected ]
     end
 
-    set_column_types
+    @column_types = Event.attribute_db_types
 
     @events = Event.scoped
 
@@ -60,8 +60,7 @@ class EventsController < SecretaryController
     @events = Event.sort(@events, sort_params)
     @sorting_column = Event.last_sort_column
     @sorting_direction = Event.last_sort_direction
-
-    set_column_headers
+    @column_headers = Event.human_column_headers
 
     respond_to do |requested_format|
       requested_format.html do
@@ -210,29 +209,6 @@ class EventsController < SecretaryController
       @title =  t('events.edit.title', :title => @event.title)
 
       render :edit
-    end
-
-    def set_column_types
-      @column_types = {}
-      Event.columns_hash.each do |key, value|
-        @column_types[key.to_sym] = value.type
-      end
-    end
-
-    def set_column_headers
-      @column_headers = {}
-      @column_types.each do |attr, type|
-        human_name = Event.human_attribute_name(attr)
-
-        case type
-        when :boolean
-          @column_headers[attr] = I18n.t('formats.attribute_name?',
-                                         :attribute => human_name)
-        else
-          @column_headers[attr] = I18n.t('formats.attribute_name:',
-                                         :attribute => human_name)
-        end
-      end
     end
 
 end

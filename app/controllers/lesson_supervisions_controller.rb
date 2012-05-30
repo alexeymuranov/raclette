@@ -41,7 +41,7 @@ class LessonSupervisionsController < SecretaryController
       @attributes = [:unique_names, :instructors_count, :comment]
     end
 
-    set_column_types
+    @column_types = LessonSupervision.attribute_db_types
 
     @lesson_supervisions = LessonSupervision.scoped
 
@@ -60,7 +60,7 @@ class LessonSupervisionsController < SecretaryController
     @sorting_column = LessonSupervision.last_sort_column
     @sorting_direction = LessonSupervision.last_sort_direction
 
-    set_column_headers
+    @column_headers = LessonSupervision.human_column_headers
 
     respond_to do |requested_format|
       requested_format.html do
@@ -101,7 +101,7 @@ class LessonSupervisionsController < SecretaryController
     @instructors_attributes = [:first_name, :last_name, :email]
     @instructors = @lesson_supervision.instructors.default_order
     @instructors_column_types = Instructor.attribute_db_types
-    set_instructors_column_headers
+    @instructors_column_headers = Instructor.human_column_headers
 
     @title = t('lesson_supervisions.show.title',
                :title => @lesson_supervision.unique_names)
@@ -185,45 +185,6 @@ class LessonSupervisionsController < SecretaryController
                   :title => @lesson_supervision.unique_names)
 
       render :edit
-    end
-
-    def set_column_types
-      @column_types = {}
-      LessonSupervision.columns_hash.each do |key, value|
-        @column_types[key.to_sym] = value.type
-      end
-    end
-
-    def set_column_headers
-      @column_headers = {}
-      @column_types.each do |attr, type|
-        human_name = LessonSupervision.human_attribute_name(attr)
-
-        case type
-        when :boolean
-          @column_headers[attr] = I18n.t('formats.attribute_name?',
-                                         :attribute => human_name)
-        else
-          @column_headers[attr] = I18n.t('formats.attribute_name:',
-                                         :attribute => human_name)
-        end
-      end
-    end
-
-    def set_instructors_column_headers
-      @instructors_column_headers = {}
-      @instructors_column_types.each do |attr, type|
-        human_name = Instructor.human_attribute_name(attr)
-
-        case type
-        when :boolean
-          @instructors_column_headers[attr] = I18n.t('formats.attribute_name?',
-                                                     :attribute => human_name)
-        else
-          @instructors_column_headers[attr] = I18n.t('formats.attribute_name:',
-                                                     :attribute => human_name)
-        end
-      end
     end
 
 end

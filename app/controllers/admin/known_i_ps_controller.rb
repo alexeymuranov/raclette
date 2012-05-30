@@ -29,8 +29,8 @@ class Admin::KnownIPsController < AdminController
   def index
     @attributes = [:ip, :description]
 
-    set_column_types
-    set_column_headers
+    @column_types = KnownIP.attribute_db_types
+    @column_headers = KnownIP.human_column_headers
 
     # Sort:
     @known_ips = KnownIP.scoped
@@ -62,8 +62,8 @@ class Admin::KnownIPsController < AdminController
     @sorting_column = User.last_sort_column
     @sorting_direction = User.last_sort_direction
 
-    set_users_column_types
-    set_users_column_headers
+    @users_column_types = User.attribute_db_types
+    @users_column_headers = User.human_column_headers
 
     @title = t('admin.known_i_ps.show.title', :ip => @known_ip.ip)
   end
@@ -120,7 +120,7 @@ class Admin::KnownIPsController < AdminController
   private
 
     def render_new_properly
-      set_column_types
+      @column_types = KnownIP.attribute_db_types
 
       @title = t('admin.known_i_ps.new.title')
 
@@ -128,57 +128,11 @@ class Admin::KnownIPsController < AdminController
     end
 
     def render_edit_properly
-      set_column_types
+      @column_types = KnownIP.attribute_db_types
 
       @title = t('admin.known_i_ps.edit.title', :ip => @known_ip.ip)
 
       render :edit
-    end
-
-    def set_column_types
-      @column_types = {}
-      KnownIP.columns_hash.each do |key, value|
-        @column_types[key.to_sym] = value.type
-      end
-    end
-
-    def set_column_headers
-      @column_headers = {}
-      @column_types.each do |attr, type|
-        human_name = KnownIP.human_attribute_name(attr)
-
-        case type
-        when :boolean
-          @column_headers[attr] = I18n.t('formats.attribute_name?',
-                                         :attribute => human_name)
-        else
-          @column_headers[attr] = I18n.t('formats.attribute_name:',
-                                         :attribute => human_name)
-        end
-      end
-    end
-
-    def set_users_column_types
-      @users_column_types = {}
-      User.columns_hash.each do |key, value|
-        @users_column_types[key.to_sym] = value.type
-      end
-    end
-
-    def set_users_column_headers
-      @users_column_headers = {}
-      @users_column_types.each do |attr, type|
-        human_name = User.human_attribute_name(attr)
-
-        case type
-        when :boolean
-          @users_column_headers[attr] = I18n.t('formats.attribute_name?',
-                                               :attribute => human_name)
-        else
-          @users_column_headers[attr] = I18n.t('formats.attribute_name:',
-                                               :attribute => human_name)
-        end
-      end
     end
 
 end

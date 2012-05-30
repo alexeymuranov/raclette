@@ -29,7 +29,7 @@ class TicketBooksController < ManagerController
       @attributes = [:tickets_number, :price]
     end
 
-    set_column_types
+    @column_types = TicketBook.attribute_db_types
 
     @ticket_books = TicketBook.scoped
 
@@ -47,7 +47,7 @@ class TicketBooksController < ManagerController
     @sorting_column = TicketBook.last_sort_column
     @sorting_direction = TicketBook.last_sort_direction
 
-    set_column_headers
+    @column_headers = TicketBook.human_column_headers
 
     respond_to do |requested_format|
       requested_format.html do
@@ -159,29 +159,6 @@ class TicketBooksController < ManagerController
                   :title => @ticket_book.non_sql_long_title)
 
       render :edit
-    end
-
-    def set_column_types
-      @column_types = {}
-      TicketBook.columns_hash.each do |key, value|
-        @column_types[key.to_sym] = value.type
-      end
-    end
-
-    def set_column_headers
-      @column_headers = {}
-      @column_types.each do |attr, type|
-        human_name = TicketBook.human_attribute_name(attr)
-
-        case type
-        when :boolean
-          @column_headers[attr] = I18n.t('formats.attribute_name?',
-                                         :attribute => human_name)
-        else
-          @column_headers[attr] = I18n.t('formats.attribute_name:',
-                                         :attribute => human_name)
-        end
-      end
     end
 
 end

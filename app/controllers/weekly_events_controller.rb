@@ -59,7 +59,7 @@ class WeeklyEventsController < ManagerController
                       :description ]
     end
 
-    set_column_types
+    @column_types = WeeklyEvent.attribute_db_types
 
     @weekly_events = WeeklyEvent.scoped
 
@@ -75,7 +75,7 @@ class WeeklyEventsController < ManagerController
     @sorting_column = WeeklyEvent.last_sort_column
     @sorting_direction = WeeklyEvent.last_sort_direction
 
-    set_column_headers
+    @column_headers = WeeklyEvent.human_column_headers
 
     respond_to do |requested_format|
       requested_format.html do
@@ -218,29 +218,6 @@ class WeeklyEventsController < ManagerController
       @title =  t('weekly_events.edit.title', :title => @weekly_event.title)
 
       render :edit
-    end
-
-    def set_column_types
-      @column_types = {}
-      WeeklyEvent.columns_hash.each do |key, value|
-        @column_types[key.to_sym] = value.type
-      end
-    end
-
-    def set_column_headers
-      @column_headers = {}
-      @column_types.each do |attr, type|
-        human_name = WeeklyEvent.human_attribute_name(attr)
-
-        case type
-        when :boolean
-          @column_headers[attr] = I18n.t('formats.attribute_name?',
-                                         :attribute => human_name)
-        else
-          @column_headers[attr] = I18n.t('formats.attribute_name:',
-                                         :attribute => human_name)
-        end
-      end
     end
 
 end

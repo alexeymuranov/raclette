@@ -10,6 +10,9 @@ class Admin::User < ActiveRecord::Base
   include Sorting
   self.default_sorting_column = :username
 
+  include AbstractSmarterModel
+  include AbstractHumanizedModel
+
   attr_readonly :id, :username, :a_person
 
   attr_accessor :password, :new_password

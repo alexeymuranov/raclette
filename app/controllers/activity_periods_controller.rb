@@ -58,8 +58,7 @@ class ActivityPeriodsController < ManagerController
     @activity_periods = ActivityPeriod.sort(@activity_periods, sort_params)
     @sorting_column = ActivityPeriod.last_sort_column
     @sorting_direction = ActivityPeriod.last_sort_direction
-
-    set_column_headers
+    @column_headers = ActivityPeriod.human_column_headers
 
     respond_to do |requested_format|
       requested_format.html do
@@ -192,22 +191,6 @@ class ActivityPeriodsController < ManagerController
       @column_types = {}
       ActivityPeriod.columns_hash.each do |key, value|
         @column_types[key.to_sym] = value.type
-      end
-    end
-
-    def set_column_headers
-      @column_headers = {}
-      @column_types.each do |attr, type|
-        human_name = ActivityPeriod.human_attribute_name(attr)
-
-        case type
-        when :boolean
-          @column_headers[attr] = I18n.t('formats.attribute_name?',
-                                         :attribute => human_name)
-        else
-          @column_headers[attr] = I18n.t('formats.attribute_name:',
-                                         :attribute => human_name)
-        end
       end
     end
 

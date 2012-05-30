@@ -61,7 +61,7 @@ class Admin::UsersController < AdminController
                       :a_person ]
     end
 
-    set_column_types
+    @column_types = User.attribute_db_types
 
     @users = User.scoped
 
@@ -83,7 +83,9 @@ class Admin::UsersController < AdminController
       @mailing_list = @mailing_list_users.collect(&:formatted_email).join(', ')
     end
 
-    set_column_headers unless request.format == Mime::JS
+    unless request.format == Mime::JS
+      @column_headers = User.human_column_headers
+    end
 
     respond_to do |requested_format|
       requested_format.html do
@@ -146,10 +148,9 @@ class Admin::UsersController < AdminController
     @sorting_column = KnownIP.last_sort_column
     @sorting_direction = KnownIP.last_sort_direction
 
-    set_column_types
-    set_column_headers
-    set_known_ips_column_types
-    set_known_ips_column_headers
+    @column_types = User.attribute_db_types
+    @known_ips_column_types = KnownIP.attribute_db_types
+    @known_ips_column_headers = KnownIP.human_column_headers
 
     @title = t('admin.users.show.title', :username => @user.username)
   end
@@ -239,12 +240,11 @@ class Admin::UsersController < AdminController
   private
 
     def render_new_properly
-      set_column_types
-      set_column_headers
+      @column_types = User.attribute_db_types
       # NOTE: this seems redundant because coincides with KnownIP.all_sorting_columns
       @known_ips_attributes = [:ip, :description]
-      set_known_ips_column_types
-      set_known_ips_column_headers
+      @known_ips_column_types = KnownIP.attribute_db_types
+      @known_ips_column_headers = KnownIP.human_column_headers
 
       @safe_ips = nil
       ip_sort_params = (params[:sort] && params[:sort][:safe_ips]) || {}
@@ -258,11 +258,10 @@ class Admin::UsersController < AdminController
     end
 
     def render_edit_properly
-      set_column_types
-      set_column_headers
+      @column_types = User.attribute_db_types
       @known_ips_attributes = [:ip, :description]
-      set_known_ips_column_types
-      set_known_ips_column_headers
+      @known_ips_column_types = KnownIP.attribute_db_types
+      @known_ips_column_headers = KnownIP.human_column_headers
 
       ip_sort_params = (params[:sort] && params[:sort][:safe_ips]) || {}
       @safe_ips = KnownIP.sort(@user.safe_ips, ip_sort_params)
@@ -274,52 +273,6 @@ class Admin::UsersController < AdminController
       @title = t('admin.users.edit.title', :username => @user.username)
 
       render :edit
-    end
-
-    def set_column_types
-      @column_types = {}
-      User.columns_hash.each do |key, value|
-        @column_types[key.to_sym] = value.type
-      end
-    end
-
-    def set_column_headers
-      @column_headers = {}
-      @column_types.each do |attr, type|
-        human_name = User.human_attribute_name(attr)
-
-        case type
-        when :boolean
-          @column_headers[attr] =
-            I18n.t('formats.attribute_name?', :attribute => human_name)
-        else
-          @column_headers[attr] =
-            I18n.t('formats.attribute_name:', :attribute => human_name)
-        end
-      end
-    end
-
-    def set_known_ips_column_types
-      @known_ips_column_types = {}
-      KnownIP.columns_hash.each do |key, value|
-        @known_ips_column_types[key.to_sym] = value.type
-      end
-    end
-
-    def set_known_ips_column_headers
-      @known_ips_column_headers = {}
-      @known_ips_column_types.each do |attr, type|
-        human_name = KnownIP.human_attribute_name(attr)
-
-        case type
-        when :boolean
-          @known_ips_column_headers[attr] =
-            I18n.t('formats.attribute_name?', :attribute => human_name)
-        else
-          @known_ips_column_headers[attr] =
-            I18n.t('formats.attribute_name:', :attribute => human_name)
-        end
-      end
     end
 
 end
