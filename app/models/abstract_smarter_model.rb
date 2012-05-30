@@ -9,16 +9,17 @@ module AbstractSmarterModel
     # Can be extended in subclasses to include SQL expressions for
     # virtual columns.
     def sql_for_attributes
-      unless @sql_for_attributes
-        @sql_for_attributes = Hash.new { |hash, key|
-          if (key.is_a?(Symbol)) && (column = columns_hash[key.to_s])
-            hash[key] = %("#{ table_name }"."#{ key.to_s }")
-          else
-            nil
-          end
-        }
-      end
-      @sql_for_attributes
+      @sql_for_attributes ||= Hash.new { |hash, key|
+        if (key.is_a?(Symbol)) && (column = columns_hash[key.to_s])
+          hash[key] = %("#{ table_name }"."#{ key.to_s }")
+        else
+          nil
+        end
+      }
+    end
+
+    def sql_for_attr(attr)
+      sql_for_attributes[attr]
     end
 
     # Returns standard types (`:string`, `:integer`, etc.) for attrubutes
@@ -26,16 +27,17 @@ module AbstractSmarterModel
     # `#columns_hash[attribute].type`.
     # Can be extended in subclasses to virtual columns.
     def attribute_db_types
-      unless @attribute_db_types
-        @attribute_db_types = Hash.new { |hash, key|
-          if (key.is_a?(Symbol)) && (column = columns_hash[key.to_s])
-            hash[key] = column.type
-          else
-            nil
-          end
-        }
-      end
-      @attribute_db_types
+      @attribute_db_types ||= Hash.new { |hash, key|
+        if (key.is_a?(Symbol)) && (column = columns_hash[key.to_s])
+          hash[key] = column.type
+        else
+          nil
+        end
+      }
+    end
+
+    def attr_db_type(attr)
+      attribute_db_types[attr]
     end
 
     def virtual_attributes_sql(*attributes)
