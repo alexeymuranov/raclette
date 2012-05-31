@@ -8,8 +8,32 @@ class EventsController < SecretaryController
                                  :start_time,
                                  :supervisors ]
     self.default_sorting_column = :date
+
+    has_many :participants, :through    => :event_entries,
+                            :source     => :person,
+                            :class_name => :Person
   end
 
+  class Person < Person
+    self.all_sorting_columns = [ :ordered_full_name,
+                                 :email ]
+    self.default_sorting_column = :ordered_full_name
+
+    has_one :member, :dependent  => :destroy,
+                     :class_name => :Member,
+                     :inverse_of => :person
+  end
+
+  class Member < Member
+    self.all_sorting_columns = [ :ordered_full_name,
+                                 :email,
+                                 :account_deactivated,
+                                 :tickets_count ]
+    self.default_sorting_column = :ordered_full_name
+
+    belongs_to :person, :class_name => :Person,
+                        :inverse_of => :member
+  end
 
   def index
     @query_type = params[:query_type]
@@ -109,6 +133,18 @@ class EventsController < SecretaryController
     @event = Event.find(params[:id])
 
     @column_types = Event.attribute_db_types
+
+    @member_participants_attributes = [ :ordered_full_name, :email ]
+    @member_participants = @event.member_participants.
+      with_virtual_attributes(*@member_participants_attributes)
+    @member_participants_column_types = Member.attribute_db_types
+    @member_participants_column_headers = Member.human_column_headers
+
+    @other_participants_attributes = [ :ordered_full_name, :email ]
+    @other_participants = @event.non_member_participants.
+      with_virtual_attributes(*@other_participants_attributes)
+    @other_participants_column_types = Person.attribute_db_types
+    @other_participants_column_headers = Person.human_column_headers
 
     @title = t('events.show.title', :title => @event.title)
   end
