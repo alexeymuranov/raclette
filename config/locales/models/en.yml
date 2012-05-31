@@ -200,6 +200,9 @@ en:
         weekly_event: "Weekly event"
         # weekly_event:
         #   <<: *weekly_event_attributes
+        participants: "Participants"
+        member_participants: "Member participants"
+        non_member_participants: "Other participants"
       revenue_account: &revenue_account_attributes
         unique_title: "Title"
         locked: "Locked"
@@ -216,7 +219,7 @@ en:
         amount: "Amount"
         method: "Method"
         cancelled_and_reimbursed: "Reimbursed"
-        note: ""
+        note: "Note"
         # payer:
         #   <<: *person_attributes
         # revenue_account:

@@ -161,6 +161,15 @@ class Event < ActiveRecord::Base
     long_title
   end
 
+  # Complex associations
+  def member_participants
+    participants.merge(Person.members)
+  end
+
+  def non_member_participants
+    participants.merge(Person.non_members)
+  end
+
   # Private instance methods
   private
 
