@@ -111,9 +111,17 @@ class Person < ActiveRecord::Base
   end
 
   # Scopes
-  scope :default_order,
-        order("UPPER(#{ sql_for_attributes[:last_name] }) ASC, "\
-              "UPPER(#{ sql_for_attributes[:first_name] }) ASC")
+  scope :default_order, # check if this works as expected
+        order("UPPER(#{ sql_for_attributes[:last_name] }) ASC").
+        order("UPPER(#{ sql_for_attributes[:first_name] }) ASC")
+        # order("UPPER(#{ sql_for_attributes[:last_name] }) ASC, "\
+        #       "UPPER(#{ sql_for_attributes[:first_name] }) ASC")
+
+  scope :members, joins(:member)
+
+  scope :non_members,
+        joins("LEFT JOIN members ON people.id = members.person_id").
+        where("members.person_id IS NULL")
 
   # Public instance methods
   # Non-SQL virtual attributes
