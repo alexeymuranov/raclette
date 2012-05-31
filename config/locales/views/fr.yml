@@ -42,6 +42,7 @@ fr:
     hide_email_addresses: "Cacher les adresses e-mail"
     continue: "Continuer"
     select: "Choisir"
+    change: "Changer"
 
   actions:
     create: "Ajouter"

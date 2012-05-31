@@ -10,19 +10,27 @@ class RegisterController < ApplicationController
   end
 
   def choose_person
-    @query_type = params[:query_type]
     @submit_button = params[:button]
 
     if @submit_button == 'clear'
       params.delete(:filter)
     end
 
-    if  @submit_button == 'filter' || @submit_button == 'clear'
+    if @submit_button == 'filter' || @submit_button == 'clear'
       params.delete(:page)
     end
 
-    # FIXME: strange if this is necessary:
-    params.except!(:query_type, :commit, :button)
+    @event_id = params[:event_id] || session[:current_event_id]
+
+    if @event_id.blank?
+      @event_id = nil
+    else
+      if @event = Event.find(@event_id)
+        session[:current_event_id] = @event_id
+      else
+        @event_id = nil
+      end
+    end
 
     render_choose_person_properly
   end
@@ -36,11 +44,14 @@ class RegisterController < ApplicationController
       render_choose_person_properly and return
     end
 
-    event_id = params[:event_id]
-    if event_id && @event = Event.find(event_id)
-      self.current_event = @event unless event_id == current_event_id
-    else
-      @event = current_event
+    # debugger
+
+    if @event_id = params[:event_id] || session[:current_event_id]
+      if @event = Event.find(@event_id)
+        session[:current_event_id] = @event_id
+      else
+        @event_id = nil
+      end
     end
 
     render_compose_transaction_properly
@@ -50,7 +61,7 @@ class RegisterController < ApplicationController
     event_entry_attributes = params[:event_entry] || {}
     event_id = event_entry_attributes[:event_id]
     if event_id && @event = Event.find(event_id)
-      self.current_event = @event unless event_id == current_event_id
+      session[:current_event_id] = event_id
     else
       flash.now[:error] = t('flash.actions.other.failure')
       render_choose_person_properly and return
@@ -157,9 +168,9 @@ class RegisterController < ApplicationController
     end
 
     def render_choose_person_properly
-      @members = paginate(Member.account_active.joins(:person)\
-                                .with_virtual_attributes(:ordered_full_name)\
-                                .default_order)
+      @members = paginate(Member.account_active.joins(:person).
+                                 with_virtual_attributes(:ordered_full_name).
+                                 default_order)
       # Filter:
       @members = Member.filter(@members, params[:filter], @attributes)
       @members_filtering_values = Member.last_filter_values
@@ -181,6 +192,8 @@ class RegisterController < ApplicationController
               :attribute => @members_column_headers[attr])
         end
       end
+
+      @events = Event.unlocked.past_seven_days
 
       @title = t('register.choose_person.title')
 
@@ -216,8 +229,8 @@ class RegisterController < ApplicationController
     end
 
     def render_new_entry_properly
-      @events = Event.all  # FIXME!
-      if @events.blank?
+      @events = Event.unlocked.past_seven_days
+      if @events.empty?
         render_choose_person_properly and return
       end
       @event ||= @events.first  # FIXME!

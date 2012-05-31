@@ -44,21 +44,21 @@ module SessionsHelper
     clear_return_to
   end
 
-  def current_event=(event)
-    @current_event_id = event.id
-    session[:current_event_id] = @current_event_id
-    @current_event = event
-  end
+  # def current_event=(event)
+  #   @current_event_id = event.id
+  #   session[:current_event_id] = @current_event_id
+  #   @current_event = event
+  # end
 
-  def current_event
-    if current_event_id
-      @current_event ||= Event.find(current_event_id)
-    end
-  end
+  # def current_event
+  #   if current_event_id
+  #     @current_event ||= Event.find(current_event_id)
+  #   end
+  # end
 
-  def current_event_id
-    @current_event_id ||= current_event_id_from_session
-  end
+  # def current_event_id
+  #   @current_event_id ||= current_event_id_from_session
+  # end
 
   private
 
@@ -71,9 +71,9 @@ module SessionsHelper
       Admin::User.find(session[:user_id]) if session[:user_id]
     end
 
-    def current_event_id_from_session
-      session[:current_event_id]
-    end
+    # def current_event_id_from_session
+    #   session[:current_event_id]
+    # end
 
     # def remember_token
     #   cookies.signed[:remember_token] || [nil, nil]

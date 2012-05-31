@@ -1,4 +1,23 @@
 %h1= t '.header'
+
+%form{:method => 'get'}
+  %label
+    = t 'formats.attribute_name:',
+        :attribute => t('register.new_entry.current_event')
+    = @event ? @event.non_sql_long_title : '∅'
+  = select_tag :event_id,
+      options_from_collection_for_select(@events,
+        :id, :non_sql_long_title,
+        :selected    => @event ? @event.id : nil ),
+      :include_blank => true
+
+  %span.actions
+    %button{ :name  => 'button',
+             :value => 'select_current_event',
+             :type  => 'submit',
+             :class => 'preselect' }
+      = t('buttons.change')
+
 %section
   %h2= t '.choose_member'
   - attributes = @members_attributes
@@ -9,7 +28,7 @@
 
   = form_tag(nil, :id     => (filter_form_id = "member_list_filter"),
                   :method => :get) do
-    = hidden_fields_from_nested_hash params.merge( :query_type => 'filter' )
+    = hidden_fields_from_nested_hash params
 
     %table{ :id    => "member_list_attributes",                             |
             :class => (@members_filtering_values.blank? ? '' : 'filtered ') |
@@ -40,7 +59,6 @@
         %tr
           = content_tag :td, :colspan => attributes.size,
                              :class   => 'actions' do
-            = hidden_field_tag :query_type, 'filter', :form  => filter_form_id
             = button_tag t('buttons.filter'),
                          :form  => filter_form_id,
                          :name  => 'button',
@@ -70,7 +88,6 @@
                                     params[:per_page] || Member.default_per_page),
                  :class => 'number'
     %span.actions
-      = hidden_field_tag :query_type, 'repaginate'
       = content_tag :button,
                     t('buttons.repaginate'),
                     :name  => 'button',

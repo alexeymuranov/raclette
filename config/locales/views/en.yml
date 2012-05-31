@@ -42,6 +42,7 @@ en:
     hide_email_addresses: "Hide e-mail addresses"
     continue: "Continue"
     select: "Select"
+    change: "Change"
 
   actions:
     create: "Add"
