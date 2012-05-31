@@ -93,6 +93,12 @@ class Event < ActiveRecord::Base
 
   # Scopes:
   scope :default_order, order('date DESC, end_time DESC, start_time DESC')
+  scope :locked, where(:locked => true)
+  scope :unlocked, where(:locked => false)
+  scope :past_seven_days, lambda {
+                            today = Date.today
+                            where :date => (today - 1.week)..today
+                          }
 
   # Public class methods
 
