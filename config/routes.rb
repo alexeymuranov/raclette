@@ -19,6 +19,7 @@ Raclette::Application.routes.draw do
   resources :members
   resources :membership_types
   resources :memberships
+  resources :people, :only => [:index, :show]
   resources :ticket_books
   resources :weekly_events
 
@@ -29,7 +30,8 @@ Raclette::Application.routes.draw do
 
     resources :known_ips, :controller => :known_i_ps
 
-    resources :safe_user_ips, :controller => :safe_user_i_ps, :only => [ :index ] do
+    resources :safe_user_ips, :controller => :safe_user_i_ps,
+                              :only       => [:index] do
       collection do
         get 'edit_all', :action => :edit_all
         put '', :action => :update_all
