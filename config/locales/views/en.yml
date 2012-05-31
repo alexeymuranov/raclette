@@ -41,6 +41,7 @@ en:
     show_email_addresses: "Show e-mail addresses"
     hide_email_addresses: "Hide e-mail addresses"
     continue: "Continue"
+    select: "Select"
 
   actions:
     create: "Add"
@@ -261,6 +262,7 @@ en:
       header: "Payment and Entry Register"
     new_entry:
       title: "Entry"
+      current_event: "Current event"
     new_ticket_purchase:
       title: "Tickets"
     new_membership_purchase:
