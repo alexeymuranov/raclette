@@ -18,11 +18,10 @@
                  :class => 'number'
   %span.actions
     = hidden_field_tag :query_type, 'repaginate'
-    = content_tag :button,
-                  t('buttons.repaginate'),
-                  :name  => 'button',
-                  :type  => 'submit',
-                  :value => 'repaginate_button'
+    = button_tag t('buttons.repaginate'),
+                 :name  => 'button',
+                 :type  => 'submit',
+                 :value => 'repaginate'
 
 = paginate models
 

@@ -22,9 +22,9 @@ module FilterMarkupHelper
               html_output << content_tag(:li, :class => 'filtering_prefix') {
                 pref == current_prefix ?
                         pref :
-                        content_tag(:button, pref, :name  => key_name,
-                                                   :value => pref,
-                                                   :type  => 'submit')
+                        button_tag(pref, :name  => key_name,
+                                         :value => pref,
+                                         :type  => 'submit')
               }
             end
           end

@@ -10,10 +10,10 @@
 
   %span.actions
     = hidden_field_tag :query_type, 'render_alternative_format'
-    = content_tag :button, 'MS Excel 2003 XML',
-                  :name  => 'button',
-                  :type  => 'submit',
-                  :value => 'download_button'
+    = button_tag 'MS Excel 2003 XML',
+                 :name  => 'button',
+                 :type  => 'submit',
+                 :value => 'download'
 
 = form_tag({ :format => :csv },
              :method => :get,
@@ -25,7 +25,7 @@
 
   %span.actions
     = hidden_field_tag :query_type, 'render_alternative_format'
-    = content_tag :button, 'CSV',
-                  :name  => 'button',
-                  :type  => 'submit',
-                  :value => 'download_button'
+    = button_tag 'CSV',
+                 :name  => 'button',
+                 :type  => 'submit',
+                 :value => 'download'

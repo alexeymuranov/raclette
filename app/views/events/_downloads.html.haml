@@ -7,10 +7,10 @@
   = hidden_fields_from_nested_hash params.slice(:filter, :sort, :per_page)
   %span.actions
     = hidden_field_tag :query_type, 'render_alternative_format'
-    = content_tag :button, 'MS Excel 2003 XML',
-                  :name  => 'button',
-                  :type  => 'submit',
-                  :value => 'download_button'
+    = button_tag 'MS Excel 2003 XML',
+                 :name  => 'button',
+                 :type  => 'submit',
+                 :value => 'download'
 = form_tag({ :format => :csv },
              :method => :get,
              :id     => 'download_events_in_csv',
@@ -19,7 +19,7 @@
   = hidden_fields_from_nested_hash params.slice(:filter, :sort, :per_page)
   %span.actions
     = hidden_field_tag :query_type, 'render_alternative_format'
-    = content_tag :button, 'CSV',
-                  :name  => 'button',
-                  :type  => 'submit',
-                  :value => 'download_button'
+    = button_tag 'CSV',
+                 :name  => 'button',
+                 :type  => 'submit',
+                 :value => 'download'

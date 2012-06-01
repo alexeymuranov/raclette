@@ -88,11 +88,10 @@
                                     params[:per_page] || Member.default_per_page),
                  :class => 'number'
     %span.actions
-      = content_tag :button,
-                    t('buttons.repaginate'),
-                    :name  => 'button',
-                    :type  => 'submit',
-                    :value => 'repaginate_button'
+      = button_tag t('buttons.repaginate'),
+                   :name  => 'button',
+                   :type  => 'submit',
+                   :value => 'repaginate'
 
   = paginate @members
 
