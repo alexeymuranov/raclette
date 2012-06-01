@@ -241,6 +241,9 @@ class RegisterController < ApplicationController
       if @member
         @event_entry.person_id = @member.person_id
         @event_entry.participant_entry_type = 'MemberEntry'
+        if params[:button] == 'show_attended_events'
+          @attended_events = @member.attended_events.default_order
+        end
       else
         @event_entry.participant_entry_type = 'GuestEntry'
       end

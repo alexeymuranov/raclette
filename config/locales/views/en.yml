@@ -40,6 +40,8 @@ en:
     repaginate: "Paginate"
     show_email_addresses: "Show e-mail addresses"
     hide_email_addresses: "Hide e-mail addresses"
+    show_attended_events: "Show attended events"
+    hide_attended_events: "Hide attended events"
     continue: "Continue"
     select: "Select"
     change: "Change"
@@ -261,6 +263,8 @@ en:
     compose_transaction:
       title: "Register"
       header: "Payment and Entry Register"
+      subheaders:
+        attended_events: "Attended events"
     new_entry:
       title: "Entry"
       current_event: "Current event"

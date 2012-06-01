@@ -40,6 +40,8 @@ fr:
     repaginate: "Paginer"
     show_email_addresses: "Afficher les adresses e-mail"
     hide_email_addresses: "Cacher les adresses e-mail"
+    show_attended_events: "Afficher événements fréquentés"
+    hide_attended_events: "Cacher événements fréquentés"
     continue: "Continuer"
     select: "Choisir"
     change: "Changer"
@@ -261,6 +263,8 @@ fr:
     compose_transaction:
       title: "Caisse"
       header: "Caisse des entrées et règlements"
+      subheaders:
+        attended_events: "Événements fréquentés"
     new_entry:
       title: "Entrée"
       current_event: "Événement en cours"
