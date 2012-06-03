@@ -124,6 +124,12 @@ class Event < ActiveRecord::Base
     @attribute_db_types
   end
 
+  def self.current
+    where(:date => Date.today).
+      where("events.start_time <= ?", Time.now.strftime("%T")).
+      default_order.first
+  end
+
   # Public instance methods
 
   def set_attributes_from_weekly_event

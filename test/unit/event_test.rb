@@ -15,6 +15,10 @@ class EventTest < ActiveSupport::TestCase
                    weekly_event.public_send(attr_name)
     end
   end
+
+  test "Event.current should return a current event" do
+    assert_equal Event.current, events(:current)
+  end
 end
 # == Schema Information
 #
