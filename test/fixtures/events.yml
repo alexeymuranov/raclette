@@ -1,15 +1,15 @@
 # Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
 
 one:
-  event_type: MyString
-  title: MyString
+  event_type: Cours
+  title: "Cours avec Pablo"
   locked: false
   lesson: false
   date: 2011-05-08
-  start_time: MyString
-  duration: 1
-  end_time: MyString
-  location: MyString
+  start_time: "18:00"
+  duration: "1:00"
+  end_time: "19:00"
+  location: Tangueando
   address_id: 1
   weekly: false
   weekly_event_id: 1
@@ -28,31 +28,58 @@ one:
   description: MyString
 
 two:
-  event_type: MyString
-  title: MyString
+  event_type: Practica
+  title: Practica de jeudi
   locked: false
   lesson: false
-  date: 2011-05-08
-  start_time: MyString
-  duration: 1
-  end_time: MyString
-  location: MyString
+  date: 2012-05-31
+  start_time: "21:00"
+  duration: "5:00"
+  end_time: "2:00"
+  location: Tangueando
+  address_id: 1
+  weekly: true
+  weekly_event_id: 1
+  supervisors: ~
+  lesson_supervision_id: ~
+  entry_fee_tickets: 1
+  member_entry_fee: 0
+  couple_entry_fee: ~
+  common_entry_fee: 5
+  over: false
+  reservations_count: 0
+  entries_count: 0
+  member_entries_count: 0
+  tickets_collected: 0
+  entry_fees_collected: 0
+  description: ~
+
+current:
+  event_type: Practica
+  title: Practica maintenant
+  locked: false
+  lesson: false
+  date: <%= Date.today %>
+  start_time: <%= Time.now.change(:min => 0).strftime("%T") %>
+  duration: 2:00
+  end_time: <%= (Time.now.change(:min => 0) + 2.hours).strftime("%T") %>
+  location: Tangueando
   address_id: 1
   weekly: false
-  weekly_event_id: 1
-  supervisors: MyString
-  lesson_supervision_id: 1
+  weekly_event_id: ~
+  supervisors: ~
+  lesson_supervision_id: 0
   entry_fee_tickets: 1
-  member_entry_fee: 9.99
-  couple_entry_fee: 9.99
-  common_entry_fee: 9.99
+  member_entry_fee: 5
+  couple_entry_fee: ~
+  common_entry_fee: 5
   over: false
-  reservations_count: 1
-  entries_count: 1
-  member_entries_count: 1
-  tickets_collected: 1
-  entry_fees_collected: 9.99
-  description: MyString
+  reservations_count: ~
+  entries_count: ~
+  member_entries_count: ~
+  tickets_collected: ~
+  entry_fees_collected: ~
+  description: ~
 # == Schema Information
 #
 # Table name: events
