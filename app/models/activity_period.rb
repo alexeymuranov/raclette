@@ -41,13 +41,12 @@ class ActivityPeriod < ActiveRecord::Base
   scope :reverse_order_by_end_date, order('end_date DESC, start_date DESC')
   scope :default_order, reverse_order_by_end_date
   scope :current, lambda {
-    today = Date.today
-    where("activity_periods.start_date <= ? AND "\
-          "activity_periods.end_date >= ?", today, today)
+    where("activity_periods.start_date <= :today AND "\
+          "activity_periods.end_date >= :today",
+          :today => Date.today)
   }
   scope :not_over, lambda {
-    today = Date.today
-    where("activity_periods.end_date >= ?", today)
+    where("activity_periods.end_date >= ?", Date.today)
   }
 end
 # == Schema Information

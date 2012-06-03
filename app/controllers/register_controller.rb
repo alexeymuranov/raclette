@@ -234,10 +234,9 @@ class RegisterController < ApplicationController
         render_choose_person_properly and return
       end
       @event ||= @events.first  # FIXME!
-      @event_entry = EventEntry.new(
-        :event_id    => @event.id,
-        :event_title => @event.title,
-        :date        => @event.date )
+      @event_entry = EventEntry.new :event_id    => @event.id,
+                                    :event_title => @event.title,
+                                    :date        => @event.date
       if @member
         @event_entry.person_id = @member.person_id
         @event_entry.participant_entry_type = 'MemberEntry'
@@ -256,9 +255,8 @@ class RegisterController < ApplicationController
         :membership_type_id => @member.current_membership.type.id).
         order('tickets_number ASC')
       @ticket_book = @ticket_books.first
-      @tickets_purchase = TicketsPurchase.new(
-        :member      => @member,
-        :ticket_book => @ticket_book )
+      @tickets_purchase = TicketsPurchase.new :member      => @member,
+                                              :ticket_book => @ticket_book
 
       render 'compose_transaction'
     end
