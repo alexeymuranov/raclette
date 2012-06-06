@@ -36,7 +36,6 @@ class EventsController < SecretaryController
   end
 
   def index
-    @query_type = params[:query_type]
     @submit_button = params[:button]
 
     if @submit_button == 'clear'
@@ -48,7 +47,7 @@ class EventsController < SecretaryController
     end
 
     # FIXME: strange if this is necessary:
-    params.except!(:query_type, :commit, :button)
+    params.except!(:commit, :button)
 
     case request.format
     when Mime::HTML
@@ -167,9 +166,9 @@ class EventsController < SecretaryController
 
   def create
     attributes = params[:event]
+    # XXX: this modifies `params` in place (`attibutes` is a shallow copy)
     attributes[:lesson] =
       %w[Cours Atelier Initiation].include?(attributes[:event_type])
-    attributes[:weekly_event_id] = params[:weekly_event_id]
     @event = Event.new(attributes)
 
     if @event.save
