@@ -57,8 +57,8 @@ class Event < ActiveRecord::Base
   #               :format    => /\A\d{1,2}[:h]\d{2}?\z/,
   #               :allow_nil => true
 
-  validates :duration, :inclusion => 5.minutes..1.day,
-                       :allow_nil => true
+  validates :duration_minutes, :inclusion => 5..(24*60),
+                               :allow_nil => true
 
   validates :supervisors, :length    => { :maximum => 255 },
                           :allow_nil => true
@@ -134,7 +134,7 @@ class Event < ActiveRecord::Base
 
   def set_attributes_from_weekly_event
     common_attribute_names = [ :event_type, :title, :lesson,
-                               :start_time, :end_time, :duration,
+                               :start_time, :end_time, :duration_minutes,
                                :location, :address,
                                :lesson_supervision, :entry_fee_tickets ]
     if weekly_event
@@ -193,10 +193,9 @@ class Event < ActiveRecord::Base
     end
 
     def calculate_duration
-      self.duration = end_time - start_time
-      self.duration += 1.day if duration < 1.day
-      # Workaround:
-      self.duration = Time.gm(0,1,1,0,0,0) + duration
+      duration = end_time - start_time # NOTE: duration in seconds
+      duration += 1.day if duration < 1.day
+      self.duration_minutes = (duration / 1.minute).to_i
      end
 
 end
@@ -211,7 +210,7 @@ end
 #  lesson                :boolean         not null
 #  date                  :date
 #  start_time            :string(8)
-#  duration              :integer(2)
+#  duration_minutes      :integer(2)
 #  end_time              :string(8)
 #  location              :string(64)
 #  address_id            :integer

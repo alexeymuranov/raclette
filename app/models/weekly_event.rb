@@ -46,8 +46,8 @@ class WeeklyEvent < ActiveRecord::Base
   #               :format    => /\A\d{1,2}[:h]\d{2}?\z/,
   #               :allow_nil => true
 
-  validates :duration, :inclusion => 5.minutes..1.day,
-                       :allow_nil => true
+  validates :duration_minutes, :inclusion => 5..(24*60),
+                               :allow_nil => true
 
   validates :location, :length    => { :maximum => 64 },
                        :allow_nil => true
@@ -94,10 +94,9 @@ class WeeklyEvent < ActiveRecord::Base
     end
 
     def calculate_duration
-      self.duration = end_time - start_time
-      self.duration += 1.day if duration < 1.day
-      # Workaround:
-      self.duration = Time.gm(0,1,1,0,0,0) + duration
+      duration = end_time - start_time # NOTE: duration in seconds
+      duration += 1.day if duration < 1.day
+      self.duration_minutes = (duration / 1.minute).to_i
     end
 
 end
@@ -111,7 +110,7 @@ end
 #  lesson                :boolean         not null
 #  week_day              :integer(1)      not null
 #  start_time            :string(8)
-#  duration              :integer(2)      default(60)
+#  duration_minutes      :integer(2)      default(60)
 #  end_time              :string(8)
 #  start_on              :date            not null
 #  end_on                :date

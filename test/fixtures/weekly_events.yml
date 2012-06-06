@@ -1,15 +1,15 @@
 # Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
 
-practica_de_jeudi:
-  event_type: Pratica
+practica_du_jeudi:
+  event_type: Practica
   title: "Pratica de jeudi"
   lesson: false
   week_day: 4
-  start_time: 21h
-  duration: 1
-  end_time: MyString
-  start_on: 2010-09-01
-  end_on: 2011-08-31
+  start_time: "21:00"
+  duration_minutes: <%= 5*60 %>
+  end_time: "2:00"
+  start_on: "2010-09-01"
+  end_on: "2011-08-31"
   location: Tangueando
   address_id: ~
   lesson_supervision_id: ~
@@ -22,11 +22,11 @@ two:
   title: "Cours Marina mardi"
   lesson: true
   week_day: 2
-  start_time: 19h30
-  duration: 60
-  end_time: 20h30
-  start_on: 2011-09-01
-  end_on: 2011-06-30
+  start_time: "19:30"
+  duration_minutes: <%= 60 %>
+  end_time: "20:30"
+  start_on: "2011-09-01"
+  end_on: "2011-06-30"
   location: Tangueando
   address_id: ~
   lesson_supervision_id: 1
@@ -43,7 +43,7 @@ two:
 #  lesson                :boolean         not null
 #  week_day              :integer(1)      not null
 #  start_time            :string(8)
-#  duration              :integer(2)      default(60)
+#  duration_minutes      :integer(2)      default(60)
 #  end_time              :string(8)
 #  start_on              :date            not null
 #  end_on                :date

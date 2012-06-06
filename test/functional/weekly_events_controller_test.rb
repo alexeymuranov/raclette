@@ -4,7 +4,7 @@ class WeeklyEventsControllerTest < ActionController::TestCase
 
   def setup
     @user_admin = admin_users(:one)
-    @weekly_event = weekly_events(:practica_de_jeudi)
+    @weekly_event = weekly_events(:practica_du_jeudi)
     # test_log_in(@user_admin, "127.0.0.1")
   end
 
