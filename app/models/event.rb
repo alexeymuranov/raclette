@@ -88,8 +88,7 @@ class Event < ActiveRecord::Base
   # Callbacks:
 
   # Workaround, Rails does not treat time columns well:
-  before_save :fix_time_values__strip_date
-  before_save :calculate_duration
+  before_save :fix_time_values__strip_date, :calculate_duration
 
   # Scopes:
   scope :default_order, order('date DESC, end_time DESC, start_time DESC')
@@ -150,6 +149,7 @@ class Event < ActiveRecord::Base
       end
       self.weekly = false
     end
+    self
   end
 
   def initialize(*attributes)

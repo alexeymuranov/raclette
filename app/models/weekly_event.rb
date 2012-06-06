@@ -64,14 +64,22 @@ class WeeklyEvent < ActiveRecord::Base
   # Callbacks:
 
   # Workaround, Rails does not treat time columns well:
-  before_save :fix_time_values__strip_date
-  before_save :calculate_duration
+  before_save :fix_time_values__strip_date,
+              :calculate_duration,
+              :fix_start_and_end_dates
 
   # Scopes:
   scope :default_order, order('end_on DESC, start_on DESC')
   scope :not_over, where(:over => false)
 
   # Public instance methods
+
+  def build_events
+    fix_start_and_end_dates
+    (start_on..end_on).step(7) do |date|
+      events.build(:date => date).set_attributes_from_weekly_event
+    end
+  end
 
   # Non-SQL virtual attributes
   def non_sql_long_title
@@ -97,6 +105,11 @@ class WeeklyEvent < ActiveRecord::Base
       duration = end_time - start_time # NOTE: duration in seconds
       duration += 1.day if duration < 1.day
       self.duration_minutes = (duration / 1.minute).to_i
+    end
+
+    def fix_start_and_end_dates
+      self.start_on += (week_day    - start_on.wday) % 7
+      self.end_on   -= (end_on.wday - week_day     ) % 7
     end
 
 end

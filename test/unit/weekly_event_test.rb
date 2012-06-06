@@ -1,9 +1,11 @@
 require 'test_helper'
 
 class WeeklyEventTest < ActiveSupport::TestCase
-  # Replace this with your real tests.
-  test "the truth" do
-    assert true
+  test "should build events" do
+    weekly_event = weekly_events(:practica_du_jeudi)
+    weekly_event.build_events
+    weekly_event.save!
+    assert_equal weekly_event.events.count, 52
   end
 end
 # == Schema Information
