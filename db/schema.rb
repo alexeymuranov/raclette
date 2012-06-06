@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120530230208) do
+ActiveRecord::Schema.define(:version => 20120506151939) do
 
   create_table "activity_periods", :force => true do |t|
     t.string   "unique_title",    :limit => 64,                    :null => false
@@ -157,30 +157,6 @@ ActiveRecord::Schema.define(:version => 20120530230208) do
   add_index "event_entries", ["participant_entry_type"], :name => "index_event_entries_on_participant_entry_type"
   add_index "event_entries", ["person_id"], :name => "index_event_entries_on_person_id"
 
-  create_table "event_entry_reservations", :force => true do |t|
-    t.integer  "event_id",                                                                               :null => false
-    t.integer  "people_number",           :limit => 1,                                :default => 1,     :null => false
-    t.string   "names",                   :limit => 64,                                                  :null => false
-    t.integer  "member_id"
-    t.integer  "previous_guest_entry_id"
-    t.string   "contact_email"
-    t.string   "contact_phone",           :limit => 32
-    t.decimal  "amount_payed",                          :precision => 3, :scale => 1, :default => 0.0,   :null => false
-    t.boolean  "cancelled",                                                           :default => false, :null => false
-    t.string   "note"
-    t.datetime "created_at",                                                                             :null => false
-    t.datetime "updated_at",                                                                             :null => false
-  end
-
-  add_index "event_entry_reservations", ["cancelled"], :name => "index_event_entry_reservations_on_cancelled"
-  add_index "event_entry_reservations", ["event_id", "member_id"], :name => "index_event_entry_reservations_on_event_id_and_member_id", :unique => true
-  add_index "event_entry_reservations", ["event_id", "names"], :name => "index_event_entry_reservations_on_event_id_and_names", :unique => true
-  add_index "event_entry_reservations", ["event_id", "previous_guest_entry_id"], :name => "index_event_entry_reservations_on_event_id_and_prev_g_entry_id", :unique => true
-  add_index "event_entry_reservations", ["member_id"], :name => "index_event_entry_reservations_on_member_id"
-  add_index "event_entry_reservations", ["names"], :name => "index_event_entry_reservations_on_names"
-  add_index "event_entry_reservations", ["people_number"], :name => "index_event_entry_reservations_on_people_number"
-  add_index "event_entry_reservations", ["previous_guest_entry_id"], :name => "index_event_entry_reservations_on_previous_guest_entry_id"
-
   create_table "events", :force => true do |t|
     t.string   "event_type",            :limit => 32,                                                  :null => false
     t.string   "title",                 :limit => 64
@@ -208,7 +184,7 @@ ActiveRecord::Schema.define(:version => 20120530230208) do
     t.string   "description"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.time     "duration"
+    t.integer  "duration_minutes",      :limit => 2
   end
 
   add_index "events", ["address_id"], :name => "index_events_on_address_id"
@@ -562,7 +538,7 @@ ActiveRecord::Schema.define(:version => 20120530230208) do
     t.string   "description"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.time     "duration"
+    t.integer  "duration_minutes",      :limit => 2
   end
 
   add_index "weekly_events", ["address_id"], :name => "index_weekly_events_on_address_id"
