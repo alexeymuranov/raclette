@@ -8,6 +8,16 @@
                :attribute   => attr,
                :column_type => @column_types[attr]
 
+  %section
+
+    = render 'shared/tables/filtered_index',
+             :models           => @events,
+             :attributes       => @events_attributes,
+             :column_types     => @events_column_types,
+             :column_headers   => @events_column_headers,
+             :html_table_id    => :events,
+             :filtering_values => @filtering_values
+
 %footer
   = link_to edit_pictogram(3) + ' ' + t('weekly_events.edit.header',
                                         :title => @weekly_event.title),

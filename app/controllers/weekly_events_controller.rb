@@ -2,25 +2,14 @@
 
 class WeeklyEventsController < ManagerController
 
-  class WeeklyEvent < WeeklyEvent
-    self.all_sorting_columns = [ :title,
-                                 :event_type,
-                                 :lesson,
-                                 :week_day,
-                                 :start_time,
-                                 :duration_minutes,
-                                 :end_time,
-                                 :start_on,
-                                 :end_on,
-                                 :location,
-                                 :entry_fee_tickets,
-                                 :over,
-                                 :description ]
-    self.default_sorting_column = :end_on
-  end
+  class WeeklyEvent < WeeklyEvent; end # filled in below
+
+  class Event < Event; end # filled in below
+
+  # Nested controller:
+  class EventsController < EventsController; end # filled in below
 
   def index
-    @query_type = params[:query_type]
     @submit_button = params[:button]
 
     if @submit_button == 'clear'
@@ -32,7 +21,7 @@ class WeeklyEventsController < ManagerController
     end
 
     # FIXME: strange if this is necessary:
-    params.except!(:query_type, :commit, :button)
+    params.except!(:commit, :button)
 
     case request.format
     when Mime::HTML
@@ -123,8 +112,31 @@ class WeeklyEventsController < ManagerController
                     :description ]
 
     @weekly_event = WeeklyEvent.find(params[:id])
-
     @column_types = WeeklyEvent.attribute_db_types
+
+    @events_attributes = [ :title, :event_type,
+                           :date,
+                           :start_time,
+                           :supervisors ]
+
+    @events = @weekly_event.events
+    @events_column_types = Event.attribute_db_types
+    @events_column_headers = Event.human_column_headers
+
+    # Filter:
+    @events = Event.filter(@events, params[:filter], @events_attributes)
+    @filtering_values = Event.last_filter_values
+    @filtered_events_count = @events.count
+
+    # Sort:
+    Event.all_sorting_columns = @events_attributes
+    sort_params = (params[:sort] && params[:sort][:events]) || {}
+    @weekly_events = Event.sort(@events, sort_params)
+    @sorting_column = Event.last_sort_column
+    @sorting_direction = Event.last_sort_direction
+
+    # Paginate:
+    @events = paginate(@events)
 
     @title = t('weekly_events.show.title', :title => @weekly_event.title)
   end
@@ -220,4 +232,53 @@ class WeeklyEventsController < ManagerController
       render :edit
     end
 
+end
+
+class WeeklyEventsController::EventsController
+  def destroy # FIXME!
+    @event = Event.find(params[:id])
+    @event.destroy
+
+    flash[:notice] = t('flash.events.destroy.success',
+                       :title => @event.title)
+
+    redirect_to({ :controller => :weekly_events,
+                  :action     => :show }.reverse_merge(params))
+  end
+end
+
+class WeeklyEventsController::WeeklyEvent
+  self.all_sorting_columns = [ :title,
+                               :event_type,
+                               :lesson,
+                               :week_day,
+                               :start_time,
+                               :duration_minutes,
+                               :end_time,
+                               :start_on,
+                               :end_on,
+                               :location,
+                               :entry_fee_tickets,
+                               :over,
+                               :description ]
+  self.default_sorting_column = :end_on
+
+  has_many :events, :class_name => :Event,
+                    :dependent  => :nullify,
+                    :inverse_of => :weekly_event
+end
+
+class WeeklyEventsController::Event
+  self.all_sorting_columns = [ :title, :event_type,
+                               :date,
+                               :start_time,
+                               :supervisors ]
+  self.default_sorting_column = :date
+
+  has_many :participants, :through    => :event_entries,
+                          :source     => :person,
+                          :class_name => :Person
+
+  belongs_to :weekly_event, :class_name => :WeeklyEvent,
+                            :inverse_of => :events
 end
