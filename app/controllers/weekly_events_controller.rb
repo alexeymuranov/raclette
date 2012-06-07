@@ -158,6 +158,7 @@ class WeeklyEventsController < ManagerController
     attributes[:lesson] =
       %w[Cours Atelier Initiation].include?(attributes[:weekly_event_type])
     @weekly_event = WeeklyEvent.new(attributes)
+    @weekly_event.build_events
 
     if @weekly_event.save
       flash[:success] = t('flash.weekly_events.create.success',
