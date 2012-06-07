@@ -21,12 +21,18 @@
                  :column_types => column_types
 
         %td.operation
-          = link_to edit_pictogram(2), { :action => :edit, :id => mod },
+          = link_to edit_pictogram(2),
+                    { :controller => mod.controller_path,
+                      :action     => :edit,
+                      :id         => mod },
                     :title => t('actions.update'),
                     :class => 'modify resource'
 
         %td.operation
-          = link_to delete_pictogram(2), { :action => :destroy, :id => mod },
+          = link_to delete_pictogram(2),
+                    { :controller => mod.controller_path,
+                      :action     => :destroy,
+                      :id         => mod },
                     :confirm => t('questions.are_you_sure?'),
                     :method  => :delete,
                     :title   => t('actions.delete'),
