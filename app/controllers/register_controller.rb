@@ -207,8 +207,8 @@ class RegisterController < ApplicationController
         @person_name = @member.full_name
       else
         @tabs.delete('new_ticket_purchase')
-        @person_name = "#{@guest.first_name} "\
-                       "(#{t('activemodel.models.guest')})"
+        @person_name = "#{ @guest.first_name } "\
+                       "(#{ t('activemodel.models.guest') })"
       end
 
       saved_param_names = [:participant_entry_type, :event_title, :date]

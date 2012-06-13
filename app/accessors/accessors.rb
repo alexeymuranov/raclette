@@ -11,7 +11,7 @@ module Accessors
 
     module ClassMethods
       def controller_class  # To be redefined in classes
-        "#{base_class.name.pluralize}Controller".constantize
+        "#{ base_class.name.pluralize }Controller".constantize
       end
 
       def controller_path
