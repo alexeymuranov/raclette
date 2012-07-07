@@ -5,6 +5,7 @@ Raclette::Application.routes.draw do
   resources :sessions, :only => [ :create ]
   
   get "monitor/overview"
+  get "admin_tools/overview"
 
   # scope :module => :admin do
   namespace :admin do

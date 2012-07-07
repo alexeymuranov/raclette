@@ -1,0 +1,24 @@
+<h1><%= t 'application_layout.navigation_links.admin_tools' %></h1>
+
+<h3><%= link_to t('admin.users.index.header'), admin_users_path %></h3>
+<p>
+  <% @users.each do |user| %>
+    <% unless user == @users.last %>
+      <%= link_to "#{user.username}, ", user %>
+    <% else %>
+      <%= link_to "#{user.username}.", user %>
+    <% end %>
+  <% end %>
+</p>
+
+<h3><%= link_to t('admin.known_ips.index.header'), admin_known_ips_path %></h3>
+<p>
+  <% @known_ips.each do |known_ip| %>
+    <% note = known_ip.description.blank? ? "" : " (#{known_ip.description})" %>
+    <% unless known_ip == @known_ips.last %>
+      <%= link_to "#{known_ip.ip}#{note}, ", known_ip %>
+    <% else %>
+      <%= link_to "#{known_ip.ip}#{note}.", known_ip %>
+    <% end %>
+  <% end %>
+</p>
