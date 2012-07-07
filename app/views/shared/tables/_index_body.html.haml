@@ -33,7 +33,7 @@
                     { :controller => mod.controller_path,
                       :action     => :destroy,
                       :id         => mod },
-                    :confirm => t('questions.are_you_sure?'),
+                    :data => { :confirm => t('questions.are_you_sure?') },
                     :method  => :delete,
                     :title   => t('actions.delete'),
                     :class   => 'modify resource'
