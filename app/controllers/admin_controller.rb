@@ -6,7 +6,7 @@ class AdminController < ApplicationController
   
     def require_admin_login
       unless current_user.admin?
-        flash[:error] = "You must be an admin to access the section you tried to access"
+        flash[:error] = t('flash_messages.require_admin')
         redirect_to root_url
       end
     end

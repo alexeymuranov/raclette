@@ -30,7 +30,7 @@ module SessionsHelper
 	
   def deny_access
     store_location
-    flash[:alert] = "Please log in to access this page."
+    flash[:alert] = t('flash_messages.require_login')
     redirect_to login_path
   end
 	

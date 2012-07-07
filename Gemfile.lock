@@ -70,6 +70,6 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  rails (= 3.0.8)
+  rails
   sass
   sqlite3

@@ -3,22 +3,23 @@
 class Admin::KnownIPsController < AdminController
 
   def index
-    @title = 'All known IPs'
     @known_ips = Admin::KnownIP.all
+
+    @title = t('admin.known_ips.index.title')
   end
 
   def show #get
-    @title = 'Known IP'
+    @title = "Known IP"
     @known_ip = Admin::KnownIP.find(params[:id])
   end
 
   def new
-    @title = 'Create known IP'
+    @title = "Create known IP"
     @known_ip = Admin::KnownIP.new
   end
 
   def edit #get
-    @title = 'Update known IP'
+    @title = "Update known IP"
     @known_ip = Admin::KnownIP.find(params[:id])
   end
 
@@ -26,11 +27,11 @@ class Admin::KnownIPsController < AdminController
     @known_ip = Admin::KnownIP.new(params[:admin_known_ip])
 
     if @known_ip.save
-      flash[:success] = 'Known IP was successfully created.'
+      flash[:success] = "Known IP was successfully created."
       redirect_to @known_ip
     else
-      flash.now[:error] = 'Known IP was not created.'
-      @title = 'Create known IP'
+      flash.now[:error] = "Known IP was not created."
+      @title = "Create known IP"
       render 'new'
     end
   end
@@ -39,11 +40,11 @@ class Admin::KnownIPsController < AdminController
     @known_ip = Admin::KnownIP.find(params[:id])
 
     if @known_ip.update_attributes(params[:admin_known_ip])
-      flash[:notice] = 'Known IP was successfully updated.'
+      flash[:notice] = "Known IP was successfully updated."
       redirect_to @known_ip
     else
-      flash.now[:error] = 'Known IP was not updated.'
-      @title = 'Update known IP'
+      flash.now[:error] = "Known IP was not updated."
+      @title = "Update known IP"
       render 'edit'
     end
   end
@@ -51,7 +52,7 @@ class Admin::KnownIPsController < AdminController
   def destroy
     @known_ip = Admin::KnownIP.find(params[:id])
     @known_ip.destroy
-    flash[:notice] = 'Known IP deleted'
+    flash[:notice] = "Known IP deleted"
     redirect_to admin_known_ips_url
   end
 end

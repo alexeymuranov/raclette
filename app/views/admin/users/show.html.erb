@@ -40,6 +40,28 @@
   <%= @user.person_id %>
 </p>
 
+<table>
+  <caption style="text-align:center;" ><%= t 'admin.users.show.captions.authorized_ips' %></caption>
+  <tr>
+    <th>
+      <%= t 'field_labels.ip' %>
+    </th>
+    <th>
+      <%= t 'field_labels.description' %>
+    </th>
+  </tr>
+  <% @user.safe_ips.each do |safe_ip| %>
+  <tr>
+    <td>
+      <%= safe_ip.ip %>
+    </td>
+    <td>
+      <%= safe_ip.description %>
+    </td>
+  </tr>
+  <% end %>
+</table>  
+
 <p>
   <b><%= t('admin.users.labels.last_signed_in_at') %></b>
   <%= @user.last_signed_in_at %>

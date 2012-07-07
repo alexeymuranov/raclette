@@ -27,7 +27,7 @@ class Admin::User < ActiveRecord::Base
                  )  ## all attributes listed here
 
   # Associations:
-  has_many :safe_user_ips, :class_name => :SafeUserIP,
+  has_many :safe_user_ips, :class_name => 'SafeUserIP',
                            :dependent  => :destroy,
                            :inverse_of => :user
 

@@ -5,11 +5,11 @@ class SessionsController < ApplicationController
 
   def new
     @session = ActiveRecord::SessionStore::Session.new
-    @title = t('sessions.new.log_in')
+    @title = t('sessions.new.title')
     @client_ip = request.remote_ip
   end
 
-  def create  
+  def create
     user = Admin::User.authenticate(params[:username], params[:password])
     # user = Admin::User.authenticate(params[:session][:email],
     #                                 params[:session][:password])
@@ -19,20 +19,20 @@ class SessionsController < ApplicationController
       # session[:user_id] = user.id
       # session[:client_ip] = client_ip
       log_in(user, client_ip)
-      flash[:success] = "Logged in!" 
-      redirect_back_or_to root_url 
-      # redirect_to root_url 
-    else  
-      flash.now.alert = "Invalid email/password combination"
-      @title = "Sign in"
-      render 'new'  
-    end  
-  end  
+      flash[:notice] = t('flash_messages.logged_in', :username => user.username)
+      redirect_back_or_to root_url
+      # redirect_to root_url
+    else
+      flash.now.alert = t('flash_messages.invalid_login')
+      @title = t('sessions.new.title')
+      render 'new'
+    end
+  end
 
   def destroy
     # log_out  # redundant with reset_session
     reset_session
-    flash[:notice] = "Logged out" 
+    flash[:notice] = t('flash_messages.logged_out')
     redirect_to login_url
   end
 end

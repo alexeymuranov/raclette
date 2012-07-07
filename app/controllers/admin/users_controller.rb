@@ -23,9 +23,9 @@ class Admin::UsersController < AdminController
 
   def edit
     @user = Admin::User.find(params[:id])
-    # @safe_ips = @user.safe_ips
-    # @other_ips = Admin::KnownIP.all - @safe_ips
-    
+    @safe_ips = @user.safe_ips
+    @other_ips = Admin::KnownIP.all - @safe_ips
+
     @title = t('admin.users.edit.title', :username => @user.username)
   end
 
@@ -63,9 +63,9 @@ class Admin::UsersController < AdminController
       params[:admin_user].delete(:new_password)
       params[:admin_user].delete(:new_password_confirmation)
     end
-              
+
     current_user_password = params[:current_user_password]
-    
+
     if current_user_password.nil? || current_user.has_password?(current_user_password)
       if @user.update_attributes(params[:admin_user])
         flash[:notice] = t('admin.users.update.flash.success',
@@ -81,12 +81,24 @@ class Admin::UsersController < AdminController
       @title = t('admin.users.edit.title', :username => @user.username)
       render 'edit'
     end
+
+    if params[:admin_user][:known_ip_is_safe].nil? # if none is safe
+      @user.safe_ips.delete_all
+    else
+      Admin::KnownIP.all.each do |known_ip|
+        if params[:admin_user][:known_ip_is_safe][known_ip.id.to_s] # if safe
+          @user.safe_ips << known_ip unless @user.safe_ips.include?(known_ip)
+        else
+          @user.safe_ips.delete(known_ip)
+        end
+      end
+    end
   end
 
   def destroy
     @user = Admin::User.find(params[:id])
     @user.destroy
-    flash[:notice] = 'User deleted.'
+    flash[:notice] =  t('admin.users.destroy.flash.success', :username => @user.username)
 
     redirect_to admin_users_url
   end

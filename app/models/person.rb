@@ -19,7 +19,7 @@ class Person < ActiveRecord::Base
   has_many :users, :dependent  => :nullify,
                    :inverse_of => :person
 
-  has_one :statement, :class_name => :PersonalStatement,
+  has_one :statement, :class_name => 'PersonalStatement',
                       :dependent  => :destroy,
                       :inverse_of => :person
 
@@ -42,7 +42,7 @@ class Person < ActiveRecord::Base
   has_many :event_cashiers, :dependent  => :nullify,
                             :inverse_of => :person
 
-  belongs_to :primary_address, :class_name => :Address,
+  belongs_to :primary_address, :class_name => 'Address',
                                :inverse_of => :people
 
   # Validations:

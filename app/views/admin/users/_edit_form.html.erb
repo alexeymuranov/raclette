@@ -17,11 +17,6 @@
   <%= render 'common_form_fields', :f => f %>
 
   <div class="field">
-    <%= label_tag :current_user_password, t('admin.users.labels.your_password') %>
-    <br />
-    <%= password_field_tag :current_user_password %>
-  </div>
-  <div class="field">
     <%= f.label :new_password, t('admin.users.labels.new_password') %><br />
     <%= f.password_field :new_password %>
   </div>
@@ -31,6 +26,51 @@
     <br />
     <%= f.password_field :new_password_confirmation %>
   </div>
+  <div class="field">
+    <%= label_tag :current_user_password, t('admin.users.labels.your_password') %>
+    <br />
+    <%= password_field_tag :current_user_password %>
+  </div>
+  <table>
+    <caption style="text-align:center;" ><%= t 'admin.users.edit.captions.authorized_ips', :username => @user.username %></caption>
+    <tr>
+      <th>
+        <%= t 'field_labels.ip' %>
+      </th>
+      <th>
+        <%= t 'field_labels.authorized?' %>
+      </th>
+      <th>
+        <%= t 'field_labels.description' %>
+      </th>
+    </tr>
+    <% @safe_ips.each do |known_ip| %>
+    <tr>
+      <td>
+        <%= label_tag "admin_user[known_ip_is_safe][#{known_ip.id}]", known_ip.ip %>
+      </td>
+      <td>
+        <%= check_box_tag "admin_user[known_ip_is_safe][#{known_ip.id}]", "1", true %>
+      </td>
+      <td>
+        <%= known_ip.description %>
+      </td>
+    </tr>
+    <% end %>
+    <% @other_ips.each do |known_ip| %>
+    <tr>
+      <td>
+        <%= check_box_tag "admin_user[known_ip_is_safe][#{known_ip.id}]", "0", false %>
+      </td>
+      <td>
+        <%= label_tag "admin_user[known_ip_is_safe][#{known_ip.id}]", known_ip.ip %>
+      </td>
+      <td>
+        <%= known_ip.description %>
+      </td>
+    </tr>
+    <% end %>
+  </table>  
   <div class="field">
     <%= f.label :comments, t('admin.users.labels.comments') %><br />
     <%= f.text_area :comments %>

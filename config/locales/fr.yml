@@ -1,90 +1,8 @@
 # French translations for Ruby on Rails
-# by Christian Lescuyer (christian@flyingcoders.com)
-# contributors:
-#  - Sebastien Grosjean - ZenCocoon.com
-#  - Bruno Michel - http://github.com/nono
-#  - Tsutomu Kuroda - http://github.com/kuroda (t-kuroda@oiax.jp)
+# Original version downloaded from
+#   https://github.com/svenfuchs/rails-i18n/raw/master/rails/locale/fr.yml
 
 fr:
-  hello: "bonjour"
-  "yes": "oui"
-  "no": "non"
-
-  buttons:
-    save: "Enregistrer"
-
-  questions:
-    are_you_sure: "Vous êtes sûr ?"
-
-  application_layout:
-    navigation_links:
-      monitor: "Écran de contrôle"
-      entry_register: "Caisse d'entrée"
-      secretary_tools: "Outils de secrétare"
-      manager_tools: "Outils de gestion"
-      admin_tools: "Outils d'administration"
-      sign_out: "Se deconnecter"
-      tangueando_site: "Site Tangueando"
-
-  sessions:
-    new:
-      log_in: "Se connecter"
-      log_in_please: "Connectez-vous, s'il vous plaît"
-    labels:
-      username: "Nom d'utilisateur :"
-      password: "Mot de passe :"
-      your_ip_address: "Votre adresse IP :"
-      
-  admin:
-    users:
-      index:
-        title: "Tous utilisateurs"
-        header: "Liste des utilisateurs"
-      show:
-        title: "%{username}"
-        links:
-          update: "Mettre l'utilisateur à jour"
-      new:
-        title: "Nouveau utilisateur"
-        header: "Nouveau utilisateur"
-      edit:
-        title: "%{username} - mise à jour"
-        header: "Mise à jour de l'utilisateur « %{username} »"
-        links:
-          show: "Voir l'utilisateur"
-      create:
-        flash:
-          success: "Utilisateur « %{username} » a été enregistré."
-          failure: "Utilisateur n'a pas été enregistré."
-      update:
-        flash:
-          success: "Utilisateur « %{username} » a été mis à jour."
-          failure: "Utilisateur n'a pas été mis à jour."
-          wrong_password: "Le mot de passe est invalide, l'utilisateur n'a pas été mis à jour."
-
-      links:
-        all: "Voir tous les utilisateurs"
-        show: "Voir"
-        new: "Ajouter un utilisateur"
-        update: "Mettre à jour"
-        delete: "Supprimer"
-      labels:
-        username: "Nom d'utilisateur :"
-        full_name: "Nom complet :"
-        person_id: "Id personnelle :"
-        email: "Adresse e-mail :"
-        admin: "Administrateur ?"
-        manager: "Gestionnaire ?"
-        secretary: "Secrétaire ?"
-        person: "Personne ?"
-        last_signed_in_at: "S'est inscrit la dernière fois à :"
-        comments: "Remarques :"
-        password: "Mot de passe :"
-        your_password: "Votre mot de passe (seulement pour changer le mot de passe de l'utilisateur) :"
-        new_password: "Nouveau mot de passe :"
-        password_confirmation: "Confirmation du mot de passe :"
-        new_password_confirmation: "Confirmation du nouveau mot de passe :"
-
   date:
     formats:
       default: "%d/%m/%Y"
@@ -224,9 +142,6 @@ fr:
   errors:
     format: "Le %{attribute} %{message}"
     messages: &errors_messages
-    
-      email_format: "n'est pas bien formé(e)"
-
       inclusion: "n'est pas inclus(e) dans la liste"
       exclusion: "n'est pas disponible"
       invalid: "n'est pas valide"
@@ -246,7 +161,10 @@ fr:
       less_than_or_equal_to: "doit être inférieur ou égal à %{count}"
       odd: "doit être impair"
       even: "doit être pair"
-      
+      # Custom:
+      email_format: "n'est pas bien formé(e)"
+
+
     template: &errors_template
       header:
         one:   "Impossible d'enregistrer ce %{model} : 1 erreur"
@@ -263,3 +181,134 @@ fr:
         <<: *errors_template
       full_messages:
         format: "%{attribute} %{message}"
+
+################################################################
+# Custom translations:
+
+  hello: "bonjour"
+  "yes": "oui"
+  "no": "non"
+
+  field_labels:
+    username: "Nom d'utilisateur :"
+    full_name: "Nom complet :"
+    person_id: "Id personnelle :"
+    email: "Adresse e-mail :"
+    "admin?": "Administrateur ?"
+    "manager?": "Gestionnaire ?"
+    "secretary?": "Secrétaire ?"
+    "person?": "Personne ?"
+    last_signed_in_at: "S'est inscrit la dernière fois à :"
+    comments: "Remarques :"
+    password: "Mot de passe :"
+    your_password: "Votre mot de passe :"
+    new_password: "Nouveau mot de passe :"
+    password_confirmation: "Confirmation du mot de passe :"
+    new_password_confirmation: "Confirmation du nouveau mot de passe :"
+    ip: "Adresse IP :"
+    description: "Description :"
+    "authorized?": "Autorisé(e) ?"
+
+  buttons:
+    save: "Enregistrer"
+
+  actions:
+    show: "Voir"
+    create: "Ajouter"
+    update: "Mettre à jour"
+    delete: "Supprimer"
+
+  questions:
+    "are_you_sure?": "Vous êtes sûr ?"
+
+  flash_messages:
+    logged_in: "Vous êtes connecté(e) comme « %{username} »."
+    logged_out: "Vous êtes déconnecté(e)."
+    invalid_login: "Nom d'utilisateur et/ou mot de passe est invalide."
+    operation_failed: "L'opération a échouée."
+    require_login: "Vous devez vous connecter pour acceder à cette page."
+    require_admin: "Vous devez être un administratur pour acceder à la section que vous avez essayé d'acceder."
+
+  application_layout:
+    navigation_links:
+      monitor: "Écran de contrôle"
+      entry_register: "Caisse d'entrée"
+      secretary_tools: "Outils de secrétare"
+      manager_tools: "Outils de gestion"
+      admin_tools: "Outils d'administration"
+      sign_out: "Se deconnecter"
+      tangueando_site: "Site Tangueando"
+
+  sessions:
+    new:
+      title: "Connection"
+      log_in: "Se connecter"
+      log_in_please: "Connectez-vous, s'il vous plaît"
+    labels:
+      username: "Nom d'utilisateur :"
+      password: "Mot de passe :"
+      your_ip_address: "Votre adresse IP :"
+
+  admin:
+    users:
+      index:
+        title: "Utilisateurs"
+        header: "Liste des utilisateurs"
+      show:
+        title: "%{username}"
+        captions:
+          authorized_ips: "L'utilisateur est pleinement autorizé(e) à connecter de ses adresses IP"
+        links:
+          update: "Mettre l'utilisateur à jour"
+      new:
+        title: "Nouveau utilisateur"
+        header: "Nouveau utilisateur"
+      edit:
+        title: "%{username} - mise à jour"
+        header: "Mise à jour de l'utilisateur « %{username} »"
+        captions:
+          authorized_ips: "L'utilisateur « %{username} » est pleinement autorizé(e) à connecter de quelles adresses IP ?"
+        links:
+          show: "Voir l'utilisateur"
+      create:
+        flash:
+          success: "L'utilisateur « %{username} » a été enregistré."
+          failure: "L'utilisateur n'a pas été enregistré."
+      update:
+        flash:
+          success: "L'utilisateur « %{username} » a été mis à jour."
+          failure: "L'utilisateur n'a pas été mis à jour."
+          wrong_password: "Le mot de passe est invalide, l'utilisateur n'a pas été mis à jour."
+      destroy:
+        flash:
+          success: "L'utilisateur « %{username} » est supprimé."
+          failure: "Une erreur s'est produit!"
+
+      links:
+        all: "Voir tous les utilisateurs"
+        show: "Voir"
+        new: "Ajouter un utilisateur"
+        update: "Mettre à jour"
+        delete: "Supprimer"
+      labels:
+        username: "Nom d'utilisateur :"
+        full_name: "Nom complet :"
+        person_id: "Id personnelle :"
+        email: "Adresse e-mail :"
+        admin: "Administrateur ?"
+        manager: "Gestionnaire ?"
+        secretary: "Secrétaire ?"
+        person: "Personne ?"
+        last_signed_in_at: "S'est inscrit la dernière fois à :"
+        comments: "Remarques :"
+        password: "Mot de passe :"
+        your_password: "Votre mot de passe (seulement pour changer le mot de passe de l'utilisateur) :"
+        new_password: "Nouveau mot de passe :"
+        password_confirmation: "Confirmation du mot de passe :"
+        new_password_confirmation: "Confirmation du nouveau mot de passe :"
+
+    known_ips:
+      index:
+        title: "Adresses IP"
+        header: "Adresses IP connues"
+
