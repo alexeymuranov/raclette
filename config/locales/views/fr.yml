@@ -75,6 +75,7 @@ fr:
       destroy:
         success: "%{resource_name} supprimé(e) avec succès."
         failure: "%{resource_name} n'a pas pu être supprimé(e)."
+        forbidden: "Il n'est pas permit de supprimer ce((t)te) %{resource_name} par cette action"
       other:
         failure: "Une erreur s'est produit !"
     filters:
