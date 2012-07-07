@@ -2,7 +2,6 @@
 = form_tag({ :format => :ms_excel_2003_xml },
              :method => :get,
              :id     => 'download_instructors_in_ms_excel_2003_xml',
-             :target => '_blank',
              :style  => 'display:inline' ) do
 
   = hidden_fields_from_nested_hash params.slice(:filter, :sort, :per_page)
@@ -17,7 +16,6 @@
 = form_tag({ :format => :csv },
              :method => :get,
              :id     => 'download_instructors_in_csv',
-             :target => '_blank',
              :style  => 'display:inline' ) do
 
   = hidden_fields_from_nested_hash params.slice(:filter, :sort, :per_page)

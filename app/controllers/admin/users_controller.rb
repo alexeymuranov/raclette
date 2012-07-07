@@ -110,15 +110,15 @@ class Admin::UsersController < AdminController
       end
 
       requested_format.ms_excel_2003_xml do
-        render_ms_excel_2003_xml_for_download @users,
-                                              @attributes,
-                                              @column_headers
+        send_ms_excel_2003_xml_for_download @users,
+                                            @attributes,
+                                            @column_headers
       end
 
       requested_format.csv do
-        render_csv_for_download @users,
-                                @attributes,
-                                @column_headers
+        send_csv_for_download @users,
+                              @attributes,
+                              @column_headers
       end
     end
   end

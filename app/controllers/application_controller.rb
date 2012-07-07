@@ -2,6 +2,7 @@
 
 require 'set'  # to be able to use Set
 require 'csv'  # to render CSV
+require 'zip/zip'
 
 class ApplicationController < ActionController::Base
   protect_from_forgery
@@ -22,11 +23,11 @@ class ApplicationController < ActionController::Base
     klass = obj.klass
     csv = csv_from_collection(obj, options[:attributes],
                                    options[:column_headers])
-    filename = options[:filename] || "#{klass.model_name.human.pluralize}"\
-      " #{Time.now.in_time_zone.strftime('%Y-%m-%d %k_%M')}.csv"
+    filename = options[:filename] || "#{ klass.model_name.human.pluralize }"\
+      " #{ Time.now.in_time_zone.strftime('%Y-%m-%d %k_%M') }.csv"
     self.response_body = csv
     send_data csv, :filename     => filename,
-                   :content_type => "#{Mime::CSV}; charset=utf-8",
+                   :content_type => "#{ Mime::CSV }; charset=utf-8",
                    :disposition  => 'inline'
   end
 
@@ -47,11 +48,11 @@ class ApplicationController < ActionController::Base
                         :attributes     => options[:attributes],
                         :column_types   => column_types,
                         :column_headers => options[:column_headers] })
-    filename = options[:filename] || "#{klass.model_name.human.pluralize}"\
-      " #{Time.now.in_time_zone.strftime('%Y-%m-%d %k_%M')}.excel2003.xml"
+    filename = options[:filename] || "#{ klass.model_name.human.pluralize }"\
+      " #{ Time.now.in_time_zone.strftime('%Y-%m-%d %k_%M') }.excel2003.xml"
     send_data ms_excel_2003_xml,
               :filename     => filename,
-              :content_type => "#{Mime::MS_EXCEL_2003_XML}; charset=utf-8",
+              :content_type => "#{ Mime::MS_EXCEL_2003_XML }; charset=utf-8",
               :disposition  => 'inline'
   end
 
@@ -66,7 +67,62 @@ class ApplicationController < ActionController::Base
     def render_ms_excel_2003_xml_for_download(scoped_collection,
                                               attributes,
                                               column_headers,
-                                              filename=nil)
+                                              filename = nil)
+      filename ||= "#{ scoped_collection.klass.model_name.human.pluralize }"\
+                   " #{ Time.now.in_time_zone.strftime('%Y-%m-%d %k_%M') }"\
+                   ".excel2003.xml"
+      send_data ms_excel_2003_xml_from_collection(scoped_collection,
+                                                  attributes,
+                                                  column_headers),
+          :filename     => filename,
+          :content_type => "#{ Mime::MS_EXCEL_2003_XML }; charset=utf-8",
+          :disposition  => 'inline'
+    end
+
+    def render_csv_for_download(models, attributes, column_headers, filename=nil)
+      filename ||= "#{ models.klass.model_name.human.pluralize }"\
+                   " #{ Time.now.in_time_zone.strftime('%Y-%m-%d %k_%M') }"\
+                   ".csv"
+      send_data csv_from_collection(models, attributes, column_headers),
+                :filename     => filename,
+                :content_type => "#{ Mime::CSV }; charset=utf-8",
+                :disposition  => 'inline'
+    end
+
+    def send_ms_excel_2003_xml_for_download(scoped_collection,
+                                            attributes,
+                                            column_headers,
+                                            filename=nil)
+      filename ||= "#{ scoped_collection.klass.model_name.human.pluralize }"\
+                   " #{ Time.now.in_time_zone.strftime('%Y-%m-%d %k_%M') }"\
+                   ".excel2003.xml.xls"
+      data = zip_string(ms_excel_2003_xml_from_collection(scoped_collection,
+                                                          attributes,
+                                                          column_headers),
+                        filename)
+      send_data data,
+          :filename     => "#{ filename }.zip",
+          :content_type => "#{ Mime::ZIP }; charset=utf-8",
+          :disposition  => 'attachment'
+    end
+
+    def send_csv_for_download(models, attributes, column_headers, filename=nil)
+      filename ||= "#{ models.klass.model_name.human.pluralize }"\
+                   " #{ Time.now.in_time_zone.strftime('%Y-%m-%d %k_%M') }"\
+                   ".csv"
+      data = zip_string(csv_from_collection(models,
+                                            attributes,
+                                            column_headers),
+                        filename)
+      send_data data,
+                :filename     => "#{ filename }.zip",
+                :content_type => "#{ Mime::ZIP }; charset=utf-8",
+                :disposition  => 'attachment'
+    end
+
+    def ms_excel_2003_xml_from_collection(scoped_collection,
+                                          attributes,
+                                          column_headers)
       klass = scoped_collection.klass
       if klass < AbstractSmarterModel
         column_types = klass.attribute_db_types
@@ -76,26 +132,13 @@ class ApplicationController < ActionController::Base
           column_types[attr] = klass.columns_hash[attr.to_s].type
         end
       end
-      filename ||= "#{klass.model_name.human.pluralize}"\
-                   " #{Time.now.in_time_zone.strftime('%Y-%m-%d %k_%M')}"\
-                   ".excel2003.xml"
-      send_data render_to_string(
-          :template => 'shared/index',
-          :locals   =>
-              { :models         => scoped_collection,
-                :attributes     => attributes,
-                :column_types   => column_types,
-                :column_headers => column_headers }),
-          :filename     => filename,
-          :content_type => "#{Mime::MS_EXCEL_2003_XML}; charset=utf-8",
-          :disposition  => 'inline'
-    end
 
-    def render_csv_for_download(models, attributes, column_headers, filename=nil)
-      send_data csv_from_collection(models, attributes, column_headers),
-                :filename     => filename,
-                :content_type => "#{Mime::CSV}; charset=utf-8",
-                :disposition  => 'inline'
+      render_to_string :template => 'shared/index',
+                       :locals   =>
+                         { :models         => scoped_collection,
+                           :attributes     => attributes,
+                           :column_types   => column_types,
+                           :column_headers => column_headers }
     end
 
     def csv_from_collection(models, attributes, column_headers)
@@ -107,6 +150,15 @@ class ApplicationController < ActionController::Base
           csv << attributes.map { |attr| model.public_send(attr).to_s }
         end
       end
+    end
+
+    def zip_string(string, filename)
+      stringio = Zip::ZipOutputStream::write_buffer do |zio|
+        zio.put_next_entry(filename)
+        zio.write string
+      end
+      stringio.rewind
+      stringio.sysread
     end
 
     def paginate(models, options={})

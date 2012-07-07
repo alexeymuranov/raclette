@@ -82,17 +82,15 @@ class WeeklyEventsController < ManagerController
       end
 
       requested_format.ms_excel_2003_xml do
-        render_ms_excel_2003_xml_for_download\
-            @weekly_events,
+        send_ms_excel_2003_xml_for_download @weekly_events,
             @attributes,
-            @column_headers  # defined in ApplicationController
+            @column_headers
       end
 
       requested_format.csv do
-        render_csv_for_download\
-            @weekly_events,
-            @attributes,
-            @column_headers  # defined in ApplicationController
+        send_csv_for_download @weekly_events,
+                              @attributes,
+                              @column_headers
       end
     end
   end
@@ -237,11 +235,16 @@ end
 
 class WeeklyEventsController::EventsController
   def destroy # FIXME!
+    # debugger
     @event = Event.find(params[:id])
-    @event.destroy
-
-    flash[:notice] = t('flash.events.destroy.success',
-                       :title => @event.title)
+    if @event.weekly_event_id == params[:weekly_event_id]
+      @event.destroy
+      flash[:notice] = t('flash.events.destroy.success',
+                         :title => @event.title)
+    else
+      flash[:error] = t('flash.actions.destroy.forbidden',
+                         :resource_name => Event.model_name.human)
+    end
 
     redirect_to({ :controller => :weekly_events,
                   :action     => :show }.reverse_merge(params))
@@ -282,4 +285,10 @@ class WeeklyEventsController::Event
 
   belongs_to :weekly_event, :class_name => :WeeklyEvent,
                             :inverse_of => :events
+
+  # NOTE: hope it will choose `WeeklyEventsController::EventsController`
+  def self.controller_class
+    EventsController
+    # WeeklyEventsController::EventsController
+  end
 end

@@ -101,15 +101,15 @@ class EventsController < SecretaryController
       end
 
       requested_format.ms_excel_2003_xml do
-        render_ms_excel_2003_xml_for_download @events,
-                                              @attributes,
-                                              @column_headers
+        send_ms_excel_2003_xml_for_download @events,
+                                            @attributes,
+                                            @column_headers
       end
 
       requested_format.csv do
-        render_csv_for_download @events,
-                                @attributes,
-                                @column_headers
+        send_csv_for_download @events,
+                              @attributes,
+                              @column_headers
       end
     end
   end
