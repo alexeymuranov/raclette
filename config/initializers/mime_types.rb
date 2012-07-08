@@ -5,9 +5,9 @@
 # Mime::Type.register_alias "text/html", :iphone
 
 Mime::Type.register 'application/xml', :ms_excel_2003_xml
-Mime::Type.register 'application/xls', :xls
+Mime::Type.register 'application/vnd.ms-excel', :xls
 Mime::Type.register 'application/zip', :zip
+Mime::Type.register 'application/x-gzip', :gzip
 # Mime::Type.register 'application/pdf', :pdf
 # Mime::Type.register 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet', :xlsx
 # Mime::Type.register 'application/vnd.oasis.opendocument.spreadsheet', :ods
-# Mime::Type.register 'application/vnd.ms-excel', :xls
