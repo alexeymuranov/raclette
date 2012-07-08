@@ -30,7 +30,7 @@ class InstructorsController < ManagerController
       @attributes = [ :ordered_full_name,
                       :email,
                       :employed_from ]
-    when Mime::XML, Mime::CSV, Mime::MS_EXCEL_2003_XML
+    when Mime::XML, Mime::CSV, Mime::MS_EXCEL_2003_XML, Mime::CSV_ZIP, Mime::MS_EXCEL_2003_XML_ZIP
       @attributes = [ :last_name,
                       :first_name,
                       :email,
@@ -89,16 +89,16 @@ class InstructorsController < ManagerController
                :only => @attributes
       end
 
-      requested_format.ms_excel_2003_xml do
-        send_ms_excel_2003_xml_for_download @instructors,
-                                            @attributes,
-                                            @column_headers
+      requested_format.ms_excel_2003_xml_zip do
+        send_ms_excel_2003_xml_zip_for_download @instructors,
+                                                @attributes,
+                                                @column_headers
       end
 
-      requested_format.csv do
-        send_csv_for_download @instructors,
-                              @attributes,
-                              @column_headers
+      requested_format.csv_zip do
+        send_csv_zip_for_download @instructors,
+                                  @attributes,
+                                  @column_headers
       end
     end
   end

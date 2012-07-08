@@ -25,7 +25,7 @@ class TicketBooksController < ManagerController
     case request.format
     when Mime::HTML
       @attributes = [:tickets_number, :price]
-    when Mime::XML, Mime::CSV, Mime::MS_EXCEL_2003_XML
+    when Mime::XML, Mime::CSV, Mime::MS_EXCEL_2003_XML, Mime::CSV_ZIP, Mime::MS_EXCEL_2003_XML_ZIP
       @attributes = [:tickets_number, :price]
     end
 
@@ -64,16 +64,16 @@ class TicketBooksController < ManagerController
                :only => @attributes
       end
 
-      requested_format.ms_excel_2003_xml do
-        send_ms_excel_2003_xml_for_download @ticket_books,
-                                            @attributes,
-                                            @column_headers
+      requested_format.ms_excel_2003_xml_zip do
+        send_ms_excel_2003_xml_zip_for_download @ticket_books,
+                                                @attributes,
+                                                @column_headers
       end
 
-      requested_format.csv do
-        send_csv_for_download @ticket_books,
-                              @attributes,
-                              @column_headers
+      requested_format.csv_zip do
+        send_csv_zip_for_download @ticket_books,
+                                  @attributes,
+                                  @column_headers
       end
     end
   end

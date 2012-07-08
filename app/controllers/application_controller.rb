@@ -24,7 +24,7 @@ class ApplicationController < ActionController::Base
     csv = csv_from_collection(obj, options[:attributes],
                                    options[:column_headers])
     filename = options[:filename] || "#{ klass.model_name.human.pluralize }"\
-      " #{ Time.now.in_time_zone.strftime('%Y-%m-%d %k_%M') }.csv"
+      " #{ Time.now.in_time_zone.strftime('%Y-%m-%d %k-%M') }.csv"
     self.response_body = csv
     send_data csv, :filename     => filename,
                    :content_type => "#{ Mime::CSV }; charset=utf-8",
@@ -42,14 +42,11 @@ class ApplicationController < ActionController::Base
         column_types[attr] = klass.columns_hash[attr.to_s].type
       end
     end
-    ms_excel_2003_xml = render_to_string(
-      :template    => 'shared/index',
-      :locals      => { :models         => obj,
-                        :attributes     => options[:attributes],
-                        :column_types   => column_types,
-                        :column_headers => options[:column_headers] })
+    ms_excel_2003_xml = ms_excel_2003_xml_from_collection(scoped_collection,
+                                                          attributes,
+                                                          column_headers)
     filename = options[:filename] || "#{ klass.model_name.human.pluralize }"\
-      " #{ Time.now.in_time_zone.strftime('%Y-%m-%d %k_%M') }.excel2003.xml"
+      " #{ Time.now.in_time_zone.strftime('%Y-%m-%d %k-%M') }.excel2003.xml"
     send_data ms_excel_2003_xml,
               :filename     => filename,
               :content_type => "#{ Mime::MS_EXCEL_2003_XML }; charset=utf-8",
@@ -69,7 +66,7 @@ class ApplicationController < ActionController::Base
                                               column_headers,
                                               filename = nil)
       filename ||= "#{ scoped_collection.klass.model_name.human.pluralize }"\
-                   " #{ Time.now.in_time_zone.strftime('%Y-%m-%d %k_%M') }"\
+                   " #{ Time.now.in_time_zone.strftime('%Y-%m-%d %k-%M') }"\
                    ".excel2003.xml"
       send_data ms_excel_2003_xml_from_collection(scoped_collection,
                                                   attributes,
@@ -79,9 +76,10 @@ class ApplicationController < ActionController::Base
           :disposition  => 'inline'
     end
 
-    def render_csv_for_download(models, attributes, column_headers, filename=nil)
+    def render_csv_for_download(models, attributes, column_headers,
+                                filename = nil)
       filename ||= "#{ models.klass.model_name.human.pluralize }"\
-                   " #{ Time.now.in_time_zone.strftime('%Y-%m-%d %k_%M') }"\
+                   " #{ Time.now.in_time_zone.strftime('%Y-%m-%d %k-%M') }"\
                    ".csv"
       send_data csv_from_collection(models, attributes, column_headers),
                 :filename     => filename,
@@ -89,13 +87,13 @@ class ApplicationController < ActionController::Base
                 :disposition  => 'inline'
     end
 
-    def send_ms_excel_2003_xml_for_download(scoped_collection,
-                                            attributes,
-                                            column_headers,
-                                            filename=nil)
+    def send_ms_excel_2003_xml_zip_for_download(scoped_collection,
+                                                attributes,
+                                                column_headers,
+                                                filename = nil)
       filename ||= "#{ scoped_collection.klass.model_name.human.pluralize }"\
-                   " #{ Time.now.in_time_zone.strftime('%Y-%m-%d %k_%M') }"\
-                   ".excel2003.xml.xls"
+                   " #{ Time.now.in_time_zone.strftime('%Y-%m-%d %k-%M') }"\
+                   ".xml.xls"
       data = zip_string(ms_excel_2003_xml_from_collection(scoped_collection,
                                                           attributes,
                                                           column_headers),
@@ -106,9 +104,10 @@ class ApplicationController < ActionController::Base
           :disposition  => 'attachment'
     end
 
-    def send_csv_for_download(models, attributes, column_headers, filename=nil)
+    def send_csv_zip_for_download(models, attributes, column_headers,
+                                  filename = nil)
       filename ||= "#{ models.klass.model_name.human.pluralize }"\
-                   " #{ Time.now.in_time_zone.strftime('%Y-%m-%d %k_%M') }"\
+                   " #{ Time.now.in_time_zone.strftime('%Y-%m-%d %k-%M') }"\
                    ".csv"
       data = zip_string(csv_from_collection(models,
                                             attributes,
@@ -133,7 +132,7 @@ class ApplicationController < ActionController::Base
         end
       end
 
-      render_to_string :template => 'shared/index',
+      render_to_string :template => 'shared/index.ms_excel_2003_xml',
                        :locals   =>
                          { :models         => scoped_collection,
                            :attributes     => attributes,

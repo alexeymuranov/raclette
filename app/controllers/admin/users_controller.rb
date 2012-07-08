@@ -50,7 +50,7 @@ class Admin::UsersController < AdminController
                       :manager,
                       :secretary,
                       :a_person ]
-    when Mime::XML, Mime::CSV, Mime::MS_EXCEL_2003_XML
+    when Mime::XML, Mime::CSV, Mime::MS_EXCEL_2003_XML, Mime::CSV_ZIP, Mime::MS_EXCEL_2003_XML_ZIP
       @attributes = [ :username,
                       :full_name,
                       :email,
@@ -109,16 +109,16 @@ class Admin::UsersController < AdminController
         end
       end
 
-      requested_format.ms_excel_2003_xml do
-        send_ms_excel_2003_xml_for_download @users,
-                                            @attributes,
-                                            @column_headers
+      requested_format.ms_excel_2003_xml_zip do
+        send_ms_excel_2003_xml_zip_for_download @users,
+                                                @attributes,
+                                                @column_headers
       end
 
-      requested_format.csv do
-        send_csv_for_download @users,
-                              @attributes,
-                              @column_headers
+      requested_format.csv_zip do
+        send_csv_zip_for_download @users,
+                                  @attributes,
+                                  @column_headers
       end
     end
   end

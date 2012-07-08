@@ -1,7 +1,7 @@
 = t('actions.download_resources:', :resources => t('members.index.terms.filtered_members'))
-= form_tag({ :format => :ms_excel_2003_xml },
+= form_tag({ :format => :ms_excel_2003_xml_zip },
              :method => :get,
-             :id     => 'download_members_in_ms_excel_2003_xml',
+             :id     => 'download_members_in_ms_excel_2003_xml_zip',
              :style  => 'display:inline' ) do
 
   = hidden_fields_from_nested_hash params.slice(:filter, :sort, :per_page)
@@ -13,9 +13,9 @@
                  :type  => 'submit',
                  :value => 'download'
 
-= form_tag({ :format => :csv },
+= form_tag({ :format => :csv_zip },
              :method => :get,
-             :id     => 'download_members_in_csv',
+             :id     => 'download_members_in_csv_zip',
              :style  => 'display:inline' ) do
 
   = hidden_fields_from_nested_hash params.slice(:filter, :sort, :per_page)
