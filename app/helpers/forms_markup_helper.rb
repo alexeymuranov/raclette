@@ -10,16 +10,16 @@ module FormsMarkupHelper
                    lambda { |k| "#{ key_prefix }[#{ k }]" }
                  end
 
-    flat_hash = {}
-    nested_hash.each_pair do |k, v|
-      k = format_key.(k)
-      if v.is_a?(Hash)
-        flat_hash.merge!(param_name_value_pairs_from_nested_hash(v, k))
-      else
-        flat_hash[k] = v
+    {}.tap do |flat_hash|
+      nested_hash.each_pair do |k, v|
+        k = format_key.(k)
+        if v.is_a?(Hash)
+          flat_hash.merge!(param_name_value_pairs_from_nested_hash(v, k))
+        else
+          flat_hash[k] = v
+        end
       end
     end
-    flat_hash
   end
 
   def hidden_fields_from_nested_hash(hash, options = {})
