@@ -22,8 +22,8 @@
 - readonly = klass.attr_readonly?(attribute)
 - editable = model.attr_editable?(attribute)
 - select_from = klass.possible_values_of(attribute)
-- select_from = nil unless select_from.respond_to?(:size) &&      |
-                           (select_size = select_from.size) <= 50 |
+- unless select_from.respond_to?(:size) && (select_size = select_from.size) <= 50
+  - select_from = nil
 - input_html_options[:required] = 'required' if required
 
 .item.field
