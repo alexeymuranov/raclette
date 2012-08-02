@@ -35,7 +35,7 @@ class TicketBook < ActiveRecord::Base
 
   # Public instance methods
   # Non-SQL virtual attributes
-  def non_sql_long_title
+  def virtual_long_title
     "#{ tickets_number } (#{ membership_type.unique_title })"\
     " : #{ number_to_currency(price, :unit => '€') }"
   end

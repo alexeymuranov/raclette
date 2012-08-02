@@ -155,7 +155,7 @@ class EventsController < SecretaryController
 
     @singular_associations = [ :weekly_event ]
     @association_name_attributes = {
-      :weekly_event => :non_sql_long_title }
+      :weekly_event => :virtual_long_title }
 
     @event = Event.find(params[:id])
 

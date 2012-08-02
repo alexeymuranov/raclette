@@ -1,4 +1,4 @@
-%h1= t '.header', :title => @ticket_book.non_sql_long_title
+%h1= t '.header', :title => @ticket_book.virtual_long_title
 %section
   %dl.show
     - @attributes.each do |attr|
@@ -10,7 +10,7 @@
 
 %footer
   = link_to edit_pictogram(3) + ' ' + t('ticket_books.edit.header',
-                                        :title => @ticket_book.non_sql_long_title),
+                                        :title => @ticket_book.virtual_long_title),
             edit_ticket_book_path(@ticket_book),
             :class => 'modify resource'
   = link_to list_all_pictogram(3) + ' ' + t('ticket_books.index.header'),

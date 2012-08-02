@@ -17,7 +17,7 @@
             :attribute => LessonSupervision.human_attribute_name(:instructors)
       %dd{ :class => 'input select_multiple' }
         = f.select_for_habtm :instructors,
-                             Instructor, :non_sql_professional_name,
+                             Instructor, :virtual_professional_name,
                              :include_blank => true
 
   .actions

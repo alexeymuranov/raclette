@@ -125,14 +125,14 @@ class Person < ActiveRecord::Base
 
   # Public instance methods
   # Non-SQL virtual attributes
-  def non_sql_full_name
+  def virtual_full_name
     [ name_title,
       first_name,
       nickname_or_other.blank? ? nil : "'#{ nickname_or_other }'",
       last_name ].reject(&:blank?).join(' ')
   end
 
-  def non_sql_personal_phone
+  def virtual_personal_phone
     mobile_phone || home_phone
   end
 end

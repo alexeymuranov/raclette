@@ -3,7 +3,7 @@
     %h2= t 'register.compose_transaction.subheaders.attended_events'
     %ol
       - @attended_events.each do |e|
-        %li= e.non_sql_long_title
+        %li= e.virtual_long_title
 
   -# NOTE: using 'action' only to scroll to the anchor.
   -# TODO: add :'data-remote' => 'true' and fix it.

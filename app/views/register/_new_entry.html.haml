@@ -16,13 +16,13 @@
   -#     %dd
   -#       = f.select :event_id,
   -#           options_from_collection_for_select(@events,
-  -#             :id, :non_sql_long_title,
+  -#             :id, :virtual_long_title,
   -#             :selected => @event_entry.event_id)
 
   .form_fields
     = f.select :event_id,
         options_from_collection_for_select(@events,
-          :id, :non_sql_long_title,
+          :id, :virtual_long_title,
           :selected => @event_entry.event_id )
 
   .actions

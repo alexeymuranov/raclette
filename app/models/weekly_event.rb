@@ -82,7 +82,7 @@ class WeeklyEvent < ActiveRecord::Base
   end
 
   # Non-SQL virtual attributes
-  def non_sql_long_title
+  def virtual_long_title
     long_title = "#{ I18n.t('date.day_names')[week_day].capitalize }"\
                  " : #{ title }"
     if lesson_supervision && !lesson_supervision.unique_names.blank?

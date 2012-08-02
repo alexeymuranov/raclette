@@ -169,7 +169,7 @@ class MembersController < SecretaryController
     @memberships_column_types = Membership.attribute_db_types
     @memberships_column_headers = Membership.human_column_headers
 
-    @title = t('members.show.title', :name => @member.non_sql_full_name)
+    @title = t('members.show.title', :name => @member.virtual_full_name)
   end
 
   def new
@@ -215,7 +215,7 @@ class MembersController < SecretaryController
 
     if @member.save
       flash[:success] = t('flash.members.create.success',
-                          :name => @member.non_sql_full_name)
+                          :name => @member.virtual_full_name)
       redirect_to :action => :show,
                   :id     => @member
     else
@@ -250,7 +250,7 @@ class MembersController < SecretaryController
     @member.destroy
 
     flash[:notice] = t('flash.members.destroy.success',
-                       :name => @member.non_sql_full_name)
+                       :name => @member.virtual_full_name)
 
     redirect_to :action => :index
   end
@@ -268,7 +268,7 @@ class MembersController < SecretaryController
     def render_edit_properly
       @column_types = Member.attribute_db_types
 
-      @title =  t('members.edit.title', :name => @member.non_sql_full_name)
+      @title =  t('members.edit.title', :name => @member.virtual_full_name)
 
       render :edit
     end

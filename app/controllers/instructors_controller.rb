@@ -118,7 +118,7 @@ class InstructorsController < ManagerController
 
     @column_types = Instructor.attribute_db_types
 
-    @title = t('instructors.show.title', :name => @instructor.non_sql_full_name)
+    @title = t('instructors.show.title', :name => @instructor.virtual_full_name)
   end
 
   def new
@@ -166,13 +166,13 @@ class InstructorsController < ManagerController
 
     # Create a default one-person lesson supervision:
     @lesson_supervision = LessonSupervision.create(
-      :unique_names      => @instructor.non_sql_professional_name,
+      :unique_names      => @instructor.virtual_professional_name,
       :instructors_count => 1)
     @instructor.lesson_supervisions << @lesson_supervision
 
     if @instructor.save
       flash[:success] = t('flash.instructors.create.success',
-                          :name => @instructor.non_sql_full_name)
+                          :name => @instructor.virtual_full_name)
       redirect_to :action => :show,
                   :id     => @instructor.id
     else
@@ -208,7 +208,7 @@ class InstructorsController < ManagerController
     @instructor.destroy
 
     flash[:notice] = t('flash.instructors.destroy.success',
-                       :name => @instructor.non_sql_full_name)
+                       :name => @instructor.virtual_full_name)
 
     redirect_to :action => :index
   end
@@ -227,7 +227,7 @@ class InstructorsController < ManagerController
       @column_types = Instructor.attribute_db_types
 
       @title =  t('instructors.edit.title',
-                  :name => @instructor.non_sql_full_name)
+                  :name => @instructor.virtual_full_name)
 
       render :edit
     end

@@ -118,7 +118,7 @@ class Member < ActiveRecord::Base
 
   # Public instance methods
   # Non-SQL virtual attributes
-  def non_sql_account_active
+  def virtual_account_active
     !account_deactivated
   end
 
@@ -127,7 +127,7 @@ class Member < ActiveRecord::Base
   end
 
   # Aliases
-  alias_method :'non_sql_account_active?', :non_sql_account_active
+  alias_method :'virtual_account_active?', :virtual_account_active
 
 end
 # == Schema Information

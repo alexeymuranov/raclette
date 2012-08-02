@@ -165,7 +165,7 @@ class Event < ActiveRecord::Base
 
   # Non-SQL virtual attributes
 
-  def non_sql_long_title
+  def virtual_long_title
     long_title = "#{ date } : #{ title }"
     if lesson_supervision && !lesson_supervision.unique_names.blank?
       long_title << " (#{ lesson_supervision.unique_names })"

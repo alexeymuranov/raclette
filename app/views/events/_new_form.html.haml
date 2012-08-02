@@ -10,7 +10,7 @@
             :attribute => Event.human_attribute_name(:weekly_event)
       %dd{ :class => 'input' }
         = f.select_for_belongs_to :weekly_event,
-                                  @weekly_events, :non_sql_long_title,
+                                  @weekly_events, :virtual_long_title,
                                   :include_blank => true
         %span.actions
           = button_tag t('.select_button'),

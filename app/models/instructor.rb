@@ -41,7 +41,7 @@ class Instructor < ActiveRecord::Base
 
   # Public instance methods
   # Non-SQL virtual attributes
-  def non_sql_professional_name
+  def virtual_professional_name
     [ first_name,
       nickname_or_other.blank? ? nil : "'#{ nickname_or_other }'",
       last_name ].reject(&:blank?).join(' ')

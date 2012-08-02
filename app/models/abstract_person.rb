@@ -20,7 +20,7 @@ module AbstractPerson  # NOTE:WIP
                   :work_phone,
                   :personal_phone,
                   :primary_address,
-                  :non_sql_full_name,
+                  :virtual_full_name,
                   :to => :person
 
     # Validations

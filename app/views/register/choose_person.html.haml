@@ -4,10 +4,10 @@
   %label
     = t 'formats.attribute_name:',
         :attribute => t('register.new_entry.current_event')
-    = @event ? @event.non_sql_long_title : '∅'
+    = @event ? @event.virtual_long_title : '∅'
   = select_tag :event_id,
       options_from_collection_for_select(@events,
-        :id, :non_sql_long_title,
+        :id, :virtual_long_title,
         :selected    => @event ? @event.id : nil ),
       :include_blank => true
 
