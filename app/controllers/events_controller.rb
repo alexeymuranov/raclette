@@ -2,7 +2,8 @@
 
 class EventsController < SecretaryController
 
-  class Event < Event
+  Event = Accessors::Event.dup
+  class Event
     self.all_sorting_columns = [ :title, :event_type,
                                  :date,
                                  :start_time,
@@ -14,7 +15,8 @@ class EventsController < SecretaryController
                             :class_name => :Person
   end
 
-  class Person < Person
+  Person = Accessors::Person.dup
+  class Person
     self.all_sorting_columns = [ :ordered_full_name,
                                  :email ]
     self.default_sorting_column = :ordered_full_name
@@ -24,7 +26,8 @@ class EventsController < SecretaryController
                      :inverse_of => :person
   end
 
-  class Member < Member
+  Member = Accessors::Member.dup
+  class Member
     self.all_sorting_columns = [ :ordered_full_name,
                                  :email,
                                  :account_deactivated,
