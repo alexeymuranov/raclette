@@ -1,0 +1,25 @@
+-# Locals:
+-#   model:
+-#   attributes:
+-#   column_types:
+-#   singular_associations:
+-#   association_name_attributes:
+
+%dl.show
+  - if local_assigns.has_key?(:singular_associations)
+    - singular_associations.each do |assoc|
+      - if associated_model = model.public_send(assoc)
+
+        = render 'shared/lists/singular_association_in_description',
+          :model                      => model,
+          :association                => assoc,
+          :associated_model           => associated_model,
+          :association_name_attribute => association_name_attributes[assoc]
+
+  - if local_assigns.has_key?(:attributes)
+    - attributes.each do |attr|
+
+      = render 'shared/lists/attribute_in_description',
+        :model       => model,
+        :attribute   => attr,
+        :column_type => column_types[attr]

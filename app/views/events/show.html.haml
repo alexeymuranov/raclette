@@ -1,21 +1,12 @@
 %h1= t '.header', :title => @event.title
 %section
-  %dl.show
-    - @singular_associations.each do |assoc|
-      - if associated_model = @event.public_send(assoc)
 
-        = render 'shared/lists/singular_association_in_description',
-          :model                      => @event,
-          :association_attribute      => assoc,
-          :associated_model           => associated_model,
-          :association_name_attribute => @association_name_attributes[assoc]
-
-    - @attributes.each do |attr|
-
-      = render 'shared/lists/attribute_in_description',
-        :model       => @event,
-        :attribute   => attr,
-        :column_type => @column_types[attr]
+  = render 'shared/lists/description',
+    :model                       => @event,
+    :attributes                  => @attributes,
+    :column_types                => @column_types,
+    :singular_associations       => @singular_associations,
+    :association_name_attributes => @association_name_attributes
 
 %section
   %h2= Event.human_attribute_name(:member_participants)

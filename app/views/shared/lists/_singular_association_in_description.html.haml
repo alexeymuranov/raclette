@@ -1,6 +1,6 @@
 -# Locals:
 -#   model
--#   association_attribute:
+-#   association:
 -#   associated_model:
 -#   association_name_attribute:
 
@@ -10,7 +10,7 @@
 .item
   %dt<
     = t 'formats.attribute_name:',
-        :attribute => klass.human_attribute_name(association_attribute)
+        :attribute => klass.human_attribute_name(association)
   %dd.reference
     = link_to identifying_name,
               { :controller => associated_model.controller_path,
