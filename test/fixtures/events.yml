@@ -12,7 +12,7 @@ one:
   location: Tangueando
   address_id: 1
   weekly: false
-  weekly_event_id: 1
+  weekly_event: practica_du_jeudi
   supervisors: MyString
   lesson_supervision_id: 1
   entry_fee_tickets: 1
@@ -39,7 +39,7 @@ two:
   location: Tangueando
   address_id: 1
   weekly: true
-  weekly_event_id: 1
+  weekly_event: practica_du_jeudi
   supervisors: ~
   lesson_supervision_id: ~
   entry_fee_tickets: 1

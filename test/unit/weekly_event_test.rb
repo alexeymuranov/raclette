@@ -5,7 +5,7 @@ class WeeklyEventTest < ActiveSupport::TestCase
     weekly_event = weekly_events(:practica_du_jeudi)
     weekly_event.build_events
     weekly_event.save!
-    assert_equal weekly_event.events.count, 52
+    assert_equal weekly_event.events.count, 54
   end
 end
 # == Schema Information
