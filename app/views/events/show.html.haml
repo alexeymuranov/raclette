@@ -4,7 +4,7 @@
     - @singular_associations.each do |assoc|
       - if associated_model = @event.public_send(assoc)
 
-        = render 'shared/lists/singular_association_in_show',
+        = render 'shared/lists/singular_association_in_description',
           :model                      => @event,
           :association_attribute      => assoc,
           :associated_model           => associated_model,
@@ -12,7 +12,7 @@
 
     - @attributes.each do |attr|
 
-      = render 'shared/lists/attribute_in_show',
+      = render 'shared/lists/attribute_in_description',
         :model       => @event,
         :attribute   => attr,
         :column_type => @column_types[attr]

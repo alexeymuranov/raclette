@@ -6,7 +6,7 @@
   %dl.show
     - @main_attributes.each do |attr|
 
-      = render 'shared/lists/attribute_in_show',
+      = render 'shared/lists/attribute_in_description',
                :attribute => attr,
                :model     => @user
 
@@ -29,7 +29,7 @@
     %dl.show
       - @other_attributes.each do |attr|
 
-        = render 'shared/lists/attribute_in_show',
+        = render 'shared/lists/attribute_in_description',
                  :attribute => attr,
                  :model     => @user
 

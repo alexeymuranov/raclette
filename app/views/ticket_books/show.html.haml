@@ -3,7 +3,7 @@
   %dl.show
     - @attributes.each do |attr|
 
-      = render 'shared/lists/attribute_in_show',
+      = render 'shared/lists/attribute_in_description',
                :model       => @ticket_book,
                :attribute   => attr,
                :column_type => @column_types[attr]

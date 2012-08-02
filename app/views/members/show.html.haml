@@ -6,7 +6,7 @@
   %dl.show
     - @attributes.each do |attr|
 
-      = render 'shared/lists/attribute_in_show',
+      = render 'shared/lists/attribute_in_description',
                :model       => @member,
                :attribute   => attr,
                :column_type => @column_types[attr]
