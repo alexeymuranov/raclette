@@ -2,8 +2,7 @@
 
 class WeeklyEventsController < ManagerController
 
-  WeeklyEvent = Accessors::WeeklyEvent.dup
-  class WeeklyEvent
+  class WeeklyEvent < Accessors::WeeklyEvent
     self.all_sorting_columns = [ :title,
                                  :event_type,
                                  :lesson,
@@ -24,17 +23,12 @@ class WeeklyEventsController < ManagerController
                       :inverse_of => :weekly_event
   end
 
-  Event = Accessors::Event.dup
-  class Event
+  class Event < Accessors::Event
     self.all_sorting_columns = [ :title, :event_type,
                                  :date,
                                  :start_time,
                                  :supervisors ]
     self.default_sorting_column = :date
-
-    has_many :participants, :through    => :event_entries,
-                            :source     => :person,
-                            :class_name => :Person
 
     belongs_to :weekly_event, :class_name => :WeeklyEvent,
                               :inverse_of => :events
