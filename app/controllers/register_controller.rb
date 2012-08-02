@@ -153,7 +153,7 @@ class RegisterController < ApplicationController
     def set_person_from_params
       if params[:member_id]
         @member = Member.joins(:person)\
-                        .with_virtual_attributes(:full_name)\
+                        .with_composite_attributes(:full_name)\
                         .find(params[:member_id])
       elsif params[:guest]
         @guest = Guest.new(params[:guest])
@@ -169,7 +169,7 @@ class RegisterController < ApplicationController
 
     def render_choose_person_properly
       @members = paginate(Member.account_active.joins(:person).
-                                 with_virtual_attributes(:ordered_full_name).
+                                 with_composite_attributes(:ordered_full_name).
                                  default_order)
       # Filter:
       @members = Member.filter(@members, params[:filter], @attributes)

@@ -8,7 +8,7 @@ class SecretaryToolsController < SecretaryController
       @members = member_count
     else
       @members = Member.joins(:person).
-        with_virtual_attributes(:ordered_full_name, :full_name).default_order
+        with_composite_attributes(:ordered_full_name, :full_name).default_order
     end
 
     event_count = Event.count

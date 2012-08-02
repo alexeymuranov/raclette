@@ -9,6 +9,6 @@ class ManagerToolsController < ManagerController
     @membership_types = MembershipType.default_order
     @activity_periods = ActivityPeriod.default_order
     @instructors = Instructor.joins(:person)\
-                     .with_virtual_attributes(:ordered_full_name, :full_name).default_order
+                     .with_composite_attributes(:ordered_full_name, :full_name).default_order
   end
 end

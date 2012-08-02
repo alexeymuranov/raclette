@@ -40,23 +40,23 @@ module AbstractSmarterModel
       attribute_db_types[attr]
     end
 
-    def virtual_attributes_sql(*attributes)
+    def composite_attributes_sql(*attributes)
       attributes.delete_if { |attr| columns_hash[attr.to_s] }
       attributes.map{ |attr|
         "#{ sql_for_attributes[attr] } AS #{ attr.to_s }"
       }.join(', ')
     end
 
-    def with_virtual_attributes_sql(*attributes)
-      %("#{ table_name }".*, #{ virtual_attributes_sql(*attributes) })
+    def with_composite_attributes_sql(*attributes)
+      %("#{ table_name }".*, #{ composite_attributes_sql(*attributes) })
     end
 
     # Cannot use `scope` with `lambda` here because `lambda` would bind
     # to the current ... scope (not in the above sense :)), in particular,
     # `self` would be `AbstractSmarterModel` in all descendants.
-    def with_virtual_attributes(*attributes)
+    def with_composite_attributes(*attributes)
       attributes.blank? ? scoped :
-        select(with_virtual_attributes_sql(*attributes))
+        select(with_composite_attributes_sql(*attributes))
     end
   end
 end

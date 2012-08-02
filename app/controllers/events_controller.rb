@@ -163,13 +163,13 @@ class EventsController < SecretaryController
 
     @member_participants_attributes = [ :ordered_full_name, :email ]
     @member_participants = @event.member_participants.
-      with_virtual_attributes(*@member_participants_attributes)
+      with_composite_attributes(*@member_participants_attributes)
     @member_participants_column_types = Member.attribute_db_types
     @member_participants_column_headers = Member.human_column_headers
 
     @other_participants_attributes = [ :ordered_full_name, :email ]
     @other_participants = @event.non_member_participants.
-      with_virtual_attributes(*@other_participants_attributes)
+      with_composite_attributes(*@other_participants_attributes)
     @other_participants_column_types = Person.attribute_db_types
     @other_participants_column_headers = Person.human_column_headers
 

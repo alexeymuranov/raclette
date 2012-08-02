@@ -76,7 +76,7 @@ class MembersController < SecretaryController
     @sql_for_attributes = Member.sql_for_attributes
 
     @members = Member.joins(:person).
-      with_virtual_attributes(*@attributes, :formatted_email)
+      with_composite_attributes(*@attributes, :formatted_email)
 
     # Filter:
     @members = Member.filter(@members, params[:filter], @attributes)
@@ -153,7 +153,7 @@ class MembersController < SecretaryController
     @extra_attributes = [:full_name]
 
     @member = Member.joins(:person).
-                     with_virtual_attributes(*@attributes, *@extra_attributes).
+                     with_composite_attributes(*@attributes, *@extra_attributes).
                      find(params[:id])
 
     @column_types = Member.attribute_db_types
@@ -165,7 +165,7 @@ class MembersController < SecretaryController
 
     @memberships_attributes = [:title, :duration_months, :end_date]
     @memberships = @member.memberships.with_type.with_activity_period.
-      with_virtual_attributes(*@memberships_attributes)
+      with_composite_attributes(*@memberships_attributes)
     @memberships_column_types = Membership.attribute_db_types
     @memberships_column_headers = Membership.human_column_headers
 
@@ -180,7 +180,7 @@ class MembersController < SecretaryController
   end
 
   def edit
-    @member = Member.joins(:person).with_virtual_attributes(:full_name).
+    @member = Member.joins(:person).with_composite_attributes(:full_name).
                      find(params[:id])
     render_edit_properly
   end
@@ -226,7 +226,7 @@ class MembersController < SecretaryController
   end
 
   def update
-    @member = Member.joins(:person).with_virtual_attributes(:full_name).
+    @member = Member.joins(:person).with_composite_attributes(:full_name).
                      find(params[:id])
 
     params[:member][:person_attributes].delete(:email) if
