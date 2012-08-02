@@ -21,11 +21,7 @@ Raclette::Application.routes.draw do
   resources :memberships
   resources :people, :only => [:index, :show]
   resources :ticket_books
-  resources :weekly_events do
-    resources :events,
-              :controller => 'WeeklyEventsController::EventsController',
-              :only       => :destroy
-  end
+  resources :weekly_events
 
   scope '/admin', :module => :admin do  # an alternative for admin namespace
   # namespace :admin do

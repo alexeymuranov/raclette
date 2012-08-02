@@ -2,6 +2,44 @@
 
 class WeeklyEventsController < ManagerController
 
+  WeeklyEvent = Accessors::WeeklyEvent.dup
+  class WeeklyEvent
+    self.all_sorting_columns = [ :title,
+                                 :event_type,
+                                 :lesson,
+                                 :week_day,
+                                 :start_time,
+                                 :duration_minutes,
+                                 :end_time,
+                                 :start_on,
+                                 :end_on,
+                                 :location,
+                                 :entry_fee_tickets,
+                                 :over,
+                                 :description ]
+    self.default_sorting_column = :end_on
+
+    has_many :events, :class_name => :Event,
+                      :dependent  => :nullify,
+                      :inverse_of => :weekly_event
+  end
+
+  Event = Accessors::Event.dup
+  class Event
+    self.all_sorting_columns = [ :title, :event_type,
+                                 :date,
+                                 :start_time,
+                                 :supervisors ]
+    self.default_sorting_column = :date
+
+    has_many :participants, :through    => :event_entries,
+                            :source     => :person,
+                            :class_name => :Person
+
+    belongs_to :weekly_event, :class_name => :WeeklyEvent,
+                              :inverse_of => :events
+  end
+
   def index
     @submit_button = params[:button]
 
@@ -224,68 +262,4 @@ class WeeklyEventsController < ManagerController
       render :edit
     end
 
-end
-
-# Nested classes
-#
-class WeeklyEventsController
-  EventsController = ApplicationController::EventsController.dup
-  class EventsController
-    def destroy # FIXME!
-      @event = Event.find(params[:id])
-      if @event.weekly_event_id == params[:weekly_event_id]
-        @event.destroy
-        flash[:notice] = t('flash.events.destroy.success',
-                           :title => @event.title)
-      else
-        flash[:error] = t('flash.actions.destroy.forbidden',
-                           :resource_name => Event.model_name.human)
-      end
-
-      redirect_to({ :controller => :weekly_events,
-                    :action     => :show }.reverse_merge(params))
-    end
-  end
-
-  WeeklyEvent = ApplicationController::WeeklyEvent.dup
-  class WeeklyEvent
-    self.all_sorting_columns = [ :title,
-                                 :event_type,
-                                 :lesson,
-                                 :week_day,
-                                 :start_time,
-                                 :duration_minutes,
-                                 :end_time,
-                                 :start_on,
-                                 :end_on,
-                                 :location,
-                                 :entry_fee_tickets,
-                                 :over,
-                                 :description ]
-    self.default_sorting_column = :end_on
-
-    has_many :events, :class_name => :Event,
-                      :dependent  => :nullify,
-                      :inverse_of => :weekly_event
-  end
-
-  Event = ApplicationController::Event.dup
-  class Event
-    self.all_sorting_columns = [ :title, :event_type,
-                                 :date,
-                                 :start_time,
-                                 :supervisors ]
-    self.default_sorting_column = :date
-
-    has_many :participants, :through    => :event_entries,
-                            :source     => :person,
-                            :class_name => :Person
-
-    belongs_to :weekly_event, :class_name => :WeeklyEvent,
-                              :inverse_of => :events
-
-    def self.controller_class
-      EventsController
-    end
-  end
 end
