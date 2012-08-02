@@ -1,0 +1,20 @@
+-# Locals:
+-#   model
+-#   association_attribute:
+-#   associated_model:
+-#   association_name_attribute:
+
+- klass = model.class
+- identifying_name = associated_model.public_send(association_name_attribute)
+
+.item
+  %dt<
+    = t 'formats.attribute_name:',
+        :attribute => klass.human_attribute_name(association_attribute)
+  %dd.reference
+    = link_to identifying_name,
+              { :controller => associated_model.controller_path,
+                :action     => :show,
+                :id         => associated_model },
+              :title => t('actions.read'),
+              :class => 'display associated resource'

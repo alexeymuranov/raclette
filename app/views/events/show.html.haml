@@ -1,6 +1,15 @@
 %h1= t '.header', :title => @event.title
 %section
   %dl.show
+    - @singular_associations.each do |assoc|
+      - if associated_model = @event.public_send(assoc)
+
+        = render 'shared/lists/singular_association_in_show',
+          :model                      => @event,
+          :association_attribute      => assoc,
+          :associated_model           => associated_model,
+          :association_name_attribute => @association_name_attributes[assoc]
+
     - @attributes.each do |attr|
 
       = render 'shared/lists/attribute_in_show',

@@ -13,6 +13,31 @@ class EventsController < SecretaryController
     has_many :participants, :through    => :event_entries,
                             :source     => :person,
                             :class_name => :Person
+
+    belongs_to :weekly_event, :class_name => :WeeklyEvent,
+                              :inverse_of => :events
+  end
+
+  WeeklyEvent = Accessors::WeeklyEvent.dup
+  class WeeklyEvent
+    self.all_sorting_columns = [ :title,
+                                 :event_type,
+                                 :lesson,
+                                 :week_day,
+                                 :start_time,
+                                 :duration_minutes,
+                                 :end_time,
+                                 :start_on,
+                                 :end_on,
+                                 :location,
+                                 :entry_fee_tickets,
+                                 :over,
+                                 :description ]
+    self.default_sorting_column = :end_on
+
+    has_many :events, :class_name => :Event,
+                      :dependent  => :nullify,
+                      :inverse_of => :weekly_event
   end
 
   Person = Accessors::Person.dup
@@ -131,6 +156,10 @@ class EventsController < SecretaryController
                     :entries_count,
                     :tickets_collected,
                     :entry_fees_collected ]
+
+    @singular_associations = [ :weekly_event ]
+    @association_name_attributes = {
+      :weekly_event => :non_sql_long_title }
 
     @event = Event.find(params[:id])
 
