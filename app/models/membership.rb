@@ -1,8 +1,10 @@
 ## encoding: UTF-8
 
+require 'app_active_record_extensions/composite_attributes'
+
 class Membership < ActiveRecord::Base
 
-  include AbstractSmarterModel
+  include CompositeAttributes
   include AbstractHumanizedModel
 
   attr_readonly :id, :membership_type_id, :activity_period_id, :initial_price
@@ -58,40 +60,26 @@ class Membership < ActiveRecord::Base
 
   # default_scope with_type.with_activity_period # FIXME
 
-  # Public class methods
+  # Composite attributes
 
-  def self.sql_for_attributes  # Extends the one from AbstractSmarterModel
-    unless @sql_for_attributes
-      super
-
-      [:start_date, :duration_months, :end_date].each do |attr|
-        @sql_for_attributes[attr] = ActivityPeriod.sql_for_attributes[attr]
-      end
-
-      @sql_for_attributes[:type_title] =
-        MembershipType.sql_for_attributes[:unique_title]
-
-      title_sql = "(#{@sql_for_attributes[:type_title]} || "\
-                  "', ' || "\
-                  "#{@sql_for_attributes[:start_date]} || "\
-                  "' -- ' || "\
-                  "#{@sql_for_attributes[:end_date]})"
-      @sql_for_attributes[:title] = title_sql
-    end
-    @sql_for_attributes
+  [:start_date, :duration_months, :end_date].each do |attr|
+    add_composite_attributes attr => ActivityPeriod.sql_for_attributes[attr]
   end
 
-  def self.attribute_db_types  # Extends the one from AbstractSmarterModel
-    unless @attribute_db_types
-      super
-      @attribute_db_types.merge! :start_date      => :date,
-                                 :duration_months => :integer,
-                                 :end_date        => :date,
-                                 :type_title      => :string,
-                                 :title           => :string
-    end
-    @attribute_db_types
-  end
+  add_composite_attributes :type_title => MembershipType.sql_for_attributes[:unique_title]
+
+  title_sql = "(#{ sql_for_attributes[:type_title] } || "\
+              "', ' || "\
+              "#{ sql_for_attributes[:start_date] } || "\
+              "' -- ' || "\
+              "#{ sql_for_attributes[:end_date] })"
+  add_composite_attributes :title => title_sql
+
+  add_composite_attribute_db_types  :start_date      => :date,
+                                    :duration_months => :integer,
+                                    :end_date        => :date,
+                                    :type_title      => :string,
+                                    :title           => :string
 
   # Public instance methods
   # def type_title

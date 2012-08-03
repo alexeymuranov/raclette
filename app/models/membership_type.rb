@@ -2,12 +2,13 @@
 
 require 'app_active_record_extensions/filtering'
 require 'app_active_record_extensions/sorting'
+require 'app_active_record_extensions/composite_attributes'
 
 class MembershipType < ActiveRecord::Base
   include Filtering
   include Sorting
 
-  include AbstractSmarterModel
+  include CompositeAttributes
   include AbstractHumanizedModel
 
   attr_readonly :id, :active, :reduced, :unlimited, :duration_months

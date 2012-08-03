@@ -2,12 +2,13 @@
 
 require 'app_active_record_extensions/filtering'
 require 'app_active_record_extensions/sorting'
+require 'app_active_record_extensions/composite_attributes'
 
 class TicketBook < ActiveRecord::Base
   include Filtering
   include Sorting
 
-  include AbstractSmarterModel
+  include CompositeAttributes
   include AbstractHumanizedModel
 
   # To use number_to_currency

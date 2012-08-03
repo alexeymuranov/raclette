@@ -2,6 +2,7 @@
 
 require 'app_active_record_extensions/filtering'
 require 'app_active_record_extensions/sorting'
+require 'app_active_record_extensions/composite_attributes'
 # require 'app_parsers/time_duration_parser'
 require 'app_validations/event'
 
@@ -11,7 +12,7 @@ class Event < ActiveRecord::Base
   self.default_sorting_column = :date
   # include TimeDurationParser
 
-  include AbstractSmarterModel
+  include CompositeAttributes
   include AbstractHumanizedModel
 
   attr_readonly :id, :event_type, :lesson, :weekly
@@ -99,29 +100,14 @@ class Event < ActiveRecord::Base
                             where :date => (today - 1.week)..today
                           }
 
+  # Composite attributes
+  long_title_sql = "(#{ sql_for_attributes[:date] } || ': ' || #{ sql_for_attributes[:title] })"
+
+  add_composite_attributes :long_title => long_title_sql
+
+  add_composite_attribute_db_types :long_title => :string
+
   # Public class methods
-
-  def self.sql_for_attributes  # Extends the one from AbstractSmarterModel
-    unless @sql_for_attributes
-      super
-
-      long_title_sql = "(#{ super[:date] } || ': ' || #{ super[:title] })"
-
-      @sql_for_attributes[:long_title] = long_title_sql
-    end
-    @sql_for_attributes
-  end
-
-  def self.attribute_db_types  # Extends the one from AbstractSmarterModel
-    unless @attribute_db_types
-      super
-
-      [:long_title].each do |attr|
-        @attribute_db_types[attr] = :string
-      end
-    end
-    @attribute_db_types
-  end
 
   def self.current
     where(:date => Date.today).

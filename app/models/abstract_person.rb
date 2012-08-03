@@ -1,7 +1,9 @@
+require 'app_active_record_extensions/composite_attributes'
+
 module AbstractPerson  # NOTE:WIP
   def self.included(base)
-    base.send(:include, AbstractSmarterModel)
-    base.extend ClassMethods
+    base.send(:include, CompositeAttributes) unless
+      base.include?(CompositeAttributes)
 
     # Associations
     base.belongs_to :person
@@ -29,39 +31,13 @@ module AbstractPerson  # NOTE:WIP
 
     # Scopes
     base.scope :default_order, base.joins(:person).merge(Person.default_order)
-  end
 
-  module ClassMethods
-    # Public class methods
-    def sql_for_attributes  # Extends the one from AbstractSmarterModel
-      unless @sql_for_attributes
-        super
-
-        [ :last_name, :first_name, :name_title, :nickname_or_other, :email,
-          :full_name, :ordered_full_name, :formatted_email
-        ].each do |attr|
-          @sql_for_attributes[attr] = Person.sql_for_attributes[attr]
-        end
-      end
-      @sql_for_attributes
-    end
-
-    def attribute_db_types  # Extends the one from AbstractSmarterModel
-      unless @attribute_db_types
-        super
-
-        [ :last_name, :first_name, :name_title, :nickname_or_other, :email
-        ].each do |attr|
-          @attribute_db_types[attr] =
-            "#{ Person.columns_hash[attr.to_s].type.to_s }".to_sym
-        end
-
-        [ :full_name, :ordered_full_name, :formatted_email
-        ].each do |attr|
-          @attribute_db_types[attr] = :string
-        end
-      end
-      @attribute_db_types
+    # Composite attributes
+    [ :last_name, :first_name, :name_title, :nickname_or_other, :email,
+      :full_name, :ordered_full_name, :formatted_email
+    ].each do |attr|
+      base.add_composite_attributes attr => Person.sql_for_attributes[attr]
+      base.add_composite_attribute_db_types attr => Person.attribute_db_types[attr]
     end
   end
 end

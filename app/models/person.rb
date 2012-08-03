@@ -4,6 +4,7 @@ require 'app_validations/email_format'
 
 require 'app_active_record_extensions/filtering'
 require 'app_active_record_extensions/sorting'
+require 'app_active_record_extensions/composite_attributes'
 
 class Person < ActiveRecord::Base
 
@@ -11,7 +12,7 @@ class Person < ActiveRecord::Base
   include Sorting
   self.default_sorting_column = :ordered_full_name
 
-  include AbstractSmarterModel
+  include CompositeAttributes
   include AbstractHumanizedModel
 
   attr_readonly :id, :last_name
@@ -76,38 +77,24 @@ class Person < ActiveRecord::Base
   validates :nickname_or_other,
             :uniqueness => { :scope => [ :last_name, :first_name ] }
 
-  # Public class methods
-  def self.sql_for_attributes  # Extendes the one in AbstractSmarterModel
-    unless @sql_for_attributes
-      super
+  # Composite attributes
+  full_name_sql         =  "(#{ sql_for_attributes[:name_title] } || ' ' || " \
+                           "#{ sql_for_attributes[:first_name] } || ' ' || " \
+                           "#{ sql_for_attributes[:last_name] })"
 
-      full_name_sql         =  "(#{ super[:name_title] } || ' ' || "\
-                               "#{ super[:first_name] } || ' ' || "\
-                               "#{ super[:last_name] })"
+  ordered_full_name_sql = "(UPPER(#{ sql_for_attributes[:last_name] }) || ', ' || " \
+                          "#{ sql_for_attributes[:first_name] } || ', ' || " \
+                          "#{ sql_for_attributes[:name_title] })"
 
-      ordered_full_name_sql = "(UPPER(#{ super[:last_name] }) || ', ' || "\
-                              "#{ super[:first_name] } || ', ' || "\
-                              "#{ super[:name_title] })"
+  formatted_email_sql   = "(#{ full_name_sql } || " \
+                          "' <' || #{ sql_for_attributes[:email] } || '>')"
 
-      formatted_email_sql   = "(#{ full_name_sql } || "\
-                              "' <' || #{ super[:email] } || '>')"
+  add_composite_attributes :full_name         => full_name_sql,
+                           :ordered_full_name => ordered_full_name_sql,
+                           :formatted_email   => formatted_email_sql
 
-      @sql_for_attributes.merge! :full_name         => full_name_sql,
-                                 :ordered_full_name => ordered_full_name_sql,
-                                 :formatted_email   => formatted_email_sql
-    end
-    @sql_for_attributes
-  end
-
-  def self.attribute_db_types  # Extendes the one in AbstractSmarterModel
-    unless @attribute_db_types
-      super
-
-      [:full_name, :ordered_full_name, :formatted_email].each do |attr|
-        @attribute_db_types[attr] = :string
-      end
-    end
-    @attribute_db_types
+  [:full_name, :ordered_full_name, :formatted_email].each do |attr|
+    add_composite_attribute_db_types attr => :string
   end
 
   # Scopes

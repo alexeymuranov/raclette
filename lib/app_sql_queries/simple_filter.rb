@@ -14,7 +14,7 @@ class SimpleFilter
       column_name = attr.to_s
       attr = column_name.to_sym
 
-      if klass < AbstractSmarterModel
+      if klass.include?(CompositeAttributes)
         filtering_column_type = klass.attribute_db_types[attr]
       else
         filtering_column_type = klass.columns_hash[column_name].type
@@ -70,7 +70,7 @@ class SimpleFilter
 
       column_name = attr.to_s
 
-      if klass < AbstractSmarterModel
+      if klass.include?(CompositeAttributes)
         filtering_column_type = klass.attribute_db_types[attr]
         column_sql            = klass.sql_for_attributes[attr]
       else

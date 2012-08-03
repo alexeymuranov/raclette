@@ -2,6 +2,7 @@
 
 require 'app_active_record_extensions/filtering'
 require 'app_active_record_extensions/sorting'
+require 'app_active_record_extensions/composite_attributes'
 require 'app_parsers/time_duration_parser'
 
 class WeeklyEvent < ActiveRecord::Base
@@ -9,7 +10,7 @@ class WeeklyEvent < ActiveRecord::Base
   include Sorting
   include TimeDurationParser
 
-  include AbstractSmarterModel
+  include CompositeAttributes
   include AbstractHumanizedModel
 
   attr_readonly :id, :event_type, :lesson, :start_on

@@ -96,25 +96,12 @@ class Member < ActiveRecord::Base
   # scope :current, joins(:memberships => :activity_period).merge(Membership.current).uniq  # Experiment. Can be removed?
   scope :current, joins(:memberships).merge(Membership.current).uniq  # FIXME!
 
-  # Public class methods
+  # Composite attributes
+  tickets_count_sql = "(#{ sql_for_attributes[:payed_tickets_count] } + #{ sql_for_attributes[:free_tickets_count] })"
 
-  def self.sql_for_attributes
-    unless @sql_for_attributes
-      super
-      tickets_count_sql =
-        "(#{ super[:payed_tickets_count] } + #{ super[:free_tickets_count] })"
-      @sql_for_attributes[:tickets_count] = tickets_count_sql
-    end
-    @sql_for_attributes
-  end
+  add_composite_attributes :tickets_count => tickets_count_sql
 
-  def self.attribute_db_types
-    unless @attribute_db_types
-      super
-      @attribute_db_types[:tickets_count] = :integer
-    end
-    @attribute_db_types
-  end
+  add_composite_attribute_db_types :tickets_count => :integer
 
   # Public instance methods
   # Non-SQL virtual attributes

@@ -34,7 +34,7 @@ class ApplicationController < ActionController::Base
   ActionController.add_renderer :ms_excel_2003_xml do |obj, options| # FIXME:WIP
     self.content_type ||= Mime::MS_EXCEL_2003_XML
     klass = obj.klass
-    if klass < AbstractSmarterModel
+    if klass.include?(CompositeAttributes)
       column_types = klass.attribute_db_types
     else
       column_types = {}
@@ -123,7 +123,7 @@ class ApplicationController < ActionController::Base
                                           attributes,
                                           column_headers)
       klass = scoped_collection.klass
-      if klass < AbstractSmarterModel
+      if klass.include?(CompositeAttributes)
         column_types = klass.attribute_db_types
       else
         column_types = {}
