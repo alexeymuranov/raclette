@@ -73,7 +73,6 @@ class MembersController < SecretaryController
     end
 
     @column_types = Member.attribute_db_types
-    @sql_for_attributes = Member.sql_for_attributes
 
     @members = Member.joins(:person).
       with_composite_attributes(*@attributes, :formatted_email)

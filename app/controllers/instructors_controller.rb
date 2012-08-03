@@ -38,7 +38,6 @@ class InstructorsController < ManagerController
     end
 
     @column_types = Instructor.attribute_db_types
-    @sql_for_attributes = Instructor.sql_for_attributes
 
     @instructors = Instructor.joins(:person).
       with_composite_attributes(*@attributes, :formatted_email)
