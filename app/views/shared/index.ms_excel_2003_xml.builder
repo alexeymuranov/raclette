@@ -29,7 +29,7 @@ xml.Workbook(
     end
   end
 
-  xml.Worksheet 'ss:Name' => Admin::User.model_name.human.pluralize,
+  xml.Worksheet 'ss:Name' => models.klass.model_name.human.pluralize,
                 'ss:Lang' => @locale.to_s do  # not known if 'ss:Lang' exists
     xml.Table 'ss:StyleID' => 'MyTable' do    # without any style boolean values are not shown correctly
 
