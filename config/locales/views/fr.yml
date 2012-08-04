@@ -13,6 +13,12 @@ fr:
     "attribute_name:": "%{attribute} :"
     "attribute_name?": "%{attribute} ?"
 
+  roles:
+    user: "Utilisateur"
+    administrator: "Administrateur"
+    manager: "Gestionnaire"
+    secretary: "Secrétaire"
+
   page_titles:
     admin_tools: "Administration"
 
