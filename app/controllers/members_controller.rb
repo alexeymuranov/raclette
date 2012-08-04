@@ -2,7 +2,7 @@
 
 class MembersController < SecretaryController
 
-  class Member < Member
+  class Member < Accessors::Member
     has_many :attended_events, :through    => :event_entries,
                                :source     => :event,
                                :class_name => :Event
@@ -17,17 +17,17 @@ class MembersController < SecretaryController
     self.default_sorting_column = :ordered_full_name
   end
 
-  class Membership < Membership
+  class Membership < Accessors::Membership
   end
 
-  class Event < Event
+  class Event < Accessors::Event
     self.all_sorting_columns = [ :title, :event_type,
                                  :date,
                                  :start_time ]
     self.default_sorting_column = :date
   end
 
-  class MembershipType < MembershipType
+  class MembershipType < Accessors::MembershipType
     self.all_sorting_columns = [ :username,
                                  :full_name,
                                  :account_deactivated,
@@ -38,7 +38,7 @@ class MembersController < SecretaryController
     self.default_sorting_column = :username
   end
 
-  class ActivityPeriod < self::ActivityPeriod
+  class ActivityPeriod < Accessors::ActivityPeriod
     self.all_sorting_columns = [:ip, :description]
     self.default_sorting_column = :ip
   end
@@ -51,12 +51,9 @@ class MembersController < SecretaryController
       params.delete(:filter)
     end
 
-    if  @submit_button == 'filter' || @submit_button == 'clear'
+    if @submit_button == 'filter' || @submit_button == 'clear'
       params.delete(:page)
     end
-
-    # FIXME: strange if this is necessary:
-    params.except!(:query_type, :commit, :button)
 
     case request.format
     when Mime::HTML
