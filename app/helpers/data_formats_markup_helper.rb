@@ -9,8 +9,4 @@ module DataFormatsMarkupHelper
   def boolean_to_picto(bool, size=1)
     bool ? yes_pictogram(size) : t(:no)
   end
-
-  def boolean_to_0_1(bool)
-    bool ? 1 : 0
-  end
 end

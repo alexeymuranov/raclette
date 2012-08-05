@@ -79,15 +79,15 @@ class MembershipTypesController < ManagerController
       end
 
       requested_format.ms_excel_2003_xml_zip do
-        send_ms_excel_2003_xml_zip_for_download @membership_types,
-                                                @attributes,
-                                                @column_headers
+        render :collection_ms_excel_2003_xml_zip => @membership_types,
+               :only                             => @attributes,
+               :headers                          => @column_headers
       end
 
       requested_format.csv_zip do
-        send_csv_zip_for_download @membership_types,
-                                  @attributes,
-                                  @column_headers
+        render :collection_csv_zip => @membership_types,
+               :only               => @attributes,
+               :headers            => @column_headers
       end
     end
   end

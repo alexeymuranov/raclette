@@ -107,15 +107,15 @@ class WeeklyEventsController < ManagerController
       end
 
       requested_format.ms_excel_2003_xml_zip do
-        send_ms_excel_2003_xml_zip_for_download @weekly_events,
-                                                @attributes,
-                                                @column_headers
+        render :collection_ms_excel_2003_xml_zip => @weekly_events,
+               :only                             => @attributes,
+               :headers                          => @column_headers
       end
 
       requested_format.csv do
-        send_csv_zip_for_download @weekly_events,
-                                  @attributes,
-                                  @column_headers
+        render :collection_csv_zip => @weekly_events,
+               :only               => @attributes,
+               :headers            => @column_headers
       end
     end
   end
