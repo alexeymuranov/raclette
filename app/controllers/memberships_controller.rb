@@ -2,7 +2,7 @@
 
 class MembershipsController < ManagerController # FIXME!
 
-  class Membership < Membership
+  class Membership < Accessors::Membership
     belongs_to :activity_period, :class_name => :ActivityPeriod,
                                  :inverse_of => :memberships
     belongs_to :type, :foreign_key => :membership_type_id,
@@ -10,7 +10,7 @@ class MembershipsController < ManagerController # FIXME!
                       :inverse_of  => :memberships
   end
 
-  class MembershipType < MembershipType
+  class MembershipType < Accessors::MembershipType
     self.all_sorting_columns = [ :unique_title,
                                  :duration_months,
                                  :active,
@@ -19,7 +19,7 @@ class MembershipsController < ManagerController # FIXME!
     self.default_sorting_column = :unique_title
   end
 
-  class ActivityPeriod < self::ActivityPeriod
+  class ActivityPeriod < Accessors::ActivityPeriod
     self.all_sorting_columns = [:ip, :description]
     self.default_sorting_column = :ip
   end

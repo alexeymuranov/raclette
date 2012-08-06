@@ -2,7 +2,7 @@
 
 class LessonSupervisionsController < SecretaryController
 
-  class LessonSupervision < LessonSupervision
+  class LessonSupervision < Accessors::LessonSupervision
     has_many :instructors, :through    => :lesson_instructors,
                            :class_name => :Instructor
 
@@ -10,7 +10,7 @@ class LessonSupervisionsController < SecretaryController
     self.default_sorting_column = :instructors_count
   end
 
-  class Instructor < Instructor
+  class Instructor < Accessors::Instructor
     self.all_sorting_columns = [ :ordered_full_name,
                                  :first_name,
                                  :last_name,

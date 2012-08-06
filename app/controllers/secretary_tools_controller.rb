@@ -3,21 +3,21 @@
 class SecretaryToolsController < SecretaryController
 
   def overview
-    member_count = Member.count
+    member_count = Accessors::Member.count
     if member_count > 50
       @members = member_count
     else
-      @members = Member.joins(:person).
+      @members = Accessors::Member.joins(:person).
         with_composite_attributes(:ordered_full_name, :full_name).default_order
     end
 
-    event_count = Event.count
+    event_count = Accessors::Event.count
     if event_count > 50
       @events = event_count
     else
-      @events = Event.default_order
+      @events = Accessors::Event.default_order
     end
 
-     @lesson_supervisions = LessonSupervision.default_order
+     @lesson_supervisions = Accessors::LessonSupervision.default_order
   end
 end

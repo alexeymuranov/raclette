@@ -2,7 +2,7 @@
 
 class InstructorsController < ManagerController
 
-  class Instructor < Instructor
+  class Instructor < Accessors::Instructor
     self.all_sorting_columns = [ :ordered_full_name,
                                  :email,
                                  :employed_from ]

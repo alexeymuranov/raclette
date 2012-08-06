@@ -2,7 +2,7 @@
 
 class RegisterController < ApplicationController
 
-  class Member < Member
+  class Member < Accessors::Member
     self.all_sorting_columns = [ :ordered_full_name,
                                  :email,
                                  :employed_from ]
