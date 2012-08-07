@@ -4,14 +4,14 @@ require 'digest'
 require 'app_validations/email_format'
 require 'app_active_record_extensions/filtering'
 require 'app_active_record_extensions/sorting'
-require 'app_active_record_extensions/composite_attributes'
+require 'app_active_record_extensions/pseudo_columns'
 
 class Admin::User < ActiveRecord::Base
   include Filtering
   include Sorting
   self.default_sorting_column = :username
 
-  include CompositeAttributes
+  include PseudoColumns
   include AbstractHumanizedModel
 
   attr_readonly :id, :username, :a_person

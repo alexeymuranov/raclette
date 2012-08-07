@@ -14,8 +14,8 @@ class SimpleFilter
       column_name = attr.to_s
       attr = column_name.to_sym
 
-      if klass.include?(CompositeAttributes)
-        filtering_column_type = klass.attribute_db_types[attr]
+      if klass.include?(PseudoColumns)
+        filtering_column_type = klass.column_db_types[attr]
       else
         filtering_column_type = klass.columns_hash[column_name].type
       end
@@ -70,9 +70,9 @@ class SimpleFilter
 
       column_name = attr.to_s
 
-      if klass.include?(CompositeAttributes)
-        filtering_column_type = klass.attribute_db_types[attr]
-        column_sql            = klass.sql_for_attributes[attr]
+      if klass.include?(PseudoColumns)
+        filtering_column_type = klass.column_db_types[attr]
+        column_sql            = klass.sql_for_columns[attr]
       else
         filtering_column_type = klass.columns_hash[column_name].type
         column_sql            = "\"#{table_name}\".\"#{column_name}\""

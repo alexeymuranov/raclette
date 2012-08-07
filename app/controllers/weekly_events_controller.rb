@@ -73,7 +73,7 @@ class WeeklyEventsController < ManagerController
                       :description ]
     end
 
-    @column_types = WeeklyEvent.attribute_db_types
+    @column_types = WeeklyEvent.column_db_types
 
     @weekly_events = WeeklyEvent.scoped
 
@@ -135,7 +135,7 @@ class WeeklyEventsController < ManagerController
                     :description ]
 
     @weekly_event = WeeklyEvent.find(params[:id])
-    @column_types = WeeklyEvent.attribute_db_types
+    @column_types = WeeklyEvent.column_db_types
 
     @events_attributes = [ :title, :event_type,
                            :date,
@@ -143,7 +143,7 @@ class WeeklyEventsController < ManagerController
                            :supervisors ]
 
     @events = @weekly_event.events
-    @events_column_types = Event.attribute_db_types
+    @events_column_types = Event.column_db_types
     @events_column_headers = Event.human_column_headers
 
     # Filter:
@@ -231,7 +231,7 @@ class WeeklyEventsController < ManagerController
                       :location,
                       :entry_fee_tickets,
                       :description ]
-      @column_types = WeeklyEvent.attribute_db_types
+      @column_types = WeeklyEvent.column_db_types
 
       @title = t('weekly_events.new.title')
 
@@ -249,7 +249,7 @@ class WeeklyEventsController < ManagerController
                       :location,
                       :entry_fee_tickets,
                       :description ]
-      @column_types = WeeklyEvent.attribute_db_types
+      @column_types = WeeklyEvent.column_db_types
 
       @title =  t('weekly_events.edit.title', :title => @weekly_event.title)
 

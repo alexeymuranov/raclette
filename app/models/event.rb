@@ -2,7 +2,7 @@
 
 require 'app_active_record_extensions/filtering'
 require 'app_active_record_extensions/sorting'
-require 'app_active_record_extensions/composite_attributes'
+require 'app_active_record_extensions/pseudo_columns'
 # require 'app_parsers/time_duration_parser'
 require 'app_validations/event'
 
@@ -12,7 +12,7 @@ class Event < ActiveRecord::Base
   self.default_sorting_column = :date
   # include TimeDurationParser
 
-  include CompositeAttributes
+  include PseudoColumns
   include AbstractHumanizedModel
 
   attr_readonly :id, :event_type, :lesson, :weekly
@@ -101,11 +101,11 @@ class Event < ActiveRecord::Base
                           }
 
   # Composite attributes
-  long_title_sql = "(#{ sql_for_attributes[:date] } || ': ' || #{ sql_for_attributes[:title] })"
+  long_title_sql = "(#{ sql_for_columns[:date] } || ': ' || #{ sql_for_columns[:title] })"
 
-  add_composite_attributes :long_title => long_title_sql
+  add_pseudo_columns :long_title => long_title_sql
 
-  add_composite_attribute_db_types :long_title => :string
+  add_pseudo_column_db_types :long_title => :string
 
   # Public class methods
 

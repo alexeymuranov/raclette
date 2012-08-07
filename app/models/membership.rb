@@ -1,10 +1,10 @@
 ## encoding: UTF-8
 
-require 'app_active_record_extensions/composite_attributes'
+require 'app_active_record_extensions/pseudo_columns'
 
 class Membership < ActiveRecord::Base
 
-  include CompositeAttributes
+  include PseudoColumns
   include AbstractHumanizedModel
 
   attr_readonly :id, :membership_type_id, :activity_period_id, :initial_price
@@ -63,19 +63,19 @@ class Membership < ActiveRecord::Base
   # Composite attributes
 
   [:start_date, :duration_months, :end_date].each do |attr|
-    add_composite_attributes attr => ActivityPeriod.sql_for_attributes[attr]
+    add_pseudo_columns attr => ActivityPeriod.sql_for_columns[attr]
   end
 
-  add_composite_attributes :type_title => MembershipType.sql_for_attributes[:unique_title]
+  add_pseudo_columns :type_title => MembershipType.sql_for_columns[:unique_title]
 
-  title_sql = "(#{ sql_for_attributes[:type_title] } || "\
+  title_sql = "(#{ sql_for_columns[:type_title] } || "\
               "', ' || "\
-              "#{ sql_for_attributes[:start_date] } || "\
+              "#{ sql_for_columns[:start_date] } || "\
               "' -- ' || "\
-              "#{ sql_for_attributes[:end_date] })"
-  add_composite_attributes :title => title_sql
+              "#{ sql_for_columns[:end_date] })"
+  add_pseudo_columns :title => title_sql
 
-  add_composite_attribute_db_types  :start_date      => :date,
+  add_pseudo_column_db_types  :start_date      => :date,
                                     :duration_months => :integer,
                                     :end_date        => :date,
                                     :type_title      => :string,

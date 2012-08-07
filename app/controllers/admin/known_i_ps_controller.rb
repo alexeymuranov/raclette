@@ -29,7 +29,7 @@ class Admin::KnownIPsController < AdminController
   def index
     @attributes = [:ip, :description]
 
-    @column_types = KnownIP.attribute_db_types
+    @column_types = KnownIP.column_db_types
     @column_headers = KnownIP.human_column_headers
 
     # Sort:
@@ -62,7 +62,7 @@ class Admin::KnownIPsController < AdminController
     @sorting_column = User.last_sort_column
     @sorting_direction = User.last_sort_direction
 
-    @users_column_types = User.attribute_db_types
+    @users_column_types = User.column_db_types
     @users_column_headers = User.human_column_headers
 
     @title = t('admin.known_i_ps.show.title', :ip => @known_ip.ip)
@@ -120,7 +120,7 @@ class Admin::KnownIPsController < AdminController
   private
 
     def render_new_properly
-      @column_types = KnownIP.attribute_db_types
+      @column_types = KnownIP.column_db_types
 
       @title = t('admin.known_i_ps.new.title')
 
@@ -128,7 +128,7 @@ class Admin::KnownIPsController < AdminController
     end
 
     def render_edit_properly
-      @column_types = KnownIP.attribute_db_types
+      @column_types = KnownIP.column_db_types
 
       @title = t('admin.known_i_ps.edit.title', :ip => @known_ip.ip)
 

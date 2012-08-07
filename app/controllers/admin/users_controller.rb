@@ -61,7 +61,7 @@ class Admin::UsersController < AdminController
                       :a_person ]
     end
 
-    @column_types = User.attribute_db_types
+    @column_types = User.column_db_types
 
     @users = User.scoped
 
@@ -160,8 +160,8 @@ class Admin::UsersController < AdminController
     @sorting_column = KnownIP.last_sort_column
     @sorting_direction = KnownIP.last_sort_direction
 
-    @column_types = User.attribute_db_types
-    @known_ips_column_types = KnownIP.attribute_db_types
+    @column_types = User.column_db_types
+    @known_ips_column_types = KnownIP.column_db_types
     @known_ips_column_headers = KnownIP.human_column_headers
 
     @title = t('admin.users.show.title', :username => @user.username)
@@ -252,10 +252,10 @@ class Admin::UsersController < AdminController
   private
 
     def render_new_properly
-      @column_types = User.attribute_db_types
+      @column_types = User.column_db_types
       # NOTE: this seems redundant because coincides with KnownIP.all_sorting_columns
       @known_ips_attributes = [:ip, :description]
-      @known_ips_column_types = KnownIP.attribute_db_types
+      @known_ips_column_types = KnownIP.column_db_types
       @known_ips_column_headers = KnownIP.human_column_headers
 
       @safe_ips = nil
@@ -270,9 +270,9 @@ class Admin::UsersController < AdminController
     end
 
     def render_edit_properly
-      @column_types = User.attribute_db_types
+      @column_types = User.column_db_types
       @known_ips_attributes = [:ip, :description]
-      @known_ips_column_types = KnownIP.attribute_db_types
+      @known_ips_column_types = KnownIP.column_db_types
       @known_ips_column_headers = KnownIP.human_column_headers
 
       ip_sort_params = (params[:sort] && params[:sort][:safe_ips]) || {}

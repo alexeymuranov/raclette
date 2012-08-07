@@ -153,7 +153,7 @@ class RegisterController < ApplicationController
     def set_person_from_params
       if params[:member_id]
         @member = Member.joins(:person)\
-                        .with_composite_attributes(:full_name)\
+                        .with_pseudo_columns(:full_name)\
                         .find(params[:member_id])
       elsif params[:guest]
         @guest = Guest.new(params[:guest])
@@ -169,7 +169,7 @@ class RegisterController < ApplicationController
 
     def render_choose_person_properly
       @members = paginate(Member.account_active.joins(:person).
-                                 with_composite_attributes(:ordered_full_name).
+                                 with_pseudo_columns(:ordered_full_name).
                                  default_order)
       # Filter:
       @members = Member.filter(@members, params[:filter], @attributes)
@@ -178,7 +178,7 @@ class RegisterController < ApplicationController
       @guest ||= Guest.new(params[:guest])
 
       @members_attributes = [ :last_name, :first_name ]
-      @members_column_types = Member.attribute_db_types
+      @members_column_types = Member.column_db_types
       @members_column_headers = {}
       @members_attributes.each do |attr|
         @members_column_headers[attr] = Member.human_attribute_name(attr)

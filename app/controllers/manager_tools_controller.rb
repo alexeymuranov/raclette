@@ -9,6 +9,6 @@ class ManagerToolsController < ManagerController
     @membership_types = Accessors::MembershipType.default_order
     @activity_periods = Accessors::ActivityPeriod.default_order
     @instructors = Accessors::Instructor.joins(:person)\
-                     .with_composite_attributes(:ordered_full_name, :full_name).default_order
+                     .with_pseudo_columns(:ordered_full_name, :full_name).default_order
   end
 end

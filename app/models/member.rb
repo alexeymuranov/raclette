@@ -97,11 +97,11 @@ class Member < ActiveRecord::Base
   scope :current, joins(:memberships).merge(Membership.current).uniq  # FIXME!
 
   # Composite attributes
-  tickets_count_sql = "(#{ sql_for_attributes[:payed_tickets_count] } + #{ sql_for_attributes[:free_tickets_count] })"
+  tickets_count_sql = "(#{ sql_for_columns[:payed_tickets_count] } + #{ sql_for_columns[:free_tickets_count] })"
 
-  add_composite_attributes :tickets_count => tickets_count_sql
+  add_pseudo_columns :tickets_count => tickets_count_sql
 
-  add_composite_attribute_db_types :tickets_count => :integer
+  add_pseudo_column_db_types :tickets_count => :integer
 
   # Public instance methods
   # Non-SQL virtual attributes

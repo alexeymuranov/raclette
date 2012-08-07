@@ -2,13 +2,13 @@
 
 require 'app_active_record_extensions/filtering'
 require 'app_active_record_extensions/sorting'
-require 'app_active_record_extensions/composite_attributes'
+require 'app_active_record_extensions/pseudo_columns'
 
 class LessonSupervision < ActiveRecord::Base
   include Filtering
   include Sorting
 
-  include CompositeAttributes
+  include PseudoColumns
   include AbstractHumanizedModel
 
   # XXX: temporary workaround to override 'counter cache':

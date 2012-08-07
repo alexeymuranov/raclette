@@ -1,9 +1,9 @@
-require 'app_active_record_extensions/composite_attributes'
+require 'app_active_record_extensions/pseudo_columns'
 
 module AbstractPerson  # NOTE:WIP
   def self.included(base)
-    base.send(:include, CompositeAttributes) unless
-      base.include?(CompositeAttributes)
+    base.send(:include, PseudoColumns) unless
+      base.include?(PseudoColumns)
 
     # Associations
     base.belongs_to :person
@@ -36,8 +36,8 @@ module AbstractPerson  # NOTE:WIP
     [ :last_name, :first_name, :name_title, :nickname_or_other, :email,
       :full_name, :ordered_full_name, :formatted_email
     ].each do |attr|
-      base.add_composite_attributes attr => Person.sql_for_attributes[attr]
-      base.add_composite_attribute_db_types attr => Person.attribute_db_types[attr]
+      base.add_pseudo_columns attr => Person.sql_for_columns[attr]
+      base.add_pseudo_column_db_types attr => Person.column_db_types[attr]
     end
   end
 end

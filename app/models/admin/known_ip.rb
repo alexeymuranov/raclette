@@ -1,7 +1,7 @@
 ## encoding: UTF-8
 
 require 'app_active_record_extensions/sorting'
-require 'app_active_record_extensions/composite_attributes'
+require 'app_active_record_extensions/pseudo_columns'
 
 class Admin::KnownIP < ActiveRecord::Base
   self.table_name = 'admin_known_ips'
@@ -9,7 +9,7 @@ class Admin::KnownIP < ActiveRecord::Base
   include Sorting
   self.default_sorting_column = :ip
 
-  include CompositeAttributes
+  include PseudoColumns
   include AbstractHumanizedModel
 
   attr_readonly :id, :ip

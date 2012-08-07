@@ -29,7 +29,7 @@ class TicketBooksController < ManagerController
       @attributes = [:tickets_number, :price]
     end
 
-    @column_types = TicketBook.attribute_db_types
+    @column_types = TicketBook.column_db_types
 
     @ticket_books = TicketBook.scoped
 
@@ -83,7 +83,7 @@ class TicketBooksController < ManagerController
 
     @ticket_book = TicketBook.find(params[:id])
 
-    @column_types = TicketBook.attribute_db_types
+    @column_types = TicketBook.column_db_types
 
     @title = t('ticket_books.show.title',
                :title => @ticket_book.virtual_long_title)
@@ -144,7 +144,7 @@ class TicketBooksController < ManagerController
 
     def render_new_properly
       @attributes = [:tickets_number, :price]
-      @column_types = TicketBook.attribute_db_types
+      @column_types = TicketBook.column_db_types
 
       @title = t('ticket_books.new.title')
 
@@ -153,7 +153,7 @@ class TicketBooksController < ManagerController
 
     def render_edit_properly
       @attributes = [:tickets_number, :price]
-      @column_types = TicketBook.attribute_db_types
+      @column_types = TicketBook.column_db_types
 
       @title =  t('ticket_books.edit.title',
                   :title => @ticket_book.virtual_long_title)

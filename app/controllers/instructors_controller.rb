@@ -37,10 +37,10 @@ class InstructorsController < ManagerController
                       :employed_from ]
     end
 
-    @column_types = Instructor.attribute_db_types
+    @column_types = Instructor.column_db_types
 
     @instructors = Instructor.joins(:person).
-      with_composite_attributes(*@attributes, :formatted_email)
+      with_pseudo_columns(*@attributes, :formatted_email)
 
     # Filter:
     @instructors = Instructor.filter(@instructors, params[:filter], @attributes)
@@ -112,10 +112,10 @@ class InstructorsController < ManagerController
                     :employed_from ]
 
     @instructor =
-      Instructor.joins(:person).with_composite_attributes(*@attributes).
+      Instructor.joins(:person).with_pseudo_columns(*@attributes).
                  find(params[:id])
 
-    @column_types = Instructor.attribute_db_types
+    @column_types = Instructor.column_db_types
 
     @title = t('instructors.show.title', :name => @instructor.virtual_full_name)
   end
@@ -129,7 +129,7 @@ class InstructorsController < ManagerController
 
   def edit
     @instructor =
-      Instructor.joins(:person).with_composite_attributes(:full_name).
+      Instructor.joins(:person).with_pseudo_columns(:full_name).
                  find(params[:id])
     render_edit_properly
   end
@@ -183,7 +183,7 @@ class InstructorsController < ManagerController
 
   def update
     @instructor =
-      Instructor.joins(:person).with_composite_attributes(:full_name).
+      Instructor.joins(:person).with_pseudo_columns(:full_name).
                  find(params[:id])
 
     params[:instructor][:person_attributes].delete(:email) if
@@ -215,7 +215,7 @@ class InstructorsController < ManagerController
   private
 
     def render_new_properly
-      @column_types = Instructor.attribute_db_types
+      @column_types = Instructor.column_db_types
 
       @title = t('instructors.new.title')
 
@@ -223,7 +223,7 @@ class InstructorsController < ManagerController
     end
 
     def render_edit_properly
-      @column_types = Instructor.attribute_db_types
+      @column_types = Instructor.column_db_types
 
       @title =  t('instructors.edit.title',
                   :name => @instructor.virtual_full_name)

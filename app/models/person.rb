@@ -4,7 +4,7 @@ require 'app_validations/email_format'
 
 require 'app_active_record_extensions/filtering'
 require 'app_active_record_extensions/sorting'
-require 'app_active_record_extensions/composite_attributes'
+require 'app_active_record_extensions/pseudo_columns'
 
 class Person < ActiveRecord::Base
 
@@ -12,7 +12,7 @@ class Person < ActiveRecord::Base
   include Sorting
   self.default_sorting_column = :ordered_full_name
 
-  include CompositeAttributes
+  include PseudoColumns
   include AbstractHumanizedModel
 
   attr_readonly :id, :last_name
@@ -78,31 +78,31 @@ class Person < ActiveRecord::Base
             :uniqueness => { :scope => [ :last_name, :first_name ] }
 
   # Composite attributes
-  full_name_sql         =  "(#{ sql_for_attributes[:name_title] } || ' ' || " \
-                           "#{ sql_for_attributes[:first_name] } || ' ' || " \
-                           "#{ sql_for_attributes[:last_name] })"
+  full_name_sql         =  "(#{ sql_for_columns[:name_title] } || ' ' || " \
+                           "#{ sql_for_columns[:first_name] } || ' ' || " \
+                           "#{ sql_for_columns[:last_name] })"
 
-  ordered_full_name_sql = "(UPPER(#{ sql_for_attributes[:last_name] }) || ', ' || " \
-                          "#{ sql_for_attributes[:first_name] } || ', ' || " \
-                          "#{ sql_for_attributes[:name_title] })"
+  ordered_full_name_sql = "(UPPER(#{ sql_for_columns[:last_name] }) || ', ' || " \
+                          "#{ sql_for_columns[:first_name] } || ', ' || " \
+                          "#{ sql_for_columns[:name_title] })"
 
   formatted_email_sql   = "(#{ full_name_sql } || " \
-                          "' <' || #{ sql_for_attributes[:email] } || '>')"
+                          "' <' || #{ sql_for_columns[:email] } || '>')"
 
-  add_composite_attributes :full_name         => full_name_sql,
+  add_pseudo_columns :full_name         => full_name_sql,
                            :ordered_full_name => ordered_full_name_sql,
                            :formatted_email   => formatted_email_sql
 
   [:full_name, :ordered_full_name, :formatted_email].each do |attr|
-    add_composite_attribute_db_types attr => :string
+    add_pseudo_column_db_types attr => :string
   end
 
   # Scopes
   scope :default_order, # check if this works as expected
-        order("UPPER(#{ sql_for_attributes[:last_name] }) ASC").
-        order("UPPER(#{ sql_for_attributes[:first_name] }) ASC")
-        # order("UPPER(#{ sql_for_attributes[:last_name] }) ASC, "\
-        #       "UPPER(#{ sql_for_attributes[:first_name] }) ASC")
+        order("UPPER(#{ sql_for_columns[:last_name] }) ASC").
+        order("UPPER(#{ sql_for_columns[:first_name] }) ASC")
+        # order("UPPER(#{ sql_for_columns[:last_name] }) ASC, "\
+        #       "UPPER(#{ sql_for_columns[:first_name] }) ASC")
 
   scope :members, joins(:member)
 
