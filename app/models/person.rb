@@ -18,7 +18,8 @@ class Person < ActiveRecord::Base
   attr_readonly :id, :last_name
 
   # Associations
-  has_many :users, :dependent  => :nullify,
+  has_many :users, :class_name => :'Admin::User',
+                   :dependent  => :nullify,
                    :inverse_of => :person
 
   has_one :statement, :class_name => :PersonalStatement,

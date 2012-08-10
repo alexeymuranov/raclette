@@ -29,6 +29,8 @@ class Admin::User < ActiveRecord::Base
   has_many :application_journal_records, :dependent  => :nullify,
                                          :inverse_of => :user
 
+  belongs_to :person, :inverse_of => :user
+
   # Validations:
   validates :username, :full_name,
             :presence => true
