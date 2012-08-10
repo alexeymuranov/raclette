@@ -27,6 +27,9 @@ class Event < ActiveRecord::Base
   has_many :participants, :through => :event_entries,
                           :source  => :person
 
+  has_many :participant_members, :through => :participants,
+                                 :source  => :member
+
   has_many :cashiers, :class_name => :EventCashier,
                       :dependent  => :nullify,
                       :inverse_of => :event
