@@ -120,15 +120,53 @@ div.container > header {
 
 /* Tabs */
 
-nav.tabs {
+// UL as tabs
+@mixin tabs {
+  margin-left: 0;
+  margin-right: 0;
+  padding: 0;
+
+  & > li {
+    @include tab;
+  }
+}
+
+@mixin tab {
+  display: inline-block;
+
+  & > a, & > button {
+    @include tab-element;
+
+    &:hover {
+      color: White;
+      background-color: Blue;
+      text-decoration: none;
+    }
+  }
+
+  & > span {
+    @include tab-element;
+    border-bottom: none;
+  }
+}
+
+@mixin tab-element {
+  display: inline-block;
+  margin: 0 0 4pt;
+  padding: 4pt;
+  font-weight: bold;
+  font-family: $body-font-family;
+  @include border-top-radius(6pt);
+  border: solid 1pt $table-border-color;
+}
+
+nav.tabs { // TODO: simplify
   display: block;
 
   ul {
-    margin: 0;
-    padding: 0;
+    @include tabs;
 
     li {
-      display: inline-block;
       font-weight: bold;
       line-height: 2;
       font-size: $tabs-font-size;
@@ -145,11 +183,6 @@ nav.tabs {
         font-weight: inherit;
         line-height: inherit;
         vertical-align: baseline;
-      }
-
-      button.tab {
-        border: none;
-        font-family: $body-font-family;
       }
 
       a:hover.tab, button:hover.tab {
