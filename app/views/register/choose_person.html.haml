@@ -109,3 +109,5 @@
   %h2= t '.enter_guest'
 
   = render 'form_for_guest'
+
+= render('event_participants') if @event

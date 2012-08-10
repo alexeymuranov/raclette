@@ -48,6 +48,8 @@ en:
     hide_email_addresses: "Hide e-mail addresses"
     show_attended_events: "Show attended events"
     hide_attended_events: "Hide attended events"
+    show_participants: "Show participants"
+    hide_participants: "Hide participants"
     continue: "Continue"
     select: "Select"
     change: "Change"
@@ -272,6 +274,7 @@ en:
       header: "Payment and Entry Register"
       subheaders:
         attended_events: "Attended events"
+        participants: "Participants"
     new_entry:
       title: "Entry"
       current_event: "Current event"

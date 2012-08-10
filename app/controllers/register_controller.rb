@@ -195,6 +195,10 @@ class RegisterController < ApplicationController
 
       @events = Event.unlocked.past_seven_days
 
+      if params[:button] == 'show_participants'
+        @participants = @event.participants.default_order
+      end
+
       @title = t('register.choose_person.title')
 
       render :choose_person

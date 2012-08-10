@@ -1,0 +1,26 @@
+%aside#event_participants
+  -# NOTE: using <a name="..."> as an anchor:
+  %a{:name => 'event_participants'}
+  %section#participants
+    - unless @participants.nil?
+      %h2= t 'register.compose_transaction.subheaders.participants'
+      %ol
+        - @participants.each do |p|
+          %li= p.virtual_full_name
+
+    -# NOTE: using 'action' only to scroll to the anchor.
+    -# TODO: add :'data-remote' => 'true' and fix it.
+    %form{:action => '#event_participants', :method => 'get'}
+      -# FIXME: not sure all params should be stored
+      = hidden_fields_from_nested_hash params
+      %span.actions
+        - if @participants.nil?
+          %button{ :name  => 'button',
+                   :type  => 'submit',
+                   :value => 'show_participants' }
+            = t('buttons.show_participants')
+        - else
+          %button{ :name  => 'button',
+                   :type  => 'submit',
+                   :value => 'hide_participants' }
+            = t('buttons.hide_participants')
