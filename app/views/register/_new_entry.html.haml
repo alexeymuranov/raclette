@@ -28,12 +28,7 @@
   .actions
     = f.submit t('buttons.continue'), :class => 'easy'
 
-- if @member
-  -# NOTE: using <a name="..."> as an anchor:
-  %a{:name => 'person_attended_events'}
-    %aside#person_attended_events
-
-      = render('attended_events')
+  = render('person_attended_events') if @member
 
 %footer
   = link_to t('register.choose_person.title'), :action => :choose_person
