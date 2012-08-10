@@ -37,7 +37,7 @@ fr:
     distance_in_words:
       half_a_minute: "une demi-minute"
       less_than_x_seconds:
-        zero:  "moins d'une seconde"
+        zero:  "moins d'une seconde"
         one:   "moins d'une seconde"
         other: "moins de %{count} secondes"
       x_seconds:
@@ -70,7 +70,7 @@ fr:
         other: "plus de %{count} ans"
       almost_x_years:
         one:   "presqu'un an"
-        other: "presque %{count} ans"
+        other: "presque %{count} ans"
     prompts:
       year:   "Année"
       month:  "Mois"
@@ -173,18 +173,19 @@ fr:
       # Custom:
       email_format: "n'est pas bien formé(e)"
       unexpected_week_day: "n'est pas %{week_day}"
+      date_before_or_on: "n'est pas autorisé(e) être après le %{date}"
 
     template: &errors_template
       header:
-        one:   "Impossible d'enregistrer ce %{model} : 1 erreur"
-        other: "Impossible d'enregistrer ce %{model} : %{count} erreurs"
+        one:   "Impossible d'enregistrer ce %{model} : 1 erreur"
+        other: "Impossible d'enregistrer ce %{model} : %{count} erreurs"
       body: "Veuillez vérifier les champs suivants : "
 
   activerecord:
     errors:
       messages:
         taken: "n'est pas disponible"
-        record_invalid: "La validation a échoué : %{errors}"
+        record_invalid: "La validation a échoué : %{errors}"
         <<: *errors_messages
       template:
         <<: *errors_template

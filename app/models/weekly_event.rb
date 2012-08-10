@@ -4,6 +4,7 @@ require 'app_active_record_extensions/filtering'
 require 'app_active_record_extensions/sorting'
 require 'app_active_record_extensions/pseudo_columns'
 require 'app_parsers/time_duration_parser'
+require 'app_validations/weekly_event'
 
 class WeeklyEvent < ActiveRecord::Base
   include Filtering
@@ -27,6 +28,8 @@ class WeeklyEvent < ActiveRecord::Base
   belongs_to :address, :inverse_of => :weekly_events
 
   # Validations:
+  validates_with WeeklyEventValidator
+
   validates :event_type, :title, :start_on, :week_day,
                 :presence => true
 
