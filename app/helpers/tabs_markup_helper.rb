@@ -14,16 +14,15 @@ module TabsMarkupHelper
               tab_title = t(:title, :scope => [controller_name, tab])
               if tab == current_tab
                 html_output <<
-                content_tag(:li, :class => 'tab enabled active') {
-                  content_tag(:span, tab_title, :class => 'tab')
-                }
+                  content_tag(:li, :class => 'current') {
+                    content_tag(:span, tab_title)
+                  }
               else
                 html_output <<
-                  content_tag(:li, :class => 'tab enabled inactive') {
+                  content_tag(:li) {
                     button_tag(tab_title, :name  => 'tab',
                                           :value => tab,
-                                          :type  => 'submit',
-                                          :class => 'tab')
+                                          :type  => 'submit')
                   }
               end
             end

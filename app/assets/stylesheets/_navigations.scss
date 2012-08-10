@@ -156,12 +156,16 @@ div.container > header {
   padding: 4pt;
   font-weight: bold;
   font-family: $body-font-family;
+  font-size: inherit;
+  font-weight: inherit;
+  line-height: inherit;
   @include border-top-radius(6pt);
   border: solid 1pt $table-border-color;
 }
 
 nav.tabs { // TODO: simplify
   display: block;
+  margin: 4pt 0;
 
   ul {
     @include tabs;
@@ -172,29 +176,8 @@ nav.tabs { // TODO: simplify
       font-size: $tabs-font-size;
     }
 
-    li.inactive {
-      a.tab, a:visited.tab, button.tab {
-        display: inline-block;
-        margin: 0;
-        padding: 5px;
-        color: $common-navigation-link-color;
-        text-decoration: none;
-        font-size: inherit;
-        font-weight: inherit;
-        line-height: inherit;
-        vertical-align: baseline;
-      }
-
-      a:hover.tab, button:hover.tab {
-        text-shadow: none;
-        color: $section-bg-color;
-        background-color: $common-navigation-link-color;
-        text-decoration: none;
-      }
-    }
-
-    li.active {
-      span.tab {
+    li.current {
+      span {
         display: inline-block;
         margin: 0;
         padding: 5px;
