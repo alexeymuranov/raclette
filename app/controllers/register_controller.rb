@@ -9,6 +9,12 @@ class RegisterController < ApplicationController
     self.default_sorting_column = :ordered_full_name
   end
 
+  class Guest < Accessors::Guest
+  end
+
+  class Event < Accessors::Event
+  end
+
   def choose_person
     @submit_button = params[:button]
 
@@ -43,8 +49,6 @@ class RegisterController < ApplicationController
       flash.now[:error] = t('flash.actions.other.failure')
       render_choose_person_properly and return
     end
-
-    # debugger
 
     if @event_id = params[:event_id] || session[:current_event_id]
       if @event = Event.find(@event_id)
@@ -199,6 +203,9 @@ class RegisterController < ApplicationController
         @participants = @event.participants.default_order
       end
 
+      saved_param_names = [:filter, :sort, :page, :per_page]
+      @saved_params = params.slice(*saved_param_names)
+
       @title = t('register.choose_person.title')
 
       render :choose_person
@@ -218,7 +225,7 @@ class RegisterController < ApplicationController
       saved_param_names = [:participant_entry_type, :event_title, :date]
       saved_param_names << :person_id if @member
       saved_param_names << :guest if @guest
-      @saved_params = params.slice(saved_param_names)
+      @saved_params = params.slice(*saved_param_names)
 
       @title = t('register.compose_transaction.title')
 

@@ -11,8 +11,7 @@
     -# NOTE: using 'action' only to scroll to the anchor.
     -# TODO: add :'data-remote' => 'true' and fix it.
     %form{:action => '#person_attended_events', :method => 'get'}
-      -# FIXME: not sure all params should be stored
-      = hidden_fields_from_nested_hash params
+      = hidden_fields_from_nested_hash @saved_params
       %span.actions
         - if @attended_events.nil?
           %button{ :name  => 'button',
