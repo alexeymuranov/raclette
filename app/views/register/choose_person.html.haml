@@ -24,13 +24,15 @@
   - column_types = @members_column_types
   - column_headers = @members_column_headers
 
-  = filter_by_prefix :last_name, 'A'..'Z', @members_filtering_values
+  %nav.filtering_prefixes
+    - current_last_name_prefix = @members_filtering_values[:last_name]
+    = filter_by_prefix :last_name, 'A'..'Z', current_last_name_prefix
 
-  = form_tag(nil, :id     => (filter_form_id = "member_list_filter"),
-                  :method => :get) do
+  %form{ :id     => (filter_form_id = 'member_list_filter'),
+         :method => :get }
     = hidden_fields_from_nested_hash params
 
-    %table{ :id    => "member_list_attributes",                             |
+    %table{ :id    => 'member_list_attributes',                             |
             :class => (@members_filtering_values.blank? ? '' : 'filtered ') |
                         + 'records filter'}                                 |
       %colgroup.attributes
@@ -44,7 +46,7 @@
                      :attribute     => attr,
                      :column_type   => column_types[attr],
                      :column_header => column_headers[attr],
-                     :html_table_id => "member_list_attributes"
+                     :html_table_id => 'member_list_attributes'
 
         %tr
           - attributes.each do |attr|

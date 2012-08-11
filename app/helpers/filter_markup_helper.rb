@@ -2,32 +2,30 @@
 
 module FilterMarkupHelper
 
-  def filter_by_prefix(str_attr, prefixes, filtering_values, param_key_nesting=nil, html_options={})
-    options = { :class => 'filtering_prefixes' }.merge(html_options)
-    if filtering_values.key?(str_attr)
-      current_prefix = filtering_values[str_attr].sub(/\%+\z/, '').mb_chars.upcase.to_s
-      current_prefix = prefixes.find { |pref|
-        pref.mb_chars.upcase.to_s == current_prefix
-      }
+  def filter_by_prefix(attr, prefixes, current_prefix, param_key_prefix='filter', html_options={})
+    if current_prefix.nil?
+      stripped_current_prefix = nil
     else
-      current_prefix = nil
+      stripped_current_prefix = current_prefix.sub(/\%+\z/, '')
     end
-    content_tag(:nav, options) do
-      form_tag(nil, :method => :get ) do
-        key_name = "filter[#{str_attr}]"
-        saved_params = params.except(key_name).merge( :request_type => 'filter' )
-        hidden_fields_from_nested_hash(saved_params) <<
-          content_tag(:ul) do
-            prefixes.inject ''.html_safe do |html_output, pref|
-              html_output << content_tag(:li, :class => 'filtering_prefix') {
-                pref == current_prefix ?
-                        pref :
-                        button_tag(pref, :name  => key_name,
-                                         :value => pref,
-                                         :type  => 'submit')
-              }
-            end
+
+    key_name = "#{ param_key_prefix }[#{ attr }]"
+    saved_params = params.except(key_name).merge(:button => 'filter')
+
+    form_tag(nil, :method => :get) do
+      hidden_fields_from_nested_hash(saved_params) << content_tag(:ul) do
+        prefixes.inject(''.html_safe) { |html_output, pref|
+          if pref == stripped_current_prefix
+            html_class = 'current filtering_prefix'
+            item_content = content_tag(:span, pref)
+          else
+            html_class = 'filtering_prefix'
+            item_content = button_tag(pref, :name  => key_name,
+                                            :value => pref,
+                                            :type  => :submit)
           end
+          html_output << content_tag(:li, item_content, :class => html_class)
+        }
       end
     end
   end
