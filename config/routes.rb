@@ -4,11 +4,35 @@ Raclette::Application.routes.draw do
   delete 'logout', :controller => :sessions, :action => :destroy
 
   get 'monitor/overview'
+
   get 'register/choose_person'
   get 'register/compose_transaction'
   post 'register/create_entry'
   post 'register/create_ticket_purchase'
   post 'register/create_membership_purchase'
+  match 'register/member/:member_id/new_transaction' =>
+          'register#new_member_transaction',
+        :constraints => { :member_id => /\d+/ },
+        :via         => :get
+  match 'register/member/:member_id/create_entry' =>
+          'register#create_member_entry',
+        :constraints => { :member_id => /\d+/ },
+        :via         => :post
+  match 'register/member/:member_id/create_ticket_purchase' =>
+          'register#create_member_ticket_purchase',
+        :constraints => { :member_id => /\d+/ },
+        :via         => :post
+  match 'register/member/:member_id/create_membership_purchase' =>
+          'register#create_member_membership_purchase',
+        :constraints => { :member_id => /\d+/ },
+        :via         => :post
+  match 'register/guest/new_transaction' =>
+          'register#new_guest_transaction',
+        :via => :get
+  match 'register/guest/create_entry' =>
+          'register#create_guest_entry',
+        :via => :post
+
   get 'secretary_tools/overview'
   get 'manager_tools/overview'
 
