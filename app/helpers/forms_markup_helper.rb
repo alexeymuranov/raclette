@@ -41,6 +41,8 @@ module FormsMarkupHelper
   # Based on http://davidsulc.com/blog/2011/05/01/self-marking-required-fields-in-rails-3/
   class CustomFormBuilder < ActionView::Helpers::FormBuilder
 
+    include ActionView::Helpers::TagHelper
+
     def label(method, content_or_options = nil, options = {}, &block)
       if content_or_options && content_or_options.class == Hash
         content = nil
@@ -50,37 +52,35 @@ module FormsMarkupHelper
       end
 
       if options[:class]
-        css_classes_arr = options[:class].split(' ')
+        html_classes = options[:class].split(' ')
       else
-        css_classes_arr = []
+        html_classes = []
       end
 
-      marks_arr = []
+      marks = ''.html_safe
 
       klass = object.class
 
       # add a '*' after the field label if the field is required
       if klass.validators_on(method).map(&:class).
            include?(ActiveModel::Validations::PresenceValidator)
-        marks_arr << '*'
-        css_classes_arr << 'required'
+        marks << '*'.html_safe
+        html_classes << 'required'
       end
 
       # add a '!' after the field label if the field will be readonly
       if klass.readonly_attributes.include?(method.to_s)
-        marks_arr << '<sup>!</sup>'
-        css_classes_arr << 'readonly'
+        marks << content_tag(:sup, '!'.html_safe)
+        html_classes << 'readonly'
       end
 
-      options[:class] = css_classes_arr.join(' ') unless css_classes_arr.empty?
+      options[:class] = html_classes.join(' ') unless html_classes.empty?
       label_itself = super(method, content, options, &block)
 
-      if marks_arr.empty?
+      if marks.empty?
         label_itself
       else
-        label_marks = %(<span class="label_marks">#{ marks_arr.join }</span>).
-                        html_safe
-        label_itself + label_marks
+        label_itself + content_tag(:span, marks, :class => 'label_marks')
       end
     end
 
@@ -94,9 +94,8 @@ module FormsMarkupHelper
         klass.validators_on(foreign_key).map(&:class).
               include?(ActiveModel::Validations::PresenceValidator)
 
-      unless options.key?(:include_blank) || required
-        options[:include_blank] = true
-      end
+      options[:include_blank] = true unless
+        options.key?(:include_blank) || required
 
       collection_select(foreign_key, collection.all, :id, text_method,
                         options, html_options)
@@ -128,7 +127,4 @@ module FormsMarkupHelper
     #   end
     # end
   end
-
-  ActionView::Base.default_form_builder = CustomFormBuilder
-
 end

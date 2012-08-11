@@ -2,6 +2,8 @@
 
 module ApplicationHelper
 
+  ActionView::Base.default_form_builder = FormsMarkupHelper::CustomFormBuilder
+
   def title
     base_title = 'Raclette'
 
