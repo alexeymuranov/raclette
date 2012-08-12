@@ -38,19 +38,31 @@ class RegisterControllerTest < ActionController::TestCase
 
   test "should create member_entry" do
     session[:user_id] = @user_admin.to_param
-    post :create_member_entry,
-         { :member_id   => @member.to_param,
-           :event_entry =>
-             { :event_id  => @event.to_param,
-               :person_id => @member.person.to_param } }
-    assert_response :success
+    assert_difference('MemberEntry.count') do
+      assert_difference('EventEntry.count') do
+      post :create_member_entry,
+           { :member_id   => @member.to_param,
+             :event_entry =>
+               { :event_id  => @event.to_param,
+                 :person_id => @member.person.to_param } }
+      end
+    end
+
+    assert_redirected_to register_choose_person_path
   end
 
-  # test "should create guest_event_entry" do
-  #   session[:user_id] = @user_admin.to_param
-  #   post :create_guest_entry
-  #   assert_response :success
-  # end
+  test "should create guest_event_entry" do
+    session[:user_id] = @user_admin.to_param
+    assert_difference('GuestEntry.count') do
+      assert_difference('EventEntry.count') do
+      post :create_guest_entry,
+           { :event_entry => { :event_id  => @event.to_param },
+             :guest       => { :first_name => 'X', :last_name  => 'Yz' } }
+      end
+    end
+
+    assert_redirected_to register_choose_person_path
+  end
 
   test "should create member_ticket_purchase" do
     session[:user_id] = @user_admin.to_param
