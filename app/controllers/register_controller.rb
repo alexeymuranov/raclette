@@ -103,16 +103,16 @@ class RegisterController < ApplicationController
       @member_entry = MemberEntry.new(
         :member_id      => @event_entry.person_id,
         :guests_invited => false,
-        :tickets_used   => @event.entry_fee_tickets )
+        :tickets_used   => @event.entry_fee_tickets)
       @event_entry.participant_entry = @member_entry
     when 'GuestEntry'
       @guest_entry = GuestEntry.new(
-        :first_name => params[:guest][:first_name] )
+        :first_name => params[:guest][:first_name])
       @event_entry.participant_entry = @guest_entry
     end
     if @event_entry.save
       flash[:success] = t('flash.actions.create.success',
-                          :resource_name => EventEntry.model_name.human )
+                          :resource_name => EventEntry.model_name.human)
       redirect_to :action => :choose_person
     else
       flash.now[:error] = t('flash.actions.other.failure')
@@ -140,7 +140,7 @@ class RegisterController < ApplicationController
     @member_entry = MemberEntry.new(
       :member_id      => @event_entry.person_id,
       :guests_invited => false,
-      :tickets_used   => @event.entry_fee_tickets )
+      :tickets_used   => @event.entry_fee_tickets)
     @event_entry.participant_entry = @member_entry
 
     if @event_entry.save
@@ -171,12 +171,12 @@ class RegisterController < ApplicationController
     @event_entry = EventEntry.new(event_entry_attributes)
 
     @guest_entry = GuestEntry.new(
-      :first_name => params[:guest][:first_name] )
+      :first_name => params[:guest][:first_name])
     @event_entry.participant_entry = @guest_entry
 
     if @event_entry.save
       flash[:success] = t('flash.actions.create.success',
-                          :resource_name => EventEntry.model_name.human )
+                          :resource_name => EventEntry.model_name.human)
       redirect_to :action => :choose_person
     else
       flash.now[:error] = t('flash.actions.other.failure')
@@ -198,7 +198,7 @@ class RegisterController < ApplicationController
 
     if @tickets_purchase.save
       flash[:success] = t('flash.actions.create.success',
-                          :resource_name => TicketsPurchase.model_name.human )
+                          :resource_name => TicketsPurchase.model_name.human)
       redirect_to :action => :choose_person
     else
       flash.now[:error] = t('flash.actions.other.failure')
@@ -229,7 +229,7 @@ class RegisterController < ApplicationController
 
     if @membership_purchase.save
       flash[:success] = t('flash.actions.create.success',
-                          :resource_name => MembershipPurchase.model_name.human )
+                          :resource_name => MembershipPurchase.model_name.human)
       redirect_to :action => :choose_person
     else
       flash.now[:error] = t('flash.actions.other.failure')
