@@ -11,16 +11,18 @@ two:
   tickets_number: 45
   ticket_book_id: 2
   purchase_date: 2011-06-07
+
 # == Schema Information
 #
 # Table name: tickets_purchases
 #
-#  id             :integer         not null, primary key
-#  member_id      :integer         not null
-#  tickets_number :integer(2)      not null
-#  ticket_book_id :integer
-#  purchase_date  :date            not null
-#  created_at     :datetime
-#  updated_at     :datetime
+#  id                :integer          not null, primary key
+#  member_id         :integer          not null
+#  tickets_number    :integer          not null
+#  ticket_book_id    :integer
+#  purchase_date     :date             not null
+#  created_at        :datetime
+#  updated_at        :datetime
+#  validated_by_user :string(32)
 #
 

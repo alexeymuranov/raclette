@@ -47,11 +47,12 @@ class Instructor < ActiveRecord::Base
       last_name ].reject(&:blank?).join(' ')
   end
 end
+
 # == Schema Information
 #
 # Table name: instructors
 #
-#  person_id      :integer         not null, primary key
+#  person_id      :integer          not null, primary key
 #  presentation   :text
 #  photo          :binary
 #  employed_from  :date

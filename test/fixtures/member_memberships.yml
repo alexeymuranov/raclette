@@ -9,14 +9,15 @@ two:
   member_id: 1
   membership_id: 2
   obtained_on: 2011-05-08
+
 # == Schema Information
 #
 # Table name: member_memberships
 #
-#  id            :integer         not null, primary key
-#  member_id     :integer         not null
-#  membership_id :integer         not null
-#  obtained_on   :date            not null
+#  id            :integer          not null, primary key
+#  member_id     :integer          not null
+#  membership_id :integer          not null
+#  obtained_on   :date             not null
 #  created_at    :datetime
 #  updated_at    :datetime
 #

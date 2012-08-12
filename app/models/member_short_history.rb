@@ -21,15 +21,16 @@ class MemberShortHistory < ActiveRecord::Base
 
   validates :member_id, :uniqueness => true
 end
+
 # == Schema Information
 #
 # Table name: member_short_histories
 #
-#  member_id                              :integer         not null, primary key
+#  member_id                              :integer          not null, primary key
 #  last_active_membership_expiration_date :date
-#  prev_membership_expiration_date        :date            not null
-#  prev_membership_type                   :string(32)      not null
-#  prev_membership_duration_months        :integer(1)      default(12), not null
+#  prev_membership_expiration_date        :date             not null
+#  prev_membership_type                   :string(32)       not null
+#  prev_membership_duration_months        :integer          default(12), not null
 #  created_at                             :datetime
 #  updated_at                             :datetime
 #

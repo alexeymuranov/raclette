@@ -20,14 +20,15 @@ class WeeklyEventSuspension < ActiveRecord::Base
   # Scopes:
   scope :default_order, order('suspend_until DESC, suspend_from DESC')
 end
+
 # == Schema Information
 #
 # Table name: weekly_event_suspensions
 #
-#  id              :integer         not null, primary key
-#  weekly_event_id :integer         not null
-#  suspend_from    :date            not null
-#  suspend_until   :date            not null
+#  id              :integer          not null, primary key
+#  weekly_event_id :integer          not null
+#  suspend_from    :date             not null
+#  suspend_until   :date             not null
 #  explanation     :string(255)
 #  created_at      :datetime
 #  updated_at      :datetime

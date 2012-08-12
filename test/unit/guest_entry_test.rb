@@ -6,12 +6,13 @@ class GuestEntryTest < ActiveSupport::TestCase
     assert true
   end
 end
+
 # == Schema Information
 #
 # Table name: guest_entries
 #
-#  id                            :integer         not null, primary key
-#  first_name                    :string(32)      not null
+#  id                            :integer          not null, primary key
+#  first_name                    :string(32)       not null
 #  last_name                     :string(32)
 #  inviting_member_id            :integer
 #  previous_entry_id             :integer

@@ -16,14 +16,15 @@ class MemberMembership < ActiveRecord::Base
 
   validates :membership_id, :uniqueness => { :scope => :member_id }
 end
+
 # == Schema Information
 #
 # Table name: member_memberships
 #
-#  id            :integer         not null, primary key
-#  member_id     :integer         not null
-#  membership_id :integer         not null
-#  obtained_on   :date            not null
+#  id            :integer          not null, primary key
+#  member_id     :integer          not null
+#  membership_id :integer          not null
+#  obtained_on   :date             not null
 #  created_at    :datetime
 #  updated_at    :datetime
 #

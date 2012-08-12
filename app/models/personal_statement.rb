@@ -23,14 +23,15 @@ class PersonalStatement < ActiveRecord::Base
 
   validates :person_id, :uniqueness => true
 end
+
 # == Schema Information
 #
 # Table name: personal_statements
 #
-#  person_id                  :integer         not null, primary key
+#  person_id                  :integer          not null, primary key
 #  birthday                   :date
-#  accept_email_announcements :boolean         default(FALSE)
-#  volunteer                  :boolean         default(FALSE)
+#  accept_email_announcements :boolean          default(FALSE)
+#  volunteer                  :boolean          default(FALSE)
 #  volunteer_as               :string(255)
 #  preferred_language         :string(32)
 #  occupation                 :string(64)

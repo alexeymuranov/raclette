@@ -124,16 +124,17 @@ class Person < ActiveRecord::Base
     mobile_phone || home_phone
   end
 end
+
 # == Schema Information
 #
 # Table name: people
 #
-#  id                 :integer         not null, primary key
-#  last_name          :string(32)      not null
-#  first_name         :string(32)      not null
+#  id                 :integer          not null, primary key
+#  last_name          :string(32)       not null
+#  first_name         :string(32)       not null
 #  name_title         :string(16)
-#  nickname_or_other  :string(32)      default(""), not null
-#  birthyear          :integer(2)
+#  nickname_or_other  :string(32)       default(""), not null
+#  birthyear          :integer
 #  email              :string(255)
 #  mobile_phone       :string(32)
 #  home_phone         :string(32)

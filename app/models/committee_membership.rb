@@ -19,16 +19,17 @@ class CommitteeMembership < ActiveRecord::Base
   # Scopes:
   scope :default_order, order('end_date DESC, start_date DESC')
 end
+
 # == Schema Information
 #
 # Table name: committee_memberships
 #
-#  id         :integer         not null, primary key
-#  person_id  :integer         not null
-#  function   :string(64)      not null
-#  start_date :date            not null
+#  id         :integer          not null, primary key
+#  person_id  :integer          not null
+#  function   :string(64)       not null
+#  start_date :date             not null
 #  end_date   :date
-#  quit       :boolean         default(FALSE), not null
+#  quit       :boolean          default(FALSE), not null
 #  comment    :string(255)
 #  created_at :datetime
 #  updated_at :datetime
