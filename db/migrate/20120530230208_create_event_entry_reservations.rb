@@ -16,7 +16,7 @@ class CreateEventEntryReservations < ActiveRecord::Migration
 
       t.timestamps
     end
-    
+
     add_index :event_entry_reservations, [ :event_id, :names ],
                   :unique => true
     add_index :event_entry_reservations, [ :event_id, :member_id ],

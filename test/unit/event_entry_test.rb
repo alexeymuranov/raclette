@@ -14,9 +14,7 @@ end
 #  id                     :integer          not null, primary key
 #  participant_entry_type :string(32)       not null
 #  participant_entry_id   :integer
-#  event_title            :string(64)       not null
-#  date                   :date             not null
-#  event_id               :integer
+#  event_id               :integer          not null
 #  person_id              :integer
 #  created_at             :datetime
 #  updated_at             :datetime

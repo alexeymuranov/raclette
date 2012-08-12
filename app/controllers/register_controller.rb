@@ -322,7 +322,7 @@ class RegisterController < ApplicationController
                        "(#{ t('activemodel.models.guest') })"
       end
 
-      saved_param_names = [:participant_entry_type, :event_title, :date]
+      saved_param_names = [:participant_entry_type]
       saved_param_names << :person_id if @member
       saved_param_names << :guest if @guest
       @saved_params = params.slice(*saved_param_names)
@@ -345,9 +345,7 @@ class RegisterController < ApplicationController
         render_choose_person_properly and return
       end
       @event ||= @events.first  # FIXME!
-      @event_entry = EventEntry.new :event_id    => @event.id,
-                                    :event_title => @event.title,
-                                    :date        => @event.date
+      @event_entry = EventEntry.new :event_id => @event.id
       if @member
         @event_entry.person_id = @member.person_id
         @event_entry.participant_entry_type = 'MemberEntry'

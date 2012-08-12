@@ -21,7 +21,7 @@ class Event < ActiveRecord::Base
   has_many :event_entry_reservations, :dependent  => :nullify,
                                       :inverse_of => :event
 
-  has_many :event_entries, :dependent  => :nullify,
+  has_many :event_entries, :dependent  => :destroy,
                            :inverse_of => :event
 
   has_many :participants, :through => :event_entries,

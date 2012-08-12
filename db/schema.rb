@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120530230208) do
+ActiveRecord::Schema.define(:version => 20120812172353) do
 
   create_table "activity_periods", :force => true do |t|
     t.string   "unique_title",    :limit => 64,                    :null => false
@@ -142,16 +142,13 @@ ActiveRecord::Schema.define(:version => 20120530230208) do
   create_table "event_entries", :force => true do |t|
     t.string   "participant_entry_type", :limit => 32, :null => false
     t.integer  "participant_entry_id"
-    t.string   "event_title",            :limit => 64, :null => false
-    t.date     "date",                                 :null => false
-    t.integer  "event_id"
+    t.integer  "event_id",                             :null => false
     t.integer  "person_id"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "validated_by_user",      :limit => 32
   end
 
-  add_index "event_entries", ["date"], :name => "index_event_entries_on_date"
   add_index "event_entries", ["event_id", "person_id"], :name => "index_event_entries_on_event_id_and_person_id", :unique => true
   add_index "event_entries", ["participant_entry_type", "participant_entry_id"], :name => "index_event_entries_on_participant_entry_type_and_p_e_id", :unique => true
   add_index "event_entries", ["participant_entry_type"], :name => "index_event_entries_on_participant_entry_type"
