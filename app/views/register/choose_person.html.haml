@@ -43,68 +43,71 @@
          :method => :get }
     = hidden_fields_from_nested_hash @saved_params
 
-    %table{ :id    => 'member_list_attributes',                             |
-            :class => (@members_filtering_values.blank? ? '' : 'filtered ') |
-                        + 'records filter'}                                 |
-      %colgroup.attributes
-        - attributes.size.times do
-          %col
-      %thead
+  %form{ :id     => (clear_filter_form_id = 'member_list_clear_filter'),
+         :method => :get }
+    = hidden_fields_from_nested_hash @saved_params.except(:filter)
+
+  %table{ :id    => 'member_list_attributes',                             |
+          :class => (@members_filtering_values.blank? ? '' : 'filtered ') |
+                      + 'records filter'}                                 |
+    %colgroup.attributes
+      - attributes.size.times do
+        %col
+    %thead
+      %tr
+        - attributes.each do |attr|
+
+          = render 'shared/tables/sorting_header',
+                   :attribute     => attr,
+                   :column_type   => column_types[attr],
+                   :column_header => column_headers[attr],
+                   :html_table_id => 'member_list_attributes'
+
+      %tr
+        - attributes.each do |attr|
+
+          = render 'shared/tables/filtering_field',
+                   :filter_form_id  => filter_form_id,
+                   :attr            => attr,
+                   :select_from     => Accessors::Member.possible_values_of(attr),
+                   :column_type     => column_types[attr],
+                   :value_or_values => @members_filtering_values[attr]
+
+      %tr
+        %td{:colspan => attributes.size, :class => 'actions'}
+          %button{ :form  => filter_form_id,
+                   :name  => 'button',
+                   :type  => 'submit',
+                   :value => 'filter' }
+            = t('buttons.filter')
+          %button{ :form  => clear_filter_form_id,
+                   :name  => 'button',
+                   :type  => 'submit',
+                   :value => 'filter' }
+            = t('buttons.clear')
+      - unless @members_filtering_values.blank?
         %tr
           - attributes.each do |attr|
 
-            = render 'shared/tables/sorting_header',
-                     :attribute     => attr,
-                     :column_type   => column_types[attr],
-                     :column_header => column_headers[attr],
-                     :html_table_id => 'member_list_attributes'
+            = render 'shared/tables/filtering_value',
+                     :value_or_values => @members_filtering_values[attr],
+                     :column_type     => column_types[attr]
 
-        %tr
-          - attributes.each do |attr|
-
-            = render 'shared/tables/filtering_field',
-                     :filter_form_id  => filter_form_id,
-                     :attr            => attr,
-                     :select_from     => Accessors::Member.possible_values_of(attr),
-                     :column_type     => column_types[attr],
-                     :value_or_values => @members_filtering_values[attr]
-
-        %tr
-          = content_tag :td, :colspan => attributes.size,
-                             :class   => 'actions' do
-            = button_tag t('buttons.filter'),
-                         :form  => filter_form_id,
-                         :name  => 'button',
-                         :type  => 'submit',
-                         :value => 'filter'
-            = button_tag t('buttons.clear'),
-                         :form  => filter_form_id,
-                         :name  => 'button',
-                         :type  => 'submit',
-                         :value => 'clear'
-        - unless @members_filtering_values.blank?
-          %tr
-            - attributes.each do |attr|
-
-              = render 'shared/tables/filtering_value',
-                       :value_or_values => @members_filtering_values[attr],
-                       :column_type     => column_types[attr]
-
-    -# end # </table>
+  -# end # </table>
 
   %form{:method => :get}
     = hidden_fields_from_nested_hash @saved_params
 
-    = label_tag :per_page, t('field_labels.per_page')
-    = select_tag :per_page,
-                 options_for_select([5, 10, 25, 50, 100, 250, 500, 1000],
-                                    params[:per_page] || Member.default_per_page),
-                 :class => 'number'
+    %label{:for => :per_page}
+      = t('field_labels.per_page')
+    %select{:name => :per_page, :class => 'number'}
+      = options_for_select [5, 10, 25, 50, 100, 250, 500, 1000],
+                           params[:per_page] || Member.default_per_page
     %span.actions
-      = button_tag t('buttons.repaginate'),
-                   :name  => 'button',
-                   :type  => 'submit',
-                   :value => 'repaginate'
+      %button{ :name  => 'button',
+               :type  => 'submit',
+               :value => 'repaginate' }
+        = t('buttons.repaginate')
 
   = paginate @members
 
