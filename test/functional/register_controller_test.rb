@@ -18,12 +18,6 @@ class RegisterControllerTest < ActionController::TestCase
     assert_response :success
   end
 
-  test "should get compose_transaction" do
-    session[:user_id] = @user_admin.to_param
-    get :compose_transaction
-    assert_response :success
-  end
-
   test "should get new_member_transaction" do
     session[:user_id] = @user_admin.to_param
     get :new_member_transaction, { :member_id => @member.to_param }

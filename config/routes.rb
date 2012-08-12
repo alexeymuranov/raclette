@@ -6,10 +6,6 @@ Raclette::Application.routes.draw do
   get 'monitor/overview'
 
   get 'register/choose_person'
-  get 'register/compose_transaction'
-  post 'register/create_entry'
-  post 'register/create_ticket_purchase'
-  post 'register/create_membership_purchase'
   match 'register/member/:member_id/new_transaction' =>
           'register#new_member_transaction',
         :constraints => { :member_id => /\d+/ },

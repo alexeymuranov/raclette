@@ -41,20 +41,6 @@ class RegisterController < ApplicationController
     render_choose_person_properly
   end
 
-  def compose_transaction # TODO: to be removed
-    set_person_from_params
-    set_tab_from_params
-
-    unless @member || @guest
-      flash.now[:error] = t('flash.actions.other.failure')
-      render_choose_person_properly and return
-    end
-
-    set_event_from_params_or_session
-
-    render_compose_transaction_properly
-  end
-
   def new_member_transaction
     @member = Member.joins(:person)\
                     .with_pseudo_columns(:full_name)\
@@ -85,44 +71,6 @@ class RegisterController < ApplicationController
     set_event_from_params_or_session
 
     render_compose_transaction_properly
-  end
-
-  def create_entry # TODO: to be removed
-    event_entry_attributes = params[:event_entry] || {}
-    event_id = event_entry_attributes[:event_id]
-    if event_id && @event = Event.find(event_id)
-      session[:current_event_id] = event_id
-    else
-      flash.now[:error] = t('flash.actions.other.failure')
-      render_choose_person_properly and return
-    end
-
-    @event_entry = EventEntry.new(event_entry_attributes)
-    case @event_entry.participant_entry_type
-    when 'MemberEntry'
-      @member_entry = MemberEntry.new(
-        :member_id      => @event_entry.person_id,
-        :guests_invited => false,
-        :tickets_used   => @event.entry_fee_tickets)
-      @event_entry.participant_entry = @member_entry
-    when 'GuestEntry'
-      @guest_entry = GuestEntry.new(
-        :first_name => params[:guest][:first_name])
-      @event_entry.participant_entry = @guest_entry
-    end
-    if @event_entry.save
-      flash[:success] = t('flash.actions.create.success',
-                          :resource_name => EventEntry.model_name.human)
-      redirect_to :action => :choose_person
-    else
-      flash.now[:error] = t('flash.actions.other.failure')
-      if @member || @guest
-        @tab = 'new_entry'
-        render_compose_transaction_properly
-      else
-        render_choose_person_properly
-      end
-    end
   end
 
   def create_member_entry
