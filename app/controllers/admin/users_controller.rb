@@ -30,10 +30,6 @@ class Admin::UsersController < AdminController
     @query_type = params[:query_type]
     @submit_button = params[:button]
 
-    if @submit_button == 'filter'
-      params.delete(:page)
-    end
-
     # FIXME: strange if this is necessary:
     params.except!(:query_type, :commit, :button)
 

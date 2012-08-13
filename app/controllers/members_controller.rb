@@ -47,10 +47,6 @@ class MembersController < SecretaryController
     @query_type = params[:query_type]
     @submit_button = params[:button]
 
-    if @submit_button == 'filter'
-      params.delete(:page)
-    end
-
     case request.format
     when Mime::HTML
       @attributes = [ :ordered_full_name,

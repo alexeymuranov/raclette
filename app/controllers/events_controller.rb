@@ -62,10 +62,6 @@ class EventsController < SecretaryController
   def index
     @submit_button = params[:button]
 
-    if @submit_button == 'filter'
-      params.delete(:page)
-    end
-
     # FIXME: strange if this is necessary:
     params.except!(:commit, :button)
 

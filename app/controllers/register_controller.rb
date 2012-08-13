@@ -18,10 +18,6 @@ class RegisterController < ApplicationController
   def choose_person
     @submit_button = params[:button]
 
-    if @submit_button == 'filter'
-      params.delete(:page)
-    end
-
     @event_id = params[:event_id] || session[:current_event_id]
 
     if @event_id.blank?
