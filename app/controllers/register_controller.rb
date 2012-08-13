@@ -207,12 +207,10 @@ class RegisterController < ApplicationController
 
       @events = Event.unlocked.past_seven_days
 
-      if params[:button] == 'show_participants'
-        @participants = @event.participants.default_order
-      end
+      @participants = @event.participants.default_order if
+        params[:button] == 'show_participants'
 
-      saved_param_names = [:filter, :sort, :page, :per_page]
-      @saved_params = params.slice(*saved_param_names)
+      @saved_params = params.slice(:filter, :sort, :page, :per_page)
 
       @title = t('register.choose_person.title')
 
@@ -221,23 +219,23 @@ class RegisterController < ApplicationController
 
     def render_new_member_transaction_properly
       @events = Event.unlocked.past_seven_days
-      if @events.empty?
-        flash.now[:error] = t('flash.actions.other.failure')
-        @tabs = []
-      else
-        @tabs = ['new_entry']
+
+      @tabs = @events.empty? ? [] : ['new_entry']
+
+      if @member.current_membership
+        @ticket_books = @member.current_membership.type.ticket_books
+        @tabs << 'new_ticket_purchase' unless @ticket_books.empty?
       end
 
-      @tabs += ['new_ticket_purchase', 'new_membership_purchase']
-
-      set_tab_from_params
+      @tabs << 'new_membership_purchase'
 
       @person_name = @member.full_name
 
-      saved_param_names = [:participant_entry_type, :person_id]
-      @saved_params = params.slice(*saved_param_names)
+      @saved_params = params.slice(:participant_entry_type, :person_id)
 
       @title = t('register.new_transaction.title')
+
+      set_tab_from_params
 
       case @tab
       when 'new_entry'
@@ -252,21 +250,21 @@ class RegisterController < ApplicationController
     def render_new_guest_transaction_properly
       @events = Event.unlocked.past_seven_days
       if @events.empty?
-        flash.now[:error] = t('flash.register.new_transaction.no_current_events_known')
+        flash.now[:error] =
+          t('flash.register.new_transaction.no_current_events_known')
         render_choose_person_properly and return
       else
         @tabs = ['new_entry']
       end
 
-      set_tab_from_params
-
       @person_name =
         "#{ @guest.first_name } (#{ t('activemodel.models.guest') })"
 
-      saved_param_names = [:participant_entry_type, :guest]
-      @saved_params = params.slice(*saved_param_names)
+      @saved_params = params.slice(:participant_entry_type, :guest)
 
       @title = t('register.new_transaction.title')
+
+      set_tab_from_params
 
       case @tab
       when 'new_entry'
@@ -277,15 +275,10 @@ class RegisterController < ApplicationController
     def render_new_member_entry_properly
       @event ||= @events.first  # FIXME!
       @event_entry = EventEntry.new :event_id => @event.id
-      if @member
-        @event_entry.person_id = @member.person_id
-        @event_entry.participant_entry_type = 'MemberEntry'
-        if params[:button] == 'show_attended_events'
-          @attended_events = @member.attended_events.default_order
-        end
-      else
-        @event_entry.participant_entry_type = 'GuestEntry'
-      end
+      @event_entry.person_id = @member.person_id
+      @event_entry.participant_entry_type = 'MemberEntry'
+      @attended_events = @member.attended_events.default_order if
+        params[:button] == 'show_attended_events'
 
       render 'new_member_transaction'
     end
@@ -293,23 +286,13 @@ class RegisterController < ApplicationController
     def render_new_guest_entry_properly
       @event ||= @events.first  # FIXME!
       @event_entry = EventEntry.new :event_id => @event.id
-      if @member
-        @event_entry.person_id = @member.person_id
-        @event_entry.participant_entry_type = 'MemberEntry'
-        if params[:button] == 'show_attended_events'
-          @attended_events = @member.attended_events.default_order
-        end
-      else
-        @event_entry.participant_entry_type = 'GuestEntry'
-      end
+      @event_entry.participant_entry_type = 'GuestEntry'
 
       render 'new_guest_transaction'
     end
 
     def render_new_member_ticket_purchase_properly
-      @ticket_books = TicketBook.where(
-        :membership_type_id => @member.current_membership.type.id).
-        order('tickets_number ASC')
+      @ticket_books = @ticket_books.default_order
       @ticket_book = @ticket_books.first
       @tickets_purchase = TicketsPurchase.new :member      => @member,
                                               :ticket_book => @ticket_book

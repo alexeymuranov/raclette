@@ -24,10 +24,30 @@ class RegisterControllerTest < ActionController::TestCase
     assert_response :success
   end
 
+  test "should get new_member_transaction each tab" do
+    session[:user_id] = @user_admin.to_param
+    [ 'new_entry', 'new_ticket_purchase', 'new_membership_purchase'
+    ].each do |tab|
+      get :new_member_transaction,
+          { :member_id => @member.to_param, :tab => tab }
+      assert_response :success
+    end
+  end
+
   test "should get new_guest_transaction" do
     session[:user_id] = @user_admin.to_param
     get :new_guest_transaction
     assert_response :success
+  end
+
+  test "should get new_guest_transaction each tab" do
+    session[:user_id] = @user_admin.to_param
+    [ 'new_entry', 'new_ticket_purchase', 'new_membership_purchase'
+    ].each do |tab|
+      get :new_guest_transaction,
+          { :guest => { :first_name => 'Ab' }, :tab => tab }
+      assert_response :success
+    end
   end
 
   test "should create member_entry" do
