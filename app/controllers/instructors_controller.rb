@@ -61,7 +61,7 @@ class InstructorsController < ManagerController
       end
 
       requested_format.js do
-        case params[:query_type]
+        case params[:button]
         when 'show_email_addresses', 'hide_email_addresses'
           render :update_email_list
         end
