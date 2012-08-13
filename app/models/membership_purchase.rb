@@ -25,6 +25,22 @@ class MembershipPurchase < ActiveRecord::Base
 
   validates :membership_id, :uniqueness => { :scope => :member_id },
                             :allow_nil  => true
+  # Callbacks:
+  before_validation :copy_membership_type_and_expiration_date
+  before_create     :associate_the_member_with_the_membership
+
+  private
+
+    def copy_membership_type_and_expiration_date
+      self.membership_type ||= membership.type.unique_title
+      self.membership_expiration_date ||= membership.end_date
+    end
+
+    def associate_the_member_with_the_membership
+      member.member_memberships.create!(:membership_id => membership.id,
+                                        :obtained_on   => purchase_date)
+    end
+
 end
 
 # == Schema Information
