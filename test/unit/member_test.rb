@@ -6,7 +6,7 @@ class MemberTest < ActiveSupport::TestCase
     current_members_count = 0
     Member.all.each do |member|
       member.memberships.each do |membership|
-        begin_date = membership.activity_period.begin_date
+        begin_date = membership.activity_period.start_date
         end_date = membership.activity_period.end_date
         today = Date.today
         if today >= begin_date && today <= end_date

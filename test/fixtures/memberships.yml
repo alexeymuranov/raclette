@@ -1,7 +1,7 @@
 # Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
 
 one:
-  membership_type_id: 1
+  type: one
   activity_period: one
   initial_price: 9.99
   current_price: 9.99
@@ -9,7 +9,7 @@ one:
   members_count: 300
 
 two:
-  membership_type_id: 2
+  type: two
   activity_period: one
   initial_price: 9.99
   current_price: 9.99
@@ -17,12 +17,21 @@ two:
   members_count: 9
 
 three:
-  membership_type_id: 2
+  type: two
   activity_period: two
   initial_price: 9.99
   current_price: 9.99
   tickets_count_limit: 1
   members_count: 0
+
+four:
+  type: one
+  activity_period: two
+  initial_price: 9.99
+  current_price: 9.99
+  tickets_count_limit: 50
+  members_count: 9
+
 
 # == Schema Information
 #

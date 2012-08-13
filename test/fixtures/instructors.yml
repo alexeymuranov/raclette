@@ -1,14 +1,14 @@
 # Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
 
 one:
-  person_id: 1
+  person: one
   presentation: MyText
   photo: ~
   employed_from: 2011-05-08
   employed_until: 2011-05-08
 
 two:
-  person_id: 3
+  person: two
   presentation: MyText
   photo: ~
   employed_from: 2011-05-08

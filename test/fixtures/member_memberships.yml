@@ -1,13 +1,13 @@
 # Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
 
 one:
-  member_id: 1
-  membership_id: 1
+  member: one
+  membership: one
   obtained_on: 2009-05-08
 
 two:
-  member_id: 1
-  membership_id: 2
+  member: one
+  membership: two
   obtained_on: 2011-05-08
 
 # == Schema Information

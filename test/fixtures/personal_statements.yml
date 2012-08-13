@@ -1,7 +1,7 @@
 # Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
 
 one:
-  person_id: 
+  person: one
   birthday: 2011-05-08
   accept_email_announcements: false
   volunteer: false
@@ -11,7 +11,7 @@ one:
   remark: MyString
 
 two:
-  person_id: 
+  person: two
   birthday: 2011-05-08
   accept_email_announcements: false
   volunteer: false

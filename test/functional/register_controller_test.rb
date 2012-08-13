@@ -8,7 +8,7 @@ class RegisterControllerTest < ActionController::TestCase
     @event = events(:one)
     @ticket_book = ticket_books(:one)
     @membership_type = membership_types(:one)
-    @activity_period = activity_periods(:one)
+    @activity_period = activity_periods(:two)
     # test_log_in(@user_admin, "127.0.0.1")
   end
 

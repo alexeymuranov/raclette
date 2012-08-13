@@ -1,7 +1,6 @@
 # Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
 
 one:
-  id: 1
   unique_title: "Active reduit 12 mois"
   active: true
   reduced: true
@@ -10,7 +9,6 @@ one:
   description: ~
 
 two:
-  id: 2
   unique_title: "Associate 6 mois"
   active: false
   reduced: false

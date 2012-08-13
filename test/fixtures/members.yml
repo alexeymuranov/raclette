@@ -2,7 +2,7 @@
 
 # NOTE: for each "member" there must be a "person" with id equal to the "member"'s person_id
 one:
-  person_id: 1
+  person: one
   been_member_by: 2000-01-30
   shares_tickets_with_member_id: 2
   account_deactivated: false
@@ -18,7 +18,7 @@ one:
   free_tickets_count: 1
 
 two:
-  person_id: 3
+  person: two
   been_member_by: 2011-05-08
   shares_tickets_with_member_id: 1
   account_deactivated: false
@@ -34,7 +34,7 @@ two:
   free_tickets_count: 0
 
 three:
-  person_id: 4
+  person: three
   been_member_by: 2011-05-08
   shares_tickets_with_member_id: ~
   account_deactivated: true
