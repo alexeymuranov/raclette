@@ -1,10 +1,5 @@
 %h1= t '.header'
 
--# NOTE: this is currently not used, but i wonder if it can eventually replace
--# two or more forms (paginating, filtering, etc.)
-%form#reload{:method => 'get'}
-  = hidden_fields_from_nested_hash @saved_params
-
 - if @events.empty?
   %strong= t 'register.new_entry.no_current_event'
 - else
