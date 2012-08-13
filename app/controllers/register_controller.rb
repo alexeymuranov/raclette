@@ -34,35 +34,31 @@ class RegisterController < ApplicationController
   end
 
   def new_member_transaction
-    @member = Member.joins(:person)\
-                    .with_pseudo_columns(:full_name)\
-                    .find(params[:member_id])
+    @members = Member.joins(:person).with_pseudo_columns(:full_name)
 
-    set_tab_from_params
-
-    unless @member
+    unless @member = @members.find(params[:member_id])
       flash.now[:error] = t('flash.actions.other.failure')
       render_choose_person_properly and return
     end
 
+    set_tab_from_params
+
     set_event_from_params_or_session
 
-    render_compose_transaction_properly
+    render_new_member_transaction_properly
   end
 
   def new_guest_transaction
-    @guest = Guest.new(params[:guest])
-
-    set_tab_from_params
-
-    unless @guest
+    unless @guest = Guest.new(params[:guest])
       flash.now[:error] = t('flash.actions.other.failure')
       render_choose_person_properly and return
     end
 
+    set_tab_from_params
+
     set_event_from_params_or_session
 
-    render_compose_transaction_properly
+    render_new_guest_transaction_properly
   end
 
   def create_member_entry
@@ -91,7 +87,7 @@ class RegisterController < ApplicationController
       flash.now[:error] = t('flash.actions.other.failure')
       if @member
         @tab = 'new_entry'
-        render_compose_transaction_properly
+        render_new_member_transaction_properly
       else
         render_choose_person_properly
       end
@@ -122,7 +118,7 @@ class RegisterController < ApplicationController
       flash.now[:error] = t('flash.actions.other.failure')
       if @guest
         @tab = 'new_entry'
-        render_compose_transaction_properly
+        render_new_guest_transaction_properly
       else
         render_choose_person_properly
       end
@@ -144,7 +140,7 @@ class RegisterController < ApplicationController
       flash.now[:error] = t('flash.actions.other.failure')
       if @member
         @tab = 'new_ticket_purchase'
-        render_compose_transaction_properly
+        render_new_member_transaction_properly
       else
         render_choose_person_properly
       end
@@ -175,7 +171,7 @@ class RegisterController < ApplicationController
       flash.now[:error] = t('flash.actions.other.failure')
       if @member
         @tab = 'new_membership_purchase'
-        render_compose_transaction_properly
+        render_new_member_transaction_properly
       else
         render_choose_person_properly
       end
@@ -196,9 +192,9 @@ class RegisterController < ApplicationController
 
     def set_person_from_params
       if params[:member_id]
-        @member = Member.joins(:person)\
-                        .with_pseudo_columns(:full_name)\
-                        .find(params[:member_id])
+        @member = Member.joins(:person).
+                         with_pseudo_columns(:full_name).
+                         find(params[:member_id])
       elsif params[:guest]
         @guest = Guest.new(params[:guest])
       end
@@ -212,9 +208,11 @@ class RegisterController < ApplicationController
     end
 
     def render_choose_person_properly
-      @members = paginate(Member.account_active.joins(:person).
-                                 with_pseudo_columns(:ordered_full_name).
-                                 default_order)
+      @members = Member.account_active.joins(:person).
+                        with_pseudo_columns(:ordered_full_name).
+                        default_order
+      @members = paginate(@members)
+
       # Filter:
       @members = Member.filter(@members, params[:filter], @attributes)
       @members_filtering_values = Member.last_filter_values
@@ -251,39 +249,58 @@ class RegisterController < ApplicationController
       render :choose_person
     end
 
-    def render_compose_transaction_properly
-      @tabs = ['new_entry', 'new_ticket_purchase', 'new_membership_purchase']
-
-      if @member
-        @person_name = @member.full_name
+    def render_new_member_transaction_properly
+      @events = Event.unlocked.past_seven_days
+      if @events.empty?
+        flash.now[:error] = t('flash.actions.other.failure')
+        @tabs = []
       else
-        @tabs.delete('new_ticket_purchase')
-        @person_name = "#{ @guest.first_name } "\
-                       "(#{ t('activemodel.models.guest') })"
+        @tabs = ['new_entry']
       end
 
-      saved_param_names = [:participant_entry_type]
-      saved_param_names << :person_id if @member
-      saved_param_names << :guest if @guest
+      @tabs += ['new_ticket_purchase', 'new_membership_purchase']
+
+      @person_name = @member.full_name
+
+      saved_param_names = [:participant_entry_type, :person_id]
       @saved_params = params.slice(*saved_param_names)
 
-      @title = t('register.compose_transaction.title')
+      @title = t('register.new_transaction.title')
 
       case @tab
       when 'new_entry'
-        render_new_entry_properly
+        render_new_member_entry_properly
       when 'new_ticket_purchase'
-        render_new_ticket_purchase_properly
+        render_new_member_ticket_purchase_properly
       when 'new_membership_purchase'
-        render_new_membership_purchase_properly
+        render_new_member_membership_purchase_properly
       end
     end
 
-    def render_new_entry_properly
+    def render_new_guest_transaction_properly
       @events = Event.unlocked.past_seven_days
       if @events.empty?
+        flash.now[:error] = t('flash.register.new_transaction.no_current_events_known')
         render_choose_person_properly and return
+      else
+        @tabs = ['new_entry']
       end
+
+      @person_name =
+        "#{ @guest.first_name } (#{ t('activemodel.models.guest') })"
+
+      saved_param_names = [:participant_entry_type, :guest]
+      @saved_params = params.slice(*saved_param_names)
+
+      @title = t('register.new_transaction.title')
+
+      case @tab
+      when 'new_entry'
+        render_new_guest_entry_properly
+      end
+    end
+
+    def render_new_member_entry_properly
       @event ||= @events.first  # FIXME!
       @event_entry = EventEntry.new :event_id => @event.id
       if @member
@@ -296,10 +313,26 @@ class RegisterController < ApplicationController
         @event_entry.participant_entry_type = 'GuestEntry'
       end
 
-      render 'compose_transaction'
+      render 'new_member_transaction'
     end
 
-    def render_new_ticket_purchase_properly
+    def render_new_guest_entry_properly
+      @event ||= @events.first  # FIXME!
+      @event_entry = EventEntry.new :event_id => @event.id
+      if @member
+        @event_entry.person_id = @member.person_id
+        @event_entry.participant_entry_type = 'MemberEntry'
+        if params[:button] == 'show_attended_events'
+          @attended_events = @member.attended_events.default_order
+        end
+      else
+        @event_entry.participant_entry_type = 'GuestEntry'
+      end
+
+      render 'new_guest_transaction'
+    end
+
+    def render_new_member_ticket_purchase_properly
       @ticket_books = TicketBook.where(
         :membership_type_id => @member.current_membership.type.id).
         order('tickets_number ASC')
@@ -307,10 +340,10 @@ class RegisterController < ApplicationController
       @tickets_purchase = TicketsPurchase.new :member      => @member,
                                               :ticket_book => @ticket_book
 
-      render 'compose_transaction'
+      render 'new_member_transaction'
     end
 
-    def render_new_membership_purchase_properly  # FIXME: allow guests to purchase memberships
+    def render_new_member_membership_purchase_properly  # FIXME: allow guests to purchase memberships
       @membership_types = MembershipType.all  # FIXME!
       @membership_type = @membership_types.first
       @activity_periods = ActivityPeriod.not_over  # FIXME!
@@ -321,7 +354,7 @@ class RegisterController < ApplicationController
         current_user.a_person?
       @membership_purchase.member_id = @member.person_id if @member
 
-      render 'compose_transaction'
+      render 'new_member_transaction'
     end
 
 end

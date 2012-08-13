@@ -222,6 +222,8 @@ en:
         success: "Destroyed."
         failure: "Not destroyed."
     register:
+      new_transaction:
+        no_current_events_known: "No event found, no operation possbile."
       new_event_entry:
         bad_person_data: &bad_person_data_for_register "The person was not well defined!"
       new_tickets_purchase:
@@ -269,7 +271,7 @@ en:
       header: "Payment and Entry Register"
       choose_member: "Choose member"
       enter_guest: "Enter guest"
-    compose_transaction:
+    new_transaction:
       title: "Register"
       header: "Payment and Entry Register"
       subheaders:

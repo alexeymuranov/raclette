@@ -4,7 +4,7 @@
 
   = render 'shared/error_messages/validation', :target => @membership_purchase
 
-  = hidden_fields_from_nested_hash :saved_params => @saved_params
+  = hidden_fields_from_nested_hash @saved_params
 
   - [:member_id].each do |attr|
     = f.hidden_field attr unless @membership_purchase.public_send(attr).nil?

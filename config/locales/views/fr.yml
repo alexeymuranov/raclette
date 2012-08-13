@@ -222,6 +222,8 @@ fr:
         success: "Le modèle est supprimé."
         failure: "Une erreur s'est produit !"
     register:
+      new_transaction:
+        no_current_events_known: "Aucun événement n'a pas été trouvé, aucune opération n'est possible."
       new_event_entree:
         bad_person_data: &bad_person_data_for_register "La personne n'a été pas bien définie !"
       new_tickets_purchase:
@@ -269,7 +271,7 @@ fr:
       header: "Caisse des entrées et règlements"
       choose_member: "Choisir un(e) adhérent(e)"
       enter_guest: "Saisir un(e) invité(e)"
-    compose_transaction:
+    new_transaction:
       title: "Caisse"
       header: "Caisse des entrées et règlements"
       subheaders:
