@@ -14,10 +14,6 @@ class Admin::UserTest < ActiveSupport::TestCase
 #     flunk "TODO: test empty"
 #   end
 
-  # Replace this with your real tests.
-  test "the truth" do
-    assert true
-  end
 end
 
 # == Schema Information
