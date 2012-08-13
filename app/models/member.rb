@@ -109,6 +109,10 @@ class Member < ActiveRecord::Base
     !account_deactivated
   end
 
+  def virtual_tickets_count
+    payed_tickets_count + free_tickets_count
+  end
+
   def current_membership
     memberships.current.reverse_order_by_expiration_date.first
   end
