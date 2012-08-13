@@ -271,12 +271,13 @@ en:
       header: "Payment and Entry Register"
       choose_member: "Choose member"
       enter_guest: "Enter guest"
+      subheaders:
+        participants: "Participants"
     new_transaction:
       title: "Register"
       header: "Payment and Entry Register"
       subheaders:
         attended_events: "Attended events"
-        participants: "Participants"
     new_entry:
       title: "Entry"
       current_event: "Current event"

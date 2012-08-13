@@ -3,7 +3,7 @@
   %a{:name => 'event_participants'}
   %section#participants
     - unless @participants.nil?
-      %h2= t 'register.compose_transaction.subheaders.participants'
+      %h2= t 'register.choose_person.subheaders.participants'
       %ol
         - @participants.each do |p|
           %li= p.virtual_full_name

@@ -271,12 +271,13 @@ fr:
       header: "Caisse des entrées et règlements"
       choose_member: "Choisir un(e) adhérent(e)"
       enter_guest: "Saisir un(e) invité(e)"
+      subheaders:
+        participants: "Participants"
     new_transaction:
       title: "Caisse"
       header: "Caisse des entrées et règlements"
       subheaders:
         attended_events: "Événements fréquentés"
-        participants: "Participants"
     new_entry:
       title: "Entrée"
       current_event: "Événement en cours"
