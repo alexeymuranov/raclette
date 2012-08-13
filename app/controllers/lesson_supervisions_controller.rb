@@ -20,7 +20,6 @@ class LessonSupervisionsController < SecretaryController
   end
 
   def index
-    @query_type = params[:query_type]
     @submit_button = params[:button]
 
     # FIXME: strange if this is necessary:
