@@ -32,9 +32,7 @@ class RegisterController < ApplicationController
   end
 
   def new_member_transaction
-    @members = Member.joins(:person).with_pseudo_columns(:full_name)
-
-    unless @member = @members.find(params[:member_id])
+    unless @member = Member.joins(:person).find(params[:member_id])
       flash.now[:error] = t('flash.actions.other.failure')
       render_choose_person_properly and return
     end
@@ -208,7 +206,6 @@ class RegisterController < ApplicationController
 
     def render_new_member_transaction_properly
       @member = Member.joins(:person).
-                       with_pseudo_columns(:full_name).
                        find(params[:member_id])
       @events = Event.unlocked.past_seven_days
 
@@ -221,7 +218,7 @@ class RegisterController < ApplicationController
 
       @tabs << 'new_membership_purchase'
 
-      @person_name = @member.full_name
+      @person_name = @member.virtual_full_name
 
       @saved_params = params.slice(:participant_entry_type, :person_id)
 
