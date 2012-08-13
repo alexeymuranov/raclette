@@ -119,12 +119,10 @@ class RegisterController < ApplicationController
     end
   end
 
-  def create_member_ticket_purchase  # FIXME
-    @tickets_purchase = TicketsPurchase.new(params[:tickets_purchase])
-
-    @tickets_purchase.tickets_number =
-      @tickets_purchase.ticket_book.tickets_number
-    @tickets_purchase.purchase_date = Date.today
+  def create_member_ticket_purchase
+    purchase_attributes = params[:tickets_purchase]
+    purchase_attributes[:purchase_date] = Date.today
+    @tickets_purchase = TicketsPurchase.new(purchase_attributes)
 
     if @tickets_purchase.save
       flash[:success] = t('flash.actions.create.success',
@@ -132,12 +130,8 @@ class RegisterController < ApplicationController
       redirect_to :action => :choose_person
     else
       flash.now[:error] = t('flash.actions.other.failure')
-      if @member
-        @tab = 'new_ticket_purchase'
-        render_new_member_transaction_properly
-      else
-        render_choose_person_properly
-      end
+      @tab = 'new_ticket_purchase'
+      render_new_member_transaction_properly
     end
   end
 

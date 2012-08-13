@@ -80,11 +80,18 @@ class RegisterControllerTest < ActionController::TestCase
 
   test "should create member_ticket_purchase" do
     session[:user_id] = @user_admin.to_param
-    post :create_member_ticket_purchase,
-         { :member_id        => @member.to_param,
-           :tickets_purchase =>
-             { :ticket_book_id  => @ticket_book.to_param } }
-    assert_response :success
+    assert_difference('@member.payed_tickets_count', @ticket_book.tickets_number) do
+      assert_difference('TicketsPurchase.count') do
+        post :create_member_ticket_purchase,
+             { :member_id        => @member.to_param,
+               :tickets_purchase =>
+                 { :member_id       => @member.to_param,
+                   :ticket_book_id  => @ticket_book.to_param } }
+        @member.reload
+      end
+    end
+
+    assert_redirected_to register_choose_person_path
   end
 
   test "should create member_membership_purchase" do
