@@ -281,6 +281,7 @@ fr:
     new_entry:
       title: "Entrée"
       current_event: "Événement en cours"
+      no_current_event: "Aucun événement n'est trouvé."
     new_ticket_purchase:
       title: "Tickets"
     new_membership_purchase:

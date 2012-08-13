@@ -5,23 +5,26 @@
 %form#reload{:method => 'get'}
   = hidden_fields_from_nested_hash @saved_params
 
-%form{:method => 'get'}
-  %label
-    = t 'formats.attribute_name:',
-        :attribute => t('register.new_entry.current_event')
-    = @event ? @event.virtual_long_title : '∅'
-  = select_tag :event_id,
-      options_from_collection_for_select(@events,
-        :id, :virtual_long_title,
-        :selected    => @event ? @event.id : nil ),
-      :include_blank => true
+- if @events.empty?
+  %strong= t 'register.new_entry.no_current_event'
+- else
+  %form{:method => 'get'}
+    %label
+      = t 'formats.attribute_name:',
+          :attribute => t('register.new_entry.current_event')
+      = @event ? @event.virtual_long_title : '∅'
+    = select_tag :event_id,
+        options_from_collection_for_select(@events,
+          :id, :virtual_long_title,
+          :selected    => @event ? @event.id : nil ),
+        :include_blank => true
 
-  %span.actions
-    %button{ :name  => 'button',
-             :value => 'select_current_event',
-             :type  => 'submit',
-             :class => 'preselect' }
-      = t('buttons.change')
+    %span.actions
+      %button{ :name  => 'button',
+               :value => 'select_current_event',
+               :type  => 'submit',
+               :class => 'preselect' }
+        = t('buttons.change')
 
 %section
   %h2= t '.choose_member'
