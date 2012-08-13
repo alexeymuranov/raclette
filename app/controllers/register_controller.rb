@@ -141,21 +141,20 @@ class RegisterController < ApplicationController
     end
   end
 
-  def create_member_membership_purchase  # FIXME
+  def create_member_membership_purchase
     purchase_attributes = params[:membership_purchase]
-    purchase_attributes[:membership_id] = Membership.
-      find_or_create_by_membership_type_id_and_activity_period_id(
-        purchase_attributes[:membership_type_id].to_i,
-        purchase_attributes[:activity_period_id].to_i).id
-    purchase_attributes.except!(:membership_type_id, :activity_period_id)
+    membership_attributes = purchase_attributes.delete(:membership)
+
+    unless membership = Membership.where(membership_attributes).first
+      flash.now[:error] =
+        t('flash.register.create_membership_purchase.no_membership_found')
+      render_new_member_transaction_properly and return
+    end
+
+    purchase_attributes[:membership_id] = membership.id unless membership.nil?
+    purchase_attributes[:purchase_date] = Date.today
 
     @membership_purchase = MembershipPurchase.new(purchase_attributes)
-
-    @membership_purchase.membership_type =
-      @membership_purchase.membership.type.unique_title
-    @membership_purchase.membership_expiration_date =
-      @membership_purchase.membership.end_date
-    @membership_purchase.purchase_date = Date.today
 
     if @membership_purchase.save
       flash[:success] = t('flash.actions.create.success',
@@ -163,12 +162,8 @@ class RegisterController < ApplicationController
       redirect_to :action => :choose_person
     else
       flash.now[:error] = t('flash.actions.other.failure')
-      if @member
-        @tab = 'new_membership_purchase'
-        render_new_member_transaction_properly
-      else
-        render_choose_person_properly
-      end
+      @tab = 'new_membership_purchase'
+      render_new_member_transaction_properly
     end
   end
 

@@ -239,6 +239,7 @@ en:
       create_membership_purchase:
         success: "%{person_name} now has %{membership_title} until %{date}."
         failure: "Error!"
+        no_membership_found: "For some reason, no membership of this type exists for this period."
 
   external_links:
     tangueando_site: "Site Tangueando"

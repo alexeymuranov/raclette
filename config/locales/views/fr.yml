@@ -239,6 +239,7 @@ fr:
       create_membership_purchase:
         success: "%{person_name} a maintenant %{membership_title} jusqu'au %{date}."
         failure: "Une erreur s'est produit !"
+        no_membership_found: "Malheureusement, aucune adhésion de ce type n'existe pas pour cette période."
 
   external_links:
     tangueando_site: "Site Tangueando"

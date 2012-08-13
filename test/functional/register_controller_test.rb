@@ -89,11 +89,18 @@ class RegisterControllerTest < ActionController::TestCase
 
   test "should create member_membership_purchase" do
     session[:user_id] = @user_admin.to_param
-    post :create_member_membership_purchase,
-         { :member_id           => @member.to_param,
-           :membership_purchase =>
-             { :membership_type_id  => @membership_type.to_param,
-               :activity_period_id  => @activity_period.to_param } }
-    assert_response :success
+    assert_difference('MembershipPurchase.count') do
+      assert_difference('MemberMembership.count') do
+        post :create_member_membership_purchase,
+             { :member_id           => @member.to_param,
+               :membership_purchase =>
+                 { :member_id  => @member.to_param,
+                   :membership =>
+                     { :membership_type_id  => @membership_type.to_param,
+                       :activity_period_id  => @activity_period.to_param } } }
+      end
+    end
+
+    assert_redirected_to register_choose_person_path
   end
 end
