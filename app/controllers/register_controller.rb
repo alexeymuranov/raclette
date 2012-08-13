@@ -16,8 +16,6 @@ class RegisterController < ApplicationController
   end
 
   def choose_person
-    @submit_button = params[:button]
-
     @event_id = params[:event_id] || session[:current_event_id]
 
     if @event_id.blank?

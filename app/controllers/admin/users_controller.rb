@@ -27,8 +27,6 @@ class Admin::UsersController < AdminController
   end
 
   def index
-    @submit_button = params[:button]
-
     case request.format
     when Mime::HTML
       @attributes = [ :username,

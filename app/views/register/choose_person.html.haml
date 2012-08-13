@@ -32,7 +32,6 @@
   %nav.filtering_prefixes
     %form{:method => 'get'}
       = hidden_fields_from_nested_hash @saved_params
-      = hidden_field_tag :button, 'filter', :id => nil
 
       - current_last_name_prefix = @members_filtering_values[:last_name]
       = filter_by_prefix_button_set :last_name, 'A'..'Z',

@@ -12,8 +12,6 @@ class ActivityPeriodsController < ManagerController
   end
 
   def index
-    @submit_button = params[:button]
-
     case request.format
     when Mime::HTML
       @attributes = [ :unique_title,

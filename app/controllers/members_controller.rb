@@ -44,8 +44,6 @@ class MembersController < SecretaryController
   end
 
   def index
-    @submit_button = params[:button]
-
     case request.format
     when Mime::HTML
       @attributes = [ :ordered_full_name,

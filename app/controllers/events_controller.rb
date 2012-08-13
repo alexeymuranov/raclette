@@ -60,8 +60,6 @@ class EventsController < SecretaryController
   end
 
   def index
-    @submit_button = params[:button]
-
     case request.format
     when Mime::HTML
       @attributes = [ :title, :event_type,
