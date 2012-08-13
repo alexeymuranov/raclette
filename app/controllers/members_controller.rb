@@ -47,11 +47,7 @@ class MembersController < SecretaryController
     @query_type = params[:query_type]
     @submit_button = params[:button]
 
-    if @submit_button == 'clear'
-      params.delete(:filter)
-    end
-
-    if @submit_button == 'filter' || @submit_button == 'clear'
+    if @submit_button == 'filter'
       params.delete(:page)
     end
 
