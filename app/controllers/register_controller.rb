@@ -188,16 +188,6 @@ class RegisterController < ApplicationController
       end
     end
 
-    def set_person_from_params
-      if params[:member_id]
-        @member = Member.joins(:person).
-                         with_pseudo_columns(:full_name).
-                         find(params[:member_id])
-      elsif params[:guest]
-        @guest = Guest.new(params[:guest])
-      end
-    end
-
     def set_tab_from_params
       @tab = params[:tab]
       @tab = 'new_entry' unless
@@ -219,19 +209,7 @@ class RegisterController < ApplicationController
 
       @members_attributes = [ :last_name, :first_name ]
       @members_column_types = Member.column_db_types
-      @members_column_headers = {}
-      @members_attributes.each do |attr|
-        @members_column_headers[attr] = Member.human_attribute_name(attr)
-
-        case @members_column_types[attr]
-        when :boolean
-          @members_column_headers[attr] = I18n.t('formats.attribute_name?',
-              :attribute => @members_column_headers[attr])
-        else
-          @members_column_headers[attr] = I18n.t('formats.attribute_name:',
-              :attribute => @members_column_headers[attr])
-        end
-      end
+      @members_column_headers = Member.human_column_headers
 
       @events = Event.unlocked.past_seven_days
 

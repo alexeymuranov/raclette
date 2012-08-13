@@ -28,7 +28,7 @@ class ActivityPeriodsController < ManagerController
                       :description ]
     end
 
-    set_column_types
+    @column_types = ActivityPeriod.column_db_types
 
     @activity_periods = ActivityPeriod.scoped
 
@@ -171,13 +171,6 @@ class ActivityPeriodsController < ManagerController
                   :title => @activity_period.unique_title)
 
       render :edit
-    end
-
-    def set_column_types
-      @column_types = {}
-      ActivityPeriod.columns_hash.each do |key, value|
-        @column_types[key.to_sym] = value.type
-      end
     end
 
 end
