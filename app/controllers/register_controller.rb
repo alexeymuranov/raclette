@@ -39,8 +39,6 @@ class RegisterController < ApplicationController
       render_choose_person_properly and return
     end
 
-    set_tab_from_params
-
     set_event_from_params_or_session
 
     render_new_member_transaction_properly
@@ -51,8 +49,6 @@ class RegisterController < ApplicationController
       flash.now[:error] = t('flash.actions.other.failure')
       render_choose_person_properly and return
     end
-
-    set_tab_from_params
 
     set_event_from_params_or_session
 
@@ -190,9 +186,7 @@ class RegisterController < ApplicationController
 
     def set_tab_from_params
       @tab = params[:tab]
-      @tab = 'new_entry' unless
-        @tab == 'new_membership_purchase' ||
-        (@member && @tab == 'new_ticket_purchase')
+      @tab = @tabs.first unless @tabs.include?(@tab)
     end
 
     def render_choose_person_properly
@@ -236,6 +230,8 @@ class RegisterController < ApplicationController
 
       @tabs += ['new_ticket_purchase', 'new_membership_purchase']
 
+      set_tab_from_params
+
       @person_name = @member.full_name
 
       saved_param_names = [:participant_entry_type, :person_id]
@@ -261,6 +257,8 @@ class RegisterController < ApplicationController
       else
         @tabs = ['new_entry']
       end
+
+      set_tab_from_params
 
       @person_name =
         "#{ @guest.first_name } (#{ t('activemodel.models.guest') })"
