@@ -26,8 +26,7 @@ module TablesMarkupHelper
                                     { html_table_id =>
                                         { :column    => column,
                                           :direction => direction_on_click } },
-                                :anchor     => html_table_id,
-                                :query_type => 'sort'
+                                :anchor     => html_table_id
 
     if html_options[:class].blank?
       html_options[:class] = css_class

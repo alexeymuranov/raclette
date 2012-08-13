@@ -8,7 +8,6 @@
   = hidden_fields_from_nested_hash params.slice(:filter, :sort, :per_page)
 
   %span.actions
-    = hidden_field_tag :query_type, 'render_alternative_format'
     = button_tag 'MS Excel 2003 XML',
                  :name  => 'button',
                  :type  => 'submit',
@@ -22,7 +21,6 @@
   = hidden_fields_from_nested_hash params.slice(:filter, :sort, :per_page)
 
   %span.actions
-    = hidden_field_tag :query_type, 'render_alternative_format'
     = button_tag 'CSV',
                  :name  => 'button',
                  :type  => 'submit',

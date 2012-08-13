@@ -17,7 +17,6 @@
     = options_for_select [5, 10, 25, 50, 100, 250, 500, 1000],
                          params[:per_page] || klass.default_per_page
   %span.actions
-    -# = hidden_field_tag :query_type, 'repaginate'
     %button{ :name  => 'button',
              :type  => 'submit',
              :value => 'repaginate' }
@@ -27,7 +26,6 @@
 
 %form{ :id     => (filter_form_id = "#{ html_table_id }_filter"),
        :method => :get }
-  -# = hidden_fields_from_nested_hash params.merge(:query_type => 'filter')
   = hidden_fields_from_nested_hash params.slice(:filter, :sort)
 
 %form{ :id     => (clear_filter_form_id = "#{ html_table_id }_clear_filter"),
@@ -68,7 +66,6 @@
       %td.empty
     %tr
       %td{:colspan => attributes.size, :class => 'actions'}
-        -# = hidden_field_tag :query_type, 'filter', :form  => filter_form_id
         %button{ :form  => filter_form_id,
                  :name  => 'button',
                  :type  => 'submit',

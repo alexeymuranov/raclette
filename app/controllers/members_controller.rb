@@ -44,7 +44,6 @@ class MembersController < SecretaryController
   end
 
   def index
-    @query_type = params[:query_type]
     @submit_button = params[:button]
 
     case request.format
@@ -101,7 +100,7 @@ class MembersController < SecretaryController
       end
 
       requested_format.js do
-        case @query_type
+        case params[:query_type]
         when 'show_email_addresses', 'hide_email_addresses'
           render :update_email_list
         end
