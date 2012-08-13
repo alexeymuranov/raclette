@@ -218,6 +218,9 @@ class RegisterController < ApplicationController
     end
 
     def render_new_member_transaction_properly
+      @member = Member.joins(:person).
+                       with_pseudo_columns(:full_name).
+                       find(params[:member_id])
       @events = Event.unlocked.past_seven_days
 
       @tabs = @events.empty? ? [] : ['new_entry']
@@ -248,6 +251,7 @@ class RegisterController < ApplicationController
     end
 
     def render_new_guest_transaction_properly
+      @guest = Guest.new(params[:guest])
       @events = Event.unlocked.past_seven_days
       if @events.empty?
         flash.now[:error] =

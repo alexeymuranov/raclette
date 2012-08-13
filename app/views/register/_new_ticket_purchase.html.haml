@@ -1,4 +1,5 @@
 %h2= t('register.new_ticket_purchase.title')
+
 = form_for @tickets_purchase, :as  => :tickets_purchase,
                               :url => 'create_ticket_purchase' do |f|
 
@@ -9,20 +10,14 @@
   - [:member_id].each do |attr|
     = f.hidden_field attr unless @tickets_purchase.public_send(attr).nil?
 
-  -# %dl.form_fields
-  -#   .dl_item.field
-  -#     %dt
-  -#     %dd
-  -#       = f.select :ticket_book_id,
-  -#           options_from_collection_for_select(@ticket_books,
-  -#             :id, :tickets_number,
-  -#             :selected => @tickets_purchase.ticket_book.id)
-
-  .form_fields
-    = f.select :ticket_book_id,
-        options_from_collection_for_select(@ticket_books,
-          :id, :tickets_number,
-          :selected => @tickets_purchase.ticket_book.id)
+  %dl.form_fields
+    .dl_item.field
+      %dt ?
+      %dd
+        = f.select :ticket_book_id,
+            options_from_collection_for_select(@ticket_books,
+              :id, :tickets_number,
+              :selected => @tickets_purchase.ticket_book.id)
 
   .actions
     = f.submit t('buttons.continue'), :class => 'easy'

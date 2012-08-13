@@ -1,4 +1,5 @@
 %h2= t('register.new_entry.title')
+
 = form_for @event_entry, :as  => :event_entry,
                          :url => 'create_entry' do |f|
 
@@ -12,20 +13,14 @@
     - [:first_name, :last_name].each do |attr|
       = hidden_field_tag("guest[#{ attr }]", @guest.public_send(attr))
 
-  -# %dl.form_fields
-  -#   .dl_item.field
-  -#     %dt
-  -#     %dd
-  -#       = f.select :event_id,
-  -#           options_from_collection_for_select(@events,
-  -#             :id, :virtual_long_title,
-  -#             :selected => @event_entry.event_id)
-
-  .form_fields
-    = f.select :event_id,
-        options_from_collection_for_select(@events,
-          :id, :virtual_long_title,
-          :selected => @event_entry.event_id )
+  %dl.form_fields
+    .dl_item.field
+      %dt ?
+      %dd
+        = f.select :event_id,
+            options_from_collection_for_select(@events,
+              :id, :virtual_long_title,
+              :selected => @event_entry.event_id)
 
   .actions
     = f.submit t('buttons.continue'), :class => 'easy'
