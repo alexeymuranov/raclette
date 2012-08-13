@@ -22,9 +22,6 @@ class LessonSupervisionsController < SecretaryController
   def index
     @submit_button = params[:button]
 
-    # FIXME: strange if this is necessary:
-    params.except!(:query_type, :commit, :button)
-
     case request.format
     when Mime::HTML
       @attributes = [:unique_names, :instructors_count, :comment]

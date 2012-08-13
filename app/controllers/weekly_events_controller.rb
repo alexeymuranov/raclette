@@ -37,9 +37,6 @@ class WeeklyEventsController < ManagerController
   def index
     @submit_button = params[:button]
 
-    # FIXME: strange if this is necessary:
-    params.except!(:commit, :button)
-
     case request.format
     when Mime::HTML
       @attributes = [ :title,

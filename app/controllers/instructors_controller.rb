@@ -13,10 +13,6 @@ class InstructorsController < ManagerController
     @query_type = params[:query_type]
     @submit_button = params[:button]
 
-    # FIXME: strange if this is necessary:
-    params.except!(:query_type, :commit, :button)
-
-
     case request.format
     when Mime::HTML
       @attributes = [ :ordered_full_name,
