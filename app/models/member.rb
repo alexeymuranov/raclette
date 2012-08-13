@@ -117,6 +117,25 @@ class Member < ActiveRecord::Base
     memberships.current.reverse_order_by_expiration_date.first
   end
 
+  # Transactions
+  def buy_membership(membership, date = Date.today)
+    transaction do
+      member_memberships.create!(:membership  => membership,
+                                 :obtained_on => date)
+      membership_purchases.create!(:membership    => membership,
+                                   :purchase_date => date)
+    end
+  end
+
+  def buy_tickets(ticket_book, date = Date.today)
+    transaction do
+      self.payed_tickets_count += ticket_book.tickets_number
+      tickets_purchases.create!(:ticket_book   => ticket_book,
+                                :purchase_date => date)
+      save!
+    end
+  end
+
   # Aliases
   alias_method :'virtual_account_active?', :virtual_account_active
 

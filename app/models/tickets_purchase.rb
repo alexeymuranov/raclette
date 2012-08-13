@@ -20,17 +20,11 @@ class TicketsPurchase < ActiveRecord::Base
 
   # Callbacks:
   before_validation :copy_tickets_number
-  before_create     :increment_member_payed_tickets_count
 
   private
 
     def copy_tickets_number
       self.tickets_number ||= ticket_book.tickets_number
-    end
-
-    def increment_member_payed_tickets_count
-      self.member.payed_tickets_count += tickets_number
-      self.member.save!
     end
 
 end

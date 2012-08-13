@@ -54,11 +54,10 @@ class RegisterControllerTest < ActionController::TestCase
     session[:user_id] = @user_admin.to_param
     assert_difference('MemberEntry.count') do
       assert_difference('EventEntry.count') do
-      post :create_member_entry,
-           { :member_id   => @member.to_param,
-             :event_entry =>
-               { :event_id  => @event.to_param,
-                 :person_id => @member.person.to_param } }
+        post :create_member_entry,
+             { :member_id   => @member.to_param,
+               :event_entry =>
+                 { :event_id  => @event.to_param } }
       end
     end
 
@@ -69,9 +68,9 @@ class RegisterControllerTest < ActionController::TestCase
     session[:user_id] = @user_admin.to_param
     assert_difference('GuestEntry.count') do
       assert_difference('EventEntry.count') do
-      post :create_guest_entry,
-           { :event_entry => { :event_id  => @event.to_param },
-             :guest       => { :first_name => 'X', :last_name  => 'Yz' } }
+        post :create_guest_entry,
+             { :guest       => { :first_name => 'X', :last_name  => 'Yz' },
+               :event_entry => { :event_id  => @event.to_param } }
       end
     end
 
@@ -85,8 +84,7 @@ class RegisterControllerTest < ActionController::TestCase
         post :create_member_ticket_purchase,
              { :member_id        => @member.to_param,
                :tickets_purchase =>
-                 { :member_id       => @member.to_param,
-                   :ticket_book_id  => @ticket_book.to_param } }
+                 { :ticket_book_id  => @ticket_book.to_param } }
         @member.reload
       end
     end
@@ -101,8 +99,7 @@ class RegisterControllerTest < ActionController::TestCase
         post :create_member_membership_purchase,
              { :member_id           => @member.to_param,
                :membership_purchase =>
-                 { :member_id  => @member.to_param,
-                   :membership =>
+                 { :membership =>
                      { :membership_type_id  => @membership_type.to_param,
                        :activity_period_id  => @activity_period.to_param } } }
       end

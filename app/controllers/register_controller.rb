@@ -118,13 +118,15 @@ class RegisterController < ApplicationController
   end
 
   def create_member_ticket_purchase
-    purchase_attributes = params[:tickets_purchase]
-    purchase_attributes[:purchase_date] = Date.today
-    @tickets_purchase = TicketsPurchase.new(purchase_attributes)
+    @member = Member.find(params[:member_id])
 
-    if @tickets_purchase.save
-      flash[:success] = t('flash.actions.create.success',
-                          :resource_name => TicketsPurchase.model_name.human)
+    ticket_book_id = params[:tickets_purchase][:ticket_book_id]
+    @ticket_book = TicketBook.find(ticket_book_id)
+
+    if @member.buy_tickets(@ticket_book)
+      flash[:success] =
+        t('flash.actions.create.success',
+          :resource_name => TicketsPurchase.model_name.human)
       redirect_to :action => :choose_person
     else
       flash.now[:error] = t('flash.actions.other.failure')
@@ -134,23 +136,21 @@ class RegisterController < ApplicationController
   end
 
   def create_member_membership_purchase
-    purchase_attributes = params[:membership_purchase]
-    membership_attributes = purchase_attributes.delete(:membership)
+    @member = Member.find(params[:member_id])
 
-    unless membership = Membership.where(membership_attributes).first
+    membership_attributes = params[:membership_purchase][:membership]
+    @membership = Membership.where(membership_attributes).first
+
+    unless @membership
       flash.now[:error] =
         t('flash.register.create_membership_purchase.no_membership_found')
       render_new_member_transaction_properly and return
     end
 
-    purchase_attributes[:membership_id] = membership.id unless membership.nil?
-    purchase_attributes[:purchase_date] = Date.today
-
-    @membership_purchase = MembershipPurchase.new(purchase_attributes)
-
-    if @membership_purchase.save
-      flash[:success] = t('flash.actions.create.success',
-                          :resource_name => MembershipPurchase.model_name.human)
+    if @member.buy_membership(@membership)
+      flash[:success] =
+        t('flash.actions.create.success',
+          :resource_name => MembershipPurchase.model_name.human)
       redirect_to :action => :choose_person
     else
       flash.now[:error] = t('flash.actions.other.failure')
