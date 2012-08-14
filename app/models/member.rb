@@ -118,35 +118,62 @@ class Member < ActiveRecord::Base
   end
 
   # Transactions
-  def buy_membership!(membership, date = Date.today)
+  def buy_membership!(membership, price_payed = membership.current_price,
+                                  date        = Date.today)
     transaction do
       member_memberships.create!(:membership  => membership,
                                  :obtained_on => date)
-      membership_purchases.create!(:membership    => membership,
-                                   :purchase_date => date)
+      purchase =
+        membership_purchases.create!(:membership    => membership,
+                                     :purchase_date => date)
+      # TODO: this normally should not be automatic, it is possible to pay
+      # in parts or to pay later
+      purchase.payments.create!(:amount => price_payed,
+                                :date   => date)
     end
   end
 
-  def buy_tickets!(ticket_book, date = Date.today)
+  def buy_tickets!(ticket_book, price_payed = ticket_book.price,
+                                date        = Date.today)
     transaction do
       self.payed_tickets_count += ticket_book.tickets_number
-      tickets_purchases.create!(:ticket_book   => ticket_book,
-                                :purchase_date => date)
+      purchase =
+        tickets_purchases.create!(:ticket_book   => ticket_book,
+                                  :purchase_date => date)
+      purchase.payments.create!(:amount => price_payed,
+                                :date   => date)
       save!
     end
   end
 
-  def attend_event!(event, tickets_used = event.entry_fee_tickets, guests_invited = 0)
-    transaction do
-      self.free_tickets_count -= tickets_used
-      if free_tickets_count < 0
-        self.payed_tickets_count += free_tickets_count
-        self.free_tickets_count = 0
+  def attend_event!(event, tickets_used   = nil,
+                           price_payed    = nil,
+                           guests_invited = 0)
+    unless tickets_used || price_payed
+      unless tickets_used = event.entry_fee_tickets
+        price_payed = event.member_entry_fee || event.common_entry_fee
       end
+    end
+    transaction do
       member_entry =
         member_entries.create!(:tickets_used   => tickets_used,
                                :guests_invited => guests_invited)
+      if tickets_used
+        self.free_tickets_count -= tickets_used
+        if free_tickets_count < 0
+          self.payed_tickets_count += free_tickets_count
+          self.free_tickets_count = 0
+        end
+      end
+
       person.attend_event!(event, member_entry)
+
+      # NOTE: not clear if the payment can only happen on the same date as the
+      # event
+      if price_payed && price_payed != 0
+        member_entry.event_entry.create_payment!(:amount => price_payed,
+                                                 :date   => event.date)
+      end
       save!
     end
   end

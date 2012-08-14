@@ -46,11 +46,16 @@ class Guest
   end
 
   # Transactions
-  def attend_event!(event, inviting_member = nil)
+  def attend_event!(event, price_payed     = event.common_entry_fee,
+                           inviting_member = nil)
     GuestEntry.transaction do
-      guest_entry = GuestEntry.create!(attributes)
+      guest_entry = GuestEntry.new(attributes)
+      guest_entry.inviting_member_id = inviting_member.id if inviting_member
+      guest_entry.save!
       EventEntry.create!(:event             => event,
                          :participant_entry => guest_entry)
+      guest_entry.event_entry.create_payment!(:amount => price_payed,
+                                              :date   => event.date)
     end
   end
 end
