@@ -2,15 +2,15 @@
 
 one:
   participant_entry_type: MemberEntry
-  participant_entry_id: 1
-  event_id: 1
-  person_id: 1
+  participant_entry: one
+  event: one
+  person: two
 
 two:
   participant_entry_type: GuestEntry
-  participant_entry_id: 1
-  event_id: 1
-  person_id: ~
+  participant_entry: one
+  event: two
+  person: ~
 
 # == Schema Information
 #
