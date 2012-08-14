@@ -123,6 +123,12 @@ class Person < ActiveRecord::Base
   def virtual_personal_phone
     mobile_phone || home_phone
   end
+
+  # Transactions
+  def attend_event(event, participant_entry)
+    event_entries.create!(:event             => event,
+                          :participant_entry => participant_entry)
+  end
 end
 
 # == Schema Information
