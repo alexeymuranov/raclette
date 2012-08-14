@@ -46,7 +46,7 @@ class Guest
   end
 
   # Transactions
-  def attend_event(event, inviting_member = nil)
+  def attend_event!(event, inviting_member = nil)
     GuestEntry.transaction do
       guest_entry = GuestEntry.create!(attributes)
       EventEntry.create!(:event             => event,

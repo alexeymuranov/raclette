@@ -17,8 +17,8 @@ class PersonTest < ActiveSupport::TestCase
     guest = Guest.new(:first_name => 'X', :last_name  => 'Yz')
     guest_entry = GuestEntry.new(guest.attributes)
     assert_difference('EventEntry.count', 2) do
-      @person.attend_event(events(:one), member_entry)
-      @person.attend_event(events(:current), guest_entry)
+      @person.attend_event!(events(:one), member_entry)
+      @person.attend_event!(events(:current), guest_entry)
     end
   end
 end

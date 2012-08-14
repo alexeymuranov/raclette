@@ -118,7 +118,7 @@ class Member < ActiveRecord::Base
   end
 
   # Transactions
-  def buy_membership(membership, date = Date.today)
+  def buy_membership!(membership, date = Date.today)
     transaction do
       member_memberships.create!(:membership  => membership,
                                  :obtained_on => date)
@@ -127,7 +127,7 @@ class Member < ActiveRecord::Base
     end
   end
 
-  def buy_tickets(ticket_book, date = Date.today)
+  def buy_tickets!(ticket_book, date = Date.today)
     transaction do
       self.payed_tickets_count += ticket_book.tickets_number
       tickets_purchases.create!(:ticket_book   => ticket_book,
@@ -136,7 +136,7 @@ class Member < ActiveRecord::Base
     end
   end
 
-  def attend_event(event, tickets_used = event.entry_fee_tickets, guests_invited = 0)
+  def attend_event!(event, tickets_used = event.entry_fee_tickets, guests_invited = 0)
     transaction do
       self.free_tickets_count -= tickets_used
       if free_tickets_count < 0
@@ -146,8 +146,7 @@ class Member < ActiveRecord::Base
       member_entry =
         member_entries.create!(:tickets_used   => tickets_used,
                                :guests_invited => guests_invited)
-      person.event_entries.create!(:event             => event,
-                                   :participant_entry => member_entry)
+      person.attend_event!(event, member_entry)
       save!
     end
   end
