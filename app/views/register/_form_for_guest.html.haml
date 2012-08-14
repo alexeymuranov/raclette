@@ -1,5 +1,5 @@
 = form_for @guest, :as     => :guest,
-                   :url    => 'new_guest_transaction',
+                   :url    => url_for(:action => 'new_guest_transaction'),
                    :method => :get do |f|
 
   = render 'shared/error_messages/validation', :target => @guest

@@ -5,13 +5,12 @@
 
   = render 'shared/error_messages/validation', :target => @event_entry
 
-  = hidden_fields_from_nested_hash :saved_params => @saved_params
+  -# = hidden_fields_from_nested_hash @saved_params
 
-  - [:participant_entry_type, :person_id].each do |attr|
-    = f.hidden_field attr unless @event_entry.public_send(attr).nil?
   - if @guest
-    - [:first_name, :last_name].each do |attr|
-      = hidden_field_tag("guest[#{ attr }]", @guest.public_send(attr))
+    = fields_for :guest, @guest do |guest_fields|
+      - [:first_name, :last_name].each do |attr|
+        = guest_fields.hidden_field(attr)
 
   %dl.form_fields
     .dl_item.field

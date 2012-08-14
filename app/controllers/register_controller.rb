@@ -54,24 +54,17 @@ class RegisterController < ApplicationController
   end
 
   def create_member_entry
-    event_entry_attributes = params[:event_entry] || {}
-    event_id = event_entry_attributes[:event_id]
-    if event_id && @event = Event.find(event_id)
+    @member = Member.find(params[:member_id])
+
+    event_id = params[:event_entry][:event_id]
+    if @event = Event.find(event_id)
       session[:current_event_id] = event_id
     else
       flash.now[:error] = t('flash.actions.other.failure')
       render_choose_person_properly and return
     end
 
-    @event_entry = EventEntry.new(event_entry_attributes)
-
-    @member_entry = MemberEntry.new(
-      :member_id      => @event_entry.person_id,
-      :guests_invited => false,
-      :tickets_used   => @event.entry_fee_tickets)
-    @event_entry.participant_entry = @member_entry
-
-    if @event_entry.save
+    if @member.attend_event(@event)
       flash[:success] = t('flash.actions.create.success',
                           :resource_name => EventEntry.model_name.human )
       redirect_to :action => :choose_person
@@ -87,22 +80,17 @@ class RegisterController < ApplicationController
   end
 
   def create_guest_entry
-    event_entry_attributes = params[:event_entry] || {}
-    event_id = event_entry_attributes[:event_id]
-    if event_id && @event = Event.find(event_id)
+    @guest = Guest.new(params[:guest])
+
+    event_id = params[:event_entry][:event_id]
+    if @event = Event.find(event_id)
       session[:current_event_id] = event_id
     else
       flash.now[:error] = t('flash.actions.other.failure')
       render_choose_person_properly and return
     end
 
-    @event_entry = EventEntry.new(event_entry_attributes)
-
-    @guest_entry = GuestEntry.new(
-      :first_name => params[:guest][:first_name])
-    @event_entry.participant_entry = @guest_entry
-
-    if @event_entry.save
+    if @guest.attend_event(@event)
       flash[:success] = t('flash.actions.create.success',
                           :resource_name => EventEntry.model_name.human)
       redirect_to :action => :choose_person
@@ -264,9 +252,8 @@ class RegisterController < ApplicationController
 
     def render_new_member_entry_properly
       @event ||= @events.first  # FIXME!
-      @event_entry = EventEntry.new :event_id => @event.id
+      @event_entry = EventEntry.new(:event => @event)
       @event_entry.person_id = @member.person_id
-      @event_entry.participant_entry_type = 'MemberEntry'
       @attended_events = @member.attended_events.default_order if
         params[:button] == 'show_attended_events'
 
@@ -275,8 +262,7 @@ class RegisterController < ApplicationController
 
     def render_new_guest_entry_properly
       @event ||= @events.first  # FIXME!
-      @event_entry = EventEntry.new :event_id => @event.id
-      @event_entry.participant_entry_type = 'GuestEntry'
+      @event_entry = EventEntry.new(:event => @event)
 
       render 'new_guest_transaction'
     end
