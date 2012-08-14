@@ -47,6 +47,11 @@ aside#developper_links {
   }
 }
 
+/* Special */
+form#login_form button.image_button{
+  @include border-radius(16pt);
+}
+
 /* In header */
 
 div.container > header {
