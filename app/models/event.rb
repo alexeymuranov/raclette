@@ -114,7 +114,7 @@ class Event < ActiveRecord::Base
 
   # Public class methods
 
-  def self.current
+  def self.a_current
     where(:date => Date.today).
       where("#{ table_name }.start_time <= ?", Time.now.strftime("%T")).
       default_order.first

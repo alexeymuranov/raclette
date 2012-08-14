@@ -17,7 +17,7 @@ class EventTest < ActiveSupport::TestCase
   end
 
   test "Event.current should return a current event" do
-    assert_equal Event.current, events(:current)
+    assert_equal Event.a_current, events(:current)
   end
 end
 
