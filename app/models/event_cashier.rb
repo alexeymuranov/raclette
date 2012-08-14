@@ -16,7 +16,9 @@ class EventCashier < ActiveRecord::Base
   validates :name, :length => { :maximum => 64 }
 
   # Scopes:
-  scope :default_order, order('name ASC, event_id DESC, finished_at DESC')
+  scope :default_order, order("#{ table_name }.name ASC, "\
+                              "#{ table_name }.event_id DESC, "\
+                              "#{ table_name }.finished_at DESC")
 end
 
 # == Schema Information

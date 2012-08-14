@@ -66,7 +66,7 @@ class Admin::User < ActiveRecord::Base
   before_update :hash_new_password_with_salt_unless_nil
 
   # Scopes:
-  scope :default_order, order('username ASC')
+  scope :default_order, order("#{ table_name }.username ASC")
   scope :admins, where(:admin => true)
   scope :managers, where(:manager => true)
   scope :secretaries, where(:secretary => true)

@@ -32,7 +32,7 @@ class TicketBook < ActiveRecord::Base
                 :uniqueness => { :scope => :membership_type_id }
 
   # Scopes:
-  scope :default_order, order('tickets_number ASC')
+  scope :default_order, order("#{ table_name }.tickets_number ASC")
 
   # Public instance methods
   # Non-SQL virtual attributes

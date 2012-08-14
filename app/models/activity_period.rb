@@ -39,15 +39,16 @@ class ActivityPeriod < ActiveRecord::Base
   validates :duration_months, :uniqueness => { :scope => :start_date }
 
   # Scopes:
-  scope :reverse_order_by_end_date, order('end_date DESC, start_date DESC')
+  scope :reverse_order_by_end_date, order("#{ table_name }.end_date DESC, "\
+                                          "#{ table_name }.start_date DESC")
   scope :default_order, reverse_order_by_end_date
   scope :current, lambda {
-    where("activity_periods.start_date <= :today AND "\
-          "activity_periods.end_date >= :today",
+    where("#{ table_name }.start_date <= :today AND "\
+          "#{ table_name }.end_date >= :today",
           :today => Date.today)
   }
   scope :not_over, lambda {
-    where("activity_periods.end_date >= ?", Date.today)
+    where("#{ table_name }.end_date >= ?", Date.today)
   }
 end
 

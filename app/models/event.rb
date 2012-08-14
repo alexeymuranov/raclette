@@ -95,12 +95,14 @@ class Event < ActiveRecord::Base
   before_save :fix_time_values__strip_date, :calculate_duration
 
   # Scopes:
-  scope :default_order, order('date DESC, end_time DESC, start_time DESC')
+  scope :default_order, order("#{ table_name }.date DESC, "\
+                              "#{ table_name }.end_time DESC, "\
+                              "#{ table_name }.start_time DESC")
   scope :locked, where(:locked => true)
   scope :unlocked, where(:locked => false)
   scope :past_seven_days, lambda {
                             today = Date.today
-                            where :date => (today - 1.week)..today
+                            where(:date => (today - 1.week)..today)
                           }
 
   # Composite attributes
@@ -114,7 +116,7 @@ class Event < ActiveRecord::Base
 
   def self.current
     where(:date => Date.today).
-      where("events.start_time <= ?", Time.now.strftime("%T")).
+      where("#{ table_name }.start_time <= ?", Time.now.strftime("%T")).
       default_order.first
   end
 

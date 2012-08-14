@@ -30,7 +30,7 @@ module Sorting
     def sort(scoped_collection, sort_params)
       @last_sort_column = sort_column(sort_params)
       @last_sort_direction = sort_direction(sort_params)
-      scoped_collection.order("#{@last_sort_column} #{@last_sort_direction}")
+      scoped_collection.order("#{ @last_sort_column } #{ @last_sort_direction }")
     end
   end
 end

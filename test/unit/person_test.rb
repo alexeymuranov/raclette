@@ -1,10 +1,18 @@
 require 'test_helper'
 
 class PersonTest < ActiveSupport::TestCase
-  test "composite attributes must work" do
+  def setup
+    @person = people(:one)
+  end
+
+  test "pseudo columns must work" do
     assert_not_nil Person.sql_for_columns[:full_name]
     assert_not_nil Person.column_db_types[:full_name]
     assert_not_nil Person.with_pseudo_columns(:full_name).first.full_name
+  end
+
+  test "should attend events" do
+
   end
 end
 

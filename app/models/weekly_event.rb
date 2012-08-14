@@ -73,7 +73,8 @@ class WeeklyEvent < ActiveRecord::Base
               :fix_start_and_end_dates
 
   # Scopes:
-  scope :default_order, order('end_on DESC, start_on DESC')
+  scope :default_order, order("#{ table_name }.end_on DESC, "\
+                              "#{ table_name }.start_on DESC")
   scope :not_over, where(:over => false)
 
   # Public instance methods
