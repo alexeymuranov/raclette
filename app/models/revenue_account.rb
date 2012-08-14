@@ -7,7 +7,7 @@ class RevenueAccount < ActiveRecord::Base
   # Associations:
   has_many :payments, :dependent  => :nullify,
                       :inverse_of => :revenue_account
-  
+
   belongs_to :activity_period, :inverse_of => :revenue_accounts
 
   # Validations:
@@ -20,6 +20,31 @@ class RevenueAccount < ActiveRecord::Base
                           :allow_nil => true
 
   validates :unique_title, :uniqueness => { :case_sensitive => false }
+
+  # Scopes:
+  scope :unlocked, where(:locked => false)
+  scope :current, lambda {
+    where("#{ table_name }.opened_on <= :today AND "\
+          "#{ table_name }.closed_on => :today",
+          :today => Date.today)
+  }
+  scope :default_order, order("#{ table_name }.closed_on DESC, "\
+                              "#{ table_name }.opened_on DESC")
+
+  # Public class methods
+  def self.the_active!
+    count = (active_ones = unlocked.current).count
+    if count == 1
+      return active_ones.first
+    elsif count == 0
+      return nil
+    else
+      raise "Multiple current revenue accounts are unlocked, do not know which one to choose. "\
+            "Please ensure that at most one active account is unlocked at any time."
+    end
+  end
+
+  # Public instance methods
 end
 
 # == Schema Information
