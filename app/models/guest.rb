@@ -44,4 +44,13 @@ class Guest
   def self.readonly_attributes
     []
   end
+
+  # Transactions
+  def attend_event(event, inviting_member = nil)
+    GuestEntry.transaction do
+      guest_entry = GuestEntry.create!(attributes)
+      EventEntry.create!(:event             => event,
+                         :participant_entry => guest_entry)
+    end
+  end
 end

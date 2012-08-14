@@ -13,10 +13,15 @@ end
 
 class GuestTest < ActiveSupport::TestCase
   def setup
-    @guest = Guest.new
+    @guest = Guest.new(:first_name => 'X', :last_name  => 'Yz')
   end
 
-  # def test_respond_to_attributes_method
-  #   assert_respond_to @guest, :attributes
-  # end
+  test "should attend events" do
+    @event = events(:one)
+    assert_difference('GuestEntry.count') do
+      assert_difference('EventEntry.count') do
+        @guest.attend_event(@event)
+      end
+    end
+  end
 end

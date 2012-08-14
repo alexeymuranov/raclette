@@ -1,6 +1,9 @@
 require 'test_helper'
 
 class MemberTest < ActiveSupport::TestCase
+  def setup
+    @member = members(:one)
+  end
 
   test "scopes must scope" do
     current_members_count = 0
@@ -27,7 +30,34 @@ class MemberTest < ActiveSupport::TestCase
       "Member.joins(:person).with_pseudo_columns(:full_name).first is #{ v.inspect }"
     assert_not_nil (v = Member.joins(:person).with_pseudo_columns(:full_name).first.full_name),
       "Member.joins(:person).with_pseudo_columns(:full_name).first.full_name is #{ v.inspect }"
+  end
 
+  test "should attend events" do
+    @event = events(:one)
+    assert_difference('MemberEntry.count') do
+      assert_difference('EventEntry.count') do
+        @member.attend_event(@event)
+      end
+    end
+  end
+
+  test "should buy tickets" do
+    @ticket_book = ticket_books(:one)
+    assert_difference('@member.payed_tickets_count', @ticket_book.tickets_number) do
+      assert_difference('TicketsPurchase.count') do
+        @member.buy_tickets(@ticket_book)
+        @member.reload
+      end
+    end
+  end
+
+  test "should buy membership" do
+    @membership = memberships(:three)
+    assert_difference('MembershipPurchase.count') do
+      assert_difference('MemberMembership.count') do
+        @member.buy_membership(@membership)
+      end
+    end
   end
 end
 

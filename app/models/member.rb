@@ -136,9 +136,24 @@ class Member < ActiveRecord::Base
     end
   end
 
+  def attend_event(event, tickets_used = event.entry_fee_tickets, guests_invited = 0)
+    transaction do
+      self.free_tickets_count -= tickets_used
+      if free_tickets_count < 0
+        self.payed_tickets_count += free_tickets_count
+        self.free_tickets_count = 0
+      end
+      member_entry =
+        member_entries.create!(:tickets_used   => tickets_used,
+                               :guests_invited => guests_invited)
+      person.event_entries.create!(:event             => event,
+                                   :participant_entry => member_entry)
+      save!
+    end
+  end
+
   # Aliases
   alias_method :'virtual_account_active?', :virtual_account_active
-
 end
 
 # == Schema Information
