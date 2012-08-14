@@ -32,7 +32,7 @@ module AbstractPerson  # NOTE:WIP
     # Scopes
     base.scope :default_order, base.joins(:person).merge(Person.default_order)
 
-    # Composite attributes
+    # Pseudo columns
     [ :last_name, :first_name, :name_title, :nickname_or_other, :email,
       :full_name, :ordered_full_name, :formatted_email
     ].each do |attr|

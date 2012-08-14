@@ -60,7 +60,7 @@ class Membership < ActiveRecord::Base
 
   # default_scope with_type.with_activity_period # FIXME
 
-  # Composite attributes
+  # Pseudo columns
 
   [:start_date, :duration_months, :end_date].each do |attr|
     add_pseudo_columns attr => ActivityPeriod.sql_for_columns[attr]
@@ -80,11 +80,6 @@ class Membership < ActiveRecord::Base
                                     :end_date        => :date,
                                     :type_title      => :string,
                                     :title           => :string
-
-  # Public instance methods
-  # def type_title
-  #   type.unique_title
-  # end
 end
 
 # == Schema Information

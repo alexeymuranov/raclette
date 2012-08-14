@@ -105,7 +105,7 @@ class Event < ActiveRecord::Base
                             where(:date => (today - 1.week)..today)
                           }
 
-  # Composite attributes
+  # Pseudo columns
   long_title_sql = "(#{ sql_for_columns[:date] } || ': ' || #{ sql_for_columns[:title] })"
 
   add_pseudo_columns :long_title => long_title_sql

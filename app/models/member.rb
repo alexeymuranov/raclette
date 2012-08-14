@@ -96,7 +96,7 @@ class Member < ActiveRecord::Base
   # scope :current, joins(:memberships => :activity_period).merge(Membership.current).uniq  # Experiment. Can be removed?
   scope :current, joins(:memberships).merge(Membership.current).uniq  # FIXME!
 
-  # Composite attributes
+  # Pseudo columns
   tickets_count_sql = "(#{ sql_for_columns[:payed_tickets_count] } + #{ sql_for_columns[:free_tickets_count] })"
 
   add_pseudo_columns :tickets_count => tickets_count_sql

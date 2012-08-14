@@ -78,7 +78,7 @@ class Person < ActiveRecord::Base
   validates :nickname_or_other,
             :uniqueness => { :scope => [ :last_name, :first_name ] }
 
-  # Composite attributes
+  # Pseudo columns
   full_name_sql         =  "(#{ sql_for_columns[:name_title] } || ' ' || " \
                            "#{ sql_for_columns[:first_name] } || ' ' || " \
                            "#{ sql_for_columns[:last_name] })"
