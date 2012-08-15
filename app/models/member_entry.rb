@@ -19,6 +19,20 @@ class MemberEntry < ActiveRecord::Base
   validates :guests_invited, :inclusion => 0..10
 
   validates :tickets_used, :inclusion => 0..100
+
+  # Callbacks:
+  before_validation :build_event_entry_and_set_person_for_event_entry
+
+  private
+
+    def build_event_entry_and_set_person_for_event_entry
+      if event_entry
+        event_entry.person = member.person
+      else
+        self.event_entry = EventEntry.new(:person => member.person)
+      end
+    end
+
 end
 
 # == Schema Information
