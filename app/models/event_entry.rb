@@ -15,6 +15,8 @@ class EventEntry < ActiveRecord::Base
   belongs_to :participant_entry, :polymorphic => true,
                                  :dependent   => :destroy
 
+  accepts_nested_attributes_for :payment
+
   # Validations:
   validates :event_id, :presence  => true
 

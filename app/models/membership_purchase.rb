@@ -16,6 +16,8 @@ class MembershipPurchase < ActiveRecord::Base
 
   belongs_to :membership, :inverse_of => :membership_purchases
 
+  accepts_nested_attributes_for :payments
+
   # Validations:
   validates :member_id, :membership_type, :membership_expiration_date,
             :purchase_date,

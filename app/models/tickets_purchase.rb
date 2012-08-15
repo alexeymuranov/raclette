@@ -12,6 +12,8 @@ class TicketsPurchase < ActiveRecord::Base
 
   belongs_to :ticket_book, :inverse_of => :tickets_purchases
 
+  accepts_nested_attributes_for :payments
+
   # Validations:
   validates :member_id, :tickets_number, :purchase_date,
             :presence  => true

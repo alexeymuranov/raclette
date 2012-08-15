@@ -10,6 +10,8 @@ class MemberEntry < ActiveRecord::Base
 
   belongs_to :member, :inverse_of => :member_entries
 
+  accepts_nested_attributes_for :event_entry
+
   # Validations:
   validates :member_id, :guests_invited, :tickets_used,
             :presence => true
