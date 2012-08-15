@@ -106,7 +106,7 @@ class RegisterController < ApplicationController
   end
 
   def create_anonymous_entry
-    event_id = params[:event_id]
+    event_id = params[:event_entry][:event_id]
     if @event = Event.find(event_id)
       session[:current_event_id] = event_id
     else
