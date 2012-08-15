@@ -2,6 +2,10 @@ require 'test_helper'
 
 class EventTest < ActiveSupport::TestCase
 
+  def setup
+    @event = events(:one)
+  end
+
   test "should be able to initialize from a weekly event" do
     weekly_event = weekly_events(:practica_du_jeudi)
     event = Event.new(weekly_event)
@@ -18,6 +22,13 @@ class EventTest < ActiveSupport::TestCase
 
   test "Event.current should return a current event" do
     assert_equal Event.a_current, events(:current)
+  end
+
+  test "should create anonymous entry" do
+    assert_difference('EventEntry.count') do
+      entry = @event.create_anonymous_entry
+      assert_kind_of EventEntry, entry
+    end
   end
 end
 

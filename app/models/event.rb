@@ -173,6 +173,17 @@ class Event < ActiveRecord::Base
     participants.merge(Person.non_members)
   end
 
+  # Transactions
+  def create_anonymous_entry(fee_payed = common_entry_fee, entry_type = 'GuestEntry')
+    event_entry_attributes = { :participant_entry_type => 'GuestEntry' }
+    if fee_payed && fee_payed != 0
+      payment_attributes = { :amount => fee_payed,
+                             :date   => date }
+      event_entry_attributes[:payment_attributes] = payment_attributes
+    end
+    event_entries.create(event_entry_attributes)
+  end
+
   # Private instance methods
   private
 
