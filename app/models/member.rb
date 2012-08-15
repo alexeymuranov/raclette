@@ -121,7 +121,7 @@ class Member < ActiveRecord::Base
   end
 
   # Transactions
-  def buy_membership(membership, price_payed = membership.current_price,
+  def buy_membership(membership, price_payed = membership.virtual_price,
                                  date        = Date.today)
     transaction do
       member_memberships.create!(:membership  => membership,

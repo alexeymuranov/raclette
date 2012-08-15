@@ -80,6 +80,13 @@ class Membership < ActiveRecord::Base
                                     :end_date        => :date,
                                     :type_title      => :string,
                                     :title           => :string
+
+  # Public instance methods
+  # Non-SQL virtual attributes
+  #
+  def virtual_price
+    current_price || initial_price
+  end
 end
 
 # == Schema Information
