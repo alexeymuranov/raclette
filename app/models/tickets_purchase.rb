@@ -20,6 +20,13 @@ class TicketsPurchase < ActiveRecord::Base
 
   validates :tickets_number, :inclusion => 1..1000
 
+  # Scopes:
+  scope :last_12_hours, lambda {
+    where("#{ table_name }.updated_at > ?", (Time.now - 12.hours).strftime("%F %T"))
+  }
+  scope :default_order, order("#{ table_name }.purchase_date DESC, "\
+                              "#{ table_name }.updated_at DESC")
+
   # Callbacks:
   before_validation :copy_tickets_number
 
