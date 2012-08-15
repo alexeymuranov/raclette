@@ -26,6 +26,9 @@ class GuestEntry < ActiveRecord::Base
              :foreign_key => :toward_membership_purchase_id,
              :inverse_of  => :accounted_guest_entries
 
+  belongs_to :inviting_member, :class_name => :Member,
+                               :inverse_of => :guest_invitations
+
   accepts_nested_attributes_for :event_entry
 
   # Validations:

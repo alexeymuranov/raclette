@@ -58,6 +58,9 @@ class Member < ActiveRecord::Base
                                 :class_name  => :Member,
                                 :inverse_of  => :tickets_lender
 
+  has_many :guest_invitations, :class_name => :GuestEntry,
+                               :inverse_of => :inviting_member
+
   accepts_nested_attributes_for :person
 
   # Delegations
