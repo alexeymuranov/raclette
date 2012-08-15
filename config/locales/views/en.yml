@@ -41,6 +41,9 @@ en:
     download_resources_in_format: "Download the %{resources} in %{file_format}"
     render_in_format: "Render in %{format}"
     render_resources_in_format: "Render the %{resources} in %{file_format}"
+    continue: "Continue"
+    select: "Select"
+    change: "Change"
     filter: "Filter"
     clear: "Clear"
     repaginate: "Paginate"
@@ -50,9 +53,10 @@ en:
     hide_attended_events: "Hide attended events"
     show_participants: "Show participants"
     hide_participants: "Hide participants"
-    continue: "Continue"
-    select: "Select"
-    change: "Change"
+    show_recent_ticket_purchases: "Show recent ticket purchases"
+    hide_recent_ticket_purchases: "Hide recent ticket purchases"
+    show_recent_membership_purchases: "Show recent membership purchases"
+    hide_recent_membership_purchases: "Hide recent membership purchases"
 
   actions:
     create: "Add"
@@ -274,6 +278,8 @@ en:
       enter_guest: "Enter guest"
       subheaders:
         participants: "Participants"
+        recent_ticket_purchases: "Recent ticket purchases"
+        recent_membership_purchases: "Recent membership purchases"
     new_transaction:
       title: "Register"
       header: "Payment and Entry Register"

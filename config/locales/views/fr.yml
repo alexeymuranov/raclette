@@ -41,6 +41,9 @@ fr:
     download_resources_in_format: "Télécharger les %{resources} en %{file_format}"
     render_in_format: "Rendre en %{format}"
     render_resources_in_format: "Rendre les %{resources} en %{file_format}"
+    continue: "Continuer"
+    select: "Choisir"
+    change: "Changer"
     filter: "Filtrer"
     clear: "Annuler"
     repaginate: "Paginer"
@@ -50,9 +53,10 @@ fr:
     hide_attended_events: "Cacher événements fréquentés"
     show_participants: "Afficher participants"
     hide_participants: "Cacher participants"
-    continue: "Continuer"
-    select: "Choisir"
-    change: "Changer"
+    show_recent_ticket_purchases: "Afficher achats de tickets récents"
+    hide_recent_ticket_purchases: "Cacher achats de tickets récents"
+    show_recent_membership_purchases: "Afficher achats des adhésions récents"
+    hide_recent_membership_purchases: "Cacher achats des adhésions récents"
 
   actions:
     create: "Ajouter"
@@ -274,6 +278,8 @@ fr:
       enter_guest: "Saisir un(e) invité(e)"
       subheaders:
         participants: "Participants"
+        recent_ticket_purchases: "Achats de tickets récents"
+        recent_membership_purchases: "Achats des adhésions récents"
     new_transaction:
       title: "Caisse"
       header: "Caisse des entrées et règlements"

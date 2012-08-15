@@ -3,7 +3,9 @@
 - if @events.empty?
   %strong= t 'register.new_entry.no_current_event'
 - else
-  %form{:method => 'get'}
+  %form{ :action => url_for(:action => 'choose_person'),
+         :method => 'get' }
+    = hidden_fields_from_nested_hash @saved_params
     %label
       = t 'formats.attribute_name:',
           :attribute => t('register.new_entry.current_event')
@@ -32,3 +34,7 @@
   = render 'form_for_guest'
 
 = render('event_participants') if @event
+
+= render 'recent_ticket_purchases'
+
+= render 'recent_membership_purchases'

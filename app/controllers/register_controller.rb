@@ -28,6 +28,15 @@ class RegisterController < ApplicationController
       end
     end
 
+    case params[:button]
+    when 'show_participants'
+      @participants = @event.participants.default_order
+    when 'show_recent_ticket_purchases'
+      @recent_ticket_purchases = TicketsPurchase.last_12_hours.default_order
+    when 'show_recent_membership_purchases'
+      @recent_membership_purchases = MembershipPurchase.last_12_hours.default_order
+    end
+
     render_choose_person_properly
   end
 
@@ -200,9 +209,6 @@ class RegisterController < ApplicationController
       @members_column_headers = Member.human_column_headers
 
       @events = Event.unlocked.past_seven_days
-
-      @participants = @event.participants.default_order if
-        params[:button] == 'show_participants'
 
       @saved_params = params.slice(:filter, :sort, :page, :per_page)
 
