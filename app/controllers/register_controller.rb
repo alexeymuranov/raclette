@@ -105,6 +105,25 @@ class RegisterController < ApplicationController
     end
   end
 
+  def create_anonymous_entry
+    event_id = params[:event_id]
+    if @event = Event.find(event_id)
+      session[:current_event_id] = event_id
+    else
+      flash.now[:error] = t('flash.actions.other.failure')
+      render_choose_person_properly and return
+    end
+
+    if @event.create_anonymous_entry
+      flash[:success] = t('flash.actions.create.success',
+                          :resource_name => EventEntry.model_name.human)
+      redirect_to :action => :choose_person
+    else
+      flash.now[:error] = t('flash.actions.other.failure')
+      render_choose_person_properly
+    end
+  end
+
   def create_member_ticket_purchase
     @member = Member.find(params[:member_id])
 

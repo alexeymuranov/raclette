@@ -28,6 +28,9 @@ Raclette::Application.routes.draw do
   match 'register/guest/create_entry' =>
           'register#create_guest_entry',
         :via => :post
+  match 'register/guest/create_anonymous_entry' =>
+          'register#create_anonymous_entry',
+        :via => :post
 
   get 'secretary_tools/overview'
   get 'manager_tools/overview'

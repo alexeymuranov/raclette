@@ -77,6 +77,15 @@ class RegisterControllerTest < ActionController::TestCase
     assert_redirected_to register_choose_person_path
   end
 
+  test "should create anonymous_event_entry" do
+    session[:user_id] = @user_admin.to_param
+    assert_difference('EventEntry.count') do
+      post :create_anonymous_entry, { :event_id  => @event.to_param }
+    end
+
+    assert_redirected_to register_choose_person_path
+  end
+
   test "should create member_ticket_purchase" do
     session[:user_id] = @user_admin.to_param
     assert_difference('@member.payed_tickets_count', @ticket_book.tickets_number) do
