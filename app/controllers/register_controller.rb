@@ -64,7 +64,7 @@ class RegisterController < ApplicationController
       render_choose_person_properly and return
     end
 
-    if @member.attend_event!(@event)
+    if @member.attend_event(@event)
       flash[:success] = t('flash.actions.create.success',
                           :resource_name => EventEntry.model_name.human )
       redirect_to :action => :choose_person
@@ -90,7 +90,7 @@ class RegisterController < ApplicationController
       render_choose_person_properly and return
     end
 
-    if @guest.attend_event!(@event)
+    if @guest.attend_event(@event)
       flash[:success] = t('flash.actions.create.success',
                           :resource_name => EventEntry.model_name.human)
       redirect_to :action => :choose_person
@@ -111,7 +111,7 @@ class RegisterController < ApplicationController
     ticket_book_id = params[:tickets_purchase][:ticket_book_id]
     @ticket_book = TicketBook.find(ticket_book_id)
 
-    if @member.buy_tickets!(@ticket_book)
+    if @member.buy_tickets(@ticket_book)
       flash[:success] =
         t('flash.actions.create.success',
           :resource_name => TicketsPurchase.model_name.human)
@@ -135,7 +135,7 @@ class RegisterController < ApplicationController
       render_new_member_transaction_properly and return
     end
 
-    if @member.buy_membership!(@membership)
+    if @member.buy_membership(@membership)
       flash[:success] =
         t('flash.actions.create.success',
           :resource_name => MembershipPurchase.model_name.human)

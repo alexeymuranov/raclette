@@ -91,8 +91,8 @@ class Person < ActiveRecord::Base
                           "' <' || #{ sql_for_columns[:email] } || '>')"
 
   add_pseudo_columns :full_name         => full_name_sql,
-                           :ordered_full_name => ordered_full_name_sql,
-                           :formatted_email   => formatted_email_sql
+                     :ordered_full_name => ordered_full_name_sql,
+                     :formatted_email   => formatted_email_sql
 
   [:full_name, :ordered_full_name, :formatted_email].each do |attr|
     add_pseudo_column_db_types attr => :string
@@ -125,9 +125,9 @@ class Person < ActiveRecord::Base
   end
 
   # Transactions
-  def attend_event!(event, participant_entry)
-    event_entries.create!(:event             => event,
-                          :participant_entry => participant_entry)
+  def attend_event(event, participant_entry)
+    event_entries.create(:event             => event,
+                         :participant_entry => participant_entry)
   end
 end
 

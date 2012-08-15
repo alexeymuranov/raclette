@@ -46,16 +46,24 @@ class Guest
   end
 
   # Transactions
-  def attend_event!(event, price_payed     = event.common_entry_fee,
-                           inviting_member = nil)
+  def attend_event(event, price_payed     = event.common_entry_fee,
+                          inviting_member = nil)
     GuestEntry.transaction do
-      guest_entry = GuestEntry.new(attributes)
-      guest_entry.inviting_member_id = inviting_member.id if inviting_member
-      guest_entry.save!
-      EventEntry.create!(:event             => event,
-                         :participant_entry => guest_entry)
-      guest_entry.event_entry.create_payment!(:amount => price_payed,
-                                              :date   => event.date)
+      guest_entry = GuestEntry.create(attributes)
+      if inviting_member
+        guest_entry.inviting_member_id = inviting_member.id
+        guest_entry.save!
+      end
+      event_entry = EventEntry.create(:event             => event,
+                                      :participant_entry => guest_entry)
+      event_entry.create_payment!(:amount => price_payed,
+                                  :date   => event.date)
+
+      # TODO: think how the return value is used and what is the meaning of
+      # this method; maybe returning `guest_entry` is better?
+      # However, `event_entry` contains most useful validations.
+      # Is this a case for using Draper?
+      event_entry
     end
   end
 end
