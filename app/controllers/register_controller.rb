@@ -66,7 +66,7 @@ class RegisterController < ApplicationController
 
     if @member.attend_event(@event)
       flash[:success] = t('flash.actions.create.success',
-                          :resource_name => EventEntry.model_name.human )
+                          :resource_name => MemberEntry.model_name.human )
       redirect_to :action => :choose_person
     else
       flash.now[:error] = t('flash.actions.other.failure')
@@ -92,7 +92,7 @@ class RegisterController < ApplicationController
 
     if @guest.attend_event(@event)
       flash[:success] = t('flash.actions.create.success',
-                          :resource_name => EventEntry.model_name.human)
+                          :resource_name => GuestEntry.model_name.human)
       redirect_to :action => :choose_person
     else
       flash.now[:error] = t('flash.actions.other.failure')
