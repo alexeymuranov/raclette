@@ -21,10 +21,10 @@ class Payment < ActiveRecord::Base
 
   validates :payable_type, :length => { :maximum => 32 }
 
-  validates :amount, :numericality => { :greater_than_or_equal_to => 0 }
+  validates :amount, :numericality => { :greater_than => 0 }
 
   validates :method, :length    => { :maximum => 32 },
-                     :inclusion => %w[ Cash Check CreditCard ],
+                     :inclusion => %w[cash check credit_card],
                      :allow_nil => true
 
   validates :note, :length    => { :maximum => 255 },
