@@ -37,7 +37,7 @@ class MemberTest < ActiveSupport::TestCase
     assert_difference('MemberEntry.count') do
       assert_difference('EventEntry.count') do
         entry = @member.attend_event(@event)
-        assert_kind_of EventEntry, entry
+        assert_kind_of MemberEntry, entry
       end
     end
   end

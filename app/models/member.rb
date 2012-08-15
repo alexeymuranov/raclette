@@ -154,11 +154,13 @@ class Member < ActiveRecord::Base
   def attend_event(event, tickets_used   = nil,
                           price_payed    = nil,
                           guests_invited = 0)
+
     unless tickets_used || price_payed
       unless tickets_used = event.entry_fee_tickets
         price_payed = event.member_entry_fee || event.common_entry_fee
       end
     end
+
     transaction do
       if tickets_used
         self.free_tickets_count -= tickets_used
@@ -169,24 +171,19 @@ class Member < ActiveRecord::Base
         save!
       end
 
-      member_entry =
-        member_entries.create(:tickets_used   => tickets_used || 0,
-                              :guests_invited => guests_invited)
-
-      event_entry = person.attend_event(event, member_entry)
+      event_entry_attributes = { :event => event }
 
       # NOTE: not clear if the payment can only happen on the same date as the
       # event
       if price_payed && price_payed != 0
-        event_entry.create_payment!(:amount => price_payed,
-                                    :date   => event.date)
+        payment_attributes = { :amount => price_payed,
+                               :date   => event.date }
+        event_entry_attributes[:payment_attributes] = payment_attributes
       end
 
-      # TODO: think how the return value is used and what is the meaning of
-      # this method; maybe returning `member_entry` is better?
-      # However, `event_entry` contains most useful validations.
-      # Is this a case for using Draper?
-      event_entry
+      member_entries.create(:tickets_used           => tickets_used || 0,
+                            :guests_invited         => guests_invited,
+                            :event_entry_attributes => event_entry_attributes)
     end
   end
 

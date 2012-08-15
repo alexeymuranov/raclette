@@ -12,14 +12,10 @@ class PersonTest < ActiveSupport::TestCase
   end
 
   test "should attend events" do
-    member = members(:one)
-    member_entry = member.member_entries.create!(:tickets_used => 1)
-    guest = Guest.new(:first_name => 'X', :last_name  => 'Yz')
-    guest_entry = GuestEntry.new(guest.attributes)
     assert_difference('EventEntry.count', 2) do
-      entry = @person.attend_event(events(:one), member_entry)
+      entry = @person.attend_event(events(:one), 'MemberEntry')
       assert_kind_of EventEntry, entry
-      entry = @person.attend_event(events(:current), guest_entry)
+      entry = @person.attend_event(events(:current), 'GuestEntry')
       assert_kind_of EventEntry, entry
     end
   end

@@ -21,7 +21,7 @@ class GuestTest < ActiveSupport::TestCase
     assert_difference('GuestEntry.count') do
       assert_difference('EventEntry.count') do
         entry = @guest.attend_event(@event)
-        assert_kind_of EventEntry, entry
+        assert_kind_of GuestEntry, entry
       end
     end
   end
