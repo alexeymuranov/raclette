@@ -46,13 +46,13 @@ class Guest
   end
 
   # Transactions
-  def attend_event(event, price_payed     = event.common_entry_fee,
+  def attend_event(event, fee_payed       = event.common_entry_fee,
                           inviting_member = nil)
 
     event_entry_attributes = { :event => event }
 
-    if price_payed && price_payed != 0
-      payment_attributes = { :amount => price_payed,
+    if fee_payed && fee_payed != 0
+      payment_attributes = { :amount => fee_payed,
                              :date   => event.date }
       event_entry_attributes[:payment_attributes] = payment_attributes
     end

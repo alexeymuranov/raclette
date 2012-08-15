@@ -152,12 +152,12 @@ class Member < ActiveRecord::Base
   end
 
   def attend_event(event, tickets_used   = nil,
-                          price_payed    = nil,
+                          fee_payed      = nil,
                           guests_invited = 0)
 
-    unless tickets_used || price_payed
+    unless tickets_used || fee_payed
       unless tickets_used = event.entry_fee_tickets
-        price_payed = event.member_entry_fee || event.common_entry_fee
+        fee_payed = event.member_entry_fee || event.common_entry_fee
       end
     end
 
@@ -175,8 +175,8 @@ class Member < ActiveRecord::Base
 
       # NOTE: not clear if the payment can only happen on the same date as the
       # event
-      if price_payed && price_payed != 0
-        payment_attributes = { :amount => price_payed,
+      if fee_payed && fee_payed != 0
+        payment_attributes = { :amount => fee_payed,
                                :date   => event.date }
         event_entry_attributes[:payment_attributes] = payment_attributes
       end
