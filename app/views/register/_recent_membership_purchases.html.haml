@@ -1,25 +1,11 @@
-%aside#recent_membership_purchases
-  -# NOTE: using <a name="..."> as an anchor:
-  %a{:name => 'recent_membership_purchases'}
-  %section#membership_purchases
-    - unless @recent_membership_purchases.nil?
-      %h2= t 'register.choose_person.subheaders.recent_membership_purchases'
-      %ol
-        - @recent_membership_purchases.each do |p|
-          %li= p.membership_type
+%section#membership_purchases
+  %h2= t 'register.choose_person.subheaders.recent_membership_purchases'
+  %ol
+    - @recent_membership_purchases.each do |p|
+      %li= p.membership_type
 
-    -# NOTE: using 'action' only to scroll to the anchor.
-    -# TODO: add :'data-remote' => 'true' and fix it.
-    %form{:action => '#recent_membership_purchases', :method => 'get'}
-      = hidden_fields_from_nested_hash @saved_params
-      %span.actions
-        - if @recent_membership_purchases.nil?
-          %button{ :name  => 'button',
-                   :type  => 'submit',
-                   :value => 'show_recent_membership_purchases' }
-            = t('buttons.show_recent_membership_purchases')
-        - else
-          %button{ :name  => 'button',
-                   :type  => 'submit',
-                   :value => 'hide_recent_membership_purchases' }
-            = t('buttons.hide_recent_membership_purchases')
+  %span.actions
+    %button{ :name  => 'button',
+             :type  => 'submit',
+             :value => 'hide_recent_membership_purchases' }
+      = t('buttons.hide_recent_membership_purchases')

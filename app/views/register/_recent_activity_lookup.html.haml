@@ -1,0 +1,25 @@
+%aside#recent_activity
+  -# NOTE: using <a name="..."> as an anchor:
+  %a{:name => 'recent_activity'}
+  -# NOTE: using 'action' only to scroll to the anchor.
+  -# TODO: add :'data-remote' => 'true' and fix it.
+  %form{:action => '#recent_activity', :method => 'get'}
+    = hidden_fields_from_nested_hash @saved_params
+    %span.actions
+      - if @event
+        %button{ :name  => 'button',
+                 :type  => 'submit',
+                 :value => 'show_participants' }
+          = t('show_participants', :scope => 'buttons')
+      - [ 'show_recent_ticket_purchases',
+          'show_recent_membership_purchases' ].each do |button_value|
+        %button{ :name  => 'button',
+                 :type  => 'submit',
+                 :value => button_value }
+          = t(button_value, :scope => 'buttons')
+
+    = render('event_participants') if @participants
+
+    = render 'recent_ticket_purchases' if @recent_ticket_purchases
+
+    = render 'recent_membership_purchases' if @recent_membership_purchases
