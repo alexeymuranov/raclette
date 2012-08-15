@@ -5,7 +5,7 @@
   = render 'shared/error_messages/validation', :target => @guest
 
   %dl.form_fields
-    - [ :first_name, :last_name, :email, :phone ].each do |attribute|
+    - [:first_name, :last_name, :email, :phone].each do |attribute|
 
       = render 'shared/forms/attribute',
                :form_builder => f,
