@@ -205,7 +205,6 @@ class RegisterController < ApplicationController
       @guest ||= Guest.new(params[:guest])
 
       @members_attributes = [ :last_name, :first_name ]
-      @members_column_types = Member.column_db_types
       @members_column_headers = Member.human_column_headers
 
       @events = Event.unlocked.past_seven_days

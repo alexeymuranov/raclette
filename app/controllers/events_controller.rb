@@ -79,8 +79,6 @@ class EventsController < SecretaryController
                       :entry_fees_collected ]
     end
 
-    @column_types = Event.column_db_types
-
     @events = Event.scoped
 
     # Filter:
@@ -146,18 +144,14 @@ class EventsController < SecretaryController
 
     @event = Event.find(params[:id])
 
-    @column_types = Event.column_db_types
-
     @member_participants_attributes = [ :ordered_full_name, :email ]
     @member_participants = @event.member_participants.
       with_pseudo_columns(*@member_participants_attributes)
-    @member_participants_column_types = Member.column_db_types
     @member_participants_column_headers = Member.human_column_headers
 
     @other_participants_attributes = [ :ordered_full_name, :email ]
     @other_participants = @event.non_member_participants.
       with_pseudo_columns(*@other_participants_attributes)
-    @other_participants_column_types = Person.column_db_types
     @other_participants_column_headers = Person.human_column_headers
 
     @title = t('events.show.title', :title => @event.title)
@@ -233,7 +227,6 @@ class EventsController < SecretaryController
                       :location,
                       # :weekly,
                       :entry_fee_tickets ]
-      @column_types = Event.column_db_types
 
       @weekly_events = WeeklyEvent.not_over
 
@@ -254,7 +247,6 @@ class EventsController < SecretaryController
                       :entries_count,
                       :tickets_collected,
                       :entry_fees_collected ]
-      @column_types = Event.column_db_types
 
       @title =  t('events.edit.title', :title => @event.title)
 

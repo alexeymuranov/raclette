@@ -27,8 +27,6 @@ class LessonSupervisionsController < SecretaryController
       @attributes = [:unique_names, :instructors_count, :comment]
     end
 
-    @column_types = LessonSupervision.column_db_types
-
     @lesson_supervisions = LessonSupervision.scoped
 
     # Filter:
@@ -82,11 +80,8 @@ class LessonSupervisionsController < SecretaryController
 
     @lesson_supervision = LessonSupervision.find(params[:id])
 
-    @column_types = LessonSupervision.column_db_types
-
     @instructors_attributes = [:first_name, :last_name, :email]
     @instructors = @lesson_supervision.instructors.default_order
-    @instructors_column_types = Instructor.column_db_types
     @instructors_column_headers = Instructor.human_column_headers
 
     @title = t('lesson_supervisions.show.title',
@@ -155,7 +150,6 @@ class LessonSupervisionsController < SecretaryController
     def render_new_properly
       # @attributes = [:unique_names, :instructors_count, :comment]
       @attributes = [:unique_names, :comment]
-      @column_types = LessonSupervision.column_db_types
 
       @title = t('lesson_supervisions.new.title')
 
@@ -165,7 +159,6 @@ class LessonSupervisionsController < SecretaryController
     def render_edit_properly
       # @attributes = [:unique_names, :instructors_count, :comment]
       @attributes = [:unique_names, :comment]
-      @column_types = LessonSupervision.column_db_types
 
       @title =  t('lesson_supervisions.edit.title',
                   :title => @lesson_supervision.unique_names)

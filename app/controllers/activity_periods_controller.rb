@@ -28,8 +28,6 @@ class ActivityPeriodsController < ManagerController
                       :description ]
     end
 
-    @column_types = ActivityPeriod.column_db_types
-
     @activity_periods = ActivityPeriod.scoped
 
     # Filter:
@@ -84,8 +82,6 @@ class ActivityPeriodsController < ManagerController
                     :description ]
 
     @activity_period = ActivityPeriod.find(params[:id])
-
-    @column_types = ActivityPeriod.column_db_types
 
     @title = t('activity_periods.show.title',
                :title => @activity_period.unique_title)
@@ -151,7 +147,6 @@ class ActivityPeriodsController < ManagerController
                       :end_date,
                       :over,
                       :description ]
-      @column_types = ActivityPeriod.column_db_types
 
       @title = t('activity_periods.new.title')
 
@@ -165,7 +160,6 @@ class ActivityPeriodsController < ManagerController
                       :end_date,
                       :over,
                       :description ]
-      @column_types = ActivityPeriod.column_db_types
 
       @title =  t('activity_periods.edit.title',
                   :title => @activity_period.unique_title)

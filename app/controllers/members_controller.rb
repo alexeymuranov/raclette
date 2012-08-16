@@ -58,8 +58,6 @@ class MembersController < SecretaryController
                       :tickets_count ]
     end
 
-    @column_types = Member.column_db_types
-
     @members = Member.joins(:person).
       with_pseudo_columns(*@attributes, :formatted_email)
 
@@ -153,17 +151,13 @@ class MembersController < SecretaryController
                      with_pseudo_columns(*@attributes, *@extra_attributes).
                      find(params[:id])
 
-    @column_types = Member.column_db_types
-
     @attended_events_attributes = [ :title, :event_type, :date, :start_time ]
     @attended_events = @member.attended_events
-    @events_column_types = Event.column_db_types
     @events_column_headers = Event.human_column_headers
 
     @memberships_attributes = [:title, :duration_months, :end_date]
     @memberships = @member.memberships.with_type.with_activity_period.
       with_pseudo_columns(*@memberships_attributes)
-    @memberships_column_types = Membership.column_db_types
     @memberships_column_headers = Membership.human_column_headers
 
     @title = t('members.show.title', :name => @member.virtual_full_name)
@@ -255,16 +249,12 @@ class MembersController < SecretaryController
   private
 
     def render_new_properly
-      @column_types = Member.column_db_types
-
       @title = t('members.new.title')
 
       render :new
     end
 
     def render_edit_properly
-      @column_types = Member.column_db_types
-
       @title =  t('members.edit.title', :name => @member.virtual_full_name)
 
       render :edit

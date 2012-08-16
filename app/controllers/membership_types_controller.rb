@@ -29,8 +29,6 @@ class MembershipTypesController < ManagerController
                       :description ]
     end
 
-    @column_types = MembershipType.column_db_types
-
     @membership_types = MembershipType.scoped
 
     # Filter:
@@ -87,8 +85,6 @@ class MembershipTypesController < ManagerController
                     :description ]
 
     @membership_type = MembershipType.find(params[:id])
-
-    @column_types = MembershipType.column_db_types
 
     @title = t('membership_types.show.title',
                :title => @membership_type.unique_title )
@@ -154,7 +150,6 @@ class MembershipTypesController < ManagerController
                       :unlimited,
                       :duration_months,
                       :description ]
-      @column_types = MembershipType.column_db_types
 
       @title = t('membership_types.new.title')
 
@@ -168,7 +163,6 @@ class MembershipTypesController < ManagerController
                       :unlimited,
                       :duration_months,
                       :description ]
-      @column_types = MembershipType.column_db_types
 
       @title =  t('membership_types.edit.title',
                   :title => @membership_type.unique_title)

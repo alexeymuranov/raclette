@@ -33,7 +33,6 @@ class MembershipsController < ManagerController # FIXME!
 
   def show
     @attributes = [:initial_price, :current_price]
-    @column_types = Membership.column_db_types
 
     @singular_associations = [:activity_period, :type]
     @association_name_attributes = { :activity_period => :unique_title,
@@ -99,7 +98,6 @@ class MembershipsController < ManagerController # FIXME!
 
     def render_new_properly
       @attributes = [:initial_price, :current_price]
-      @column_types = Membership.column_db_types
 
       @belongs_to_associations = [:activity_period, :type]
       @association_name_attributes = { :activity_period => :unique_title,
@@ -112,7 +110,6 @@ class MembershipsController < ManagerController # FIXME!
 
     def render_edit_properly
       @attributes = [:initial_price, :current_price]
-      @column_types = Membership.column_db_types
 
       @belongs_to_associations = [:activity_period, :type]
       @association_name_attributes = { :activity_period => :unique_title,

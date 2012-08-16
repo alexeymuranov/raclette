@@ -22,8 +22,6 @@ class InstructorsController < ManagerController
                       :employed_from ]
     end
 
-    @column_types = Instructor.column_db_types
-
     @instructors = Instructor.joins(:person).
       with_pseudo_columns(*@attributes, :formatted_email)
 
@@ -99,8 +97,6 @@ class InstructorsController < ManagerController
     @instructor =
       Instructor.joins(:person).with_pseudo_columns(*@attributes).
                  find(params[:id])
-
-    @column_types = Instructor.column_db_types
 
     @title = t('instructors.show.title', :name => @instructor.virtual_full_name)
   end
@@ -200,16 +196,12 @@ class InstructorsController < ManagerController
   private
 
     def render_new_properly
-      @column_types = Instructor.column_db_types
-
       @title = t('instructors.new.title')
 
       render :new
     end
 
     def render_edit_properly
-      @column_types = Instructor.column_db_types
-
       @title =  t('instructors.edit.title',
                   :name => @instructor.virtual_full_name)
 
