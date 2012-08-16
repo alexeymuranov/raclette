@@ -1,6 +1,9 @@
 ## encoding: UTF-8
 
 class RevenueAccount < ActiveRecord::Base
+  # TODO: decide if 'main' boolean field is necessary, and how to use it.
+  # It was intended to be used to automaticaly choose a single active
+  # account.
 
   attr_readonly :id, :opened_on
 
@@ -33,6 +36,7 @@ class RevenueAccount < ActiveRecord::Base
 
   # Public class methods
   def self.the_active!
+    # TODO: decide if to use 'main' boolean field
     count = (active_ones = unlocked.current).count
     if count == 1
       return active_ones.first
@@ -45,6 +49,9 @@ class RevenueAccount < ActiveRecord::Base
   end
 
   # Public instance methods
+  def register(payment)
+    fail # TODO
+  end
 end
 
 # == Schema Information
