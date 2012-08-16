@@ -4,7 +4,7 @@
 -#   label_content:
 -#   input_html_options (optional):
 
-- if local_assigns.has_key?(:input_html_options)
+- if local_assigns.key?(:input_html_options)
   - input_html_options.except!(:name, :value)
 - else
   - input_html_options = {}

@@ -24,7 +24,7 @@ module ActiveModelUtilities
     def attr_required?(attr)
       attr = attr.to_s
       @attr_required ||= {}
-      if @attr_required.has_key?(attr)
+      if @attr_required.key?(attr)
         @attr_required[attr]
       else
         @attr_required[attr] = validator_classes_on(attr).include?(
@@ -40,10 +40,10 @@ module ActiveModelUtilities
     def possible_values_of(attr)
       attr = attr.to_s
       @possible_values_of ||= {}
-      return @possible_values_of[attr] if @possible_values_of.has_key?(attr)
+      return @possible_values_of[attr] if @possible_values_of.key?(attr)
 
       @inclusion_validator_on ||= {}
-      if @inclusion_validator_on.has_key?(attr)
+      if @inclusion_validator_on.key?(attr)
         inclusion_validator = @inclusion_validator_on[attr]
       else
         inclusion_validator = validators_on(attr).find { |v|

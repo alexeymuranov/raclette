@@ -46,7 +46,7 @@ class Hash
     def my_deep_remove(key_hash)
       new_hash = self.class.new
       each_pair do |k,v|
-        unless key_hash.has_key?(k) && ov = key_hash[k]
+        unless key_hash.key?(k) && ov = key_hash[k]
           new_hash[k] = v.is_a?(Hash) ? v.deep_dup : v
         else
           new_hash[k] = v.deep_remove(ov) if ov.is_a?(Hash)

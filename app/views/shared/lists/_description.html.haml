@@ -6,7 +6,7 @@
 -#   association_name_attributes:
 
 %dl.show
-  - if local_assigns.has_key?(:singular_associations)
+  - if local_assigns.key?(:singular_associations)
     - singular_associations.each do |assoc|
       - if associated_model = model.public_send(assoc)
 
@@ -16,7 +16,7 @@
           :associated_model           => associated_model,
           :association_name_attribute => association_name_attributes[assoc]
 
-  - if local_assigns.has_key?(:attributes)
+  - if local_assigns.key?(:attributes)
     - attributes.each do |attr|
 
       = render 'shared/lists/attribute_in_description',

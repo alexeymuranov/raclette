@@ -5,7 +5,7 @@
 -#   # field_labels (optional):
 -#   input_html_options (optional):
 
-- input_html_options = {} unless local_assigns.has_key? :input_html_options
+- input_html_options = {} unless local_assigns.key? :input_html_options
 
 - model = form_builder.object
 - klass = model.class

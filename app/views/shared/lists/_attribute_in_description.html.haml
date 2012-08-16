@@ -5,7 +5,7 @@
 
 - klass = model.class
 
-- unless local_assigns.has_key?(:column_type)
+- unless local_assigns.key?(:column_type)
   - unless (column = klass.columns_hash[attribute.to_s]).nil?
     - column_type = column.type
   - else
