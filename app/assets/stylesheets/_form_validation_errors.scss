@@ -11,6 +11,7 @@ pre {
 }
 
 #error_explanation {
+  @include border-radius(4pt);
   border: 2px solid DarkRed;
   background-color: LightYellow;
   margin-bottom: 20px;
