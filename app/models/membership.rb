@@ -26,16 +26,16 @@ class Membership < ActiveRecord::Base
 
   # Validations:
   validates :membership_type_id, :activity_period_id, :initial_price,
-                :presence => true
+            :presence => true
 
   validates :initial_price, :numericality => { :greater_than_or_equal_to => 0 }
 
   validates :current_price, :tickets_count_limit, :members_count,
-                :numericality => { :greater_than_or_equal_to => 0 },
-                :allow_nil    => true
+            :numericality => { :greater_than_or_equal_to => 0 },
+            :allow_nil    => true
 
   validates :membership_type_id,
-                :uniqueness => { :scope => :activity_period_id }
+            :uniqueness => { :scope => :activity_period_id }
 
   # Delegations:
   delegate :start_date,
@@ -75,15 +75,19 @@ class Membership < ActiveRecord::Base
               "#{ sql_for_columns[:end_date] })"
   add_pseudo_columns :title => title_sql
 
-  add_pseudo_column_db_types  :start_date      => :date,
-                                    :duration_months => :integer,
-                                    :end_date        => :date,
-                                    :type_title      => :string,
-                                    :title           => :string
+  add_pseudo_column_db_types :start_date      => :date,
+                             :duration_months => :integer,
+                             :end_date        => :date,
+                             :type_title      => :string,
+                             :title           => :string
 
   # Public instance methods
   # Non-SQL virtual attributes
   #
+  def virtual_title
+    "#{ type.unique_title }, #{ start_date } -- #{ end_date }"
+  end
+
   def virtual_price
     current_price || initial_price
   end
