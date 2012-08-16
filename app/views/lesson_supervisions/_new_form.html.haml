@@ -16,8 +16,7 @@
         = t 'formats.attribute_name:',
             :attribute => LessonSupervision.human_attribute_name(:instructors)
       %dd{ :class => 'input select_multiple' }
-        = f.select_for_habtm :instructors,
-                             Instructor, :virtual_professional_name,
+        = f.select_for_habtm :instructors, :virtual_professional_name, nil,
                              :include_blank => true
 
   .actions

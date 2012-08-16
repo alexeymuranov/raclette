@@ -10,9 +10,8 @@
           = t 'formats.attribute_name:',
               :attribute => Membership.human_attribute_name(assoc)
         %dd{ :class => 'input' }
-          = f.select_for_belongs_to assoc,
-                                    Membership.reflect_on_association(assoc).klass,
-                                    @association_name_attributes[assoc],
+          = f.select_for_belongs_to assoc, @association_name_attributes[assoc],
+                                    nil,
                                     :include_blank => true
 
     - @attributes.each do |attribute|

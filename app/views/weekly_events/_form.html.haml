@@ -9,8 +9,7 @@
         = t 'formats.attribute_name:',
             :attribute => WeeklyEvent.human_attribute_name(:lesson_supervision)
       %dd{ :class => 'input' }
-        = f.select_for_belongs_to :lesson_supervision,
-                                  LessonSupervision, :unique_names,
+        = f.select_for_belongs_to :lesson_supervision, :unique_names, nil,
                                   :include_blank => true
 
     - @attributes.each do |attribute|

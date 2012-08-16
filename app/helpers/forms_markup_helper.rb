@@ -84,11 +84,12 @@ module FormsMarkupHelper
       end
     end
 
-    def select_for_belongs_to(assoc_name, collection, text_method,
+    def select_for_belongs_to(assoc_name, text_method, collection = nil,
                               options = {}, html_options = {})
       klass = object.class
       reflection = klass.reflect_on_association(assoc_name)
       foreign_key = reflection.foreign_key
+      collection ||= reflection.klass
 
       required =
         klass.validators_on(foreign_key).map(&:class).
@@ -101,11 +102,12 @@ module FormsMarkupHelper
                         options, html_options)
     end
 
-    def select_for_habtm(assoc_name, collection, text_method,
+    def select_for_habtm(assoc_name, text_method, collection = nil,
                          options = {}, html_options = {})
       klass = object.class
       reflection = klass.reflect_on_association(assoc_name)
       ids_attr_name = "#{ reflection.name.to_s.singularize }_ids"
+      collection ||= reflection.klass
 
       html_options[:multiple] = true
 
