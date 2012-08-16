@@ -30,6 +30,10 @@ module PseudoColumns
       @sql_for_columns.merge! sql_for_columns
     end
 
+    def sql_for_column(col)
+      sql_for_columns[col]
+    end
+
     # Returns standard types (`:string`, `:integer`, etc.) for attributes
     # corresponding to columns by essentially calling
     # `#columns_hash[attribute].type`.
@@ -43,6 +47,10 @@ module PseudoColumns
         end
       }
       @column_db_types.merge! column_db_types
+    end
+
+    def column_db_type(col)
+      column_db_types[col]
     end
 
     # Cannot use `scope` with `lambda` here because `lambda` would bind
