@@ -2,12 +2,10 @@
 
 %section
   %dl.show
-    - @attributes.each do |attr|
 
-      = render 'shared/lists/attribute_in_description',
-               :model       => @instructor,
-               :attribute   => attr,
-               :column_type => @column_types[attr]
+    = render 'shared/lists/description',
+      :model                       => @instructor,
+      :attributes                  => @attributes
 
 %footer
   = link_to edit_pictogram(3) + ' ' + t('instructors.edit.header',

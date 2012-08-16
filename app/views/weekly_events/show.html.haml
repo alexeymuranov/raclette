@@ -1,19 +1,16 @@
 %h1= t '.header', :title => @weekly_event.title
 %section
   %dl.show
-    - @attributes.each do |attr|
 
-      = render 'shared/lists/attribute_in_description',
-               :model       => @weekly_event,
-               :attribute   => attr,
-               :column_type => @column_types[attr]
+    = render 'shared/lists/description',
+      :model                       => @weekly_event,
+      :attributes                  => @attributes
 
   %section
 
     = render 'shared/tables/filtered_index',
              :models           => @events,
              :attributes       => @events_attributes,
-             :column_types     => @events_column_types,
              :column_headers   => @events_column_headers,
              :html_table_id    => :events,
              :filtering_values => @filtering_values

@@ -4,13 +4,11 @@
 
       = render 'shared/forms/attribute',
                :form_builder => f,
-               :attribute    => attribute,
-               :column_type  => @column_types[attribute]
+               :attribute    => attribute
 
     = render 'shared/forms/attribute',
              :form_builder       => f,
              :attribute          => :email,
-             :column_type        => @column_types[:email],
              :input_html_options => { :type => :email }
 
     - is_current_user = (@user == current_user)
@@ -20,21 +18,18 @@
       = render 'shared/forms/attribute',
                :form_builder       => f,
                :attribute          => attribute,
-               :column_type        => @column_types[attribute],
                :input_html_options => { :disabled => is_current_user }
 
     - [ :manager, :secretary, :a_person ].each do |attribute|
 
       = render 'shared/forms/attribute',
                :form_builder => f,
-               :attribute    => attribute,
-               :column_type  => @column_types[attribute]
+               :attribute    => attribute
 
 = field_set_tag t('admin.users.edit.subheaders.authorized_ips') do
 
   = render 'shared/forms/selection_index',
            :attributes        => @known_ips_attributes,
-           :column_types      => @known_ips_column_types,
            :column_headers    => @known_ips_column_headers,
            :html_table_id     => :known_ips,
            :models            => @known_ips,
@@ -48,5 +43,4 @@
     = render 'shared/forms/attribute',
              :form_builder       => f,
              :attribute          => :comments,
-             :column_type        => @column_types[:comments],
              :input_html_options => { :maxlength => 1000 }

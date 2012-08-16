@@ -22,13 +22,11 @@
         = render 'shared/forms/attribute',
                  :form_builder       => f,
                  :attribute          => :new_password,
-                 :column_type        => @column_types[:new_password],
                  :input_html_options => { :type => :password }
 
         = render 'shared/forms/attribute',
                  :form_builder       => f,
                  :attribute          => :new_password_confirmation,
-                 :column_type        => @column_types[:new_password_confirmation],
                  :input_html_options => { :type => :password }
 
   .actions

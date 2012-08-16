@@ -11,21 +11,18 @@
 
         = render 'shared/forms/attribute',
                  :form_builder => person_fields,
-                 :attribute    => attribute,
-                 :column_type  => @column_types[attribute]
+                 :attribute    => attribute
 
       = render 'shared/forms/attribute',
                :form_builder       => person_fields,
                :attribute          => :email,
-               :column_type        => @column_types[:email],
                :input_html_options => { :type => :email }
 
     - [ :been_member_by, :free_tickets_count ].each do |attribute|
 
       = render 'shared/forms/attribute',
                :form_builder => f,
-               :attribute    => attribute,
-               :column_type  => @column_types[attribute]
+               :attribute    => attribute
 
   .actions
     = f.submit

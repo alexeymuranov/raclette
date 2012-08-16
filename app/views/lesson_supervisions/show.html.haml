@@ -1,23 +1,20 @@
 %h1= t '.header', :title => @lesson_supervision.unique_names
 %section
   %dl.show
-    - @attributes.each do |attr|
 
-      = render 'shared/lists/attribute_in_description',
-               :model       => @lesson_supervision,
-               :attribute   => attr,
-               :column_type => @column_types[attr]
+    = render 'shared/lists/description',
+      :model                       => @lesson_supervision,
+      :attributes                  => @attributes
 
 %section
   %h2= LessonSupervision.human_attribute_name(:instructors)
 
   - unless @instructors.empty?
-    = render('shared/tables/simple_index',
+    = render 'shared/tables/simple_index',
              :models                    => @instructors,
              :attributes                => @instructors_attributes,
-             :column_types              => @instructors_column_types,
              :column_headers            => @instructors_column_headers,
-             :html_table_id             => :instructors)
+             :html_table_id             => :instructors
 
 %footer
   = link_to edit_pictogram(3) + ' ' + t('lesson_supervisions.edit.header',

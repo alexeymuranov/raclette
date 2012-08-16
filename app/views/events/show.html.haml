@@ -4,7 +4,6 @@
   = render 'shared/lists/description',
     :model                       => @event,
     :attributes                  => @attributes,
-    :column_types                => @column_types,
     :singular_associations       => @singular_associations,
     :association_name_attributes => @association_name_attributes
 
@@ -12,23 +11,21 @@
   %h2= Event.human_attribute_name(:member_participants)
 
   - unless @member_participants.empty?
-    = render('shared/tables/simple_index',
+    = render 'shared/tables/simple_index',
              :models                    => @member_participants,
              :attributes                => @member_participants_attributes,
-             :column_types              => @member_participants_column_types,
              :column_headers            => @member_participants_column_headers,
-             :html_table_id             => :member_participants)
+             :html_table_id             => :member_participants
 
 %section
   %h2= Event.human_attribute_name(:non_member_participants)
 
   - unless @other_participants.empty?
-    = render('shared/tables/simple_index',
+    = render 'shared/tables/simple_index',
              :models                    => @other_participants,
              :attributes                => @other_participants_attributes,
-             :column_types              => @other_participants_column_types,
              :column_headers            => @other_participants_column_headers,
-             :html_table_id             => :other_participants)
+             :html_table_id             => :other_participants
 
 %footer
   = link_to edit_pictogram(3) + ' ' + t('events.edit.header',

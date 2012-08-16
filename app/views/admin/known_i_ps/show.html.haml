@@ -4,22 +4,21 @@
   %h2= t 'admin.known_i_ps.show.subheaders.known_ip_data'
 
   %dl.show
-    - @attributes.each do |attr|
 
-      = render 'shared/lists/attribute_in_description',
-               :attribute => attr,
-               :model     => @known_ip
+    = render 'shared/lists/description',
+      :model                       => @known_ip,
+      :attributes                  => @attributes
 
 %section
   %h2= Admin::KnownIP.human_attribute_name(:safe_users)
 
-  = render('shared/tables/simple_index',
-           :models                    => @safe_users,
-           :attributes                => @safe_users_attributes,
-           :column_types              => @users_column_types,
-           :column_headers            => @users_column_headers,
-           :resources_controller_name => Admin::UsersController.controller_path,
-           :html_table_id             => :safe_users) unless @safe_users.empty?
+  - unless @safe_users.empty?
+    = render 'shared/tables/simple_index',
+             :models                    => @safe_users,
+             :attributes                => @safe_users_attributes,
+             :column_headers            => @users_column_headers,
+             :resources_controller_name => Admin::UsersController.controller_path,
+             :html_table_id             => :safe_users
 
 %footer
   = link_to edit_pictogram(3) + ' ' + t('admin.known_i_ps.edit.header',

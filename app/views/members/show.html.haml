@@ -4,34 +4,30 @@
   %h2= t 'members.show.subheaders.member_data'
 
   %dl.show
-    - @attributes.each do |attr|
 
-      = render 'shared/lists/attribute_in_description',
-               :model       => @member,
-               :attribute   => attr,
-               :column_type => @column_types[attr]
+    = render 'shared/lists/description',
+      :model                       => @member,
+      :attributes                  => @attributes
 
 %section
   %h2= Member.human_attribute_name(:memberships)
 
   - unless @memberships.empty?
-    = render('shared/tables/simple_index',
+    = render 'shared/tables/simple_index',
              :models                    => @memberships,
              :attributes                => @memberships_attributes,
-             :column_types              => @memberships_column_types,
              :column_headers            => @memberships_column_headers,
-             :html_table_id             => :memberships)
+             :html_table_id             => :memberships
 
 %section
   %h2= Person.human_attribute_name(:attended_events)
 
   - unless @attended_events.empty?
-    = render('shared/tables/simple_index',
+    = render 'shared/tables/simple_index',
              :models                    => @attended_events,
              :attributes                => @attended_events_attributes,
-             :column_types              => @events_column_types,
              :column_headers            => @events_column_headers,
-             :html_table_id             => :attended_events)
+             :html_table_id             => :attended_events
 
 %footer
   = link_to edit_pictogram(3) + ' ' + t('members.edit.header',

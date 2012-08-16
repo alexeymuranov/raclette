@@ -4,11 +4,10 @@
   %h2= t 'admin.users.show.subheaders.user_data'
 
   %dl.show
-    - @main_attributes.each do |attr|
 
-      = render 'shared/lists/attribute_in_description',
-               :attribute => attr,
-               :model     => @user
+    = render 'shared/lists/description',
+      :model                       => @user,
+      :attributes                  => @main_attributes
 
 %section
   %h2= Admin::User.human_attribute_name(:safe_ips)
@@ -18,7 +17,6 @@
     = render 'shared/tables/simple_index',
              :models                    => @safe_ips,
              :attributes                => @safe_ips_attributes,
-             :column_types              => @known_ips_column_types,
              :column_headers            => @known_ips_column_headers,
              :html_table_id             => :safe_ips
 
@@ -27,11 +25,10 @@
 
   - unless @other_attributes.blank?
     %dl.show
-      - @other_attributes.each do |attr|
 
-        = render 'shared/lists/attribute_in_description',
-                 :attribute => attr,
-                 :model     => @user
+      = render 'shared/lists/description',
+        :model                       => @user,
+        :attributes                  => @other_attributes
 
 %footer
   = link_to edit_pictogram(3) + ' ' + t('admin.users.edit.header',

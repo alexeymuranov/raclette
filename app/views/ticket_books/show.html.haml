@@ -1,12 +1,10 @@
 %h1= t '.header', :title => @ticket_book.virtual_long_title
 %section
   %dl.show
-    - @attributes.each do |attr|
 
-      = render 'shared/lists/attribute_in_description',
-               :model       => @ticket_book,
-               :attribute   => attr,
-               :column_type => @column_types[attr]
+    = render 'shared/lists/description',
+      :model                       => @ticket_book,
+      :attributes                  => @attributes
 
 %footer
   = link_to edit_pictogram(3) + ' ' + t('ticket_books.edit.header',

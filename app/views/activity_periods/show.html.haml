@@ -1,12 +1,10 @@
 %h1= t '.header', :title => @activity_period.unique_title
 
 %dl.show
-  - @attributes.each do |attr|
 
-    = render 'shared/lists/attribute_in_description',
-             :model       => @activity_period,
-             :attribute   => attr,
-             :column_type => @column_types[attr]
+  = render 'shared/lists/description',
+    :model                       => @activity_period,
+    :attributes                  => @attributes
 
 %footer
   = link_to edit_pictogram(3) + ' ' + t('activity_periods.edit.header',
