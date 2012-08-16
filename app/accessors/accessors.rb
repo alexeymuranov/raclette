@@ -151,6 +151,8 @@ module Accessors
   end
 
   class Membership < ::Membership
+    include ActiveModelUtilities
+
     include ControllerAware
 
     def self.controller_class
