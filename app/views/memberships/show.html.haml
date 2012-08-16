@@ -1,2 +1,30 @@
-%h1 Memberships#show
-%p Find me in app/views/memberships/show.html.erb
+%h1= t '.header', :title => @membership.virtual_title
+
+= render 'shared/lists/description',
+  :model                       => @membership,
+  :attributes                  => @attributes,
+  :column_types                => @column_types,
+  :singular_associations       => @singular_associations,
+  :association_name_attributes => @association_name_attributes
+
+%footer
+  = link_to edit_pictogram(3) + ' ' + t('memberships.edit.header',
+                                        :title => @membership.virtual_title),
+            edit_membership_path(@membership),
+            :class => 'modify resource'
+  = link_to list_all_pictogram(3) + ' ' + t('memberships.index.header'),
+            memberships_path,
+            :class => 'display resource'
+
+-# End of the main body of the view
+
+- content_for :side_menu_list_items do
+  %li
+    = link_to list_all_pictogram + ' ' + t('memberships.index.title'),
+              memberships_path,
+              :class => 'display resource'
+  %li
+    = link_to add_pictogram + ' ' + t('memberships.new.title'),
+              new_membership_path,
+              :title => t('actions.create'),
+              :class => 'add resource'

@@ -31,21 +31,97 @@ class MembershipsController < ManagerController # FIXME!
     # @title = t('memberships.index.title')
   end
 
-  def edit_all
-    @membership_types = MembershipType.default_order
-    @activity_periods = ActivityPeriod.default_order
+  def show
+    @attributes = [:initial_price, :current_price]
+    @column_types = Membership.column_db_types
 
-    # @title = t('memberships.edit_all.title')
+    @singular_associations = [:activity_period, :type]
+    @association_name_attributes = { :activity_period => :unique_title,
+                                     :type            => :unique_title }
+
+    @membership = Membership.find(params[:id])
+
+    @title = t('memberships.show.title',
+               :title => @membership.virtual_title)
   end
 
-  def update_all
-    params[:membership_type_ids_for_activity_periods] ||= {}
+  def new
+    @membership = Membership.new
 
-    ActivityPeriod.all.each do |activity_period|
-      new_membership_type_ids = params[:membership_type_ids_for_activity_periods][activity_period.to_param]
-      activity_period.membership_type_ids = new_membership_type_ids
+    render_new_properly
+  end
+
+  def edit
+    @membership = Membership.find(params[:id])
+
+    render_edit_properly
+  end
+
+  def create
+    @membership = Membership.new(params[:membership])
+
+    if @membership.save
+      flash[:success] = t('flash.memberships.create.success',
+                          :title => @membership.virtual_title)
+      redirect_to :action => :show, :id => @membership
+    else
+      flash.now[:error] = t('flash.memberships.create.failure')
+
+      render_new_properly
     end
+  end
+
+  def update
+    @membership = Membership.find(params[:id])
+
+    if @membership.update_attributes(params[:membership])
+      flash[:notice] = t('flash.memberships.update.success',
+                         :title => @membership.virtual_title)
+      redirect_to :action => :show, :id => @membership
+    else
+      flash.now[:error] = t('flash.memberships.update.failure')
+
+      render_edit_properly
+    end
+  end
+
+  def destroy
+    @membership = Membership.find(params[:id])
+    @membership.destroy
+
+    flash[:notice] = t('flash.memberships.destroy.success',
+                       :title => @membership.virtual_title)
 
     redirect_to :action => :index
   end
+
+  private
+
+    def render_new_properly
+      @attributes = [:initial_price, :current_price]
+      @column_types = Membership.column_db_types
+
+      @belongs_to_associations = [:activity_period, :type]
+      @association_name_attributes = { :activity_period => :unique_title,
+                                       :type            => :unique_title }
+
+      @title = t('memberships.new.virtual_title')
+
+      render :new
+    end
+
+    def render_edit_properly
+      @attributes = [:initial_price, :current_price]
+      @column_types = Membership.column_db_types
+
+      @belongs_to_associations = [:activity_period, :type]
+      @association_name_attributes = { :activity_period => :unique_title,
+                                       :type            => :unique_title }
+
+      @title =  t('memberships.edit.title',
+                  :title => @membership.virtual_title)
+
+      render :edit
+    end
+
 end

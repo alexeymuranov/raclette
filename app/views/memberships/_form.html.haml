@@ -1,0 +1,26 @@
+= form_for @membership, :as => :membership,
+           :url => @membership_form_url do |f|
+
+  = render 'shared/error_messages/validation', :target => @membership
+
+  %dl.form_fields
+    - @belongs_to_associations.each do |assoc|
+      .dl_item.field
+        %dt
+          = t 'formats.attribute_name:',
+              :attribute => Membership.human_attribute_name(assoc)
+        %dd{ :class => 'input' }
+          = f.select_for_belongs_to assoc,
+                                    Membership.reflect_on_association(assoc).klass,
+                                    @association_name_attributes[assoc],
+                                    :include_blank => true
+
+    - @attributes.each do |attribute|
+
+      = render 'shared/forms/attribute',
+               :form_builder => f,
+               :attribute    => attribute,
+               :column_type  => @column_types[attribute]
+
+  .actions
+    = f.submit

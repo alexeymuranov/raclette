@@ -1,2 +1,17 @@
-%h1 Memberships#new
-%p Find me in app/views/memberships/new.html.erb
+%h1= t '.header'
+- @membership_form_url = memberships_path
+
+= render 'form'
+
+%footer
+  = link_to list_all_pictogram(3) + ' ' + t('memberships.index.header'),
+            memberships_path,
+            :class => 'display resource'
+
+-# End of the main body of the view
+
+- content_for :side_menu_list_items do
+  %li
+    = link_to list_all_pictogram + ' ' + t('memberships.index.title'),
+              memberships_path,
+              :class => 'display resource'
