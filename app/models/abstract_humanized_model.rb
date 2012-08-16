@@ -7,7 +7,7 @@ module AbstractHumanizedModel
     def human_column_headers
       @human_column_headers ||= Hash.new { |hash, key|
         name = human_attribute_name(key)
-        case column_db_types[attr]
+        case column_db_type(attr)
         when :boolean
           hash[key] = I18n.t('formats.attribute_name?', :attribute => name)
         else

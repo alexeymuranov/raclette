@@ -19,14 +19,15 @@ end
 ActionController.add_renderer :collection_ms_excel_2003_xml do |collection, options|
   self.content_type ||= Mime::MS_EXCEL_2003_XML
   klass = collection.klass
-  if klass.include?(PseudoColumns)
-    column_types = klass.column_db_types
-  else
-    column_types = {}
-    attributes.each do |attr|
-      column_types[attr] = klass.columns_hash[attr.to_s].type
-    end
-  end
+  # column_types = if klass.include?(PseudoColumns)
+  #                  klass.column_db_types
+  #                else
+  #                  {}.tap do |h|
+  #                    attributes.each { |attr|
+  #                      h[attr] = klass.columns_hash[attr.to_s].type
+  #                    }
+  #                  end
+  #                end
   ms_excel_2003_xml =
     AppRenderingHelpers::ms_excel_2003_xml_from_collection(
       collection, options[:only], options[:headers])
@@ -90,14 +91,15 @@ module AppRenderingHelpers
                                         column_headers)
     attributes ||= scoped_collection.klass.attribute_names
     klass = scoped_collection.klass
-    if klass.include?(PseudoColumns)
-      column_types = klass.column_db_types
-    else
-      column_types = {}
-      attributes.each do |attr|
-        column_types[attr] = klass.columns_hash[attr.to_s].type
-      end
-    end
+    column_types = if klass.include?(PseudoColumns)
+                     klass.column_db_types
+                   else
+                     {}.tap do |h|
+                       attributes.each { |attr|
+                         h[attr] = klass.columns_hash[attr.to_s].type
+                       }
+                     end
+                   end
 
     xml = ::Builder::XmlMarkup.new(:indent => 2)
     xml.instruct! :xml, :version    => '1.0',

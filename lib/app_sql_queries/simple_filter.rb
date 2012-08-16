@@ -14,11 +14,11 @@ class SimpleFilter
       column_name = attr.to_s
       attr = column_name.to_sym
 
-      if klass.include?(PseudoColumns)
-        filtering_column_type = klass.column_db_types[attr]
-      else
-        filtering_column_type = klass.columns_hash[column_name].type
-      end
+      filtering_column_type = if klass.include?(PseudoColumns)
+                                klass.column_db_type(attr)
+                              else
+                                klass.columns_hash[column_name].type
+                              end
 
       case filtering_column_type
       when :string, :delegated_string, :virtual_string
@@ -71,8 +71,8 @@ class SimpleFilter
       column_name = attr.to_s
 
       if klass.include?(PseudoColumns)
-        filtering_column_type = klass.column_db_types[attr]
-        column_sql            = klass.sql_for_columns[attr]
+        filtering_column_type = klass.column_db_type(attr)
+        column_sql            = klass.sql_for_column(attr)
       else
         filtering_column_type = klass.columns_hash[column_name].type
         column_sql            = "\"#{table_name}\".\"#{column_name}\""
