@@ -1,7 +1,3 @@
-- attributes = @members_attributes
-- column_types = @members_column_types
-- column_headers = @members_column_headers
-
 %nav.filtering_prefixes
   %form{:method => 'get'}
     = hidden_fields_from_nested_hash @saved_params
@@ -23,30 +19,30 @@
         :class => (@members_filtering_values.blank? ? '' : 'filtered ') |
                     + 'records filter'}                                 |
   %colgroup.attributes
-    - attributes.size.times do
+    - @members_attributes.size.times do
       %col
   %thead
     %tr
-      - attributes.each do |attr|
+      - @members_attributes.each do |attr|
 
         = render 'shared/tables/sorting_header',
                  :attribute     => attr,
-                 :column_type   => column_types[attr],
-                 :column_header => column_headers[attr],
+                 :column_type   => @members_column_types[attr],
+                 :column_header => @members_column_headers[attr],
                  :html_table_id => 'member_list_attributes'
 
     %tr
-      - attributes.each do |attr|
+      - @members_attributes.each do |attr|
 
         = render 'shared/tables/filtering_field',
                  :filter_form_id  => filter_form_id,
                  :attr            => attr,
                  :select_from     => Accessors::Member.possible_values_of(attr),
-                 :column_type     => column_types[attr],
+                 :column_type     => @members_column_types[attr],
                  :value_or_values => @members_filtering_values[attr]
 
     %tr
-      %td{:colspan => attributes.size, :class => 'actions'}
+      %td{:colspan => @members_attributes.size, :class => 'actions'}
         %button{ :form  => filter_form_id,
                  :name  => 'button',
                  :type  => 'submit',
@@ -59,11 +55,11 @@
           = t('buttons.clear')
     - unless @members_filtering_values.blank?
       %tr
-        - attributes.each do |attr|
+        - @members_attributes.each do |attr|
 
           = render 'shared/tables/filtering_value',
                    :value_or_values => @members_filtering_values[attr],
-                   :column_type     => column_types[attr]
+                   :column_type     => @members_column_types[attr]
 
 -# end # </table>
 
