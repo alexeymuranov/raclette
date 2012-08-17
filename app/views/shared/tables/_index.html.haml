@@ -2,7 +2,7 @@
 -#   models:
 -#   attributes:
 -#   column_types (optional):
--#   column_headers:
+-#   column_headers (optional):
 -#   html_table_id:
 -#   klass (optional):
 
@@ -12,6 +12,10 @@
 - unless local_assigns.key? :column_types
   -# It is assumed here that PseudoColumns module is included
   - column_types = klass.column_db_types
+
+- unless local_assigns.key? :column_headers
+  -# It is assumed here that AbstractHumanizedModel module is included
+  - column_headers = klass.human_column_headers
 
 = content_tag :table, :id => html_table_id, :class => 'records' do
   %colgroup.attributes
