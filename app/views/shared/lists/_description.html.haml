@@ -1,9 +1,13 @@
 -# Locals:
 -#   model:
 -#   attributes:
--#   column_types:
+-#   column_types (optional):
 -#   singular_associations:
 -#   association_name_attributes:
+
+- unless local_assigns.key? :column_types
+  -# It is assumed here that PseudoColumns module is included
+  - column_types = model.class.column_db_types
 
 %dl.show
   - if local_assigns.key?(:singular_associations)

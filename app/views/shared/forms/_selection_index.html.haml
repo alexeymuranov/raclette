@@ -1,12 +1,20 @@
 -# Locals:
 -#   attributes:
--#   column_types:
+-#   column_types (optional):
 -#   column_headers:
 -#   html_table_id:
 -#   models:
 -#   selected_models (optional):
 -#   id_prefix:
 -#   array_name:
+-#   klass (optional):
+
+- unless local_assigns.key? :klass
+  - klass = models.klass
+
+- unless local_assigns.key? :column_types
+  -# It is assumed here that PseudoColumns module is included
+  - column_types = klass.column_db_types
 
 - if local_assigns[:selected_models]
   - unselected_models = models - selected_models

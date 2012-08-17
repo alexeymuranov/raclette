@@ -1,12 +1,18 @@
 -# Locals:
 -#   models:
 -#   attributes:
--#   column_types:
+-#   column_types (optional):
 -#   column_headers:
 -#   html_table_id:
 -#   filtering_values:
+-#   klass (optional):
 
-- klass = models.klass
+- unless local_assigns.key? :klass
+  - klass = models.klass
+
+- unless local_assigns.key? :column_types
+  -# It is assumed here that PseudoColumns module is included
+  - column_types = klass.column_db_types
 
 %form{:method => :get}
   = hidden_fields_from_nested_hash params.slice(:filter, :sort)

@@ -10,11 +10,15 @@
 - model = form_builder.object
 - klass = model.class
 
-- unless local_assigns.has_key?(:column_type)
-  - unless (column = klass.columns_hash[attribute.to_s]).nil?
-    - column_type = column.type
-  - else
-    - column_type = nil
+- unless local_assigns.key? :column_type
+  -# It is assumed here that PseudoColumns module is included
+  - column_type = klass.column_db_type(attribute)
+
+-# - unless local_assigns.key?(:column_type)
+-#   - unless (column = klass.columns_hash[attribute.to_s]).nil?
+-#     - column_type = column.type
+-#   - else
+-#     - column_type = nil
 
 - input_parent_css_classes = []
 
