@@ -244,9 +244,9 @@ class Admin::UsersController < AdminController
       @known_ips_column_types = KnownIP.column_db_types
       @known_ips_column_headers = KnownIP.human_column_headers
 
-      @safe_ips = nil
       ip_sort_params = (params[:sort] && params[:sort][:safe_ips]) || {}
-      @other_ips = KnownIP.sort(KnownIP.scoped, ip_sort_params)
+      @known_ips = KnownIP.sort(KnownIP.scoped, ip_sort_params)
+      @safe_ips = nil
       @sorting_column = KnownIP.last_sort_column
       @sorting_direction = KnownIP.last_sort_direction
 
@@ -262,9 +262,8 @@ class Admin::UsersController < AdminController
       @known_ips_column_headers = KnownIP.human_column_headers
 
       ip_sort_params = (params[:sort] && params[:sort][:safe_ips]) || {}
+      @known_ips = KnownIP.sort(KnownIP.scoped, ip_sort_params)
       @safe_ips = KnownIP.sort(@user.safe_ips, ip_sort_params)
-      @other_ips = KnownIP.sort(KnownIP.scoped, ip_sort_params) -
-        @safe_ips
       @sorting_column = KnownIP.last_sort_column
       @sorting_direction = KnownIP.last_sort_direction
 

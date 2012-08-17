@@ -3,10 +3,15 @@
 -#   column_types:
 -#   column_headers:
 -#   html_table_id:
--#   selected_models:
--#   unselected_models:
+-#   models:
+-#   selected_models (optional):
 -#   id_prefix:
 -#   array_name:
+
+- if local_assigns[:selected_models]
+  - unselected_models = models - selected_models
+- else
+  - unselected_models = models
 
 = content_tag :table, :class => 'form_fields' do
   %colgroup
