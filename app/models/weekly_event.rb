@@ -3,13 +3,11 @@
 require 'app_active_record_extensions/filtering'
 require 'app_active_record_extensions/sorting'
 require 'app_active_record_extensions/pseudo_columns'
-require 'app_parsers/time_duration_parser'
 require 'app_validations/weekly_event'
 
 class WeeklyEvent < ActiveRecord::Base
   include Filtering
   include Sorting
-  include TimeDurationParser
 
   include PseudoColumns
   include AbstractHumanizedModel
@@ -68,9 +66,9 @@ class WeeklyEvent < ActiveRecord::Base
   # Callbacks:
 
   # Workaround, Rails does not treat time columns well:
-  before_save :fix_time_values__strip_date,
-              :calculate_duration,
-              :fix_start_and_end_dates
+  before_validation :fix_time_values__strip_date,
+                    :calculate_duration,
+                    :fix_start_and_end_dates
 
   # Scopes:
   scope :default_order, order("#{ table_name }.end_on DESC, "\
@@ -100,16 +98,18 @@ class WeeklyEvent < ActiveRecord::Base
   private
 
     def fix_time_values__strip_date # NOTE: only nullifies the date
-      self.start_time = start_time.change(:year => 0, :month => 1, :day => 1)
-      self.end_time = end_time.change(:year => 0, :month => 1, :day => 1)
-      # self.start_time = start_time - start_time.beginning_of_day
-      # self.end_time = end_time - end_time.beginning_of_day
+      self.start_time &&= start_time.change(:year => 0, :month => 1, :day => 1)
+      self.end_time   &&= end_time.change(:year => 0, :month => 1, :day => 1)
     end
 
     def calculate_duration
-      duration = end_time - start_time # NOTE: duration in seconds
-      duration += 1.day if duration < 1.day
-      self.duration_minutes = (duration / 1.minute).to_i
+      if start_time && end_time
+        duration = end_time - start_time # NOTE: duration in seconds
+        duration += 1.day if duration < 0
+        self.duration_minutes = (duration / 1.minute).to_i
+      else
+        duration = nil
+      end
     end
 
     def fix_start_and_end_dates
