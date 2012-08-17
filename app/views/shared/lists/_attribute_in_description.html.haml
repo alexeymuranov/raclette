@@ -31,7 +31,7 @@
     %dt<
       = t 'formats.attribute_name:',
           :attribute => klass.human_attribute_name(attribute)
-    %dd
+    %dd{:class => column_type}
       - unless value.nil?
         - shown_value = l value, :format => :custom
         %time<
@@ -43,7 +43,7 @@
     %dt<
       = t 'formats.attribute_name:',
           :attribute => klass.human_attribute_name(attribute)
-    %dd
+    %dd.time
       - unless value.nil?
         - shown_value = l value, :format => :time_of_the_day
         %time<
@@ -55,7 +55,7 @@
     %dt<
       = t 'formats.attribute_name:',
           :attribute => klass.human_attribute_name(attribute)
-    %dd
+    %dd.number
       - unless value.nil?
         - if readonly
           %b= value
@@ -65,7 +65,7 @@
     %dt<
       = t 'formats.attribute_name:',
           :attribute => klass.human_attribute_name(attribute)
-    %dd
+    %dd{:class => column_type}
       - unless value.nil?
         - if readonly
           %b= value

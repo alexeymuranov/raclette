@@ -5,10 +5,16 @@
 - case column_type
 - when :boolean
   %td.boolean
-    = boolean_to_picto value, size=2
+    = boolean_to_picto value, size = 2
 - when :integer
   %td.number
     = value
+- when :date, :datetime
+  %td{:class => column_type}
+    = l(value, :format => :custom) if value
+- when :time
+  %td.time
+    = l(value, :format => :time_of_the_day) if value
 - else
-  %td
+  %td{:class => column_type}
     = value
