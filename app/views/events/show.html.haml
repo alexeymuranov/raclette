@@ -14,7 +14,6 @@
     = render 'shared/tables/simple_index',
              :models                    => @member_participants,
              :attributes                => @member_participants_attributes,
-             :column_headers            => @member_participants_column_headers,
              :html_table_id             => :member_participants
 
 %section
@@ -24,7 +23,6 @@
     = render 'shared/tables/simple_index',
              :models                    => @other_participants,
              :attributes                => @other_participants_attributes,
-             :column_headers            => @other_participants_column_headers,
              :html_table_id             => :other_participants
 
 %footer
