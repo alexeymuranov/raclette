@@ -43,10 +43,24 @@ module FormsMarkupHelper
 
     include ActionView::Helpers::TagHelper
 
+    def date_field(method, options = {})
+      ActionView::Helpers::InstanceTag.new(@object_name, method, @template,
+        options.delete(:object)).to_input_field_tag('date', options)
+    end
+
+    def local_time_field(method, options = {})
+      ActionView::Helpers::InstanceTag.new(@object_name, method, @template,
+        options.delete(:object)).to_input_field_tag('time-local', options)
+    end
+
+    def local_datetime_field(method, options = {})
+      ActionView::Helpers::InstanceTag.new(@object_name, method, @template,
+        options.delete(:object)).to_input_field_tag('datetime-local', options)
+    end
+
     def label(method, content_or_options = nil, options = {}, &block)
-      if content_or_options && content_or_options.class == Hash
-        content = nil
-        options = content_or_options
+      if content_or_options && content_or_options.is_a?(Hash)
+        options, content = content_or_options, nil
       else
         content = content_or_options
       end
