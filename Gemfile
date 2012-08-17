@@ -33,6 +33,7 @@ group :assets do
 end
 
 gem 'jquery-rails'
+gem 'jquery-ui-rails' # jQuery UI
 
 gem 'haml'  # use HAML templates (instead of ERB)
 
