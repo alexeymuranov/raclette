@@ -14,7 +14,7 @@ gem 'rails', '~> 3.2.0', :git => 'git://github.com/alexeymuranov/rails.git', :br
 # gem 'will_paginate'  # pagination
 gem 'kaminari'  # pagination
 
-gem 'squeel'  # queries without SQL
+# gem 'squeel'  # queries without SQL
 
 # gem 'spreadsheet'  # to generate XLS (Excel 2003 XML is used instead)
 
@@ -50,6 +50,8 @@ gem 'bourbon'  # better Sass
 # gem 'capistrano'
 
 gem 'rubyzip'  # reading and writing zip files
+
+gem 'ruby-duration'  # Immutable time duration type
 
 group :development do
   gem 'sqlite3'
