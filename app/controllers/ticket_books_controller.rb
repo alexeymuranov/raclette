@@ -50,14 +50,12 @@ class TicketBooksController < ManagerController
 
       requested_format.ms_excel_2003_xml_zip do
         render :collection_ms_excel_2003_xml_zip => @ticket_books,
-               :only                             => @attributes,
-               :headers                          => @column_headers
+               :only                             => @attributes
       end
 
       requested_format.csv_zip do
         render :collection_csv_zip => @ticket_books,
-               :only               => @attributes,
-               :headers            => @column_headers
+               :only               => @attributes
       end
     end
   end
