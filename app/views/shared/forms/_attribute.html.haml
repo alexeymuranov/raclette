@@ -14,14 +14,6 @@
   -# It is assumed here that PseudoColumns module is included
   - column_type = klass.column_db_type(attribute)
 
--# - unless local_assigns.key?(:column_type)
--#   - unless (column = klass.columns_hash[attribute.to_s]).nil?
--#     - column_type = column.type
--#   - else
--#     - column_type = nil
-
-- input_parent_css_classes = []
-
 - required = klass.attr_required?(attribute)
 - readonly = klass.attr_readonly?(attribute)
 - editable = model.attr_editable?(attribute)
@@ -45,54 +37,57 @@
     - else
       %b= label_content
 
-  - if column_type == :text
-    - input_parent_css_classes << 'long_text'
-
-  = content_tag :dd, :class => input_parent_css_classes.join(' ') do
-    - if editable
-      - if select_from
-        = form_builder.select attribute,
-                              options_for_select(select_from,
-                                                 model.public_send(attribute)),
-                              input_html_options
-      - else
-        - case column_type
-        - when :boolean
-          = form_builder.check_box attribute, input_html_options
-        - when :integer
-          = form_builder.number_field attribute, input_html_options
-        - when :date
-          -# input_html_options[:type] = 'date'
-          = form_builder.date_select attribute,
-              { :include_blank => true,
-                :start_year    => Time.now.year - 1,
-                :end_year      => Time.now.year + 2 },
-              input_html_options
-        - when :datetime
-          -# input_html_options[:type] = 'datetime-local'
-          = form_builder.datetime_select attribute,
-              { :include_blank => true,
-                :start_year    => Time.now.year - 1,
-                :end_year      => Time.now.year + 2 },
-              input_html_options
-        - when :time
-          -# input_html_options[:type] = 'time-local'
-          = form_builder.time_select attribute,
-                                     { :include_blank => true },
-                                     input_html_options
-        - when :text
-          = form_builder.text_area attribute, input_html_options
-        - else
-          = form_builder.text_field attribute, input_html_options
+  - if editable
+    - if select_from
+      = form_builder.select attribute,
+                            options_for_select(select_from,
+                                               model.public_send(attribute)),
+                            input_html_options
     - else
-      - value = model.public_send(attribute)
-
       - case column_type
       - when :boolean
-        = boolean_to_picto(value, size=2)
+        %dd.boolean
+          = form_builder.check_box attribute, input_html_options
+      - when :integer
+        %dd.number
+          = form_builder.number_field attribute, input_html_options
       - when :date
-        = l value, :format => :long
+        -# Defined in my custom form builder
+        %dd.date
+          = form_builder.date_field attribute, input_html_options
       - when :datetime
-        = l value, :format => :custom
+        -# Defined in my custom form builder
+        %dd.datetime
+          = form_builder.local_datetime_field attribute, input_html_options
+      - when :time
+        -# Defined in my custom form builder
+        %dd.time
+          = form_builder.local_time_field attribute, input_html_options
+      - when :text
+        %dd.long_text
+          = form_builder.text_area attribute, input_html_options
       - else
+        %dd{:class => column_type}
+          = form_builder.text_field attribute, input_html_options
+  - else
+    - value = model.public_send(attribute)
+
+    - case column_type
+    - when :boolean
+      %dd.boolean
+        = boolean_to_picto(value, size=2)
+    - when :integer
+      %dd.number
+        = value
+    - when :date
+      %dd.boolean
+        = l(value, :format => :long) if value
+    - when :datetime
+      %dd.boolean
+        = l(value, :format => :custom) if value
+    - when :time
+      %dd.time
+        - l(value, :format => :time_of_the_day) if value
+    - else
+      %dd{:class => column_type}
         = value
