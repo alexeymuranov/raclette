@@ -67,10 +67,6 @@ class Admin::UsersController < AdminController
       @mailing_list = @mailing_list_users.collect(&:formatted_email).join(', ')
     end
 
-    unless request.format == Mime::JS
-      @column_headers = User.human_column_headers
-    end
-
     respond_to do |requested_format|
       requested_format.html do
 
@@ -232,7 +228,6 @@ class Admin::UsersController < AdminController
     def render_new_properly
       # NOTE: this seems redundant because coincides with KnownIP.all_sorting_columns
       @known_ips_attributes = [:ip, :description]
-      @known_ips_column_headers = KnownIP.human_column_headers
 
       ip_sort_params = (params[:sort] && params[:sort][:safe_ips]) || {}
       @known_ips = KnownIP.sort(KnownIP.scoped, ip_sort_params)
@@ -247,7 +242,6 @@ class Admin::UsersController < AdminController
 
     def render_edit_properly
       @known_ips_attributes = [:ip, :description]
-      @known_ips_column_headers = KnownIP.human_column_headers
 
       ip_sort_params = (params[:sort] && params[:sort][:safe_ips]) || {}
       @known_ips = KnownIP.sort(KnownIP.scoped, ip_sort_params)

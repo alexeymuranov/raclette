@@ -74,8 +74,6 @@ class WeeklyEventsController < ManagerController
     @sorting_column = WeeklyEvent.last_sort_column
     @sorting_direction = WeeklyEvent.last_sort_direction
 
-    @column_headers = WeeklyEvent.human_column_headers
-
     respond_to do |requested_format|
       requested_format.html do
 

@@ -45,8 +45,6 @@ class MembershipTypesController < ManagerController
     @sorting_column = MembershipType.last_sort_column
     @sorting_direction = MembershipType.last_sort_direction
 
-    @column_headers = MembershipType.human_column_headers
-
     respond_to do |requested_format|
       requested_format.html do
 

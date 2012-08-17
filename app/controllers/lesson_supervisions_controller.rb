@@ -44,8 +44,6 @@ class LessonSupervisionsController < SecretaryController
     @sorting_column = LessonSupervision.last_sort_column
     @sorting_direction = LessonSupervision.last_sort_direction
 
-    @column_headers = LessonSupervision.human_column_headers
-
     respond_to do |requested_format|
       requested_format.html do
 
@@ -80,7 +78,6 @@ class LessonSupervisionsController < SecretaryController
 
     @instructors_attributes = [:first_name, :last_name, :email]
     @instructors = @lesson_supervision.instructors.default_order
-    @instructors_column_headers = Instructor.human_column_headers
 
     @title = t('lesson_supervisions.show.title',
                :title => @lesson_supervision.unique_names)

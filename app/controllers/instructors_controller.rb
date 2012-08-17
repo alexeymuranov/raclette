@@ -47,8 +47,6 @@ class InstructorsController < ManagerController
         @mailing_list_instructors.collect(&:formatted_email).join(', ')
     end
 
-    @column_headers = Instructor.human_column_headers
-
     respond_to do |requested_format|
       requested_format.html do
         # Paginate:

@@ -82,10 +82,6 @@ class MembersController < SecretaryController
         join(', ')
     end
 
-    unless request.format == Mime::JS
-      @column_headers = Member.human_column_headers
-    end
-
     respond_to do |requested_format|
       requested_format.html do
         # Paginate:
@@ -149,12 +145,10 @@ class MembersController < SecretaryController
 
     @attended_events_attributes = [ :title, :event_type, :date, :start_time ]
     @attended_events = @member.attended_events
-    @events_column_headers = Event.human_column_headers
 
     @memberships_attributes = [:title, :duration_months, :end_date]
     @memberships = @member.memberships.with_type.with_activity_period.
       with_pseudo_columns(*@memberships_attributes)
-    @memberships_column_headers = Membership.human_column_headers
 
     @title = t('members.show.title', :name => @member.virtual_full_name)
   end

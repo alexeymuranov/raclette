@@ -92,7 +92,6 @@ class EventsController < SecretaryController
     @events = Event.sort(@events, sort_params)
     @sorting_column = Event.last_sort_column
     @sorting_direction = Event.last_sort_direction
-    @column_headers = Event.human_column_headers
 
     respond_to do |requested_format|
       requested_format.html do
@@ -145,12 +144,10 @@ class EventsController < SecretaryController
     @member_participants_attributes = [ :ordered_full_name, :email ]
     @member_participants = @event.member_participants.
       with_pseudo_columns(*@member_participants_attributes)
-    @member_participants_column_headers = Member.human_column_headers
 
     @other_participants_attributes = [ :ordered_full_name, :email ]
     @other_participants = @event.non_member_participants.
       with_pseudo_columns(*@other_participants_attributes)
-    @other_participants_column_headers = Person.human_column_headers
 
     @title = t('events.show.title', :title => @event.title)
   end

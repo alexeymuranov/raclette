@@ -29,8 +29,6 @@ class Admin::KnownIPsController < AdminController
   def index
     @attributes = [:ip, :description]
 
-    @column_headers = KnownIP.human_column_headers
-
     # Sort:
     @known_ips = KnownIP.scoped
     sort_params = (params[:sort] && params[:sort][:known_ips]) || {}
@@ -60,8 +58,6 @@ class Admin::KnownIPsController < AdminController
     @safe_users = User.sort(@safe_users, sort_params)
     @sorting_column = User.last_sort_column
     @sorting_direction = User.last_sort_direction
-
-    @users_column_headers = User.human_column_headers
 
     @title = t('admin.known_i_ps.show.title', :ip => @known_ip.ip)
   end

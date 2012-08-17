@@ -42,7 +42,6 @@ class ActivityPeriodsController < ManagerController
     @activity_periods = ActivityPeriod.sort(@activity_periods, sort_params)
     @sorting_column = ActivityPeriod.last_sort_column
     @sorting_direction = ActivityPeriod.last_sort_direction
-    @column_headers = ActivityPeriod.human_column_headers
 
     respond_to do |requested_format|
       requested_format.html do

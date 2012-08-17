@@ -28,7 +28,7 @@
         = render 'shared/tables/sorting_header',
                  :attribute     => attr,
                  :column_type   => Member.column_db_type(attr),
-                 :column_header => @members_column_headers[attr],
+                 :column_header => Member.human_column_header(attr),
                  :html_table_id => 'member_list_attributes'
 
     %tr

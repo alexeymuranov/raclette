@@ -31,8 +31,6 @@ class TicketBooksController < ManagerController
     @sorting_column = TicketBook.last_sort_column
     @sorting_direction = TicketBook.last_sort_direction
 
-    @column_headers = TicketBook.human_column_headers
-
     respond_to do |requested_format|
       requested_format.html do
 
