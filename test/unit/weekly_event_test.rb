@@ -1,11 +1,15 @@
 require 'test_helper'
 
 class WeeklyEventTest < ActiveSupport::TestCase
+  setup do
+    @weekly_practica_du_jeudi = weekly_events(:practica_du_jeudi)
+  end
+
   test "should build events" do
-    weekly_event = weekly_events(:practica_du_jeudi)
-    weekly_event.build_events
-    weekly_event.save!
-    assert_equal weekly_event.events.count, 54
+    assert_difference('@weekly_practica_du_jeudi.events.count', 52) do
+      @weekly_practica_du_jeudi.build_events
+      @weekly_practica_du_jeudi.save!
+    end
   end
 end
 

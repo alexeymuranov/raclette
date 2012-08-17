@@ -7,13 +7,13 @@ one:
   lesson: false
   date: 2011-05-08
   start_time: "18:00"
-  duration_minutes: <%= 60 %>
+  duration_minutes: 60
   end_time: "19:00"
   location: Tangueando
   address_id: 1
   weekly: false
-  weekly_event: practica_du_jeudi
-  supervisors: MyString
+  weekly_event: ~
+  supervisors: Nobody
   lesson_supervision_id: 1
   entry_fee_tickets: 1
   member_entry_fee: 9.99
@@ -60,9 +60,9 @@ current:
   locked: false
   lesson: false
   date: <%= Date.today %>
-  start_time: <%= Time.now.change(:min => 0).strftime("%T") %>
+  start_time: <%= "\"#{ Time.now.change(:min => 0).strftime("%T") }\"" %>
   duration_minutes: <%= 2*60 %>
-  end_time: <%= (Time.now.change(:min => 0) + 2.hours).strftime("%T") %>
+  end_time: <%= "\"#{ (Time.now.change(:min => 0) + 2.hours).strftime("%T") }\"" %>
   location: Tangueando
   address_id: 1
   weekly: false
