@@ -136,8 +136,7 @@ class EventsController < SecretaryController
                     :entry_fees_collected ]
 
     @singular_associations = [ :weekly_event ]
-    @association_name_attributes = {
-      :weekly_event => :virtual_long_title }
+    @association_name_attributes = { :weekly_event => :virtual_long_title }
 
     @event = Event.find(params[:id])
 
@@ -172,7 +171,7 @@ class EventsController < SecretaryController
     attributes = params[:event]
     # XXX: this modifies `params` in place (`attibutes` is a shallow copy)
     attributes[:lesson] =
-      %w[Cours Atelier Initiation].include?(attributes[:event_type])
+      Set['Cours', 'Atelier', 'Initiation'].include?(attributes[:event_type])
     @event = Event.new(attributes)
 
     if @event.save
@@ -220,7 +219,6 @@ class EventsController < SecretaryController
                       :end_time,
                       :supervisors,
                       :location,
-                      # :weekly,
                       :entry_fee_tickets ]
 
       @weekly_events = WeeklyEvent.not_over
@@ -237,11 +235,7 @@ class EventsController < SecretaryController
                       :end_time,
                       :supervisors,
                       :location,
-                      :weekly,
-                      :entry_fee_tickets,
-                      :entries_count,
-                      :tickets_collected,
-                      :entry_fees_collected ]
+                      :entry_fee_tickets ]
 
       @title =  t('events.edit.title', :title => @event.title)
 
