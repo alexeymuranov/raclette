@@ -67,9 +67,9 @@ class WeeklyEvent < ActiveRecord::Base
   # Callbacks:
 
   # Workaround, Rails does not treat time columns well:
-  before_validation :fix_time_values__strip_date,
-                    :calculate_duration,
-                    :fix_start_and_end_dates
+  # before_validation :fix_time_values__strip_date,
+  before_validation :calculate_duration,
+                    :adjust_start_and_end_dates
 
   # Scopes:
   scope :default_order, order("#{ table_name }.end_on DESC, "\
@@ -79,7 +79,7 @@ class WeeklyEvent < ActiveRecord::Base
   # Public instance methods
 
   def build_events
-    fix_start_and_end_dates
+    adjust_start_and_end_dates
     (start_on..end_on).step(7) do |date|
       events.build(:date => date).set_attributes_from_weekly_event
     end
@@ -105,7 +105,9 @@ class WeeklyEvent < ActiveRecord::Base
 
     def calculate_duration
       if start_time && end_time
-        duration = end_time - start_time # NOTE: duration in seconds
+        s_t = start_time.change(:year => 0, :month => 1, :day => 1)
+        e_t = end_time.change(:year => 0, :month => 1, :day => 1)
+        duration = e_t - s_t # NOTE: duration in seconds
         duration += 1.day if duration < 0
         self.duration_minutes = (duration / 1.minute).to_i
       else
@@ -113,7 +115,7 @@ class WeeklyEvent < ActiveRecord::Base
       end
     end
 
-    def fix_start_and_end_dates
+    def adjust_start_and_end_dates
       self.start_on += (week_day    - start_on.wday) % 7
       self.end_on   -= (end_on.wday - week_day     ) % 7
     end

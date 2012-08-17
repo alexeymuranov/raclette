@@ -91,7 +91,8 @@ class Event < ActiveRecord::Base
   # Callbacks:
 
   # Workaround, Rails does not treat time columns well:
-  before_validation :fix_time_values__strip_date, :calculate_duration
+  # before_validation :fix_time_values__strip_date, :calculate_duration
+  before_validation :calculate_duration
 
   # Scopes:
   scope :default_order, order("#{ table_name }.date DESC, "\
@@ -194,7 +195,9 @@ class Event < ActiveRecord::Base
 
     def calculate_duration
       if start_time && end_time
-        duration = end_time - start_time # NOTE: duration in seconds
+        s_t = start_time.change(:year => 0, :month => 1, :day => 1)
+        e_t = end_time.change(:year => 0, :month => 1, :day => 1)
+        duration = e_t - s_t # NOTE: duration in seconds
         duration += 1.day if duration < 0
         self.duration_minutes = (duration / 1.minute).to_i
       else
