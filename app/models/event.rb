@@ -3,14 +3,12 @@
 require 'app_active_record_extensions/filtering'
 require 'app_active_record_extensions/sorting'
 require 'app_active_record_extensions/pseudo_columns'
-# require 'app_parsers/time_duration_parser'
 require 'app_validations/event'
 
 class Event < ActiveRecord::Base
   include Filtering
   include Sorting
   self.default_sorting_column = :date
-  # include TimeDurationParser
 
   include PseudoColumns
   include AbstractHumanizedModel
@@ -92,7 +90,7 @@ class Event < ActiveRecord::Base
   # Callbacks:
 
   # Workaround, Rails does not treat time columns well:
-  before_save :fix_time_values__strip_date, :calculate_duration
+  before_validation :fix_time_values__strip_date, :calculate_duration
 
   # Scopes:
   scope :default_order, order("#{ table_name }.date DESC, "\
@@ -174,9 +172,10 @@ class Event < ActiveRecord::Base
   end
 
   # Transactions
-  def create_anonymous_entry(fee_payed = common_entry_fee, entry_type = 'GuestEntry')
-    event_entry_attributes = { :participant_entry_type => 'GuestEntry' }
-    if fee_payed && fee_payed != 0
+  def create_anonymous_entry(fee_payed  = common_entry_fee,
+                             entry_type = 'GuestEntry')
+    event_entry_attributes = { :participant_entry_type => entry_type }
+    if fee_payed && fee_payed > 0
       payment_attributes = { :amount => fee_payed,
                              :date   => date }
       event_entry_attributes[:payment_attributes] = payment_attributes
@@ -188,16 +187,18 @@ class Event < ActiveRecord::Base
   private
 
     def fix_time_values__strip_date # NOTE: only nullifies the date
-      self.start_time = start_time.change(:year => 0, :month => 1, :day => 1)
-      self.end_time = end_time.change(:year => 0, :month => 1, :day => 1)
-      # self.start_time = start_time - start_time.beginning_of_day
-      # self.end_time = end_time - end_time.beginning_of_day
+      self.start_time &&= start_time.change(:year => 0, :month => 1, :day => 1)
+      self.end_time   &&= end_time.change(:year => 0, :month => 1, :day => 1)
     end
 
     def calculate_duration
-      duration = end_time - start_time # NOTE: duration in seconds
-      duration += 1.day if duration < 1.day
-      self.duration_minutes = (duration / 1.minute).to_i
+      if start_time && end_time
+        duration = end_time - start_time # NOTE: duration in seconds
+        duration += 1.day if duration < 0
+        self.duration_minutes = (duration / 1.minute).to_i
+      else
+        duration = nil
+      end
     end
 
 end

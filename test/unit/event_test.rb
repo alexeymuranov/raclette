@@ -24,6 +24,13 @@ class EventTest < ActiveSupport::TestCase
     assert_equal Event.a_current, events(:current)
   end
 
+  test "should recalculate duration_minutes on save" do
+    assert_difference('@event.duration_minutes', 60) do
+      @event.end_time += 1.hour
+      @event.save!
+    end
+  end
+
   test "should create anonymous entry" do
     assert_difference('EventEntry.count') do
       entry = @event.create_anonymous_entry
