@@ -57,9 +57,9 @@ class Event < ActiveRecord::Base
             :allow_nil => true
 
   # validates :start_time, :end_time,
-  #               :length    => { :maximum => 8 }, # may allow to use AM/PM
-  #               :format    => /\A\d{1,2}[:h]\d{2}?\z/,
-  #               :allow_nil => true
+  #           :length    => { :maximum => 8 }, # may allow to use AM/PM
+  #           :format    => /\A\d{1,2}[:h]\d{2}?\z/,
+  #           :allow_nil => true
 
   validates :duration_minutes, :inclusion => 5..(24*60),
                                :allow_nil => true
@@ -198,7 +198,7 @@ class Event < ActiveRecord::Base
       duration = end_time - start_time # NOTE: duration in seconds
       duration += 1.day if duration < 1.day
       self.duration_minutes = (duration / 1.minute).to_i
-     end
+    end
 
 end
 

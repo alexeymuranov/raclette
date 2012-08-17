@@ -57,8 +57,7 @@ module PseudoColumns
     # to the current ... scope (not in the above sense :)), in particular,
     # `self` would be `PseudoColumns` in all descendants.
     def with_pseudo_columns(*attributes)
-      attributes.blank? ? scoped :
-        select(with_pseudo_columns_sql(*attributes))
+      attributes.blank? ? scoped : select(with_pseudo_columns_sql(*attributes))
     end
 
     private
