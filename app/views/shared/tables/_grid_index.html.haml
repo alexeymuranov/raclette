@@ -40,15 +40,33 @@
         - associated_models2.each do |mod2|
           %td.grid_index
             - if model = klass.public_send(find_by_ids_method, mod1.id, mod2.id)
-              = link_to send(attribute_presentation_helper, model),
-                        { :controller => model.controller_path,
-                          :action     => :show,
-                          :id         => model },
-                        :title => t('actions.read'),
-                        :class => 'display resource'
+              %span
+                = link_to send(attribute_presentation_helper, model),
+                          { :controller => model.controller_path,
+                            :action     => :show,
+                            :id         => model },
+                          :title => t('actions.read'),
+                          :class => 'display resource'
+              %span.operation
+                = link_to edit_pictogram(2),
+                          { :controller => model.controller_path,
+                            :action     => :edit,
+                            :id         => model },
+                          :title => t('actions.update'),
+                          :class => 'modify resource'
+              %span.operation
+                = link_to delete_pictogram(2),
+                          { :controller => model.controller_path,
+                            :action     => :destroy,
+                            :id         => model },
+                          :data => { :confirm => t('questions.are_you_sure?') },
+                          :method  => :delete,
+                          :title   => t('actions.delete'),
+                          :class   => 'modify resource'
             - else
-              = link_to add_pictogram(2) + ' ' + t('actions.create'),
-                        { :controller => klass.controller_path,
-                          :action     => :new },
-                        :title => t('actions.create'),
-                        :class => 'add resource'
+              %span
+                = link_to add_pictogram(2) + ' ' + t('actions.create'),
+                          { :controller => klass.controller_path,
+                            :action     => :new },
+                          :title => t('actions.create'),
+                          :class => 'add resource'
