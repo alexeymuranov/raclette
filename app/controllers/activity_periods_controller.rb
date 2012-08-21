@@ -97,8 +97,7 @@ class ActivityPeriodsController < ManagerController
   end
 
   def create
-    @activity_period = ActivityPeriod.new
-    @activity_period.assign_attributes(params[:activity_period])
+    @activity_period = ActivityPeriod.new(params[:activity_period])
 
     if @activity_period.save
       flash[:success] = t('flash.activity_periods.create.success',

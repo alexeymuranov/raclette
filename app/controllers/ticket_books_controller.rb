@@ -80,8 +80,7 @@ class TicketBooksController < ManagerController
   end
 
   def create
-    @ticket_book = TicketBook.new
-    @ticket_book.assign_attributes(params[:ticket_book])
+    @ticket_book = TicketBook.new(params[:ticket_book])
 
     if @ticket_book.save
       flash[:success] = t('flash.ticket_books.create.success',

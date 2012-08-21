@@ -99,8 +99,7 @@ class MembershipTypesController < ManagerController
   end
 
   def create
-    @membership_type = MembershipType.new
-    @membership_type.assign_attributes(params[:membership_type])
+    @membership_type = MembershipType.new(params[:membership_type])
 
     if @membership_type.save
       flash[:success] = t('flash.membership_types.create.success',
