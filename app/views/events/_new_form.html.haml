@@ -4,7 +4,14 @@
   = render 'shared/error_messages/validation', :target => @event
 
   %dl.form_fields
-    .dl_item.field
+
+    -# = render 'shared/forms/belongs_to_association',
+    -#          :form_builder => f,
+    -#          :association  => :weekly_event,
+    -#          :association_name_attribute => :virtual_long_title,
+    -#          :collection   => @weekly_events
+
+    .item.field
       %dt
         = t 'formats.attribute_name:',
             :attribute => Event.human_attribute_name(:weekly_event)
@@ -22,13 +29,10 @@
                        :formmethod => 'get',
                        :class      => 'prefill'
 
-    .dl_item.field
-      %dt
-        = t 'formats.attribute_name:',
-            :attribute => Event.human_attribute_name(:lesson_supervision)
-      %dd{ :class => 'input' }
-        = f.select_for_belongs_to :lesson_supervision, :unique_names, nil,
-                                  :include_blank => true
+    = render 'shared/forms/belongs_to_association',
+             :form_builder => f,
+             :association  => :lesson_supervision,
+             :association_name_attribute => :unique_names
 
     - @attributes.each do |attribute|
 

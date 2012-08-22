@@ -5,14 +5,11 @@
 
   %dl.form_fields
     - @belongs_to_associations.each do |assoc|
-      .dl_item.field
-        %dt
-          = t 'formats.attribute_name:',
-              :attribute => Membership.human_attribute_name(assoc)
-        %dd{ :class => 'input' }
-          = f.select_for_belongs_to assoc, @association_name_attributes[assoc],
-                                    nil,
-                                    :include_blank => true
+
+      = render 'shared/forms/belongs_to_association',
+               :form_builder => f,
+               :association  => assoc,
+               :association_name_attribute => @association_name_attributes[assoc]
 
     - @attributes.each do |attribute|
 

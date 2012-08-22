@@ -1,0 +1,38 @@
+-# Locals:
+-#   form_builder:
+-#   association:
+-#   collection:
+-#   association_name_attribute:
+-#   input_html_options (optional):
+
+-# FIXME: WIP
+
+- collection         = nil unless local_assigns.key? :collection
+- input_html_options = {}  unless local_assigns.key? :input_html_options
+
+- model = form_builder.object
+- klass = model.class
+
+- required = klass.attr_required?(association)
+-# - readonly = klass.attr_readonly?(association)
+- editable = model.attr_editable?(association)
+- input_html_options[:required] = 'required' if required
+
+.item.field
+  - human_name = klass.human_attribute_name(association)
+  - label_content = t('formats.attribute_name:', :attribute => human_name)
+
+  - if editable
+    %dt
+      = form_builder.label association, label_content
+    %dd.list
+      = form_builder.select_for_belongs_to association,
+                                           association_name_attribute,
+                                           collection,
+                                           { :include_blank => !required },
+                                           input_html_options
+  - else
+    %dt
+      %b= label_content
+    %dd.reference
+      = model.public_send(association).public_send(association_name_attribute)
