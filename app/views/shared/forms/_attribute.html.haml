@@ -2,7 +2,6 @@
 -#   form_builder:
 -#   attribute:
 -#   column_type (optional):
--#   # field_labels (optional):
 -#   input_html_options (optional):
 
 - input_html_options = {} unless local_assigns.key? :input_html_options
@@ -15,7 +14,7 @@
   - column_type = klass.column_db_type(attribute)
 
 - required = klass.attr_required?(attribute)
-- readonly = klass.attr_readonly?(attribute)
+-# - readonly = klass.attr_readonly?(attribute)
 - editable = model.attr_editable?(attribute)
 - select_from = klass.possible_values_of(attribute)
 - unless select_from.respond_to?(:size) && (select_size = select_from.size) <= 50
@@ -39,10 +38,11 @@
 
   - if editable
     - if select_from
-      = form_builder.select attribute,
-                            options_for_select(select_from,
-                                               model.public_send(attribute)),
-                            input_html_options
+      %dd.list
+        = form_builder.select attribute,
+                              options_for_select(select_from,
+                                                 model.public_send(attribute)),
+                              input_html_options
     - else
       - case column_type
       - when :boolean
