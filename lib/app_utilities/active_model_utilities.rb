@@ -50,9 +50,8 @@ module ActiveModelUtilities
           v.is_a?(ActiveModel::Validations::InclusionValidator) }
         @inclusion_validator_on[attr] = inclusion_validator
       end
-      @possible_values_of[attr] = ( inclusion_validator ?
-                                    inclusion_validator.options[:in] :
-                                    nil )
+      @possible_values_of[attr] =
+        inclusion_validator ? inclusion_validator.options[:in] : nil
     end
   end
 

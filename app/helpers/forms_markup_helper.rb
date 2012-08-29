@@ -105,12 +105,12 @@ module FormsMarkupHelper
       foreign_key = reflection.foreign_key
       collection ||= reflection.klass
 
-      required =
-        klass.validators_on(foreign_key).map(&:class).
-              include?(ActiveModel::Validations::PresenceValidator)
+      # Assume ActiveModelUtilities module was mixed into klass
+      required = klass.attr_required?(foreign_key)
 
-      options[:include_blank] = true unless
-        options.key?(:include_blank) || required
+      unless options.key?(:include_blank) || required
+        options[:include_blank] = true
+      end
 
       collection_select(foreign_key, collection.all, :id, text_method,
                         options, html_options)
