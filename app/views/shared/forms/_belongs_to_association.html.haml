@@ -1,11 +1,9 @@
 -# Locals:
 -#   form_builder:
 -#   association:
--#   collection:
 -#   association_name_attribute:
+-#   collection (optional):
 -#   input_html_options (optional):
-
--# FIXME: WIP
 
 - collection         = nil unless local_assigns.key? :collection
 - input_html_options = {}  unless local_assigns.key? :input_html_options
@@ -13,10 +11,14 @@
 - model = form_builder.object
 - klass = model.class
 
-- required = klass.attr_required?(association)
--# - readonly = klass.attr_readonly?(association)
-- editable = model.attr_editable?(association)
+-# XXX: using undocumented ActiveRecord::Reflection module methods, for example
+-# #association_foreign_key
+- assoc_reflection = klass.reflect_on_association(association)
+- foreign_key = assoc_reflection.association_foreign_key
+- required = klass.attr_required?(foreign_key)
+
 - input_html_options[:required] = 'required' if required
+- editable = model.attr_editable?(foreign_key)
 
 .item.field
   - human_name = klass.human_attribute_name(association)
@@ -24,7 +26,7 @@
 
   - if editable
     %dt
-      = form_builder.label association, label_content
+      = form_builder.label foreign_key, label_content
     %dd.list
       = form_builder.select_for_belongs_to association,
                                            association_name_attribute,

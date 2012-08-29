@@ -14,12 +14,13 @@
   - column_type = klass.column_db_type(attribute)
 
 - required = klass.attr_required?(attribute)
--# - readonly = klass.attr_readonly?(attribute)
-- editable = model.attr_editable?(attribute)
-- select_from = klass.possible_values_of(attribute)
-- unless select_from.respond_to?(:size) && (select_size = select_from.size) <= 50
-  - select_from = nil
 - input_html_options[:required] = 'required' if required
+
+- editable = model.attr_editable?(attribute)
+
+- select_from = klass.possible_values_of(attribute)
+- if !select_from.respond_to?(:size) || select_from.size > 50
+  - select_from = nil
 
 .item.field
   %dt
@@ -42,6 +43,7 @@
         = form_builder.select attribute,
                               options_for_select(select_from,
                                                  model.public_send(attribute)),
+                              { :include_blank => !required },
                               input_html_options
     - else
       - case column_type
