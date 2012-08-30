@@ -5,12 +5,24 @@
   = render 'shared/error_messages/validation', :target => @guest
 
   %dl.form_fields
-    - [:first_name, :last_name, :email, :phone].each do |attribute|
+    - [:first_name, :last_name].each do |attribute|
 
       = render 'shared/forms/attribute',
                :form_builder => f,
                :attribute    => attribute,
                :column_type  => :string
+
+    = render 'shared/forms/attribute',
+             :form_builder => f,
+             :attribute    => :email,
+             :column_type  => :string,
+             :input_html_options => { :type => :email }
+
+    = render 'shared/forms/attribute',
+             :form_builder => f,
+             :attribute    => :phone,
+             :column_type  => :string,
+             :input_html_options => { :type => :tel }
 
     = render 'shared/forms/attribute',
              :form_builder => f,
