@@ -41,6 +41,8 @@ gem 'haml'  # use HAML templates (instead of ERB)
 
 # gem 'draper'  # provides decorators (similar to presenters)
 
+gem 'formtastic'
+
 gem 'bourbon'  # better Sass
 
 # Use unicorn as the web server
