@@ -1,0 +1,33 @@
+-# Locals:
+-#   form_builder:
+-#   association:
+-#   association_name_attribute:
+-#   collection (optional):
+-#   input_html_options (optional):
+
+- collection         = nil unless local_assigns.key? :collection
+- input_html_options = {}  unless local_assigns.key? :input_html_options
+
+- object = form_builder.object
+- klass = object.class
+
+-# XXX: using undocumented ActiveRecord::Reflection module methods, for example
+-# #association_foreign_key
+- assoc_reflection = klass.reflect_on_association(association)
+- ids_attr_name = "#{ assoc_reflection.name.to_s.singularize }_ids"
+
+- collection ||= assoc_reflection.klass.all
+
+- input_html_options[:multiple] = true
+
+- attr_name = klass.human_attribute_name(association)
+- label_content = t('formats.attribute_name:', :attribute => attr_name)
+
+.item.field
+  %dt
+    = form_builder.label ids_attr_name, label_content
+  %dd.list.select_multiple
+    = form_builder.collection_select ids_attr_name, collection,
+                                     :id, association_name_attribute,
+                                     {},
+                                     input_html_options

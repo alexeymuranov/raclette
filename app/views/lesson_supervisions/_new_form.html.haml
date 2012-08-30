@@ -10,15 +10,10 @@
                :form_builder => f,
                :attribute    => attribute
 
-    .dl_item.field
-      %dt
-        = t 'formats.attribute_name:',
-            :attribute => LessonSupervision.human_attribute_name(:instructors)
-      %dd.list.select_multiple
-        = f.collection_select :instructor_ids, Instructor.all,
-                              :id, :virtual_professional_name,
-                              {},
-                              { :multiple => true }
+    = render 'shared/forms/habtm_association',
+             :form_builder               => f,
+             :association                => :instructors,
+             :association_name_attribute => :virtual_professional_name
 
   .actions
     = f.submit
