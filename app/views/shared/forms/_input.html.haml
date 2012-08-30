@@ -13,7 +13,7 @@
   %dt
     = label_tag name, label_content
 
-  %dd{ :class => 'input' }
+  %dd.input
     - case input_html_options[:type]
     - when 'checkbox'
       = check_box_tag name, value,
