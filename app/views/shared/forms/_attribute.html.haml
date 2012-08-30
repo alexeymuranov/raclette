@@ -19,8 +19,7 @@
 - editable = object.attr_editable?(attribute)
 
 - select_from = klass.possible_values_of(attribute)
-- if !select_from.respond_to?(:size) || select_from.size > 50
-  - select_from = nil
+- select_from = nil unless select_from.respond_to?(:size)
 
 .item.field
   %dt
@@ -68,6 +67,17 @@
       - when :text
         %dd.long_text
           = form_builder.text_area attribute, input_html_options
+      - when :string
+        - case input_html_options[:type]
+        - when :email
+          %dd.string.email
+            = form_builder.email_field attribute, input_html_options
+        - when :password
+          %dd.string.password
+            = form_builder.password_field attribute, input_html_options
+        - else
+          %dd.string
+            = form_builder.text_field attribute, input_html_options
       - else
         %dd{:class => column_type}
           = form_builder.text_field attribute, input_html_options
