@@ -75,15 +75,16 @@ module FormsMarkupHelper
 
       klass = object.class
 
+      # NOTE: assume that ActiveModelUtilities is included into the model class
+
       # add a '*' after the field label if the field is required
-      if klass.validators_on(method).map(&:class).
-           include?(ActiveModel::Validations::PresenceValidator)
+      if klass.attr_required?(method)
         marks << '*'.html_safe
         html_classes << 'required'
       end
 
       # add a '!' after the field label if the field will be readonly
-      if klass.readonly_attributes.include?(method.to_s)
+      if klass.attr_readonly?(method)
         marks << content_tag(:sup, '!'.html_safe)
         html_classes << 'readonly'
       end
