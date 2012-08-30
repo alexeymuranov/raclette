@@ -6,8 +6,8 @@
 
 - input_html_options = {} unless local_assigns.key? :input_html_options
 
-- model = form_builder.object
-- klass = model.class
+- object = form_builder.object
+- klass = object.class
 
 - unless local_assigns.key? :column_type
   -# It is assumed here that PseudoColumns module is included
@@ -16,7 +16,7 @@
 - required = klass.attr_required?(attribute)
 - input_html_options[:required] = 'required' if required
 
-- editable = model.attr_editable?(attribute)
+- editable = object.attr_editable?(attribute)
 
 - select_from = klass.possible_values_of(attribute)
 - if !select_from.respond_to?(:size) || select_from.size > 50
@@ -42,7 +42,7 @@
       %dd.list
         = form_builder.select attribute,
                               options_for_select(select_from,
-                                                 model.public_send(attribute)),
+                                                 object.public_send(attribute)),
                               { :include_blank => !required },
                               input_html_options
     - else
@@ -72,7 +72,7 @@
         %dd{:class => column_type}
           = form_builder.text_field attribute, input_html_options
   - else
-    - value = model.public_send(attribute)
+    - value = object.public_send(attribute)
 
     - case column_type
     - when :boolean
@@ -82,14 +82,14 @@
       %dd.number
         = value
     - when :date
-      %dd.boolean
+      %dd.date
         = l(value, :format => :long) if value
     - when :datetime
-      %dd.boolean
+      %dd.datetime
         = l(value, :format => :custom) if value
     - when :time
       %dd.time
-        - l(value, :format => :time_of_the_day) if value
+        = l(value, :format => :time_of_the_day) if value
     - else
       %dd{:class => column_type}
         = value

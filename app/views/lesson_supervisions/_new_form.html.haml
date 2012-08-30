@@ -14,9 +14,11 @@
       %dt
         = t 'formats.attribute_name:',
             :attribute => LessonSupervision.human_attribute_name(:instructors)
-      %dd{ :class => 'input select_multiple' }
-        = f.select_for_habtm :instructors, :virtual_professional_name, nil,
-                             :include_blank => true
+      %dd.list.select_multiple
+        = f.collection_select :instructor_ids, Instructor.all,
+                              :id, :virtual_professional_name,
+                              {},
+                              { :multiple => true }
 
   .actions
     = f.submit

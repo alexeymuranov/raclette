@@ -98,38 +98,38 @@ module FormsMarkupHelper
       end
     end
 
-    def select_for_belongs_to(assoc_name, text_method, collection = nil,
-                              options = {}, html_options = {})
-      klass = object.class
-      reflection = klass.reflect_on_association(assoc_name)
-      foreign_key = reflection.foreign_key
-      collection ||= reflection.klass
+    # def select_for_belongs_to(assoc_name, text_method, collection = nil,
+    #                           options = {}, html_options = {})
+    #   klass = object.class
+    #   reflection = klass.reflect_on_association(assoc_name)
+    #   foreign_key = reflection.foreign_key
+    #   collection ||= reflection.klass
+    #
+    #   # Assume ActiveModelUtilities module was mixed into klass
+    #   required = klass.attr_required?(foreign_key)
+    #
+    #   unless options.key?(:include_blank) || required
+    #     options[:include_blank] = true
+    #   end
+    #
+    #   collection_select(foreign_key, collection.all, :id, text_method,
+    #                     options, html_options)
+    # end
 
-      # Assume ActiveModelUtilities module was mixed into klass
-      required = klass.attr_required?(foreign_key)
-
-      unless options.key?(:include_blank) || required
-        options[:include_blank] = true
-      end
-
-      collection_select(foreign_key, collection.all, :id, text_method,
-                        options, html_options)
-    end
-
-    def select_for_habtm(assoc_name, text_method, collection = nil,
-                         options = {}, html_options = {})
-      klass = object.class
-      reflection = klass.reflect_on_association(assoc_name)
-      ids_attr_name = "#{ reflection.name.to_s.singularize }_ids"
-      collection ||= reflection.klass
-
-      html_options[:multiple] = true
-
-      options.delete(:include_blank)
-
-      collection_select(ids_attr_name, collection.all, :id, text_method,
-                        options, html_options)
-    end
+    # def select_for_habtm(assoc_name, text_method, collection = nil,
+    #                      options = {}, html_options = {})
+    #   klass = object.class
+    #   reflection = klass.reflect_on_association(assoc_name)
+    #   ids_attr_name = "#{ reflection.name.to_s.singularize }_ids"
+    #   collection ||= reflection.klass
+    #
+    #   html_options[:multiple] = true
+    #
+    #   options.delete(:include_blank)
+    #
+    #   collection_select(ids_attr_name, collection.all, :id, text_method,
+    #                     options, html_options)
+    # end
 
     # Useful web page:
     # http://code.alexreisner.com/articles/form-builders-in-rails.html

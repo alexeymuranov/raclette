@@ -13,12 +13,13 @@
 
     .item.field
       %dt
-        = t 'formats.attribute_name:',
-            :attribute => Event.human_attribute_name(:weekly_event)
-      %dd{ :class => 'input' }
-        = f.select_for_belongs_to :weekly_event, :virtual_long_title,
-                                  @weekly_events,
-                                  :include_blank => true
+        = f.label :weekly_event_id,
+                  t('formats.attribute_name:',
+                    :attribute => Event.human_attribute_name(:weekly_event))
+      %dd.list
+        = f.collection_select :weekly_event_id, @weekly_events,
+                              :id, :virtual_long_title,
+                              :include_blank => true
         %span.actions
           = button_tag t('.select_button'),
                        :name       => 'button',

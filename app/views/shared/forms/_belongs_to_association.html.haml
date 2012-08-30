@@ -8,33 +8,35 @@
 - collection         = nil unless local_assigns.key? :collection
 - input_html_options = {}  unless local_assigns.key? :input_html_options
 
-- model = form_builder.object
-- klass = model.class
+- object = form_builder.object
+- klass = object.class
 
 -# XXX: using undocumented ActiveRecord::Reflection module methods, for example
 -# #association_foreign_key
 - assoc_reflection = klass.reflect_on_association(association)
-- foreign_key = assoc_reflection.association_foreign_key
-- required = klass.attr_required?(foreign_key)
 
+- foreign_key = assoc_reflection.association_foreign_key
+- collection ||= assoc_reflection.klass.all
+
+- required = klass.attr_required?(foreign_key)
 - input_html_options[:required] = 'required' if required
-- editable = model.attr_editable?(foreign_key)
+
+- attr_name = klass.human_attribute_name(association)
+- label_content = t('formats.attribute_name:', :attribute => attr_name)
+
+- editable = object.attr_editable?(foreign_key)
 
 .item.field
-  - human_name = klass.human_attribute_name(association)
-  - label_content = t('formats.attribute_name:', :attribute => human_name)
-
   - if editable
     %dt
       = form_builder.label foreign_key, label_content
     %dd.list
-      = form_builder.select_for_belongs_to association,
-                                           association_name_attribute,
-                                           collection,
-                                           { :include_blank => !required },
-                                           input_html_options
+      = form_builder.collection_select foreign_key, collection,
+                                       :id, association_name_attribute,
+                                       { :include_blank => !required },
+                                       input_html_options
   - else
     %dt
       %b= label_content
     %dd.reference
-      = model.public_send(association).public_send(association_name_attribute)
+      = object.public_send(association).public_send(association_name_attribute)
