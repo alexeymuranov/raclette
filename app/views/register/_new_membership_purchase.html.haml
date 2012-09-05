@@ -15,14 +15,14 @@
           = membership_fields.select :membership_type_id,
               options_from_collection_for_select(@membership_types,
                 :id, :unique_title,
-                :selected => @membership_type.id)
+                :selected => (@membership_type && @membership_type.id))
       .dl_item.field
         %dt ?
         %dd
           = membership_fields.select :activity_period_id,
               options_from_collection_for_select(@activity_periods,
                 :id, :unique_title,
-                :selected => @activity_period.id)
+                :selected => (@activity_period && @activity_period.id))
 
   .actions
     = f.submit t('buttons.continue'), :class => 'easy'
