@@ -44,18 +44,21 @@ module FormsMarkupHelper
     include ActionView::Helpers::TagHelper
 
     def date_field(method, options = {})
-      ActionView::Helpers::InstanceTag.new(@object_name, method, @template,
-        options.delete(:object)).to_input_field_tag('date', options)
+      ActionView::Helpers::InstanceTag.new(
+        @object_name, method, @template, options.delete(:object)
+      ).to_input_field_tag('date', options)
     end
 
     def local_time_field(method, options = {})
-      ActionView::Helpers::InstanceTag.new(@object_name, method, @template,
-        options.delete(:object)).to_input_field_tag('time-local', options)
+      ActionView::Helpers::InstanceTag.new(
+        @object_name, method, @template, options.delete(:object)
+      ).to_input_field_tag('time-local', options)
     end
 
     def local_datetime_field(method, options = {})
-      ActionView::Helpers::InstanceTag.new(@object_name, method, @template,
-        options.delete(:object)).to_input_field_tag('datetime-local', options)
+      ActionView::Helpers::InstanceTag.new(
+        @object_name, method, @template, options.delete(:object)
+      ).to_input_field_tag('datetime-local', options)
     end
 
     def label(method, content_or_options = nil, options = {}, &block)
@@ -96,6 +99,138 @@ module FormsMarkupHelper
         label_itself
       else
         label_itself + content_tag(:span, marks, :class => 'label_marks')
+      end
+    end
+
+    def attribute_field(attribute, column_type = nil, options = {}) # FIXME: WIP
+      fail
+      object = form_builder.object
+      klass = object.class
+
+      unless local_assigns.key? :column_type
+        # It is assumed here that PseudoColumns module is included
+        column_type = klass.column_db_type(attribute)
+      end
+
+      required = klass.attr_required?(attribute)
+      input_html_options[:required] = 'required' if required
+
+      editable = object.attr_editable?(attribute)
+
+      select_from = klass.possible_values_of(attribute)
+      select_from = nil unless select_from.respond_to?(:size)
+
+      html_output = ''.html_safe
+
+      html_output << content_tag(:div, :class => 'item field') do
+        label_element = content_tag(:dt) do
+          human_name = klass.human_attribute_name(attribute)
+
+          case column_type
+          when :boolean
+            label_content = t('formats.attribute_name?', :attribute => human_name)
+          else
+            label_content = t('formats.attribute_name:', :attribute => human_name)
+          end
+
+          if editable
+            label attribute, label_content
+          else
+            content_tag(:b, label_content)
+          end
+        end
+
+        if editable
+          if select_from
+            input_element = content_tag(:dd, :class => 'list') do
+              select attribute,
+                     options_for_select(select_from,
+                                        object.public_send(attribute)),
+                     { :include_blank => !required },
+                     input_html_options
+            end
+          else
+            case column_type
+            when :boolean
+              input_element = content_tag(:dd, :class => 'boolean') do
+                check_box attribute, input_html_options
+              end
+            when :integer
+              input_element = content_tag(:dd, :class => 'number') do
+                number_field attribute, input_html_options
+              end
+            when :date
+              # Defined in my custom form builder
+              input_element = content_tag(:dd, :class => 'date') do
+                date_field attribute, input_html_options
+              end
+            when :datetime
+              # Defined in my custom form builder
+              input_element = content_tag(:dd, :class => 'datetime') do
+                local_datetime_field attribute, input_html_options
+              end
+            when :time
+              # Defined in my custom form builder
+              input_element = content_tag(:dd, :class => 'time') do
+                local_time_field attribute, input_html_options
+              end
+            when :text
+              input_element = content_tag(:dd, :class => 'long_text') do
+                text_area attribute, input_html_options
+              end
+            when :string
+              case input_html_options[:type]
+              when :email
+                input_element = content_tag(:dd, :class => 'string email') do
+                  email_field attribute, input_html_options
+                end
+              when :password
+                input_element = content_tag(:dd, :class => 'string password') do
+                  password_field attribute, input_html_options
+                end
+              else
+                input_element = content_tag(:dd, :class => 'string') do
+                  text_field attribute, input_html_options
+                end
+              end
+            else
+              input_element = content_tag(:dd, :class => 'boolean') do
+                text_field attribute, input_html_options
+              end
+            end
+          end
+        else
+          value = object.public_send(attribute)
+
+          case column_type
+          when :boolean
+            input_element = content_tag(:dd, :class => 'boolean') do
+              boolean_to_picto(value, 2) # size = 2
+            end
+          when :integer
+            input_element = content_tag(:dd, :class => 'number') do
+              value
+            end
+          when :date
+            input_element = content_tag(:dd, :class => 'date') do
+              l(value, :format => :long) if value
+            end
+          when :datetime
+            input_element = content_tag(:dd, :class => 'datetime') do
+              l(value, :format => :custom) if value
+            end
+          when :time
+            input_element = content_tag(:dd, :class => 'time') do
+              l(value, :format => :time_of_the_day) if value
+            end
+          else
+            input_element = content_tag(:dd, :class => column_type) do
+              value
+            end
+          end
+        end
+
+        label_element + input_element
       end
     end
 
