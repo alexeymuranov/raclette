@@ -4,7 +4,7 @@ class TicketBooksController < ManagerController
 
   class TicketBook < Accessors::TicketBook
     self.all_sorting_columns = [:tickets_number, :price]
-    self.default_sorting_column = :start_date
+    self.default_sorting_column = :tickets_number
   end
 
   def index
