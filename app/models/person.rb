@@ -72,8 +72,8 @@ class Person < ActiveRecord::Base
                     :allow_nil    => true
 
   validates :mobile_phone, :home_phone, :work_phone,
-                :length    => { :maximum => 32 },
-                :allow_nil => true
+            :length    => { :maximum => 32 },
+            :allow_nil => true
 
   validates :nickname_or_other,
             :uniqueness => { :scope => [ :last_name, :first_name ] }
