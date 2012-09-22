@@ -9,7 +9,7 @@ class CreateTicketBooks < ActiveRecord::Migration
     end
 
     add_index :ticket_books, [ :membership_type_id, :tickets_number ],
-                  :unique => true
+              :unique => true
   end
 
   def down

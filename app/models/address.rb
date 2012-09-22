@@ -22,7 +22,7 @@ class Address < ActiveRecord::Base
   validates :names, :length => { :maximum => 64 }
 
   validates :address_type, :length    => { :maximum => 32 },
-                           :inclusion => %w[ Home Work Mailing ],
+                           :inclusion => %w[Home Work Mailing],
                            :allow_nil => true
 
   validates :country, :length => { :maximum => 32 }

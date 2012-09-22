@@ -10,7 +10,7 @@ class EventEntryReservation < ActiveRecord::Base
   belongs_to :member, :inverse_of => :event_entry_reservations
 
   belongs_to :previous_guest_entry,
-             :class_name => 'GuestEntry',
+             :class_name => :GuestEntry,
              :inverse_of => :following_event_entry_reservations
 
   # Validations:

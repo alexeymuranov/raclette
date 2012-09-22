@@ -76,7 +76,7 @@ class Person < ActiveRecord::Base
             :allow_nil => true
 
   validates :nickname_or_other,
-            :uniqueness => { :scope => [ :last_name, :first_name ] }
+            :uniqueness => { :scope => [:last_name, :first_name] }
 
   # Pseudo columns
   full_name_sql         =  "(#{ sql_for_columns[:name_title] } || ' ' || " \

@@ -9,7 +9,7 @@ class Payment < ActiveRecord::Base
                         :polymorphic  => true,
                         :foreign_type => :payable_type
 
-  belongs_to :revenue_account, :inverse_of  => :payments
+  belongs_to :revenue_account, :inverse_of => :payments
 
   belongs_to :payer, :foreign_key => :payer_person_id,
                      :class_name  => :Person,

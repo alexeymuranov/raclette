@@ -21,7 +21,7 @@ class Membership < ActiveRecord::Base
   belongs_to :activity_period, :inverse_of => :memberships
 
   belongs_to :type, :foreign_key => :membership_type_id,
-                    :class_name  => 'MembershipType',
+                    :class_name  => :MembershipType,
                     :inverse_of  => :memberships
 
   # Validations:

@@ -19,7 +19,7 @@ class SecretaryNote < ActiveRecord::Base
                       :allow_nil => true
 
   validates :something_id,
-            :uniqueness => { :scope => [ :note_type, :something_type ] }
+            :uniqueness => { :scope => [:note_type, :something_type] }
 end
 
 # == Schema Information
