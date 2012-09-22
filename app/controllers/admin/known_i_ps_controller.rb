@@ -37,8 +37,6 @@ class Admin::KnownIPsController < AdminController
     @known_ips = KnownIP.sort(@known_ips, sort_params)
     @sorting_column = KnownIP.last_sort_column
     @sorting_direction = KnownIP.last_sort_direction
-
-    # @title = t('admin.known_i_ps.index.title')
   end
 
   def show

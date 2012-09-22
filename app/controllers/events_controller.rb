@@ -101,7 +101,6 @@ class EventsController < SecretaryController
         # Paginate:
         @events = paginate(@events)
 
-        # @title = t('admin.users.index.title')  # or: Event.model_name.human.pluralize
         render :index
       end
 

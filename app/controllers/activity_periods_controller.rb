@@ -52,7 +52,6 @@ class ActivityPeriodsController < ManagerController
         # Paginate:
         @activity_periods = paginate(@activity_periods)
 
-        # @title = t('activity_periods.index.title')  # or: ActivityPeriod.model_name.human.pluralize
         render :index
       end
 

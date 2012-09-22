@@ -54,7 +54,6 @@ class MembershipTypesController < ManagerController
         # Paginate:
         @membership_types = paginate(@membership_types)
 
-        # @title = t('membership_types.index.title')  # or: MembershipType.model_name.human.pluralize
         render :index
       end
 

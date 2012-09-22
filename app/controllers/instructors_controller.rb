@@ -55,7 +55,6 @@ class InstructorsController < ManagerController
         # Paginate:
         @instructors = paginate(@instructors)
 
-        # @title = t('instructors.index.title')  # or: Instructor.model_name.human.pluralize
         render :index
       end
 

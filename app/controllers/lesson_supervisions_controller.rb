@@ -53,7 +53,6 @@ class LessonSupervisionsController < SecretaryController
         # Paginate:
         @lesson_supervisions = paginate(@lesson_supervisions)
 
-        # @title = t('lesson_supervisions.index.title')  # or: LessonSupervision.model_name.human.pluralize
         render :index
       end
 

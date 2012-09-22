@@ -38,7 +38,6 @@ class TicketBooksController < ManagerController
         # Paginate:
         @ticket_books = paginate(@ticket_books)
 
-        # @title = t('ticket_books.index.title')  # or: TicketBook.model_name.human.pluralize
         render :index
       end
 

@@ -84,7 +84,6 @@ class WeeklyEventsController < ManagerController
         # Paginate:
         @weekly_events = paginate(@weekly_events)
 
-        # @title = t('admin.users.index.title')  # or: WeeklyEvent.model_name.human.pluralize
         render :index
       end
 

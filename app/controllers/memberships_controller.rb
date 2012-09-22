@@ -29,8 +29,6 @@ class MembershipsController < ManagerController # FIXME!
   def index
     @membership_types = MembershipType.default_order
     @activity_periods = ActivityPeriod.default_order
-
-    # @title = t('memberships.index.title')
   end
 
   def show

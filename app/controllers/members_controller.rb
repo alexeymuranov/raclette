@@ -90,7 +90,6 @@ class MembersController < SecretaryController
         # Paginate:
         @members = paginate(@members)
 
-        # @title = t('members.index.title')  # or: Member.model_name.human.pluralize
         render :index
       end
 

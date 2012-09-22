@@ -76,7 +76,6 @@ class Admin::UsersController < AdminController
         # Paginate:
         @users = paginate(@users)
 
-        # @title = t('admin.users.index.title')  # or: User.model_name.human.pluralize
         render :index
       end
 
