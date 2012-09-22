@@ -223,7 +223,7 @@ class RegisterController < ApplicationController
       @tabs = @events.empty? ? [] : ['new_entry']
 
       if @member.current_membership
-        @ticket_books = @member.current_membership.type.ticket_books
+        @ticket_books = @member.current_membership.ticket_books
         @tabs << 'new_ticket_purchase' unless @ticket_books.empty?
       end
 

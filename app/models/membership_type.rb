@@ -20,9 +20,6 @@ class MembershipType < ActiveRecord::Base
 
   has_many :activity_periods, :through => :memberships
 
-  has_many :ticket_books, :dependent  => :destroy,
-                          :inverse_of => :membership_type
-
   # Validations:
   validates :unique_title, :duration_months,
             :presence => true

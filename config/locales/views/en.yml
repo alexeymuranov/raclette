@@ -452,7 +452,7 @@ en:
       header: "Ticket book \"%{title}\""
     new:
       title: "New ticket book"
-      header: "New ticket book"
+      header: "New ticket book for %{membership_title}"
     edit:
       title: "Update \"%{title}\""
       header: "Update ticket book \"%{title}\""

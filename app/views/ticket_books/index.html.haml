@@ -15,13 +15,3 @@
            :filtering_values => @filtering_values
 
 %footer
-  = link_to add_pictogram(2) + ' ' + t('ticket_books.new.header'),
-            new_ticket_book_path,
-            :title => t('actions.create'),
-            :class => 'add resource'
-  - content_for :side_menu_list_items do
-    %li
-      = link_to add_pictogram + ' ' + t('ticket_books.new.title'),
-                new_ticket_book_path,
-                :title => t('actions.create'),
-                :class => 'add resource'

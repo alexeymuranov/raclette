@@ -116,7 +116,7 @@ en:
         duration_months: "Duration"
         description: "Description"
       ticket_book:
-        membership_type: "Membership Type"
+        membership: "Membership"
         tickets_number: "Tickets"
         price: "Price"
       activity_period: &activity_period_attributes
@@ -133,6 +133,7 @@ en:
         activity_period: "Activity Period"
         # activity_period:
         #   <<: *activity_period_attributes
+        ticket_books: "Ticket books"
         initial_price: "Initial price"
         current_price: "Current price"
         tickets_count_limit: "Tickets limit"

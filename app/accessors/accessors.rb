@@ -223,6 +223,13 @@ module Accessors
     def self.controller_class
       TicketBooksController
     end
+
+    private
+
+      def common_options_for_urls
+        super.merge(:membership_id => membership_id)
+      end
+
   end
 
   class TicketsPurchase < ::TicketsPurchase

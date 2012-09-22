@@ -1,14 +1,25 @@
-%h1= t '.header'
-- @ticket_book_form_url = ticket_books_path
+%h1= t '.header', :membership_title => @membership.virtual_title
+
+- @ticket_book_form_url = membership_ticket_books_path(@membership)
 
 = render 'form'
 
 %footer
+  = link_to show_pictogram(3) + ' ' + t('memberships.show.header', :title => @membership.virtual_title),
+            membership_path(@membership),
+            :class => 'display resource'
   = link_to list_all_pictogram(3) + ' ' + t('ticket_books.index.header'),
             ticket_books_path,
             :class => 'display resource'
-  - content_for :side_menu_list_items do
-    %li
-      = link_to list_all_pictogram + ' ' + t('ticket_books.index.title'),
-                ticket_books_path,
-                :class => 'display resource'
+
+-# End of the main body of the view
+
+- content_for :side_menu_list_items do
+  %li
+    = link_to show_pictogram + ' ' + t('memberships.show.title', :title => @membership.virtual_title),
+              membership_path(@membership),
+              :class => 'display resource'
+  %li
+    = link_to list_all_pictogram + ' ' + t('ticket_books.index.title'),
+              ticket_books_path,
+              :class => 'display resource'

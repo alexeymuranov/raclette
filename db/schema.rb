@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120812172353) do
+ActiveRecord::Schema.define(:version => 20120921215732) do
 
   create_table "activity_periods", :force => true do |t|
     t.string   "unique_title",    :limit => 64,                    :null => false
@@ -505,14 +505,14 @@ ActiveRecord::Schema.define(:version => 20120812172353) do
   add_index "sessions", ["updated_at"], :name => "index_sessions_on_updated_at"
 
   create_table "ticket_books", :force => true do |t|
-    t.integer  "membership_type_id",                                            :null => false
-    t.integer  "tickets_number",     :limit => 2,                               :null => false
-    t.decimal  "price",                           :precision => 4, :scale => 1, :null => false
+    t.integer  "tickets_number", :limit => 2,                               :null => false
+    t.decimal  "price",                       :precision => 4, :scale => 1, :null => false
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "membership_id",                                             :null => false
   end
 
-  add_index "ticket_books", ["membership_type_id", "tickets_number"], :name => "index_ticket_books_on_membership_type_id_and_tickets_number", :unique => true
+  add_index "ticket_books", ["membership_id", "tickets_number"], :name => "index_ticket_books_on_membership_id_and_tickets_number", :unique => true
 
   create_table "tickets_purchases", :force => true do |t|
     t.integer  "member_id",                       :null => false

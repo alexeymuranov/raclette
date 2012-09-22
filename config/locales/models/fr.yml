@@ -116,7 +116,7 @@ fr:
         duration_months: "Durée"
         description: "Description"
       ticket_book:
-        membership_type: "Type d'adhésion"
+        membership: "Adhésion"
         tickets_number: "Tickets"
         price: "Prix"
       activity_period: &activity_period_attributes
@@ -133,6 +133,7 @@ fr:
         activity_period: "Saison"
         # activity_period:
         #   <<: *activity_period_attributes
+        ticket_books: "Carnets de tickets"
         initial_price: "Prix"
         current_price: "Prix actuel"
         tickets_count_limit: "Limite de tickets"

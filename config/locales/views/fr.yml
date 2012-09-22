@@ -452,10 +452,10 @@ fr:
       header: "Carnet de tickets « %{title} »"
     new:
       title: "Nouveau carnet de tickets"
-      header: "Ajouter un carnet de tickets"
+      header: "Ajouter un carnet de tickets pour %{membership_title}"
     edit:
       title: "%{title} - mise à jour"
-      header: "Mise à jour du carnet de tickets"
+      header: "Mise à jour du carnet de tickets « %{title} »"
 
   activity_periods:
     index:

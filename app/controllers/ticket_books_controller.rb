@@ -2,10 +2,13 @@
 
 class TicketBooksController < ManagerController
 
-  class TicketBook < Accessors::TicketBook
-    self.all_sorting_columns = [:tickets_number, :price]
-    self.default_sorting_column = :tickets_number
-  end
+  TicketBook = MembershipsController::TicketBook
+
+  Membership = MembershipsController::Membership
+
+  before_filter :find_membership, :except => :index
+  before_filter :find_ticket_book_and_check_correct_membership_selection,
+                :only => [:show, :edit, :update, :destroy]
 
   def index
     case request.format
@@ -16,6 +19,7 @@ class TicketBooksController < ManagerController
       @attributes = [:tickets_number, :price]
     end
 
+    # @ticket_books = @membership.ticket_books
     @ticket_books = TicketBook.scoped
 
     # Filter:
@@ -76,7 +80,9 @@ class TicketBooksController < ManagerController
   end
 
   def create
-    @ticket_book = TicketBook.new(params[:ticket_book])
+    @ticket_book =
+      TicketBook.new(
+        params[:ticket_book].merge(:membership_id => params[:membership_id]))
 
     if @ticket_book.save
       flash[:success] = t('flash.ticket_books.create.success',
@@ -107,10 +113,21 @@ class TicketBooksController < ManagerController
     flash[:notice] = t('flash.ticket_books.destroy.success',
                        :title => @ticket_book.virtual_long_title)
 
-    redirect_to :action => :index
+    redirect_to :controller => :memberships,
+                :action     => :show,
+                :id         => @ticket_book.membership_id
   end
 
   private
+
+    def find_membership
+      @membership = Membership.find(params[:membership_id])
+    end
+
+    def find_ticket_book_and_check_correct_membership_selection
+      @ticket_book = TicketBook.find(params[:id])
+      redirect_to :back unless @ticket_book.membership.id == @membership.id
+    end
 
     def render_new_properly
       @attributes = [:tickets_number, :price]

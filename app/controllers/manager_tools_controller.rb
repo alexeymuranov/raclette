@@ -5,7 +5,6 @@ class ManagerToolsController < ManagerController
   def overview
     @weekly_events = Accessors::WeeklyEvent.default_order
     @memberships = Accessors::Membership.count
-    @ticket_books = Accessors::TicketBook.default_order
     @membership_types = Accessors::MembershipType.default_order
     @activity_periods = Accessors::ActivityPeriod.default_order
     @instructors =

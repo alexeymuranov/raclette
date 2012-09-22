@@ -13,14 +13,6 @@
            :show_path_method      => method(:weekly_event_path)
 
   = render 'shared/sections/data_section_in_overview',
-           :collection            => @ticket_books,
-           :name_method           => :virtual_long_title,
-           :i18n_controller_scope => 'ticket_books',
-           :index_path            => ticket_books_path,
-           :new_path              => new_ticket_book_path,
-           :show_path_method      => method(:ticket_book_path)
-
-  = render 'shared/sections/data_section_in_overview',
            :collection            => @memberships,
            :name_method           => :virtual_title,
            :i18n_controller_scope => 'memberships',
@@ -66,10 +58,6 @@
   %li
     = link_to list_all_pictogram + ' ' + t('weekly_events.index.title'),
               weekly_events_path,
-              :class => 'display resource'
-  %li
-    = link_to list_all_pictogram + ' ' + t('ticket_books.index.title'),
-              ticket_books_path,
               :class => 'display resource'
   %li
     = link_to list_all_pictogram + ' ' + t('membership_types.index.title'),

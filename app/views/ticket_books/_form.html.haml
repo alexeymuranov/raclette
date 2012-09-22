@@ -4,12 +4,6 @@
   = render 'shared/error_messages/validation', :target => @ticket_book
 
   %dl.form_fields
-
-    = render 'shared/forms/belongs_to_association',
-             :form_builder => f,
-             :association  => :membership_type,
-             :association_name_attribute => :unique_title
-
     - @attributes.each do |attribute|
 
       = render 'shared/forms/attribute',

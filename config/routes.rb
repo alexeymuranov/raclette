@@ -42,9 +42,14 @@ Raclette::Application.routes.draw do
   resources :lesson_supervisions
   resources :members
   resources :membership_types
-  resources :memberships
+
+  resources :memberships do
+    resources :ticket_books, :except => :index
+  end
+
+  resources :ticket_books, :only => :index
+
   resources :people, :only => [:index, :show]
-  resources :ticket_books
   resources :weekly_events
 
   scope '/admin', :module => :admin do  # an alternative for admin namespace

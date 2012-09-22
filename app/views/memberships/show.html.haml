@@ -1,16 +1,32 @@
 %h1= t '.header', :title => @membership.virtual_title
+%section
 
-= render 'shared/lists/description',
-  :object                      => @membership,
-  :attributes                  => @attributes,
-  :singular_associations       => @singular_associations,
-  :association_name_attributes => @association_name_attributes
+  = render 'shared/lists/description',
+    :object                      => @membership,
+    :attributes                  => @attributes,
+    :singular_associations       => @singular_associations,
+    :association_name_attributes => @association_name_attributes
+
+%section
+  %h2= title_from_association_name(Membership, :ticket_books)
+
+  - unless @ticket_books.empty?
+
+    = render 'shared/tables/index',
+             :collection    => @ticket_books,
+             :attributes    => @ticket_book_attributes,
+             :html_table_id => :ticket_books
 
 %footer
   = link_to edit_pictogram(3) + ' ' + t('memberships.edit.header',
                                         :title => @membership.virtual_title),
             edit_membership_path(@membership),
             :class => 'modify resource'
+  = link_to add_pictogram(2) + ' ' + t('ticket_books.new.header',
+                                       :membership_title => @membership.virtual_title),
+            new_membership_ticket_book_path(@membership),
+            :title => t('actions.create'),
+            :class => 'add resource'
   = link_to list_all_pictogram(3) + ' ' + t('memberships.index.header'),
             memberships_path,
             :class => 'display resource'
