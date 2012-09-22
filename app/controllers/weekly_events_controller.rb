@@ -135,7 +135,7 @@ class WeeklyEventsController < ManagerController
     # Sort:
     Event.all_sorting_columns = @event_attributes
     sort_params = (params[:sort] && params[:sort][:events]) || {}
-    @weekly_events = Event.sort(@events, sort_params)
+    @events = Event.sort(@events, sort_params)
     @sorting_column = Event.last_sort_column
     @sorting_direction = Event.last_sort_direction
 
