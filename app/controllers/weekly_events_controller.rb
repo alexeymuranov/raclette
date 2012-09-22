@@ -34,6 +34,8 @@ class WeeklyEventsController < ManagerController
                               :inverse_of => :events
   end
 
+  before_filter :find_weekly_event, :only => [:show, :edit, :update, :destroy]
+
   def index
     case request.format
     when Mime::HTML
@@ -45,7 +47,8 @@ class WeeklyEventsController < ManagerController
                       :duration_minutes,
                       :location,
                       :entry_fee_tickets ]
-    when Mime::XML, Mime::CSV, Mime::MS_EXCEL_2003_XML, Mime::CSV_ZIP, Mime::MS_EXCEL_2003_XML_ZIP
+    when Mime::XML, Mime::CSV, Mime::MS_EXCEL_2003_XML,
+         Mime::CSV_ZIP, Mime::MS_EXCEL_2003_XML_ZIP
       @attributes = [ :title,
                       :event_type,
                       :lesson,
@@ -63,7 +66,8 @@ class WeeklyEventsController < ManagerController
     @weekly_events = WeeklyEvent.scoped
 
     # Filter:
-    @weekly_events = WeeklyEvent.filter(@weekly_events, params[:filter], @attributes)
+    @weekly_events =
+      WeeklyEvent.filter(@weekly_events, params[:filter], @attributes)
     @filtering_values = WeeklyEvent.last_filter_values
     @filtered_weekly_events_count = @weekly_events.count
 
@@ -115,8 +119,6 @@ class WeeklyEventsController < ManagerController
                     :entry_fee_tickets,
                     :description ]
 
-    @weekly_event = WeeklyEvent.find(params[:id])
-
     @events_attributes = [ :title, :event_type,
                            :date,
                            :start_time,
@@ -150,8 +152,6 @@ class WeeklyEventsController < ManagerController
   end
 
   def edit
-    @weekly_event = WeeklyEvent.find(params[:id])
-
     render_edit_properly
   end
 
@@ -174,8 +174,6 @@ class WeeklyEventsController < ManagerController
   end
 
   def update
-    @weekly_event = WeeklyEvent.find(params[:id])
-
     if @weekly_event.update_attributes(params[:weekly_event])
       flash[:notice] = t('flash.weekly_events.update.success',
                          :title => @weekly_event.title)
@@ -188,7 +186,6 @@ class WeeklyEventsController < ManagerController
   end
 
   def destroy
-    @weekly_event = WeeklyEvent.find(params[:id])
     @weekly_event.destroy
 
     flash[:notice] = t('flash.weekly_events.destroy.success',
@@ -231,6 +228,10 @@ class WeeklyEventsController < ManagerController
       @title =  t('weekly_events.edit.title', :title => @weekly_event.title)
 
       render :edit
+    end
+
+    def find_weekly_event
+      @weekly_event = WeeklyEvent.find(params[:id])
     end
 
 end

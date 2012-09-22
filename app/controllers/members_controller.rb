@@ -43,6 +43,8 @@ class MembersController < SecretaryController
     self.default_sorting_column = :ip
   end
 
+  before_filter :find_member, :only => [:show, :edit, :update, :destroy]
+
   def index
     case request.format
     when Mime::HTML
@@ -50,7 +52,8 @@ class MembersController < SecretaryController
                       :email,
                       :account_deactivated,
                       :tickets_count ]
-    when Mime::XML, Mime::CSV, Mime::MS_EXCEL_2003_XML, Mime::CSV_ZIP, Mime::MS_EXCEL_2003_XML_ZIP
+    when Mime::XML, Mime::CSV, Mime::MS_EXCEL_2003_XML,
+         Mime::CSV_ZIP, Mime::MS_EXCEL_2003_XML_ZIP
       @attributes = [ :last_name,
                       :first_name,
                       :nickname_or_other,
@@ -137,13 +140,8 @@ class MembersController < SecretaryController
                     :free_tickets_count,
                     :account_deactivated,
                     :been_member_by ]
-    @extra_attributes = [:full_name]
 
-    @member = Member.joins(:person).
-                     with_pseudo_columns(*@attributes, *@extra_attributes).
-                     find(params[:id])
-
-    @attended_events_attributes = [ :title, :event_type, :date, :start_time ]
+    @attended_events_attributes = [:title, :event_type, :date, :start_time]
     @attended_events = @member.attended_events
 
     @memberships_attributes = [:title, :duration_months, :end_date]
@@ -161,13 +159,10 @@ class MembersController < SecretaryController
   end
 
   def edit
-    @member = Member.joins(:person).with_pseudo_columns(:full_name).
-                     find(params[:id])
     render_edit_properly
   end
 
   def create
-
     params[:member].delete(:email) if params[:member][:email].blank?
 
     # Because members primary key works as foreign key for people
@@ -207,15 +202,12 @@ class MembersController < SecretaryController
   end
 
   def update
-    @member = Member.joins(:person).with_pseudo_columns(:full_name).
-                     find(params[:id])
-
     params[:member][:person_attributes].delete(:email) if
       params[:member][:person_attributes][:email].blank?
 
     if @member.update_attributes(params[:member])
       flash[:notice] = t('flash.members.update.success',
-                         :name => @member.full_name)
+                         :name => @member.virtual_full_name)
 
       redirect_to :action => :show,
                   :id     => @member
@@ -227,7 +219,6 @@ class MembersController < SecretaryController
   end
 
   def destroy
-    @member = Member.find(params[:id])
     @member.destroy
 
     flash[:notice] = t('flash.members.destroy.success',
@@ -237,6 +228,10 @@ class MembersController < SecretaryController
   end
 
   private
+
+    def find_member
+      @member = Member.find(params[:id])
+    end
 
     def render_new_properly
       @title = t('members.new.title')

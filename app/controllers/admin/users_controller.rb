@@ -26,6 +26,8 @@ class Admin::UsersController < AdminController
     self.default_sorting_column = :ip
   end
 
+  before_filter :find_user, :only => [:show, :edit, :update, :destroy]
+
   def index
     case request.format
     when Mime::HTML
@@ -36,7 +38,8 @@ class Admin::UsersController < AdminController
                       :manager,
                       :secretary,
                       :a_person ]
-    when Mime::XML, Mime::CSV, Mime::MS_EXCEL_2003_XML, Mime::CSV_ZIP, Mime::MS_EXCEL_2003_XML_ZIP
+    when Mime::XML, Mime::CSV, Mime::MS_EXCEL_2003_XML,
+         Mime::CSV_ZIP, Mime::MS_EXCEL_2003_XML_ZIP
       @attributes = [ :username,
                       :full_name,
                       :email,
@@ -112,8 +115,6 @@ class Admin::UsersController < AdminController
   end
 
   def show
-    @user = User.find(params[:id])
-
     @main_attributes = [ :username,
                          :full_name,
                          :email,
@@ -148,13 +149,10 @@ class Admin::UsersController < AdminController
   end
 
   def edit
-    @user = User.find(params[:id])
-
     render_edit_properly
   end
 
   def create
-
     params[:user][:safe_ip_ids] ||= []
 
     params[:user][:email] = nil if params[:user][:email].blank?
@@ -175,8 +173,6 @@ class Admin::UsersController < AdminController
   end
 
   def update
-    @user = User.find(params[:id])
-
     params[:user][:safe_ip_ids] ||= []
 
     params[:user][:email] = nil if params[:user][:email].blank?
@@ -215,7 +211,6 @@ class Admin::UsersController < AdminController
   end
 
   def destroy
-    @user = User.find(params[:id])
     @user.destroy
     flash[:notice] = t('flash.admin.users.destroy.success',
                        :username => @user.username)
@@ -224,6 +219,10 @@ class Admin::UsersController < AdminController
   end
 
   private
+
+    def find_user
+      @user = User.find(params[:id])
+    end
 
     def render_new_properly
       # NOTE: this seems redundant because coincides with KnownIP.all_sorting_columns

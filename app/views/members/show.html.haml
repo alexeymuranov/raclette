@@ -1,4 +1,4 @@
-%h1= t '.header', :name => @member.full_name
+%h1= t '.header', :name => @member.virtual_full_name
 
 %section
   %h2= t 'members.show.subheaders.member_data'
@@ -29,7 +29,7 @@
 
 %footer
   = link_to edit_pictogram(3) + ' ' + t('members.edit.header',
-                                        :name => @member.full_name),
+                                        :name => @member.virtual_full_name),
             edit_member_path(@member),
             :class => 'modify resource'
   = link_to list_all_pictogram(3) + ' ' + t('members.index.header'),

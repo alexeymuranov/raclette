@@ -19,11 +19,14 @@ class LessonSupervisionsController < SecretaryController
     self.default_sorting_column = :first_name
   end
 
+  before_filter :find_lesson_supervision, :only => [:show, :edit, :update, :destroy]
+
   def index
     case request.format
     when Mime::HTML
       @attributes = [:unique_names, :instructors_count, :comment]
-    when Mime::XML, Mime::CSV, Mime::MS_EXCEL_2003_XML, Mime::CSV_ZIP, Mime::MS_EXCEL_2003_XML_ZIP
+    when Mime::XML, Mime::CSV, Mime::MS_EXCEL_2003_XML,
+         Mime::CSV_ZIP, Mime::MS_EXCEL_2003_XML_ZIP
       @attributes = [:unique_names, :instructors_count, :comment]
     end
 
@@ -74,8 +77,6 @@ class LessonSupervisionsController < SecretaryController
   def show
     @attributes = [:unique_names, :instructors_count, :comment]
 
-    @lesson_supervision = LessonSupervision.find(params[:id])
-
     @instructors_attributes = [:first_name, :last_name, :email]
     @instructors = @lesson_supervision.instructors.default_order
 
@@ -90,8 +91,6 @@ class LessonSupervisionsController < SecretaryController
   end
 
   def edit
-    @lesson_supervision = LessonSupervision.find(params[:id])
-
     render_edit_properly
   end
 
@@ -116,8 +115,6 @@ class LessonSupervisionsController < SecretaryController
   end
 
   def update
-    @lesson_supervision = LessonSupervision.find(params[:id])
-
     if @lesson_supervision.update_attributes(params[:lesson_supervision])
       flash[:notice] = t('flash.lesson_supervisions.update.success',
                          :title => @lesson_supervision.unique_names)
@@ -131,7 +128,6 @@ class LessonSupervisionsController < SecretaryController
   end
 
   def destroy
-    @lesson_supervision = LessonSupervision.find(params[:id])
     @lesson_supervision.destroy
 
     flash[:notice] = t('flash.lesson_supervisions.destroy.success',
@@ -141,6 +137,10 @@ class LessonSupervisionsController < SecretaryController
   end
 
   private
+
+    def find_lesson_supervision
+      @lesson_supervision = LessonSupervision.find(params[:id])
+    end
 
     def render_new_properly
       # @attributes = [:unique_names, :instructors_count, :comment]

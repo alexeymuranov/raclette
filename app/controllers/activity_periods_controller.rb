@@ -11,6 +11,8 @@ class ActivityPeriodsController < ManagerController
     self.default_sorting_column = :start_date
   end
 
+  before_filter :find_activity_period, :only => [:show, :edit, :update, :destroy]
+
   def index
     case request.format
     when Mime::HTML
@@ -19,7 +21,8 @@ class ActivityPeriodsController < ManagerController
                       :duration_months,
                       :end_date,
                       :over ]
-    when Mime::XML, Mime::CSV, Mime::MS_EXCEL_2003_XML, Mime::CSV_ZIP, Mime::MS_EXCEL_2003_XML_ZIP
+    when Mime::XML, Mime::CSV, Mime::MS_EXCEL_2003_XML,
+         Mime::CSV_ZIP, Mime::MS_EXCEL_2003_XML_ZIP
       @attributes = [ :unique_title,
                       :start_date,
                       :duration_months,
@@ -78,8 +81,6 @@ class ActivityPeriodsController < ManagerController
                     :over,
                     :description ]
 
-    @activity_period = ActivityPeriod.find(params[:id])
-
     @title = t('activity_periods.show.title',
                :title => @activity_period.unique_title)
   end
@@ -91,8 +92,6 @@ class ActivityPeriodsController < ManagerController
   end
 
   def edit
-    @activity_period = ActivityPeriod.find(params[:id])
-
     render_edit_properly
   end
 
@@ -111,8 +110,6 @@ class ActivityPeriodsController < ManagerController
   end
 
   def update
-    @activity_period = ActivityPeriod.find(params[:id])
-
     if @activity_period.update_attributes(params[:activity_period])
       flash[:notice] = t('flash.activity_periods.update.success',
                          :title => @activity_period.unique_title)
@@ -125,7 +122,6 @@ class ActivityPeriodsController < ManagerController
   end
 
   def destroy
-    @activity_period = ActivityPeriod.find(params[:id])
     @activity_period.destroy
 
     flash[:notice] = t('flash.activity_periods.destroy.success',
@@ -135,6 +131,10 @@ class ActivityPeriodsController < ManagerController
   end
 
   private
+
+    def find_activity_period
+      @activity_period = ActivityPeriod.find(params[:id])
+    end
 
     def render_new_properly
       @attributes = [ :unique_title,

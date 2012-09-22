@@ -9,13 +9,16 @@ class InstructorsController < ManagerController
     self.default_sorting_column = :ordered_full_name
   end
 
+  before_filter :find_instructor, :only => [:show, :edit, :update, :destroy]
+
   def index
     case request.format
     when Mime::HTML
       @attributes = [ :ordered_full_name,
                       :email,
                       :employed_from ]
-    when Mime::XML, Mime::CSV, Mime::MS_EXCEL_2003_XML, Mime::CSV_ZIP, Mime::MS_EXCEL_2003_XML_ZIP
+    when Mime::XML, Mime::CSV, Mime::MS_EXCEL_2003_XML,
+         Mime::CSV_ZIP, Mime::MS_EXCEL_2003_XML_ZIP
       @attributes = [ :last_name,
                       :first_name,
                       :email,
@@ -87,12 +90,7 @@ class InstructorsController < ManagerController
                     :last_name,
                     :nickname_or_other,
                     :email,
-                    :full_name,
                     :employed_from ]
-
-    @instructor =
-      Instructor.joins(:person).with_pseudo_columns(*@attributes).
-                 find(params[:id])
 
     @title = t('instructors.show.title', :name => @instructor.virtual_full_name)
   end
@@ -105,14 +103,10 @@ class InstructorsController < ManagerController
   end
 
   def edit
-    @instructor =
-      Instructor.joins(:person).with_pseudo_columns(:full_name).
-                 find(params[:id])
     render_edit_properly
   end
 
   def create
-
     params[:instructor].delete(:email) if params[:instructor][:email].blank?
 
     # Because instructors primary key works as foreign key for people
@@ -159,16 +153,12 @@ class InstructorsController < ManagerController
   end
 
   def update
-    @instructor =
-      Instructor.joins(:person).with_pseudo_columns(:full_name).
-                 find(params[:id])
-
     params[:instructor][:person_attributes].delete(:email) if
       params[:instructor][:person_attributes][:email].blank?
 
     if @instructor.update_attributes(params[:instructor])
       flash[:notice] = t('flash.instructors.update.success',
-                         :name => @instructor.full_name)
+                         :name => @instructor.virtual_full_name)
 
       redirect_to :action => :show,
                   :id     => @instructor.id
@@ -180,7 +170,6 @@ class InstructorsController < ManagerController
   end
 
   def destroy
-    @instructor = Instructor.find(params[:id])
     @instructor.destroy
 
     flash[:notice] = t('flash.instructors.destroy.success',
@@ -190,6 +179,10 @@ class InstructorsController < ManagerController
   end
 
   private
+
+    def find_instructor
+      @instructor = Instructor.find(params[:id])
+    end
 
     def render_new_properly
       @title = t('instructors.new.title')

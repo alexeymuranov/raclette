@@ -11,7 +11,8 @@ class TicketBooksController < ManagerController
     case request.format
     when Mime::HTML
       @attributes = [:tickets_number, :price]
-    when Mime::XML, Mime::CSV, Mime::MS_EXCEL_2003_XML, Mime::CSV_ZIP, Mime::MS_EXCEL_2003_XML_ZIP
+    when Mime::XML, Mime::CSV, Mime::MS_EXCEL_2003_XML,
+         Mime::CSV_ZIP, Mime::MS_EXCEL_2003_XML_ZIP
       @attributes = [:tickets_number, :price]
     end
 
@@ -61,8 +62,6 @@ class TicketBooksController < ManagerController
   def show
     @attributes = [:tickets_number, :price]
 
-    @ticket_book = TicketBook.find(params[:id])
-
     @title = t('ticket_books.show.title',
                :title => @ticket_book.virtual_long_title)
   end
@@ -74,8 +73,6 @@ class TicketBooksController < ManagerController
   end
 
   def edit
-    @ticket_book = TicketBook.find(params[:id])
-
     render_edit_properly
   end
 
@@ -94,8 +91,6 @@ class TicketBooksController < ManagerController
   end
 
   def update
-    @ticket_book = TicketBook.find(params[:id])
-
     if @ticket_book.update_attributes(params[:ticket_book])
       flash[:notice] = t('flash.ticket_books.update.success',
                          :title => @ticket_book.virtual_long_title)
@@ -108,7 +103,6 @@ class TicketBooksController < ManagerController
   end
 
   def destroy
-    @ticket_book = TicketBook.find(params[:id])
     @ticket_book.destroy
 
     flash[:notice] = t('flash.ticket_books.destroy.success',

@@ -1,11 +1,11 @@
-%h1= t '.header', :name => @member.full_name
+%h1= t '.header', :name => @member.virtual_full_name
 - @member_form_url = member_path(@member)
 
 = render 'form'
 
 %footer
   = link_to show_pictogram(3) + ' ' + t('members.show.header',
-                                        :name => @member.full_name),
+                                        :name => @member.virtual_full_name),
             member_path(@member),
             :class => 'display resource'
   = link_to list_all_pictogram(3) + ' ' + t('members.index.header'),

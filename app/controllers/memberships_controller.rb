@@ -24,6 +24,8 @@ class MembershipsController < ManagerController # FIXME!
     self.default_sorting_column = :ip
   end
 
+  before_filter :find_membership, :only => [:show, :edit, :update, :destroy]
+
   def index
     @membership_types = MembershipType.default_order
     @activity_periods = ActivityPeriod.default_order
@@ -38,8 +40,6 @@ class MembershipsController < ManagerController # FIXME!
     @association_name_attributes = { :activity_period => :unique_title,
                                      :type            => :unique_title }
 
-    @membership = Membership.find(params[:id])
-
     @title = t('memberships.show.title',
                :title => @membership.virtual_title)
   end
@@ -51,8 +51,6 @@ class MembershipsController < ManagerController # FIXME!
   end
 
   def edit
-    @membership = Membership.find(params[:id])
-
     render_edit_properly
   end
 
@@ -71,8 +69,6 @@ class MembershipsController < ManagerController # FIXME!
   end
 
   def update
-    @membership = Membership.find(params[:id])
-
     if @membership.update_attributes(params[:membership])
       flash[:notice] = t('flash.memberships.update.success',
                          :title => @membership.virtual_title)
@@ -85,7 +81,6 @@ class MembershipsController < ManagerController # FIXME!
   end
 
   def destroy
-    @membership = Membership.find(params[:id])
     @membership.destroy
 
     flash[:notice] = t('flash.memberships.destroy.success',
@@ -95,6 +90,10 @@ class MembershipsController < ManagerController # FIXME!
   end
 
   private
+
+    def find_membership
+      @membership = Membership.find(params[:id])
+    end
 
     def render_new_properly
       @attributes = [:initial_price, :current_price]

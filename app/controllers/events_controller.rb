@@ -59,6 +59,8 @@ class EventsController < SecretaryController
                         :inverse_of => :member
   end
 
+  before_filter :find_event, :only => [:show, :edit, :update, :destroy]
+
   def index
     case request.format
     when Mime::HTML
@@ -66,7 +68,8 @@ class EventsController < SecretaryController
                       :date,
                       :start_time,
                       :supervisors ]
-    when Mime::XML, Mime::CSV, Mime::MS_EXCEL_2003_XML, Mime::CSV_ZIP, Mime::MS_EXCEL_2003_XML_ZIP
+    when Mime::XML, Mime::CSV, Mime::MS_EXCEL_2003_XML,
+         Mime::CSV_ZIP, Mime::MS_EXCEL_2003_XML_ZIP
       @attributes = [ :title, :event_type,
                       :date,
                       :start_time,
@@ -138,8 +141,6 @@ class EventsController < SecretaryController
     @singular_associations = [ :weekly_event ]
     @association_name_attributes = { :weekly_event => :virtual_long_title }
 
-    @event = Event.find(params[:id])
-
     @member_participants_attributes = [ :ordered_full_name, :email ]
     @member_participants = @event.member_participants.
       with_pseudo_columns(*@member_participants_attributes)
@@ -162,8 +163,6 @@ class EventsController < SecretaryController
   end
 
   def edit
-    @event = Event.find(params[:id])
-
     render_edit_properly
   end
 
@@ -187,8 +186,6 @@ class EventsController < SecretaryController
   end
 
   def update
-    @event = Event.find(params[:id])
-
     if @event.update_attributes(params[:event])
       flash[:notice] = t('flash.events.update.success',
                          :title => @event.title)
@@ -201,7 +198,6 @@ class EventsController < SecretaryController
   end
 
   def destroy
-    @event = Event.find(params[:id])
     @event.destroy
 
     flash[:notice] = t('flash.events.destroy.success',
@@ -211,6 +207,10 @@ class EventsController < SecretaryController
   end
 
   private
+
+    def find_event
+      @event = Event.find(params[:id])
+    end
 
     def render_new_properly
       @attributes = [ :title, :event_type,
