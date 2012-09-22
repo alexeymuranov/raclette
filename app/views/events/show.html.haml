@@ -13,7 +13,7 @@
   - unless @member_participants.empty?
     = render 'shared/tables/simple_index',
              :models                    => @member_participants,
-             :attributes                => @member_participants_attributes,
+             :attributes                => @member_participant_attributes,
              :html_table_id             => :member_participants
 
 %section
@@ -22,7 +22,7 @@
   - unless @other_participants.empty?
     = render 'shared/tables/simple_index',
              :models                    => @other_participants,
-             :attributes                => @other_participants_attributes,
+             :attributes                => @other_participant_attributes,
              :html_table_id             => :other_participants
 
 %footer

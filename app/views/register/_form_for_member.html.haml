@@ -19,11 +19,11 @@
         :class => (@members_filtering_values.blank? ? '' : 'filtered ') |
                     + 'records filter'}                                 |
   %colgroup.attributes
-    - @members_attributes.size.times do
+    - @member_attributes.size.times do
       %col
   %thead
     %tr
-      - @members_attributes.each do |attr|
+      - @member_attributes.each do |attr|
 
         = render 'shared/tables/sorting_header',
                  :attribute     => attr,
@@ -32,7 +32,7 @@
                  :html_table_id => 'member_list_attributes'
 
     %tr
-      - @members_attributes.each do |attr|
+      - @member_attributes.each do |attr|
 
         = render 'shared/tables/filtering_field',
                  :filter_form_id  => filter_form_id,
@@ -42,7 +42,7 @@
                  :value_or_values => @members_filtering_values[attr]
 
     %tr
-      %td{:colspan => @members_attributes.size, :class => 'actions'}
+      %td{:colspan => @member_attributes.size, :class => 'actions'}
         %button{ :form  => filter_form_id,
                  :name  => 'button',
                  :type  => 'submit',
@@ -55,7 +55,7 @@
           = t('buttons.clear')
     - unless @members_filtering_values.blank?
       %tr
-        - @members_attributes.each do |attr|
+        - @member_attributes.each do |attr|
 
           = render 'shared/tables/filtering_value',
                    :value_or_values => @members_filtering_values[attr],

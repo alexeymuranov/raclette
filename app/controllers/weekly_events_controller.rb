@@ -119,21 +119,21 @@ class WeeklyEventsController < ManagerController
                     :entry_fee_tickets,
                     :description ]
 
-    @events_attributes = [ :title, :event_type,
-                           :date,
-                           :start_time,
-                           :supervisors ]
+    @event_attributes = [ :title, :event_type,
+                          :date,
+                          :start_time,
+                          :supervisors ]
 
     @events = @weekly_event.events
     @events_column_headers = Event.human_column_headers
 
     # Filter:
-    @events = Event.filter(@events, params[:filter], @events_attributes)
+    @events = Event.filter(@events, params[:filter], @event_attributes)
     @filtering_values = Event.last_filter_values
     @filtered_events_count = @events.count
 
     # Sort:
-    Event.all_sorting_columns = @events_attributes
+    Event.all_sorting_columns = @event_attributes
     sort_params = (params[:sort] && params[:sort][:events]) || {}
     @weekly_events = Event.sort(@events, sort_params)
     @sorting_column = Event.last_sort_column

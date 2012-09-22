@@ -141,12 +141,12 @@ class MembersController < SecretaryController
                     :account_deactivated,
                     :been_member_by ]
 
-    @attended_events_attributes = [:title, :event_type, :date, :start_time]
+    @attended_event_attributes = [:title, :event_type, :date, :start_time]
     @attended_events = @member.attended_events
 
-    @memberships_attributes = [:title, :duration_months, :end_date]
+    @membership_attributes = [:title, :duration_months, :end_date]
     @memberships = @member.memberships.with_type.with_activity_period.
-      with_pseudo_columns(*@memberships_attributes)
+      with_pseudo_columns(*@membership_attributes)
 
     @title = t('members.show.title', :name => @member.virtual_full_name)
   end

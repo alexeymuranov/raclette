@@ -77,7 +77,7 @@ class LessonSupervisionsController < SecretaryController
   def show
     @attributes = [:unique_names, :instructors_count, :comment]
 
-    @instructors_attributes = [:first_name, :last_name, :email]
+    @instructor_attributes = [:first_name, :last_name, :email]
     @instructors = @lesson_supervision.instructors.default_order
 
     @title = t('lesson_supervisions.show.title',

@@ -29,7 +29,7 @@
 = field_set_tag t('admin.users.edit.subheaders.authorized_ips') do
 
   = render 'shared/forms/selection_index',
-           :attributes        => @known_ips_attributes,
+           :attributes        => @known_ip_attributes,
            :html_table_id     => :known_ips,
            :models            => @known_ips,
            :selected_models   => @safe_ips,

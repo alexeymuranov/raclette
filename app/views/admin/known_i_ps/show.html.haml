@@ -15,7 +15,7 @@
   - unless @safe_users.empty?
     = render 'shared/tables/simple_index',
              :models                    => @safe_users,
-             :attributes                => @safe_users_attributes,
+             :attributes                => @safe_user_attributes,
              :resources_controller_name => Admin::UsersController.controller_path,
              :html_table_id             => :safe_users
 

@@ -39,8 +39,7 @@ class EventsController < SecretaryController
   end
 
   class Person < Accessors::Person
-    self.all_sorting_columns = [ :ordered_full_name,
-                                 :email ]
+    self.all_sorting_columns = [:ordered_full_name, :email]
     self.default_sorting_column = :ordered_full_name
 
     has_one :member, :dependent  => :destroy,
@@ -138,16 +137,16 @@ class EventsController < SecretaryController
                     :tickets_collected,
                     :entry_fees_collected ]
 
-    @singular_associations = [ :weekly_event ]
+    @singular_associations = [:weekly_event]
     @association_name_attributes = { :weekly_event => :virtual_long_title }
 
-    @member_participants_attributes = [ :ordered_full_name, :email ]
+    @member_participant_attributes = [:ordered_full_name, :email]
     @member_participants = @event.member_participants.
-      with_pseudo_columns(*@member_participants_attributes)
+      with_pseudo_columns(*@member_participant_attributes)
 
-    @other_participants_attributes = [ :ordered_full_name, :email ]
+    @other_participant_attributes = [:ordered_full_name, :email]
     @other_participants = @event.non_member_participants.
-      with_pseudo_columns(*@other_participants_attributes)
+      with_pseudo_columns(*@other_participant_attributes)
 
     @title = t('events.show.title', :title => @event.title)
   end

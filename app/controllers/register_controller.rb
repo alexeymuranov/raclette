@@ -204,7 +204,7 @@ class RegisterController < ApplicationController
 
       @guest ||= Guest.new(params[:guest])
 
-      @members_attributes = [ :last_name, :first_name ]
+      @member_attributes = [:last_name, :first_name]
 
       @events = Event.unlocked.past_seven_days
 

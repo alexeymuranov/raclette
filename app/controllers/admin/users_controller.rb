@@ -130,7 +130,7 @@ class Admin::UsersController < AdminController
     @other_attributes << :last_signed_in_at unless
       @user.last_signed_in_at.blank?
 
-    @safe_ips_attributes = [:ip, :description]
+    @safe_ip_attributes = [:ip, :description]
 
     ip_sort_params = (params[:sort] && params[:sort][:safe_ips]) || {}
     @safe_ips = KnownIP.sort(@user.safe_ips, ip_sort_params)
@@ -226,7 +226,7 @@ class Admin::UsersController < AdminController
 
     def render_new_properly
       # NOTE: this seems redundant because coincides with KnownIP.all_sorting_columns
-      @known_ips_attributes = [:ip, :description]
+      @known_ip_attributes = [:ip, :description]
 
       ip_sort_params = (params[:sort] && params[:sort][:safe_ips]) || {}
       @known_ips = KnownIP.sort(KnownIP.scoped, ip_sort_params)
@@ -240,7 +240,7 @@ class Admin::UsersController < AdminController
     end
 
     def render_edit_properly
-      @known_ips_attributes = [:ip, :description]
+      @known_ip_attributes = [:ip, :description]
 
       ip_sort_params = (params[:sort] && params[:sort][:safe_ips]) || {}
       @known_ips = KnownIP.sort(KnownIP.scoped, ip_sort_params)

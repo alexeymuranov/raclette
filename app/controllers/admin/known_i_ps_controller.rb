@@ -44,17 +44,17 @@ class Admin::KnownIPsController < AdminController
   def show
     @attributes = [:ip, :description]
 
-    @safe_users_attributes = [ :username,
-                               :full_name,
-                               :account_deactivated,
-                               :admin,
-                               :manager,
-                               :secretary,
-                               :a_person ]
+    @safe_user_attributes = [ :username,
+                              :full_name,
+                              :account_deactivated,
+                              :admin,
+                              :manager,
+                              :secretary,
+                              :a_person ]
 
     # Sort safe users:
     @safe_users = @known_ip.safe_users
-    User.all_sorting_columns = @safe_users_attributes
+    User.all_sorting_columns = @safe_user_attributes
     sort_params = (params[:sort] && params[:sort][:safe_users]) || {}
     @safe_users = User.sort(@safe_users, sort_params)
     @sorting_column = User.last_sort_column
