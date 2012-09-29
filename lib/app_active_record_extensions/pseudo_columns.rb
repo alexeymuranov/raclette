@@ -1,13 +1,14 @@
 module PseudoColumns
-  def self.included(base)
+  def self.included(base_class)
     # NOTE: looks like a hack
-    if base.ancestors.count(self) == 1
-      base.extend ClassMethods
-      base.send :initialize_pseudo_columns
-    end
+    base_class.extend ClassMethods if base_class.ancestors.count(self) == 1
   end
 
   module ClassMethods
+    def self.extended(base_class)
+      base_class.send :initialize_pseudo_columns
+    end
+
     # Callback
     def inherited(subclass)
       subclass.instance_variable_set :@sql_for_columns, self.sql_for_columns.dup
@@ -22,11 +23,6 @@ module PseudoColumns
     attr_reader :sql_for_columns
 
     def add_pseudo_columns(sql_for_columns)
-      @sql_for_columns ||= Hash.new { |hash, key|
-        if col = columns_hash[key.to_s]
-          hash[key] = %("#{ table_name }"."#{ col.name }")
-        end
-      }
       @sql_for_columns.merge! sql_for_columns
     end
 
@@ -41,11 +37,6 @@ module PseudoColumns
     attr_reader :column_db_types
 
     def add_pseudo_column_db_types(column_db_types)
-      @column_db_types ||= Hash.new { |hash, key|
-        if col = columns_hash[key.to_s]
-          hash[key] = col.type
-        end
-      }
       @column_db_types.merge! column_db_types
     end
 
@@ -63,12 +54,12 @@ module PseudoColumns
     private
 
       def initialize_pseudo_columns
-        @sql_for_columns ||= Hash.new { |hash, key|
+        @sql_for_columns = Hash.new { |hash, key|
           if col = columns_hash[key.to_s]
             hash[key] = %("#{ table_name }"."#{ col.name }")
           end
         }
-        @column_db_types ||= Hash.new { |hash, key|
+        @column_db_types = Hash.new { |hash, key|
           if col = columns_hash[key.to_s]
             hash[key] = col.type
           end
