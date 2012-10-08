@@ -33,7 +33,6 @@ module ActiveModelUtilities
     end
 
     def attr_readonly?(attr)
-      attr = attr.to_s
       readonly_attributes.include?(attr.to_s)
     end
 
