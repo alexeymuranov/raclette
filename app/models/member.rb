@@ -97,7 +97,7 @@ class Member < ActiveRecord::Base
   scope :default_order, joins(:person).merge(Person.default_order)
   scope :account_active, where(:account_deactivated => false)
   # scope :current, joins(:memberships => :activity_period).merge(Membership.current).uniq  # Experiment. Can be removed?
-  scope :current, joins(:memberships).merge(Membership.current).uniq  # FIXME!
+  scope :current, joins(:memberships).merge(Membership.current).uniq  # TEST_ME!
 
   # Pseudo columns
   tickets_count_sql = "(#{ sql_for_columns[:payed_tickets_count] } + #{ sql_for_columns[:free_tickets_count] })"
