@@ -21,11 +21,11 @@ class SimpleFilter
                               end
 
       case filtering_column_type
-      when :string, :delegated_string, :virtual_string
+      when :string
         unless value.blank?
           @filtering_values[attr] = value.mb_chars.upcase.to_s.sub(/\%*\z/, '%')
         end
-      when :boolean, :delegated_boolean
+      when :boolean
         unless value.nil?
           case value
           when /yes/i, /true/i, /t/i, 1, '1', true
@@ -34,7 +34,7 @@ class SimpleFilter
             @filtering_values[attr] = false
           end
         end
-      when :integer, :delegated_integer, :virtual_integer
+      when :integer
         minimum = value.try(:'[]', :min)
         minimum = minimum.blank? ? nil : minimum.to_i
         maximum = value.try(:'[]', :max)
@@ -43,7 +43,7 @@ class SimpleFilter
           @filtering_values[attr] = { :min => minimum,
                                       :max => maximum }
         end
-      when :date, :delegated_date, :virtual_date
+      when :date
         start_date = value.try(:'[]', :from)
         start_date = start_date.blank? ? nil : start_date.to_date
         end_date = value.try(:'[]', :until)
