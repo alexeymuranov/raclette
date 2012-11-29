@@ -8,89 +8,80 @@
 - unless select_from.respond_to?(:size) && (select_size = select_from.size) <= 10
   - select_from = nil
 
-- if select_from
-  - case column_type
-  - when :string
-    - if value_or_values.is_a?(String)
-      - value_or_values = value_or_values.sub(/\%\z/, '')
-      - value_or_values = select_from.find { |c|      |
-          c.mb_chars.upcase.to_s == value_or_values } |
-    - css_class = 'text field'
-  - when :boolean
-    - css_class = 'boolean field'
-  - when :integer
-    - css_class = 'number field'
-  - when :date
-    - css_class = 'date field'
+- css_class = { :string  => 'text',
+                :boolean => 'boolean',
+                :integer => 'number',
+                :date    => 'date' }[column_type]
 
-  = content_tag :td, :class => css_class do
+%td.field{ :class => css_class }<
+  - if select_from
+    - case column_type
+    - when :string
+      - if value_or_values.is_a?(String)
+        - value_or_values = value_or_values.sub(/\%\z/, '')
+        - value_or_values = select_from.find { |c|      |
+            c.mb_chars.upcase.to_s == value_or_values } |
+
     = select_tag "filter[#{attr}]",
                  options_for_select(select_from,
                                     value_or_values),
                  :include_blank => true,
                  :form          => filter_form_id
 
-- else
-  - case column_type
-  - when :string
-    %td.text.field
+  - else
+    - case column_type
+    - when :string
       = search_field_tag "filter[#{attr}]",
                          value_or_values,
-                         :form => filter_form_id,
+                         :form         => filter_form_id,
                          :autocomplete => :off
-  - when :boolean
-    %td.boolean.field
+    - when :boolean
       = radio_button_tag "filter[#{attr}]",
                          'yes',
                          value_or_values,
-                         :form => filter_form_id,
-                         :autocomplete => :off
+                         :form         => filter_form_id
       = label_tag 'filter_' + attr.to_s + '_yes', t('yes')
       = radio_button_tag "filter[#{attr}]",
                          'no',
                          value_or_values == false,
-                         :form => filter_form_id,
-                         :autocomplete => :off
+                         :form         => filter_form_id
       = label_tag 'filter_' + attr.to_s + '_no', t('no')
       = radio_button_tag "filter[#{attr}]",
                          'all',
                          value_or_values.nil? ,
-                         :form => filter_form_id,
-                         :autocomplete => :off
+                         :form         => filter_form_id
       = label_tag 'filter_' + attr.to_s + '_all', t('all')
-  - when :integer
-    %td.number.field<
+    - when :integer
       - value_or_values ||= {}
       = label_tag "filter[#{attr}][min]",
                   t('formats.attribute_name:', :attribute => 'min')
       = number_field_tag "filter[#{attr}][min]",
                          value_or_values[:min],
-                         :form => filter_form_id,
+                         :form         => filter_form_id,
                          :autocomplete => :off,
-                         :size => 6
+                         :size         => 6
       %br>
       = label_tag "filter[#{attr}][max]",
                   t('formats.attribute_name:', :attribute => 'max')
       = number_field_tag "filter[#{attr}][max]",
                          value_or_values[:max],
-                         :form => filter_form_id,
+                         :form         => filter_form_id,
                          :autocomplete => :off,
-                         :size => 6
-  - when :date
-    %td.date.field
+                         :size         => 6
+    - when :date
       - value_or_values ||= {}
-      = label_tag "filter[#{attr}][from]", t('date.from')
+      = label_tag "filter[#{attr}][from]",
+                  t('formats.attribute_name:', :attribute => t('date.from'))
       = date_select "filter[#{attr}][from]",
                     value_or_values[:from],
-                    :form => filter_form_id,
+                    :form         => filter_form_id,
                     :autocomplete => :off,
-                    :type => 'date'
+                    :type         => 'date'
       %br>
-      = label_tag "filter[#{attr}][until]", t('date.until')
+      = label_tag "filter[#{attr}][until]",
+                  t('formats.attribute_name:', :attribute => t('date.until'))
       = date_select "filter[#{attr}][until]",
                     value_or_values[:until],
-                    :form => filter_form_id,
+                    :form         => filter_form_id,
                     :autocomplete => :off,
-                    :type => 'date'
-  - else
-    %td
+                    :type         => 'date'
