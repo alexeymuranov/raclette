@@ -2,31 +2,30 @@
 -#   value_or_values:
 -#   column_type:
 
-- unless value_or_values.blank?
-  - case column_type
-  - when :string
-    %td.filtering_value
-      = value_or_values
-  - when :boolean
-    %td.boolean.filtering_value
+- if value_or_values.blank?
+  %td
+- else
+  - css_class = { :string  => 'text',
+                  :boolean => 'boolean',
+                  :integer => 'number',
+                  :date    => 'date' }[column_type]
+
+  %td.filtering_value{ :class => css_class }
+    - case column_type
+    - when :boolean
       = boolean_to_yes_no(value_or_values)
-  - when :integer
-    %td.number.filtering_value
-      - if value_or_values[:min]
+    - when :integer
+      - if value_or_values.key?(:min)
         = value_or_values[:min]
       \..
-      - if value_or_values[:max]
+      - if value_or_values.key?(:max)
         = value_or_values[:max]
-  - when :date
-    %td.date.filtering_value
-      - if value_or_values[:from]
-        = t(date.from)
+    - when :date
+      - if value_or_values.key?(:from)
+        = t 'date.from'
         = value_or_values[:from]
-      - if value_or_values[:until]
-        = t(date.until)
+      - if value_or_values.key?(:until)
+        = t 'date.until'
         = value_or_values[:until]
-  - else
-    %td.filtering_value
+    - else
       = value_or_values
-- else
-  %td
