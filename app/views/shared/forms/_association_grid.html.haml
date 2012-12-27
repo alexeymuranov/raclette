@@ -19,14 +19,14 @@
       %th.empty
       - models2.each do |mod2|
         %th
-          = content_tag :span, mod2.public_send(key2),
-                        :title => mod2.public_send(description2)
+          %span{ :title => mod2.public_send(description2) }
+            = mod2.public_send(key2)
   %tbody
     - models1.each do |mod1|
       %tr
-        %th{:scope => "row"}
-          = content_tag :span, mod1.public_send(key1),
-                        :title => mod1.public_send(description1)
+        %th{ :scope => 'row' }
+          %span{ :title => mod1.public_send(description1) }
+            = mod1.public_send(key1)
         - models2.each do |mod2|
           %td.boolean
             = check_box_tag "#{id_array_name}[#{mod1.id}][]", mod2.id,

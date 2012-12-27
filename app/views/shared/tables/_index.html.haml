@@ -17,7 +17,7 @@
   -# It is assumed here that AbstractHumanizedModel module is included
   - column_headers = klass.human_column_headers
 
-= content_tag :table, :id => html_table_id, :class => 'records' do
+%table.records{ :id => html_table_id }
   %colgroup.attributes
     - attributes.size.times do
       %col

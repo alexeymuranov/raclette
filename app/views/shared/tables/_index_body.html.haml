@@ -6,8 +6,8 @@
 %tbody
   - if models.blank?
     %tr
-      = content_tag :td, '∅', :colspan => attributes.size,
-                              :class   => 'nothing'
+      %td.nothing{ :colspan => attributes.size }
+        ∅
       %td.empty
       %td.empty
     %tr
