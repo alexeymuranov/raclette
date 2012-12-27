@@ -16,7 +16,7 @@ input[type="submit"].easy {
   display: inline-block;
   border: none;
   @include appearance(button);
-  @include border-radius(10px);
+  border-radius: 10px;
   padding: 20px;
   font-size: $tabs-font-size;
   font-weight: bold;
@@ -33,7 +33,7 @@ input[type="checkbox"]:not(:checked) + *.checkbox_conditional {
 }
 
 fieldset {
-  @include border-radius(5px);
+  border-radius: 5px;
   margin: 0.5em 0;
   padding: 10px;
 

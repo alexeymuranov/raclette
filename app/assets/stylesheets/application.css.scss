@@ -55,7 +55,7 @@ div#welcome_logo {
 /* Header */
 
 div.container > header {
-  @include border-radius(10px);
+  border-radius: 10px;
   background-color: $section-bg-color;
   font-size: $main-menu-font-size;
   text-align: left;
@@ -71,7 +71,7 @@ div.container > header {
   }
 
   div#main_logo div#logo_box {
-    @include border-radius(10px);
+    border-radius: 10px;
     display: inline-block;
     padding: 10px;
     opacity: 0.75;
@@ -107,7 +107,7 @@ div.container > header {
 /* Footer */
 
 div.container > footer {
-  @include border-radius(10px);
+  border-radius: 10px;
   background-color: $section-bg-color;
   font-size: $main-menu-font-size;
   text-align: center;
@@ -133,12 +133,12 @@ div.container > footer {
 /* Sections */
 
 div.container > section {
-  @include border-radius(10px);
+  border-radius: 10px;
   background-color: $section-bg-color;
   padding: 10px;
 
   section {
-    @include border-radius(5px);
+    border-radius: 5px;
     margin: 5px 0px;
 
     section {

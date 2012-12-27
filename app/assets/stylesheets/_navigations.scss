@@ -212,7 +212,7 @@ nav.pagination {
     }
 
     a:hover {
-      @include border-radius(3px);
+      border-radius: 3px;
       text-shadow: none;
       color: $section-bg-color;
       background-color: $common-navigation-link-color;
@@ -242,7 +242,7 @@ nav.filtering_prefixes {
 /* Side menu */
 
 nav#side_menu {
-  @include border-radius(5px);
+  border-radius: 5px;
   position: fixed;
   top: 110px;
   left: 5px;
