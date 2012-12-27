@@ -32,7 +32,7 @@
 
     %ul.compact
       - @known_ips.each do |known_ip|
-        - note = known_ip.description.blank? ? '' : " (#{known_ip.description})"
+        - note = known_ip.description.blank? ? '' : " (#{ known_ip.description })"
         %li
           = link_to show_pictogram(2) + ' ' + known_ip.ip + note, known_ip_path(known_ip),
                     :class => 'display resource'
