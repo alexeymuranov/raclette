@@ -17,10 +17,9 @@
         :include_blank => true
 
     %span.actions
-      %button{ :name  => 'button',
-               :value => 'select_current_event',
-               :type  => 'submit',
-               :class => 'preselect' }
+      %button.preselect{ :type  => 'submit',
+                         :name  => 'button',
+                         :value => 'select_current_event' }
         = t('buttons.change')
 
 %section

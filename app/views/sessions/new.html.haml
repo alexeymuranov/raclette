@@ -17,7 +17,8 @@
         %dt= t 'sessions.labels.your_ip_address'
         %dd= @client_ip
   .actions
-    %button{ :name  => 'button', :value => 'log_in',
-             :type  => 'submit', :class => 'image_button' }
+    %button.image_button{ :type  => 'submit',
+                          :name  => 'button',
+                          :value => 'log_in' }
       #welcome_logo
         = logo(2)

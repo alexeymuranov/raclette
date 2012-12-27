@@ -79,7 +79,7 @@
           %dd.string
             = form_builder.text_field attribute, input_html_options
       - else
-        %dd{:class => column_type}
+        %dd{ :class => column_type }
           = form_builder.text_field attribute, input_html_options
   - else
     - value = object.public_send(attribute)
@@ -101,5 +101,5 @@
       %dd.time
         = l(value, :format => :time_of_the_day) if value
     - else
-      %dd{:class => column_type}
+      %dd{ :class => column_type }
         = value

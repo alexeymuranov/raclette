@@ -10,11 +10,11 @@
   %td.number
     = value
 - when :date, :datetime
-  %td{:class => column_type}
+  %td{ :class => column_type }
     = l(value, :format => :custom) if value
 - when :time
   %td.time
     = l(value, :format => :time_of_the_day) if value
 - else
-  %td{:class => column_type}
+  %td{ :class => column_type }
     = value

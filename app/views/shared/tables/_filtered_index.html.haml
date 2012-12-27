@@ -23,12 +23,12 @@
 
   %label{:for => :per_page}
     = t('field_labels.per_page')
-  %select{:name => :per_page, :class => 'number'}
+  %select.number{ :name => :per_page }
     = options_for_select [5, 10, 25, 50, 100, 250, 500, 1000],
                          params[:per_page] || klass.default_per_page
   %span.actions
-    %button{ :name  => 'button',
-             :type  => 'submit',
+    %button{ :type  => 'submit',
+             :name  => 'button',
              :value => 'repaginate' }
       = t('buttons.repaginate')
 
@@ -42,8 +42,8 @@
        :method => :get }
   = hidden_fields_from_nested_hash params.slice(:sort)
 
-%table{ :id    => html_table_id,
-        :class => (filtering_values.blank? ? '' : 'filtered ') + 'records' }
+%table.records{ :id    => html_table_id,
+                :class => (filtering_values.blank? ? nil : 'filtered ') }
   %colgroup.attributes
     - attributes.size.times do
       %col
@@ -75,16 +75,16 @@
       %td.empty
       %td.empty
     %tr
-      %td{:colspan => attributes.size, :class => 'actions'}
-        %button{ :form  => filter_form_id,
+      %td.actions{ :colspan => attributes.size }
+        %button{ :type  => 'submit',
+                 :form  => filter_form_id,
                  :name  => 'button',
-                 :type  => 'submit',
                  :value => 'filter' }
           = t('buttons.filter')
 
-        %button{ :form  => clear_filter_form_id,
+        %button{ :type  => 'submit',
+                 :form  => clear_filter_form_id,
                  :name  => 'button',
-                 :type  => 'submit',
                  :value => 'filter' }
           = t('buttons.clear')
 

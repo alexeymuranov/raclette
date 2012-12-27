@@ -15,9 +15,7 @@
        :method => :get }
   = hidden_fields_from_nested_hash @saved_params.except(:filter)
 
-%table{ :id    => 'member_list_attributes',                             |
-        :class => (@members_filtering_values.blank? ? '' : 'filtered ') |
-                    + 'records filter' }                                |
+%table#member_list_attributes.records.filter{ :class => (@members_filtering_values.blank? ? nil : 'filtered ') }
   %colgroup.attributes
     - @member_attributes.size.times do
       %col
@@ -42,7 +40,7 @@
                  :value_or_values => @members_filtering_values[attr]
 
     %tr
-      %td{:colspan => @member_attributes.size, :class => 'actions'}
+      %td.actions{ :colspan => @member_attributes.size }
         %button{ :form  => filter_form_id,
                  :name  => 'button',
                  :type  => 'submit',
@@ -68,7 +66,7 @@
 
   %label{:for => :per_page}
     = t('field_labels.per_page')
-  %select{:name => :per_page, :class => 'number'}
+  %select.number{ :name => :per_page }
     = options_for_select [5, 10, 25, 50, 100, 250, 500, 1000],
                          params[:per_page] || Member.default_per_page
   %span.actions

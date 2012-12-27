@@ -24,7 +24,8 @@
 
       %section
         - flash.each do |name, msg|
-          %div{ :class => "flash #{name}" }= msg
+          %div.flash{ :class => name }
+            = msg
 
         = render 'layouts/side_menu'
 
