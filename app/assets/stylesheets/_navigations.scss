@@ -152,20 +152,20 @@ div.container > header {
 
 @mixin tab-element {
   display: inline-block;
-  margin: 0 0 4pt;
-  padding: 4pt;
+  margin: 0 0 5px;
+  padding: 5px;
   font-weight: bold;
   font-family: $body-font-family;
   font-size: inherit;
   font-weight: inherit;
   line-height: inherit;
-  @include border-top-radius(6pt);
-  border: solid 1pt $table-border-color;
+  @include border-top-radius(10px);
+  border: solid 1px $table-border-color;
 }
 
 nav.tabs { // TODO: simplify
   display: block;
-  margin: 4pt 0;
+  margin: 5px 0;
 
   ul {
     @include tabs;
