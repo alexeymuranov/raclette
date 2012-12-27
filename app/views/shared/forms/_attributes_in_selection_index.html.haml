@@ -4,9 +4,9 @@
 -#   column_types:
 
 %th{ :scope => 'row' }
-  = label_tag id_prefix + "_#{model.id}", model.public_send(attributes[0])
+  = label_tag id_prefix + "_#{model.id}", model.public_send(attributes.first)
 
-- attributes[1..-1].each do |attr|
+- attributes.from(1).each do |attr|
 
   = render 'shared/tables/attribute_in_simple_index',
            :column_type => column_types[attr],
