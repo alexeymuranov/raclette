@@ -11,7 +11,7 @@
       = check_box_tag :change_password
       %dl.checkbox_conditional.form_fields
 
-        = render 'shared/forms/input',
+        = render 'shared/forms/input_field_tag',
                  :name               => :current_password,
                  :value              => nil,
                  :label_content      => t('field_labels.current_password'),
