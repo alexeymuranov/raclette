@@ -1,73 +1,10 @@
 -# Locals:
--#   model:
--#   attribute:
--#   column_type(optional):
-
-- klass = model.class
-
-- unless local_assigns.key?(:column_type)
-  - unless (column = klass.columns_hash[attribute.to_s]).nil?
-    - column_type = column.type
-  - else
-    - column_type = nil
-
-- readonly = klass.readonly_attributes.include?(attribute.to_s)
-- value = model.public_send(attribute)
+-#   label:
+-#   html_class:
+-#   formatted_value:
 
 .item
-  - case column_type
-  - when :boolean
-    %dt<
-      = t 'formats.attribute_name?',
-          :attribute => klass.human_attribute_name(attribute)
-    %dd.boolean
-      - unless value.nil?
-        - shown_value = boolean_to_yes_no(value)
-        - if readonly
-          %b= shown_value
-        - else
-          = shown_value
-  - when :date, :datetime
-    %dt<
-      = t 'formats.attribute_name:',
-          :attribute => klass.human_attribute_name(attribute)
-    %dd{ :class => column_type }
-      - unless value.nil?
-        - shown_value = l value, :format => :custom
-        %time<
-          - if readonly
-            %b= shown_value
-          - else
-            = shown_value
-  - when :time
-    %dt<
-      = t 'formats.attribute_name:',
-          :attribute => klass.human_attribute_name(attribute)
-    %dd.time
-      - unless value.nil?
-        - shown_value = l value, :format => :time_of_the_day
-        %time<
-          - if readonly
-            %b= shown_value
-          - else
-            = shown_value
-  - when :integer
-    %dt<
-      = t 'formats.attribute_name:',
-          :attribute => klass.human_attribute_name(attribute)
-    %dd.number
-      - unless value.nil?
-        - if readonly
-          %b= value
-        - else
-          = value
-  - else
-    %dt<
-      = t 'formats.attribute_name:',
-          :attribute => klass.human_attribute_name(attribute)
-    %dd{ :class => column_type }
-      - unless value.nil?
-        - if readonly
-          %b= value
-        - else
-          = value
+  %dt<
+    = label
+  %dd{ :class => html_class }<
+    = formatted_value

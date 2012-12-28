@@ -23,7 +23,4 @@
   - if local_assigns.key?(:attributes)
     - attributes.each do |attr|
 
-      = render 'shared/lists/attribute_in_description',
-        :model       => model,
-        :attribute   => attr,
-        :column_type => column_types[attr]
+      = formatted_attribute_in_description(model, attr)
