@@ -9,16 +9,16 @@ module TablesMarkupHelper
       if @sorting_direction == :ASC  # is the current sort direction asc?
         sort_indicator = '▲ '
         direction_on_click = :DESC
-        css_class = 'sort current asc'
+        html_class = 'sort current asc'
       else
         sort_indicator = '▼ '
         direction_on_click = :ASC
-        css_class = 'sort current desc'
+        html_class = 'sort current desc'
       end
     else
       sort_indicator = ''
       direction_on_click = :ASC
-      css_class = 'sort'
+      html_class = 'sort'
     end
 
     options = params.deep_merge :page       => 1,
@@ -29,9 +29,9 @@ module TablesMarkupHelper
                                 :anchor     => html_table_id
 
     if html_options[:class].blank?
-      html_options[:class] = css_class
+      html_options[:class] = html_class
     else
-      html_options[:class] << " #{css_class}"
+      html_options[:class] << " #{html_class}"
     end
 
     link_to sort_indicator + title, options, html_options

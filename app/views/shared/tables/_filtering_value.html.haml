@@ -5,12 +5,12 @@
 - if value_or_values.blank?
   %td
 - else
-  - css_class = { :string  => 'text',
+  - html_class = { :string  => 'text',
                   :boolean => 'boolean',
                   :integer => 'number',
                   :date    => 'date' }[column_type]
 
-  %td.filtering_value{ :class => css_class }
+  %td.filtering_value{ :class => html_class }
     - case column_type
     - when :boolean
       = boolean_to_yes_no(value_or_values)

@@ -8,12 +8,12 @@
 - unless select_from.respond_to?(:size) && (select_size = select_from.size) <= 10
   - select_from = nil
 
-- css_class = { :string  => 'text',
+- html_class = { :string  => 'text',
                 :boolean => 'boolean',
                 :integer => 'number',
                 :date    => 'date' }[column_type]
 
-%td.field{ :class => css_class }<
+%td.field{ :class => html_class }<
   - if select_from
     - case column_type
     - when :string
