@@ -26,4 +26,24 @@ module FilterMarkupHelper
       }
     end
   end
+
+  def formatted_filtering_value(value_or_values, column_type)
+    case column_type
+    when :boolean
+      boolean_to_yes_no(value_or_values)
+    when :integer
+      "#{ value_or_values[:min] }..#{ value_or_values[:max] }"
+    when :date
+      parts = []
+      if value_or_values.key?(:from)
+        parts << "#{ t 'date.from' } #{ value_or_values[:from] }"
+      end
+      if value_or_values.key?(:until)
+        parts << "#{ t 'date.until' } #{ value_or_values[:until] }"
+      end
+      parts.join(" ")
+    else
+      value_or_values
+    end
+  end
 end

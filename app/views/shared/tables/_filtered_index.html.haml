@@ -93,10 +93,12 @@
     - unless filtering_values.blank?
       %tr
         - attributes.each do |attr|
-
-          = render 'shared/tables/filtering_value',
-                   :value_or_values => filtering_values[attr],
-                   :column_type     => column_types[attr]
+          - if (val = filtering_values[attr]).blank?
+            %td
+          - else
+            - html_class = html_class_from_column_type(column_types[attr])
+            %td.filtering_value{ :class => html_class }
+              = formatted_filtering_value val, column_types[attr]
 
         %td.empty
         %td.empty

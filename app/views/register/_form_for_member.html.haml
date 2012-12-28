@@ -54,10 +54,13 @@
     - unless @members_filtering_values.blank?
       %tr
         - @member_attributes.each do |attr|
-
-          = render 'shared/tables/filtering_value',
-                   :value_or_values => @members_filtering_values[attr],
-                   :column_type     => Member.column_db_type(attr)
+          - if (val = @members_filtering_values[attr]).blank?
+            %td
+          - else
+            - column_type = Member.column_db_type(attr)
+            - html_class = html_class_from_column_type(column_type)
+            %td.filtering_value{ :class => html_class }
+              = formatted_filtering_value val, column_type
 
 -# end # </table>
 
