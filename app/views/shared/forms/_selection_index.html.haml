@@ -36,11 +36,9 @@
     %tr
       %th.empty.boolean
 
-      = render 'shared/tables/headers',
-               :attributes     => attributes,
-               :column_types   => column_types,
-               :column_headers => column_headers,
-               :html_table_id  => html_table_id
+      - attributes.each do |attr|
+        %th{ :class => html_class_from_column_type(column_types[attr]) }<
+          = column_headers[attr]
 
   %tbody
     - unless selected_models.nil?

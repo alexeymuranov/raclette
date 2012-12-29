@@ -24,12 +24,8 @@
   %thead
     %tr
       - attributes.each do |attr|
-
-        = render 'shared/tables/sorting_header',
-                 :attribute     => attr,
-                 :column_type   => column_types[attr],
-                 :column_header => column_headers[attr],
-                 :html_table_id => html_table_id
+        %th{ :class => html_class_from_column_type(column_types[attr]) }<
+          = sortable html_table_id, attr, column_headers[attr]
 
   = render 'shared/tables/simple_index_body',
            :models       => models,

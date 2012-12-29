@@ -22,12 +22,9 @@
   %thead
     %tr
       - @member_attributes.each do |attr|
-
-        = render 'shared/tables/sorting_header',
-                 :attribute     => attr,
-                 :column_type   => Member.column_db_type(attr),
-                 :column_header => Member.human_column_header(attr),
-                 :html_table_id => 'member_list_attributes'
+        %th{ :class => html_class_from_column_type(Member.column_db_type(attr)) }<
+          = sortable 'member_list_attributes', attr,
+                     Member.human_column_header(attr)
 
     %tr
       - @member_attributes.each do |attr|
