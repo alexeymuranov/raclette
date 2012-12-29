@@ -71,7 +71,7 @@ class Membership < ActiveRecord::Base
   title_sql = "(#{ sql_for_columns[:type_title] } || "\
               "', ' || "\
               "#{ sql_for_columns[:start_date] } || "\
-              "' -- ' || "\
+              "' — ' || "\
               "#{ sql_for_columns[:end_date] })"
   add_pseudo_columns :title => title_sql
 
@@ -85,7 +85,7 @@ class Membership < ActiveRecord::Base
   # Non-SQL virtual attributes
   #
   def virtual_title
-    "#{ type.unique_title }, #{ start_date } -- #{ end_date }"
+    "#{ type.unique_title }, #{ start_date } — #{ end_date }"
   end
 
   def virtual_price
