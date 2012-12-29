@@ -23,13 +23,7 @@
 
 .item.field
   %dt
-    - human_name = klass.human_attribute_name(attribute)
-
-    - case column_type
-    - when :boolean
-      - label_content = t('formats.attribute_name?', :attribute => human_name)
-    - else
-      - label_content = t('formats.attribute_name:', :attribute => human_name)
+    - label_content = label_from_attribute_name(klass, attribute, column_type)
 
     - if editable
       = form_builder.label attribute, label_content
@@ -82,24 +76,5 @@
         %dd{ :class => column_type }
           = form_builder.text_field attribute, input_html_options
   - else
-    - value = object.public_send(attribute)
-
-    - case column_type
-    - when :boolean
-      %dd.boolean
-        = boolean_to_picto(value, size=2)
-    - when :integer
-      %dd.number
-        = value
-    - when :date
-      %dd.date
-        = l(value, :format => :long) if value
-    - when :datetime
-      %dd.datetime
-        = l(value, :format => :custom) if value
-    - when :time
-      %dd.time
-        = l(value, :format => :time_of_the_day) if value
-    - else
-      %dd{ :class => column_type }
-        = value
+    %dd{ :class => html_class_from_column_type(column_type) }
+      = formatted_attribute_value(object.public_send(attribute), column_type)
