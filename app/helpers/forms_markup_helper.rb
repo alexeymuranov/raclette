@@ -41,8 +41,6 @@ module FormsMarkupHelper
   # Based on http://davidsulc.com/blog/2011/05/01/self-marking-required-fields-in-rails-3/
   class CustomFormBuilder < ActionView::Helpers::FormBuilder
 
-    include ActionView::Helpers::TagHelper
-
     def date_field(method, options = {})
       ActionView::Helpers::InstanceTag.new(
         @object_name, method, @template, options.delete(:object)
@@ -88,7 +86,7 @@ module FormsMarkupHelper
 
       # add a '!' after the field label if the field will be readonly
       if klass.attr_readonly?(method)
-        marks << content_tag(:sup, '!'.html_safe)
+        marks << @template.content_tag(:sup, '!'.html_safe)
         html_classes << 'readonly'
       end
 
@@ -98,7 +96,7 @@ module FormsMarkupHelper
       if marks.empty?
         label_itself
       else
-        label_itself + content_tag(:span, marks, :class => 'label_marks')
+        label_itself + @template.content_tag(:span, marks, :class => 'label_marks')
       end
     end
 
