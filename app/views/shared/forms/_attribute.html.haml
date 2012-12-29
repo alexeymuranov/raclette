@@ -4,77 +4,18 @@
 -#   column_type (optional):
 -#   input_html_options (optional):
 
-- input_html_options = {} unless local_assigns.key? :input_html_options
+- unless local_assigns.key? :input_html_options
+  - input_html_options = {}
 
-- object = form_builder.object
-- klass = object.class
+- model = form_builder.object.class
 
 - unless local_assigns.key? :column_type
-  -# It is assumed here that PseudoColumns module is included
-  - column_type = klass.column_db_type(attribute)
-
-- required = klass.attr_required?(attribute)
-- input_html_options[:required] = 'required' if required
-
-- editable = object.attr_editable?(attribute)
-
-- select_from = klass.possible_values_of(attribute)
-- select_from = nil unless select_from.respond_to?(:size)
+  - column_type = model.column_db_type(attribute)
 
 .item.field
   %dt
-    - label_content = label_from_attribute_name(klass, attribute, column_type)
+    = form_builder.label attribute,
+        label_from_attribute_name(model, attribute, column_type)
 
-    - if editable
-      = form_builder.label attribute, label_content
-    - else
-      %b= label_content
-
-  - if editable
-    - if select_from
-      %dd.list
-        = form_builder.select attribute,
-                              options_for_select(select_from,
-                                                 object.public_send(attribute)),
-                              { :include_blank => !required },
-                              input_html_options
-    - else
-      - case column_type
-      - when :boolean
-        %dd.boolean
-          = form_builder.check_box attribute, input_html_options
-      - when :integer
-        %dd.number
-          = form_builder.number_field attribute, input_html_options
-      - when :date
-        -# Defined in my custom form builder
-        %dd.date
-          = form_builder.date_field attribute, input_html_options
-      - when :datetime
-        -# Defined in my custom form builder
-        %dd.datetime
-          = form_builder.local_datetime_field attribute, input_html_options
-      - when :time
-        -# Defined in my custom form builder
-        %dd.time
-          = form_builder.local_time_field attribute, input_html_options
-      - when :text
-        %dd.long_text
-          = form_builder.text_area attribute, input_html_options
-      - when :string
-        - case input_html_options[:type]
-        - when :email
-          %dd.string.email
-            = form_builder.email_field attribute, input_html_options
-        - when :password
-          %dd.string.password
-            = form_builder.password_field attribute, input_html_options
-        - else
-          %dd.string
-            = form_builder.text_field attribute, input_html_options
-      - else
-        %dd{ :class => column_type }
-          = form_builder.text_field attribute, input_html_options
-  - else
-    %dd{ :class => html_class_from_column_type(column_type) }
-      = formatted_attribute_value(object.public_send(attribute), column_type)
+  %dd{ :class => html_class_from_column_type(column_type) }
+    = form_builder.smart_input_field attribute, column_type, input_html_options

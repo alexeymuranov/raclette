@@ -100,135 +100,58 @@ module FormsMarkupHelper
       end
     end
 
-    def attribute_field(attribute, column_type = nil, options = {}) # FIXME: WIP
-      fail
-      object = form_builder.object
-      klass = object.class
+    def smart_input_field(method, column_type  = nil,
+                                  html_options = {},
+                                  options      = {})
 
-      unless local_assigns.key? :column_type
-        # It is assumed here that PseudoColumns module is included
-        column_type = klass.column_db_type(attribute)
-      end
+      model = object.class
 
-      required = klass.attr_required?(attribute)
-      input_html_options[:required] = 'required' if required
+      column_type ||= model.column_db_type(method)
 
-      editable = object.attr_editable?(attribute)
+      required = model.attr_required?(method)
+      html_options[:required] = 'required' if required
 
-      select_from = klass.possible_values_of(attribute)
+      editable = object.attr_editable?(method)
+
+      select_from = model.possible_values_of(method)
       select_from = nil unless select_from.respond_to?(:size)
 
-      html_output = ''.html_safe
-
-      html_output << content_tag(:div, :class => 'item field') do
-        label_element = content_tag(:dt) do
-          human_name = klass.human_attribute_name(attribute)
-
-          case column_type
-          when :boolean
-            label_content = t('formats.attribute_name?', :attribute => human_name)
-          else
-            label_content = t('formats.attribute_name:', :attribute => human_name)
-          end
-
-          if editable
-            label attribute, label_content
-          else
-            content_tag(:b, label_content)
-          end
-        end
-
-        if editable
-          if select_from
-            input_element = content_tag(:dd, :class => 'list') do
-              select attribute,
-                     options_for_select(select_from,
-                                        object.public_send(attribute)),
-                     { :include_blank => !required },
-                     input_html_options
-            end
-          else
-            case column_type
-            when :boolean
-              input_element = content_tag(:dd, :class => 'boolean') do
-                check_box attribute, input_html_options
-              end
-            when :integer
-              input_element = content_tag(:dd, :class => 'number') do
-                number_field attribute, input_html_options
-              end
-            when :date
-              # Defined in my custom form builder
-              input_element = content_tag(:dd, :class => 'date') do
-                date_field attribute, input_html_options
-              end
-            when :datetime
-              # Defined in my custom form builder
-              input_element = content_tag(:dd, :class => 'datetime') do
-                local_datetime_field attribute, input_html_options
-              end
-            when :time
-              # Defined in my custom form builder
-              input_element = content_tag(:dd, :class => 'time') do
-                local_time_field attribute, input_html_options
-              end
-            when :text
-              input_element = content_tag(:dd, :class => 'long_text') do
-                text_area attribute, input_html_options
-              end
-            when :string
-              case input_html_options[:type]
-              when :email
-                input_element = content_tag(:dd, :class => 'string email') do
-                  email_field attribute, input_html_options
-                end
-              when :password
-                input_element = content_tag(:dd, :class => 'string password') do
-                  password_field attribute, input_html_options
-                end
-              else
-                input_element = content_tag(:dd, :class => 'string') do
-                  text_field attribute, input_html_options
-                end
-              end
-            else
-              input_element = content_tag(:dd, :class => 'boolean') do
-                text_field attribute, input_html_options
-              end
-            end
-          end
+      if editable
+        if select_from
+          select method,
+                 @template.options_for_select(select_from,
+                                              object.public_send(method)),
+                 { :include_blank => !required },
+                 html_options
         else
-          value = object.public_send(attribute)
-
           case column_type
           when :boolean
-            input_element = content_tag(:dd, :class => 'boolean') do
-              boolean_to_picto(value, 2) # size = 2
-            end
+            check_box method, html_options
           when :integer
-            input_element = content_tag(:dd, :class => 'number') do
-              value
-            end
+            number_field method, html_options
           when :date
-            input_element = content_tag(:dd, :class => 'date') do
-              l(value, :format => :long) if value
-            end
+            date_field method, html_options
           when :datetime
-            input_element = content_tag(:dd, :class => 'datetime') do
-              l(value, :format => :custom) if value
-            end
+            local_datetime_field method, html_options
           when :time
-            input_element = content_tag(:dd, :class => 'time') do
-              l(value, :format => :time_of_the_day) if value
+            local_time_field method, html_options
+          when :text
+            text_area method, html_options
+          when :string
+            case html_options[:type]
+            when :email
+              email_field method, html_options
+            when :password
+              password_field method, html_options
+            else
+              text_field method, html_options
             end
           else
-            input_element = content_tag(:dd, :class => column_type) do
-              value
-            end
+            text_field method, html_options
           end
         end
-
-        label_element + input_element
+      else
+        @template.formatted_attribute_value(object.public_send(method), column_type)
       end
     end
 
