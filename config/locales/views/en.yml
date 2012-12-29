@@ -435,13 +435,13 @@ en:
       header: "Membership Types"
     show:
       title: "%{title}"
-      header: "Membership type %{title}"
+      header: "Membership type \"%{title}\""
     new:
       title: "New membership type"
       header: "New membership type"
     edit:
-      title: "Update %{title}"
-      header: "Update membership type %{title}"
+      title: "Update \"%{title}\""
+      header: "Update membership type \"%{title}\""
 
   ticket_books:
     index:
@@ -449,13 +449,13 @@ en:
       header: "Ticket Books"
     show:
       title: "%{title}"
-      header: "Ticket book %{title}"
+      header: "Ticket book \"%{title}\""
     new:
       title: "New ticket book"
       header: "New ticket book"
     edit:
-      title: "Update %{title}"
-      header: "Update ticket book %{title}"
+      title: "Update \"%{title}\""
+      header: "Update ticket book \"%{title}\""
 
   activity_periods:
     index:
@@ -463,13 +463,13 @@ en:
       header: "Activity Periods"
     show:
       title: "%{title}"
-      header: "Activity period %{title}"
+      header: "Activity period \"%{title}\""
     new:
       title: "New activity period"
       header: "New activity period"
     edit:
-      title: "Update %{title}"
-      header: "Update activity period %{title}"
+      title: "Update \"%{title}\""
+      header: "Update activity period \"%{title}\""
 
   memberships:
     index:
@@ -482,8 +482,8 @@ en:
       title: "New membership"
       header: "New membership"
     edit:
-      title: "Update %{title}"
-      header: "Update membership %{title}"
+      title: "Update \"%{title}\""
+      header: "Update membership \"%{title}\""
 
   weekly_events:
     index:
@@ -491,13 +491,13 @@ en:
       header: "Weekly Events"
     show:
       title: "%{title}"
-      header: "Weekly event %{title}"
+      header: "Weekly event \"%{title}\""
     new:
       title: "New weekly event"
       header: "New weekly event"
     edit:
-      title: "Update %{title}"
-      header: "Update weekly event %{title}"
+      title: "Update \"%{title}\""
+      header: "Update weekly event \"%{title}\""
 
   weekly_event_suspensions:
     index:
@@ -510,8 +510,8 @@ en:
       title: "New weekly event suspension"
       header: "New weekly event suspension"
     edit:
-      title: "Update %{title}"
-      header: "Update weekly event suspension %{title}"
+      title: "Update \"%{title}\""
+      header: "Update weekly event suspension \"%{title}\""
 
   events:
     index:
@@ -523,12 +523,12 @@ en:
         filtered_events: "filtered events"
     show:
       title: "%{title}"
-      header: "Event %{title}"
+      header: "Event \"%{title}\""
     new:
       title: "New event"
       header: "New event"
     edit:
-      title: "Update %{title}"
-      header: "Update event %{title}"
+      title: "Update \"%{title}\""
+      header: "Update event \"%{title}\""
     new_form:
       select_button: "Pre-fill"

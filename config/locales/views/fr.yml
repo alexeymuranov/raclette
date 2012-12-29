@@ -435,13 +435,13 @@ fr:
       header: "Types d'adhésion"
     show:
       title: "%{title}"
-      header: "Type d'adhésion %{title}"
+      header: "Type d'adhésion « %{title} »"
     new:
       title: "Nouveau type d'adhésion"
       header: "Ajouter un type d'adhésion"
     edit:
       title: "%{title} - mise à jour"
-      header: "Mise à jour du type d'adhésion %{title}"
+      header: "Mise à jour du type d'adhésion « %{title} »"
 
   ticket_books:
     index:
@@ -449,7 +449,7 @@ fr:
       header: "Carnets de tickets"
     show:
       title: "%{title}"
-      header: "Carnet de tickets %{title}"
+      header: "Carnet de tickets « %{title} »"
     new:
       title: "Nouveau carnet de tickets"
       header: "Ajouter un carnet de tickets"
@@ -463,13 +463,13 @@ fr:
       header: "Saisons"
     show:
       title: "%{title}"
-      header: "Saison %{title}"
+      header: "Saison « %{title} »"
     new:
       title: "Nouvelle saison"
       header: "Nouvelle saison"
     edit:
       title: "%{title} - mise à jour"
-      header: "Mise à jour de la saison %{title}"
+      header: "Mise à jour de la saison « %{title} »"
 
   memberships:
     index:
@@ -483,7 +483,7 @@ fr:
       header: "Ajouter une adhésion"
     edit:
       title: "%{title} - mise à jour"
-      header: "Mise à jour de l'adhésion %{title}"
+      header: "Mise à jour de l'adhésion « %{title} »"
 
   weekly_events:
     index:
@@ -491,13 +491,13 @@ fr:
       header: "Événements hebdomadaires"
     show:
       title: "%{title}"
-      header: "Événement hebdomadaire %{title}"
+      header: "Événement hebdomadaire « %{title} »"
     new:
       title: "Nouveau événement hebdomadaire"
       header: "Ajouter un événement hebdomadaire"
     edit:
       title: "%{title} - mise à jour"
-      header: "Mise à jour de l'événement hebdomadaire %{title}"
+      header: "Mise à jour de l'événement hebdomadaire « %{title} »"
 
   weekly_event_suspensions:
     index:
@@ -505,13 +505,13 @@ fr:
       header: "Arrêts des événements hebdomadaires"
     show:
       title: "%{title}"
-      header: "Arrêt d'un événement hebdomadaire %{title}"
+      header: "Arrêt d'un événement hebdomadaire « %{title} »"
     new:
       title: "Nouveau arrêt d'un événement hebdomadaire"
       header: "Ajouter un arrêt d'un événement hebdomadaire"
     edit:
       title: "%{title} - mise à jour"
-      header: "Mise à jour de l'arrêt d'un événement hebdomadaire %{title}"
+      header: "Mise à jour de l'arrêt d'un événement hebdomadaire « %{title} »"
 
   events:
     index:
@@ -523,12 +523,12 @@ fr:
         filtered_events: "événements filtrés"
     show:
       title: "%{title}"
-      header: "Événement %{title}"
+      header: "Événement « %{title} »"
     new:
       title: "Nouveau événement"
       header: "Ajouter un événement"
     edit:
       title: "%{title} - mise à jour"
-      header: "Mise à jour de l'événement %{title}"
+      header: "Mise à jour de l'événement « %{title} »"
     new_form:
       select_button: "Pré-remplir"
