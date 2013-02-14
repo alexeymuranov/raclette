@@ -1,12 +1,13 @@
 source 'https://rubygems.org'
 
-# gem 'rails', '~> 3.2.0'
+# gem 'rails', '~> 3.2.11'
 
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
 
 # Bundle my "fixed" Rails branch on GitHub instead:
-gem 'rails', '~> 3.2.0', :git => 'git://github.com/alexeymuranov/rails.git', :branch => 'backport-to-3-2'
+gem 'rails', :git    => 'git://github.com/alexeymuranov/rails.git',
+             :branch => 'backport-to-3-2'
 
 # Bundle Rails from my local directory instead:
 # gem 'rails', '~> 3.2.0', :path => "~/Development/rails"
@@ -14,13 +15,10 @@ gem 'rails', '~> 3.2.0', :git => 'git://github.com/alexeymuranov/rails.git', :br
 # gem 'will_paginate'  # pagination
 gem 'kaminari'  # pagination
 
-# gem 'squeel'  # queries without SQL
-
 # gem 'spreadsheet'  # to generate XLS (Excel 2003 XML is used instead)
 
 # gem 'inherited_resources'  # for lazy resourceful controllers
 
-# gem 'param_protected'  # for filtering params in the controllers
 gem 'strong_parameters'  # a simpler alternative for mass assignement security
 # gem 'focused_controller'  # alternative way to define and use controllers
 
@@ -35,13 +33,11 @@ end
 gem 'jquery-rails'
 gem 'jquery-ui-rails' # jQuery UI
 
-gem 'haml'  # use HAML templates (instead of ERB)
-
-# gem 'slim' # use Slim templates (instead of HAML and ERB)
+gem 'haml'
 
 # gem 'draper'  # provides decorators (similar to presenters)
 
-gem 'formtastic'
+# gem 'formtastic'
 
 gem 'bourbon'  # better Sass
 
