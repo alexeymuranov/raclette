@@ -58,6 +58,7 @@ gem 'ruby-duration'  # Immutable time duration type
 group :development do
   gem 'sqlite3'
   gem 'debugger'
+  gem 'better_errors'
   gem 'annotate'   # annotate models
   gem 'rails-erd'  # generate models' diagram in PDF
 end
