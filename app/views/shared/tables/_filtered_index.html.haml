@@ -19,7 +19,7 @@
   - column_headers = klass.human_column_headers
 
 %form{:method => :get}
-  = hidden_fields_from_nested_hash params.slice(:filter, :sort)
+  = hidden_field_tags_from_nested_hash params.slice(:filter, :sort)
 
   %label{:for => :per_page}
     = t('field_labels.per_page')
@@ -36,11 +36,11 @@
 
 %form{ :id     => (filter_form_id = "#{ html_table_id }_filter"),
        :method => :get }
-  = hidden_fields_from_nested_hash params.slice(:filter, :sort)
+  = hidden_field_tags_from_nested_hash params.slice(:filter, :sort)
 
 %form{ :id     => (clear_filter_form_id = "#{ html_table_id }_clear_filter"),
        :method => :get }
-  = hidden_fields_from_nested_hash params.slice(:sort)
+  = hidden_field_tags_from_nested_hash params.slice(:sort)
 
 %table.records{ :id    => html_table_id,
                 :class => (filtering_values.blank? ? nil : 'filtered ') }

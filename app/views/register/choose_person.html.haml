@@ -5,7 +5,7 @@
 - else
   %form{ :action => url_for(:action => 'choose_person'),
          :method => 'get' }
-    = hidden_fields_from_nested_hash @saved_params
+    = hidden_field_tags_from_nested_hash @saved_params
     %label
       = t 'formats.attribute_name:',
           :attribute => t('register.new_entry.current_event')

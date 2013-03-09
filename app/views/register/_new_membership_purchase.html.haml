@@ -5,7 +5,7 @@
 
   = render 'shared/error_messages/validation', :target => @membership_purchase
 
-  -# = hidden_fields_from_nested_hash @saved_params
+  -# = hidden_field_tags_from_nested_hash @saved_params
 
   = f.fields_for :membership do |membership_fields|
     %dl.form_fields

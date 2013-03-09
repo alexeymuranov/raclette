@@ -2,40 +2,50 @@
 
 module FormsMarkupHelper
 
-  # Originally based on http://marklunds.com/articles/one/314
-  def param_name_value_pairs_from_nested_hash(nested_hash, key_prefix = '')
-    format_key = if key_prefix.blank?
-                   lambda { |k| k.to_s }
-                 else
-                   lambda { |k| "#{ key_prefix }[#{ k }]" }
-                 end
+  # Creates a sequence of hidden inputs to store a flat hash of strings.
+  def hidden_field_tags_from_flat_hash(hash, options = {})
+    [].tap do |tag_array|
+      hash.each_pair do |name, value|
+        if value.is_a?(Enumerable)
+          name = "#{ name }[]"
+          value.each do |v|
+            tag_array << hidden_field_tag(name, v, options)
+          end
+        else
+          tag_array << hidden_field_tag(name, value, options)
+        end
+      end
+    end.join("\n").html_safe
+  end
+
+  #--
+  # This function is used in `hidden_field_tags_from_nested_hash`
+  # Originally based on http://marklunds.com/articles/one/314.
+  #++
+  def flat_param_hash_from_nested_hash(nested_hash, key_prefix = '') # :nodoc:
+    combine_key_with_prefix = if key_prefix.blank?
+                                lambda { |k| "#{ k }" }
+                              else
+                                lambda { |k| "#{ key_prefix }[#{ k }]" }
+                              end
 
     {}.tap do |flat_hash|
-      nested_hash.each_pair do |k, v|
-        k = format_key[k]
-        if v.is_a?(Hash)
-          flat_hash.merge!(param_name_value_pairs_from_nested_hash(v, k))
+      nested_hash.each_pair do |key, value|
+        combined_key = combine_key_with_prefix[key]
+        if value.is_a?(Hash)
+          flat_hash.merge!(flat_param_hash_from_nested_hash(value, combined_key))
         else
-          flat_hash[k] = v
+          flat_hash[combined_key] = value
         end
       end
     end
   end
 
-  def hidden_fields_from_nested_hash(hash, options = {})
-    hidden_field_tags = []
-    param_name_value_pairs_from_nested_hash(hash).each do |name, value|
-      if value.is_a?(Array)
-        name << '[]'
-        value.each do |v|
-          hidden_field_tags << hidden_field_tag(name, v, options)
-        end
-      else
-        hidden_field_tags << hidden_field_tag(name, value, options)
-      end
-    end
-
-    hidden_field_tags.join("\n").html_safe
+  # Creates a sequence of hidden inputs to store a possibly nested hash
+  # of strings.
+  def hidden_field_tags_from_nested_hash(hash, options = {})
+    hidden_field_tags_from_flat_hash(
+      flat_param_hash_from_nested_hash(hash), options)
   end
 
   # Based on http://davidsulc.com/blog/2011/05/01/self-marking-required-fields-in-rails-3/

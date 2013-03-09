@@ -1,6 +1,6 @@
 %nav.filtering_prefixes
   %form{:method => 'get'}
-    = hidden_fields_from_nested_hash @saved_params
+    = hidden_field_tags_from_nested_hash @saved_params
 
     - current_last_name_prefix = @members_filtering_values[:last_name]
     = filter_by_prefix_button_set :last_name, 'A'..'Z',
@@ -9,11 +9,11 @@
 
 %form{ :id     => (filter_form_id = 'member_list_filter'),
        :method => :get }
-  = hidden_fields_from_nested_hash @saved_params
+  = hidden_field_tags_from_nested_hash @saved_params
 
 %form{ :id     => (clear_filter_form_id = 'member_list_clear_filter'),
        :method => :get }
-  = hidden_fields_from_nested_hash @saved_params.except(:filter)
+  = hidden_field_tags_from_nested_hash @saved_params.except(:filter)
 
 %table#member_list_attributes.records.filter{ :class => (@members_filtering_values.blank? ? nil : 'filtered ') }
   %colgroup.attributes
@@ -62,7 +62,7 @@
 -# end # </table>
 
 %form{:method => :get}
-  = hidden_fields_from_nested_hash @saved_params
+  = hidden_field_tags_from_nested_hash @saved_params
 
   %label{:for => :per_page}
     = t('field_labels.per_page')

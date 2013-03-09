@@ -5,7 +5,7 @@
 
   = render 'shared/error_messages/validation', :target => @event_entry
 
-  -# = hidden_fields_from_nested_hash @saved_params
+  -# = hidden_field_tags_from_nested_hash @saved_params
 
   - if @guest
     = fields_for :guest, @guest do |guest_fields|
