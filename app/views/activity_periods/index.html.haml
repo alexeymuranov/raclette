@@ -11,7 +11,7 @@
 #activity_periods_table
 
   = render 'shared/tables/filtered_index',
-           :models           => @activity_periods,
+           :collection       => @activity_periods,
            :attributes       => @attributes,
            :html_table_id    => :activity_periods,
            :filtering_values => @filtering_values

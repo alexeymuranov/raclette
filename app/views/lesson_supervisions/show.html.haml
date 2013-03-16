@@ -3,17 +3,17 @@
   %dl.show
 
     = render 'shared/lists/description',
-      :model                       => @lesson_supervision,
-      :attributes                  => @attributes
+      :object     => @lesson_supervision,
+      :attributes => @attributes
 
 %section
   %h2= LessonSupervision.human_attribute_name(:instructors)
 
   - unless @instructors.empty?
     = render 'shared/tables/simple_index',
-             :models                    => @instructors,
-             :attributes                => @instructor_attributes,
-             :html_table_id             => :instructors
+             :collection    => @instructors,
+             :attributes    => @instructor_attributes,
+             :html_table_id => :instructors
 
 %footer
   = link_to edit_pictogram(3) + ' ' + t('lesson_supervisions.edit.header',

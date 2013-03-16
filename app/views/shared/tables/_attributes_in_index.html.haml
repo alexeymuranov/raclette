@@ -1,18 +1,18 @@
 -# Locals:
--#   model:
+-#   object:
 -#   attributes:
 -#   column_types:
 
 %th{ :scope => 'row',
      :class => html_class_from_column_type(column_types.first) }
-  = link_to model.public_send(attributes.first),
-            { :controller => model.controller_path,
+  = link_to object.public_send(attributes.first),
+            { :controller => object.controller_path,
               :action     => :show,
-              :id         => model },
+              :id         => object },
             :title => t('actions.read'),
             :class => 'display resource'
 
 - attributes.from(1).each do |attr|
   - column_type = column_types[attr]
   %td{ :class => html_class_from_column_type(column_type) }
-    = formatted_attribute_value(model.public_send(attr), column_type)
+    = formatted_attribute_value(object.public_send(attr), column_type)

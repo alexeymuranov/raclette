@@ -1,7 +1,7 @@
 -# Locals:
 -#   klass:
--#   associated_models1:
--#   associated_models2:
+-#   associated_collection1:
+-#   associated_collection2:
 -#   find_by_ids_method:
 -#   attribute_presentation_helper:
 -#   key1:
@@ -14,51 +14,51 @@
   %colgroup
     %col
   %colgroup
-    - associated_models2.size.times do
+    - associated_collection2.size.times do
       %col
   %thead
     %tr
       %th.empty
-      - associated_models2.each do |mod2|
+      - associated_collection2.each do |obj2|
         %th
-          = link_to mod2.public_send(key2),
-                    { :controller => mod2.controller_path,
+          = link_to obj2.public_send(key2),
+                    { :controller => obj2.controller_path,
                       :action     => :show,
-                      :id         => mod2 },
-                    :title => mod2.public_send(description2),
+                      :id         => obj2 },
+                    :title => obj2.public_send(description2),
                     :class => 'display resource'
   %tbody
-    - associated_models1.each do |mod1|
+    - associated_collection1.each do |obj1|
       %tr
         %th{:scope => "row"}
-          = link_to mod1.public_send(key1),
-                    { :controller => mod1.controller_path,
+          = link_to obj1.public_send(key1),
+                    { :controller => obj1.controller_path,
                       :action     => :show,
-                      :id         => mod1 },
-                    :title => mod1.public_send(description1),
+                      :id         => obj1 },
+                    :title => obj1.public_send(description1),
                     :class => 'display resource'
-        - associated_models2.each do |mod2|
+        - associated_collection2.each do |obj2|
           %td.grid_index
-            - if model = klass.public_send(find_by_ids_method, mod1.id, mod2.id)
+            - if object = klass.public_send(find_by_ids_method, obj1.id, obj2.id)
               %span
-                = link_to send(attribute_presentation_helper, model),
-                          { :controller => model.controller_path,
+                = link_to send(attribute_presentation_helper, object),
+                          { :controller => object.controller_path,
                             :action     => :show,
-                            :id         => model },
+                            :id         => object },
                           :title => t('actions.read'),
                           :class => 'display resource'
               %span.operation
                 = link_to edit_pictogram(2),
-                          { :controller => model.controller_path,
+                          { :controller => object.controller_path,
                             :action     => :edit,
-                            :id         => model },
+                            :id         => object },
                           :title => t('actions.update'),
                           :class => 'modify resource'
               %span.operation
                 = link_to delete_pictogram(2),
-                          { :controller => model.controller_path,
+                          { :controller => object.controller_path,
                             :action     => :destroy,
-                            :id         => model },
+                            :id         => object },
                           :data   => { :confirm => t('questions.are_you_sure?') },
                           :method => :delete,
                           :title  => t('actions.delete'),

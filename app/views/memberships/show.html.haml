@@ -1,7 +1,7 @@
 %h1= t '.header', :title => @membership.virtual_title
 
 = render 'shared/lists/description',
-  :model                       => @membership,
+  :object                      => @membership,
   :attributes                  => @attributes,
   :singular_associations       => @singular_associations,
   :association_name_attributes => @association_name_attributes

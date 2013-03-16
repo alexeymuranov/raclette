@@ -11,7 +11,7 @@
 #instructors_table
 
   = render 'shared/tables/filtered_index',
-           :models           => @instructors,
+           :collection       => @instructors,
            :attributes       => @attributes,
            :html_table_id    => :instructors,
            :filtering_values => @filtering_values

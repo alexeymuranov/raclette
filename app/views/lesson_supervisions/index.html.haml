@@ -9,7 +9,7 @@
 #lesson_supervisions_table
 
   = render 'shared/tables/filtered_index',
-           :models           => @lesson_supervisions,
+           :collection       => @lesson_supervisions,
            :attributes       => @attributes,
            :html_table_id    => :lesson_supervisions,
            :filtering_values => @filtering_values

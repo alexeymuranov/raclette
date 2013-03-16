@@ -3,8 +3,8 @@
   %dl.show
 
     = render 'shared/lists/description',
-      :model                       => @membership_type,
-      :attributes                  => @attributes
+      :object     => @membership_type,
+      :attributes => @attributes
 
 %footer
   = link_to edit_pictogram(3) + ' ' + t('membership_types.edit.header',

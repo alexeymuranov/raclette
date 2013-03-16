@@ -2,8 +2,8 @@
 
 = render 'shared/tables/grid_index',
          :klass                         => MembershipsController::Membership,
-         :associated_models1            => @activity_periods,
-         :associated_models2            => @membership_types,
+         :associated_collection1        => @activity_periods,
+         :associated_collection2        => @membership_types,
          :find_by_ids_method            => :find_by_activity_period_id_and_membership_type_id,
          :attribute_presentation_helper => :membership_summary_in_period_type_grid,
          :key1                          => :unique_title,

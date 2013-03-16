@@ -21,13 +21,13 @@ class ApplicationController < ActionController::Base
       @locale = I18n.locale
     end
 
-    def paginate(models, options={})
+    def paginate(collection, options={})
       per_page = options[:per_page] || params[:per_page]
       per_page = per_page ? per_page.to_i : 25
       per_page = 1000 if per_page.to_i > 1000
       page = options[:page] || params[:page]
       page = page ? page.to_i : 1
-      models.page(page).per(per_page)
+      collection.page(page).per(per_page)
     end
 
     def approximate_time

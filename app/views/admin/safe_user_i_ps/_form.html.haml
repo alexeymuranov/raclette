@@ -2,8 +2,8 @@
   = field_set_tag do
 
     = render 'shared/forms/association_grid',
-             :models1                => @known_ips,
-             :models2                => @users,
+             :collection1            => @known_ips,
+             :collection2            => @users,
              :association_attribute1 => :safe_users,
              :key1                   => :ip,
              :key2                   => :username,

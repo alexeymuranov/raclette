@@ -1,19 +1,19 @@
 -# Locals:
--#   models:
+-#   collection:
 -#   attributes:
 -#   column_types:
 
 %tbody
-  - if models.blank?
+  - if collection.blank?
     %tr
       %td.nothing{ :colspan => attributes.size }
         ∅
     %tr
   - else
-    - models.each do |mod|
+    - collection.each do |obj|
       %tr
 
         = render 'shared/tables/attributes_in_index',
-                 :model           => mod,
-                 :attributes      => attributes,
-                 :column_types    => column_types
+                 :object       => obj,
+                 :attributes   => attributes,
+                 :column_types => column_types

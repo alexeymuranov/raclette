@@ -6,8 +6,8 @@
   %dl.show
 
     = render 'shared/lists/description',
-      :model                       => @user,
-      :attributes                  => @main_attributes
+      :object     => @user,
+      :attributes => @main_attributes
 
 %section
   %h2= Admin::User.human_attribute_name(:safe_ips)
@@ -15,9 +15,9 @@
   - unless @safe_ips.empty?
 
     = render 'shared/tables/simple_index',
-             :models                    => @safe_ips,
-             :attributes                => @safe_ip_attributes,
-             :html_table_id             => :safe_ips
+             :collection    => @safe_ips,
+             :attributes    => @safe_ip_attributes,
+             :html_table_id => :safe_ips
 
 %section
   %h2= t 'admin.users.show.subheaders.other'
@@ -26,8 +26,8 @@
     %dl.show
 
       = render 'shared/lists/description',
-        :model                       => @user,
-        :attributes                  => @other_attributes
+        :object     => @user,
+        :attributes => @other_attributes
 
 %footer
   = link_to edit_pictogram(3) + ' ' + t('admin.users.edit.header',

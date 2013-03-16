@@ -9,7 +9,7 @@
 #ticket_books_table
 
   = render 'shared/tables/filtered_index',
-           :models           => @ticket_books,
+           :collection       => @ticket_books,
            :attributes       => @attributes,
            :html_table_id    => :ticket_books,
            :filtering_values => @filtering_values

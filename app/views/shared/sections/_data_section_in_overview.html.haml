@@ -1,5 +1,5 @@
 -# Locals:
--#   models:
+-#   collection:
 -#   name_method:
 -#   i18n_controller_scope:
 -#   index_path:
@@ -14,15 +14,15 @@
               index_path,                                                 |
               :class => 'display resource'                                |
 
-  - if models.is_a?(ActiveRecord::Relation) || models.is_a?(Enumerable)
+  - if collection.is_a?(ActiveRecord::Relation) || collection.is_a?(Enumerable)
     %ul.compact
-      - models.each do |model|
+      - collection.each do |obj|
         %li
-          = link_to show_pictogram(2) + ' ' + model.public_send(name_method),
-                    show_path_method.call(model),
+          = link_to show_pictogram(2) + ' ' + obj.public_send(name_method),
+                    show_path_method.call(obj),
                     :class => 'display resource'
   - else
-    %p= models.to_s
+    %p= collection.to_s
 
   %footer
     = link_to add_pictogram(2) +                                         |

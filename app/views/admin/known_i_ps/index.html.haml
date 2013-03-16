@@ -1,9 +1,9 @@
 %h1= t '.header'
 
 = render 'shared/tables/index',
-         :models         => @known_ips,
-         :attributes     => @attributes,
-         :html_table_id  => :known_ips
+         :collection    => @known_ips,
+         :attributes    => @attributes,
+         :html_table_id => :known_ips
 
 %footer>
   = link_to add_pictogram(2) + ' ' + t('admin.known_i_ps.new.header'),

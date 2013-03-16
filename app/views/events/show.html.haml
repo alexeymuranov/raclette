@@ -2,7 +2,7 @@
 %section
 
   = render 'shared/lists/description',
-    :model                       => @event,
+    :object                      => @event,
     :attributes                  => @attributes,
     :singular_associations       => @singular_associations,
     :association_name_attributes => @association_name_attributes
@@ -12,18 +12,18 @@
 
   - unless @member_participants.empty?
     = render 'shared/tables/simple_index',
-             :models                    => @member_participants,
-             :attributes                => @member_participant_attributes,
-             :html_table_id             => :member_participants
+             :collection    => @member_participants,
+             :attributes    => @member_participant_attributes,
+             :html_table_id => :member_participants
 
 %section
   %h2= Event.human_attribute_name(:non_member_participants)
 
   - unless @other_participants.empty?
     = render 'shared/tables/simple_index',
-             :models                    => @other_participants,
-             :attributes                => @other_participant_attributes,
-             :html_table_id             => :other_participants
+             :collection    => @other_participants,
+             :attributes    => @other_participant_attributes,
+             :html_table_id => :other_participants
 
 %footer
   = link_to edit_pictogram(3) + ' ' + t('events.edit.header',

@@ -6,26 +6,26 @@
   %dl.show
 
     = render 'shared/lists/description',
-      :model                       => @member,
-      :attributes                  => @attributes
+      :object     => @member,
+      :attributes => @attributes
 
 %section
   %h2= Member.human_attribute_name(:memberships)
 
   - unless @memberships.empty?
     = render 'shared/tables/simple_index',
-             :models                    => @memberships,
-             :attributes                => @membership_attributes,
-             :html_table_id             => :memberships
+             :collection    => @memberships,
+             :attributes    => @membership_attributes,
+             :html_table_id => :memberships
 
 %section
   %h2= Person.human_attribute_name(:attended_events)
 
   - unless @attended_events.empty?
     = render 'shared/tables/simple_index',
-             :models                    => @attended_events,
-             :attributes                => @attended_event_attributes,
-             :html_table_id             => :attended_events
+             :collection    => @attended_events,
+             :attributes    => @attended_event_attributes,
+             :html_table_id => :attended_events
 
 %footer
   = link_to edit_pictogram(3) + ' ' + t('members.edit.header',

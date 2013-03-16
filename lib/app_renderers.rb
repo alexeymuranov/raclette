@@ -75,8 +75,8 @@ module AppRenderingHelpers
                  :row_sep       => "\r\n",
                  :encoding      => 'utf-8') do |csv|
       csv << attributes.map { |attr| column_headers[attr] } << []
-      scoped_collection.each do |model|
-        csv << attributes.map { |attr| model.public_send(attr).to_s }
+      scoped_collection.each do |object|
+        csv << attributes.map { |attr| object.public_send(attr).to_s }
       end
     end
   end

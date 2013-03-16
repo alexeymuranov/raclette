@@ -1,10 +1,10 @@
 -# Locals:
--#   models:
+-#   collection:
 -#   attributes:
 -#   column_types:
 
 %tbody
-  - if models.blank?
+  - if collection.blank?
     %tr
       %td.nothing{ :colspan => attributes.size }
         ∅
@@ -12,27 +12,27 @@
       %td.empty
     %tr
   - else
-    - models.each do |mod|
+    - collection.each do |obj|
       %tr
 
         = render 'shared/tables/attributes_in_index',
-                 :model        => mod,
+                 :object       => obj,
                  :attributes   => attributes,
                  :column_types => column_types
 
         %td.operation
           = link_to edit_pictogram(2),
-                    { :controller => mod.controller_path,
+                    { :controller => obj.controller_path,
                       :action     => :edit,
-                      :id         => mod },
+                      :id         => obj },
                     :title => t('actions.update'),
                     :class => 'modify resource'
 
         %td.operation
           = link_to delete_pictogram(2),
-                    { :controller => mod.controller_path,
+                    { :controller => obj.controller_path,
                       :action     => :destroy,
-                      :id         => mod },
+                      :id         => obj },
                     :data   => { :confirm => t('questions.are_you_sure?') },
                     :method => :delete,
                     :title  => t('actions.delete'),

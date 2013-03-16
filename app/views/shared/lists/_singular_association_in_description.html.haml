@@ -1,11 +1,11 @@
 -# Locals:
--#   model
+-#   object
 -#   association:
--#   associated_model:
+-#   associated_object:
 -#   association_name_attribute:
 
-- klass = model.class
-- identifying_name = associated_model.public_send(association_name_attribute)
+- klass = object.class
+- identifying_name = associated_object.public_send(association_name_attribute)
 
 .item
   %dt<
@@ -13,8 +13,8 @@
         :attribute => klass.human_attribute_name(association)
   %dd.reference
     = link_to identifying_name,
-              { :controller => associated_model.controller_path,
+              { :controller => associated_object.controller_path,
                 :action     => :show,
-                :id         => associated_model },
+                :id         => associated_object },
               :title => t('actions.read'),
               :class => 'display associated resource'

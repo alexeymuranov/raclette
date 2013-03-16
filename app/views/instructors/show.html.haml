@@ -4,8 +4,8 @@
   %dl.show
 
     = render 'shared/lists/description',
-      :model                       => @instructor,
-      :attributes                  => @attributes
+      :object     => @instructor,
+      :attributes => @attributes
 
 %footer
   = link_to edit_pictogram(3) + ' ' + t('instructors.edit.header',

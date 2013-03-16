@@ -3,8 +3,8 @@
 %dl.show
 
   = render 'shared/lists/description',
-    :model                       => @activity_period,
-    :attributes                  => @attributes
+    :object     => @activity_period,
+    :attributes => @attributes
 
 %footer
   = link_to edit_pictogram(3) + ' ' + t('activity_periods.edit.header',

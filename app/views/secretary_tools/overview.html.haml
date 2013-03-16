@@ -5,7 +5,7 @@
   %h2= t 'headers.data'
 
   = render 'shared/sections/data_section_in_overview',
-           :models                => @members,
+           :collection            => @members,
            :name_method           => :full_name,
            :i18n_controller_scope => 'members',
            :index_path            => members_path,
@@ -13,7 +13,7 @@
            :show_path_method      => method(:member_path)
 
   = render 'shared/sections/data_section_in_overview',
-           :models                => @events,
+           :collection            => @events,
            :name_method           => :title,
            :i18n_controller_scope => 'events',
            :index_path            => events_path,
@@ -21,7 +21,7 @@
            :show_path_method      => method(:event_path)
 
   = render 'shared/sections/data_section_in_overview',
-           :models                => @lesson_supervisions,
+           :collection            => @lesson_supervisions,
            :name_method           => :unique_names,
            :i18n_controller_scope => 'lesson_supervisions',
            :index_path            => lesson_supervisions_path,

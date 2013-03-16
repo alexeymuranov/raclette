@@ -1,12 +1,12 @@
 -# Locals:
--#   model:
+-#   object:
 -#   attributes (optional):
 -#   column_types (optional):
 -#   singular_associations (optional):
 -#   association_name_attributes:
 
 -# It is assumed here that PseudoColumns module is included
-- column_types ||= model.class.column_db_types
+- column_types ||= object.class.column_db_types
 
 - singular_associations ||= nil
 
@@ -15,15 +15,15 @@
 %dl.show
   - if singular_associations
     - singular_associations.each do |assoc|
-      - if associated_model = model.public_send(assoc)
+      - if associated_object = object.public_send(assoc)
 
         = render 'shared/lists/singular_association_in_description',
-          :model                      => model,
+          :object                     => object,
           :association                => assoc,
-          :associated_model           => associated_model,
+          :associated_object          => associated_object,
           :association_name_attribute => association_name_attributes[assoc]
 
   - if attributes
     - attributes.each do |attr|
 
-      = formatted_attribute_in_description(model, attr)
+      = formatted_attribute_in_description(object, attr)

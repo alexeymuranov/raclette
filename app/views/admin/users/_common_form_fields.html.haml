@@ -29,12 +29,12 @@
 = field_set_tag t('admin.users.edit.subheaders.authorized_ips') do
 
   = render 'shared/forms/selection_index',
-           :attributes        => @known_ip_attributes,
-           :html_table_id     => :known_ips,
-           :models            => @known_ips,
-           :selected_models   => @safe_ips,
-           :id_prefix         => 'user_safe_ip_ids',
-           :array_name        => 'user[safe_ip_ids]'
+           :attributes       => @known_ip_attributes,
+           :html_table_id    => :known_ips,
+           :collection       => @known_ips,
+           :selected_objects => @safe_ips,
+           :id_prefix        => 'user_safe_ip_ids',
+           :array_name       => 'user[safe_ip_ids]'
 
 = field_set_tag t('admin.users.edit.subheaders.comments') do
   %dl.form_fields

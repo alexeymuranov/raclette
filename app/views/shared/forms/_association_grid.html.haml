@@ -1,6 +1,6 @@
 -# Locals:
--#   models1:
--#   models2:
+-#   collection1:
+-#   collection2:
 -#   association_attribute1:
 -#   key1:
 -#   key2:
@@ -12,22 +12,22 @@
   %colgroup
     %col
   %colgroup
-    - models2.size.times do
+    - collection2.size.times do
       %col
   %thead
     %tr
       %th.empty
-      - models2.each do |mod2|
+      - collection2.each do |obj2|
         %th
-          %span{ :title => mod2.public_send(description2) }
-            = mod2.public_send(key2)
+          %span{ :title => obj2.public_send(description2) }
+            = obj2.public_send(key2)
   %tbody
-    - models1.each do |mod1|
+    - collection1.each do |obj1|
       %tr
         %th{ :scope => 'row' }
-          %span{ :title => mod1.public_send(description1) }
-            = mod1.public_send(key1)
-        - models2.each do |mod2|
+          %span{ :title => obj1.public_send(description1) }
+            = obj1.public_send(key1)
+        - collection2.each do |obj2|
           %td.boolean
-            = check_box_tag "#{id_array_name}[#{mod1.id}][]", mod2.id,
-                mod1.public_send(association_attribute1).include?(mod2)
+            = check_box_tag "#{ id_array_name }[#{ obj1.id }][]", obj2.id,
+                obj1.public_send(association_attribute1).include?(obj2)

@@ -11,7 +11,7 @@
 #members_table
 
   = render 'shared/tables/filtered_index',
-           :models           => @members,
+           :collection       => @members,
            :attributes       => @attributes,
            :html_table_id    => :members,
            :filtering_values => @filtering_values

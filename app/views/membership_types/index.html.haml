@@ -9,7 +9,7 @@
 #membership_types_table
 
   = render 'shared/tables/filtered_index',
-           :models           => @membership_types,
+           :collection       => @membership_types,
            :attributes       => @attributes,
            :html_table_id    => :membership_types,
            :filtering_values => @filtering_values

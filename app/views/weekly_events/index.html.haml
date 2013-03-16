@@ -9,7 +9,7 @@
 #weekly_events_table
 
   = render 'shared/tables/filtered_index',
-           :models           => @weekly_events,
+           :collection       => @weekly_events,
            :attributes       => @attributes,
            :html_table_id    => :weekly_events,
            :filtering_values => @filtering_values

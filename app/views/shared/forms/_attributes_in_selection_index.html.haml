@@ -1,13 +1,13 @@
 -# Locals:
--#   model:
+-#   object:
 -#   attributes:
 -#   column_types:
 
 %th{ :scope => 'row',
      :class => html_class_from_column_type(column_types.first) }
-  = label_tag id_prefix + "_#{ model.id }", model.public_send(attributes.first)
+  = label_tag id_prefix + "_#{ object.id }", object.public_send(attributes.first)
 
 - attributes.from(1).each do |attr|
   - column_type = column_types[attr]
   %td{ :class => html_class_from_column_type(column_type) }
-    = formatted_attribute_value(model.public_send(attr), column_type)
+    = formatted_attribute_value(object.public_send(attr), column_type)
