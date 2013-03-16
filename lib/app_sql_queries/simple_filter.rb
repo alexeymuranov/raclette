@@ -8,16 +8,16 @@ class SimpleFilter
     @filtering_attributes = []
   end
 
-  def set_filtering_values_from_human_hash(human_filtering_values, klass)
+  def set_filtering_values_from_human_hash(human_filtering_values, model)
 
     human_filtering_values.each do |attr, value|
       column_name = attr.to_s
       attr = column_name.to_sym
 
-      filtering_column_type = if klass.include?(PseudoColumns)
-                                klass.column_db_type(attr)
+      filtering_column_type = if model.include?(PseudoColumns)
+                                model.column_db_type(attr)
                               else
-                                klass.columns_hash[column_name].type
+                                model.columns_hash[column_name].type
                               end
 
       case filtering_column_type
@@ -58,8 +58,8 @@ class SimpleFilter
 
   def do_filter(scoped_collection, filtering_values=nil,
                                    filtering_attributes=nil)
-    klass = scoped_collection.klass
-    table_name = klass.table_name
+    model = scoped_collection.klass
+    table_name = model.table_name
     @filtering_values = filtering_values || @filtering_values
     @filtering_attributes = filtering_attributes || @filtering_attributes\
                                                  || @filtering_values.keys
@@ -70,16 +70,16 @@ class SimpleFilter
 
       column_name = attr.to_s
 
-      if klass.include?(PseudoColumns)
-        filtering_column_type = klass.column_db_type(attr)
-        column_sql            = klass.sql_for_column(attr)
+      if model.include?(PseudoColumns)
+        filtering_column_type = model.column_db_type(attr)
+        column_sql            = model.sql_for_column(attr)
       else
-        filtering_column_type = klass.columns_hash[column_name].type
+        filtering_column_type = model.columns_hash[column_name].type
         column_sql            = "\"#{table_name}\".\"#{column_name}\""
       end
 
       unless filtering_column_type && column_sql
-        if column = klass.columns_hash[column_name]
+        if column = model.columns_hash[column_name]
           filtering_column_type ||= column.type
           column_sql ||= "\"#{table_name}\".\"#{column_name}\""
         else

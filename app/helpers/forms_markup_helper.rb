@@ -84,18 +84,18 @@ module FormsMarkupHelper
 
       marks = ''.html_safe
 
-      klass = object.class
+      model = object.class
 
       # NOTE: assume that ActiveModelUtilities is included into the model class
 
       # add a '*' after the field label if the field is required
-      if klass.attr_required?(method)
+      if model.attr_required?(method)
         marks << '*'.html_safe
         html_classes << 'required'
       end
 
       # add a '!' after the field label if the field will be readonly
-      if klass.attr_readonly?(method)
+      if model.attr_readonly?(method)
         marks << @template.content_tag(:sup, '!'.html_safe)
         html_classes << 'readonly'
       end

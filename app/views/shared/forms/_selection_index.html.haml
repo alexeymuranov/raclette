@@ -7,15 +7,15 @@
 -#   selected_objects (optional):
 -#   id_prefix:
 -#   array_name:
--#   klass (optional):
+-#   model (optional):
 
-- klass ||= collection.klass
+- model ||= collection.klass
 
 -# It is assumed here that PseudoColumns module is included
-- column_types ||= klass.column_db_types
+- column_types ||= model.column_db_types
 
 -# It is assumed here that AbstractHumanizedModel module is included
-- column_headers ||= klass.human_column_headers
+- column_headers ||= model.human_column_headers
 
 - selected_objects ||= nil
 

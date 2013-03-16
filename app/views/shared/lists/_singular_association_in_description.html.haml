@@ -4,13 +4,13 @@
 -#   associated_object:
 -#   association_name_attribute:
 
-- klass = object.class
+- model = object.class
 - identifying_name = associated_object.public_send(association_name_attribute)
 
 .item
   %dt<
     = t 'formats.attribute_name:',
-        :attribute => klass.human_attribute_name(association)
+        :attribute => model.human_attribute_name(association)
   %dd.reference
     = link_to identifying_name,
               { :controller => associated_object.controller_path,

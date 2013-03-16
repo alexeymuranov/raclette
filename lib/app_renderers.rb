@@ -5,13 +5,13 @@ require 'zip/zip'
 
 ActionController.add_renderer :collection_csv do |collection, options|
   self.content_type ||= Mime::CSV
-  klass = collection.klass
-  headers = options[:headers] || klass.human_column_headers
+  model = collection.klass
+  headers = options[:headers] || model.human_column_headers
   csv = AppRenderingHelpers::csv_from_collection(collection,
                                                  options[:only],
                                                  headers)
   filename = options[:filename] ||
-    "#{ klass.model_name.human.pluralize } " \
+    "#{ model.model_name.human.pluralize } " \
     "#{ Time.now.in_time_zone.strftime('%Y-%m-%d %k-%M') }.csv"
   send_data csv, :filename     => filename,
                  :content_type => "#{ Mime::CSV }; charset=utf-8",
@@ -20,14 +20,14 @@ end
 
 ActionController.add_renderer :collection_ms_excel_2003_xml do |collection, options|
   self.content_type ||= Mime::MS_EXCEL_2003_XML
-  klass = collection.klass
-  headers = options[:headers] || klass.human_column_headers
+  model = collection.klass
+  headers = options[:headers] || model.human_column_headers
   ms_excel_2003_xml =
     AppRenderingHelpers::ms_excel_2003_xml_from_collection(collection,
                                                            options[:only],
                                                            headers)
   filename = options[:filename] ||
-    "#{ klass.model_name.human.pluralize } " \
+    "#{ model.model_name.human.pluralize } " \
     "#{ Time.now.in_time_zone.strftime('%Y-%m-%d %k-%M') }.xls"
   send_data ms_excel_2003_xml,
             :filename     => filename,
@@ -37,10 +37,10 @@ end
 
 ActionController.add_renderer :collection_csv_zip do |collection, options|
   self.content_type ||= Mime::CSV_ZIP
-  klass = collection.klass
+  model = collection.klass
   csv = render_to_string({ :collection_csv => collection }.merge!(options))
   filename = options[:filename] ||
-    "#{ klass.model_name.human.pluralize } " \
+    "#{ model.model_name.human.pluralize } " \
     "#{ Time.now.in_time_zone.strftime('%Y-%m-%d %k-%M') }.csv"
   data = AppRenderingHelpers::zip_string(csv, filename)
   send_data data,
@@ -51,12 +51,12 @@ end
 
 ActionController.add_renderer :collection_ms_excel_2003_xml_zip do |collection, options|
   self.content_type ||= Mime::MS_EXCEL_2003_XML_ZIP
-  klass = collection.klass
+  model = collection.klass
   ms_excel_2003_xml =
     render_to_string(
       { :collection_ms_excel_2003_xml => collection }.merge!(options))
   filename = options[:filename] ||
-    "#{ klass.model_name.human.pluralize } " \
+    "#{ model.model_name.human.pluralize } " \
     "#{ Time.now.in_time_zone.strftime('%Y-%m-%d %k-%M') }.xls"
   data = AppRenderingHelpers::zip_string(ms_excel_2003_xml, filename)
   send_data data,
@@ -85,13 +85,13 @@ module AppRenderingHelpers
                                         attributes,
                                         column_headers)
     attributes ||= scoped_collection.klass.attribute_names
-    klass = scoped_collection.klass
-    column_types = if klass.include?(PseudoColumns)
-                     klass.column_db_types
+    model = scoped_collection.klass
+    column_types = if model.include?(PseudoColumns)
+                     model.column_db_types
                    else
                      {}.tap do |h|
                        attributes.each { |attr|
-                         h[attr] = klass.columns_hash[attr.to_s].type
+                         h[attr] = model.columns_hash[attr.to_s].type
                        }
                      end
                    end

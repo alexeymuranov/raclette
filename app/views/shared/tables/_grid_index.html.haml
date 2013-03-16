@@ -1,5 +1,5 @@
 -# Locals:
--#   klass:
+-#   model:
 -#   associated_collection1:
 -#   associated_collection2:
 -#   find_by_ids_method:
@@ -39,7 +39,7 @@
                     :class => 'display resource'
         - associated_collection2.each do |obj2|
           %td.grid_index
-            - if object = klass.public_send(find_by_ids_method, obj1.id, obj2.id)
+            - if object = model.public_send(find_by_ids_method, obj1.id, obj2.id)
               %span
                 = link_to send(attribute_presentation_helper, object),
                           { :controller => object.controller_path,
@@ -66,7 +66,7 @@
             - else
               %span
                 = link_to add_pictogram(2) + ' ' + t('actions.create'),
-                          { :controller => klass.controller_path,
+                          { :controller => model.controller_path,
                             :action     => :new },
                           :title => t('actions.create'),
                           :class => 'add resource'
