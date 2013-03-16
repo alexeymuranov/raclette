@@ -5,8 +5,7 @@
 -#   collection (optional):
 -#   input_html_options (optional):
 
-- collection         = nil unless local_assigns.key? :collection
-- input_html_options = {}  unless local_assigns.key? :input_html_options
+- input_html_options ||= {}
 
 - object = form_builder.object
 - klass = object.class

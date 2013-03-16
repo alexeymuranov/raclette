@@ -4,13 +4,11 @@
 -#   column_type (optional):
 -#   input_html_options (optional):
 
-- unless local_assigns.key? :input_html_options
-  - input_html_options = {}
+- input_html_options ||= {}
 
 - model = form_builder.object.class
 
-- unless local_assigns.key? :column_type
-  - column_type = model.column_db_type(attribute)
+- column_type ||= model.column_db_type(attribute)
 
 .item.field
   %dt

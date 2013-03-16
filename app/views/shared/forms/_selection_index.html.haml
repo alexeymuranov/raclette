@@ -9,21 +9,17 @@
 -#   array_name:
 -#   klass (optional):
 
-- unless local_assigns.key? :klass
-  - klass = models.klass
+- klass ||= models.klass
 
-- unless local_assigns.key? :column_types
-  -# It is assumed here that PseudoColumns module is included
-  - column_types = klass.column_db_types
+-# It is assumed here that PseudoColumns module is included
+- column_types ||= klass.column_db_types
 
-- unless local_assigns.key? :column_headers
-  -# It is assumed here that AbstractHumanizedModel module is included
-  - column_headers = klass.human_column_headers
+-# It is assumed here that AbstractHumanizedModel module is included
+- column_headers ||= klass.human_column_headers
 
-- if local_assigns[:selected_models]
-  - unselected_models = models - selected_models
-- else
-  - unselected_models = models
+- selected_models ||= nil
+
+- unselected_models = selected_models ? models - selected_models : models
 
 %table.form_fields
   %colgroup
