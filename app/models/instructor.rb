@@ -28,7 +28,7 @@ class Instructor < ActiveRecord::Base
   # Validations
   validates :person_id, :presence => true
 
-  validates :presentation, :length    => { :maximum => 32*1024 },
+  validates :presentation, :length    => { :maximum => 32 * 1024 },
                            :allow_nil => true
 
   validates :photo, :length    => { :maximum => 2.megabytes },
@@ -43,8 +43,9 @@ class Instructor < ActiveRecord::Base
   # Non-SQL virtual attributes
   def virtual_professional_name
     [ first_name,
-      nickname_or_other.blank? ? nil : "'#{ nickname_or_other }'",
-      last_name ].reject(&:blank?).join(' ')
+      ("'#{ nickname_or_other }'" unless nickname_or_other.blank?),
+      last_name
+    ].reject(&:blank?).join(' ')
   end
 end
 
