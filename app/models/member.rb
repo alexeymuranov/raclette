@@ -61,7 +61,7 @@ class Member < ActiveRecord::Base
   has_many :guest_invitations, :class_name => :GuestEntry,
                                :inverse_of => :inviting_member
 
-  accepts_nested_attributes_for :person
+  # accepts_nested_attributes_for :person # This is taken care of in `AbstractPerson`
 
   # Delegations
 

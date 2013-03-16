@@ -23,7 +23,7 @@ class Instructor < ActiveRecord::Base
 
   belongs_to :person, :inverse_of => :instructor
 
-  accepts_nested_attributes_for :person
+  # accepts_nested_attributes_for :person # This is taken care of in `AbstractPerson`
 
   # Validations
   validates :person_id, :presence => true
