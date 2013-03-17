@@ -59,10 +59,10 @@
                           { :controller => model.controller_path,
                             :action     => :destroy,
                             :id         => model },
-                          :data => { :confirm => t('questions.are_you_sure?') },
-                          :method  => :delete,
-                          :title   => t('actions.delete'),
-                          :class   => 'modify resource'
+                          :data   => { :confirm => t('questions.are_you_sure?') },
+                          :method => :delete,
+                          :title  => t('actions.delete'),
+                          :class  => 'modify resource'
             - else
               %span
                 = link_to add_pictogram(2) + ' ' + t('actions.create'),
