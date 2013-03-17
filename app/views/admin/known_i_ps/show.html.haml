@@ -14,10 +14,9 @@
 
   - unless @safe_users.empty?
     = render 'shared/tables/simple_index',
-             :models                    => @safe_users,
-             :attributes                => @safe_user_attributes,
-             :resources_controller_name => Admin::UsersController.controller_path,
-             :html_table_id             => :safe_users
+             :models        => @safe_users,
+             :attributes    => @safe_user_attributes,
+             :html_table_id => :safe_users
 
 %footer
   = link_to edit_pictogram(3) + ' ' + t('admin.known_i_ps.edit.header',
