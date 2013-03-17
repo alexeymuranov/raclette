@@ -3,6 +3,7 @@
 -#   associated_collection1:
 -#   associated_collection2:
 -#   find_by_ids_method:
+-#   build_by_ids_method:
 -#   attribute_presentation_helper:
 -#   key1:
 -#   key2:
@@ -64,9 +65,10 @@
                           :title  => t('actions.delete'),
                           :class  => 'modify resource'
             - else
+              - object = model.public_send(build_by_ids_method, obj1.id, obj2.id)
               %span
                 = link_to add_pictogram(2) + ' ' + t('actions.create'),
-                          { :controller => model.controller_path,
+                          { :controller => object.controller_path,
                             :action     => :new },
                           :title => t('actions.create'),
                           :class => 'add resource'

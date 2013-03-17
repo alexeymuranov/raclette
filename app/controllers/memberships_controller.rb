@@ -8,6 +8,11 @@ class MembershipsController < ManagerController # FIXME!
     belongs_to :type, :foreign_key => :membership_type_id,
                       :class_name  => :MembershipType,
                       :inverse_of  => :memberships
+
+    # This is used to generate a link in 'shared/tables/grid_index' partial
+    def self.build_by_activity_period_id_and_membership_type_id(a_p_id, m_t_id)
+      new :activity_period_id => a_p_id, :membership_type_id => m_t_id
+    end
   end
 
   class MembershipType < Accessors::MembershipType
