@@ -23,9 +23,7 @@
       - associated_collection2.each do |obj2|
         %th
           = link_to obj2.public_send(key2),
-                    { :controller => obj2.controller_path,
-                      :action     => :show,
-                      :id         => obj2 },
+                    obj2.path_to(:action => :show),
                     :title => obj2.public_send(description2),
                     :class => 'display resource'
   %tbody
@@ -33,9 +31,7 @@
       %tr
         %th{:scope => "row"}
           = link_to obj1.public_send(key1),
-                    { :controller => obj1.controller_path,
-                      :action     => :show,
-                      :id         => obj1 },
+                    obj1.path_to(:action => :show),
                     :title => obj1.public_send(description1),
                     :class => 'display resource'
         - associated_collection2.each do |obj2|
@@ -43,32 +39,25 @@
             - if object = model.public_send(find_by_ids_method, obj1.id, obj2.id)
               %span
                 = link_to send(attribute_presentation_helper, object),
-                          { :controller => object.controller_path,
-                            :action     => :show,
-                            :id         => object },
+                          object.path_to(:action => :show),
                           :title => t('actions.read'),
                           :class => 'display resource'
               %span.operation
                 = link_to edit_pictogram(2),
-                          { :controller => object.controller_path,
-                            :action     => :edit,
-                            :id         => object },
+                          object.path_to(:action => :edit),
                           :title => t('actions.update'),
                           :class => 'modify resource'
               %span.operation
                 = link_to delete_pictogram(2),
-                          { :controller => object.controller_path,
-                            :action     => :destroy,
-                            :id         => object },
+                          object.path_to(:action => :destroy),
                           :data   => { :confirm => t('questions.are_you_sure?') },
                           :method => :delete,
                           :title  => t('actions.delete'),
                           :class  => 'modify resource'
             - else
-              - object = model.public_send(build_by_ids_method, obj1.id, obj2.id)
+              - new_object = model.public_send(build_by_ids_method, obj1.id, obj2.id)
               %span
                 = link_to add_pictogram(2) + ' ' + t('actions.create'),
-                          { :controller => object.controller_path,
-                            :action     => :new },
+                          new_object.path_to(:action => :new),
                           :title => t('actions.create'),
                           :class => 'add resource'

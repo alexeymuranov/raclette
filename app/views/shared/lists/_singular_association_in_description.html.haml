@@ -13,8 +13,6 @@
         :attribute => model.human_attribute_name(association)
   %dd.reference
     = link_to identifying_name,
-              { :controller => associated_object.controller_path,
-                :action     => :show,
-                :id         => associated_object },
+              associated_object.path_to(:action => :show),
               :title => t('actions.read'),
               :class => 'display associated resource'

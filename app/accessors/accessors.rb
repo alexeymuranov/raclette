@@ -7,21 +7,39 @@ module Accessors
   module ControllerAware
     def self.included(base)
       base.extend(ClassMethods)
+
+      # XXX: Looks like a hack to me, but maybe this is the official way:
+      # http://api.rubyonrails.org/classes/ActionDispatch/Routing/UrlFor.html
+      base.send(:include, Rails.application.routes.url_helpers)
     end
 
     module ClassMethods
       def controller_class  # To be redefined in classes
-        "#{ base_class.name.pluralize }Controller".constantize
+        @controller_class ||=
+          "#{ base_class.name.pluralize }Controller".constantize
       end
 
       def controller_path
-        controller_class.controller_path
+        @controller_path ||= controller_class.controller_path
       end
     end
 
-    def controller_path
-      self.class.controller_path
+    # def controller_path
+    #   self.class.controller_path
+    # end
+
+    def path_to(url_options)
+      url_for common_options_for_urls.merge(url_options)
     end
+
+    private
+
+      def common_options_for_urls
+        { :controller => self.class.controller_path,
+          :id         => id,
+          :only_path  => true }
+      end
+
   end
 
   # Active Record:

@@ -19,9 +19,7 @@
       - collection2.each do |obj2|
         %th
           = link_to obj2.public_send(key2),
-                    { :controller => obj2.controller_path,
-                      :action     => :show,
-                      :id         => obj2 },
+                    obj2.path_to(:action => :show),
                     :title => obj2.public_send(description2),
                     :class => 'display resource'
   %tbody
@@ -29,9 +27,7 @@
       %tr
         %th{:scope => "row"}
           = link_to obj1.public_send(key1),
-                    { :controller => obj1.controller_path,
-                      :action     => :show,
-                      :id         => obj1 },
+                    obj1.path_to(:action => :show),
                     :title => obj1.public_send(description1),
                     :class => 'display resource'
         - collection2.each do |obj2|

@@ -6,9 +6,7 @@
 %th{ :scope => 'row',
      :class => html_class_from_column_type(column_types.first) }
   = link_to object.public_send(attributes.first),
-            { :controller => object.controller_path,
-              :action     => :show,
-              :id         => object },
+            object.path_to(:action => :show),
             :title => t('actions.read'),
             :class => 'display resource'
 

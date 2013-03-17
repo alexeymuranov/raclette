@@ -22,17 +22,13 @@
 
         %td.operation
           = link_to edit_pictogram(2),
-                    { :controller => obj.controller_path,
-                      :action     => :edit,
-                      :id         => obj },
+                    obj.path_to(:action => :edit),
                     :title => t('actions.update'),
                     :class => 'modify resource'
 
         %td.operation
           = link_to delete_pictogram(2),
-                    { :controller => obj.controller_path,
-                      :action     => :destroy,
-                      :id         => obj },
+                    obj.path_to(:action => :destroy),
                     :data   => { :confirm => t('questions.are_you_sure?') },
                     :method => :delete,
                     :title  => t('actions.delete'),
