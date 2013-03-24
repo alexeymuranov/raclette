@@ -23,13 +23,16 @@
   = link_to list_all_pictogram(3) + ' ' + t('lesson_supervisions.index.header'),
             lesson_supervisions_path,
             :class => 'display resource'
-  - content_for :side_menu_list_items do
-    %li
-      = link_to list_all_pictogram + ' ' + t('lesson_supervisions.index.title'),
-                lesson_supervisions_path,
-                :class => 'display resource'
-    %li
-      = link_to add_pictogram + ' ' + t('lesson_supervisions.new.title'),
-                new_lesson_supervision_path,
-                :title => t('actions.create'),
-                :class => 'add resource'
+
+-# End of the main body of the view
+
+- content_for :side_menu_list_items do
+  %li
+    = link_to list_all_pictogram + ' ' + t('lesson_supervisions.index.title'),
+              lesson_supervisions_path,
+              :class => 'display resource'
+  %li
+    = link_to add_pictogram + ' ' + t('lesson_supervisions.new.title'),
+              new_lesson_supervision_path,
+              :title => t('actions.create'),
+              :class => 'add resource'

@@ -19,9 +19,12 @@
             new_lesson_supervision_path,
             :title => t('actions.create'),
             :class => 'add resource'
-  - content_for :side_menu_list_items do
-    %li
-      = link_to add_pictogram + ' ' + t('lesson_supervisions.new.title'),
-                new_lesson_supervision_path,
-                :title => t('actions.create'),
-                :class => 'add resource'
+
+-# End of the main body of the view
+
+- content_for :side_menu_list_items do
+  %li
+    = link_to add_pictogram + ' ' + t('lesson_supervisions.new.title'),
+              new_lesson_supervision_path,
+              :title => t('actions.create'),
+              :class => 'add resource'

@@ -19,9 +19,12 @@
             new_weekly_event_path,
             :title => t('actions.create'),
             :class => 'add resource'
-  - content_for :side_menu_list_items do
-    %li
-      = link_to add_pictogram + ' ' + t('weekly_events.new.title'),
-                new_weekly_event_path,
-                :title => t('actions.create'),
-                :class => 'add resource'
+
+-# End of the main body of the view
+
+- content_for :side_menu_list_items do
+  %li
+    = link_to add_pictogram + ' ' + t('weekly_events.new.title'),
+              new_weekly_event_path,
+              :title => t('actions.create'),
+              :class => 'add resource'

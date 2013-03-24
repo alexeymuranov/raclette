@@ -19,9 +19,12 @@
             new_membership_type_path,
             :title => t('actions.create'),
             :class => 'add resource'
-  - content_for :side_menu_list_items do
-    %li
-      = link_to add_pictogram + ' ' + t('membership_types.new.title'),
-                new_membership_type_path,
-                :title => t('actions.create'),
-                :class => 'add resource'
+
+-# End of the main body of the view
+
+- content_for :side_menu_list_items do
+  %li
+    = link_to add_pictogram + ' ' + t('membership_types.new.title'),
+              new_membership_type_path,
+              :title => t('actions.create'),
+              :class => 'add resource'
