@@ -55,6 +55,7 @@ group :development do
   gem 'sqlite3'
   gem 'debugger'
   gem 'better_errors'
+  gem 'binding_of_caller' # more debugging tools to use with 'better_errors'
   gem 'annotate'   # annotate models
   gem 'rails-erd'  # generate models' diagram in PDF
 end
