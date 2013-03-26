@@ -72,7 +72,8 @@ class MembershipsController < ManagerController # FIXME!
   end
 
   def new
-    @membership = Membership.new
+    @membership =
+      Membership.new(params.slice(:activity_period_id, :membership_type_id))
 
     render_new_properly
   end

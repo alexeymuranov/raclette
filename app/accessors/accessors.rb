@@ -176,6 +176,14 @@ module Accessors
     def self.controller_class
       MembershipsController
     end
+
+    private
+
+      def common_options_for_urls
+        super.merge(:activity_period_id => activity_period_id,
+                    :membership_type_id => membership_type_id)
+      end
+
   end
 
   class MembershipPurchase < ::MembershipPurchase
