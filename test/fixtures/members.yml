@@ -4,7 +4,7 @@
 one:
   person: one
   been_member_by: 2000-01-30
-  shares_tickets_with_member_id: 2
+  tickets_borrower: two
   account_deactivated: false
   latest_membership_obtained_on: 2011-05-08
   latest_membership_expiration_date: 2012-09-01
@@ -20,7 +20,7 @@ one:
 two:
   person: two
   been_member_by: 2011-05-08
-  shares_tickets_with_member_id: 1
+  tickets_borrower: one
   account_deactivated: false
   latest_membership_obtained_on: 2011-05-08
   latest_membership_expiration_date: 2011-09-01
@@ -36,7 +36,7 @@ two:
 three:
   person: three
   been_member_by: 2011-05-08
-  shares_tickets_with_member_id: ~
+  tickets_borrower: ~
   account_deactivated: true
   latest_membership_obtained_on: 2010-09-01
   latest_membership_expiration_date: 2011-02-01
