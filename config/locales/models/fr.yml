@@ -226,6 +226,7 @@ fr:
         # revenue_account:
         #   <<: *revenue_account_attributes
       membership_purchase:
+        membership: "Adhésion"
         membership_type: "Type d'adhésion"
         membership_expiration_date: "Date de fin d'adhésion"
         purchase_date: "Date d'achat"

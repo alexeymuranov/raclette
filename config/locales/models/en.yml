@@ -226,6 +226,7 @@ en:
         # revenue_account:
         #   <<: *revenue_account_attributes
       membership_purchase:
+        membership: "Membership"
         membership_type: "Membership type"
         membership_expiration_date: "Expiration date"
         purchase_date: "Purchase date"
