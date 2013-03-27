@@ -43,6 +43,9 @@ class Membership < ActiveRecord::Base
   validates :membership_type_id,
             :uniqueness => { :scope => :activity_period_id }
 
+  # Callbacks:
+  before_create :initialize_current_price
+
   # Delegations:
   delegate :start_date,
            :duration_months,
@@ -94,9 +97,16 @@ class Membership < ActiveRecord::Base
     "#{ start_date } — #{ end_date } : #{ membership_type.unique_title }"
   end
 
-  def virtual_price
+  def virtual_current_price
     current_price || initial_price
   end
+
+  private
+
+    def initialize_current_price
+      self.current_price ||= initial_price
+    end
+
 end
 
 # == Schema Information
