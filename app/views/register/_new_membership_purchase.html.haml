@@ -7,22 +7,13 @@
 
   -# = hidden_field_tags_from_nested_hash @saved_params
 
-  = f.fields_for :membership do |membership_fields|
-    %dl.form_fields
-      .dl_item.field
-        %dt ?
-        %dd
-          = membership_fields.select :membership_type_id,
-              options_from_collection_for_select(@membership_types,
-                :id, :unique_title,
-                :selected => (@membership_type && @membership_type.id))
-      .dl_item.field
-        %dt ?
-        %dd
-          = membership_fields.select :activity_period_id,
-              options_from_collection_for_select(@activity_periods,
-                :id, :unique_title,
-                :selected => (@activity_period && @activity_period.id))
+  %dl.form_fields
+
+    = render 'shared/forms/belongs_to_association',
+             :form_builder => f,
+             :association  => :membership,
+             :collection   => @memberships,
+             :association_name_attribute => :virtual_title
 
   .actions
     = f.submit t('buttons.continue'), :class => 'easy'

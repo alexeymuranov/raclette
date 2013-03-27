@@ -8,13 +8,12 @@
   -# = hidden_field_tags_from_nested_hash @saved_params
 
   %dl.form_fields
-    .dl_item.field
-      %dt ?
-      %dd
-        = f.select :ticket_book_id,
-            options_from_collection_for_select(@ticket_books,
-              :id, :tickets_number,
-              :selected => @tickets_purchase.ticket_book.id)
+
+    = render 'shared/forms/belongs_to_association',
+             :form_builder => f,
+             :association  => :ticket_book,
+             :collection   => @ticket_books,
+             :association_name_attribute => :tickets_number
 
   .actions
     = f.submit t('buttons.continue'), :class => 'easy'

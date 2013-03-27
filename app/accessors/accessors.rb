@@ -187,6 +187,7 @@ module Accessors
   end
 
   class MembershipPurchase < ::MembershipPurchase
+    include ActiveModelUtilities
   end
 
   class MembershipType < ::MembershipType
@@ -241,6 +242,7 @@ module Accessors
   end
 
   class TicketsPurchase < ::TicketsPurchase
+    include ActiveModelUtilities
   end
 
   class WeeklyEvent < ::WeeklyEvent

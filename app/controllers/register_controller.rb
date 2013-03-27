@@ -1,18 +1,67 @@
 ## encoding: UTF-8
 
-class RegisterController < ApplicationController
+class RegisterController < ApplicationController # FIXME
 
   class Member < Accessors::Member
     self.all_sorting_columns = [ :ordered_full_name,
                                  :email,
                                  :tickets_count ]
     self.default_sorting_column = :ordered_full_name
+
+    has_many :memberships, :through    => :member_memberships,
+                           :class_name => :Membership
+
+    has_many :membership_purchases, :dependent  => :destroy,
+                                    :class_name => :MembershipPurchase,
+                                    :inverse_of => :member
+
+    has_many :tickets_purchases, :dependent  => :destroy,
+                                 :class_name => :TicketsPurchase,
+                                 :inverse_of => :member
+  end
+
+  class Membership < Accessors::Membership
+    has_many :members, :through    => :member_memberships,
+                       :class_name => :Member
+
+    has_many :membership_purchases, :dependent  => :nullify,
+                                    :class_name => :MembershipPurchase,
+                                    :inverse_of => :membership
+
+    has_many :ticket_books, :dependent  => :destroy,
+                            :class_name => :TicketBook,
+                            :inverse_of => :membership
+  end
+
+  class TicketBook < Accessors::TicketBook
+    has_many :tickets_purchases, :dependent  => :nullify,
+                                 :class_name => :TicketsPurchase,
+                                 :inverse_of => :ticket_book
+
+    belongs_to :membership, :class_name => :Membership,
+                            :inverse_of => :ticket_books
   end
 
   class Guest < Accessors::Guest
   end
 
   class Event < Accessors::Event
+  end
+
+  class MembershipPurchase < Accessors::MembershipPurchase
+    belongs_to :member, :class_name => :Member,
+                        :inverse_of => :membership_purchases
+
+    belongs_to :membership, :class_name => :Membership,
+                            :inverse_of => :membership_purchases
+  end
+
+  class TicketsPurchase < Accessors::TicketsPurchase
+    belongs_to :member, :class_name => :Member,
+                        :inverse_of => :tickets_purchases
+
+    belongs_to :ticket_book, :class_name => :TicketBook,
+                             :inverse_of => :tickets_purchases
   end
 
   def choose_person
@@ -73,7 +122,9 @@ class RegisterController < ApplicationController
       render_choose_person_properly and return
     end
 
-    if @member.attend_event(@event)
+    @member.compose_new_event_participation(@event)
+
+    if @member.save
       flash[:success] = t('flash.actions.create.success',
                           :resource_name => MemberEntry.model_name.human )
       redirect_to :action => :choose_person
@@ -99,7 +150,9 @@ class RegisterController < ApplicationController
       render_choose_person_properly and return
     end
 
-    if @guest.attend_event(@event)
+    guest_entry = @guest.compose_new_event_participation(@event)
+
+    if guest_entry.save
       flash[:success] = t('flash.actions.create.success',
                           :resource_name => GuestEntry.model_name.human)
       redirect_to :action => :choose_person
@@ -136,10 +189,11 @@ class RegisterController < ApplicationController
   def create_member_ticket_purchase
     @member = Member.find(params[:member_id])
 
-    ticket_book_id = params[:tickets_purchase][:ticket_book_id]
-    @ticket_book = TicketBook.find(ticket_book_id)
+    @ticket_book = TicketBook.find(params[:tickets_purchase][:ticket_book_id])
 
-    if @member.buy_tickets(@ticket_book)
+    @tickets_purchase = @member.compose_new_tickets_purchase(@ticket_book)
+
+    if @member.save
       flash[:success] =
         t('flash.actions.create.success',
           :resource_name => TicketsPurchase.model_name.human)
@@ -154,16 +208,11 @@ class RegisterController < ApplicationController
   def create_member_membership_purchase
     @member = Member.find(params[:member_id])
 
-    membership_attributes = params[:membership_purchase][:membership]
-    @membership = Membership.where(membership_attributes).first
+    @membership = Membership.find(params[:membership_purchase][:membership_id])
 
-    unless @membership
-      flash.now[:error] =
-        t('flash.register.create_membership_purchase.no_membership_found')
-      render_new_member_transaction_properly and return
-    end
+    @membership_purchase = @member.compose_new_membership_purchase(@membership)
 
-    if @member.buy_membership(@membership)
+    if @member.save
       flash[:success] =
         t('flash.actions.create.success',
           :resource_name => MembershipPurchase.model_name.human)
@@ -216,8 +265,6 @@ class RegisterController < ApplicationController
     end
 
     def render_new_member_transaction_properly
-      @member = Member.joins(:person).
-                       find(params[:member_id])
       @events = Event.unlocked.past_seven_days
 
       @tabs = @events.empty? ? [] : ['new_entry']
@@ -248,7 +295,6 @@ class RegisterController < ApplicationController
     end
 
     def render_new_guest_transaction_properly
-      @guest = Guest.new(params[:guest])
       @events = Event.unlocked.past_seven_days
       if @events.empty?
         flash.now[:error] =
@@ -292,22 +338,29 @@ class RegisterController < ApplicationController
     end
 
     def render_new_member_ticket_purchase_properly
-      @ticket_books = @ticket_books.default_order
-      @ticket_book = @ticket_books.first
+      @memberships = @member.memberships.not_over.reverse_order_by_expiration_date.all
+      @ticket_books = []
+      @memberships.each do |m|
+        @ticket_books += m.ticket_books.default_order.all
+      end
 
-      @tickets_purchase = TicketsPurchase.new(:member      => @member,
-                                              :ticket_book => @ticket_book)
+      @tickets_purchase ||=
+        TicketsPurchase.new(:member      => @member,
+                            :ticket_book => @ticket_books.first)
 
       render 'new_member_transaction'
     end
 
     def render_new_member_membership_purchase_properly  # FIXME: allow guests to purchase memberships
-      @membership_types = MembershipType.all  # FIXME!
-      @membership_type = @membership_types.first
-      @activity_periods = ActivityPeriod.not_over  # FIXME!
-      @activity_period = ActivityPeriod.current.reverse_order_by_end_date.first
+      @activity_periods = ActivityPeriod.not_over.reverse_order_by_end_date.all
+      @memberships = []
+      @activity_periods.each do |ap|
+        @memberships += ap.memberships.default_order.all
+      end
 
-      @membership_purchase = MembershipPurchase.new
+      @membership_purchase ||=
+        MembershipPurchase.new(:membership => @memberships.first)
+
       @membership_purchase.validated_by_user = current_user.username if
         current_user.a_person?
 

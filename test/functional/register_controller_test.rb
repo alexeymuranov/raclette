@@ -6,9 +6,6 @@ class RegisterControllerTest < ActionController::TestCase
     @user_admin = admin_users(:one)
     @member = members(:one)
     @event = events(:one)
-    @ticket_book = ticket_books(:one)
-    @membership_type = membership_types(:one)
-    @activity_period = activity_periods(:two)
     # test_log_in(@user_admin, "127.0.0.1")
   end
 
@@ -89,12 +86,13 @@ class RegisterControllerTest < ActionController::TestCase
 
   test "should create member_ticket_purchase" do
     session[:user_id] = @user_admin.to_param
-    assert_difference('@member.payed_tickets_count', @ticket_book.tickets_number) do
+    selected_ticket_book = ticket_books(:one)
+    assert_difference('@member.payed_tickets_count', selected_ticket_book.tickets_number) do
       assert_difference('TicketsPurchase.count') do
         post :create_member_ticket_purchase,
              { :member_id        => @member.to_param,
                :tickets_purchase =>
-                 { :ticket_book_id  => @ticket_book.to_param } }
+                 { :ticket_book_id  => selected_ticket_book.to_param } }
         @member.reload
       end
     end
@@ -104,14 +102,13 @@ class RegisterControllerTest < ActionController::TestCase
 
   test "should create member_membership_purchase" do
     session[:user_id] = @user_admin.to_param
+    selected_membership = memberships(:three)
     assert_difference('MembershipPurchase.count') do
       assert_difference('MemberMembership.count') do
         post :create_member_membership_purchase,
              { :member_id           => @member.to_param,
                :membership_purchase =>
-                 { :membership =>
-                     { :membership_type_id  => @membership_type.to_param,
-                       :activity_period_id  => @activity_period.to_param } } }
+                 { :membership_id => selected_membership.to_param } }
       end
     end
 
