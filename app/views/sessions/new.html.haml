@@ -6,7 +6,7 @@
           = label_tag :username,
                       t('formats.attribute_name:',
                         :attribute => Admin::User.human_attribute_name(:username))
-        %dd= text_field_tag :username
+        %dd= text_field_tag :username, nil, :autofocus => true
       .item.field
         %dt
           = label_tag :password,
