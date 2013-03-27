@@ -57,6 +57,7 @@ class Membership < ActiveRecord::Base
   delegate :start_date,
            :duration_months,
            :end_date,
+           :virtually_over?,
            :to => :activity_period
 
   # Scopes:
@@ -69,10 +70,13 @@ class Membership < ActiveRecord::Base
   # The following does not work when used with `merge` from another model
   # (see GitHub rails Issue #5494):
   # scope :with_activity_period, joins(:activity_period)
+  scope :order_by_expiration_date,
+        with_activity_period.merge(ActivityPeriod.order_by_end_date)
   scope :reverse_order_by_expiration_date,
         with_activity_period.merge(ActivityPeriod.reverse_order_by_end_date)
   scope :default_order, reverse_order_by_expiration_date
   scope :current, with_activity_period.merge(ActivityPeriod.current)
+  scope :not_over, with_activity_period.merge(ActivityPeriod.not_over)
 
   # default_scope with_type.with_activity_period
 

@@ -139,15 +139,17 @@ class Member < ActiveRecord::Base
 
   def buy_tickets(ticket_book, price_payed = ticket_book.price,
                                date        = Date.today)
-    transaction do
-      self.payed_tickets_count += ticket_book.tickets_number
-      save!
-      purchase =
-        tickets_purchases.create(:ticket_book   => ticket_book,
-                                 :purchase_date => date)
-      purchase.payments.create!(:amount => price_payed,
-                                :date   => date)
-      purchase
+    if memberships.include?(ticket_book.membership)
+      transaction do
+        self.payed_tickets_count += ticket_book.tickets_number
+        save!
+        purchase =
+          tickets_purchases.create(:ticket_book   => ticket_book,
+                                   :purchase_date => date)
+        purchase.payments.create!(:amount => price_payed,
+                                  :date   => date)
+        purchase
+      end
     end
   end
 
