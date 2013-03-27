@@ -91,7 +91,7 @@ class Membership < ActiveRecord::Base
   # Non-SQL virtual attributes
   #
   def virtual_title
-    "#{ membership_type.unique_title }, #{ start_date } — #{ end_date }"
+    "#{ start_date } — #{ end_date } : #{ membership_type.unique_title }"
   end
 
   def virtual_price
