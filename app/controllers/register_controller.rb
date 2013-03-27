@@ -285,6 +285,7 @@ class RegisterController < ApplicationController
 
     def render_new_guest_entry_properly
       @event ||= @events.first  # FIXME!
+
       @event_entry = EventEntry.new(:event => @event)
 
       render 'new_guest_transaction'
@@ -293,8 +294,9 @@ class RegisterController < ApplicationController
     def render_new_member_ticket_purchase_properly
       @ticket_books = @ticket_books.default_order
       @ticket_book = @ticket_books.first
-      @tickets_purchase = TicketsPurchase.new :member      => @member,
-                                              :ticket_book => @ticket_book
+
+      @tickets_purchase = TicketsPurchase.new(:member      => @member,
+                                              :ticket_book => @ticket_book)
 
       render 'new_member_transaction'
     end
@@ -308,6 +310,7 @@ class RegisterController < ApplicationController
       @membership_purchase = MembershipPurchase.new
       @membership_purchase.validated_by_user = current_user.username if
         current_user.a_person?
+
       @membership_purchase.member_id = @member.person_id if @member
 
       render 'new_member_transaction'
