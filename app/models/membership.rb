@@ -67,7 +67,7 @@ class Membership < ActiveRecord::Base
   scope :default_order, reverse_order_by_expiration_date
   scope :current, with_activity_period.merge(ActivityPeriod.current)
 
-  # default_scope with_type.with_activity_period # FIXME
+  # default_scope with_type.with_activity_period
 
   # Pseudo columns
 

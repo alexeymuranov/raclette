@@ -1,6 +1,6 @@
 ## encoding: UTF-8
 
-class MembershipsController < ManagerController # FIXME!
+class MembershipsController < ManagerController
 
   class Membership < Accessors::Membership
     belongs_to :activity_period, :class_name => :ActivityPeriod,
