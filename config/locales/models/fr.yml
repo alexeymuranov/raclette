@@ -257,3 +257,7 @@ fr:
         <<: *person_attributes
         phone: "Téléphone"
         note: "Remarque"
+
+  model_validation_error_messages:
+    ticket_purchase:
+      membership_not_acquired: "%{person_name} n'a pas l'adhésion réquise %{membership_title}, il faudrait prendre cette adhésion d'abord"

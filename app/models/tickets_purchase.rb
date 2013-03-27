@@ -20,6 +20,8 @@ class TicketsPurchase < ActiveRecord::Base
 
   validates :tickets_number, :inclusion => 1..1000
 
+  validate :the_membership_must_be_acquired_already
+
   # Scopes:
   scope :last_12_hours, lambda {
     where("#{ table_name }.updated_at > ?", (Time.now - 12.hours).strftime("%F %T"))
@@ -31,6 +33,16 @@ class TicketsPurchase < ActiveRecord::Base
   before_validation :copy_tickets_number
 
   private
+
+    def the_membership_must_be_acquired_already
+      membership = ticket_book.membership
+      unless member.memberships.include?(membership)
+        errors.add(:base,
+                   I18n.t('model_validation_error_messages.ticket_purchase.membership_not_acquired',
+                          :person_name      => member.virtual_full_name,
+                          :membership_title => membership.virtual_title))
+      end
+    end
 
     def copy_tickets_number
       self.tickets_number ||= ticket_book.tickets_number

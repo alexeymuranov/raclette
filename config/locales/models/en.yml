@@ -257,3 +257,7 @@ en:
         <<: *person_attributes
         phone: "Phone"
         note: "Note"
+
+  model_validation_error_messages:
+    ticket_purchase:
+      membership_not_acquired: "%{person_name} does not have the necessary membership %{membership_title}, it would be neccessary to acquire it first"
