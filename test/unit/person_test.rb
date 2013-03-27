@@ -13,10 +13,11 @@ class PersonTest < ActiveSupport::TestCase
 
   test "should attend events" do
     assert_difference('EventEntry.count', 2) do
-      entry = @person.attend_event(events(:one), 'MemberEntry')
+      entry = @person.compose_new_event_participation(events(:one), 'MemberEntry')
       assert_kind_of EventEntry, entry
-      entry = @person.attend_event(events(:current), 'GuestEntry')
+      entry = @person.compose_new_event_participation(events(:current), 'GuestEntry')
       assert_kind_of EventEntry, entry
+      @person.save
     end
   end
 end

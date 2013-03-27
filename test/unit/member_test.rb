@@ -36,8 +36,9 @@ class MemberTest < ActiveSupport::TestCase
     @event = events(:one)
     assert_difference('MemberEntry.count') do
       assert_difference('EventEntry.count') do
-        entry = @member.attend_event(@event)
+        entry = @member.compose_new_event_participation(@event)
         assert_kind_of MemberEntry, entry
+        @member.save
       end
     end
   end
@@ -46,10 +47,11 @@ class MemberTest < ActiveSupport::TestCase
     @ticket_book = ticket_books(:one)
     assert_difference('@member.payed_tickets_count', @ticket_book.tickets_number) do
       assert_difference('TicketsPurchase.count') do
-        purchase = @member.buy_tickets(@ticket_book)
+        purchase = @member.compose_new_tickets_purchase(@ticket_book)
         assert_kind_of TicketsPurchase, purchase
-        @member.reload
+        @member.save
       end
+      @member.reload
     end
   end
 
@@ -57,8 +59,9 @@ class MemberTest < ActiveSupport::TestCase
     @membership = memberships(:three)
     assert_difference('MembershipPurchase.count') do
       assert_difference('MemberMembership.count') do
-        purchase = @member.buy_membership(@membership)
+        purchase = @member.compose_new_membership_purchase(@membership)
         assert_kind_of MembershipPurchase, purchase
+        @member.save
       end
     end
   end

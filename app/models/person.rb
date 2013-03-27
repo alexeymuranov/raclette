@@ -125,9 +125,9 @@ class Person < ActiveRecord::Base
   end
 
   # Transactions
-  def attend_event(event, entry_type = 'GuestEntry')
-    event_entries.create(:event                  => event,
-                         :participant_entry_type => entry_type)
+  def compose_new_event_participation(event, entry_type = 'GuestEntry')
+    event_entries.build(:event                  => event,
+                        :participant_entry_type => entry_type)
   end
 end
 

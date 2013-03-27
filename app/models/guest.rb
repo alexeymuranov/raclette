@@ -46,8 +46,9 @@ class Guest
   end
 
   # Transactions
-  def attend_event(event, fee_payed       = event.common_entry_fee,
-                          inviting_member = nil)
+  def compose_new_event_participation(event,
+                                      fee_payed       = event.common_entry_fee,
+                                      inviting_member = nil)
 
     event_entry_attributes = { :event => event }
 
@@ -61,6 +62,6 @@ class Guest
       attributes.merge(:inviting_member        => inviting_member,
                        :event_entry_attributes => event_entry_attributes)
 
-    GuestEntry.create(guest_entry_attributes)
+    GuestEntry.new(guest_entry_attributes)
   end
 end
