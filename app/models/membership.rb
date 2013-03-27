@@ -10,7 +10,14 @@ class Membership < ActiveRecord::Base
   attr_readonly :id, :membership_type_id, :activity_period_id, :initial_price
 
   # Associations:
-  has_many :member_memberships, :dependent  => :nullify,
+
+  # XXX: the "correct" option for `member_memberships` association is
+  # `:dependent => :destroy`.
+  # However, it has to be used with care to avoid accidental loss of
+  # membership history for many members.
+  # As a dirty "workaround", this option can be temporarily changed to
+  # `:dependent  => :nullify`.
+  has_many :member_memberships, :dependent  => :destroy,
                                 :inverse_of => :membership
 
   has_many :members, :through => :member_memberships
