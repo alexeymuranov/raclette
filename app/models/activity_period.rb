@@ -18,7 +18,7 @@ class ActivityPeriod < ActiveRecord::Base
                          :inverse_of => :activity_period
 
   has_many :membership_types, :through => :memberships,
-                              :source  => :type
+                              :source  => :membership_type
 
   has_many :revenue_accounts, :dependent  => :nullify,
                               :inverse_of => :activity_period

@@ -1,7 +1,7 @@
 # Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
 
 one:
-  type: one
+  membership_type: one
   activity_period: one
   initial_price: 9.99
   current_price: 9.99
@@ -9,7 +9,7 @@ one:
   members_count: 300
 
 two:
-  type: two
+  membership_type: two
   activity_period: one
   initial_price: 9.99
   current_price: 9.99
@@ -17,7 +17,7 @@ two:
   members_count: 9
 
 three:
-  type: two
+  membership_type: two
   activity_period: two
   initial_price: 9.99
   current_price: 9.99
@@ -25,7 +25,7 @@ three:
   members_count: 0
 
 four:
-  type: one
+  membership_type: one
   activity_period: two
   initial_price: 9.99
   current_price: 9.99

@@ -5,9 +5,9 @@ class MembershipsController < ManagerController # FIXME!
   class Membership < Accessors::Membership
     belongs_to :activity_period, :class_name => :ActivityPeriod,
                                  :inverse_of => :memberships
-    belongs_to :type, :foreign_key => :membership_type_id,
-                      :class_name  => :MembershipType,
-                      :inverse_of  => :memberships
+    belongs_to :membership_type, :foreign_key => :membership_type_id,
+                                 :class_name  => :MembershipType,
+                                 :inverse_of  => :memberships
 
     has_many :ticket_books, :dependent  => :destroy,
                             :class_name => :TicketBook,
@@ -51,9 +51,9 @@ class MembershipsController < ManagerController # FIXME!
   def show
     @attributes = [:initial_price, :current_price]
 
-    @singular_associations = [:activity_period, :type]
+    @singular_associations = [:activity_period, :membership_type]
     @association_name_attributes = { :activity_period => :unique_title,
-                                     :type            => :unique_title }
+                                     :membership_type => :unique_title }
 
     @ticket_book_attributes = [:tickets_number, :price]
 
@@ -125,9 +125,9 @@ class MembershipsController < ManagerController # FIXME!
     def render_new_properly
       @attributes = [:initial_price, :current_price]
 
-      @belongs_to_associations = [:activity_period, :type]
+      @belongs_to_associations = [:activity_period, :membership_type]
       @association_name_attributes = { :activity_period => :unique_title,
-                                       :type            => :unique_title }
+                                       :membership_type => :unique_title }
 
       @title = t('memberships.new.virtual_title')
 
@@ -137,9 +137,9 @@ class MembershipsController < ManagerController # FIXME!
     def render_edit_properly
       @attributes = [:initial_price, :current_price]
 
-      @belongs_to_associations = [:activity_period, :type]
+      @belongs_to_associations = [:activity_period, :membership_type]
       @association_name_attributes = { :activity_period => :unique_title,
-                                       :type            => :unique_title }
+                                       :membership_type => :unique_title }
 
       @title =  t('memberships.edit.title',
                   :title => @membership.virtual_title)

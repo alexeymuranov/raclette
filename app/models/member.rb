@@ -66,7 +66,7 @@ class Member < ActiveRecord::Base
   # Delegations
 
   # delegate :unique_title, :duration_months,  # FIXME
-  #          :to     => :'current_membership.type',
+  #          :to     => :'current_membership.membership_type',
   #          :prefix => :current_membership
 
   # delegate :unique_title, :start_date, :duration_months, :end_date,  # FIXME

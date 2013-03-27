@@ -16,7 +16,7 @@ class MembershipType < ActiveRecord::Base
   # Associations:
   has_many :memberships, :foreign_key => :membership_type_id,
                          :dependent   => :destroy,
-                         :inverse_of  => :type
+                         :inverse_of  => :membership_type
 
   has_many :activity_periods, :through => :memberships
 

@@ -23,9 +23,9 @@ class Membership < ActiveRecord::Base
 
   belongs_to :activity_period, :inverse_of => :memberships
 
-  belongs_to :type, :foreign_key => :membership_type_id,
-                    :class_name  => :MembershipType,
-                    :inverse_of  => :memberships
+  belongs_to :membership_type, :foreign_key => :membership_type_id,
+                               :class_name  => :MembershipType,
+                               :inverse_of  => :memberships
 
   # accepts_nested_attributes_for :ticket_books, :reject_if     => :all_blank,
   #                                              :allow_destroy => true
@@ -91,7 +91,7 @@ class Membership < ActiveRecord::Base
   # Non-SQL virtual attributes
   #
   def virtual_title
-    "#{ type.unique_title }, #{ start_date } — #{ end_date }"
+    "#{ membership_type.unique_title }, #{ start_date } — #{ end_date }"
   end
 
   def virtual_price

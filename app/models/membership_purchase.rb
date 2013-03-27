@@ -40,7 +40,7 @@ class MembershipPurchase < ActiveRecord::Base
   private
 
     def copy_membership_type_and_expiration_date
-      self.membership_type ||= membership.type.unique_title
+      self.membership_type ||= membership.membership_type.unique_title
       self.membership_expiration_date ||= membership.end_date
     end
 
