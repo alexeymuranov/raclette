@@ -106,7 +106,13 @@ class InstructorsController < ManagerController
   end
 
   def create
-    params[:instructor].delete(:email) if params[:instructor][:email].blank?
+    params['instructor']['person_attributes'].tap { |h|
+      h.each_pair do |k, v| h[k] = nil if v.blank? end
+      h['nickname_or_other'] ||= ''
+    }
+    params['instructor'].tap { |h|
+      h.each_pair do |k, v| h[k] = nil if v.blank? end
+    }
 
     # Because instructors primary key works as foreign key for people
     # (this is not recommended in general),
@@ -115,29 +121,25 @@ class InstructorsController < ManagerController
     # (probably causes stack overflow).
     # The only workaround seems to be to save the person first,
     # assign the foreign key manually, and then save the instructor.
-    @person = Person.new
-    @instructor = Instructor.new
-    params[:instructor][:person_attributes].delete(:email) if
-      params[:instructor][:person_attributes][:email].blank?
-
-    @person.assign_attributes(params[:instructor][:person_attributes])
-    @instructor.assign_attributes(
-      params[:instructor].except(:person_attributes))
+    @person = Person.new(params[:instructor][:person_attributes])
+    @instructor = Instructor.new(params[:instructor].except(:person_attributes))
+    @instructor.person = @person
 
     unless @person.save
       flash.now[:error] = t('flash.instructors.create.failure')
-      @instructor.person = @person  # seems safe here
 
       render_new_properly and return
     end
 
-    @instructor.person_id = @person.id
-
-    # Create a default one-person lesson supervision:
-    @lesson_supervision = LessonSupervision.create(
-      :unique_names      => @instructor.virtual_professional_name,
-      :instructors_count => 1)
-    @instructor.lesson_supervisions << @lesson_supervision
+    if params[:automatic_lesson_supervision] == '1'
+      # Create a default one-person lesson supervision.
+      # NOTE: for some (or same) reason, @instructor.lesson_supervisions.build
+      # does not work here.
+      @instructor.lesson_supervisions <<
+        LessonSupervision.new(
+          :unique_names      => @instructor.virtual_professional_name,
+          :instructors_count => 1)
+    end
 
     if @instructor.save
       flash[:success] = t('flash.instructors.create.success',
@@ -152,8 +154,13 @@ class InstructorsController < ManagerController
   end
 
   def update
-    params[:instructor][:person_attributes].delete(:email) if
-      params[:instructor][:person_attributes][:email].blank?
+    params['instructor']['person_attributes'].tap { |h|
+      h.each_pair do |k, v| h[k] = nil if v.blank? end
+      h['nickname_or_other'] ||= ''
+    }
+    params['instructor'].tap { |h|
+      h.each_pair do |k, v| h[k] = nil if v.blank? end
+    }
 
     if @instructor.update_attributes(params[:instructor])
       flash[:notice] = t('flash.instructors.update.success',
@@ -169,7 +176,11 @@ class InstructorsController < ManagerController
   end
 
   def destroy
-    @instructor.destroy
+    if @instructor.person.associated_roles == [:instructor]
+      @instructor.person.destroy
+    else
+      @instructor.destroy
+    end
 
     flash[:notice] = t('flash.instructors.destroy.success',
                        :name => @instructor.virtual_full_name)

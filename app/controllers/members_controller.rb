@@ -162,7 +162,13 @@ class MembersController < SecretaryController
   end
 
   def create
-    params[:member].delete(:email) if params[:member][:email].blank?
+    params['member']['person_attributes'].tap { |h|
+      h.each_pair do |k, v| h[k] = nil if v.blank? end
+      h['nickname_or_other'] ||= ''
+    }
+    params['member'].tap { |h|
+      h.each_pair do |k, v| h[k] = nil if v.blank? end
+    }
 
     # Because members primary key works as foreign key for people
     # (this is not recommended in general),
@@ -171,22 +177,15 @@ class MembersController < SecretaryController
     # (probably causes stack overflow).
     # The only workaround seems to be to save the person first,
     # assign the foreign key manually, and then save the member.
-    @person = Person.new
-    @member = Member.new
-    params[:member][:person_attributes].delete(:email) if
-      params[:member][:person_attributes][:email].blank?
-
-    @person.assign_attributes(params[:member][:person_attributes])
-    @member.assign_attributes(params[:member].except(:person_attributes))
+    @person = Person.new(params[:member][:person_attributes])
+    @member = Member.new(params[:member].except(:person_attributes))
+    @member.person = @person
 
     unless @person.save
       flash.now[:error] = t('flash.members.create.failure')
-      @member.person = @person  # seems safe here
 
       render_new_properly and return
     end
-
-    @member.person_id = @person.id
 
     if @member.save
       flash[:success] = t('flash.members.create.success',
@@ -201,8 +200,13 @@ class MembersController < SecretaryController
   end
 
   def update
-    params[:member][:person_attributes].delete(:email) if
-      params[:member][:person_attributes][:email].blank?
+    params['member']['person_attributes'].tap { |h|
+      h.each_pair do |k, v| h[k] = nil if v.blank? end
+      h['nickname_or_other'] ||= ''
+    }
+    params['member'].tap { |h|
+      h.each_pair do |k, v| h[k] = nil if v.blank? end
+    }
 
     if @member.update_attributes(params[:member])
       flash[:notice] = t('flash.members.update.success',
@@ -218,7 +222,11 @@ class MembersController < SecretaryController
   end
 
   def destroy
-    @member.destroy
+    if @member.person.associated_roles == [:member]
+      @member.person.destroy
+    else
+      @member.destroy
+    end
 
     flash[:notice] = t('flash.members.destroy.success',
                        :name => @member.virtual_full_name)
