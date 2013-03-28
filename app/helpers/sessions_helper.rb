@@ -67,7 +67,6 @@ module SessionsHelper
     # end
 
     def user_from_session
-      # raise session.inspect
       Admin::User.find(session[:user_id]) if session[:user_id]
     end
 
