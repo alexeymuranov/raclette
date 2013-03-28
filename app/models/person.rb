@@ -7,6 +7,7 @@ require 'app_active_record_extensions/sorting'
 require 'app_active_record_extensions/pseudo_columns'
 
 class Person < ActiveRecord::Base
+  ASSOCIATED_ROLES = [:member, :instructor]
 
   include Filtering
   include Sorting
@@ -128,6 +129,11 @@ class Person < ActiveRecord::Base
   def compose_new_event_participation(event, entry_type = 'GuestEntry')
     event_entries.build(:event                  => event,
                         :participant_entry_type => entry_type)
+  end
+
+  # Other public instance methods:
+  def associated_roles
+    ASSOCIATED_ROLES.select { |ar| public_send(ar) }
   end
 end
 
