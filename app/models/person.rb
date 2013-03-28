@@ -80,13 +80,13 @@ class Person < ActiveRecord::Base
             :uniqueness => { :scope => [:last_name, :first_name] }
 
   # Pseudo columns
-  full_name_sql         =  "(#{ sql_for_columns[:name_title] } || ' ' || " \
+  full_name_sql         =  "(COALESCE(#{ sql_for_columns[:name_title] } || ' ', '') || " \
                            "#{ sql_for_columns[:first_name] } || ' ' || " \
                            "#{ sql_for_columns[:last_name] })"
 
   ordered_full_name_sql = "(UPPER(#{ sql_for_columns[:last_name] }) || ', ' || " \
-                          "#{ sql_for_columns[:first_name] } || ', ' || " \
-                          "#{ sql_for_columns[:name_title] })"
+                          "#{ sql_for_columns[:first_name] } || " \
+                          "COALESCE(', ' || #{ sql_for_columns[:name_title] }, ''))"
 
   formatted_email_sql   = "(#{ full_name_sql } || " \
                           "' <' || #{ sql_for_columns[:email] } || '>')"
