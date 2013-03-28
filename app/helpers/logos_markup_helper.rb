@@ -23,7 +23,7 @@ module LogosMarkupHelper
     elsif user.manager?
       'background-color:Blue'
     elsif user.secretary?
-      'Aqua'
+      'background-color:Aqua'
     else
       'background-color:Green'
     end
