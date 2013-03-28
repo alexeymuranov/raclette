@@ -7,6 +7,8 @@ require 'app_active_record_extensions/sorting'
 require 'app_active_record_extensions/pseudo_columns'
 
 class Admin::User < ActiveRecord::Base
+  ROLES = [:secretary, :manager, :admin]
+
   include Filtering
   include Sorting
   self.default_sorting_column = :username
@@ -76,6 +78,14 @@ class Admin::User < ActiveRecord::Base
   def has_password?(submitted_password)
     (password_or_password_hash == submitted_password) ||
         (password_or_password_hash == hash_with_salt(submitted_password))
+  end
+
+  def roles
+    ROLES.select { |r| public_send(r) }
+  end
+
+  def has_role?(submitted_role)
+    roles.find { |r| r.to_s == submitted_role.to_s }
   end
 
   def self.authenticate(username, submitted_password)
