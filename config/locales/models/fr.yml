@@ -231,6 +231,7 @@ fr:
         membership_expiration_date: "Date de fin d'adhésion"
         purchase_date: "Date d'achat"
       tickets_purchase:
+        ticket_book: "Carnet de tickets"
         tickets_number: "Nombre de tickets"
         purchase_date: "Date d'achat"
       event_entry:

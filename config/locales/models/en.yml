@@ -231,6 +231,7 @@ en:
         membership_expiration_date: "Expiration date"
         purchase_date: "Purchase date"
       tickets_purchase:
+        ticket_book: "Ticket book"
         tickets_number: "Tickets number"
         purchase_date: "Purchase date"
       event_entry:

@@ -15,7 +15,7 @@ fr:
 
   roles:
     user: "Utilisateur"
-    administrator: "Administrateur"
+    admin: "Administrateur"
     manager: "Gestionnaire"
     secretary: "Secrétaire"
 
@@ -290,9 +290,9 @@ fr:
       current_event: "Événement en cours"
       no_current_event: "Aucun événement n'est trouvé."
     new_ticket_purchase:
-      title: "Tickets"
+      title: "Achat de tickets"
     new_membership_purchase:
-      title: "Adhésion"
+      title: "Achat d'adhésion"
 
   secretary_tools:
     overview:
