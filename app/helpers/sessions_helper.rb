@@ -2,13 +2,14 @@
 
 module SessionsHelper
 
-  def log_in(user, client_ip)
+  def log_in(user, role, client_ip)
     user.last_signed_in_at = Time.now
     user.last_signed_in_from_ip = client_ip
     user.save
     # cookies.permanent.signed[:remember_token] = [user.id, user.salt]
     session[:client_ip] = client_ip
     self.current_user = user
+    self.current_user_role = role
   end
 
   def current_user=(user)
@@ -18,6 +19,14 @@ module SessionsHelper
 
   def current_user
     @current_user ||= user_from_session
+  end
+
+  def current_user_role=(role)
+    @current_user_role = session[:user_role] = role
+  end
+
+  def current_user_role
+    @current_user_role ||= user_role_from_session
   end
 
   def logged_in?
@@ -68,6 +77,10 @@ module SessionsHelper
 
     def user_from_session
       Admin::User.find(session[:user_id]) if session[:user_id]
+    end
+
+    def user_role_from_session
+      Admin::User::ROLES.find { |r| r.to_s == session[:user_role].to_s }
     end
 
     # def current_event_id_from_session

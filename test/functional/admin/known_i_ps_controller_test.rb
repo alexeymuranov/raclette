@@ -8,25 +8,22 @@ class Admin::KnownIPsControllerTest < ActionController::TestCase
     @new_known_ip = Admin::KnownIP.new(
         'ip'          => "64.64.64.64",
         'description' => "Another IP" )
-    # test_log_in(@user_admin, "127.0.0.1")
+    test_log_in(@user_admin, :admin, "127.0.0.1")
   end
 
   test "should get index" do
-    session[:user_id] = @user_admin.to_param
     get :index
     assert_response :success
     assert_not_nil assigns(:known_ips)
   end
 
   test "should get new" do
-    session[:user_id] = @user_admin.to_param
     get :new
     assert_response :success
   end
 
   test "should create admin_known_ip" do
     assert_difference('Admin::KnownIP.count') do
-      session[:user_id] = @user_admin.to_param
       post :create, { :known_ip => @new_known_ip.attributes }
     end
 
@@ -35,19 +32,16 @@ class Admin::KnownIPsControllerTest < ActionController::TestCase
   end
 
   test "should show admin_known_ip" do
-    session[:user_id] = @user_admin.to_param
     get :show, { :id => @known_ip.to_param }
     assert_response :success
   end
 
   test "should get edit" do
-    session[:user_id] = @user_admin.to_param
     get :edit, { :id => @known_ip.to_param }
     assert_response :success
   end
 
   test "should update admin_known_ip" do
-    session[:user_id] = @user_admin.to_param
     put :update, { :id => @known_ip.to_param,
                    :known_ip => @new_known_ip.attributes }
 
@@ -57,7 +51,6 @@ class Admin::KnownIPsControllerTest < ActionController::TestCase
 
   test "should destroy admin_known_ip" do
     assert_difference('Admin::KnownIP.count', -1) do
-      session[:user_id] = @user_admin.to_param
       delete :destroy, { :id => @known_ip.to_param }
     end
 

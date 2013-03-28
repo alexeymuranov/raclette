@@ -7,7 +7,7 @@ class SecretaryController < ApplicationController
   private
 
     def require_secretary_login
-      unless current_user.secretary?
+      unless current_user_role == :secretary
         flash[:error] = t('flash.filters.require_secretary')
         redirect_to root_url
       end

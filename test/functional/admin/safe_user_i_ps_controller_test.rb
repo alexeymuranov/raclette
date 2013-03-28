@@ -7,11 +7,10 @@ class Admin::SafeUserIPsControllerTest < ActionController::TestCase
     @another_user = admin_users(:user_secretary)
     @known_ip = admin_known_ips(:one)
     @safe_user_ip = admin_safe_user_ips(:one)
-    # test_log_in(@user_admin, "127.0.0.1")
+    test_log_in(@user_admin, :admin, "127.0.0.1")
   end
 
   test "should get index" do
-    session[:user_id] = @user_admin.to_param
     get :index
     assert_response :success
     assert_not_nil assigns(:users)
@@ -19,7 +18,6 @@ class Admin::SafeUserIPsControllerTest < ActionController::TestCase
   end
 
   test "should get edit_all" do
-    session[:user_id] = @user_admin.to_param
     get :edit_all
     assert_response :success
   end
@@ -39,7 +37,6 @@ class Admin::SafeUserIPsControllerTest < ActionController::TestCase
                         { @known_ip.to_param =>
                             new_safe_user_ids_for_known_ip } }
 
-      session[:user_id] = @user_admin.to_param
       assert_difference('@known_ip.safe_users.count', expected_difference) do
         put :update_all, params_hash
         @known_ip.reload

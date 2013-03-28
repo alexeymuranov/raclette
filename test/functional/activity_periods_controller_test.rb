@@ -5,7 +5,7 @@ class ActivityPeriodsControllerTest < ActionController::TestCase
   def setup
     @user_admin = admin_users(:one)
     @activity_period = activity_periods(:one)
-    # test_log_in(admin_users(:one), "127.0.0.1")
+    test_log_in(@user_admin, :manager, "127.0.0.1")
   end
 
   test "should get index" do

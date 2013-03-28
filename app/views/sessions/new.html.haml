@@ -13,6 +13,18 @@
                       t('formats.attribute_name:',
                         :attribute => Admin::User.human_attribute_name(:password))
         %dd= password_field_tag :password
+      .item.field
+        %dt
+          = label_tag :role,
+                      t('formats.attribute_name:',
+                        :attribute => t('.role'))
+        %dd
+          - collection = [].tap do |a|
+            - @roles.each do |r|
+              - a << [r, t(r, :scope => 'roles')]
+          = select_tag :role,
+                       options_from_collection_for_select(collection,
+                                                          :first, :last)
       .item
         %dt= t 'sessions.labels.your_ip_address'
         %dd= @client_ip

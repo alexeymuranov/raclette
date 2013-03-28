@@ -7,7 +7,7 @@ class AdminController < ApplicationController
   private
 
     def require_admin_login
-      unless current_user.admin?
+      unless current_user_role == :admin
         flash[:error] = t('flash.filters.require_admin')
         redirect_to root_url
       end

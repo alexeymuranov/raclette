@@ -1,7 +1,7 @@
 #main_logo
-  - if current_user
-    #logo_box{ :style => logo_box_inline_style_for_user(current_user) }
-      = link_to logo, path_logo_links_to(current_user)
+  - if logged_in?
+    #logo_box{ :style => logo_box_inline_style }
+      = link_to logo, path_logo_links_to
     #logo_menu
 
       = render 'layouts/main_menu'

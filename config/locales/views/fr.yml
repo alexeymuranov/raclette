@@ -101,6 +101,7 @@ fr:
         logged_in: "Vous êtes connecté(e) comme « %{username} »."
         invalid_login: "Nom d'utilisateur et/ou mot de passe est invalide."
         user_account_deactivated: "Votre compte d'utilisateur est désactivé, veuillez contacter un administrateur."
+        user_role_not_active: "Vous n'avez pas le rôle %{role}, essayez un des : %{available_roles}."
       destroy:
         logged_out: "Vous êtes déconnecté(e)."
     admin:
@@ -257,6 +258,7 @@ fr:
       log_in_invitation: "Connectez-vous"
       log_in_please: "Connectez-vous, s'il vous plaît"
       log_in_button: "Connecter"
+      role: "Rôle"
     labels:
       username: "Nom d'utilisateur :"
       password: "Mot de passe :"

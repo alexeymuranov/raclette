@@ -6,23 +6,20 @@ class RegisterControllerTest < ActionController::TestCase
     @user_admin = admin_users(:one)
     @member = members(:one)
     @event = events(:one)
-    # test_log_in(@user_admin, "127.0.0.1")
+    test_log_in(@user_admin, :secretary, "127.0.0.1")
   end
 
   test "should get choose_person" do
-    session[:user_id] = @user_admin.to_param
     get :choose_person
     assert_response :success
   end
 
   test "should get new_member_transaction" do
-    session[:user_id] = @user_admin.to_param
     get :new_member_transaction, { :member_id => @member.to_param }
     assert_response :success
   end
 
   test "should get new_member_transaction each tab" do
-    session[:user_id] = @user_admin.to_param
     [ 'new_entry', 'new_ticket_purchase', 'new_membership_purchase'
     ].each do |tab|
       get :new_member_transaction,
@@ -32,13 +29,11 @@ class RegisterControllerTest < ActionController::TestCase
   end
 
   test "should get new_guest_transaction" do
-    session[:user_id] = @user_admin.to_param
     get :new_guest_transaction
     assert_response :success
   end
 
   test "should get new_guest_transaction each tab" do
-    session[:user_id] = @user_admin.to_param
     [ 'new_entry', 'new_ticket_purchase', 'new_membership_purchase'
     ].each do |tab|
       get :new_guest_transaction,
@@ -48,7 +43,6 @@ class RegisterControllerTest < ActionController::TestCase
   end
 
   test "should create member_entry" do
-    session[:user_id] = @user_admin.to_param
     assert_difference('MemberEntry.count') do
       assert_difference('EventEntry.count') do
         post :create_member_entry,
@@ -62,7 +56,6 @@ class RegisterControllerTest < ActionController::TestCase
   end
 
   test "should create guest_event_entry" do
-    session[:user_id] = @user_admin.to_param
     assert_difference('GuestEntry.count') do
       assert_difference('EventEntry.count') do
         post :create_guest_entry,
@@ -75,7 +68,6 @@ class RegisterControllerTest < ActionController::TestCase
   end
 
   test "should create anonymous_event_entry" do
-    session[:user_id] = @user_admin.to_param
     assert_difference('EventEntry.count') do
       post :create_anonymous_entry,
            { :event_entry => { :event_id  => @event.to_param } }
@@ -85,7 +77,6 @@ class RegisterControllerTest < ActionController::TestCase
   end
 
   test "should create member_ticket_purchase" do
-    session[:user_id] = @user_admin.to_param
     selected_ticket_book = ticket_books(:one)
     assert_difference('@member.payed_tickets_count', selected_ticket_book.tickets_number) do
       assert_difference('TicketsPurchase.count') do
@@ -101,7 +92,6 @@ class RegisterControllerTest < ActionController::TestCase
   end
 
   test "should create member_membership_purchase" do
-    session[:user_id] = @user_admin.to_param
     selected_membership = memberships(:three)
     assert_difference('MembershipPurchase.count') do
       assert_difference('MemberMembership.count') do

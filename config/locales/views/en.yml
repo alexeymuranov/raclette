@@ -101,6 +101,7 @@ en:
         logged_in: "Your have signed in as '%{username}'."
         invalid_login: "Invalid username/password combination."
         user_account_deactivated: "Your user account is deactivated, please contact an administrator."
+        user_role_not_active: "You do not have the role %{role}, try one of: %{available_roles}."
       destroy:
         logged_out: "Your have signed out."
     admin:
@@ -257,6 +258,7 @@ en:
       log_in_invitation: "Sign in"
       log_in_please: "Sign in please"
       log_in_button: "Sign in"
+      role: "Role"
     labels:
       username: "Username:"
       password: "Password:"

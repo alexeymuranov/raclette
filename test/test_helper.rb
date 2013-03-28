@@ -17,8 +17,8 @@ class ActiveSupport::TestCase
 
   private
 
-    def test_log_in(user, client_ip)
-      @controller.log_in(user, client_ip)
+    def test_log_in(user, role, client_ip)
+      @controller.log_in(user, role, client_ip)
     end
 
 end
