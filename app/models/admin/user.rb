@@ -84,7 +84,7 @@ class Admin::User < ActiveRecord::Base
   end
 
   def formatted_email
-    "#{full_name} <#{email}>"
+    "#{ full_name } <#{ email }>"
   end
 
   # Private methods:
@@ -103,11 +103,11 @@ class Admin::User < ActiveRecord::Base
     end
 
     def hash_with_salt(string)
-      secure_hash("#{password_salt}--#{string}")
+      secure_hash("#{ password_salt }--#{ string }")
     end
 
     def make_salt
-      secure_hash("#{Time.now.utc}--#{password}")
+      secure_hash("#{ Time.now.utc }--#{ password }")
     end
 
     def secure_hash(string)

@@ -61,8 +61,8 @@ class SimpleFilter
     model = scoped_collection.klass
     table_name = model.table_name
     @filtering_values = filtering_values || @filtering_values
-    @filtering_attributes = filtering_attributes || @filtering_attributes\
-                                                 || @filtering_values.keys
+    @filtering_attributes = filtering_attributes  ||
+                            @filtering_attributes || @filtering_values.keys
 
     @filtering_attributes.each do |attr|
 
@@ -75,13 +75,13 @@ class SimpleFilter
         column_sql            = model.sql_for_column(attr)
       else
         filtering_column_type = model.columns_hash[column_name].type
-        column_sql            = "\"#{table_name}\".\"#{column_name}\""
+        column_sql            = "\"#{ table_name }\".\"#{ column_name }\""
       end
 
       unless filtering_column_type && column_sql
         if column = model.columns_hash[column_name]
           filtering_column_type ||= column.type
-          column_sql ||= "\"#{table_name}\".\"#{column_name}\""
+          column_sql ||= "\"#{ table_name }\".\"#{ column_name }\""
         else
           next
         end
@@ -89,28 +89,32 @@ class SimpleFilter
 
       case filtering_column_type
       when :string, :delegated_string, :virtual_string
-        scoped_collection = scoped_collection\
-            .where("UPPER(#{column_sql}) LIKE ?", filtering_value)
+        scoped_collection =
+          scoped_collection.where("UPPER(#{ column_sql }) LIKE ?", filtering_value)
       when :boolean, :delegated_boolean
-        scoped_collection = scoped_collection\
-            .where("#{column_sql} = ?", filtering_value)
+        scoped_collection =
+          scoped_collection.where("#{ column_sql } = ?", filtering_value)
       when :integer, :delegated_integer, :virtual_integer
         unless filtering_value[:min].nil?
-          scoped_collection = scoped_collection\
-              .where("#{column_sql} >= ?", filtering_value[:min])
+          scoped_collection =
+            scoped_collection.where("#{ column_sql } >= ?",
+                                    filtering_value[:min])
         end
         unless filtering_value[:max].nil?
-          scoped_collection = scoped_collection\
-              .where("#{column_sql} <= ?", filtering_value[:max])
+          scoped_collection =
+            scoped_collection.where("#{ column_sql } <= ?",
+                                    filtering_value[:max])
         end
       when :date, :delegated_date, :virtual_date
         unless filtering_value[:from].nil?
-          scoped_collection = scoped_collection\
-              .where("#{column_sql} >= ?", filtering_value[:from])
+          scoped_collection =
+            scoped_collection.where("#{ column_sql } >= ?",
+                                    filtering_value[:from])
         end
         unless filtering_value[:until].nil?
-          scoped_collection = scoped_collection\
-              .where("#{column_sql} <= ?", filtering_value[:until])
+          scoped_collection =
+            scoped_collection.where("#{ column_sql } <= ?",
+                                    filtering_value[:until])
         end
       end
     end
