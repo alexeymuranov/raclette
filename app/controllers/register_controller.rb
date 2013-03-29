@@ -267,6 +267,14 @@ class RegisterController < ApplicationController # FIXME
     def render_new_member_transaction_properly
       @events = Event.unlocked.past_seven_days
 
+      @attended_event_attributes = [:title, :event_type, :date, :start_time]
+      @attended_events = @member.attended_events
+
+      @owned_membership_attributes = [:title, :duration_months, :end_date]
+      @owned_memberships =
+        @member.memberships.with_type.with_activity_period.
+                with_pseudo_columns(*@owned_membership_attributes)
+
       @tabs = @events.empty? ? [] : ['new_entry']
 
       if @member.current_membership

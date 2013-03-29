@@ -7,4 +7,22 @@
 
   = render @tab
 
+%section
+  %h2= Member.human_attribute_name(:memberships)
+
+  - unless @owned_memberships.empty?
+    = render 'shared/tables/simple_index',
+             :collection    => @owned_memberships,
+             :attributes    => @owned_membership_attributes,
+             :html_table_id => :memberships
+
+%section
+  %h2= Person.human_attribute_name(:attended_events)
+
+  - unless @attended_events.empty?
+    = render 'shared/tables/simple_index',
+             :collection    => @attended_events,
+             :attributes    => @attended_event_attributes,
+             :html_table_id => :attended_events
+
 %footer
