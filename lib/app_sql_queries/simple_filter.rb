@@ -23,7 +23,7 @@ class SimpleFilter
       case filtering_column_type
       when :string
         unless value.blank?
-          @filtering_values[attr] = value.mb_chars.upcase.to_s.sub(/\%*\z/, '%')
+          @filtering_values[attr] = value.sub(/\%*\z/, '%')
         end
       when :boolean
         unless value.nil?
@@ -90,7 +90,7 @@ class SimpleFilter
       case filtering_column_type
       when :string, :delegated_string, :virtual_string
         scoped_collection =
-          scoped_collection.where("UPPER(#{ column_sql }) LIKE ?", filtering_value)
+          scoped_collection.where("#{ column_sql } LIKE ?", filtering_value)
       when :boolean, :delegated_boolean
         scoped_collection =
           scoped_collection.where("#{ column_sql } = ?", filtering_value)
