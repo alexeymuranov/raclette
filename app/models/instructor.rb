@@ -16,12 +16,12 @@ class Instructor < ActiveRecord::Base
   attr_readonly :id, :person_id
 
   # Associations
+  belongs_to :person, :inverse_of => :instructor
+
   has_many :lesson_instructors, :dependent  => :destroy,
                                 :inverse_of => :instructor
 
   has_many :lesson_supervisions, :through => :lesson_instructors
-
-  belongs_to :person, :inverse_of => :instructor
 
   # accepts_nested_attributes_for :person # This is taken care of in `AbstractPerson`
 

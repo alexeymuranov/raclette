@@ -6,15 +6,15 @@ class MembershipPurchase < ActiveRecord::Base
                 :membership_expiration_date, :purchase_date
 
   # Associations:
+  belongs_to :member, :inverse_of => :membership_purchases
+
+  belongs_to :membership, :inverse_of => :membership_purchases
+
   has_many :payments, :as        => :payable,
                       :dependent => :nullify
 
   has_many :accounted_guest_entries, :dependent  => :nullify,
                                      :inverse_of => :membership_purchase
-
-  belongs_to :member, :inverse_of => :membership_purchases
-
-  belongs_to :membership, :inverse_of => :membership_purchases
 
   accepts_nested_attributes_for :payments
 

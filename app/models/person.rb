@@ -18,9 +18,8 @@ class Person < ActiveRecord::Base
   attr_readonly :id, :last_name
 
   # Associations
-  has_many :users, :class_name => :'Admin::User',
-                   :dependent  => :nullify,
-                   :inverse_of => :person
+  belongs_to :primary_address, :class_name => :Address,
+                               :inverse_of => :people
 
   has_one :statement, :class_name => :PersonalStatement,
                       :dependent  => :destroy,
@@ -29,11 +28,15 @@ class Person < ActiveRecord::Base
   has_one :instructor, :dependent  => :destroy,
                        :inverse_of => :person
 
-  has_many :committee_memberships, :dependent  => :destroy,
-                                   :inverse_of => :person
-
   has_one :member, :dependent  => :destroy,
                    :inverse_of => :person
+
+  has_many :users, :class_name => :'Admin::User',
+                   :dependent  => :nullify,
+                   :inverse_of => :person
+
+  has_many :committee_memberships, :dependent  => :destroy,
+                                   :inverse_of => :person
 
   has_many :payments, :foreign_key => :payer_person_id,
                       :dependent   => :nullify,
@@ -47,9 +50,6 @@ class Person < ActiveRecord::Base
 
   has_many :event_cashiers, :dependent  => :nullify,
                             :inverse_of => :person
-
-  belongs_to :primary_address, :class_name => :Address,
-                               :inverse_of => :people
 
   accepts_nested_attributes_for :primary_address, :statement
 

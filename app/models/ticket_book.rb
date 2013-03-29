@@ -17,10 +17,10 @@ class TicketBook < ActiveRecord::Base
   attr_readonly :id, :membership_id, :tickets_number
 
   # Associations:
+  belongs_to :membership, :inverse_of => :ticket_books
+
   has_many :tickets_purchases, :dependent  => :nullify,
                                :inverse_of => :ticket_book
-
-  belongs_to :membership, :inverse_of => :ticket_books
 
   # Validations:
   validates :membership_id, :tickets_number, :price,

@@ -16,15 +16,15 @@ class WeeklyEvent < ActiveRecord::Base
   attr_readonly :id, :event_type, :lesson, :start_on
 
   # Associations:
+  belongs_to :lesson_supervision, :inverse_of => :weekly_events
+
+  belongs_to :address, :inverse_of => :weekly_events
+
   has_many :weekly_event_suspensions, :dependent  => :destroy,
                                       :inverse_of => :weekly_event
 
   has_many :events, :dependent  => :nullify,
                     :inverse_of => :weekly_event
-
-  belongs_to :lesson_supervision, :inverse_of => :weekly_events
-
-  belongs_to :address, :inverse_of => :weekly_events
 
   # Validations:
   validates_with WeeklyEventValidator

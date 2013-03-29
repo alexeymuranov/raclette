@@ -19,6 +19,8 @@ class Admin::User < ActiveRecord::Base
   attr_accessor :password, :new_password
 
   # Associations:
+  belongs_to :person, :inverse_of => :user
+
   has_many :safe_user_ips, :class_name => :SafeUserIP,
                            :dependent  => :destroy,
                            :inverse_of => :user
@@ -28,8 +30,6 @@ class Admin::User < ActiveRecord::Base
 
   has_many :application_journal_records, :dependent  => :nullify,
                                          :inverse_of => :user
-
-  belongs_to :person, :inverse_of => :user
 
   # Validations:
   validates :username, :full_name,

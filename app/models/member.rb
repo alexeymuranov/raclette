@@ -16,6 +16,12 @@ class Member < ActiveRecord::Base
   attr_readonly :id, :person_id, :been_member_by
 
   # Associations
+  belongs_to :person, :inverse_of => :member
+
+  belongs_to :tickets_borrower, :foreign_key => :shares_tickets_with_member_id,
+                                :class_name  => :Member,
+                                :inverse_of  => :tickets_lender
+
   has_one :tickets_lender, :foreign_key => :shares_tickets_with_member_id,
                            :class_name  => :Member,
                            :dependent   => :nullify,
@@ -25,15 +31,15 @@ class Member < ActiveRecord::Base
                           :dependent  => :destroy,
                           :inverse_of => :member
 
+  has_one :member_message, :dependent  => :destroy,
+                           :inverse_of => :member
+
   # has_many :statistic_counters, :class_name => :MemberStatisticCounter,
   #                               :dependent  => :destroy,
   #                               :inverse_of => :member
 
   # has_many :event_entry_reservations, :dependent  => :nullify,
   #                                     :inverse_of => :member
-
-  has_one :member_message, :dependent  => :destroy,
-                           :inverse_of => :member
 
   has_many :member_memberships, :dependent  => :destroy,
                                 :inverse_of => :member
@@ -49,14 +55,8 @@ class Member < ActiveRecord::Base
   has_many :member_entries, :dependent  => :destroy,
                             :inverse_of => :member
 
-  belongs_to :person, :inverse_of => :member
-
   has_many :event_entries,   :through => :person
   has_many :attended_events, :through => :person
-
-  belongs_to :tickets_borrower, :foreign_key => :shares_tickets_with_member_id,
-                                :class_name  => :Member,
-                                :inverse_of  => :tickets_lender
 
   has_many :guest_invitations, :class_name => :GuestEntry,
                                :inverse_of => :inviting_member

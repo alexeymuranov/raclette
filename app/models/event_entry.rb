@@ -5,15 +5,15 @@ class EventEntry < ActiveRecord::Base
   attr_readonly :id, :participant_entry_type
 
   # Associations:
-  has_one :payment, :as        => :payable,
-                    :dependent => :nullify
-
   belongs_to :person, :inverse_of => :event_entries
 
   belongs_to :event, :inverse_of => :event_entries
 
   belongs_to :participant_entry, :polymorphic => true,
                                  :dependent   => :destroy
+
+  has_one :payment, :as        => :payable,
+                    :dependent => :nullify
 
   accepts_nested_attributes_for :payment
 

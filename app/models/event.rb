@@ -17,6 +17,12 @@ class Event < ActiveRecord::Base
   attr_readonly :id, :event_type, :lesson, :weekly
 
   # Associations:
+  belongs_to :address, :inverse_of => :events
+
+  belongs_to :weekly_event, :inverse_of => :events
+
+  belongs_to :lesson_supervision, :inverse_of => :events
+
   has_many :event_entry_reservations, :dependent  => :nullify,
                                       :inverse_of => :event
 
@@ -32,12 +38,6 @@ class Event < ActiveRecord::Base
   has_many :cashiers, :class_name => :EventCashier,
                       :dependent  => :nullify,
                       :inverse_of => :event
-
-  belongs_to :address, :inverse_of => :events
-
-  belongs_to :weekly_event, :inverse_of => :events
-
-  belongs_to :lesson_supervision, :inverse_of => :events
 
   # Validations:
   validates_with EventValidator

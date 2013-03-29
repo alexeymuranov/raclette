@@ -10,6 +10,11 @@ class Membership < ActiveRecord::Base
   attr_readonly :id, :membership_type_id, :activity_period_id, :initial_price
 
   # Associations:
+  belongs_to :activity_period, :inverse_of => :memberships
+
+  belongs_to :membership_type, :foreign_key => :membership_type_id,
+                               :class_name  => :MembershipType,
+                               :inverse_of  => :memberships
 
   # XXX: the "correct" option for `member_memberships` association is
   # `:dependent => :destroy`.
@@ -27,12 +32,6 @@ class Membership < ActiveRecord::Base
 
   has_many :ticket_books, :dependent  => :destroy,
                           :inverse_of => :membership
-
-  belongs_to :activity_period, :inverse_of => :memberships
-
-  belongs_to :membership_type, :foreign_key => :membership_type_id,
-                               :class_name  => :MembershipType,
-                               :inverse_of  => :memberships
 
   # accepts_nested_attributes_for :ticket_books, :reject_if     => :all_blank,
   #                                              :allow_destroy => true

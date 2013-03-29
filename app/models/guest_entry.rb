@@ -5,6 +5,16 @@ class GuestEntry < ActiveRecord::Base
   attr_readonly :id, :first_name
 
   # Associations:
+  belongs_to :previous_entry, :class_name => :GuestEntry,
+                              :inverse_of => :following_entry
+
+  belongs_to :membership_purchase,
+             :foreign_key => :toward_membership_purchase_id,
+             :inverse_of  => :accounted_guest_entries
+
+  belongs_to :inviting_member, :class_name => :Member,
+                               :inverse_of => :guest_invitations
+
   has_one :event_entry, :as        => :participant_entry,
                         :dependent => :nullify
 
@@ -18,16 +28,6 @@ class GuestEntry < ActiveRecord::Base
            :class_name  => :EventEntryReservation,
            :dependent   => :nullify,
            :inverse_of  => :previous_guest_entry
-
-  belongs_to :previous_entry, :class_name => :GuestEntry,
-                              :inverse_of => :following_entry
-
-  belongs_to :membership_purchase,
-             :foreign_key => :toward_membership_purchase_id,
-             :inverse_of  => :accounted_guest_entries
-
-  belongs_to :inviting_member, :class_name => :Member,
-                               :inverse_of => :guest_invitations
 
   accepts_nested_attributes_for :event_entry
 

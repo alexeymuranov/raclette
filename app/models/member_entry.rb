@@ -5,10 +5,10 @@ class MemberEntry < ActiveRecord::Base
   attr_readonly :id, :member_id
 
   # Associations:
+  belongs_to :member, :inverse_of => :member_entries
+
   has_one :event_entry, :as        => :participant_entry,
                         :dependent => :nullify
-
-  belongs_to :member, :inverse_of => :member_entries
 
   accepts_nested_attributes_for :event_entry
 

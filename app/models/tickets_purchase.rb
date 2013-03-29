@@ -5,12 +5,12 @@ class TicketsPurchase < ActiveRecord::Base
   attr_readonly :id, :member_id, :tickets_number, :purchase_date
 
   # Associations:
-  has_many :payments, :as        => :payable,
-                      :dependent => :nullify
-
   belongs_to :member, :inverse_of => :tickets_purchases
 
   belongs_to :ticket_book, :inverse_of => :tickets_purchases
+
+  has_many :payments, :as        => :payable,
+                      :dependent => :nullify
 
   accepts_nested_attributes_for :payments
 
