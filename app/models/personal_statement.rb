@@ -6,7 +6,11 @@ class PersonalStatement < ActiveRecord::Base
   attr_readonly :id, :person_id
 
   # Associations:
-  belongs_to :person, :inverse_of => :statement
+  def self.init_associations
+    belongs_to :person, :inverse_of => :statement
+  end
+
+  init_associations
 
   # Validations:
   validates :person_id, :presence => true

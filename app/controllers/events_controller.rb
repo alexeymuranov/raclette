@@ -3,21 +3,18 @@
 class EventsController < SecretaryController
 
   class Event < Accessors::Event
+    init_associations
+
     self.all_sorting_columns = [ :title, :event_type,
                                  :date,
                                  :start_time,
                                  :supervisors ]
     self.default_sorting_column = :date
-
-    has_many :participants, :through    => :event_entries,
-                            :source     => :person,
-                            :class_name => :Person
-
-    belongs_to :weekly_event, :class_name => :WeeklyEvent,
-                              :inverse_of => :events
   end
 
   class WeeklyEvent < Accessors::WeeklyEvent
+    init_associations
+
     self.all_sorting_columns = [ :title,
                                  :event_type,
                                  :lesson,
@@ -32,30 +29,23 @@ class EventsController < SecretaryController
                                  :over,
                                  :description ]
     self.default_sorting_column = :end_on
-
-    has_many :events, :class_name => :Event,
-                      :dependent  => :nullify,
-                      :inverse_of => :weekly_event
   end
 
   class Person < Accessors::Person
+    init_associations
+
     self.all_sorting_columns = [:ordered_full_name, :email]
     self.default_sorting_column = :ordered_full_name
-
-    has_one :member, :dependent  => :destroy,
-                     :class_name => :Member,
-                     :inverse_of => :person
   end
 
   class Member < Accessors::Member
+    init_associations
+
     self.all_sorting_columns = [ :ordered_full_name,
                                  :email,
                                  :account_deactivated,
                                  :tickets_count ]
     self.default_sorting_column = :ordered_full_name
-
-    belongs_to :person, :class_name => :Person,
-                        :inverse_of => :member
   end
 
   before_filter :find_event, :only => [:show, :edit, :update, :destroy]

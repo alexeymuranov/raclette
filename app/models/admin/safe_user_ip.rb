@@ -6,17 +6,20 @@ class Admin::SafeUserIP < ActiveRecord::Base
   attr_readonly :id, :known_ip_id, :user_id
 
   # Associations:
-  belongs_to :user, :inverse_of => :safe_user_ips
+  def self.init_associations
+    belongs_to :user, :inverse_of => :safe_user_ips
 
-  belongs_to :known_ip, :class_name => :KnownIP,
-                        :inverse_of => :safe_user_ips
+    belongs_to :known_ip, :class_name => :KnownIP,
+                          :inverse_of => :safe_user_ips
+  end
+
+  init_associations
 
   # Validations:
   validates :known_ip_id, :user_id,
             :presence => true
 
   validates :known_ip_id, :uniqueness => { :scope => :user_id }
-
 end
 
 # == Schema Information

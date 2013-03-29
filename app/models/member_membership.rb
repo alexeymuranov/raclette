@@ -5,10 +5,14 @@ class MemberMembership < ActiveRecord::Base
   attr_readonly :id, :member_id, :membership_id, :obtained_on
 
   # Associations:
-  belongs_to :member, :inverse_of => :member_memberships
+  def self.init_associations
+    belongs_to :member, :inverse_of => :member_memberships
 
-  belongs_to :membership, :inverse_of    => :member_memberships,
-                          :counter_cache => :members_count
+    belongs_to :membership, :inverse_of    => :member_memberships,
+                            :counter_cache => :members_count
+  end
+
+  init_associations
 
   # Validations:
   validates :member_id, :membership_id, :obtained_on,

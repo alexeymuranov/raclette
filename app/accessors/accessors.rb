@@ -44,12 +44,9 @@ module Accessors
 
   # Active Record:
   class KnownIP < ::Admin::KnownIP
-    include ActiveModelUtilities
+    init_associations
 
-    # XXX: this is to pick up `User` from the current scope.
-    has_many :safe_users, :class_name => :User,
-                          :through    => :safe_user_ips,
-                          :source     => :user
+    include ActiveModelUtilities
 
     include ControllerAware
 
@@ -59,12 +56,9 @@ module Accessors
   end
 
   class User < ::Admin::User
-    include ActiveModelUtilities
+    init_associations
 
-    # XXX: this is to pick up `KnownIP` from the current scope.
-    has_many :safe_ips, :class_name => :KnownIP,
-                        :through    => :safe_user_ips,
-                        :source     => :known_ip
+    include ActiveModelUtilities
 
     include ControllerAware
 
@@ -74,6 +68,8 @@ module Accessors
   end
 
   class ActivityPeriod < ::ActivityPeriod
+    init_associations
+
     include ActiveModelUtilities
 
     include ControllerAware
@@ -84,16 +80,22 @@ module Accessors
   end
 
   class Address < ::Address
+    init_associations
+
     include ActiveModelUtilities
   end
 
   class ApplicationJournalRecord < ::ApplicationJournalRecord
+    init_associations
   end
 
   class CommitteeMembership < ::CommitteeMembership
+    init_associations
   end
 
   class Event < ::Event
+    init_associations
+
     include ActiveModelUtilities
 
     include ControllerAware
@@ -104,20 +106,21 @@ module Accessors
   end
 
   class EventCashier < ::EventCashier
+    init_associations
   end
 
   class EventEntry < ::EventEntry
+    init_associations
   end
 
   class GuestEntry < ::GuestEntry
+    init_associations
   end
 
   class Instructor < ::Instructor
-    include ActiveModelUtilities
+    init_associations
 
-    # XXX: this is to pick up `Person` from the current scope.
-    belongs_to :person, :class_name => :Person,
-                        :inverse_of => :instructor
+    include ActiveModelUtilities
 
     include ControllerAware
 
@@ -127,13 +130,13 @@ module Accessors
   end
 
   class LessonInstructor < ::LessonInstructor
+    init_associations
   end
 
   class LessonSupervision < ::LessonSupervision
-    include ActiveModelUtilities
+    init_associations
 
-    has_many :instructors, :class_name => :Instructor,
-                           :through    => :lesson_instructors
+    include ActiveModelUtilities
 
     include ControllerAware
 
@@ -143,11 +146,9 @@ module Accessors
   end
 
   class Member < ::Member
-    include ActiveModelUtilities
+    init_associations
 
-    # XXX: this is to pick up `Person` from the current scope.
-    belongs_to :person, :class_name => :Person,
-                        :inverse_of => :member
+    include ActiveModelUtilities
 
     include ControllerAware
 
@@ -157,18 +158,23 @@ module Accessors
   end
 
   class MemberEntry < ::MemberEntry
+    init_associations
   end
 
   class MemberMembership < ::MemberMembership
   end
 
   class MemberMessage < ::MemberMessage
+    init_associations
   end
 
   class MemberShortHistory < ::MemberShortHistory
+    init_associations
   end
 
   class Membership < ::Membership
+    init_associations
+
     include ActiveModelUtilities
 
     include ControllerAware
@@ -187,10 +193,14 @@ module Accessors
   end
 
   class MembershipPurchase < ::MembershipPurchase
+    init_associations
+
     include ActiveModelUtilities
   end
 
   class MembershipType < ::MembershipType
+    init_associations
+
     include ActiveModelUtilities
 
     include ControllerAware
@@ -201,9 +211,12 @@ module Accessors
   end
 
   class Payment < ::Payment
+    init_associations
   end
 
   class Person < ::Person
+    init_associations
+
     include ActiveModelUtilities
 
     include ControllerAware
@@ -214,10 +227,14 @@ module Accessors
   end
 
   class PersonalStatement < ::PersonalStatement
+    init_associations
+
     include ActiveModelUtilities
   end
 
   class RevenueAccount < ::RevenueAccount
+    init_associations
+
     include ActiveModelUtilities
   end
 
@@ -225,6 +242,8 @@ module Accessors
   end
 
   class TicketBook < ::TicketBook
+    init_associations
+
     include ActiveModelUtilities
 
     include ControllerAware
@@ -242,10 +261,14 @@ module Accessors
   end
 
   class TicketsPurchase < ::TicketsPurchase
+    init_associations
+
     include ActiveModelUtilities
   end
 
   class WeeklyEvent < ::WeeklyEvent
+    init_associations
+
     include ActiveModelUtilities
 
     include ControllerAware
@@ -256,6 +279,8 @@ module Accessors
   end
 
   class WeeklyEventSuspension < ::WeeklyEventSuspension
+    init_associations
+
     include ActiveModelUtilities
   end
 

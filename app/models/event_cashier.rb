@@ -5,9 +5,13 @@ class EventCashier < ActiveRecord::Base
   attr_readonly :id, :name, :started_at
 
   # Associations:
-  belongs_to :event, :inverse_of => :cashiers
+  def self.init_associations
+    belongs_to :event, :inverse_of => :cashiers
 
-  belongs_to :person, :inverse_of => :event_cashiers
+    belongs_to :person, :inverse_of => :event_cashiers
+  end
+
+  init_associations
 
   # Validations:
   validates :name, :started_at,

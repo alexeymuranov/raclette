@@ -14,14 +14,18 @@ class ActivityPeriod < ActiveRecord::Base
   attr_readonly :id, :start_date, :duration_months, :end_date
 
   # Associations:
-  has_many :memberships, :dependent  => :destroy,
-                         :inverse_of => :activity_period
+  def self.init_associations
+    has_many :memberships, :dependent  => :destroy,
+                           :inverse_of => :activity_period
 
-  has_many :membership_types, :through => :memberships,
-                              :source  => :membership_type
+    has_many :membership_types, :through => :memberships,
+                                :source  => :membership_type
 
-  has_many :revenue_accounts, :dependent  => :nullify,
-                              :inverse_of => :activity_period
+    has_many :revenue_accounts, :dependent  => :nullify,
+                                :inverse_of => :activity_period
+  end
+
+  init_associations
 
   # Validations:
   validates :unique_title, :start_date, :duration_months, :end_date,

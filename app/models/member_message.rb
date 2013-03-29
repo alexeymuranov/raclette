@@ -5,7 +5,11 @@ class MemberMessage < ActiveRecord::Base
   attr_readonly :id, :member_id
 
   # Associations:
-  belongs_to :member, :inverse_of => :member_message
+  def self.init_associations
+    belongs_to :member, :inverse_of => :member_message
+  end
+
+  init_associations
 
   # Validations:
   validates :member_id, :content, :created_on,

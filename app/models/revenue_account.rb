@@ -8,10 +8,14 @@ class RevenueAccount < ActiveRecord::Base
   attr_readonly :id, :opened_on
 
   # Associations:
-  belongs_to :activity_period, :inverse_of => :revenue_accounts
+  def self.init_associations
+    belongs_to :activity_period, :inverse_of => :revenue_accounts
 
-  has_many :payments, :dependent  => :nullify,
-                      :inverse_of => :revenue_account
+    has_many :payments, :dependent  => :nullify,
+                        :inverse_of => :revenue_account
+  end
+
+  init_associations
 
   # Validations:
   validates :unique_title, :opened_on, :amount, :amount_updated_on,

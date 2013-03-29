@@ -15,13 +15,17 @@ class Admin::KnownIP < ActiveRecord::Base
   attr_readonly :id, :ip
 
   # Associations:
-  has_many :safe_user_ips, :foreign_key => :known_ip_id,
-                           :class_name  => :SafeUserIP,
-                           :dependent   => :destroy,
-                           :inverse_of  => :known_ip
+  def self.init_associations
+    has_many :safe_user_ips, :foreign_key => :known_ip_id,
+                             :class_name  => :SafeUserIP,
+                             :dependent   => :destroy,
+                             :inverse_of  => :known_ip
 
-  has_many :safe_users, :through => :safe_user_ips,
-                        :source  => :user
+    has_many :safe_users, :through => :safe_user_ips,
+                          :source  => :user
+  end
+
+  init_associations
 
   # Validations:
   validates :ip, :presence   => true,
@@ -30,7 +34,6 @@ class Admin::KnownIP < ActiveRecord::Base
 
   # Scopes:
   scope :default_order, order("#{ table_name }.ip ASC")
-
 end
 
 # == Schema Information

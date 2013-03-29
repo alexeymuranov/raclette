@@ -3,6 +3,8 @@
 class ActivityPeriodsController < ManagerController
 
   class ActivityPeriod < Accessors::ActivityPeriod
+    init_associations
+
     self.all_sorting_columns = [ :unique_title,
                                  :start_date,
                                  :duration_months,

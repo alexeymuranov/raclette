@@ -10,31 +10,35 @@ class Membership < ActiveRecord::Base
   attr_readonly :id, :membership_type_id, :activity_period_id, :initial_price
 
   # Associations:
-  belongs_to :activity_period, :inverse_of => :memberships
+  def self.init_associations
+    belongs_to :activity_period, :inverse_of => :memberships
 
-  belongs_to :membership_type, :foreign_key => :membership_type_id,
-                               :class_name  => :MembershipType,
-                               :inverse_of  => :memberships
+    belongs_to :membership_type, :foreign_key => :membership_type_id,
+                                 :class_name  => :MembershipType,
+                                 :inverse_of  => :memberships
 
-  # XXX: the "correct" option for `member_memberships` association is
-  # `:dependent => :destroy`.
-  # However, it has to be used with care to avoid accidental loss of
-  # membership history for many members.
-  # As a dirty "workaround", this option can be temporarily changed to
-  # `:dependent  => :nullify`.
-  has_many :member_memberships, :dependent  => :destroy,
-                                :inverse_of => :membership
-
-  has_many :members, :through => :member_memberships
-
-  has_many :membership_purchases, :dependent  => :nullify,
+    # XXX: the "correct" option for `member_memberships` association is
+    # `:dependent => :destroy`.
+    # However, it has to be used with care to avoid accidental loss of
+    # membership history for many members.
+    # As a dirty "workaround", this option can be temporarily changed to
+    # `:dependent  => :nullify`.
+    has_many :member_memberships, :dependent  => :destroy,
                                   :inverse_of => :membership
 
-  has_many :ticket_books, :dependent  => :destroy,
-                          :inverse_of => :membership
+    has_many :members, :through => :member_memberships
 
-  # accepts_nested_attributes_for :ticket_books, :reject_if     => :all_blank,
-  #                                              :allow_destroy => true
+    has_many :membership_purchases, :dependent  => :nullify,
+                                    :inverse_of => :membership
+
+    has_many :ticket_books, :dependent  => :destroy,
+                            :inverse_of => :membership
+
+    # accepts_nested_attributes_for :ticket_books, :reject_if     => :all_blank,
+    #                                              :allow_destroy => true
+  end
+
+  init_associations
 
   # Validations:
   validates :membership_type_id, :activity_period_id, :initial_price,

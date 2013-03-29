@@ -17,27 +17,31 @@ class Event < ActiveRecord::Base
   attr_readonly :id, :event_type, :lesson, :weekly
 
   # Associations:
-  belongs_to :address, :inverse_of => :events
+  def self.init_associations
+    belongs_to :address, :inverse_of => :events
 
-  belongs_to :weekly_event, :inverse_of => :events
+    belongs_to :weekly_event, :inverse_of => :events
 
-  belongs_to :lesson_supervision, :inverse_of => :events
+    belongs_to :lesson_supervision, :inverse_of => :events
 
-  has_many :event_entry_reservations, :dependent  => :nullify,
-                                      :inverse_of => :event
+    has_many :event_entry_reservations, :dependent  => :nullify,
+                                        :inverse_of => :event
 
-  has_many :event_entries, :dependent  => :destroy,
-                           :inverse_of => :event
+    has_many :event_entries, :dependent  => :destroy,
+                             :inverse_of => :event
 
-  has_many :participants, :through => :event_entries,
-                          :source  => :person
+    has_many :participants, :through => :event_entries,
+                            :source  => :person
 
-  has_many :participant_members, :through => :participants,
-                                 :source  => :member
+    has_many :participant_members, :through => :participants,
+                                   :source  => :member
 
-  has_many :cashiers, :class_name => :EventCashier,
-                      :dependent  => :nullify,
-                      :inverse_of => :event
+    has_many :cashiers, :class_name => :EventCashier,
+                        :dependent  => :nullify,
+                        :inverse_of => :event
+  end
+
+  init_associations
 
   # Validations:
   validates_with EventValidator

@@ -5,9 +5,13 @@ class LessonInstructor < ActiveRecord::Base
   attr_readonly :id, :lesson_supervision_id, :instructor_id
 
   # Associations:
-  belongs_to :instructor, :inverse_of => :lesson_instructors
+  def self.init_associations
+    belongs_to :instructor, :inverse_of => :lesson_instructors
 
-  belongs_to :lesson_supervision, :inverse_of => :lesson_instructors
+    belongs_to :lesson_supervision, :inverse_of => :lesson_instructors
+  end
+
+  init_associations
 
   # Validations:
   validates :lesson_supervision_id, :instructor_id,

@@ -14,11 +14,15 @@ class MembershipType < ActiveRecord::Base
   attr_readonly :id, :active, :reduced, :unlimited, :duration_months
 
   # Associations:
-  has_many :memberships, :foreign_key => :membership_type_id,
-                         :dependent   => :destroy,
-                         :inverse_of  => :membership_type
+  def self.init_associations
+    has_many :memberships, :foreign_key => :membership_type_id,
+                           :dependent   => :destroy,
+                           :inverse_of  => :membership_type
 
-  has_many :activity_periods, :through => :memberships
+    has_many :activity_periods, :through => :memberships
+  end
+
+  init_associations
 
   # Validations:
   validates :unique_title, :duration_months,

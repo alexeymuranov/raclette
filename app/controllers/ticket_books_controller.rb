@@ -3,7 +3,6 @@
 class TicketBooksController < ManagerController
 
   TicketBook = MembershipsController::TicketBook
-
   Membership = MembershipsController::Membership
 
   before_filter :find_membership, :except => :index

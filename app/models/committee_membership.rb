@@ -5,7 +5,11 @@ class CommitteeMembership < ActiveRecord::Base
   attr_readonly :id, :person_id, :function, :start_date
 
   # Associations:
-  belongs_to :person, :inverse_of => :committee_membership
+  def self.init_associations
+    belongs_to :person, :inverse_of => :committee_membership
+  end
+
+  init_associations
 
   # Validations:
   validates :person_id, :function, :start_date,

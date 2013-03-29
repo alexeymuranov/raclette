@@ -5,13 +5,12 @@
 
 class MembersController < SecretaryController
 
-  class Member < Accessors::Member
-    has_many :attended_events, :through    => :event_entries,
-                               :source     => :event,
-                               :class_name => :Event
+  class Person < Accessors::Person
+    init_associations
+  end
 
-    has_many :memberships, :through    => :member_memberships,
-                           :class_name => :Membership
+  class Member < Accessors::Member
+    init_associations
 
     self.all_sorting_columns = [ :ordered_full_name,
                                  :email,
@@ -21,9 +20,12 @@ class MembersController < SecretaryController
   end
 
   class Membership < Accessors::Membership
+    init_associations
   end
 
   class Event < Accessors::Event
+    init_associations
+
     self.all_sorting_columns = [ :title, :event_type,
                                  :date,
                                  :start_time ]
@@ -31,6 +33,8 @@ class MembersController < SecretaryController
   end
 
   class MembershipType < Accessors::MembershipType
+    init_associations
+
     self.all_sorting_columns = [ :username,
                                  :full_name,
                                  :account_deactivated,
@@ -42,6 +46,8 @@ class MembersController < SecretaryController
   end
 
   class ActivityPeriod < Accessors::ActivityPeriod
+    init_associations
+
     self.all_sorting_columns = [:ip, :description]
     self.default_sorting_column = :ip
   end

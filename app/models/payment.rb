@@ -5,15 +5,19 @@ class Payment < ActiveRecord::Base
   attr_readonly :id, :payable_type, :date, :amount, :method
 
   # Associations:
-  belongs_to :purchase, :foreign_key  => :payable_id,
-                        :polymorphic  => true,
-                        :foreign_type => :payable_type
+  def self.init_associations
+    belongs_to :purchase, :foreign_key  => :payable_id,
+                          :polymorphic  => true,
+                          :foreign_type => :payable_type
 
-  belongs_to :revenue_account, :inverse_of => :payments
+    belongs_to :revenue_account, :inverse_of => :payments
 
-  belongs_to :payer, :foreign_key => :payer_person_id,
-                     :class_name  => :Person,
-                     :inverse_of  => :payments
+    belongs_to :payer, :foreign_key => :payer_person_id,
+                       :class_name  => :Person,
+                       :inverse_of  => :payments
+  end
+
+  init_associations
 
   # Validations:
   validates :payable_type, :date, :amount,

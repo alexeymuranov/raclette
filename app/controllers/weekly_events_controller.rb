@@ -3,6 +3,8 @@
 class WeeklyEventsController < ManagerController
 
   class WeeklyEvent < Accessors::WeeklyEvent
+    init_associations
+
     self.all_sorting_columns = [ :title,
                                  :event_type,
                                  :lesson,
@@ -17,21 +19,16 @@ class WeeklyEventsController < ManagerController
                                  :over,
                                  :description ]
     self.default_sorting_column = :end_on
-
-    has_many :events, :class_name => :Event,
-                      :dependent  => :nullify,
-                      :inverse_of => :weekly_event
   end
 
   class Event < Accessors::Event
+    init_associations
+
     self.all_sorting_columns = [ :title, :event_type,
                                  :date,
                                  :start_time,
                                  :supervisors ]
     self.default_sorting_column = :date
-
-    belongs_to :weekly_event, :class_name => :WeeklyEvent,
-                              :inverse_of => :events
   end
 
   before_filter :find_weekly_event, :only => [:show, :edit, :update, :destroy]

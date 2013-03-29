@@ -5,7 +5,11 @@ class WeeklyEventSuspension < ActiveRecord::Base
   attr_readonly :id, :weekly_event_id, :suspend_from
 
   # Associations:
-  belongs_to :weekly_event, :inverse_of => :weekly_event_suspensions
+  def self.init_associations
+    belongs_to :weekly_event, :inverse_of => :weekly_event_suspensions
+  end
+
+  init_associations
 
   # Validations:
   validates :weekly_event_id, :suspend_from, :suspend_until,

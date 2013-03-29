@@ -6,7 +6,11 @@ class MemberShortHistory < ActiveRecord::Base
   attr_readonly :id, :member_id
 
   # Associations:
-  belongs_to :member, :inverse_of => :short_history
+  def self.init_associations
+    belongs_to :member, :inverse_of => :short_history
+  end
+
+  init_associations
 
   # Validations:
   validates :member_id, :prev_membership_expiration_date,

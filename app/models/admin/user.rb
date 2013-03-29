@@ -21,17 +21,21 @@ class Admin::User < ActiveRecord::Base
   attr_accessor :password, :new_password
 
   # Associations:
-  belongs_to :person, :inverse_of => :user
+  def self.init_associations
+    belongs_to :person, :inverse_of => :user
 
-  has_many :safe_user_ips, :class_name => :SafeUserIP,
-                           :dependent  => :destroy,
-                           :inverse_of => :user
+    has_many :safe_user_ips, :class_name => :SafeUserIP,
+                             :dependent  => :destroy,
+                             :inverse_of => :user
 
-  has_many :safe_ips, :through => :safe_user_ips,
-                      :source  => :known_ip
+    has_many :safe_ips, :through => :safe_user_ips,
+                        :source  => :known_ip
 
-  has_many :application_journal_records, :dependent  => :nullify,
-                                         :inverse_of => :user
+    has_many :application_journal_records, :dependent  => :nullify,
+                                           :inverse_of => :user
+  end
+
+  init_associations
 
   # Validations:
   validates :username, :full_name,

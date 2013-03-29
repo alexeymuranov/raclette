@@ -5,13 +5,17 @@ class EventEntryReservation < ActiveRecord::Base
   attr_readonly :id, :event_id
 
   # Associations:
-  belongs_to :event, :inverse_of => :event_entry_reservations
+  def self.init_associations
+    belongs_to :event, :inverse_of => :event_entry_reservations
 
-  belongs_to :member, :inverse_of => :event_entry_reservations
+    belongs_to :member, :inverse_of => :event_entry_reservations
 
-  belongs_to :previous_guest_entry,
-             :class_name => :GuestEntry,
-             :inverse_of => :following_event_entry_reservations
+    belongs_to :previous_guest_entry,
+               :class_name => :GuestEntry,
+               :inverse_of => :following_event_entry_reservations
+  end
+
+  init_associations
 
   # Validations:
   validates :event_id, :people_number, :names, :amount_payed,

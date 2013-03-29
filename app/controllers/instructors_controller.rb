@@ -2,7 +2,13 @@
 
 class InstructorsController < ManagerController
 
+  class Person < Accessors::Person
+    init_associations
+  end
+
   class Instructor < Accessors::Instructor
+    init_associations
+
     self.all_sorting_columns = [ :ordered_full_name,
                                  :email,
                                  :employed_from ]

@@ -3,6 +3,8 @@
 class MembershipTypesController < ManagerController
 
   class MembershipType < Accessors::MembershipType
+    init_associations
+
     self.all_sorting_columns = [ :unique_title,
                                  :active,
                                  :reduced,

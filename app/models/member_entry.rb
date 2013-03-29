@@ -5,12 +5,16 @@ class MemberEntry < ActiveRecord::Base
   attr_readonly :id, :member_id
 
   # Associations:
-  belongs_to :member, :inverse_of => :member_entries
+  def self.init_associations
+    belongs_to :member, :inverse_of => :member_entries
 
-  has_one :event_entry, :as        => :participant_entry,
-                        :dependent => :nullify
+    has_one :event_entry, :as        => :participant_entry,
+                          :dependent => :nullify
 
-  accepts_nested_attributes_for :event_entry
+    accepts_nested_attributes_for :event_entry
+  end
+
+  init_associations
 
   # Validations:
   validates :member_id, :guests_invited, :tickets_used,

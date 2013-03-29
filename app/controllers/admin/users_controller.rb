@@ -3,9 +3,7 @@
 class Admin::UsersController < AdminController
 
   class User < Accessors::User
-    has_many :safe_ips, :class_name => :KnownIP,
-                        :through    => :safe_user_ips,
-                        :source     => :known_ip
+    init_associations
 
     self.all_sorting_columns = [ :username,
                                  :full_name,
@@ -18,9 +16,7 @@ class Admin::UsersController < AdminController
   end
 
   class KnownIP < Accessors::KnownIP
-    has_many :safe_users, :class_name => :User,
-                          :through    => :safe_user_ips,
-                          :source     => :user
+    init_associations
 
     self.all_sorting_columns = [:ip, :description]
     self.default_sorting_column = :ip

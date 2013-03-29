@@ -3,65 +3,35 @@
 class RegisterController < ApplicationController # FIXME
 
   class Member < Accessors::Member
+    init_associations
+
     self.all_sorting_columns = [ :ordered_full_name,
                                  :email,
                                  :tickets_count ]
     self.default_sorting_column = :ordered_full_name
-
-    has_many :memberships, :through    => :member_memberships,
-                           :class_name => :Membership
-
-    has_many :membership_purchases, :dependent  => :destroy,
-                                    :class_name => :MembershipPurchase,
-                                    :inverse_of => :member
-
-    has_many :tickets_purchases, :dependent  => :destroy,
-                                 :class_name => :TicketsPurchase,
-                                 :inverse_of => :member
   end
 
   class Membership < Accessors::Membership
-    has_many :members, :through    => :member_memberships,
-                       :class_name => :Member
-
-    has_many :membership_purchases, :dependent  => :nullify,
-                                    :class_name => :MembershipPurchase,
-                                    :inverse_of => :membership
-
-    has_many :ticket_books, :dependent  => :destroy,
-                            :class_name => :TicketBook,
-                            :inverse_of => :membership
+    init_associations
   end
 
   class TicketBook < Accessors::TicketBook
-    has_many :tickets_purchases, :dependent  => :nullify,
-                                 :class_name => :TicketsPurchase,
-                                 :inverse_of => :ticket_book
-
-    belongs_to :membership, :class_name => :Membership,
-                            :inverse_of => :ticket_books
-  end
-
-  class Guest < Accessors::Guest
+    init_associations
   end
 
   class Event < Accessors::Event
+    init_associations
   end
 
   class MembershipPurchase < Accessors::MembershipPurchase
-    belongs_to :member, :class_name => :Member,
-                        :inverse_of => :membership_purchases
-
-    belongs_to :membership, :class_name => :Membership,
-                            :inverse_of => :membership_purchases
+    init_associations
   end
 
   class TicketsPurchase < Accessors::TicketsPurchase
-    belongs_to :member, :class_name => :Member,
-                        :inverse_of => :tickets_purchases
+    init_associations
+  end
 
-    belongs_to :ticket_book, :class_name => :TicketBook,
-                             :inverse_of => :tickets_purchases
+  class Guest < Accessors::Guest
   end
 
   def choose_person

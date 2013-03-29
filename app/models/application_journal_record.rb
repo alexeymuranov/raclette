@@ -7,9 +7,13 @@ class ApplicationJournalRecord < ActiveRecord::Base
                 :something_type, :something_id, :details, :generated_at
 
   # Associations:
-  belongs_to :user, :inverse_of => :application_journal_records
+  def self.init_associations
+    belongs_to :user, :inverse_of => :application_journal_records
 
-  belongs_to :something, :polymorphic => true
+    belongs_to :something, :polymorphic => true
+  end
+
+  init_associations
 
   # Validations:
   validates :action, :username, :ip, :something_type, :generated_at,

@@ -5,7 +5,11 @@ class SecretaryNote < ActiveRecord::Base
   attr_readonly :id, :note_type, :something_type, :something_id, :created_on
 
   # Associations:
-  belongs_to :something, :polymorphic => true
+  def self.init_associations
+    belongs_to :something, :polymorphic => true
+  end
+
+  init_associations
 
   # Validations:
   validates :note_type, :something_type, :something_id, :created_on,

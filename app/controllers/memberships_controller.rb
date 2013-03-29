@@ -3,15 +3,7 @@
 class MembershipsController < ManagerController
 
   class Membership < Accessors::Membership
-    belongs_to :activity_period, :class_name => :ActivityPeriod,
-                                 :inverse_of => :memberships
-    belongs_to :membership_type, :foreign_key => :membership_type_id,
-                                 :class_name  => :MembershipType,
-                                 :inverse_of  => :memberships
-
-    has_many :ticket_books, :dependent  => :destroy,
-                            :class_name => :TicketBook,
-                            :inverse_of => :membership
+    init_associations
 
     # This is used to generate a link in 'shared/tables/grid_index' partial
     def self.build_by_activity_period_id_and_membership_type_id(a_p_id, m_t_id)
@@ -20,6 +12,8 @@ class MembershipsController < ManagerController
   end
 
   class MembershipType < Accessors::MembershipType
+    init_associations
+
     self.all_sorting_columns = [ :unique_title,
                                  :duration_months,
                                  :active,
@@ -29,16 +23,17 @@ class MembershipsController < ManagerController
   end
 
   class ActivityPeriod < Accessors::ActivityPeriod
+    init_associations
+
     self.all_sorting_columns = [:ip, :description]
     self.default_sorting_column = :ip
   end
 
   class TicketBook < Accessors::TicketBook
+    init_associations
+
     self.all_sorting_columns = [:tickets_number, :price]
     self.default_sorting_column = :tickets_number
-
-    belongs_to :membership, :class_name => :Membership,
-                            :inverse_of => :ticket_books
   end
 
   before_filter :find_membership, :only => [:show, :edit, :update, :destroy]

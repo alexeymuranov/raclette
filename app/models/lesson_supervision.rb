@@ -16,16 +16,20 @@ class LessonSupervision < ActiveRecord::Base
   attr_readonly :id, :unique_names
 
   # Associations:
-  has_many :lesson_instructors, :dependent  => :destroy,
-                                :inverse_of => :lesson_supervision
+  def self.init_associations
+    has_many :lesson_instructors, :dependent  => :destroy,
+                                  :inverse_of => :lesson_supervision
 
-  has_many :instructors, :through => :lesson_instructors
+    has_many :instructors, :through => :lesson_instructors
 
-  has_many :weekly_events, :dependent  => :nullify,
-                           :inverse_of => :lesson_supervision
+    has_many :weekly_events, :dependent  => :nullify,
+                             :inverse_of => :lesson_supervision
 
-  has_many :events, :dependent  => :nullify,
-                    :inverse_of => :lesson_supervision
+    has_many :events, :dependent  => :nullify,
+                      :inverse_of => :lesson_supervision
+  end
+
+  init_associations
 
   # Validations:
   validates :unique_names, :instructors_count,
