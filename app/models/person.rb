@@ -2,14 +2,12 @@
 
 require 'app_validations/email_format'
 
-require 'app_active_record_extensions/filtering'
 require 'app_active_record_extensions/sorting'
 require 'app_active_record_extensions/pseudo_columns'
 
 class Person < ActiveRecord::Base
   ASSOCIATED_ROLES = [:member, :instructor]
 
-  include Filtering
   include Sorting
   self.default_sorting_column = :ordered_full_name
 

@@ -2,6 +2,7 @@
 
 require 'set'  # to be able to use Set
 require 'app_renderers'
+require 'app_activerecord_utilities/friendly_relation_filter'
 
 class ApplicationController < ActionController::Base
   protect_from_forgery
@@ -30,5 +31,20 @@ class ApplicationController < ActionController::Base
       collection.page(page).per(per_page)
     end
 
+    def do_filtering(collection_scope, values     = params[:filter],
+                                       attributes = @attributes)
+      if values
+        @filter = FriendlyRelationFilter.new(collection_scope.klass)
+        @filter.filtering_attributes = attributes
+        @filter.set_filtering_values_from_text_hash(values)
+        @filtering_values =
+          @filter.filtering_attributes_as_simple_nested_hash
+        collection_scope.merge(@filter.to_scope)
+      else
+        @filter = nil
+        @filtering_values = nil
+        collection_scope
+      end
+    end
 
 end

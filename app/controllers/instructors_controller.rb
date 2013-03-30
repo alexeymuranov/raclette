@@ -35,8 +35,7 @@ class InstructorsController < ManagerController
       with_pseudo_columns(*@attributes, :formatted_email)
 
     # Filter:
-    @instructors = Instructor.filter(@instructors, params[:filter], @attributes)
-    @filtering_values = Instructor.last_filter_values
+    @instructors = do_filtering(@instructors)
     @filtered_instructors_count = @instructors.count
 
     # Sort:

@@ -36,10 +36,8 @@ class ActivityPeriodsController < ManagerController
     @activity_periods = ActivityPeriod.scoped
 
     # Filter:
-    @activity_periods = ActivityPeriod.filter(@activity_periods,
-                                              params[:filter],
-                                              @attributes)
-    @filtering_values = ActivityPeriod.last_filter_values
+    @activity_periods = do_filtering(@activity_periods)
+    @filtered_activity_periods_count = @activity_periods.count
 
     # Sort:
     ActivityPeriod.all_sorting_columns = @attributes

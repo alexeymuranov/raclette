@@ -34,10 +34,7 @@ class LessonSupervisionsController < SecretaryController
     @lesson_supervisions = LessonSupervision.scoped
 
     # Filter:
-    @lesson_supervisions = LessonSupervision.filter(@lesson_supervisions,
-                                                    params[:filter],
-                                                    @attributes)
-    @filtering_values = LessonSupervision.last_filter_values
+    @lesson_supervisions = do_filtering(@lesson_supervisions)
     @filtered_lesson_supervisions_count = @lesson_supervisions.count
 
     # Sort:

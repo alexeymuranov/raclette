@@ -22,10 +22,7 @@ class TicketBooksController < ManagerController
     @ticket_books = TicketBook.scoped
 
     # Filter:
-    @ticket_books = TicketBook.filter(@ticket_books,
-                                      params[:filter],
-                                      @attributes)
-    @filtering_values = TicketBook.last_filter_values
+    @ticket_books = do_filtering(@ticket_books)
     @filtered_ticket_books_count = @ticket_books.count
 
     # Sort:

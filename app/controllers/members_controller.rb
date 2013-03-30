@@ -45,8 +45,7 @@ class MembersController < SecretaryController
       with_pseudo_columns(*@attributes, :formatted_email)
 
     # Filter:
-    @members = Member.filter(@members, params[:filter], @attributes)
-    @filtering_values = Member.last_filter_values
+    @members = do_filtering(@members)
     @filtered_members_count = @members.count
 
     # Sort:

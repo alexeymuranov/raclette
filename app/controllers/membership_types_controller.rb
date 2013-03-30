@@ -37,10 +37,7 @@ class MembershipTypesController < ManagerController
     @membership_types = MembershipType.scoped
 
     # Filter:
-    @membership_types = MembershipType.filter(@membership_types,
-                                              params[:filter],
-                                              @attributes)
-    @filtering_values = MembershipType.last_filter_values
+    @membership_types = do_filtering(@membership_types)
     @filtered_membership_types_count = @membership_types.count
 
     # Sort:

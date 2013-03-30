@@ -186,8 +186,8 @@ class RegisterController < ApplicationController # FIXME
       @members = paginate(@members)
 
       # Filter:
-      @members = Member.filter(@members, params[:filter], @attributes)
-      @members_filtering_values = Member.last_filter_values
+      @members = do_filtering(@members)
+      @members_filtering_values = @filtering_values || {}
 
       @guest ||= Guest.new(params[:guest])
 

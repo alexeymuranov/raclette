@@ -15,6 +15,8 @@
 -# It is assumed here that AbstractHumanizedModel module is included
 - column_headers ||= model.human_column_headers
 
+- filtering_values ||= {}
+
 %form{:method => :get}
   = hidden_field_tags_from_nested_hash params.slice(:filter, :sort)
 

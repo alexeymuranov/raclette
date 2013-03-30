@@ -49,8 +49,7 @@ class Admin::UsersController < AdminController
     @users = User.scoped
 
     # Filter:
-    @users = User.filter(@users, params[:filter], @attributes)
-    @filtering_values = User.last_filter_values
+    @users = do_filtering(@users)
     @filtered_users_count = @users.count
 
     # Sort:
