@@ -43,148 +43,82 @@ module Accessors
   end
 
   # Active Record:
-  class KnownIP < ::Admin::KnownIP
-    init_associations
+  BASIC_AR_MODELS =
+    [ ::Admin::KnownIP,
+      ::Admin::User,
+      ::Admin::SafeUserIP,
+      ::ActivityPeriod,
+      ::ApplicationJournalRecord,
+      ::CommitteeMembership,
+      ::Event,
+      ::EventCashier,
+      ::EventEntry,
+      ::GuestEntry,
+      ::Instructor,
+      ::LessonInstructor,
+      ::LessonSupervision,
+      ::Member,
+      ::MemberEntry,
+      ::MemberMembership,
+      ::MemberMessage,
+      ::MemberShortHistory,
+      ::Membership,
+      ::MembershipPurchase,
+      ::MembershipType,
+      ::Payment,
+      ::Person,
+      ::PersonalStatement,
+      ::RevenueAccount,
+      ::SecretaryNote,
+      ::TicketBook,
+      ::TicketsPurchase,
+      ::WeeklyEvent,
+      ::WeeklyEventSuspension ]
 
-    include ActiveModelUtilities
-
-    include ControllerAware
-
-    def self.controller_class
-      Admin::KnownIPsController
+  MODELS = [].tap do |accessor_models|
+    BASIC_AR_MODELS.each do |model|
+      accessor_models << (accessor_model = Class.new(model))
+      const_set(model.name.split('::').last, accessor_model)
+      accessor_model.init_associations
     end
   end
 
-  class User < ::Admin::User
-    init_associations
+  MODELS << const_set(:Guest, Class.new(::Guest))
 
-    include ActiveModelUtilities
-
-    include ControllerAware
-
-    def self.controller_class
-      Admin::UsersController
+  MODELS.each do |model|
+    model.class_eval do
+      include ActiveModelUtilities
     end
   end
 
-  class ActivityPeriod < ::ActivityPeriod
-    init_associations
+  MODEL_CONTROLLER_CLASS_NAMES =
+    { KnownIP           => 'Admin::KnownIPsController',
+      User              => 'Admin::UsersController',
+      SafeUserIP        => 'Admin::SafeUserIPsController',
+      ActivityPeriod    => 'ActivityPeriodsController',
+      Event             => 'EventsController',
+      Instructor        => 'InstructorsController',
+      LessonSupervision => 'LessonSupervisionsController',
+      Member            => 'MembersController',
+      Membership        => 'MembershipsController',
+      MembershipType    => 'MembershipTypesController',
+      Person            => 'PeopleController',
+      TicketBook        => 'TicketBooksController',
+      WeeklyEvent       => 'WeeklyEventsController' }
 
-    include ActiveModelUtilities
+  MODEL_CONTROLLER_CLASS_NAMES.keys.each do |accessor_model|
+    accessor_model.class_eval do
+      include ControllerAware
+    end
 
-    include ControllerAware
-
-    def self.controller_class
-      ActivityPeriodsController
+    controller_class_name = MODEL_CONTROLLER_CLASS_NAMES[accessor_model]
+    accessor_model.define_singleton_method :controller_class do
+      @controller_class ||= controller_class_name.constantize
     end
   end
 
-  class Address < ::Address
-    init_associations
-
-    include ActiveModelUtilities
-  end
-
-  class ApplicationJournalRecord < ::ApplicationJournalRecord
-    init_associations
-  end
-
-  class CommitteeMembership < ::CommitteeMembership
-    init_associations
-  end
-
-  class Event < ::Event
-    init_associations
-
-    include ActiveModelUtilities
-
-    include ControllerAware
-
-    def self.controller_class
-      EventsController
-    end
-  end
-
-  class EventCashier < ::EventCashier
-    init_associations
-  end
-
-  class EventEntry < ::EventEntry
-    init_associations
-  end
-
-  class GuestEntry < ::GuestEntry
-    init_associations
-  end
-
-  class Instructor < ::Instructor
-    init_associations
-
-    include ActiveModelUtilities
-
-    include ControllerAware
-
-    def self.controller_class
-      InstructorsController
-    end
-  end
-
-  class LessonInstructor < ::LessonInstructor
-    init_associations
-  end
-
-  class LessonSupervision < ::LessonSupervision
-    init_associations
-
-    include ActiveModelUtilities
-
-    include ControllerAware
-
-    def self.controller_class
-      LessonSupervisionsController
-    end
-  end
-
-  class Member < ::Member
-    init_associations
-
-    include ActiveModelUtilities
-
-    include ControllerAware
-
-    def self.controller_class
-      MembersController
-    end
-  end
-
-  class MemberEntry < ::MemberEntry
-    init_associations
-  end
-
-  class MemberMembership < ::MemberMembership
-  end
-
-  class MemberMessage < ::MemberMessage
-    init_associations
-  end
-
-  class MemberShortHistory < ::MemberShortHistory
-    init_associations
-  end
-
-  class Membership < ::Membership
-    init_associations
-
-    include ActiveModelUtilities
-
-    include ControllerAware
-
-    def self.controller_class
-      MembershipsController
-    end
-
+  class Membership
     private
-
       def common_options_for_urls
         super.merge(:activity_period_id => activity_period_id,
                     :membership_type_id => membership_type_id)
@@ -192,100 +126,11 @@ module Accessors
 
   end
 
-  class MembershipPurchase < ::MembershipPurchase
-    init_associations
-
-    include ActiveModelUtilities
-  end
-
-  class MembershipType < ::MembershipType
-    init_associations
-
-    include ActiveModelUtilities
-
-    include ControllerAware
-
-    def self.controller_class
-      MembershipTypesController
-    end
-  end
-
-  class Payment < ::Payment
-    init_associations
-  end
-
-  class Person < ::Person
-    init_associations
-
-    include ActiveModelUtilities
-
-    include ControllerAware
-
-    def self.controller_class
-      PeopleController
-    end
-  end
-
-  class PersonalStatement < ::PersonalStatement
-    init_associations
-
-    include ActiveModelUtilities
-  end
-
-  class RevenueAccount < ::RevenueAccount
-    init_associations
-
-    include ActiveModelUtilities
-  end
-
-  class SecretaryNote < ::SecretaryNote
-  end
-
-  class TicketBook < ::TicketBook
-    init_associations
-
-    include ActiveModelUtilities
-
-    include ControllerAware
-
-    def self.controller_class
-      TicketBooksController
-    end
-
+  class TicketBook
     private
-
       def common_options_for_urls
         super.merge(:membership_id => membership_id)
       end
 
-  end
-
-  class TicketsPurchase < ::TicketsPurchase
-    init_associations
-
-    include ActiveModelUtilities
-  end
-
-  class WeeklyEvent < ::WeeklyEvent
-    init_associations
-
-    include ActiveModelUtilities
-
-    include ControllerAware
-
-    def self.controller_class
-      WeeklyEventsController
-    end
-  end
-
-  class WeeklyEventSuspension < ::WeeklyEventSuspension
-    init_associations
-
-    include ActiveModelUtilities
-  end
-
-  # Active Model:
-  class Guest < ::Guest
-    include ActiveModelUtilities
   end
 end
