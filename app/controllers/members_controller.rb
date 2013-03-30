@@ -5,52 +5,23 @@
 
 class MembersController < SecretaryController
 
-  class Person < Accessors::Person
-    init_associations
+  [ ::Accessors::Person,
+    ::Accessors::Member,
+    ::Accessors::Event,
+    ::Accessors::Membership,
+    ::Accessors::MembershipType,
+    ::Accessors::ActivityPeriod
+  ].each do |model|
+    new_model = Class.new(model)
+    const_set(model.name.split('::').last, new_model)
+    new_model.init_associations
   end
 
-  class Member < Accessors::Member
-    init_associations
-
-    self.all_sorting_columns = [ :ordered_full_name,
+  Member.all_sorting_columns = [ :ordered_full_name,
                                  :email,
                                  :account_deactivated,
                                  :tickets_count ]
-    self.default_sorting_column = :ordered_full_name
-  end
-
-  class Membership < Accessors::Membership
-    init_associations
-  end
-
-  class Event < Accessors::Event
-    init_associations
-
-    self.all_sorting_columns = [ :title, :event_type,
-                                 :date,
-                                 :start_time ]
-    self.default_sorting_column = :date
-  end
-
-  class MembershipType < Accessors::MembershipType
-    init_associations
-
-    self.all_sorting_columns = [ :username,
-                                 :full_name,
-                                 :account_deactivated,
-                                 :admin,
-                                 :manager,
-                                 :secretary,
-                                 :a_person ]
-    self.default_sorting_column = :username
-  end
-
-  class ActivityPeriod < Accessors::ActivityPeriod
-    init_associations
-
-    self.all_sorting_columns = [:ip, :description]
-    self.default_sorting_column = :ip
-  end
+  Member.default_sorting_column = :ordered_full_name
 
   before_filter :find_member, :only => [:show, :edit, :update, :destroy]
 
