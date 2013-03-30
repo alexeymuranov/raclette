@@ -2,38 +2,6 @@
 
 class RegisterController < ApplicationController # FIXME
 
-  class Member < Accessors::Member
-    init_associations
-
-    self.all_sorting_columns = [ :ordered_full_name,
-                                 :email,
-                                 :tickets_count ]
-    self.default_sorting_column = :ordered_full_name
-  end
-
-  class Membership < Accessors::Membership
-    init_associations
-  end
-
-  class TicketBook < Accessors::TicketBook
-    init_associations
-  end
-
-  class Event < Accessors::Event
-    init_associations
-  end
-
-  class MembershipPurchase < Accessors::MembershipPurchase
-    init_associations
-  end
-
-  class TicketsPurchase < Accessors::TicketsPurchase
-    init_associations
-  end
-
-  class Guest < Accessors::Guest
-  end
-
   def choose_person
     @event_id = params[:event_id] || session[:current_event_id]
 
