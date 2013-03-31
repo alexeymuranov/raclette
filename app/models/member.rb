@@ -102,7 +102,7 @@ class Member < ActiveRecord::Base
   scope :current, joins(:memberships).merge(Membership.current).uniq  # TEST_ME!
 
   # Pseudo columns
-  tickets_count_sql = "(#{ sql_for_columns[:payed_tickets_count] } + #{ sql_for_columns[:free_tickets_count] })"
+  tickets_count_sql = "(#{ sql_for_column(:payed_tickets_count) } + #{ sql_for_column(:free_tickets_count) })"
 
   add_pseudo_columns :tickets_count => tickets_count_sql
 

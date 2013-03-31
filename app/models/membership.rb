@@ -86,16 +86,16 @@ class Membership < ActiveRecord::Base
   # Pseudo columns
 
   [:start_date, :duration_months, :end_date].each do |attr|
-    add_pseudo_columns attr => ActivityPeriod.sql_for_columns[attr]
+    add_pseudo_columns attr => ActivityPeriod.sql_for_column(attr)
   end
 
-  add_pseudo_columns :type_title => MembershipType.sql_for_columns[:unique_title]
+  add_pseudo_columns :type_title => MembershipType.sql_for_column(:unique_title)
 
-  title_sql = "(#{ sql_for_columns[:type_title] } || "\
+  title_sql = "(#{ sql_for_column(:type_title) } || "\
               "', ' || "\
-              "#{ sql_for_columns[:start_date] } || "\
+              "#{ sql_for_column(:start_date) } || "\
               "' — ' || "\
-              "#{ sql_for_columns[:end_date] })"
+              "#{ sql_for_column(:end_date) })"
   add_pseudo_columns :title => title_sql
 
   add_pseudo_column_db_types :start_date      => :date,

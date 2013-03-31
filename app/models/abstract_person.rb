@@ -36,8 +36,8 @@ module AbstractPerson  # NOTE:WIP
     [ :last_name, :first_name, :name_title, :nickname_or_other, :email,
       :full_name, :ordered_full_name, :formatted_email
     ].each do |attr|
-      base.add_pseudo_columns attr => Person.sql_for_columns[attr]
-      base.add_pseudo_column_db_types attr => Person.column_db_types[attr]
+      base.add_pseudo_columns attr => Person.sql_for_column(attr)
+      base.add_pseudo_column_db_types attr => Person.column_db_type(attr)
     end
   end
 end

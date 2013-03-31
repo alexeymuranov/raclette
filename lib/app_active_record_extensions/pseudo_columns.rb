@@ -11,8 +11,8 @@ module PseudoColumns
 
     # Callback
     def inherited(subclass)
-      subclass.instance_variable_set :@sql_for_columns, self.sql_for_columns.dup
-      subclass.instance_variable_set :@column_db_types, self.column_db_types.dup
+      subclass.instance_variable_set :@sql_for_columns, self.instance_variable_get(:@sql_for_columns).dup
+      subclass.instance_variable_set :@column_db_types, self.instance_variable_get(:@column_db_types).dup
       super
     end
 
@@ -20,14 +20,14 @@ module PseudoColumns
     # in the standard form "table_name"."column_name".
     # Can be extended in subclasses to include SQL expressions for
     # virtual columns.
-    attr_reader :sql_for_columns
+    # attr_reader :sql_for_columns
 
     def add_pseudo_columns(sql_for_columns)
       @sql_for_columns.merge! sql_for_columns
     end
 
     def sql_for_column(col)
-      sql_for_columns[col]
+      @sql_for_columns[col]
     end
 
     # Returns standard types (`:string`, `:integer`, etc.) for attributes
@@ -41,7 +41,7 @@ module PseudoColumns
     end
 
     def column_db_type(col)
-      column_db_types[col]
+      @column_db_types[col]
     end
 
     # Cannot use `scope` with `lambda` here because `lambda` would bind
@@ -69,7 +69,7 @@ module PseudoColumns
       def pseudo_columns_sql(*attributes)
         attributes.delete_if { |attr| columns_hash[attr.to_s] }
         attributes.map{ |attr|
-          "#{ sql_for_columns[attr] } AS #{ attr.to_s }"
+          "#{ @sql_for_columns[attr] } AS #{ attr.to_s }"
         }.join(', ')
       end
 

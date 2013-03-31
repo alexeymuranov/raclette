@@ -108,7 +108,7 @@ class Event < ActiveRecord::Base
                           }
 
   # Pseudo columns
-  long_title_sql = "(#{ sql_for_columns[:date] } || ': ' || #{ sql_for_columns[:title] })"
+  long_title_sql = "(#{ sql_for_column(:date) } || ': ' || #{ sql_for_column(:title) })"
 
   add_pseudo_columns :long_title => long_title_sql
 

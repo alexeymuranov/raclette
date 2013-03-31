@@ -22,10 +22,10 @@ class MemberTest < ActiveSupport::TestCase
   end
 
   test "composite attributes must work" do
-    assert_not_nil (v = Member.sql_for_columns[:tickets_count]),
-      "Member.sql_for_columns[:tickets_count] is #{ v.inspect }"
-    assert_not_nil (v = Member.sql_for_columns[:full_name]),
-      "Member.sql_for_columns[:full_name] is #{ v.inspect }"
+    assert_not_nil (v = Member.sql_for_column(:tickets_count)),
+      "Member.sql_for_column(:tickets_count) is #{ v.inspect }"
+    assert_not_nil (v = Member.sql_for_column(:full_name)),
+      "Member.sql_for_column(:full_name) is #{ v.inspect }"
     assert_not_nil (v = Member.joins(:person).with_pseudo_columns(:full_name).first),
       "Member.joins(:person).with_pseudo_columns(:full_name).first is #{ v.inspect }"
     assert_not_nil (v = Member.joins(:person).with_pseudo_columns(:full_name).first.full_name),

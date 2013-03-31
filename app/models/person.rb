@@ -82,16 +82,16 @@ class Person < ActiveRecord::Base
             :uniqueness => { :scope => [:last_name, :first_name] }
 
   # Pseudo columns
-  full_name_sql         =  "(COALESCE(#{ sql_for_columns[:name_title] } || ' ', '') || " \
-                           "#{ sql_for_columns[:first_name] } || ' ' || " \
-                           "#{ sql_for_columns[:last_name] })"
+  full_name_sql         =  "(COALESCE(#{ sql_for_column(:name_title) } || ' ', '') || " \
+                           "#{ sql_for_column(:first_name) } || ' ' || " \
+                           "#{ sql_for_column(:last_name) })"
 
-  ordered_full_name_sql = "(UPPER(#{ sql_for_columns[:last_name] }) || ', ' || " \
-                          "#{ sql_for_columns[:first_name] } || " \
-                          "COALESCE(', ' || #{ sql_for_columns[:name_title] }, ''))"
+  ordered_full_name_sql = "(UPPER(#{ sql_for_column(:last_name) }) || ', ' || " \
+                          "#{ sql_for_column(:first_name) } || " \
+                          "COALESCE(', ' || #{ sql_for_column(:name_title) }, ''))"
 
   formatted_email_sql   = "(#{ full_name_sql } || " \
-                          "' <' || #{ sql_for_columns[:email] } || '>')"
+                          "' <' || #{ sql_for_column(:email) } || '>')"
 
   add_pseudo_columns :full_name         => full_name_sql,
                      :ordered_full_name => ordered_full_name_sql,
@@ -103,10 +103,10 @@ class Person < ActiveRecord::Base
 
   # Scopes
   scope :default_order,
-        order("UPPER(#{ sql_for_columns[:last_name] }) ASC").
-        order("UPPER(#{ sql_for_columns[:first_name] }) ASC")
-        # order("UPPER(#{ sql_for_columns[:last_name] }) ASC, "\
-        #       "UPPER(#{ sql_for_columns[:first_name] }) ASC")
+        order("UPPER(#{ sql_for_column(:last_name) }) ASC").
+        order("UPPER(#{ sql_for_column(:first_name) }) ASC")
+        # order("UPPER(#{ sql_for_column(:last_name) }) ASC, "\
+        #       "UPPER(#{ sql_for_column(:first_name) }) ASC")
 
   scope :members, joins(:member)
 
