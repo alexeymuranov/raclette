@@ -30,8 +30,5 @@ class ApplicationController < ActionController::Base
       collection.page(page).per(per_page)
     end
 
-    def approximate_time
-      @approximate_time ||= Time.now
-    end
 
 end
