@@ -1,14 +1,10 @@
 ## encoding: UTF-8
 
-require 'app_active_record_extensions/sorting'
 require 'app_active_record_extensions/pseudo_columns'
 require 'app_validations/event'
 require 'ruby-duration'
 
 class Event < ActiveRecord::Base
-  include Sorting
-  self.default_sorting_column = :date
-
   include PseudoColumns
   include AbstractHumanizedModel
 

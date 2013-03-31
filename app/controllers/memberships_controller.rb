@@ -2,40 +2,6 @@
 
 class MembershipsController < ManagerController
 
-  class Membership < Accessors::Membership
-    init_associations
-
-    # This is used to generate a link in 'shared/tables/grid_index' partial
-    def self.build_by_activity_period_id_and_membership_type_id(a_p_id, m_t_id)
-      new :activity_period_id => a_p_id, :membership_type_id => m_t_id
-    end
-  end
-
-  class MembershipType < Accessors::MembershipType
-    init_associations
-
-    self.all_sorting_columns = [ :unique_title,
-                                 :duration_months,
-                                 :active,
-                                 :reduced,
-                                 :unlimited ]
-    self.default_sorting_column = :unique_title
-  end
-
-  class ActivityPeriod < Accessors::ActivityPeriod
-    init_associations
-
-    self.all_sorting_columns = [:ip, :description]
-    self.default_sorting_column = :ip
-  end
-
-  class TicketBook < Accessors::TicketBook
-    init_associations
-
-    self.all_sorting_columns = [:tickets_number, :price]
-    self.default_sorting_column = :tickets_number
-  end
-
   before_filter :find_membership, :only => [:show, :edit, :update, :destroy]
 
   def index
@@ -56,11 +22,8 @@ class MembershipsController < ManagerController
     # @ticket_books_column_headers = TicketBook.human_column_headers
 
     # Sort:
-    TicketBook.all_sorting_columns = @ticket_book_attributes
     sort_params = (params[:sort] && params[:sort][:ticket_books]) || {}
-    @ticket_books = TicketBook.sort(@ticket_books, sort_params)
-    @sorting_column = TicketBook.last_sort_column
-    @sorting_direction = TicketBook.last_sort_direction
+    @ticket_books = sort(@ticket_books, sort_params, :tickets_number)
 
     @title = t('memberships.show.title',
                :title => @membership.virtual_title)

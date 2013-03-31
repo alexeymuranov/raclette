@@ -6,18 +6,18 @@ module TablesMarkupHelper
     title ||= column.to_s.titleize
 
     if column.to_s == @sorting_column.to_s  # is column the current sort column?
-      if @sorting_direction == :ASC  # is the current sort direction asc?
+      if @sorting_direction == 'ASC'  # is the current sort direction asc?
         sort_indicator = '▲ '
-        direction_on_click = :DESC
+        direction_on_click = 'DESC'
         html_class = 'sort current asc'
       else
         sort_indicator = '▼ '
-        direction_on_click = :ASC
+        direction_on_click = 'ASC'
         html_class = 'sort current desc'
       end
     else
       sort_indicator = ''
-      direction_on_click = :ASC
+      direction_on_click = 'ASC'
       html_class = 'sort'
     end
 

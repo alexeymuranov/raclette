@@ -2,37 +2,16 @@
 
 class Admin::KnownIPsController < AdminController
 
-  class User < Accessors::User
-    init_associations
-
-    self.all_sorting_columns = [:username,
-                                :full_name,
-                                :account_deactivated,
-                                :admin,
-                                :manager,
-                                :secretary,
-                                :a_person]
-    self.default_sorting_column = :username
-  end
-
-  class KnownIP < Accessors::KnownIP
-    init_associations
-
-    self.all_sorting_columns = [:ip, :description]
-    self.default_sorting_column = :ip
-  end
-
   before_filter :find_known_ip, :only => [:show, :edit, :update, :destroy]
 
   def index
     @attributes = [:ip, :description]
 
-    # Sort:
     @known_ips = KnownIP.scoped
+
+    # Sort:
     sort_params = (params[:sort] && params[:sort][:known_ips]) || {}
-    @known_ips = KnownIP.sort(@known_ips, sort_params)
-    @sorting_column = KnownIP.last_sort_column
-    @sorting_direction = KnownIP.last_sort_direction
+    @known_ips = sort(@known_ips, sort_params, :ip)
   end
 
   def show
@@ -46,13 +25,11 @@ class Admin::KnownIPsController < AdminController
                               :secretary,
                               :a_person ]
 
-    # Sort safe users:
     @safe_users = @known_ip.safe_users
-    User.all_sorting_columns = @safe_user_attributes
+
+    # Sort safe users:
     sort_params = (params[:sort] && params[:sort][:safe_users]) || {}
-    @safe_users = User.sort(@safe_users, sort_params)
-    @sorting_column = User.last_sort_column
-    @sorting_direction = User.last_sort_direction
+    @safe_users = sort(@safe_users, sort_params, :username)
 
     @title = t('admin.known_i_ps.show.title', :ip => @known_ip.ip)
   end

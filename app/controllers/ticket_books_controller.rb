@@ -2,9 +2,6 @@
 
 class TicketBooksController < ManagerController
 
-  TicketBook = MembershipsController::TicketBook
-  Membership = MembershipsController::Membership
-
   before_filter :find_membership, :except => :index
   before_filter :find_ticket_book_and_check_correct_membership_selection,
                 :only => [:show, :edit, :update, :destroy]
@@ -26,11 +23,8 @@ class TicketBooksController < ManagerController
     @filtered_ticket_books_count = @ticket_books.count
 
     # Sort:
-    TicketBook.all_sorting_columns = @attributes
     sort_params = (params[:sort] && params[:sort][:ticket_books]) || {}
-    @ticket_books = TicketBook.sort(@ticket_books, sort_params)
-    @sorting_column = TicketBook.last_sort_column
-    @sorting_direction = TicketBook.last_sort_direction
+    @ticket_books = sort(@ticket_books, sort_params, :tickets_number)
 
     respond_to do |requested_format|
       requested_format.html do

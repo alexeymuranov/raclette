@@ -1,11 +1,8 @@
 ## encoding: UTF-8
 
-require 'app_active_record_extensions/sorting'
 require 'app_active_record_extensions/pseudo_columns'
 
 class ActivityPeriod < ActiveRecord::Base
-  include Sorting
-
   include PseudoColumns
   include AbstractHumanizedModel
 

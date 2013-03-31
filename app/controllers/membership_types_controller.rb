@@ -2,18 +2,6 @@
 
 class MembershipTypesController < ManagerController
 
-  class MembershipType < Accessors::MembershipType
-    init_associations
-
-    self.all_sorting_columns = [ :unique_title,
-                                 :active,
-                                 :reduced,
-                                 :unlimited,
-                                 :duration_months,
-                                 :description ]
-    self.default_sorting_column = :duration_months
-  end
-
   before_filter :find_membership_type, :only => [:show, :edit, :update, :destroy]
 
   def index
@@ -41,11 +29,8 @@ class MembershipTypesController < ManagerController
     @filtered_membership_types_count = @membership_types.count
 
     # Sort:
-    MembershipType.all_sorting_columns = @attributes
     sort_params = (params[:sort] && params[:sort][:membership_types]) || {}
-    @membership_types = MembershipType.sort(@membership_types, sort_params)
-    @sorting_column = MembershipType.last_sort_column
-    @sorting_direction = MembershipType.last_sort_direction
+    @membership_types = sort(@membership_types, sort_params, :duration_months)
 
     respond_to do |requested_format|
       requested_format.html do

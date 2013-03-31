@@ -2,17 +2,6 @@
 
 class ActivityPeriodsController < ManagerController
 
-  class ActivityPeriod < Accessors::ActivityPeriod
-    init_associations
-
-    self.all_sorting_columns = [ :unique_title,
-                                 :start_date,
-                                 :duration_months,
-                                 :end_date,
-                                 :over ]
-    self.default_sorting_column = :start_date
-  end
-
   before_filter :find_activity_period, :only => [:show, :edit, :update, :destroy]
 
   def index
@@ -40,11 +29,8 @@ class ActivityPeriodsController < ManagerController
     @filtered_activity_periods_count = @activity_periods.count
 
     # Sort:
-    ActivityPeriod.all_sorting_columns = @attributes
     sort_params = (params[:sort] && params[:sort][:activity_periods]) || {}
-    @activity_periods = ActivityPeriod.sort(@activity_periods, sort_params)
-    @sorting_column = ActivityPeriod.last_sort_column
-    @sorting_direction = ActivityPeriod.last_sort_direction
+    @activity_periods = sort(@activity_periods, sort_params, :start_date)
 
     respond_to do |requested_format|
       requested_format.html do

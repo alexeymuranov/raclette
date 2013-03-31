@@ -5,24 +5,6 @@
 
 class MembersController < SecretaryController
 
-  [ ::Accessors::Person,
-    ::Accessors::Member,
-    ::Accessors::Event,
-    ::Accessors::Membership,
-    ::Accessors::MembershipType,
-    ::Accessors::ActivityPeriod
-  ].each do |model|
-    new_model = Class.new(model)
-    const_set(model.name.split('::').last, new_model)
-    new_model.init_associations
-  end
-
-  Member.all_sorting_columns = [ :ordered_full_name,
-                                 :email,
-                                 :account_deactivated,
-                                 :tickets_count ]
-  Member.default_sorting_column = :ordered_full_name
-
   before_filter :find_member, :only => [:show, :edit, :update, :destroy]
 
   def index
@@ -49,13 +31,10 @@ class MembersController < SecretaryController
     @filtered_members_count = @members.count
 
     # Sort:
-    Member.all_sorting_columns = @attributes
-    Member.default_sorting_column = ( request.format == 'html' ?
-                                      :ordered_full_name : :last_name )
+    default_sorting_column = ( request.format == 'html' ?
+                               :ordered_full_name : :last_name )
     sort_params = (params[:sort] && params[:sort][:members]) || {}
-    @members = Member.sort(@members, sort_params)
-    @sorting_column = Member.last_sort_column
-    @sorting_direction = Member.last_sort_direction
+    @members = sort(@members, sort_params, default_sorting_column)
 
     # Compose mailing list:
     if params[:list_email_addresses]

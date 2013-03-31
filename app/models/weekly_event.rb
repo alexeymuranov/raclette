@@ -1,13 +1,10 @@
 ## encoding: UTF-8
 
-require 'app_active_record_extensions/sorting'
 require 'app_active_record_extensions/pseudo_columns'
 require 'app_validations/weekly_event'
 require 'ruby-duration'
 
 class WeeklyEvent < ActiveRecord::Base
-  include Sorting
-
   include PseudoColumns
   include AbstractHumanizedModel
 

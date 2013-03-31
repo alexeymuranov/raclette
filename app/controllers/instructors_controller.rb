@@ -2,19 +2,6 @@
 
 class InstructorsController < ManagerController
 
-  class Person < Accessors::Person
-    init_associations
-  end
-
-  class Instructor < Accessors::Instructor
-    init_associations
-
-    self.all_sorting_columns = [ :ordered_full_name,
-                                 :email,
-                                 :employed_from ]
-    self.default_sorting_column = :ordered_full_name
-  end
-
   before_filter :find_instructor, :only => [:show, :edit, :update, :destroy]
 
   def index
@@ -39,13 +26,10 @@ class InstructorsController < ManagerController
     @filtered_instructors_count = @instructors.count
 
     # Sort:
-    Instructor.all_sorting_columns = @attributes
-    Instructor.default_sorting_column =
+    default_sorting_column =
       request.format == 'html' ? :ordered_full_name : :last_name
     sort_params = (params[:sort] && params[:sort][:instructors]) || {}
-    @instructors = Instructor.sort(@instructors, sort_params)
-    @sorting_column = Instructor.last_sort_column
-    @sorting_direction = Instructor.last_sort_direction
+    @instructors = sort(@instructors, sort_params, default_sorting_column)
 
     # Compose mailing list:
     if params[:list_email_addresses]

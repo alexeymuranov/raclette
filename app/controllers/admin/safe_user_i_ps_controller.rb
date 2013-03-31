@@ -2,26 +2,6 @@
 
 class Admin::SafeUserIPsController < AdminController
 
-  class User < Accessors::User
-    init_associations
-
-    self.all_sorting_columns = [:username,
-                                :full_name,
-                                :account_deactivated,
-                                :admin,
-                                :manager,
-                                :secretary,
-                                :a_person]
-    self.default_sorting_column = :username
-  end
-
-  class KnownIP < Accessors::KnownIP
-    init_associations
-
-    self.all_sorting_columns = [:ip, :description]
-    self.default_sorting_column = :ip
-  end
-
   def index
     @users = User.default_order
     @known_ips = KnownIP.default_order

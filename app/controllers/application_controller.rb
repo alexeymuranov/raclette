@@ -47,4 +47,35 @@ class ApplicationController < ActionController::Base
       end
     end
 
+    def sort(collection_scope, options = params[:sort],
+                               default_column    = nil,
+                               default_direction = 'ASC')
+      @sorting_direction =
+        case options[:direction]
+        when /asc/i
+          'ASC'
+        when /desc/i
+          'DESC'
+        else
+          default_direction
+        end
+
+      suggested_sort_column = options[:column]
+      # Assume that PseudoColumns module is included into the model
+      @sorting_column =
+        if collection_scope.pseudo_column?(suggested_sort_column)
+          suggested_sort_column
+        else
+          default_column
+        end
+
+      if @sorting_column && @sorting_direction
+        collection_scope.order("#{ @sorting_column } #{ @sorting_direction }")
+      else
+        @sorting_column = nil
+        @sorting_direction = nil
+        collection_scope
+      end
+    end
+
 end

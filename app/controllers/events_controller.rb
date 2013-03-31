@@ -2,52 +2,6 @@
 
 class EventsController < SecretaryController
 
-  class Event < Accessors::Event
-    init_associations
-
-    self.all_sorting_columns = [ :title, :event_type,
-                                 :date,
-                                 :start_time,
-                                 :supervisors ]
-    self.default_sorting_column = :date
-  end
-
-  class WeeklyEvent < Accessors::WeeklyEvent
-    init_associations
-
-    self.all_sorting_columns = [ :title,
-                                 :event_type,
-                                 :lesson,
-                                 :week_day,
-                                 :start_time,
-                                 :duration_minutes,
-                                 :end_time,
-                                 :start_on,
-                                 :end_on,
-                                 :location,
-                                 :entry_fee_tickets,
-                                 :over,
-                                 :description ]
-    self.default_sorting_column = :end_on
-  end
-
-  class Person < Accessors::Person
-    init_associations
-
-    self.all_sorting_columns = [:ordered_full_name, :email]
-    self.default_sorting_column = :ordered_full_name
-  end
-
-  class Member < Accessors::Member
-    init_associations
-
-    self.all_sorting_columns = [ :ordered_full_name,
-                                 :email,
-                                 :account_deactivated,
-                                 :tickets_count ]
-    self.default_sorting_column = :ordered_full_name
-  end
-
   before_filter :find_event, :only => [:show, :edit, :update, :destroy]
 
   def index
@@ -78,11 +32,8 @@ class EventsController < SecretaryController
     @filtered_events_count = @events.count
 
     # Sort:
-    Event.all_sorting_columns = @attributes
     sort_params = (params[:sort] && params[:sort][:events]) || {}
-    @events = Event.sort(@events, sort_params)
-    @sorting_column = Event.last_sort_column
-    @sorting_direction = Event.last_sort_direction
+    @events = sort(@events, sort_params, :date)
 
     respond_to do |requested_format|
       requested_format.html do

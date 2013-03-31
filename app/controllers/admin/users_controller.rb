@@ -2,26 +2,6 @@
 
 class Admin::UsersController < AdminController
 
-  class User < Accessors::User
-    init_associations
-
-    self.all_sorting_columns = [ :username,
-                                 :full_name,
-                                 :account_deactivated,
-                                 :admin,
-                                 :manager,
-                                 :secretary,
-                                 :a_person ]
-    self.default_sorting_column = :username
-  end
-
-  class KnownIP < Accessors::KnownIP
-    init_associations
-
-    self.all_sorting_columns = [:ip, :description]
-    self.default_sorting_column = :ip
-  end
-
   before_filter :find_user, :only => [:show, :edit, :update, :destroy]
 
   def index
@@ -53,11 +33,8 @@ class Admin::UsersController < AdminController
     @filtered_users_count = @users.count
 
     # Sort:
-    User.all_sorting_columns = @attributes
     sort_params = (params[:sort] && params[:sort][:users]) || {}
-    @users = User.sort(@users, sort_params)
-    @sorting_column = User.last_sort_column
-    @sorting_direction = User.last_sort_direction
+    @users = sort(@users, sort_params, :username)
 
     # Compose mailing list:
     if params[:list_email_addresses]
@@ -127,9 +104,7 @@ class Admin::UsersController < AdminController
     @safe_ip_attributes = [:ip, :description]
 
     ip_sort_params = (params[:sort] && params[:sort][:safe_ips]) || {}
-    @safe_ips = KnownIP.sort(@user.safe_ips, ip_sort_params)
-    @sorting_column = KnownIP.last_sort_column
-    @sorting_direction = KnownIP.last_sort_direction
+    @safe_ips = sort(@user.safe_ips, ip_sort_params, :ip)
 
     @known_ips_column_headers = KnownIP.human_column_headers
 
@@ -223,10 +198,8 @@ class Admin::UsersController < AdminController
       @known_ip_attributes = [:ip, :description]
 
       ip_sort_params = (params[:sort] && params[:sort][:safe_ips]) || {}
-      @known_ips = KnownIP.sort(KnownIP.scoped, ip_sort_params)
+      @known_ips = sort(KnownIP.scoped, ip_sort_params, :ip)
       @safe_ips = nil
-      @sorting_column = KnownIP.last_sort_column
-      @sorting_direction = KnownIP.last_sort_direction
 
       @title = t('admin.users.new.title')
 
@@ -237,10 +210,8 @@ class Admin::UsersController < AdminController
       @known_ip_attributes = [:ip, :description]
 
       ip_sort_params = (params[:sort] && params[:sort][:safe_ips]) || {}
-      @known_ips = KnownIP.sort(KnownIP.scoped, ip_sort_params)
-      @safe_ips = KnownIP.sort(@user.safe_ips, ip_sort_params)
-      @sorting_column = KnownIP.last_sort_column
-      @sorting_direction = KnownIP.last_sort_direction
+      @known_ips = sort(KnownIP.scoped, ip_sort_params, :ip)
+      @safe_ips = sort(@user.safe_ips, ip_sort_params, :ip)
 
       @title = t('admin.users.edit.title', :username => @user.username)
 

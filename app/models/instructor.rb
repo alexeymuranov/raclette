@@ -1,12 +1,7 @@
 ## encoding: UTF-8
 
-require 'app_active_record_extensions/sorting'
-
 class Instructor < ActiveRecord::Base
   self.primary_key = 'person_id'
-
-  include Sorting
-  self.default_sorting_column = :ordered_full_name
 
   include AbstractPerson
   include AbstractHumanizedModel

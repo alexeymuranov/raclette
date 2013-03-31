@@ -2,24 +2,6 @@
 
 class LessonSupervisionsController < SecretaryController
 
-  class LessonSupervision < Accessors::LessonSupervision
-    init_associations
-
-    self.all_sorting_columns = [:unique_names, :instructors_count]
-    self.default_sorting_column = :instructors_count
-  end
-
-  class Instructor < Accessors::Instructor
-    init_associations
-
-    self.all_sorting_columns = [ :ordered_full_name,
-                                 :first_name,
-                                 :last_name,
-                                 :email,
-                                 :employed_from ]
-    self.default_sorting_column = :first_name
-  end
-
   before_filter :find_lesson_supervision, :only => [:show, :edit, :update, :destroy]
 
   def index
@@ -38,12 +20,9 @@ class LessonSupervisionsController < SecretaryController
     @filtered_lesson_supervisions_count = @lesson_supervisions.count
 
     # Sort:
-    LessonSupervision.all_sorting_columns = @attributes
     sort_params = (params[:sort] && params[:sort][:lesson_supervisions]) || {}
     @lesson_supervisions =
-      LessonSupervision.sort(@lesson_supervisions, sort_params)
-    @sorting_column = LessonSupervision.last_sort_column
-    @sorting_direction = LessonSupervision.last_sort_direction
+      sort(@lesson_supervisions, sort_params, :instructors_count)
 
     respond_to do |requested_format|
       requested_format.html do

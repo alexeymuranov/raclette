@@ -1,13 +1,9 @@
 ## encoding: UTF-8
 
-require 'app_active_record_extensions/sorting'
 require 'app_active_record_extensions/pseudo_columns'
 
 class Admin::KnownIP < ActiveRecord::Base
   self.table_name = 'admin_known_ips'
-
-  include Sorting
-  self.default_sorting_column = :ip
 
   include PseudoColumns
   include AbstractHumanizedModel
