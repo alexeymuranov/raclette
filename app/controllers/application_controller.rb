@@ -22,7 +22,7 @@ class ApplicationController < ActionController::Base
       @locale = I18n.locale
     end
 
-    def paginate(collection, options={})
+    def paginate(collection, options = {})
       per_page = options[:per_page] || params[:per_page]
       per_page = per_page ? per_page.to_i : 25
       per_page = 1000 if per_page.to_i > 1000
