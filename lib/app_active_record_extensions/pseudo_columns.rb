@@ -1,3 +1,5 @@
+require 'set'
+
 module PseudoColumns
   def self.included(base_class)
     # NOTE: looks like a hack
@@ -11,10 +13,14 @@ module PseudoColumns
 
     # Callback
     def inherited(subclass)
-      subclass.instance_variable_set :@sql_for_columns, self.instance_variable_get(:@sql_for_columns).dup
-      subclass.instance_variable_set :@column_db_types, self.instance_variable_get(:@column_db_types).dup
+      [ :@pseudo_column_names, :@sql_for_columns, :@column_db_types
+      ].each do |var|
+        subclass.instance_variable_set var, instance_variable_get(var).dup
+      end
       super
     end
+
+    # attr_reader :column_names
 
     # Provides SQL identifiers for attributes corresponding to columns
     # in the standard form "table_name"."column_name".
@@ -24,6 +30,7 @@ module PseudoColumns
 
     def add_pseudo_columns(sql_for_columns)
       @sql_for_columns.merge! sql_for_columns
+      @pseudo_column_names.merge sql_for_columns.keys.map(&:to_s)
     end
 
     def sql_for_column(col)
@@ -51,9 +58,14 @@ module PseudoColumns
       attributes.blank? ? scoped : select(with_pseudo_columns_sql(*attributes))
     end
 
+    def pseudo_column?(name)
+      @pseudo_column_names.include?(name.to_s)
+    end
+
     private
 
       def initialize_pseudo_columns
+        @pseudo_column_names = column_names.to_set
         @sql_for_columns = Hash.new { |hash, key|
           if col = columns_hash[key.to_s]
             hash[key] = %("#{ table_name }"."#{ col.name }")
