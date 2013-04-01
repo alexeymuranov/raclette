@@ -38,9 +38,10 @@ class MembersController < SecretaryController
 
     # Compose mailing list:
     if params[:list_email_addresses]
-      @mailing_list_members = @members.select { |member| !member.email.blank? }
-      @mailing_list = @mailing_list_members.collect(&:formatted_email).
-        join(', ')
+      @mailing_list_members =
+        @members.select { |member| !member.email.blank? }
+      @mailing_list =
+        @mailing_list_members.collect(&:formatted_email).join(', ')
     end
 
     respond_to do |requested_format|
@@ -205,7 +206,7 @@ class MembersController < SecretaryController
     end
 
     def render_edit_properly
-      @title =  t('members.edit.title', :name => @member.virtual_full_name)
+      @title = t('members.edit.title', :name => @member.virtual_full_name)
 
       render :edit
     end

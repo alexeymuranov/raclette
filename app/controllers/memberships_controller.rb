@@ -100,8 +100,8 @@ class MembershipsController < ManagerController
       @association_name_attributes = { :activity_period => :unique_title,
                                        :membership_type => :unique_title }
 
-      @title =  t('memberships.edit.title',
-                  :title => @membership.virtual_title)
+      @title = t('memberships.edit.title',
+                 :title => @membership.virtual_title)
 
       render :edit
     end

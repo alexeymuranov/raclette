@@ -131,8 +131,8 @@ class LessonSupervisionsController < SecretaryController
       # @attributes = [:unique_names, :instructors_count, :comment]
       @attributes = [:unique_names, :comment]
 
-      @title =  t('lesson_supervisions.edit.title',
-                  :title => @lesson_supervision.unique_names)
+      @title = t('lesson_supervisions.edit.title',
+                 :title => @lesson_supervision.unique_names)
 
       render :edit
     end

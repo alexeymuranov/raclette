@@ -142,8 +142,8 @@ class MembershipTypesController < ManagerController
                       :duration_months,
                       :description ]
 
-      @title =  t('membership_types.edit.title',
-                  :title => @membership_type.unique_title)
+      @title = t('membership_types.edit.title',
+                 :title => @membership_type.unique_title)
 
       render :edit
     end

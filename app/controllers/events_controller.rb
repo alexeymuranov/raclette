@@ -175,7 +175,7 @@ class EventsController < SecretaryController
                       :location,
                       :entry_fee_tickets ]
 
-      @title =  t('events.edit.title', :title => @event.title)
+      @title = t('events.edit.title', :title => @event.title)
 
       render :edit
     end

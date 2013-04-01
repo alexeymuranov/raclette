@@ -142,8 +142,8 @@ class ActivityPeriodsController < ManagerController
                       :over,
                       :description ]
 
-      @title =  t('activity_periods.edit.title',
-                  :title => @activity_period.unique_title)
+      @title = t('activity_periods.edit.title',
+                 :title => @activity_period.unique_title)
 
       render :edit
     end

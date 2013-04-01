@@ -183,7 +183,7 @@ class WeeklyEventsController < ManagerController
                       :entry_fee_tickets,
                       :description ]
 
-      @title =  t('weekly_events.edit.title', :title => @weekly_event.title)
+      @title = t('weekly_events.edit.title', :title => @weekly_event.title)
 
       render :edit
     end

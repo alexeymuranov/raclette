@@ -130,8 +130,8 @@ class TicketBooksController < ManagerController
     def render_edit_properly
       @attributes = [:tickets_number, :price]
 
-      @title =  t('ticket_books.edit.title',
-                  :title => @ticket_book.virtual_long_title)
+      @title = t('ticket_books.edit.title',
+                 :title => @ticket_book.virtual_long_title)
 
       render :edit
     end

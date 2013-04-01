@@ -190,8 +190,8 @@ class InstructorsController < ManagerController
     end
 
     def render_edit_properly
-      @title =  t('instructors.edit.title',
-                  :name => @instructor.virtual_full_name)
+      @title = t('instructors.edit.title',
+                 :name => @instructor.virtual_full_name)
 
       render :edit
     end

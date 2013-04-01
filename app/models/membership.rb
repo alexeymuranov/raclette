@@ -3,7 +3,6 @@
 require 'app_active_record_extensions/pseudo_columns'
 
 class Membership < ActiveRecord::Base
-
   include PseudoColumns
   include AbstractHumanizedModel
 
