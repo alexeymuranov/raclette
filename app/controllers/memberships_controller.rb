@@ -2,14 +2,14 @@
 
 class MembershipsController < ManagerController
 
-  before_filter :find_membership, :only => [:show, :edit, :update, :destroy]
-
   def index
     @membership_types = MembershipType.default_order
     @activity_periods = ActivityPeriod.default_order
   end
 
   def show
+    @membership = Membership.find(params['id'])
+
     @attribute_names = [:initial_price, :current_price]
 
     @singular_association_names = [:activity_period, :membership_type]
@@ -37,6 +37,8 @@ class MembershipsController < ManagerController
   end
 
   def edit
+    @membership = Membership.find(params['id'])
+
     render_edit_properly
   end
 
@@ -55,6 +57,8 @@ class MembershipsController < ManagerController
   end
 
   def update
+    @membership = Membership.find(params['id'])
+
     if @membership.update_attributes(params[:membership])
       flash[:notice] = t('flash.memberships.update.success',
                          :title => @membership.virtual_title)
@@ -67,6 +71,8 @@ class MembershipsController < ManagerController
   end
 
   def destroy
+    @membership = Membership.find(params['id'])
+
     @membership.destroy
 
     flash[:notice] = t('flash.memberships.destroy.success',
@@ -76,10 +82,6 @@ class MembershipsController < ManagerController
   end
 
   private
-
-    def find_membership
-      @membership = Membership.find(params[:id])
-    end
 
     def render_new_properly
       @attribute_names = [:initial_price, :current_price]

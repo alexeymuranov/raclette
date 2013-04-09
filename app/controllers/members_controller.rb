@@ -5,7 +5,6 @@
 
 class MembersController < SecretaryController
 
-  before_filter :find_member, :only => [:show, :edit, :update, :destroy]
 
   def index
     case request.format
@@ -88,6 +87,8 @@ class MembersController < SecretaryController
   end
 
   def show
+    @member = Member.find(params['id'])
+
     @attribute_names = [ :person_id,
                          :name_title,
                          :first_name,
@@ -117,6 +118,8 @@ class MembersController < SecretaryController
   end
 
   def edit
+    @member = Member.find(params['id'])
+
     render_edit_properly
   end
 
@@ -159,6 +162,8 @@ class MembersController < SecretaryController
   end
 
   def update
+    @member = Member.find(params['id'])
+
     params['member']['person_attributes'].tap { |h|
       h.each_pair do |k, v| h[k] = nil if v.blank? end
       h['nickname_or_other'] ||= ''
@@ -181,6 +186,8 @@ class MembersController < SecretaryController
   end
 
   def destroy
+    @member = Member.find(params['id'])
+
     if @member.person.associated_roles == [:member]
       @member.person.destroy
     else
@@ -194,10 +201,6 @@ class MembersController < SecretaryController
   end
 
   private
-
-    def find_member
-      @member = Member.find(params[:id])
-    end
 
     def render_new_properly
       @title = t('members.new.title')

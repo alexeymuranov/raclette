@@ -2,8 +2,6 @@
 
 class InstructorsController < ManagerController
 
-  before_filter :find_instructor, :only => [:show, :edit, :update, :destroy]
-
   def index
     case request.format
     when Mime::HTML
@@ -73,6 +71,8 @@ class InstructorsController < ManagerController
   end
 
   def show
+    @instructor = Instructor.find(params['id'])
+
     @attribute_names = [ :name_title,
                          :first_name,
                          :last_name,
@@ -91,6 +91,8 @@ class InstructorsController < ManagerController
   end
 
   def edit
+    @instructor = Instructor.find(params['id'])
+
     render_edit_properly
   end
 
@@ -143,6 +145,8 @@ class InstructorsController < ManagerController
   end
 
   def update
+    @instructor = Instructor.find(params['id'])
+
     params['instructor']['person_attributes'].tap { |h|
       h.each_pair do |k, v| h[k] = nil if v.blank? end
       h['nickname_or_other'] ||= ''
@@ -165,6 +169,8 @@ class InstructorsController < ManagerController
   end
 
   def destroy
+    @instructor = Instructor.find(params['id'])
+
     if @instructor.person.associated_roles == [:instructor]
       @instructor.person.destroy
     else
@@ -178,10 +184,6 @@ class InstructorsController < ManagerController
   end
 
   private
-
-    def find_instructor
-      @instructor = Instructor.find(params[:id])
-    end
 
     def render_new_properly
       @title = t('instructors.new.title')

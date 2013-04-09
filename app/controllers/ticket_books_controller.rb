@@ -3,8 +3,6 @@
 class TicketBooksController < ManagerController
 
   before_filter :find_membership, :except => :index
-  before_filter :find_ticket_book_and_check_correct_membership_selection,
-                :only => [:show, :edit, :update, :destroy]
 
   def index
     case request.format
@@ -53,6 +51,11 @@ class TicketBooksController < ManagerController
   end
 
   def show
+    @ticket_book = TicketBook.find(params['id'])
+    unless @ticket_book.membership.id == @membership.id
+      redirect_to :back && return
+    end
+
     @attribute_names = [:tickets_number, :price]
 
     @title = t('ticket_books.show.title',
@@ -66,6 +69,11 @@ class TicketBooksController < ManagerController
   end
 
   def edit
+    @ticket_book = TicketBook.find(params['id'])
+    unless @ticket_book.membership.id == @membership.id
+      redirect_to :back && return
+    end
+
     render_edit_properly
   end
 
@@ -86,6 +94,11 @@ class TicketBooksController < ManagerController
   end
 
   def update
+    @ticket_book = TicketBook.find(params['id'])
+    unless @ticket_book.membership.id == @membership.id
+      redirect_to :back && return
+    end
+
     if @ticket_book.update_attributes(params[:ticket_book])
       flash[:notice] = t('flash.ticket_books.update.success',
                          :title => @ticket_book.virtual_long_title)
@@ -98,6 +111,11 @@ class TicketBooksController < ManagerController
   end
 
   def destroy
+    @ticket_book = TicketBook.find(params['id'])
+    unless @ticket_book.membership.id == @membership.id
+      redirect_to :back && return
+    end
+
     @ticket_book.destroy
 
     flash[:notice] = t('flash.ticket_books.destroy.success',
@@ -111,12 +129,7 @@ class TicketBooksController < ManagerController
   private
 
     def find_membership
-      @membership = Membership.find(params[:membership_id])
-    end
-
-    def find_ticket_book_and_check_correct_membership_selection
-      @ticket_book = TicketBook.find(params[:id])
-      redirect_to :back unless @ticket_book.membership.id == @membership.id
+      @membership = Membership.find(params['membership_id'])
     end
 
     def render_new_properly

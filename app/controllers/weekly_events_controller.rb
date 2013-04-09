@@ -2,8 +2,6 @@
 
 class WeeklyEventsController < ManagerController
 
-  before_filter :find_weekly_event, :only => [:show, :edit, :update, :destroy]
-
   def index
     case request.format
     when Mime::HTML
@@ -68,6 +66,8 @@ class WeeklyEventsController < ManagerController
   end
 
   def show
+    @weekly_event = WeeklyEvent.find(params['id'])
+
     @attribute_names = [ :title,
                          :event_type,
                          :lesson,
@@ -110,6 +110,8 @@ class WeeklyEventsController < ManagerController
   end
 
   def edit
+    @weekly_event = WeeklyEvent.find(params['id'])
+
     render_edit_properly
   end
 
@@ -132,6 +134,8 @@ class WeeklyEventsController < ManagerController
   end
 
   def update
+    @weekly_event = WeeklyEvent.find(params['id'])
+
     if @weekly_event.update_attributes(params[:weekly_event])
       flash[:notice] = t('flash.weekly_events.update.success',
                          :title => @weekly_event.title)
@@ -144,6 +148,8 @@ class WeeklyEventsController < ManagerController
   end
 
   def destroy
+    @weekly_event = WeeklyEvent.find(params['id'])
+
     @weekly_event.destroy
 
     flash[:notice] = t('flash.weekly_events.destroy.success',
@@ -186,10 +192,6 @@ class WeeklyEventsController < ManagerController
       @title = t('weekly_events.edit.title', :title => @weekly_event.title)
 
       render :edit
-    end
-
-    def find_weekly_event
-      @weekly_event = WeeklyEvent.find(params[:id])
     end
 
 end

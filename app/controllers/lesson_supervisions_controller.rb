@@ -2,8 +2,6 @@
 
 class LessonSupervisionsController < SecretaryController
 
-  before_filter :find_lesson_supervision, :only => [:show, :edit, :update, :destroy]
-
   def index
     case request.format
     when Mime::HTML
@@ -51,6 +49,8 @@ class LessonSupervisionsController < SecretaryController
   end
 
   def show
+    @lesson_supervision = LessonSupervision.find(params['id'])
+
     @attribute_names = [:unique_names, :instructors_count, :comment]
 
     @instructor_attribute_names = [:first_name, :last_name, :email]
@@ -67,6 +67,8 @@ class LessonSupervisionsController < SecretaryController
   end
 
   def edit
+    @lesson_supervision = LessonSupervision.find(params['id'])
+
     render_edit_properly
   end
 
@@ -91,6 +93,8 @@ class LessonSupervisionsController < SecretaryController
   end
 
   def update
+    @lesson_supervision = LessonSupervision.find(params['id'])
+
     if @lesson_supervision.update_attributes(params[:lesson_supervision])
       flash[:notice] = t('flash.lesson_supervisions.update.success',
                          :title => @lesson_supervision.unique_names)
@@ -104,6 +108,8 @@ class LessonSupervisionsController < SecretaryController
   end
 
   def destroy
+    @lesson_supervision = LessonSupervision.find(params['id'])
+
     @lesson_supervision.destroy
 
     flash[:notice] = t('flash.lesson_supervisions.destroy.success',
@@ -113,10 +119,6 @@ class LessonSupervisionsController < SecretaryController
   end
 
   private
-
-    def find_lesson_supervision
-      @lesson_supervision = LessonSupervision.find(params[:id])
-    end
 
     def render_new_properly
       # @attribute_names = [:unique_names, :instructors_count, :comment]

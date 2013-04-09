@@ -2,8 +2,6 @@
 
 class Admin::KnownIPsController < AdminController
 
-  before_filter :find_known_ip, :only => [:show, :edit, :update, :destroy]
-
   def index
     @attribute_names = [:ip, :description]
 
@@ -15,6 +13,9 @@ class Admin::KnownIPsController < AdminController
   end
 
   def show
+    @known_ip = KnownIP.find(params['id'])
+    @safe_users = @known_ip.safe_users
+
     @attribute_names = [:ip, :description]
 
     @safe_user_attribute_names = [ :username,
@@ -24,8 +25,6 @@ class Admin::KnownIPsController < AdminController
                                    :manager,
                                    :secretary,
                                    :a_person ]
-
-    @safe_users = @known_ip.safe_users
 
     # Sort safe users:
     sort_params = (params[:sort] && params[:sort][:safe_users]) || {}
@@ -41,6 +40,8 @@ class Admin::KnownIPsController < AdminController
   end
 
   def edit
+    @known_ip = KnownIP.find(params['id'])
+
     render_edit_properly
   end
 
@@ -59,6 +60,8 @@ class Admin::KnownIPsController < AdminController
   end
 
   def update
+    @known_ip = KnownIP.find(params['id'])
+
     if @known_ip.update_attributes(params[:known_ip])
       flash[:notice] =  t('flash.admin.known_i_ps.update.success',
                           :ip => @known_ip.ip)
@@ -71,7 +74,10 @@ class Admin::KnownIPsController < AdminController
   end
 
   def destroy
+    @known_ip = KnownIP.find(params['id'])
+
     @known_ip.destroy
+
     flash[:notice] = t('flash.admin.known_i_ps.destroy.success',
                        :ip => @known_ip.ip)
 
@@ -79,10 +85,6 @@ class Admin::KnownIPsController < AdminController
   end
 
   private
-
-    def find_known_ip
-      @known_ip = KnownIP.find(params[:id])
-    end
 
     def render_new_properly
       @title = t('admin.known_i_ps.new.title')

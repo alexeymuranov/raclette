@@ -2,8 +2,6 @@
 
 class EventsController < SecretaryController
 
-  before_filter :find_event, :only => [:show, :edit, :update, :destroy]
-
   def index
     case request.format
     when Mime::HTML
@@ -62,6 +60,8 @@ class EventsController < SecretaryController
   end
 
   def show
+    @event = Event.find(params['id'])
+
     @attribute_names = [ :title, :event_type,
                          :lesson,
                          :date,
@@ -101,6 +101,8 @@ class EventsController < SecretaryController
   end
 
   def edit
+    @event = Event.find(params['id'])
+
     render_edit_properly
   end
 
@@ -124,6 +126,8 @@ class EventsController < SecretaryController
   end
 
   def update
+    @event = Event.find(params['id'])
+
     if @event.update_attributes(params[:event])
       flash[:notice] = t('flash.events.update.success',
                          :title => @event.title)
@@ -136,6 +140,8 @@ class EventsController < SecretaryController
   end
 
   def destroy
+    @event = Event.find(params['id'])
+
     @event.destroy
 
     flash[:notice] = t('flash.events.destroy.success',
@@ -145,10 +151,6 @@ class EventsController < SecretaryController
   end
 
   private
-
-    def find_event
-      @event = Event.find(params[:id])
-    end
 
     def render_new_properly
       @attribute_names = [ :title, :event_type,
