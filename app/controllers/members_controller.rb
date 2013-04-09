@@ -1,5 +1,8 @@
 ## encoding: UTF-8
 
+# NOTE: This controller is used to test changes before applying them to
+# all controllers.
+
 class MembersController < SecretaryController
 
   class Member < Accessors::Member
