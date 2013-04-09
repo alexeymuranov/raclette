@@ -4,12 +4,12 @@
   = render 'shared/error_messages/validation', :target => @membership
 
   %dl.form_fields
-    - @belongs_to_associations.each do |assoc|
+    - @belongs_to_association_names.each do |assoc_name|
 
       = render 'shared/forms/belongs_to_association',
                :form_builder => f,
-               :association  => assoc,
-               :association_name_attribute => @association_name_attributes[assoc]
+               :association  => assoc_name,
+               :association_name_attribute => @association_name_attributes[assoc_name]
 
     - @attribute_names.each do |attr_name|
 

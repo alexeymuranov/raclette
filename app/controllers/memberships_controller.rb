@@ -12,7 +12,7 @@ class MembershipsController < ManagerController
   def show
     @attribute_names = [:initial_price, :current_price]
 
-    @singular_associations = [:activity_period, :membership_type]
+    @singular_association_names = [:activity_period, :membership_type]
     @association_name_attributes = { :activity_period => :unique_title,
                                      :membership_type => :unique_title }
 
@@ -84,7 +84,7 @@ class MembershipsController < ManagerController
     def render_new_properly
       @attribute_names = [:initial_price, :current_price]
 
-      @belongs_to_associations = [:activity_period, :membership_type]
+      @belongs_to_association_names = [:activity_period, :membership_type]
       @association_name_attributes = { :activity_period => :unique_title,
                                        :membership_type => :unique_title }
 
@@ -96,7 +96,7 @@ class MembershipsController < ManagerController
     def render_edit_properly
       @attribute_names = [:initial_price, :current_price]
 
-      @belongs_to_associations = [:activity_period, :membership_type]
+      @belongs_to_association_names = [:activity_period, :membership_type]
       @association_name_attributes = { :activity_period => :unique_title,
                                        :membership_type => :unique_title }
 

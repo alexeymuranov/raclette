@@ -76,7 +76,7 @@ class EventsController < SecretaryController
                          :tickets_collected,
                          :entry_fees_collected ]
 
-    @singular_associations = [:weekly_event]
+    @singular_association_names = [:weekly_event]
     @association_name_attributes = { :weekly_event => :virtual_long_title }
 
     @member_participant_attribute_names = [:ordered_full_name, :email]
