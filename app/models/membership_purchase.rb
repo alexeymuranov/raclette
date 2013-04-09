@@ -14,8 +14,11 @@ class MembershipPurchase < ActiveRecord::Base
     has_many :payments, :as        => :payable,
                         :dependent => :nullify
 
-    has_many :accounted_guest_entries, :dependent  => :nullify,
-                                       :inverse_of => :membership_purchase
+    has_many :accounted_guest_entries,
+             :class_name  => :GuestEntry,
+             :foreign_key => :toward_membership_purchase_id,
+             :dependent   => :nullify,
+             :inverse_of  => :toward_membership_purchase
 
     accepts_nested_attributes_for :payments
   end

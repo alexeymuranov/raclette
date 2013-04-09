@@ -9,7 +9,8 @@ class GuestEntry < ActiveRecord::Base
     belongs_to :previous_entry, :class_name => :GuestEntry,
                                 :inverse_of => :following_entry
 
-    belongs_to :membership_purchase,
+    belongs_to :toward_membership_purchase,
+               :class_name  => :MembershipPurchase,
                :foreign_key => :toward_membership_purchase_id,
                :inverse_of  => :accounted_guest_entries
 
