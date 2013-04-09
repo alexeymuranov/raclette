@@ -1,5 +1,7 @@
 ## encoding: UTF-8
 
+# TODO: implement params processing.
+
 class TicketBooksController < ManagerController
 
   before_filter :find_membership, :except => :index
@@ -149,4 +151,15 @@ class TicketBooksController < ManagerController
       render :edit
     end
 
+  module AttributesFromParamsForCreate
+    private
+      # TODO: implement
+  end
+  include AttributesFromParamsForCreate
+
+  module AttributesFromParamsForUpdate
+    private
+      # TODO: implement
+  end
+  include AttributesFromParamsForUpdate
 end

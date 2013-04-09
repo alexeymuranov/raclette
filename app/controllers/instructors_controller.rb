@@ -2,18 +2,27 @@
 
 class InstructorsController < ManagerController
 
+  INSTRUCTOR_ATTRIBUTE_NAMES_FOR_HTML_INDEX = [ :ordered_full_name,
+                                                :email,
+                                                :employed_from ]
+  INSTRUCTOR_ATTRIBUTE_NAMES_FOR_XML_INDEX  = [ :last_name,
+                                                :first_name,
+                                                :email,
+                                                :employed_from ]
   def index
     case request.format
     when Mime::HTML
-      @attribute_names = [ :ordered_full_name,
-                           :email,
-                           :employed_from ]
+      @attribute_names = INSTRUCTOR_ATTRIBUTE_NAMES_FOR_HTML_INDEX
+      default_sorting_column = :ordered_full_name
     when Mime::XML, Mime::CSV, Mime::MS_EXCEL_2003_XML,
          Mime::CSV_ZIP, Mime::MS_EXCEL_2003_XML_ZIP
-      @attribute_names = [ :last_name,
-                           :first_name,
-                           :email,
-                           :employed_from ]
+      @attribute_names = INSTRUCTOR_ATTRIBUTE_NAMES_FOR_XML_INDEX
+      default_sorting_column = :last_name
+    end
+
+    if selected_attribute_names = params['attribute_names']
+      @attribute_names = @attribute_names.select { |attr|
+        selected_attribute_names[attr.to_s] }
     end
 
     @instructors = Instructor.joins(:person).
@@ -24,8 +33,6 @@ class InstructorsController < ManagerController
     @filtered_instructors_count = @instructors.count
 
     # Sort:
-    default_sorting_column =
-      request.format == 'html' ? :ordered_full_name : :last_name
     sort_params = (params['sort'] && params['sort']['instructors']) || {}
     @instructors = sort(@instructors, sort_params, default_sorting_column)
 
@@ -70,41 +77,65 @@ class InstructorsController < ManagerController
     end
   end
 
+  INSTRUCTOR_ATTRIBUTE_NAMES_FOR_SHOW = [ :name_title,
+                                          :first_name,
+                                          :last_name,
+                                          :nickname_or_other,
+                                          :email,
+                                          :employed_from ]
   def show
     @instructor = Instructor.find(params['id'])
 
-    @attribute_names = [ :name_title,
-                         :first_name,
-                         :last_name,
-                         :nickname_or_other,
-                         :email,
-                         :employed_from ]
+    @attribute_names = INSTRUCTOR_ATTRIBUTE_NAMES_FOR_SHOW
+    if selected_attribute_names = params['attribute_names']
+      @attribute_names = @attribute_names.select { |attr|
+        selected_attribute_names[attr.to_s] }
+    end
 
     @title = t('instructors.show.title', :name => @instructor.virtual_full_name)
   end
 
+  INSTRUCTOR_ATTRIBUTE_NAMES_FOR_NEW = [ :employed_from ]
+  INSTRUCTOR_PERSON_ATTRIBUTE_NAMES_FOR_NEW = [ :name_title,
+                                                :first_name,
+                                                :last_name,
+                                                :nickname_or_other,
+                                                :email ]
   def new
-    @instructor = Instructor.new
-    @instructor.build_person
+    @attribute_names        = INSTRUCTOR_ATTRIBUTE_NAMES_FOR_NEW
+    @person_attribute_names = INSTRUCTOR_PERSON_ATTRIBUTE_NAMES_FOR_NEW
+
+    @instructor = Person.new.build_instructor
 
     render_new_properly
   end
 
+  INSTRUCTOR_ATTRIBUTE_NAMES_FOR_EDIT = [ :employed_from ]
+  INSTRUCTOR_PERSON_ATTRIBUTE_NAMES_FOR_EDIT = [ :name_title,
+                                                 :first_name,
+                                                 :last_name,
+                                                 :nickname_or_other,
+                                                 :email ]
   def edit
     @instructor = Instructor.find(params['id'])
+
+    @attribute_names        = INSTRUCTOR_ATTRIBUTE_NAMES_FOR_EDIT
+    @person_attribute_names = INSTRUCTOR_PERSON_ATTRIBUTE_NAMES_FOR_EDIT
+    selected_attribute_names        = params['attribute_names']
+    selected_person_attribute_names = params['person_attribute_names']
+    if selected_attribute_names || selected_person_attribute_names
+      selected_attribute_names        ||= []
+      selected_person_attribute_names ||= []
+      @attribute_names = @attribute_names.select { |attr|
+        selected_attribute_names[attr.to_s] }
+      @person_attribute_names = @person_attribute_names.select { |attr|
+        selected_person_attribute_names[attr.to_s] }
+    end
 
     render_edit_properly
   end
 
   def create
-    params['instructor']['person_attributes'].tap { |h|
-      h.each_pair do |k, v| h[k] = nil if v.blank? end
-      h['nickname_or_other'] ||= ''
-    }
-    params['instructor'].tap { |h|
-      h.each_pair do |k, v| h[k] = nil if v.blank? end
-    }
-
     # Because instructors primary key works as foreign key for people
     # (this is not recommended in general),
     # building an associated person and saving the instructor with person with
@@ -112,8 +143,11 @@ class InstructorsController < ManagerController
     # (probably causes stack overflow).
     # The only workaround seems to be to save the person first,
     # assign the foreign key manually, and then save the instructor.
-    @person = Person.new(params['instructor']['person_attributes'])
-    @instructor = Instructor.new(params['instructor'].except('person_attributes'))
+    attributes =
+      process_raw_instructor_attributes_for_create
+
+    @person = Person.new(attributes.delete(:person_attributes))
+    @instructor = Instructor.new(attributes)
     @instructor.person = @person
 
     unless @person.save
@@ -147,15 +181,10 @@ class InstructorsController < ManagerController
   def update
     @instructor = Instructor.find(params['id'])
 
-    params['instructor']['person_attributes'].tap { |h|
-      h.each_pair do |k, v| h[k] = nil if v.blank? end
-      h['nickname_or_other'] ||= ''
-    }
-    params['instructor'].tap { |h|
-      h.each_pair do |k, v| h[k] = nil if v.blank? end
-    }
+    attributes =
+      process_raw_instructor_attributes_for_update
 
-    if @instructor.update_attributes(params['instructor'])
+    if @instructor.update_attributes(attributes)
       flash[:notice] = t('flash.instructors.update.success',
                          :name => @instructor.virtual_full_name)
 
@@ -198,4 +227,131 @@ class InstructorsController < ManagerController
       render :edit
     end
 
+  module AttributesFromParamsForCreate
+    INSTRUCTOR_ATTRIBUTE_NAMES = Set[ :employed_from ]
+    INSTRUCTOR_PERSON_ATTRIBUTE_NAMES = Set[ :name_title,
+                                             :first_name,
+                                             :last_name,
+                                             :nickname_or_other,
+                                             :email ]
+    INSTRUCTOR_ATTRIBUTE_NAMES_FROM_STRINGS = {}.tap do |h|
+      INSTRUCTOR_ATTRIBUTE_NAMES.each do |attr_name|
+        h[attr_name.to_s] = attr_name
+      end
+    end
+    INSTRUCTOR_PERSON_ATTRIBUTE_NAMES_FROM_STRINGS = {}.tap do |h|
+      INSTRUCTOR_PERSON_ATTRIBUTE_NAMES.each do |attr_name|
+        h[attr_name.to_s] = attr_name
+      end
+    end
+
+    private
+
+      def instructor_attribute_names_for_create
+        INSTRUCTOR_ATTRIBUTE_NAMES
+      end
+
+      def instructor_person_attribute_names_for_create
+        INSTRUCTOR_PERSON_ATTRIBUTE_NAMES
+      end
+
+      def process_raw_instructor_attributes_for_create(submitted_attributes = params['instructor'])
+        allowed_attribute_names = instructor_attribute_names_for_create
+        {}.tap do |attributes|
+          submitted_attributes.each_pair do |k, v|
+            attr_name = INSTRUCTOR_ATTRIBUTE_NAMES_FROM_STRINGS[k]
+            if allowed_attribute_names.include?(attr_name)
+              attributes[attr_name] = v == '' ? nil : v
+            end
+          end
+          if submitted_attributes.key?('person_attributes')
+            attributes[:person_attributes] =
+              process_raw_instructor_person_attributes_for_create(
+                submitted_attributes['person_attributes'])
+          end
+        end
+      end
+
+      def process_raw_instructor_person_attributes_for_create(submitted_attributes = params['instructor']['person_attributes'])
+        allowed_attribute_names = instructor_person_attribute_names_for_create
+        {}.tap do |attributes|
+          submitted_attributes.each_pair do |k, v|
+            attr_name = INSTRUCTOR_PERSON_ATTRIBUTE_NAMES_FROM_STRINGS[k]
+            if allowed_attribute_names.include?(attr_name)
+              attributes[attr_name] = v == '' ? nil : v
+            end
+          end
+          if attributes.key?(:nickname_or_other)
+            attributes[:nickname_or_other] ||= ''
+          end
+        end
+      end
+
+  end
+  include AttributesFromParamsForCreate
+
+  module AttributesFromParamsForUpdate
+    INSTRUCTOR_ATTRIBUTE_NAMES =
+      AttributesFromParamsForCreate::INSTRUCTOR_ATTRIBUTE_NAMES
+    INSTRUCTOR_PERSON_ATTRIBUTE_NAMES = Set[ :id,
+                                             :name_title,
+                                             :first_name,
+                                             :last_name,
+                                             :nickname_or_other,
+                                             :email ]
+    INSTRUCTOR_ATTRIBUTE_NAMES_FROM_STRINGS = {}.tap do |h|
+      INSTRUCTOR_ATTRIBUTE_NAMES.each do |attr_name|
+        h[attr_name.to_s] = attr_name
+      end
+    end
+    INSTRUCTOR_PERSON_ATTRIBUTE_NAMES_FROM_STRINGS = {}.tap do |h|
+      INSTRUCTOR_PERSON_ATTRIBUTE_NAMES.each do |attr_name|
+        h[attr_name.to_s] = attr_name
+      end
+    end
+
+    private
+
+      def instructor_attribute_names_for_update
+        INSTRUCTOR_ATTRIBUTE_NAMES
+      end
+
+      def instructor_person_attribute_names_for_update
+        INSTRUCTOR_PERSON_ATTRIBUTE_NAMES
+      end
+
+      def process_raw_instructor_attributes_for_update(submitted_attributes = params['instructor'])
+        allowed_attribute_names = instructor_attribute_names_for_update
+        {}.tap do |attributes|
+          submitted_attributes.each_pair do |k, v|
+            attr_name = INSTRUCTOR_ATTRIBUTE_NAMES_FROM_STRINGS[k]
+            if allowed_attribute_names.include?(attr_name)
+              attributes[attr_name] = v == '' ? nil : v
+            end
+          end
+          if submitted_attributes.key?('person_attributes')
+            attributes[:person_attributes] =
+              process_raw_instructor_person_attributes_for_update(
+                submitted_attributes['person_attributes'])
+          end
+        end
+      end
+
+      def process_raw_instructor_person_attributes_for_update(submitted_attributes = params['instructor']['person_attributes'])
+        allowed_attribute_names = instructor_person_attribute_names_for_update
+        {}.tap do |attributes|
+          submitted_attributes.each_pair do |k, v|
+            attr_name = INSTRUCTOR_PERSON_ATTRIBUTE_NAMES_FROM_STRINGS[k]
+            if allowed_attribute_names.include?(attr_name)
+              attributes[attr_name] = v == '' ? nil : v
+            end
+          end
+          if attributes.key?(:nickname_or_other)
+            attributes[:nickname_or_other] ||= ''
+          end
+        end
+      end
+
+  end
+  include AttributesFromParamsForUpdate
 end

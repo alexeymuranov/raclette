@@ -1,5 +1,7 @@
 ## encoding: UTF-8
 
+# TODO: implement params processing.
+
 class MembershipsController < ManagerController
 
   def index
@@ -108,4 +110,15 @@ class MembershipsController < ManagerController
       render :edit
     end
 
+  module AttributesFromParamsForCreate
+    private
+      # TODO: implement
+  end
+  include AttributesFromParamsForCreate
+
+  module AttributesFromParamsForUpdate
+    private
+      # TODO: implement
+  end
+  include AttributesFromParamsForUpdate
 end

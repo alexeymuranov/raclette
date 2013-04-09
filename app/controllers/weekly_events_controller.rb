@@ -1,5 +1,7 @@
 ## encoding: UTF-8
 
+# TODO: implement params processing.
+
 class WeeklyEventsController < ManagerController
 
   def index
@@ -194,4 +196,15 @@ class WeeklyEventsController < ManagerController
       render :edit
     end
 
+  module AttributesFromParamsForCreate
+    private
+      # TODO: implement
+  end
+  include AttributesFromParamsForCreate
+
+  module AttributesFromParamsForUpdate
+    private
+      # TODO: implement
+  end
+  include AttributesFromParamsForUpdate
 end

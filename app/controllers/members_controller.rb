@@ -5,21 +5,29 @@
 
 class MembersController < SecretaryController
 
-
+  MEMBER_ATTRIBUTE_NAMES_FOR_HTML_INDEX = [ :ordered_full_name,
+                                            :email,
+                                            :account_deactivated,
+                                            :tickets_count ]
+  MEMBER_ATTRIBUTE_NAMES_FOR_XML_INDEX  = [ :last_name,
+                                            :first_name,
+                                            :nickname_or_other,
+                                            :email,
+                                            :tickets_count ]
   def index
     case request.format
     when Mime::HTML
-      @attribute_names = [ :ordered_full_name,
-                           :email,
-                           :account_deactivated,
-                           :tickets_count ]
+      @attribute_names = MEMBER_ATTRIBUTE_NAMES_FOR_HTML_INDEX
+      default_sorting_column = :ordered_full_name
     when Mime::XML, Mime::CSV, Mime::MS_EXCEL_2003_XML,
          Mime::CSV_ZIP, Mime::MS_EXCEL_2003_XML_ZIP
-      @attribute_names = [ :last_name,
-                           :first_name,
-                           :nickname_or_other,
-                           :email,
-                           :tickets_count ]
+      @attribute_names = MEMBER_ATTRIBUTE_NAMES_FOR_XML_INDEX
+      default_sorting_column = :last_name
+    end
+
+    if selected_attribute_names = params['attribute_names']
+      @attribute_names = @attribute_names.select { |attr|
+        selected_attribute_names[attr.to_s] }
     end
 
     @members = Member.joins(:person).
@@ -30,8 +38,6 @@ class MembersController < SecretaryController
     @filtered_members_count = @members.count
 
     # Sort:
-    default_sorting_column = ( request.format == 'html' ?
-                               :ordered_full_name : :last_name )
     sort_params = (params['sort'] && params['sort']['members']) || {}
     @members = sort(@members, sort_params, default_sorting_column)
 
@@ -86,19 +92,24 @@ class MembersController < SecretaryController
     end
   end
 
+  MEMBER_ATTRIBUTE_NAMES_FOR_SHOW = [ :person_id,
+                                      :name_title,
+                                      :first_name,
+                                      :last_name,
+                                      :nickname_or_other,
+                                      :email,
+                                      :payed_tickets_count,
+                                      :free_tickets_count,
+                                      :account_deactivated,
+                                      :been_member_by ]
   def show
     @member = Member.find(params['id'])
 
-    @attribute_names = [ :person_id,
-                         :name_title,
-                         :first_name,
-                         :last_name,
-                         :nickname_or_other,
-                         :email,
-                         :payed_tickets_count,
-                         :free_tickets_count,
-                         :account_deactivated,
-                         :been_member_by ]
+    @attribute_names = MEMBER_ATTRIBUTE_NAMES_FOR_SHOW
+    if selected_attribute_names = params['attribute_names']
+      @attribute_names = @attribute_names.select { |attr|
+        selected_attribute_names[attr.to_s] }
+    end
 
     @attended_event_attribute_names = [:title, :event_type, :date, :start_time]
     @attended_events = @member.attended_events
@@ -110,28 +121,53 @@ class MembersController < SecretaryController
     @title = t('members.show.title', :name => @member.virtual_full_name)
   end
 
+  MEMBER_ATTRIBUTE_NAMES_FOR_NEW = [ :payed_tickets_count,
+                                     :free_tickets_count,
+                                     :account_deactivated,
+                                     :been_member_by ]
+  MEMBER_PERSON_ATTRIBUTE_NAMES_FOR_NEW = [ :name_title,
+                                            :first_name,
+                                            :last_name,
+                                            :nickname_or_other,
+                                            :email ]
   def new
-    @member = Member.new
-    @member.build_person
+    @attribute_names        = MEMBER_ATTRIBUTE_NAMES_FOR_NEW
+    @person_attribute_names = MEMBER_PERSON_ATTRIBUTE_NAMES_FOR_NEW
+
+    @member = Person.new.build_member
 
     render_new_properly
   end
 
+  MEMBER_ATTRIBUTE_NAMES_FOR_EDIT = [ :payed_tickets_count,
+                                      :free_tickets_count,
+                                      :account_deactivated,
+                                      :been_member_by ]
+  MEMBER_PERSON_ATTRIBUTE_NAMES_FOR_EDIT = [ :name_title,
+                                             :first_name,
+                                             :last_name,
+                                             :nickname_or_other,
+                                             :email ]
   def edit
     @member = Member.find(params['id'])
+
+    @attribute_names        = MEMBER_ATTRIBUTE_NAMES_FOR_EDIT
+    @person_attribute_names = MEMBER_PERSON_ATTRIBUTE_NAMES_FOR_EDIT
+    selected_attribute_names        = params['attribute_names']
+    selected_person_attribute_names = params['person_attribute_names']
+    if selected_attribute_names || selected_person_attribute_names
+      selected_attribute_names        ||= []
+      selected_person_attribute_names ||= []
+      @attribute_names = @attribute_names.select { |attr|
+        selected_attribute_names[attr.to_s] }
+      @person_attribute_names = @person_attribute_names.select { |attr|
+        selected_person_attribute_names[attr.to_s] }
+    end
 
     render_edit_properly
   end
 
   def create
-    params['member']['person_attributes'].tap { |h|
-      h.each_pair do |k, v| h[k] = nil if v.blank? end
-      h['nickname_or_other'] ||= ''
-    }
-    params['member'].tap { |h|
-      h.each_pair do |k, v| h[k] = nil if v.blank? end
-    }
-
     # Because members primary key works as foreign key for people
     # (this is not recommended in general),
     # building an associated person and saving the member with person with
@@ -139,8 +175,10 @@ class MembersController < SecretaryController
     # (probably causes stack overflow).
     # The only workaround seems to be to save the person first,
     # assign the foreign key manually, and then save the member.
-    @person = Person.new(params['member']['person_attributes'])
-    @member = Member.new(params['member'].except('person_attributes'))
+    attributes = process_raw_member_attributes_for_create
+
+    @person = Person.new(attributes.delete(:person_attributes))
+    @member = Member.new(attributes)
     @member.person = @person
 
     unless @person.save
@@ -164,15 +202,9 @@ class MembersController < SecretaryController
   def update
     @member = Member.find(params['id'])
 
-    params['member']['person_attributes'].tap { |h|
-      h.each_pair do |k, v| h[k] = nil if v.blank? end
-      h['nickname_or_other'] ||= ''
-    }
-    params['member'].tap { |h|
-      h.each_pair do |k, v| h[k] = nil if v.blank? end
-    }
+    attributes = process_raw_member_attributes_for_update
 
-    if @member.update_attributes(params['member'])
+    if @member.update_attributes(attributes)
       flash[:notice] = t('flash.members.update.success',
                          :name => @member.virtual_full_name)
 
@@ -214,4 +246,134 @@ class MembersController < SecretaryController
       render :edit
     end
 
+  module AttributesFromParamsForCreate
+    MEMBER_ATTRIBUTE_NAMES = Set[ :payed_tickets_count,
+                                  :free_tickets_count,
+                                  :account_deactivated,
+                                  :been_member_by ]
+    MEMBER_PERSON_ATTRIBUTE_NAMES = Set[ :name_title,
+                                         :first_name,
+                                         :last_name,
+                                         :nickname_or_other,
+                                         :email ]
+    MEMBER_ATTRIBUTE_NAMES_FROM_STRINGS = {}.tap do |h|
+      MEMBER_ATTRIBUTE_NAMES.each do |attr_name|
+        h[attr_name.to_s] = attr_name
+      end
+    end
+    MEMBER_PERSON_ATTRIBUTE_NAMES_FROM_STRINGS = {}.tap do |h|
+      MEMBER_PERSON_ATTRIBUTE_NAMES.each do |attr_name|
+        h[attr_name.to_s] = attr_name
+      end
+    end
+
+    private
+
+      def member_attribute_names_for_create
+        MEMBER_ATTRIBUTE_NAMES
+      end
+
+      def member_person_attribute_names_for_create
+        MEMBER_PERSON_ATTRIBUTE_NAMES
+      end
+
+      def process_raw_member_attributes_for_create(submitted_attributes = params['member'])
+        allowed_attribute_names = member_attribute_names_for_create
+        {}.tap do |attributes|
+          submitted_attributes.each_pair do |k, v|
+            attr_name = MEMBER_ATTRIBUTE_NAMES_FROM_STRINGS[k]
+            if allowed_attribute_names.include?(attr_name)
+              attributes[attr_name] = v == '' ? nil : v
+            end
+          end
+          if submitted_attributes.key?('person_attributes')
+            attributes[:person_attributes] =
+              process_raw_member_person_attributes_for_create(
+                submitted_attributes['person_attributes'])
+          end
+        end
+      end
+
+      def process_raw_member_person_attributes_for_create(submitted_attributes = params['member']['person_attributes'])
+        allowed_attribute_names = member_person_attribute_names_for_create
+        {}.tap do |attributes|
+          submitted_attributes.each_pair do |k, v|
+            attr_name = MEMBER_PERSON_ATTRIBUTE_NAMES_FROM_STRINGS[k]
+            if allowed_attribute_names.include?(attr_name)
+              attributes[attr_name] = v == '' ? nil : v
+            end
+          end
+          if attributes.key?(:nickname_or_other)
+            attributes[:nickname_or_other] ||= ''
+          end
+        end
+      end
+
+  end
+  include AttributesFromParamsForCreate
+
+  module AttributesFromParamsForUpdate
+    MEMBER_ATTRIBUTE_NAMES =
+      AttributesFromParamsForCreate::MEMBER_ATTRIBUTE_NAMES
+    MEMBER_PERSON_ATTRIBUTE_NAMES = Set[ :id,
+                                         :name_title,
+                                         :first_name,
+                                         :last_name,
+                                         :nickname_or_other,
+                                         :email ]
+    MEMBER_ATTRIBUTE_NAMES_FROM_STRINGS = {}.tap do |h|
+      MEMBER_ATTRIBUTE_NAMES.each do |attr_name|
+        h[attr_name.to_s] = attr_name
+      end
+    end
+    MEMBER_PERSON_ATTRIBUTE_NAMES_FROM_STRINGS = {}.tap do |h|
+      MEMBER_PERSON_ATTRIBUTE_NAMES.each do |attr_name|
+        h[attr_name.to_s] = attr_name
+      end
+    end
+
+    private
+
+      def member_attribute_names_for_update
+        MEMBER_ATTRIBUTE_NAMES
+      end
+
+      def member_person_attribute_names_for_update
+        MEMBER_PERSON_ATTRIBUTE_NAMES
+      end
+
+      def process_raw_member_attributes_for_update(submitted_attributes = params['member'])
+        allowed_attribute_names = member_attribute_names_for_update
+        {}.tap do |attributes|
+          submitted_attributes.each_pair do |k, v|
+            attr_name = MEMBER_ATTRIBUTE_NAMES_FROM_STRINGS[k]
+            if allowed_attribute_names.include?(attr_name)
+              attributes[attr_name] = v == '' ? nil : v
+            end
+          end
+          if submitted_attributes.key?('person_attributes')
+            attributes[:person_attributes] =
+              process_raw_member_person_attributes_for_update(
+                submitted_attributes['person_attributes'])
+          end
+        end
+      end
+
+      def process_raw_member_person_attributes_for_update(submitted_attributes = params['member']['person_attributes'])
+        allowed_attribute_names = member_person_attribute_names_for_update
+        {}.tap do |attributes|
+          submitted_attributes.each_pair do |k, v|
+            attr_name = MEMBER_PERSON_ATTRIBUTE_NAMES_FROM_STRINGS[k]
+            if allowed_attribute_names.include?(attr_name)
+              attributes[attr_name] = v == '' ? nil : v
+            end
+          end
+          if attributes.key?(:nickname_or_other)
+            attributes[:nickname_or_other] ||= ''
+          end
+        end
+      end
+
+  end
+  include AttributesFromParamsForUpdate
 end

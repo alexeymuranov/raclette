@@ -1,5 +1,7 @@
 ## encoding: UTF-8
 
+# TODO: implement params processing.
+
 class ActivityPeriodsController < ManagerController
 
   def index
@@ -150,4 +152,15 @@ class ActivityPeriodsController < ManagerController
       render :edit
     end
 
+  module AttributesFromParamsForCreate
+    private
+      # TODO: implement
+  end
+  include AttributesFromParamsForCreate
+
+  module AttributesFromParamsForUpdate
+    private
+      # TODO: implement
+  end
+  include AttributesFromParamsForUpdate
 end

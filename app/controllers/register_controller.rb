@@ -1,5 +1,7 @@
 ## encoding: UTF-8
 
+# TODO: implement params processing.
+
 class RegisterController < ApplicationController # FIXME
 
   def choose_person
@@ -315,4 +317,33 @@ class RegisterController < ApplicationController # FIXME
       render 'new_member_transaction'
     end
 
+  module AttributesFromParamsForCreateMemberEntry
+    private
+      # TODO: implement
+  end
+  include AttributesFromParamsForCreateMemberEntry
+
+  module AttributesFromParamsForCreateGuestEntry
+    private
+      # TODO: implement
+  end
+  include AttributesFromParamsForCreateGuestEntry
+
+  module AttributesFromParamsForCreateAnonymousEntry
+    private
+      # TODO: implement
+  end
+  include AttributesFromParamsForCreateAnonymousEntry
+
+  module AttributesFromParamsForCreateMemberTicketPurchase
+    private
+      # TODO: implement
+  end
+  include AttributesFromParamsForCreateMemberTicketPurchase
+
+  module AttributesFromParamsForCreateMemberMembershipPurchase
+    private
+      # TODO: implement
+  end
+  include AttributesFromParamsForCreateMemberMembershipPurchase
 end

@@ -1,5 +1,7 @@
 ## encoding: UTF-8
 
+# TODO: implement params processing.
+
 class Admin::SafeUserIPsController < AdminController
 
   def index
@@ -22,4 +24,10 @@ class Admin::SafeUserIPsController < AdminController
 
     redirect_to :action => :index
   end
+
+  module AttributesFromParamsForUpdateAll
+    private
+      # TODO: implement
+  end
+  include AttributesFromParamsForUpdateAll
 end

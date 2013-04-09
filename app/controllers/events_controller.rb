@@ -1,5 +1,7 @@
 ## encoding: UTF-8
 
+# TODO: implement params processing.
+
 class EventsController < SecretaryController
 
   def index
@@ -182,4 +184,15 @@ class EventsController < SecretaryController
       render :edit
     end
 
+  module AttributesFromParamsForCreate
+    private
+      # TODO: implement
+  end
+  include AttributesFromParamsForCreate
+
+  module AttributesFromParamsForUpdate
+    private
+      # TODO: implement
+  end
+  include AttributesFromParamsForUpdate
 end
