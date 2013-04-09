@@ -3,13 +3,13 @@
 
   = render 'shared/lists/description',
     :object     => @weekly_event,
-    :attributes => @attributes
+    :attributes => @attribute_names
 
 %section
 
   = render 'shared/tables/filtered_index',
            :collection       => @events,
-           :attributes       => @event_attributes,
+           :attributes       => @event_attribute_names,
            :html_table_id    => :events,
            :filtering_values => @filtering_values
 

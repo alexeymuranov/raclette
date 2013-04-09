@@ -7,19 +7,19 @@ class InstructorsController < ManagerController
   def index
     case request.format
     when Mime::HTML
-      @attributes = [ :ordered_full_name,
-                      :email,
-                      :employed_from ]
+      @attribute_names = [ :ordered_full_name,
+                           :email,
+                           :employed_from ]
     when Mime::XML, Mime::CSV, Mime::MS_EXCEL_2003_XML,
          Mime::CSV_ZIP, Mime::MS_EXCEL_2003_XML_ZIP
-      @attributes = [ :last_name,
-                      :first_name,
-                      :email,
-                      :employed_from ]
+      @attribute_names = [ :last_name,
+                           :first_name,
+                           :email,
+                           :employed_from ]
     end
 
     @instructors = Instructor.joins(:person).
-      with_pseudo_columns(*@attributes, :formatted_email)
+      with_pseudo_columns(*@attribute_names, :formatted_email)
 
     # Filter:
     @instructors = do_filtering(@instructors)
@@ -57,28 +57,28 @@ class InstructorsController < ManagerController
       # For download:
       requested_format.xml do
         render :xml  => @instructors,
-               :only => @attributes
+               :only => @attribute_names
       end
 
       requested_format.ms_excel_2003_xml_zip do
         render :collection_ms_excel_2003_xml_zip => @instructors,
-               :only                             => @attributes
+               :only                             => @attribute_names
       end
 
       requested_format.csv_zip do
         render :collection_csv_zip => @instructors,
-               :only               => @attributes
+               :only               => @attribute_names
       end
     end
   end
 
   def show
-    @attributes = [ :name_title,
-                    :first_name,
-                    :last_name,
-                    :nickname_or_other,
-                    :email,
-                    :employed_from ]
+    @attribute_names = [ :name_title,
+                         :first_name,
+                         :last_name,
+                         :nickname_or_other,
+                         :email,
+                         :employed_from ]
 
     @title = t('instructors.show.title', :name => @instructor.virtual_full_name)
   end

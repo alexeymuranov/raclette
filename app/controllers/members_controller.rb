@@ -10,21 +10,21 @@ class MembersController < SecretaryController
   def index
     case request.format
     when Mime::HTML
-      @attributes = [ :ordered_full_name,
-                      :email,
-                      :account_deactivated,
-                      :tickets_count ]
+      @attribute_names = [ :ordered_full_name,
+                           :email,
+                           :account_deactivated,
+                           :tickets_count ]
     when Mime::XML, Mime::CSV, Mime::MS_EXCEL_2003_XML,
          Mime::CSV_ZIP, Mime::MS_EXCEL_2003_XML_ZIP
-      @attributes = [ :last_name,
-                      :first_name,
-                      :nickname_or_other,
-                      :email,
-                      :tickets_count ]
+      @attribute_names = [ :last_name,
+                           :first_name,
+                           :nickname_or_other,
+                           :email,
+                           :tickets_count ]
     end
 
     @members = Member.joins(:person).
-      with_pseudo_columns(*@attributes, :formatted_email)
+      with_pseudo_columns(*@attribute_names, :formatted_email)
 
     # Filter:
     @members = do_filtering(@members)
@@ -62,49 +62,49 @@ class MembersController < SecretaryController
       # For download:
       requested_format.xml do
         render :xml  => @members,
-               :only => @attributes
+               :only => @attribute_names
       end
 
       requested_format.ms_excel_2003_xml do
         render :collection_ms_excel_2003_xml => @members,
-               :only                         => @attributes
+               :only                         => @attribute_names
       end
 
       requested_format.ms_excel_2003_xml_zip do
         render :collection_ms_excel_2003_xml_zip => @members,
-               :only                             => @attributes
+               :only                             => @attribute_names
       end
 
       requested_format.csv do
         render :collection_csv => @members,
-               :only           => @attributes
+               :only           => @attribute_names
       end
 
       requested_format.csv_zip do
         render :collection_csv_zip => @members,
-               :only               => @attributes
+               :only               => @attribute_names
       end
     end
   end
 
   def show
-    @attributes = [ :person_id,
-                    :name_title,
-                    :first_name,
-                    :last_name,
-                    :nickname_or_other,
-                    :email,
-                    :payed_tickets_count,
-                    :free_tickets_count,
-                    :account_deactivated,
-                    :been_member_by ]
+    @attribute_names = [ :person_id,
+                         :name_title,
+                         :first_name,
+                         :last_name,
+                         :nickname_or_other,
+                         :email,
+                         :payed_tickets_count,
+                         :free_tickets_count,
+                         :account_deactivated,
+                         :been_member_by ]
 
-    @attended_event_attributes = [:title, :event_type, :date, :start_time]
+    @attended_event_attribute_names = [:title, :event_type, :date, :start_time]
     @attended_events = @member.attended_events
 
-    @membership_attributes = [:title, :duration_months, :end_date]
+    @membership_attribute_names = [:title, :duration_months, :end_date]
     @memberships = @member.memberships.with_type.with_activity_period.
-      with_pseudo_columns(*@membership_attributes)
+      with_pseudo_columns(*@membership_attribute_names)
 
     @title = t('members.show.title', :name => @member.virtual_full_name)
   end

@@ -7,23 +7,23 @@ class Admin::UsersController < AdminController
   def index
     case request.format
     when Mime::HTML
-      @attributes = [ :username,
-                      :full_name,
-                      :account_deactivated,
-                      :admin,
-                      :manager,
-                      :secretary,
-                      :a_person ]
+      @attribute_names = [ :username,
+                           :full_name,
+                           :account_deactivated,
+                           :admin,
+                           :manager,
+                           :secretary,
+                           :a_person ]
     when Mime::XML, Mime::CSV, Mime::MS_EXCEL_2003_XML,
          Mime::CSV_ZIP, Mime::MS_EXCEL_2003_XML_ZIP
-      @attributes = [ :username,
-                      :full_name,
-                      :email,
-                      :account_deactivated,
-                      :admin,
-                      :manager,
-                      :secretary,
-                      :a_person ]
+      @attribute_names = [ :username,
+                           :full_name,
+                           :email,
+                           :account_deactivated,
+                           :admin,
+                           :manager,
+                           :secretary,
+                           :a_person ]
     end
 
     @users = User.scoped
@@ -53,7 +53,7 @@ class Admin::UsersController < AdminController
 
       requested_format.xml do
         render :xml  => @users,
-               :only => @attributes
+               :only => @attribute_names
       end
 
       requested_format.js do
@@ -65,43 +65,43 @@ class Admin::UsersController < AdminController
 
       requested_format.ms_excel_2003_xml do
         render :collection_ms_excel_2003_xml => @users,
-               :only                         => @attributes
+               :only                         => @attribute_names
       end
 
       requested_format.csv do
         render :collection_csv => @users,
-               :only           => @attributes
+               :only           => @attribute_names
       end
 
       requested_format.ms_excel_2003_xml_zip do
         render :collection_ms_excel_2003_xml_zip => @users,
-               :only                             => @attributes
+               :only                             => @attribute_names
       end
 
       requested_format.csv_zip do
         render :collection_csv_zip => @users,
-               :only               => @attributes
+               :only               => @attribute_names
       end
     end
   end
 
   def show
-    @main_attributes = [ :username,
-                         :full_name,
-                         :email,
-                         :account_deactivated,
-                         :admin,
-                         :manager,
-                         :secretary,
-                         :a_person ]
-    @main_attributes << :person_id if @user.a_person?
-    @main_attributes << :comments
+    @main_attribute_names = [ :username,
+                              :full_name,
+                              :email,
+                              :account_deactivated,
+                              :admin,
+                              :manager,
+                              :secretary,
+                              :a_person ]
+    @main_attribute_names << :person_id if @user.a_person?
+    @main_attribute_names << :comments
 
-    @other_attributes = []
-    @other_attributes << :last_signed_in_at unless
+    @other_attribute_names = []
+    @other_attribute_names << :last_signed_in_at unless
       @user.last_signed_in_at.blank?
 
-    @safe_ip_attributes = [:ip, :description]
+    @safe_ip_attribute_names = [:ip, :description]
 
     ip_sort_params = (params[:sort] && params[:sort][:safe_ips]) || {}
     @safe_ips = sort(@user.safe_ips, ip_sort_params, :ip)
@@ -195,7 +195,7 @@ class Admin::UsersController < AdminController
 
     def render_new_properly
       # NOTE: this seems redundant because coincides with KnownIP.all_sorting_columns
-      @known_ip_attributes = [:ip, :description]
+      @known_ip_attribute_names = [:ip, :description]
 
       ip_sort_params = (params[:sort] && params[:sort][:safe_ips]) || {}
       @known_ips = sort(KnownIP.scoped, ip_sort_params, :ip)
@@ -207,7 +207,7 @@ class Admin::UsersController < AdminController
     end
 
     def render_edit_properly
-      @known_ip_attributes = [:ip, :description]
+      @known_ip_attribute_names = [:ip, :description]
 
       ip_sort_params = (params[:sort] && params[:sort][:safe_ips]) || {}
       @known_ips = sort(KnownIP.scoped, ip_sort_params, :ip)

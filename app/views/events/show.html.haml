@@ -3,7 +3,7 @@
 
   = render 'shared/lists/description',
     :object                      => @event,
-    :attributes                  => @attributes,
+    :attributes                  => @attribute_names,
     :singular_associations       => @singular_associations,
     :association_name_attributes => @association_name_attributes
 
@@ -13,7 +13,7 @@
   - unless @member_participants.empty?
     = render 'shared/tables/simple_index',
              :collection    => @member_participants,
-             :attributes    => @member_participant_attributes,
+             :attributes    => @member_participant_attribute_names,
              :html_table_id => :member_participants
 
 %section
@@ -22,7 +22,7 @@
   - unless @other_participants.empty?
     = render 'shared/tables/simple_index',
              :collection    => @other_participants,
-             :attributes    => @other_participant_attributes,
+             :attributes    => @other_participant_attribute_names,
              :html_table_id => :other_participants
 
 %footer

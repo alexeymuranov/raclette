@@ -191,7 +191,7 @@ class RegisterController < ApplicationController # FIXME
 
       @guest ||= Guest.new(params[:guest])
 
-      @member_attributes = [:last_name, :first_name]
+      @member_attribute_names = [:last_name, :first_name]
 
       @events = Event.unlocked.past_seven_days
 
@@ -205,13 +205,13 @@ class RegisterController < ApplicationController # FIXME
     def render_new_member_transaction_properly
       @events = Event.unlocked.past_seven_days
 
-      @attended_event_attributes = [:title, :event_type, :date, :start_time]
+      @attended_event_attribute_names = [:title, :event_type, :date, :start_time]
       @attended_events = @member.attended_events
 
-      @owned_membership_attributes = [:title, :duration_months, :end_date]
+      @owned_membership_attribute_names = [:title, :duration_months, :end_date]
       @owned_memberships =
         @member.memberships.with_type.with_activity_period.
-                with_pseudo_columns(*@owned_membership_attributes)
+                with_pseudo_columns(*@owned_membership_attribute_names)
 
       @tabs = @events.empty? ? [] : ['new_entry']
 

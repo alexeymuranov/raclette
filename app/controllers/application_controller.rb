@@ -31,11 +31,11 @@ class ApplicationController < ActionController::Base
       collection.page(page).per(per_page)
     end
 
-    def do_filtering(collection_scope, values     = params[:filter],
-                                       attributes = @attributes)
+    def do_filtering(collection_scope, values          = params[:filter],
+                                       attribute_names = @attribute_names)
       if values
         @filter = FriendlyRelationFilter.new(collection_scope.klass)
-        @filter.filtering_attributes = attributes
+        @filter.filtering_attributes = attribute_names
         @filter.set_filtering_values_from_text_hash(values)
         @filtering_values =
           @filter.filtering_attributes_as_simple_nested_hash

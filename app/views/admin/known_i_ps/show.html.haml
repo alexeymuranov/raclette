@@ -7,7 +7,7 @@
 
     = render 'shared/lists/description',
       :object     => @known_ip,
-      :attributes => @attributes
+      :attributes => @attribute_names
 
 %section
   %h2= Admin::KnownIP.human_attribute_name(:safe_users)
@@ -15,7 +15,7 @@
   - unless @safe_users.empty?
     = render 'shared/tables/simple_index',
              :collection    => @safe_users,
-             :attributes    => @safe_user_attributes,
+             :attributes    => @safe_user_attribute_names,
              :html_table_id => :safe_users
 
 %footer

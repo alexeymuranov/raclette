@@ -7,10 +7,10 @@ class LessonSupervisionsController < SecretaryController
   def index
     case request.format
     when Mime::HTML
-      @attributes = [:unique_names, :instructors_count, :comment]
+      @attribute_names = [:unique_names, :instructors_count, :comment]
     when Mime::XML, Mime::CSV, Mime::MS_EXCEL_2003_XML,
          Mime::CSV_ZIP, Mime::MS_EXCEL_2003_XML_ZIP
-      @attributes = [:unique_names, :instructors_count, :comment]
+      @attribute_names = [:unique_names, :instructors_count, :comment]
     end
 
     @lesson_supervisions = LessonSupervision.scoped
@@ -35,25 +35,25 @@ class LessonSupervisionsController < SecretaryController
 
       requested_format.xml do
         render :xml  => @lesson_supervisions,
-               :only => @attributes
+               :only => @attribute_names
       end
 
       requested_format.ms_excel_2003_xml_zip do
         render :collection_ms_excel_2003_xml_zip => @lesson_supervisions,
-               :only                             => @attributes
+               :only                             => @attribute_names
       end
 
       requested_format.csv_zip do
         render :collection_csv_zip => @lesson_supervisions,
-               :only               => @attributes
+               :only               => @attribute_names
       end
     end
   end
 
   def show
-    @attributes = [:unique_names, :instructors_count, :comment]
+    @attribute_names = [:unique_names, :instructors_count, :comment]
 
-    @instructor_attributes = [:first_name, :last_name, :email]
+    @instructor_attribute_names = [:first_name, :last_name, :email]
     @instructors = @lesson_supervision.instructors.default_order
 
     @title = t('lesson_supervisions.show.title',
@@ -119,8 +119,8 @@ class LessonSupervisionsController < SecretaryController
     end
 
     def render_new_properly
-      # @attributes = [:unique_names, :instructors_count, :comment]
-      @attributes = [:unique_names, :comment]
+      # @attribute_names = [:unique_names, :instructors_count, :comment]
+      @attribute_names = [:unique_names, :comment]
 
       @title = t('lesson_supervisions.new.title')
 
@@ -128,8 +128,8 @@ class LessonSupervisionsController < SecretaryController
     end
 
     def render_edit_properly
-      # @attributes = [:unique_names, :instructors_count, :comment]
-      @attributes = [:unique_names, :comment]
+      # @attribute_names = [:unique_names, :instructors_count, :comment]
+      @attribute_names = [:unique_names, :comment]
 
       @title = t('lesson_supervisions.edit.title',
                  :title => @lesson_supervision.unique_names)

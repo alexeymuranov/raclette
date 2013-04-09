@@ -7,28 +7,28 @@ class WeeklyEventsController < ManagerController
   def index
     case request.format
     when Mime::HTML
-      @attributes = [ :title,
-                      :event_type,
-                      :lesson,
-                      :week_day,
-                      :start_time,
-                      :duration_minutes,
-                      :location,
-                      :entry_fee_tickets ]
+      @attribute_names = [ :title,
+                           :event_type,
+                           :lesson,
+                           :week_day,
+                           :start_time,
+                           :duration_minutes,
+                           :location,
+                           :entry_fee_tickets ]
     when Mime::XML, Mime::CSV, Mime::MS_EXCEL_2003_XML,
          Mime::CSV_ZIP, Mime::MS_EXCEL_2003_XML_ZIP
-      @attributes = [ :title,
-                      :event_type,
-                      :lesson,
-                      :week_day,
-                      :start_time,
-                      :duration_minutes,
-                      :end_time,
-                      :start_on,
-                      :end_on,
-                      :location,
-                      :entry_fee_tickets,
-                      :description ]
+      @attribute_names = [ :title,
+                           :event_type,
+                           :lesson,
+                           :week_day,
+                           :start_time,
+                           :duration_minutes,
+                           :end_time,
+                           :start_on,
+                           :end_on,
+                           :location,
+                           :entry_fee_tickets,
+                           :description ]
     end
 
     @weekly_events = WeeklyEvent.scoped
@@ -52,45 +52,45 @@ class WeeklyEventsController < ManagerController
 
       requested_format.xml do
         render :xml  => @weekly_events,
-               :only => @attributes
+               :only => @attribute_names
       end
 
       requested_format.ms_excel_2003_xml_zip do
         render :collection_ms_excel_2003_xml_zip => @weekly_events,
-               :only                             => @attributes
+               :only                             => @attribute_names
       end
 
       requested_format.csv do
         render :collection_csv_zip => @weekly_events,
-               :only               => @attributes
+               :only               => @attribute_names
       end
     end
   end
 
   def show
-    @attributes = [ :title,
-                    :event_type,
-                    :lesson,
-                    :week_day,
-                    :start_time,
-                    :end_time,
-                    # :duration_minutes,
-                    :start_on,
-                    :end_on,
-                    :location,
-                    :entry_fee_tickets,
-                    :description ]
+    @attribute_names = [ :title,
+                         :event_type,
+                         :lesson,
+                         :week_day,
+                         :start_time,
+                         :end_time,
+                         # :duration_minutes,
+                         :start_on,
+                         :end_on,
+                         :location,
+                         :entry_fee_tickets,
+                         :description ]
 
-    @event_attributes = [ :title, :event_type,
-                          :date,
-                          :start_time,
-                          :supervisors ]
+    @event_attribute_names = [ :title, :event_type,
+                               :date,
+                               :start_time,
+                               :supervisors ]
 
     @events = @weekly_event.events
     @events_column_headers = Event.human_column_headers
 
     # Filter:
-    @events = do_filtering(@events, params[:filter], @event_attributes)
+    @events = do_filtering(@events, params[:filter], @event_attribute_names)
     @filtered_events_count = @events.count
 
     # Sort:
@@ -155,16 +155,16 @@ class WeeklyEventsController < ManagerController
   private
 
     def render_new_properly
-      @attributes = [ :title,
-                      :event_type,
-                      :week_day,
-                      :start_time,
-                      :end_time,
-                      :start_on,
-                      :end_on,
-                      :location,
-                      :entry_fee_tickets,
-                      :description ]
+      @attribute_names = [ :title,
+                           :event_type,
+                           :week_day,
+                           :start_time,
+                           :end_time,
+                           :start_on,
+                           :end_on,
+                           :location,
+                           :entry_fee_tickets,
+                           :description ]
 
       @title = t('weekly_events.new.title')
 
@@ -172,16 +172,16 @@ class WeeklyEventsController < ManagerController
     end
 
     def render_edit_properly
-      @attributes = [ :title,
-                      :event_type,
-                      :week_day,
-                      :start_time,
-                      :end_time,
-                      :start_on,
-                      :end_on,
-                      :location,
-                      :entry_fee_tickets,
-                      :description ]
+      @attribute_names = [ :title,
+                           :event_type,
+                           :week_day,
+                           :start_time,
+                           :end_time,
+                           :start_on,
+                           :end_on,
+                           :location,
+                           :entry_fee_tickets,
+                           :description ]
 
       @title = t('weekly_events.edit.title', :title => @weekly_event.title)
 

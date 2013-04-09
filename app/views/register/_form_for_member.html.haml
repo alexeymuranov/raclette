@@ -17,27 +17,27 @@
 
 %table#member_list_attributes.records.filter{ :class => (@members_filtering_values.blank? ? nil : 'filtered ') }
   %colgroup.attributes
-    - @member_attributes.size.times do
+    - @member_attribute_names.size.times do
       %col
   %thead
     %tr
-      - @member_attributes.each do |attr|
-        %th{ :class => html_class_from_column_type(Member.column_db_type(attr)) }<
-          = sortable 'member_list_attributes', attr,
-                     Member.human_column_header(attr)
+      - @member_attribute_names.each do |attr_name|
+        %th{ :class => html_class_from_column_type(Member.column_db_type(attr_name)) }<
+          = sortable 'member_list_attributes', attr_name,
+                     Member.human_column_header(attr_name)
 
     %tr
-      - @member_attributes.each do |attr|
+      - @member_attribute_names.each do |attr_name|
 
         = render 'shared/tables/filtering_field',
                  :filter_form_id  => filter_form_id,
-                 :attr            => attr,
-                 :select_from     => Accessors::Member.possible_values_of(attr),
-                 :column_type     => Member.column_db_type(attr),
-                 :value_or_values => @members_filtering_values[attr]
+                 :attr            => attr_name,
+                 :select_from     => Accessors::Member.possible_values_of(attr_name),
+                 :column_type     => Member.column_db_type(attr_name),
+                 :value_or_values => @members_filtering_values[attr_name]
 
     %tr
-      %td.actions{ :colspan => @member_attributes.size }
+      %td.actions{ :colspan => @member_attribute_names.size }
         %button{ :form  => filter_form_id,
                  :name  => 'button',
                  :type  => 'submit',
@@ -50,11 +50,11 @@
           = t('buttons.clear')
     - unless @members_filtering_values.blank?
       %tr
-        - @member_attributes.each do |attr|
-          - if (val = @members_filtering_values[attr]).blank?
+        - @member_attribute_names.each do |attr_name|
+          - if (val = @members_filtering_values[attr_name]).blank?
             %td
           - else
-            - column_type = Member.column_db_type(attr)
+            - column_type = Member.column_db_type(attr_name)
             - html_class = html_class_from_column_type(column_type)
             %td.filtering_value{ :class => html_class }
               = formatted_filtering_value val, column_type

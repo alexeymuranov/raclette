@@ -4,7 +4,7 @@
 
     = render 'shared/lists/description',
       :object     => @membership_type,
-      :attributes => @attributes
+      :attributes => @attribute_names
 
 %footer
   = link_to edit_pictogram(3) + ' ' + t('membership_types.edit.header',

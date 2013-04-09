@@ -5,7 +5,7 @@ class Admin::KnownIPsController < AdminController
   before_filter :find_known_ip, :only => [:show, :edit, :update, :destroy]
 
   def index
-    @attributes = [:ip, :description]
+    @attribute_names = [:ip, :description]
 
     @known_ips = KnownIP.scoped
 
@@ -15,15 +15,15 @@ class Admin::KnownIPsController < AdminController
   end
 
   def show
-    @attributes = [:ip, :description]
+    @attribute_names = [:ip, :description]
 
-    @safe_user_attributes = [ :username,
-                              :full_name,
-                              :account_deactivated,
-                              :admin,
-                              :manager,
-                              :secretary,
-                              :a_person ]
+    @safe_user_attribute_names = [ :username,
+                                   :full_name,
+                                   :account_deactivated,
+                                   :admin,
+                                   :manager,
+                                   :secretary,
+                                   :a_person ]
 
     @safe_users = @known_ip.safe_users
 

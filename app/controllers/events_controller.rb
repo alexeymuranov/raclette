@@ -7,22 +7,22 @@ class EventsController < SecretaryController
   def index
     case request.format
     when Mime::HTML
-      @attributes = [ :title, :event_type,
-                      :date,
-                      :start_time,
-                      :supervisors ]
+      @attribute_names = [ :title, :event_type,
+                           :date,
+                           :start_time,
+                           :supervisors ]
     when Mime::XML, Mime::CSV, Mime::MS_EXCEL_2003_XML,
          Mime::CSV_ZIP, Mime::MS_EXCEL_2003_XML_ZIP
-      @attributes = [ :title, :event_type,
-                      :date,
-                      :start_time,
-                      :duration_minutes,
-                      :supervisors,
-                      :location,
-                      :entry_fee_tickets,
-                      :entries_count,
-                      :tickets_collected,
-                      :entry_fees_collected ]
+      @attribute_names = [ :title, :event_type,
+                           :date,
+                           :start_time,
+                           :duration_minutes,
+                           :supervisors,
+                           :location,
+                           :entry_fee_tickets,
+                           :entries_count,
+                           :tickets_collected,
+                           :entry_fees_collected ]
     end
 
     @events = Event.scoped
@@ -46,46 +46,46 @@ class EventsController < SecretaryController
 
       requested_format.xml do
         render :xml  => @events,
-               :only => @attributes
+               :only => @attribute_names
       end
 
       requested_format.ms_excel_2003_xml_zip do
         render :collection_ms_excel_2003_xml_zip => @events,
-               :only                             => @attributes
+               :only                             => @attribute_names
       end
 
       requested_format.csv_zip do
         render :collection_csv_zip => @events,
-               :only               => @attributes
+               :only               => @attribute_names
       end
     end
   end
 
   def show
-    @attributes = [ :title, :event_type,
-                    :lesson,
-                    :date,
-                    :start_time,
-                    :end_time,
-                    # :duration_minutes,
-                    :supervisors,
-                    :location,
-                    :weekly,
-                    :entry_fee_tickets,
-                    :entries_count,
-                    :tickets_collected,
-                    :entry_fees_collected ]
+    @attribute_names = [ :title, :event_type,
+                         :lesson,
+                         :date,
+                         :start_time,
+                         :end_time,
+                         # :duration_minutes,
+                         :supervisors,
+                         :location,
+                         :weekly,
+                         :entry_fee_tickets,
+                         :entries_count,
+                         :tickets_collected,
+                         :entry_fees_collected ]
 
     @singular_associations = [:weekly_event]
     @association_name_attributes = { :weekly_event => :virtual_long_title }
 
-    @member_participant_attributes = [:ordered_full_name, :email]
+    @member_participant_attribute_names = [:ordered_full_name, :email]
     @member_participants = @event.member_participants.
-      with_pseudo_columns(*@member_participant_attributes)
+      with_pseudo_columns(*@member_participant_attribute_names)
 
-    @other_participant_attributes = [:ordered_full_name, :email]
+    @other_participant_attribute_names = [:ordered_full_name, :email]
     @other_participants = @event.non_member_participants.
-      with_pseudo_columns(*@other_participant_attributes)
+      with_pseudo_columns(*@other_participant_attribute_names)
 
     @title = t('events.show.title', :title => @event.title)
   end
@@ -151,13 +151,13 @@ class EventsController < SecretaryController
     end
 
     def render_new_properly
-      @attributes = [ :title, :event_type,
-                      :date,
-                      :start_time,
-                      :end_time,
-                      :supervisors,
-                      :location,
-                      :entry_fee_tickets ]
+      @attribute_names = [ :title, :event_type,
+                           :date,
+                           :start_time,
+                           :end_time,
+                           :supervisors,
+                           :location,
+                           :entry_fee_tickets ]
 
       @weekly_events = WeeklyEvent.not_over
 
@@ -167,13 +167,13 @@ class EventsController < SecretaryController
     end
 
     def render_edit_properly
-      @attributes = [ :title, :event_type,
-                      :date,
-                      :start_time,
-                      :end_time,
-                      :supervisors,
-                      :location,
-                      :entry_fee_tickets ]
+      @attribute_names = [ :title, :event_type,
+                           :date,
+                           :start_time,
+                           :end_time,
+                           :supervisors,
+                           :location,
+                           :entry_fee_tickets ]
 
       @title = t('events.edit.title', :title => @event.title)
 

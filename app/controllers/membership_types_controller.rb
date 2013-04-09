@@ -7,19 +7,19 @@ class MembershipTypesController < ManagerController
   def index
     case request.format
     when Mime::HTML
-      @attributes = [ :unique_title,
-                      :active,
-                      :reduced,
-                      :unlimited,
-                      :duration_months ]
+      @attribute_names = [ :unique_title,
+                           :active,
+                           :reduced,
+                           :unlimited,
+                           :duration_months ]
     when Mime::XML, Mime::CSV, Mime::MS_EXCEL_2003_XML,
          Mime::CSV_ZIP, Mime::MS_EXCEL_2003_XML_ZIP
-      @attributes = [ :unique_title,
-                      :active,
-                      :reduced,
-                      :unlimited,
-                      :duration_months,
-                      :description ]
+      @attribute_names = [ :unique_title,
+                           :active,
+                           :reduced,
+                           :unlimited,
+                           :duration_months,
+                           :description ]
     end
 
     @membership_types = MembershipType.scoped
@@ -43,28 +43,28 @@ class MembershipTypesController < ManagerController
 
       requested_format.xml do
         render :xml  => @membership_types,
-               :only => @attributes
+               :only => @attribute_names
       end
 
       requested_format.ms_excel_2003_xml_zip do
         render :collection_ms_excel_2003_xml_zip => @membership_types,
-               :only                             => @attributes
+               :only                             => @attribute_names
       end
 
       requested_format.csv_zip do
         render :collection_csv_zip => @membership_types,
-               :only               => @attributes
+               :only               => @attribute_names
       end
     end
   end
 
   def show
-    @attributes = [ :unique_title,
-                    :active,
-                    :reduced,
-                    :unlimited,
-                    :duration_months,
-                    :description ]
+    @attribute_names = [ :unique_title,
+                         :active,
+                         :reduced,
+                         :unlimited,
+                         :duration_months,
+                         :description ]
 
     @title = t('membership_types.show.title',
                :title => @membership_type.unique_title )
@@ -122,12 +122,12 @@ class MembershipTypesController < ManagerController
     end
 
     def render_new_properly
-      @attributes = [ :unique_title,
-                      :active,
-                      :reduced,
-                      :unlimited,
-                      :duration_months,
-                      :description ]
+      @attribute_names = [ :unique_title,
+                           :active,
+                           :reduced,
+                           :unlimited,
+                           :duration_months,
+                           :description ]
 
       @title = t('membership_types.new.title')
 
@@ -135,12 +135,12 @@ class MembershipTypesController < ManagerController
     end
 
     def render_edit_properly
-      @attributes = [ :unique_title,
-                      :active,
-                      :reduced,
-                      :unlimited,
-                      :duration_months,
-                      :description ]
+      @attribute_names = [ :unique_title,
+                           :active,
+                           :reduced,
+                           :unlimited,
+                           :duration_months,
+                           :description ]
 
       @title = t('membership_types.edit.title',
                  :title => @membership_type.unique_title)

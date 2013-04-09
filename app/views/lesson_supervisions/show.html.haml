@@ -4,7 +4,7 @@
 
     = render 'shared/lists/description',
       :object     => @lesson_supervision,
-      :attributes => @attributes
+      :attributes => @attribute_names
 
 %section
   %h2= LessonSupervision.human_attribute_name(:instructors)
@@ -12,7 +12,7 @@
   - unless @instructors.empty?
     = render 'shared/tables/simple_index',
              :collection    => @instructors,
-             :attributes    => @instructor_attributes,
+             :attributes    => @instructor_attribute_names,
              :html_table_id => :instructors
 
 %footer

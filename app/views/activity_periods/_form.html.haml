@@ -5,11 +5,11 @@
 
   %dl.form_fields
 
-    - @attributes.each do |attribute|
+    - @attribute_names.each do |attr_name|
 
       = render 'shared/forms/attribute',
                :form_builder => f,
-               :attribute    => attribute
+               :attribute    => attr_name
 
   .actions
     = f.submit

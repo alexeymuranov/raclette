@@ -3,7 +3,7 @@
 
   = render 'shared/lists/description',
     :object                      => @membership,
-    :attributes                  => @attributes,
+    :attributes                  => @attribute_names,
     :singular_associations       => @singular_associations,
     :association_name_attributes => @association_name_attributes
 
@@ -14,7 +14,7 @@
 
     = render 'shared/tables/index',
              :collection    => @ticket_books,
-             :attributes    => @ticket_book_attributes,
+             :attributes    => @ticket_book_attribute_names,
              :html_table_id => :ticket_books
 
 %footer

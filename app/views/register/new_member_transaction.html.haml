@@ -13,7 +13,7 @@
   - unless @owned_memberships.empty?
     = render 'shared/tables/simple_index',
              :collection    => @owned_memberships,
-             :attributes    => @owned_membership_attributes,
+             :attributes    => @owned_membership_attribute_names,
              :html_table_id => :memberships
 
 %section
@@ -22,7 +22,7 @@
   - unless @attended_events.empty?
     = render 'shared/tables/simple_index',
              :collection    => @attended_events,
-             :attributes    => @attended_event_attributes,
+             :attributes    => @attended_event_attribute_names,
              :html_table_id => :attended_events
 
 %footer

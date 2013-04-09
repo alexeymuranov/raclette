@@ -7,19 +7,19 @@ class ActivityPeriodsController < ManagerController
   def index
     case request.format
     when Mime::HTML
-      @attributes = [ :unique_title,
-                      :start_date,
-                      :duration_months,
-                      :end_date,
-                      :over ]
+      @attribute_names = [ :unique_title,
+                           :start_date,
+                           :duration_months,
+                           :end_date,
+                           :over ]
     when Mime::XML, Mime::CSV, Mime::MS_EXCEL_2003_XML,
          Mime::CSV_ZIP, Mime::MS_EXCEL_2003_XML_ZIP
-      @attributes = [ :unique_title,
-                      :start_date,
-                      :duration_months,
-                      :end_date,
-                      :over,
-                      :description ]
+      @attribute_names = [ :unique_title,
+                           :start_date,
+                           :duration_months,
+                           :end_date,
+                           :over,
+                           :description ]
     end
 
     @activity_periods = ActivityPeriod.scoped
@@ -43,28 +43,28 @@ class ActivityPeriodsController < ManagerController
 
       requested_format.xml do
         render :xml  => @activity_periods,
-               :only => @attributes
+               :only => @attribute_names
       end
 
       requested_format.ms_excel_2003_xml_zip do
         render :collection_ms_excel_2003_xml_zip => @activity_periods,
-               :only                             => @attributes
+               :only                             => @attribute_names
       end
 
       requested_format.csv_zip do
         render :collection_csv_zip => @activity_periods,
-               :only               => @attributes
+               :only               => @attribute_names
       end
     end
   end
 
   def show
-    @attributes = [ :unique_title,
-                    :start_date,
-                    :duration_months,
-                    :end_date,
-                    :over,
-                    :description ]
+    @attribute_names = [ :unique_title,
+                         :start_date,
+                         :duration_months,
+                         :end_date,
+                         :over,
+                         :description ]
 
     @title = t('activity_periods.show.title',
                :title => @activity_period.unique_title)
@@ -122,12 +122,12 @@ class ActivityPeriodsController < ManagerController
     end
 
     def render_new_properly
-      @attributes = [ :unique_title,
-                      :start_date,
-                      :duration_months,
-                      :end_date,
-                      :over,
-                      :description ]
+      @attribute_names = [ :unique_title,
+                           :start_date,
+                           :duration_months,
+                           :end_date,
+                           :over,
+                           :description ]
 
       @title = t('activity_periods.new.title')
 
@@ -135,12 +135,12 @@ class ActivityPeriodsController < ManagerController
     end
 
     def render_edit_properly
-      @attributes = [ :unique_title,
-                      :start_date,
-                      :duration_months,
-                      :end_date,
-                      :over,
-                      :description ]
+      @attribute_names = [ :unique_title,
+                           :start_date,
+                           :duration_months,
+                           :end_date,
+                           :over,
+                           :description ]
 
       @title = t('activity_periods.edit.title',
                  :title => @activity_period.unique_title)
