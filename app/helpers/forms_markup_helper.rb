@@ -124,7 +124,9 @@ module FormsMarkupHelper
       editable = object.attr_editable?(method)
 
       select_from = model.possible_values_of(method)
-      select_from = nil unless select_from.respond_to?(:size)
+      unless select_from.respond_to?(:size) && select_from.size <= 16
+        select_from = nil
+      end
 
       if editable
         if select_from
