@@ -34,7 +34,7 @@ class MembersControllerTest < ActionController::TestCase
   end
 
   test "should get show" do
-    get :show, { :id => @member.to_param }
+    get :show, 'id' => @member.to_param
     assert_response :success
   end
 
@@ -44,7 +44,7 @@ class MembersControllerTest < ActionController::TestCase
   end
 
   test "should get edit" do
-    get :edit, { :id => @member.to_param }
+    get :edit, 'id' => @member.to_param
     assert_response :success
   end
 end

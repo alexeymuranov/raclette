@@ -14,7 +14,7 @@ class InstructorsControllerTest < ActionController::TestCase
   end
 
   test "should get show" do
-    get :show, { :id => @instructor.to_param }
+    get :show, 'id' => @instructor.to_param
     assert_response :success
   end
 
@@ -24,7 +24,7 @@ class InstructorsControllerTest < ActionController::TestCase
   end
 
   test "should get edit" do
-    get :edit, { :id => @instructor.to_param }
+    get :edit, 'id' => @instructor.to_param
     assert_response :success
   end
 end

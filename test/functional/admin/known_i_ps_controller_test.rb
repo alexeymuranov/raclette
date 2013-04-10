@@ -24,34 +24,36 @@ class Admin::KnownIPsControllerTest < ActionController::TestCase
 
   test "should create admin_known_ip" do
     assert_difference('Admin::KnownIP.count') do
-      post :create, { :known_ip => @new_known_ip.attributes }
+      post :create, 'known_ip' => @new_known_ip.attributes
     end
 
     assert_not_nil assigns(:known_ip)
-    assert_redirected_to :action => :show, :id => assigns(:known_ip)
+    assert_redirected_to :action => :show,
+                         'id'    => assigns(:known_ip).to_param
   end
 
   test "should show admin_known_ip" do
-    get :show, { :id => @known_ip.to_param }
+    get :show, 'id' => @known_ip.to_param
     assert_response :success
   end
 
   test "should get edit" do
-    get :edit, { :id => @known_ip.to_param }
+    get :edit, 'id' => @known_ip.to_param
     assert_response :success
   end
 
   test "should update admin_known_ip" do
-    put :update, { :id => @known_ip.to_param,
-                   :known_ip => @new_known_ip.attributes }
+    put :update, 'id'       => @known_ip.to_param,
+                 'known_ip' => @new_known_ip.attributes
 
     assert_not_nil assigns(:known_ip)
-    assert_redirected_to :action => :show, :id => assigns(:known_ip)
+    assert_redirected_to :action => :show,
+                         'id'    => assigns(:known_ip).to_param
   end
 
   test "should destroy admin_known_ip" do
     assert_difference('Admin::KnownIP.count', -1) do
-      delete :destroy, { :id => @known_ip.to_param }
+      delete :destroy, 'id' => @known_ip.to_param
     end
 
     assert_redirected_to :action => :index

@@ -34,7 +34,7 @@ class Admin::UsersControllerTest < ActionController::TestCase
   end
 
   test "should get show" do
-    get :show, { :id => @another_user.to_param }
+    get :show, 'id' => @another_user.to_param
     assert_response :success
   end
 
@@ -44,7 +44,7 @@ class Admin::UsersControllerTest < ActionController::TestCase
   end
 
   test "should get edit" do
-    get :edit, { :id => @another_user.to_param }
+    get :edit, 'id' => @another_user.to_param
     assert_response :success
   end
 
@@ -60,10 +60,10 @@ class Admin::UsersControllerTest < ActionController::TestCase
         new_safe_ip_ids << known_ip.id
         expected_difference = 1
       end
-      params_hash = { :id   => @another_user.to_param,
-                      :user =>  {
-                        :secretary   => new_secretary_status,
-                        :safe_ip_ids => new_safe_ip_ids } }
+      params_hash = { 'id'   => @another_user.to_param,
+                      'user' =>  {
+                        'secretary'   => new_secretary_status,
+                        'safe_ip_ids' => new_safe_ip_ids } }
 
       assert_difference('@another_user.safe_ips.count', expected_difference) do
         put :update, params_hash
@@ -72,7 +72,8 @@ class Admin::UsersControllerTest < ActionController::TestCase
 
       assert_same @another_user.secretary?, new_secretary_status
 
-      assert_redirected_to :action => :show, :id => @another_user
+      assert_redirected_to :action => :show,
+                           'id'    => @another_user
     end
   end
 end
