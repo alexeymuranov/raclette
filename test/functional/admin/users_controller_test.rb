@@ -76,4 +76,12 @@ class Admin::UsersControllerTest < ActionController::TestCase
                            'id'    => @another_user
     end
   end
+
+  test "should destroy user" do
+    assert_difference('Admin::User.count', -1) do
+      delete :destroy, 'id' => @another_user.to_param
+    end
+
+    assert_redirected_to :action => :index
+  end
 end
