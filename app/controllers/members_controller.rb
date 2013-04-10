@@ -32,11 +32,11 @@ class MembersController < SecretaryController
     # Sort:
     default_sorting_column = ( request.format == 'html' ?
                                :ordered_full_name : :last_name )
-    sort_params = (params[:sort] && params[:sort][:members]) || {}
+    sort_params = (params['sort'] && params['sort']['members']) || {}
     @members = sort(@members, sort_params, default_sorting_column)
 
     # Compose mailing list:
-    if params[:list_email_addresses]
+    if params['list_email_addresses']
       @mailing_list_members =
         @members.select { |member| !member.email.blank? }
       @mailing_list =
@@ -52,7 +52,7 @@ class MembersController < SecretaryController
       end
 
       requested_format.js do
-        case params[:button]
+        case params['button']
         when 'show_email_addresses', 'hide_email_addresses'
           render :update_email_list
         end
@@ -139,8 +139,8 @@ class MembersController < SecretaryController
     # (probably causes stack overflow).
     # The only workaround seems to be to save the person first,
     # assign the foreign key manually, and then save the member.
-    @person = Person.new(params[:member][:person_attributes])
-    @member = Member.new(params[:member].except(:person_attributes))
+    @person = Person.new(params['member']['person_attributes'])
+    @member = Member.new(params['member'].except('person_attributes'))
     @member.person = @person
 
     unless @person.save
@@ -172,7 +172,7 @@ class MembersController < SecretaryController
       h.each_pair do |k, v| h[k] = nil if v.blank? end
     }
 
-    if @member.update_attributes(params[:member])
+    if @member.update_attributes(params['member'])
       flash[:notice] = t('flash.members.update.success',
                          :name => @member.virtual_full_name)
 

@@ -26,11 +26,11 @@ class InstructorsController < ManagerController
     # Sort:
     default_sorting_column =
       request.format == 'html' ? :ordered_full_name : :last_name
-    sort_params = (params[:sort] && params[:sort][:instructors]) || {}
+    sort_params = (params['sort'] && params['sort']['instructors']) || {}
     @instructors = sort(@instructors, sort_params, default_sorting_column)
 
     # Compose mailing list:
-    if params[:list_email_addresses]
+    if params['list_email_addresses']
       @mailing_list_instructors =
         @instructors.select { |instructor| !instructor.email.blank? }
       @mailing_list =
@@ -46,7 +46,7 @@ class InstructorsController < ManagerController
       end
 
       requested_format.js do
-        case params[:button]
+        case params['button']
         when 'show_email_addresses', 'hide_email_addresses'
           render :update_email_list
         end
@@ -112,8 +112,8 @@ class InstructorsController < ManagerController
     # (probably causes stack overflow).
     # The only workaround seems to be to save the person first,
     # assign the foreign key manually, and then save the instructor.
-    @person = Person.new(params[:instructor][:person_attributes])
-    @instructor = Instructor.new(params[:instructor].except(:person_attributes))
+    @person = Person.new(params['instructor']['person_attributes'])
+    @instructor = Instructor.new(params['instructor'].except('person_attributes'))
     @instructor.person = @person
 
     unless @person.save
@@ -122,7 +122,7 @@ class InstructorsController < ManagerController
       render_new_properly and return
     end
 
-    if params[:automatic_lesson_supervision] == '1'
+    if params['automatic_lesson_supervision'] == '1'
       # Create a default one-person lesson supervision.
       # NOTE: for some (or same) reason, @instructor.lesson_supervisions.build
       # does not work here.
@@ -155,7 +155,7 @@ class InstructorsController < ManagerController
       h.each_pair do |k, v| h[k] = nil if v.blank? end
     }
 
-    if @instructor.update_attributes(params[:instructor])
+    if @instructor.update_attributes(params['instructor'])
       flash[:notice] = t('flash.instructors.update.success',
                          :name => @instructor.virtual_full_name)
 
