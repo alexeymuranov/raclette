@@ -20,7 +20,6 @@ gem 'kaminari'  # pagination
 
 # gem 'inherited_resources'  # for lazy resourceful controllers
 
-gem 'strong_parameters'  # a simpler alternative for mass assignement security
 # gem 'focused_controller'  # alternative way to define and use controllers
 
 # Gems used only for assets and not required
