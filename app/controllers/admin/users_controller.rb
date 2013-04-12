@@ -139,7 +139,7 @@ class Admin::UsersController < AdminController
     else
       flash.now[:error] = t('flash.admin.users.create.failure')
 
-      render_new_properly  # is it OK?
+      render_new_properly
     end
   end
 
@@ -174,12 +174,12 @@ class Admin::UsersController < AdminController
       else
         flash.now[:error] = t('flash.admin.users.update.failure')
 
-        render_edit_properly  # is it OK?
+        render_edit_properly
       end
     else
       flash.now[:error] = t('flash.admin.users.update.wrong_password')
 
-      render_edit_properly  # is it OK?
+      render_edit_properly
     end
   end
 
@@ -197,7 +197,6 @@ class Admin::UsersController < AdminController
   private
 
     def render_new_properly
-      # NOTE: this seems redundant because coincides with KnownIP.all_sorting_columns
       @known_ip_attribute_names = [:ip, :description]
 
       ip_sort_params = (params[:sort] && params[:sort][:safe_ips]) || {}
