@@ -264,7 +264,7 @@ class RegisterController < ApplicationController # FIXME
     end
 
     def render_new_member_entry_properly
-      @event ||= @events.first  # FIXME!
+      # @event ||= @events.first  # TODO: look at this
       @event_entry = EventEntry.new(:event => @event)
       @event_entry.person_id = @member.person_id
       @attended_events = @member.attended_events.default_order if
@@ -274,8 +274,7 @@ class RegisterController < ApplicationController # FIXME
     end
 
     def render_new_guest_entry_properly
-      @event ||= @events.first  # FIXME!
-
+      # @event ||= @events.first  # TODO: look at this
       @event_entry = EventEntry.new(:event => @event)
 
       render 'new_guest_transaction'
