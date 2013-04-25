@@ -21,7 +21,9 @@ class RegisterController < ApplicationController # FIXME
   end
 
   def new_member_transaction
-    unless @member = Member.joins(:person).find(params['member_id'])
+    set_member_joint_person_from_params
+
+    unless @member
       flash.now[:error] = t('flash.actions.other.failure')
       render_choose_person_properly and return
     end
@@ -32,7 +34,9 @@ class RegisterController < ApplicationController # FIXME
   end
 
   def new_guest_transaction
-    unless @guest = Guest.new(params['guest'])
+    build_guest_from_params
+
+    unless @guest
       flash.now[:error] = t('flash.actions.other.failure')
       render_choose_person_properly and return
     end
@@ -43,7 +47,7 @@ class RegisterController < ApplicationController # FIXME
   end
 
   def create_member_entry
-    @member = Member.find(params['member_id'])
+    set_member_from_params
 
     event_id = params['event_entry']['event_id']
     if @event = Event.find(event_id)
@@ -71,7 +75,7 @@ class RegisterController < ApplicationController # FIXME
   end
 
   def create_guest_entry
-    @guest = Guest.new(params['guest'])
+    build_guest_from_params
 
     event_id = params['event_entry']['event_id']
     if @event = Event.find(event_id)
@@ -118,7 +122,7 @@ class RegisterController < ApplicationController # FIXME
   end
 
   def create_member_ticket_purchase
-    @member = Member.find(params['member_id'])
+    set_member_from_params
 
     @ticket_book =
       TicketBook.find(params['tickets_purchase']['ticket_book_id'])
@@ -138,7 +142,7 @@ class RegisterController < ApplicationController # FIXME
   end
 
   def create_member_membership_purchase
-    @member = Member.find(params['member_id'])
+    set_member_from_params
 
     @membership =
       Membership.find(params['membership_purchase']['membership_id'])
@@ -168,6 +172,18 @@ class RegisterController < ApplicationController # FIXME
           @event_id = nil
         end
       end
+    end
+
+    def set_member_from_params
+      @member = Member.find(params['member_id'])
+    end
+
+    def set_member_joint_person_from_params
+      @member = Member.joins(:person).find(params['member_id'])
+    end
+
+    def build_guest_from_params
+      @guest = Guest.new(params['guest'])
     end
 
     def set_tab_from_params
