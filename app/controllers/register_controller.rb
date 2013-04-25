@@ -286,7 +286,7 @@ class RegisterController < ApplicationController # FIXME
         @member.memberships.not_over.reverse_order_by_expiration_date.all
       @ticket_books = []
       @memberships.each do |m|
-        @ticket_books += m.ticket_books.default_order.all
+        @ticket_books.concat(m.ticket_books.default_order.all)
       end
 
       @tickets_purchase ||=
@@ -302,7 +302,7 @@ class RegisterController < ApplicationController # FIXME
         ActivityPeriod.not_over.reverse_order_by_end_date.all
       @memberships = []
       @activity_periods.each do |ap|
-        @memberships += ap.memberships.default_order.all
+        @memberships.concat(ap.memberships.default_order.all)
       end
 
       @membership_purchase ||=
