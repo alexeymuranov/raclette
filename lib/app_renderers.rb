@@ -71,9 +71,9 @@ module AppRenderingHelpers
 
   def csv_from_collection(scoped_collection, attributes, column_headers)
     attributes ||= scoped_collection.klass.attribute_names
-    CSV.generate(:col_sep       => ';',
-                 :row_sep       => "\r\n",
-                 :encoding      => 'utf-8') do |csv|
+    CSV.generate(:col_sep  => ';',
+                 :row_sep  => "\r\n",
+                 :encoding => 'utf-8') do |csv|
       csv << attributes.map { |attr| column_headers[attr] } << []
       scoped_collection.each do |object|
         csv << attributes.map { |attr| object.public_send(attr).to_s }

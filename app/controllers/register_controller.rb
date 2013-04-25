@@ -13,7 +13,8 @@ class RegisterController < ApplicationController # FIXME
     when 'show_recent_ticket_purchases'
       @recent_ticket_purchases = TicketsPurchase.last_12_hours.default_order
     when 'show_recent_membership_purchases'
-      @recent_membership_purchases = MembershipPurchase.last_12_hours.default_order
+      @recent_membership_purchases =
+        MembershipPurchase.last_12_hours.default_order
     end
 
     render_choose_person_properly
@@ -142,7 +143,8 @@ class RegisterController < ApplicationController # FIXME
     @membership =
       Membership.find(params['membership_purchase']['membership_id'])
 
-    @membership_purchase = @member.compose_new_membership_purchase(@membership)
+    @membership_purchase =
+      @member.compose_new_membership_purchase(@membership)
 
     if @member.save
       flash[:success] =
@@ -199,10 +201,12 @@ class RegisterController < ApplicationController # FIXME
     def render_new_member_transaction_properly
       @events = Event.unlocked.past_seven_days
 
-      @attended_event_attribute_names = [:title, :event_type, :date, :start_time]
+      @attended_event_attribute_names =
+        [:title, :event_type, :date, :start_time]
       @attended_events = @member.attended_events
 
-      @owned_membership_attribute_names = [:title, :duration_months, :end_date]
+      @owned_membership_attribute_names =
+        [:title, :duration_months, :end_date]
       @owned_memberships =
         @member.memberships.with_type.with_activity_period.
                 with_pseudo_columns(*@owned_membership_attribute_names)
@@ -278,7 +282,8 @@ class RegisterController < ApplicationController # FIXME
     end
 
     def render_new_member_ticket_purchase_properly
-      @memberships = @member.memberships.not_over.reverse_order_by_expiration_date.all
+      @memberships =
+        @member.memberships.not_over.reverse_order_by_expiration_date.all
       @ticket_books = []
       @memberships.each do |m|
         @ticket_books += m.ticket_books.default_order.all
@@ -291,8 +296,10 @@ class RegisterController < ApplicationController # FIXME
       render 'new_member_transaction'
     end
 
-    def render_new_member_membership_purchase_properly  # FIXME: allow guests to purchase memberships
-      @activity_periods = ActivityPeriod.not_over.reverse_order_by_end_date.all
+    # FIXME: allow guests to purchase memberships
+    def render_new_member_membership_purchase_properly
+      @activity_periods =
+        ActivityPeriod.not_over.reverse_order_by_end_date.all
       @memberships = []
       @activity_periods.each do |ap|
         @memberships += ap.memberships.default_order.all
@@ -301,10 +308,13 @@ class RegisterController < ApplicationController # FIXME
       @membership_purchase ||=
         MembershipPurchase.new(:membership => @memberships.first)
 
-      @membership_purchase.validated_by_user = current_user.username if
-        current_user.a_person?
+      if current_user.a_person?
+        @membership_purchase.validated_by_user = current_user.username
+      end
 
-      @membership_purchase.member_id = @member.person_id if @member
+      if @member
+        @membership_purchase.member_id = @member.person_id
+      end
 
       render 'new_member_transaction'
     end
