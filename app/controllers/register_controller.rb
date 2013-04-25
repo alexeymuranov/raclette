@@ -7,7 +7,7 @@ class RegisterController < ApplicationController # FIXME
   def choose_person
     set_event_from_params_or_session
 
-    case params[:button]
+    case params['button']
     when 'show_participants'
       @participants = @event.participants.default_order
     when 'show_recent_ticket_purchases'
@@ -20,7 +20,7 @@ class RegisterController < ApplicationController # FIXME
   end
 
   def new_member_transaction
-    unless @member = Member.joins(:person).find(params[:member_id])
+    unless @member = Member.joins(:person).find(params['member_id'])
       flash.now[:error] = t('flash.actions.other.failure')
       render_choose_person_properly and return
     end
@@ -31,7 +31,7 @@ class RegisterController < ApplicationController # FIXME
   end
 
   def new_guest_transaction
-    unless @guest = Guest.new(params[:guest])
+    unless @guest = Guest.new(params['guest'])
       flash.now[:error] = t('flash.actions.other.failure')
       render_choose_person_properly and return
     end
@@ -42,11 +42,11 @@ class RegisterController < ApplicationController # FIXME
   end
 
   def create_member_entry
-    @member = Member.find(params[:member_id])
+    @member = Member.find(params['member_id'])
 
-    event_id = params[:event_entry][:event_id]
+    event_id = params['event_entry']['event_id']
     if @event = Event.find(event_id)
-      session[:current_event_id] = event_id
+      session['current_event_id'] = event_id
     else
       flash.now[:error] = t('flash.actions.other.failure')
       render_choose_person_properly and return
@@ -70,11 +70,11 @@ class RegisterController < ApplicationController # FIXME
   end
 
   def create_guest_entry
-    @guest = Guest.new(params[:guest])
+    @guest = Guest.new(params['guest'])
 
-    event_id = params[:event_entry][:event_id]
+    event_id = params['event_entry']['event_id']
     if @event = Event.find(event_id)
-      session[:current_event_id] = event_id
+      session['current_event_id'] = event_id
     else
       flash.now[:error] = t('flash.actions.other.failure')
       render_choose_person_properly and return
@@ -98,9 +98,9 @@ class RegisterController < ApplicationController # FIXME
   end
 
   def create_anonymous_entry
-    event_id = params[:event_entry][:event_id]
+    event_id = params['event_entry']['event_id']
     if @event = Event.find(event_id)
-      session[:current_event_id] = event_id
+      session['current_event_id'] = event_id
     else
       flash.now[:error] = t('flash.actions.other.failure')
       render_choose_person_properly and return
@@ -117,9 +117,10 @@ class RegisterController < ApplicationController # FIXME
   end
 
   def create_member_ticket_purchase
-    @member = Member.find(params[:member_id])
+    @member = Member.find(params['member_id'])
 
-    @ticket_book = TicketBook.find(params[:tickets_purchase][:ticket_book_id])
+    @ticket_book =
+      TicketBook.find(params['tickets_purchase']['ticket_book_id'])
 
     @tickets_purchase = @member.compose_new_tickets_purchase(@ticket_book)
 
@@ -136,9 +137,10 @@ class RegisterController < ApplicationController # FIXME
   end
 
   def create_member_membership_purchase
-    @member = Member.find(params[:member_id])
+    @member = Member.find(params['member_id'])
 
-    @membership = Membership.find(params[:membership_purchase][:membership_id])
+    @membership =
+      Membership.find(params['membership_purchase']['membership_id'])
 
     @membership_purchase = @member.compose_new_membership_purchase(@membership)
 
@@ -157,9 +159,9 @@ class RegisterController < ApplicationController # FIXME
   private
 
     def set_event_from_params_or_session
-      if @event_id = params[:event_id] || session[:current_event_id]
+      if @event_id = params['event_id'] || session['current_event_id']
         if @event = Event.find(@event_id)
-          session[:current_event_id] = @event_id
+          session['current_event_id'] = @event_id
         else
           @event_id = nil
         end
@@ -167,7 +169,7 @@ class RegisterController < ApplicationController # FIXME
     end
 
     def set_tab_from_params
-      @tab = params[:tab]
+      @tab = params['tab']
       @tab = @tabs.first unless @tabs.include?(@tab)
     end
 
@@ -181,7 +183,7 @@ class RegisterController < ApplicationController # FIXME
       @members = do_filtering(@members)
       @members_filtering_values = @filtering_values || {}
 
-      @guest ||= Guest.new(params[:guest])
+      @guest ||= Guest.new(params['guest'])
 
       @member_attribute_names = [:last_name, :first_name]
 
@@ -262,7 +264,7 @@ class RegisterController < ApplicationController # FIXME
       @event_entry = EventEntry.new(:event => @event)
       @event_entry.person_id = @member.person_id
       @attended_events = @member.attended_events.default_order if
-        params[:button] == 'show_attended_events'
+        params['button'] == 'show_attended_events'
 
       render 'new_member_transaction'
     end
