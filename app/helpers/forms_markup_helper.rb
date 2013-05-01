@@ -4,18 +4,17 @@ module FormsMarkupHelper
 
   # Creates a sequence of hidden inputs to store a flat hash of strings.
   def hidden_field_tags_from_flat_hash(hash, options = {})
-    [].tap do |tag_array|
-      hash.each_pair do |name, value|
-        if value.is_a?(Enumerable)
-          name = "#{ name }[]"
-          value.each do |v|
-            tag_array << hidden_field_tag(name, v, options)
-          end
-        else
-          tag_array << hidden_field_tag(name, value, options)
-        end
+    hash.reduce([]) { |tag_memo, name__value|
+      name, value = name__value
+      if value.is_a?(Enumerable)
+        name = "#{ name }[]"
+        value.reduce(tag_memo) { |tm, v|
+          tm << hidden_field_tag(name, v, options)
+        }
+      else
+        tag_memo << hidden_field_tag(name, value, options)
       end
-    end.join("\n").html_safe
+    }.join("\n").html_safe
   end
 
   #--
@@ -29,16 +28,17 @@ module FormsMarkupHelper
                                 lambda { |k| "#{ key_prefix }[#{ k }]" }
                               end
 
-    {}.tap do |flat_hash|
-      nested_hash.each_pair do |key, value|
-        combined_key = combine_key_with_prefix[key]
-        if value.is_a?(Hash)
-          flat_hash.merge!(flat_param_hash_from_nested_hash(value, combined_key))
-        else
-          flat_hash[combined_key] = value
-        end
+    nested_hash.reduce({}) { |flat_hash_memo, key__value|
+      key, value = key__value
+      combined_key = combine_key_with_prefix[key]
+      if value.is_a?(Hash)
+        flat_hash_memo.merge!(
+          flat_param_hash_from_nested_hash(value, combined_key))
+      else
+        flat_hash_memo[combined_key] = value
+        flat_hash_memo
       end
-    end
+    }
   end
 
   # Creates a sequence of hidden inputs to store a possibly nested hash
