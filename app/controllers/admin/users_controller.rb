@@ -26,7 +26,7 @@ class Admin::UsersController < AdminController
       @attribute_names = USER_ATTRIBUTE_NAMES_FOR_XML_INDEX
     end
 
-    @users = User.scoped
+    @users = User.all
 
     # Filter:
     @users = do_filtering(@users)
@@ -226,7 +226,7 @@ class Admin::UsersController < AdminController
       @known_ip_attribute_names = [:ip, :description]
 
       ip_sort_params = (params['sort'] && params['sort']['safe_ips']) || {}
-      @known_ips = sort(KnownIP.scoped, ip_sort_params, :ip)
+      @known_ips = sort(KnownIP.all, ip_sort_params, :ip)
       @safe_ips = nil
 
       @title = t('admin.users.new.title')
@@ -238,7 +238,7 @@ class Admin::UsersController < AdminController
       @known_ip_attribute_names = [:ip, :description]
 
       ip_sort_params = (params['sort'] && params['sort']['safe_ips']) || {}
-      @known_ips = sort(KnownIP.scoped, ip_sort_params, :ip)
+      @known_ips = sort(KnownIP.all, ip_sort_params, :ip)
       @safe_ips = sort(@user.safe_ips, ip_sort_params, :ip)
 
       @title = t('admin.users.edit.title', :username => @user.username)

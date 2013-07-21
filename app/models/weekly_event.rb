@@ -71,9 +71,11 @@ class WeeklyEvent < ActiveRecord::Base
                     :adjust_start_and_end_dates
 
   # Scopes:
-  scope :default_order, order("#{ table_name }.end_on DESC, "\
-                              "#{ table_name }.start_on DESC")
-  scope :not_over, where(:over => false)
+  scope :default_order, lambda {
+    order("#{ table_name }.end_on DESC, "\
+          "#{ table_name }.start_on DESC")
+  }
+  scope :not_over, lambda { where(:over => false) }
 
   # Public instance methods
 

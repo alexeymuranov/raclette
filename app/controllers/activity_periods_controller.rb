@@ -22,7 +22,7 @@ class ActivityPeriodsController < ManagerController
                            :description ]
     end
 
-    @activity_periods = ActivityPeriod.scoped
+    @activity_periods = ActivityPeriod.all
 
     # Filter:
     @activity_periods = do_filtering(@activity_periods)

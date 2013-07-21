@@ -30,7 +30,7 @@ module AbstractPerson  # NOTE:WIP
                                :uniqueness => true
 
     # Scopes
-    base.scope :default_order, base.joins(:person).merge(Person.default_order)
+    base.scope :default_order, lambda { base.joins(:person).merge(Person.default_order) }
 
     # Pseudo columns
     [ :last_name, :first_name, :name_title, :nickname_or_other, :email,

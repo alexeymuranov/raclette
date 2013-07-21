@@ -31,7 +31,7 @@ class WeeklyEventsController < ManagerController
                            :description ]
     end
 
-    @weekly_events = WeeklyEvent.scoped
+    @weekly_events = WeeklyEvent.all
 
     # Filter:
     @weekly_events = do_filtering(@weekly_events)

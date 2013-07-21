@@ -97,17 +97,19 @@ class Person < ActiveRecord::Base
   end
 
   # Scopes
-  scope :default_order,
-        order("UPPER(#{ sql_for_column(:last_name) }) ASC, "\
-              "UPPER(#{ sql_for_column(:first_name) }) ASC"
-        # order("UPPER(#{ sql_for_column(:last_name) }) ASC, "\
-        #       "UPPER(#{ sql_for_column(:first_name) }) ASC")
+  scope :default_order, lambda {
+    order("UPPER(#{ sql_for_column(:last_name) }) ASC, "\
+          "UPPER(#{ sql_for_column(:first_name) }) ASC")
+    # order("UPPER(#{ sql_for_column(:last_name) }) ASC, "\
+    #       "UPPER(#{ sql_for_column(:first_name) }) ASC")
+  }
 
-  scope :members, joins(:member)
+  scope :members, lambda { joins(:member) }
 
-  scope :non_members,
-        joins("LEFT JOIN members ON people.id = members.person_id").
-        where("members.person_id IS NULL")
+  scope :non_members, lambda {
+    joins("LEFT JOIN members ON people.id = members.person_id").
+    where("members.person_id IS NULL")
+  }
 
   # Public instance methods
   # Non-SQL virtual attributes

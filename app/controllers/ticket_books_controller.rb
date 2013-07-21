@@ -16,7 +16,7 @@ class TicketBooksController < ManagerController
     end
 
     # @ticket_books = @membership.ticket_books
-    @ticket_books = TicketBook.scoped
+    @ticket_books = TicketBook.all
 
     # Filter:
     @ticket_books = do_filtering(@ticket_books)

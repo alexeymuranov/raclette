@@ -22,8 +22,10 @@ class WeeklyEventSuspension < ActiveRecord::Base
             :uniqueness => { :scope => :weekly_event_id }
 
   # Scopes:
-  scope :default_order, order("#{ table_name }.suspend_until DESC, "\
-                              "#{ table_name }.suspend_from DESC")
+  scope :default_order, lambda {
+    order("#{ table_name }.suspend_until DESC, "\
+          "#{ table_name }.suspend_from DESC")
+  }
 end
 
 # == Schema Information

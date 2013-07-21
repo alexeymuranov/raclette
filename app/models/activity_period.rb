@@ -38,10 +38,11 @@ class ActivityPeriod < ActiveRecord::Base
   validates :duration_months, :uniqueness => { :scope => :start_date }
 
   # Scopes:
-  scope :order_by_end_date, order("#{ table_name }.end_date ASC, "\
-                                  "#{ table_name }.start_date ASC")
-  scope :reverse_order_by_end_date, order_by_end_date.reverse_order
-  scope :default_order, reverse_order_by_end_date
+  scope :order_by_end_date, lambda {
+    order("#{ table_name }.end_date ASC, #{ table_name }.start_date ASC")
+  }
+  scope :reverse_order_by_end_date, lambda { order_by_end_date.reverse_order }
+  scope :default_order, lambda { reverse_order_by_end_date }
   scope :current, lambda {
     where("#{ table_name }.start_date <= :today AND "\
           "#{ table_name }.end_date >= :today",

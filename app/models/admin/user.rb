@@ -66,11 +66,11 @@ class Admin::User < ActiveRecord::Base
   before_update :hash_new_password_with_salt_unless_nil
 
   # Scopes:
-  scope :default_order, order("#{ table_name }.username ASC")
-  scope :admins, where(:admin => true)
-  scope :managers, where(:manager => true)
-  scope :secretaries, where(:secretary => true)
-  scope :humans, where(:a_person => true)
+  scope :default_order, lambda { order("#{ table_name }.username ASC") }
+  scope :admins, lambda { where(:admin => true) }
+  scope :managers, lambda { where(:manager => true) }
+  scope :secretaries, lambda { where(:secretary => true) }
+  scope :humans, lambda { where(:a_person => true) }
 
   # Public methods:
   def has_password?(submitted_password)

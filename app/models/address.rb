@@ -40,9 +40,11 @@ class Address < ActiveRecord::Base
   validates :street_address, :length    => { :maximum => 255 },
                              :allow_nil => true
   # Scopes:
-  scope :default_order, order("#{ table_name }.country ASC, "\
-                              "#{ table_name }.city ASC, "\
-                              "#{ table_name }.post_code ASC")
+  scope :default_order, lambda {
+    order("#{ table_name }.country ASC, "\
+          "#{ table_name }.city ASC, "\
+          "#{ table_name }.post_code ASC")
+  }
 end
 
 # == Schema Information

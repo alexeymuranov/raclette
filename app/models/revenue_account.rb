@@ -29,14 +29,16 @@ class RevenueAccount < ActiveRecord::Base
   validates :unique_title, :uniqueness => { :case_sensitive => false }
 
   # Scopes:
-  scope :unlocked, where(:locked => false)
+  scope :unlocked, lambda { where(:locked => false) }
   scope :current, lambda {
     where("#{ table_name }.opened_on <= :today AND "\
           "#{ table_name }.closed_on => :today",
           :today => Date.today)
   }
-  scope :default_order, order("#{ table_name }.closed_on DESC, "\
-                              "#{ table_name }.opened_on DESC")
+  scope :default_order, lambda {
+    order("#{ table_name }.closed_on DESC, "\
+          "#{ table_name }.opened_on DESC")
+  }
 
   # Public class methods
   def self.the_active!

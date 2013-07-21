@@ -5,7 +5,7 @@ class Admin::KnownIPsController < AdminController
   def index
     @attribute_names = [:ip, :description]
 
-    @known_ips = KnownIP.scoped
+    @known_ips = KnownIP.all
 
     # Sort:
     sort_params = (params[:sort] && params[:sort][:known_ips]) || {}

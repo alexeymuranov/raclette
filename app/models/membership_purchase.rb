@@ -29,8 +29,10 @@ class MembershipPurchase < ActiveRecord::Base
   scope :last_12_hours, lambda {
     where("#{ table_name }.updated_at > ?", (Time.now - 12.hours).strftime("%F %T"))
   }
-  scope :default_order, order("#{ table_name }.purchase_date DESC, "\
-                              "#{ table_name }.updated_at DESC")
+  scope :default_order, lambda {
+    order("#{ table_name }.purchase_date DESC, "\
+          "#{ table_name }.updated_at DESC")
+  }
 
   # Validations:
   validates :member_id, :membership_type, :membership_expiration_date,

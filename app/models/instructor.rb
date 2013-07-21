@@ -34,7 +34,7 @@ class Instructor < ActiveRecord::Base
   validates :person_id, :uniqueness => true
 
   # Scopes
-  scope :default_order, joins(:person).merge(Person.default_order)
+  scope :default_order, lambda { joins(:person).merge(Person.default_order) }
 
   # Public instance methods
   # Non-SQL virtual attributes

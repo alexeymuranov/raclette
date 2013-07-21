@@ -22,7 +22,7 @@ class MembershipTypesController < ManagerController
                            :description ]
     end
 
-    @membership_types = MembershipType.scoped
+    @membership_types = MembershipType.all
 
     # Filter:
     @membership_types = do_filtering(@membership_types)

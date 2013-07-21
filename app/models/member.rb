@@ -91,10 +91,10 @@ class Member < ActiveRecord::Base
   validates :person_id, :uniqueness => true
 
   # Scopes
-  scope :default_order, joins(:person).merge(Person.default_order)
-  scope :account_active, where(:account_deactivated => false)
+  scope :default_order, lambda { joins(:person).merge(Person.default_order) }
+  scope :account_active, lambda { where(:account_deactivated => false) }
   # scope :current, joins(:memberships => :activity_period).merge(Membership.current).uniq  # Experiment. Can be removed?
-  scope :current, joins(:memberships).merge(Membership.current).uniq  # TEST_ME!
+  scope :current, lambda { joins(:memberships).merge(Membership.current).uniq }  # TEST_ME!
 
   # Pseudo columns
   tickets_count_sql = "(#{ sql_for_column(:payed_tickets_count) } + #{ sql_for_column(:free_tickets_count) })"

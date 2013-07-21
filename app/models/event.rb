@@ -93,15 +93,17 @@ class Event < ActiveRecord::Base
   before_validation :calculate_duration
 
   # Scopes:
-  scope :default_order, order("#{ table_name }.date DESC, "\
-                              "#{ table_name }.end_time DESC, "\
-                              "#{ table_name }.start_time DESC")
-  scope :locked, where(:locked => true)
-  scope :unlocked, where(:locked => false)
+  scope :default_order, lambda {
+    order("#{ table_name }.date DESC, "\
+          "#{ table_name }.end_time DESC, "\
+          "#{ table_name }.start_time DESC")
+  }
+  scope :locked, lambda { where(:locked => true) }
+  scope :unlocked, lambda { where(:locked => false) }
   scope :past_seven_days, lambda {
-                            today = Date.today
-                            where(:date => (today - 1.week)..today)
-                          }
+    today = Date.today
+    where(:date => (today - 1.week)..today)
+  }
 
   # Pseudo columns
   long_title_sql = "(#{ sql_for_column(:date) } || ': ' || #{ sql_for_column(:title) })"

@@ -314,10 +314,10 @@ class RegisterController < ApplicationController # FIXME
     # FIXME: allow guests to purchase memberships
     def render_new_member_membership_purchase_properly
       @activity_periods =
-        ActivityPeriod.not_over.reverse_order_by_end_date.all
+        ActivityPeriod.not_over.reverse_order_by_end_date
       @memberships = []
       @activity_periods.each do |ap|
-        @memberships.concat(ap.memberships.default_order.all)
+        @memberships.concat(ap.memberships.default_order)
       end
 
       @membership_purchase ||=

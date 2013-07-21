@@ -21,8 +21,10 @@ class CommitteeMembership < ActiveRecord::Base
                       :allow_nil => true
 
   # Scopes:
-  scope :default_order, order("#{ table_name }.end_date DESC, "\
-                              "#{ table_name }.start_date DESC")
+  scope :default_order, lambda {
+    order("#{ table_name }.end_date DESC, "\
+          "#{ table_name }.start_date DESC")
+  }
 end
 
 # == Schema Information

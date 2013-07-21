@@ -40,8 +40,10 @@ class LessonSupervision < ActiveRecord::Base
   validates :unique_names, :uniqueness => { :case_sensitive => false }
 
   # Scopes:
-  scope :default_order, order("#{ table_name }.instructors_count ASC, "\
-                              "#{ table_name }.unique_names ASC")
+  scope :default_order, lambda {
+    order("#{ table_name }.instructors_count ASC, "\
+          "#{ table_name }.unique_names ASC")
+  }
 end
 
 # == Schema Information

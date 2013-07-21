@@ -63,22 +63,26 @@ class Membership < ActiveRecord::Base
            :to => :activity_period
 
   # Scopes:
-  scope :with_type,
-        joins('INNER JOIN membership_types ON '\
-              'membership_types.id = memberships.membership_type_id')
-  scope :with_activity_period,
-        joins('INNER JOIN activity_periods ON '\
-              'activity_periods.id = memberships.activity_period_id')
+  scope :with_type, lambda {
+    joins('INNER JOIN membership_types ON '\
+          'membership_types.id = memberships.membership_type_id')
+  }
+  scope :with_activity_period, lambda {
+    joins('INNER JOIN activity_periods ON '\
+          'activity_periods.id = memberships.activity_period_id')
+  }
   # The following does not work when used with `merge` from another model
   # (see GitHub rails Issue #5494):
   # scope :with_activity_period, joins(:activity_period)
-  scope :order_by_expiration_date,
-        with_activity_period.merge(ActivityPeriod.order_by_end_date)
-  scope :reverse_order_by_expiration_date,
-        with_activity_period.merge(ActivityPeriod.reverse_order_by_end_date)
-  scope :default_order, reverse_order_by_expiration_date
-  scope :current, with_activity_period.merge(ActivityPeriod.current)
-  scope :not_over, with_activity_period.merge(ActivityPeriod.not_over)
+  scope :order_by_expiration_date, lambda {
+    with_activity_period.merge(ActivityPeriod.order_by_end_date)
+  }
+  scope :reverse_order_by_expiration_date, lambda {
+    with_activity_period.merge(ActivityPeriod.reverse_order_by_end_date)
+  }
+  scope :default_order, lambda { reverse_order_by_expiration_date }
+  scope :current, lambda { with_activity_period.merge(ActivityPeriod.current) }
+  scope :not_over, lambda { with_activity_period.merge(ActivityPeriod.not_over) }
 
   # default_scope with_type.with_activity_period
 

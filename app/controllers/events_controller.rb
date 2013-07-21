@@ -25,7 +25,7 @@ class EventsController < SecretaryController
                            :entry_fees_collected ]
     end
 
-    @events = Event.scoped
+    @events = Event.all
 
     # Filter:
     @events = do_filtering(@events)

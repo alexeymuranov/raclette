@@ -13,7 +13,7 @@ class LessonSupervisionsController < SecretaryController
       @attribute_names = [:unique_names, :instructors_count, :comment]
     end
 
-    @lesson_supervisions = LessonSupervision.scoped
+    @lesson_supervisions = LessonSupervision.all
 
     # Filter:
     @lesson_supervisions = do_filtering(@lesson_supervisions)

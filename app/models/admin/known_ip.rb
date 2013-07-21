@@ -29,7 +29,7 @@ class Admin::KnownIP < ActiveRecord::Base
                  :uniqueness => true
 
   # Scopes:
-  scope :default_order, order("#{ table_name }.ip ASC")
+  scope :default_order, lambda { order("#{ table_name }.ip ASC") }
 end
 
 # == Schema Information
