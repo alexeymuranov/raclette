@@ -319,9 +319,9 @@ ActiveRecord::Schema.define(:version => 20120921215732) do
     t.datetime "updated_at"
   end
 
-  add_index "member_short_histories", ["last_active_membership_expiration_date"], :name => "index_member_short_histories_on_last_active_membership_exp_date"
-  add_index "member_short_histories", ["prev_membership_duration_months"], :name => "index_member_short_histories_on_prev_membership_duration_months"
-  add_index "member_short_histories", ["prev_membership_expiration_date"], :name => "index_member_short_histories_on_prev_membership_expiration_date"
+  add_index "member_short_histories", ["last_active_membership_expiration_date"], :name => "index_member_short_histories_on_last_active_membership_exp_d"
+  add_index "member_short_histories", ["prev_membership_duration_months"], :name => "index_member_short_histories_on_prev_membership_duration_mon"
+  add_index "member_short_histories", ["prev_membership_expiration_date"], :name => "index_member_short_histories_on_prev_membership_expiration_d"
   add_index "member_short_histories", ["prev_membership_type", "prev_membership_expiration_date"], :name => "index_member_short_histories_on_prev_m_type_and_p_m_exp_date"
 
   create_table "members", :primary_key => "person_id", :force => true do |t|
