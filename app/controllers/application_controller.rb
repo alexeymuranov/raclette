@@ -5,7 +5,9 @@ require 'app_renderers'
 require 'app_activerecord_utilities/friendly_relation_filter'
 
 class ApplicationController < ActionController::Base
-  protect_from_forgery
+  # Prevent CSRF attacks by raising an exception.
+  # For APIs, you may want to use :null_session instead.
+  protect_from_forgery :with => :exception
 
   include ApplicationHelper
   include SessionsHelper

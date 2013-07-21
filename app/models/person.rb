@@ -98,8 +98,8 @@ class Person < ActiveRecord::Base
 
   # Scopes
   scope :default_order,
-        order("UPPER(#{ sql_for_column(:last_name) }) ASC").
-        order("UPPER(#{ sql_for_column(:first_name) }) ASC")
+        order("UPPER(#{ sql_for_column(:last_name) }) ASC, "\
+              "UPPER(#{ sql_for_column(:first_name) }) ASC"
         # order("UPPER(#{ sql_for_column(:last_name) }) ASC, "\
         #       "UPPER(#{ sql_for_column(:first_name) }) ASC")
 
