@@ -20,7 +20,7 @@ class Payment < ActiveRecord::Base
   init_associations
 
   # Validations:
-  validates :payable_type, :date, :amount,
+  validates :date, :amount,
             :presence => true
 
   validates :payable_type, :length => { :maximum => 32 }
