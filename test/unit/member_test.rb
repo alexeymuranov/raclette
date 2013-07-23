@@ -50,6 +50,8 @@ class MemberTest < ActiveSupport::TestCase
         purchase = @member.compose_new_tickets_purchase(@ticket_book)
         assert_kind_of TicketsPurchase, purchase
         @member.save!
+        assert_equal 'TicketsPurchase',
+                     @member.tickets_purchases.last.payments.first.payable_type
       end
       @member.reload
     end
@@ -62,6 +64,8 @@ class MemberTest < ActiveSupport::TestCase
         purchase = @member.compose_new_membership_purchase(@membership)
         assert_kind_of MembershipPurchase, purchase
         @member.save!
+        assert_equal 'MembershipPurchase',
+                     @member.membership_purchases.last.payments.first.payable_type
       end
     end
   end
