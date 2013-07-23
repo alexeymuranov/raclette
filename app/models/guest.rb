@@ -50,18 +50,17 @@ class Guest
                                       fee_payed       = event.common_entry_fee,
                                       inviting_member = nil)
 
-    event_entry_attributes = { :event => event }
+    entry =
+      GuestEntry.new(attributes.merge(:inviting_member => inviting_member))
+    entry.build_event_entry(:event => event)
 
+    # NOTE: not clear if the payment can only happen on the same date as the
+    # event
     if fee_payed && fee_payed != 0
-      payment_attributes = { :amount => fee_payed,
-                             :date   => event.date }
-      event_entry_attributes[:payment_attributes] = payment_attributes
+      entry.event_entry.build_payment(:amount => fee_payed,
+                                      :date   => event.date)
     end
 
-    guest_entry_attributes =
-      attributes.merge(:inviting_member        => inviting_member,
-                       :event_entry_attributes => event_entry_attributes)
-
-    GuestEntry.new(guest_entry_attributes)
+    entry
   end
 end

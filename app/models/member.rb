@@ -124,12 +124,11 @@ class Member < ActiveRecord::Base
     member_memberships.build(:membership  => membership,
                              :obtained_on => date)
 
-    membership_purchases.create(:membership          => membership,
-                                :purchase_date       => date,
-                                :payments_attributes =>
-                                  [{ :amount => price_payed,
-                                     :date   => date }])
-
+    purchase = membership_purchases.build(:membership    => membership,
+                                          :purchase_date => date)
+    purchase.payments.build(:amount => price_payed,
+                            :date   => date)
+    purchase
   end
 
   def compose_new_tickets_purchase(ticket_book,
@@ -138,11 +137,11 @@ class Member < ActiveRecord::Base
     self.payed_tickets_count += ticket_book.tickets_number
 
     # NOTE: it will be validated by TicketsPurchase that memberships.include?(ticket_book.membership)
-    tickets_purchases.build(:ticket_book         => ticket_book,
-                            :purchase_date       => date,
-                            :payments_attributes =>
-                              [{ :amount => price_payed,
-                                 :date   => date }])
+    purchase = tickets_purchases.build(:ticket_book   => ticket_book,
+                                       :purchase_date => date)
+    purchase.payments.build(:amount => price_payed,
+                            :date   => date)
+    purchase
   end
 
   def compose_new_event_participation(event, tickets_used   = nil,
@@ -163,19 +162,18 @@ class Member < ActiveRecord::Base
       end
     end
 
-    event_entry_attributes = { :event => event }
+    entry = member_entries.build(:tickets_used   => tickets_used || 0,
+                                 :guests_invited => guests_invited)
+    entry.build_event_entry(:event => event)
 
     # NOTE: not clear if the payment can only happen on the same date as the
     # event
     if fee_payed && fee_payed != 0
-      payment_attributes = { :amount => fee_payed,
-                             :date   => event.date }
-      event_entry_attributes[:payment_attributes] = payment_attributes
+      entry.event_entry.build_payment(:amount => fee_payed,
+                                      :date   => event.date)
     end
 
-    member_entries.build(:tickets_used           => tickets_used || 0,
-                         :guests_invited         => guests_invited,
-                         :event_entry_attributes => event_entry_attributes)
+    entry
   end
 
   # Aliases
