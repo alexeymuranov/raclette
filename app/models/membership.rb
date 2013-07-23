@@ -63,14 +63,8 @@ class Membership < ActiveRecord::Base
            :to => :activity_period
 
   # Scopes:
-  scope :with_type, lambda {
-    joins('INNER JOIN membership_types ON '\
-          'membership_types.id = memberships.membership_type_id')
-  }
-  scope :with_activity_period, lambda {
-    joins('INNER JOIN activity_periods ON '\
-          'activity_periods.id = memberships.activity_period_id')
-  }
+  scope :with_type, lambda { joins(:membership_type) }
+  scope :with_activity_period, lambda { joins(:activity_period) }
   # The following does not work when used with `merge` from another model
   # (see GitHub rails Issue #5494):
   # scope :with_activity_period, joins(:activity_period)
