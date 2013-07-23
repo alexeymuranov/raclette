@@ -17,7 +17,7 @@ class PersonTest < ActiveSupport::TestCase
       assert_kind_of EventEntry, entry
       entry = @person.compose_new_event_participation(events(:current), 'GuestEntry')
       assert_kind_of EventEntry, entry
-      @person.save
+      @person.save!
     end
   end
 end
