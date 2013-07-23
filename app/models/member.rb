@@ -137,7 +137,7 @@ class Member < ActiveRecord::Base
                                    date        = Date.today)
     self.payed_tickets_count += ticket_book.tickets_number
 
-    # NOTE: it will be validated by TicketsPurchace that memberships.include?(ticket_book.membership)
+    # NOTE: it will be validated by TicketsPurchase that memberships.include?(ticket_book.membership)
     tickets_purchases.build(:ticket_book         => ticket_book,
                             :purchase_date       => date,
                             :payments_attributes =>
