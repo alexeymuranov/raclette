@@ -1,7 +1,5 @@
 ## encoding: UTF-8
 
-# TODO: implement params processing.
-
 class MembershipsController < ManagerController
 
   def index
@@ -32,8 +30,8 @@ class MembershipsController < ManagerController
   end
 
   def new
-    @membership =
-      Membership.new(params.slice(:activity_period_id, :membership_type_id))
+    attributes = process_raw_membership_attributes_for_new
+    @membership = Membership.new(attributes)
 
     render_new_properly
   end
@@ -45,7 +43,8 @@ class MembershipsController < ManagerController
   end
 
   def create
-    @membership = Membership.new(params[:membership])
+    attributes = process_raw_membership_attributes_for_create
+    @membership = Membership.new(attributes)
 
     if @membership.save
       flash[:success] = t('flash.memberships.create.success',
@@ -61,7 +60,9 @@ class MembershipsController < ManagerController
   def update
     @membership = Membership.find(params['id'])
 
-    if @membership.update_attributes(params[:membership])
+    attributes = process_raw_membership_attributes_for_update
+
+    if @membership.update_attributes(attributes)
       flash[:notice] = t('flash.memberships.update.success',
                          :title => @membership.virtual_title)
       redirect_to :action => :show, :id => @membership
@@ -110,15 +111,84 @@ class MembershipsController < ManagerController
       render :edit
     end
 
-  module AttributesFromParamsForCreate
+  module AttributesFromParamsForNew
+    MEMBERSHIP_ASSOCIATION_ID_ATTRIBUTE_NAMES =
+      [:activity_period_id, :membership_type_id]
+
     private
-      # TODO: implement
+
+      def process_raw_membership_attributes_for_new(
+            submitted_attributes =
+              params.slice('activity_period_id', 'membership_type_id'))
+        MEMBERSHIP_ASSOCIATION_ID_ATTRIBUTE_NAMES.reduce({}) do |attributes, id_attribute_name|
+          attributes[id_attribute_name] =
+            submitted_attributes[id_attribute_name.to_s].to_i
+          attributes
+        end
+      end
+
+  end
+  include AttributesFromParamsForNew
+
+
+  module AttributesFromParamsForCreate
+    MEMBERSHIP_ATTRIBUTE_NAMES = Set[ :activity_period_id,
+                                      :membership_type_id,
+                                      :initial_price,
+                                      :current_price ]
+    MEMBERSHIP_ATTRIBUTE_NAMES_FROM_STRINGS =
+      MEMBERSHIP_ATTRIBUTE_NAMES.reduce({}) { |h, attr_name|
+        h[attr_name.to_s] = attr_name
+        h
+      }
+
+    private
+
+      def membership_attribute_name_from_params_key_for_create(params_key)
+        MEMBERSHIP_ATTRIBUTE_NAMES_FROM_STRINGS[params_key]
+      end
+
+      def process_raw_membership_attributes_for_create(
+            submitted_attributes = params['membership_type'])
+        attributes_in_array = submitted_attributes.map { |key, value|
+          [membership_attribute_name_from_params_key_for_create(key), value]
+        }.select { |attr_name, _|
+          attr_name
+        }.map { |attr_name, value|
+          [attr_name, value == '' ? nil : value]
+        }
+        Hash[attributes_in_array]
+      end
+
   end
   include AttributesFromParamsForCreate
 
   module AttributesFromParamsForUpdate
+    MEMBERSHIP_ATTRIBUTE_NAMES = Set[:current_price]
+    MEMBERSHIP_ATTRIBUTE_NAMES_FROM_STRINGS =
+      MEMBERSHIP_ATTRIBUTE_NAMES.reduce({}) { |h, attr_name|
+        h[attr_name.to_s] = attr_name
+        h
+      }
+
     private
-      # TODO: implement
+
+      def membership_attribute_name_from_params_key_for_update(params_key)
+        MEMBERSHIP_ATTRIBUTE_NAMES_FROM_STRINGS[params_key]
+      end
+
+      def process_raw_membership_attributes_for_update(
+            submitted_attributes = params['membership_type'])
+        attributes_in_array = submitted_attributes.map { |key, value|
+          [membership_attribute_name_from_params_key_for_update(key), value]
+        }.select { |attr_name, _|
+          attr_name
+        }.map { |attr_name, value|
+          [attr_name, value == '' ? nil : value]
+        }
+        Hash[attributes_in_array]
+      end
+
   end
   include AttributesFromParamsForUpdate
 end

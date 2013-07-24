@@ -1,7 +1,5 @@
 ## encoding: UTF-8
 
-# TODO: implement params processing.
-
 class TicketBooksController < ManagerController
 
   before_filter :find_membership, :except => :index
@@ -152,14 +150,60 @@ class TicketBooksController < ManagerController
     end
 
   module AttributesFromParamsForCreate
+    TICKET_BOOK_ATTRIBUTE_NAMES = Set[:tickets_number, :price]
+    TICKET_BOOK_ATTRIBUTE_NAMES_FROM_STRINGS =
+      TICKET_BOOK_ATTRIBUTE_NAMES.reduce({}) { |h, attr_name|
+        h[attr_name.to_s] = attr_name
+        h
+      }
+
     private
-      # TODO: implement
+
+      def ticket_book_attribute_name_from_params_key_for_create(params_key)
+        TICKET_BOOK_ATTRIBUTE_NAMES_FROM_STRINGS[params_key]
+      end
+
+      def process_raw_ticket_book_attributes_for_create(
+            submitted_attributes = params['ticket_book'])
+        attributes_in_array = submitted_attributes.map { |key, value|
+          [ticket_book_attribute_name_from_params_key_for_create(key), value]
+        }.select { |attr_name, _|
+          attr_name
+        }.map { |attr_name, value|
+          [attr_name, value == '' ? nil : value]
+        }
+        Hash[attributes_in_array]
+      end
+
   end
   include AttributesFromParamsForCreate
 
   module AttributesFromParamsForUpdate
+    TICKET_BOOK_ATTRIBUTE_NAMES = Set[:price]
+    TICKET_BOOK_ATTRIBUTE_NAMES_FROM_STRINGS =
+      TICKET_BOOK_ATTRIBUTE_NAMES.reduce({}) { |h, attr_name|
+        h[attr_name.to_s] = attr_name
+        h
+      }
+
     private
-      # TODO: implement
+
+      def ticket_book_attribute_name_from_params_key_for_update(params_key)
+        TICKET_BOOK_ATTRIBUTE_NAMES_FROM_STRINGS[params_key]
+      end
+
+      def process_raw_ticket_book_attributes_for_update(
+            submitted_attributes = params['ticket_book'])
+        attributes_in_array = submitted_attributes.map { |key, value|
+          [ticket_book_attribute_name_from_params_key_for_update(key), value]
+        }.select { |attr_name, _|
+          attr_name
+        }.map { |attr_name, value|
+          [attr_name, value == '' ? nil : value]
+        }
+        Hash[attributes_in_array]
+      end
+
   end
   include AttributesFromParamsForUpdate
 end

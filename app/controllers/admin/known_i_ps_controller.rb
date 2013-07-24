@@ -116,15 +116,14 @@ class Admin::KnownIPsController < Admin::AdminController
       end
 
       def process_raw_known_ip_attributes_for_create(submitted_attributes = params['known_ip'])
-        result_as_array = submitted_attributes.map { |key, value|
+        attributes_in_array = submitted_attributes.map { |key, value|
           [known_ip_attribute_name_from_params_key_for_create(key), value]
         }.select { |attr_name, _|
           attr_name
         }.map { |attr_name, value|
-          if value == '' then value = nil end
-          [attr_name, value]
+          [attr_name, value == '' ? nil : value]
         }
-        Hash[result_as_array]
+        Hash[attributes_in_array]
       end
 
   end
@@ -145,15 +144,14 @@ class Admin::KnownIPsController < Admin::AdminController
       end
 
       def process_raw_known_ip_attributes_for_update(submitted_attributes = params['known_ip'])
-        result_as_array = submitted_attributes.map { |key, value|
+        attributes_in_array = submitted_attributes.map { |key, value|
           [known_ip_attribute_name_from_params_key_for_update(key), value]
         }.select { |attr_name, _|
           attr_name
         }.map { |attr_name, value|
-          if value == '' then value = nil end
-          [attr_name, value]
+          [attr_name, value == '' ? nil : value]
         }
-        Hash[result_as_array]
+        Hash[attributes_in_array]
       end
 
   end

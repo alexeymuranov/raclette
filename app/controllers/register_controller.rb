@@ -183,7 +183,8 @@ class RegisterController < ApplicationController # FIXME
     end
 
     def build_guest_from_params
-      @guest = Guest.new(params['guest'])
+      attributes = process_raw_guest_attributes_for_create_guest_entry
+      @guest = Guest.new(attributes)
     end
 
     def set_tab_from_params
@@ -283,8 +284,9 @@ class RegisterController < ApplicationController # FIXME
       # @event ||= @events.first  # TODO: look at this
       @event_entry = EventEntry.new(:event => @event)
       @event_entry.person_id = @member.person_id
-      @attended_events = @member.attended_events.default_order if
-        params['button'] == 'show_attended_events'
+      if params['button'] == 'show_attended_events'
+        @attended_events = @member.attended_events.default_order
+      end
 
       render 'new_member_transaction'
     end
@@ -341,8 +343,33 @@ class RegisterController < ApplicationController # FIXME
   include AttributesFromParamsForCreateMemberEntry
 
   module AttributesFromParamsForCreateGuestEntry
+    GUEST_ATTRIBUTE_NAMES =
+      Set[:first_name, :last_name, :email, :phone, :note]
+
+    GUEST_ATTRIBUTE_NAMES_FROM_STRINGS =
+      GUEST_ATTRIBUTE_NAMES.reduce({}) { |h, attr_name|
+        h[attr_name.to_s] = attr_name
+        h
+      }
+
     private
-      # TODO: implement
+
+      def guest_attribute_name_from_params_key_for_create_guest_entry(params_key)
+        GUEST_ATTRIBUTE_NAMES_FROM_STRINGS[params_key]
+      end
+
+      def process_raw_guest_attributes_for_create_guest_entry(
+            submitted_attributes = params['guest'])
+        attributes_in_array = submitted_attributes.map { |key, value|
+          [guest_attribute_name_from_params_key_for_create_guest_entry(key), value]
+        }.select { |attr_name, _|
+          attr_name
+        }.map { |attr_name, value|
+          [attr_name, value == '' ? nil : value]
+        }
+        Hash[attributes_in_array]
+      end
+
   end
   include AttributesFromParamsForCreateGuestEntry
 

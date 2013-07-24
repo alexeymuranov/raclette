@@ -1,7 +1,5 @@
 ## encoding: UTF-8
 
-# TODO: implement params processing.
-
 class Admin::SafeUserIPsController < Admin::AdminController
 
   def index
@@ -15,11 +13,11 @@ class Admin::SafeUserIPsController < Admin::AdminController
   end
 
   def update_all
-    params[:safe_user_ids_for_known_ips] ||= {}
+    safe_user_ids_for_known_ips =
+      process_raw_safe_user_ids_for_known_ips_for_create
 
     KnownIP.all.each do |known_ip|
-      new_safe_user_ids = params[:safe_user_ids_for_known_ips][known_ip.to_param]
-      known_ip.safe_user_ids = new_safe_user_ids
+      known_ip.safe_user_ids = safe_user_ids_for_known_ips[known_ip.id]
     end
 
     redirect_to :action => :index
@@ -27,7 +25,15 @@ class Admin::SafeUserIPsController < Admin::AdminController
 
   module AttributesFromParamsForUpdateAll
     private
-      # TODO: implement
+
+      def process_raw_safe_user_ids_for_known_ips_for_create(
+            submitted_attributes = params['safe_user_ids_for_known_ips'])
+        result_in_array = submitted_attributes.map { |key, value|
+          [key.to_i, value.map(&:to_i)]
+        }
+        Hash[result_in_array]
+      end
+
   end
   include AttributesFromParamsForUpdateAll
 end

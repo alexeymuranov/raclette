@@ -1,7 +1,5 @@
 ## encoding: UTF-8
 
-# TODO: implement params processing.
-
 class WeeklyEventsController < ManagerController
 
   def index
@@ -118,9 +116,7 @@ class WeeklyEventsController < ManagerController
   end
 
   def create
-    attributes = params[:weekly_event]
-    attributes[:lesson] =
-      %w[Cours Atelier Initiation].include?(attributes[:weekly_event_type])
+    attributes = process_raw_weekly_event_attributes_for_create
     @weekly_event = WeeklyEvent.new(attributes)
     @weekly_event.build_events
 
@@ -138,7 +134,9 @@ class WeeklyEventsController < ManagerController
   def update
     @weekly_event = WeeklyEvent.find(params['id'])
 
-    if @weekly_event.update_attributes(params[:weekly_event])
+    attributes = process_raw_weekly_event_attributes_for_update
+
+    if @weekly_event.update_attributes(attributes)
       flash[:notice] = t('flash.weekly_events.update.success',
                          :title => @weekly_event.title)
       redirect_to :action => :show, :id => @weekly_event
@@ -197,14 +195,80 @@ class WeeklyEventsController < ManagerController
     end
 
   module AttributesFromParamsForCreate
+    WEEKLY_EVENT_ATTRIBUTE_NAMES = Set[ :title,
+                                        :event_type,
+                                        :week_day,
+                                        :start_time,
+                                        :end_time,
+                                        :start_on,
+                                        :end_on,
+                                        :location,
+                                        :entry_fee_tickets,
+                                        :description ]
+    WEEKLY_EVENT_ATTRIBUTE_NAMES_FROM_STRINGS =
+      WEEKLY_EVENT_ATTRIBUTE_NAMES.reduce({}) { |h, attr_name|
+        h[attr_name.to_s] = attr_name
+        h
+      }
+
     private
-      # TODO: implement
+
+      def weekly_event_attribute_name_from_params_key_for_create(params_key)
+        WEEKLY_EVENT_ATTRIBUTE_NAMES_FROM_STRINGS[params_key]
+      end
+
+      def process_raw_weekly_event_attributes_for_create(
+            submitted_attributes = params['weekly_event'])
+        attributes_in_array = submitted_attributes.map { |key, value|
+          [weekly_event_attribute_name_from_params_key_for_create(key), value]
+        }.select { |attr_name, _|
+          attr_name
+        }.map { |attr_name, value|
+          [attr_name, value == '' ? nil : value]
+        }
+
+        Hash[attributes_in_array].tap do |attributes|
+          attributes[:lesson] =
+            %w[Cours Atelier Initiation].include?(attributes[:weekly_event_type])
+        end
+      end
+
   end
   include AttributesFromParamsForCreate
 
   module AttributesFromParamsForUpdate
+    WEEKLY_EVENT_ATTRIBUTE_NAMES = Set[ :title,
+                                        :week_day,
+                                        :start_time,
+                                        :end_time,
+                                        :end_on,
+                                        :location,
+                                        :entry_fee_tickets,
+                                        :description ]
+    WEEKLY_EVENT_ATTRIBUTE_NAMES_FROM_STRINGS =
+      WEEKLY_EVENT_ATTRIBUTE_NAMES.reduce({}) { |h, attr_name|
+        h[attr_name.to_s] = attr_name
+        h
+      }
+
     private
-      # TODO: implement
+
+      def weekly_event_attribute_name_from_params_key_for_update(params_key)
+        WEEKLY_EVENT_ATTRIBUTE_NAMES_FROM_STRINGS[params_key]
+      end
+
+      def process_raw_weekly_event_attributes_for_update(
+            submitted_attributes = params['weekly_event'])
+        attributes_in_array = submitted_attributes.map { |key, value|
+          [weekly_event_attribute_name_from_params_key_for_update(key), value]
+        }.select { |attr_name, _|
+          attr_name
+        }.map { |attr_name, value|
+          [attr_name, value == '' ? nil : value]
+        }
+        Hash[attributes_in_array]
+      end
+
   end
   include AttributesFromParamsForUpdate
 end

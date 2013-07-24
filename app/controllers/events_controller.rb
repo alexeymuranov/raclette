@@ -1,7 +1,5 @@
 ## encoding: UTF-8
 
-# TODO: implement params processing.
-
 class EventsController < SecretaryController
 
   def index
@@ -109,10 +107,7 @@ class EventsController < SecretaryController
   end
 
   def create
-    attributes = params[:event]
-    # XXX: this modifies `params` in place (`attibutes` is a shallow copy)
-    attributes[:lesson] =
-      Set['Cours', 'Atelier', 'Initiation'].include?(attributes[:event_type])
+    attributes = process_raw_event_attributes_for_create
     @event = Event.new(attributes)
 
     if @event.save
@@ -187,14 +182,78 @@ class EventsController < SecretaryController
     end
 
   module AttributesFromParamsForCreate
+    EVENT_ATTRIBUTE_NAMES = Set[ :title,
+                                 :event_type,
+                                 :date,
+                                 :start_time,
+                                 :end_time,
+                                 :supervisors,
+                                 :location,
+                                 :entry_fee_tickets ]
+    EVENT_ATTRIBUTE_NAMES_FROM_STRINGS =
+      EVENT_ATTRIBUTE_NAMES.reduce({}) { |h, attr_name|
+        h[attr_name.to_s] = attr_name
+        h
+      }
+
     private
-      # TODO: implement
+
+      def event_attribute_name_from_params_key_for_create(params_key)
+        EVENT_ATTRIBUTE_NAMES_FROM_STRINGS[params_key]
+      end
+
+      def process_raw_event_attributes_for_create(
+            submitted_attributes = params['event'])
+        attributes_in_array = submitted_attributes.map { |key, value|
+          [event_attribute_name_from_params_key_for_create(key), value]
+        }.select { |attr_name, _|
+          attr_name
+        }.map { |attr_name, value|
+          [attr_name, value == '' ? nil : value]
+        }
+
+        Hash[attributes_in_array].tap do |attributes|
+          attributes[:lesson] =
+            %w[Cours Atelier Initiation].include?(attributes[:event_type])
+        end
+      end
+
   end
   include AttributesFromParamsForCreate
 
   module AttributesFromParamsForUpdate
+    EVENT_ATTRIBUTE_NAMES = Set[ :title,
+                                 :event_type,
+                                 :date,
+                                 :start_time,
+                                 :end_time,
+                                 :supervisors,
+                                 :location,
+                                 :entry_fee_tickets ]
+    EVENT_ATTRIBUTE_NAMES_FROM_STRINGS =
+      EVENT_ATTRIBUTE_NAMES.reduce({}) { |h, attr_name|
+        h[attr_name.to_s] = attr_name
+        h
+      }
+
     private
-      # TODO: implement
+
+      def event_attribute_name_from_params_key_for_update(params_key)
+        EVENT_ATTRIBUTE_NAMES_FROM_STRINGS[params_key]
+      end
+
+      def process_raw_event_attributes_for_update(
+            submitted_attributes = params['event'])
+        attributes_in_array = submitted_attributes.map { |key, value|
+          [event_attribute_name_from_params_key_for_update(key), value]
+        }.select { |attr_name, _|
+          attr_name
+        }.map { |attr_name, value|
+          [attr_name, value == '' ? nil : value]
+        }
+        Hash[attributes_in_array]
+      end
+
   end
   include AttributesFromParamsForUpdate
 end

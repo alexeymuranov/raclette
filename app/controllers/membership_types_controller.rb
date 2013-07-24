@@ -1,7 +1,5 @@
 ## encoding: UTF-8
 
-# TODO: implement params processing.
-
 class MembershipTypesController < ManagerController
 
   def index
@@ -85,7 +83,8 @@ class MembershipTypesController < ManagerController
   end
 
   def create
-    @membership_type = MembershipType.new(params[:membership_type])
+    attributes = process_raw_membership_type_attributes_for_create
+    @membership_type = MembershipType.new(attributes)
 
     if @membership_type.save
       flash[:success] = t('flash.membership_types.create.success',
@@ -101,7 +100,9 @@ class MembershipTypesController < ManagerController
   def update
     @membership_type = MembershipType.find(params['id'])
 
-    if @membership_type.update_attributes(params[:membership_type])
+    attributes = process_raw_membership_type_attributes_for_update
+
+    if @membership_type.update_attributes(attributes)
       flash[:notice] = t('flash.membership_types.update.success',
                          :title => @membership_type.unique_title)
       redirect_to :action => :show, :id => @membership_type
@@ -153,14 +154,66 @@ class MembershipTypesController < ManagerController
     end
 
   module AttributesFromParamsForCreate
+    MEMBERSHIP_TYPE_ATTRIBUTE_NAMES = Set[ :unique_title,
+                                           :active,
+                                           :reduced,
+                                           :unlimited,
+                                           :duration_months,
+                                           :description ]
+    MEMBERSHIP_TYPE_ATTRIBUTE_NAMES_FROM_STRINGS =
+      MEMBERSHIP_TYPE_ATTRIBUTE_NAMES.reduce({}) { |h, attr_name|
+        h[attr_name.to_s] = attr_name
+        h
+      }
+
     private
-      # TODO: implement
+
+      def membership_type_attribute_name_from_params_key_for_create(params_key)
+        MEMBERSHIP_TYPE_ATTRIBUTE_NAMES_FROM_STRINGS[params_key]
+      end
+
+      def process_raw_membership_type_attributes_for_create(
+            submitted_attributes = params['membership_type'])
+        attributes_in_array = submitted_attributes.map { |key, value|
+          [membership_type_attribute_name_from_params_key_for_create(key), value]
+        }.select { |attr_name, _|
+          attr_name
+        }.map { |attr_name, value|
+          [attr_name, value == '' ? nil : value]
+        }
+        Hash[attributes_in_array]
+      end
+
   end
   include AttributesFromParamsForCreate
 
   module AttributesFromParamsForUpdate
+    MEMBERSHIP_TYPE_ATTRIBUTE_NAMES = Set[ :unique_title,
+                                           :description ]
+    MEMBERSHIP_TYPE_ATTRIBUTE_NAMES_FROM_STRINGS =
+      MEMBERSHIP_TYPE_ATTRIBUTE_NAMES.reduce({}) { |h, attr_name|
+        h[attr_name.to_s] = attr_name
+        h
+      }
+
     private
-      # TODO: implement
+
+      def membership_type_attribute_name_from_params_key_for_update(params_key)
+        MEMBERSHIP_TYPE_ATTRIBUTE_NAMES_FROM_STRINGS[params_key]
+      end
+
+      def process_raw_membership_type_attributes_for_update(
+            submitted_attributes = params['membership_type'])
+        attributes_in_array = submitted_attributes.map { |key, value|
+          [membership_type_attribute_name_from_params_key_for_update(key), value]
+        }.select { |attr_name, _|
+          attr_name
+        }.map { |attr_name, value|
+          [attr_name, value == '' ? nil : value]
+        }
+        Hash[attributes_in_array]
+      end
+
   end
   include AttributesFromParamsForUpdate
 end

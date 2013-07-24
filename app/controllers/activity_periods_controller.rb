@@ -1,7 +1,5 @@
 ## encoding: UTF-8
 
-# TODO: implement params processing.
-
 class ActivityPeriodsController < ManagerController
 
   def index
@@ -85,7 +83,9 @@ class ActivityPeriodsController < ManagerController
   end
 
   def create
-    @activity_period = ActivityPeriod.new(params[:activity_period])
+    attributes = process_raw_activity_period_attributes_for_create
+
+    @activity_period = ActivityPeriod.new(attributes)
 
     if @activity_period.save
       flash[:success] = t('flash.activity_periods.create.success',
@@ -101,7 +101,9 @@ class ActivityPeriodsController < ManagerController
   def update
     @activity_period = ActivityPeriod.find(params['id'])
 
-    if @activity_period.update_attributes(params[:activity_period])
+    attributes = process_raw_activity_period_attributes_for_update
+
+    if @activity_period.update_attributes(attributes)
       flash[:notice] = t('flash.activity_periods.update.success',
                          :title => @activity_period.unique_title)
       redirect_to :action => :show, :id => @activity_period
@@ -153,14 +155,63 @@ class ActivityPeriodsController < ManagerController
     end
 
   module AttributesFromParamsForCreate
+    ACTIVITY_PERIOD_ATTRIBUTE_NAMES = Set[ :unique_title,
+                                           :start_date,
+                                           :duration_months,
+                                           :end_date,
+                                           :over,
+                                           :description ]
+    ACTIVITY_PERIOD_ATTRIBUTE_NAMES_FROM_STRINGS =
+      ACTIVITY_PERIOD_ATTRIBUTE_NAMES.reduce({}) { |h, attr_name|
+        h[attr_name.to_s] = attr_name
+        h
+      }
+
     private
-      # TODO: implement
+
+      def activity_period_attribute_name_from_params_key_for_create(params_key)
+        ACTIVITY_PERIOD_ATTRIBUTE_NAMES_FROM_STRINGS[params_key]
+      end
+
+      def process_raw_activity_period_attributes_for_create(
+            submitted_attributes = params['activity_period'])
+        attributes_in_array = submitted_attributes.map { |key, value|
+          [activity_period_attribute_name_from_params_key_for_create(key), value]
+        }.select { |attr_name, _|
+          attr_name
+        }.map { |attr_name, value|
+          [attr_name, value == '' ? nil : value]
+        }
+        Hash[attributes_in_array]
+      end
+
   end
   include AttributesFromParamsForCreate
 
   module AttributesFromParamsForUpdate
+    ACTIVITY_PERIOD_ATTRIBUTE_NAMES =
+      AttributesFromParamsForCreate::ACTIVITY_PERIOD_ATTRIBUTE_NAMES
+    ACTIVITY_PERIOD_ATTRIBUTE_NAMES_FROM_STRINGS =
+      AttributesFromParamsForCreate::ACTIVITY_PERIOD_ATTRIBUTE_NAMES_FROM_STRINGS
+
     private
-      # TODO: implement
+
+      def activity_period_attribute_name_from_params_key_for_update(params_key)
+        ACTIVITY_PERIOD_ATTRIBUTE_NAMES_FROM_STRINGS[params_key]
+      end
+
+      def process_raw_activity_period_attributes_for_update(
+            submitted_attributes = params['activity_period'])
+        attributes_in_array = submitted_attributes.map { |key, value|
+          [activity_period_attribute_name_from_params_key_for_update(key), value]
+        }.select { |attr_name, _|
+          attr_name
+        }.map { |attr_name, value|
+          [attr_name, value == '' ? nil : value]
+        }
+        Hash[attributes_in_array]
+      end
+
   end
   include AttributesFromParamsForUpdate
 end

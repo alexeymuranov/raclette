@@ -1,7 +1,5 @@
 ## encoding: UTF-8
 
-# TODO: implement params processing.
-
 class LessonSupervisionsController < SecretaryController
 
   def index
@@ -75,7 +73,8 @@ class LessonSupervisionsController < SecretaryController
   end
 
   def create
-    @lesson_supervision = LessonSupervision.new(params[:lesson_supervision])
+    attributes = process_raw_lesson_supervision_attributes_for_create
+    @lesson_supervision = LessonSupervision.new(attributes)
 
     if @lesson_supervision.save
       # XXX: temporary workaround to override 'counter cache':
@@ -97,7 +96,9 @@ class LessonSupervisionsController < SecretaryController
   def update
     @lesson_supervision = LessonSupervision.find(params['id'])
 
-    if @lesson_supervision.update_attributes(params[:lesson_supervision])
+    attributes = process_raw_lesson_supervision_attributes_for_update
+
+    if @lesson_supervision.update_attributes(attributes)
       flash[:notice] = t('flash.lesson_supervisions.update.success',
                          :title => @lesson_supervision.unique_names)
       redirect_to :action => :show,
@@ -123,7 +124,6 @@ class LessonSupervisionsController < SecretaryController
   private
 
     def render_new_properly
-      # @attribute_names = [:unique_names, :instructors_count, :comment]
       @attribute_names = [:unique_names, :comment]
 
       @title = t('lesson_supervisions.new.title')
@@ -132,7 +132,6 @@ class LessonSupervisionsController < SecretaryController
     end
 
     def render_edit_properly
-      # @attribute_names = [:unique_names, :instructors_count, :comment]
       @attribute_names = [:unique_names, :comment]
 
       @title = t('lesson_supervisions.edit.title',
@@ -142,14 +141,73 @@ class LessonSupervisionsController < SecretaryController
     end
 
   module AttributesFromParamsForCreate
+    LESSON_SUPERVISION_ATTRIBUTE_NAMES =
+      Set[:instructor_ids, :unique_names, :comment]
+    LESSON_SUPERVISION_ATTRIBUTE_NAMES_FROM_STRINGS =
+      LESSON_SUPERVISION_ATTRIBUTE_NAMES.reduce({}) { |h, attr_name|
+        h[attr_name.to_s] = attr_name
+        h
+      }
+
     private
-      # TODO: implement
+
+      def lesson_supervision_attribute_name_from_params_key_for_create(params_key)
+        LESSON_SUPERVISION_ATTRIBUTE_NAMES_FROM_STRINGS[params_key]
+      end
+
+      def process_raw_lesson_supervision_attributes_for_create(
+            submitted_attributes = params['lesson_supervision'])
+        attributes_in_array = submitted_attributes.map { |key, value|
+          [lesson_supervision_attribute_name_from_params_key_for_create(key), value]
+        }.select { |attr_name, _|
+          attr_name
+        }.map { |attr_name, value|
+          [attr_name, value == '' ? nil : value]
+        }
+
+        Hash[attributes_in_array].tap do |attributes|
+          if attributes.key?(:instructor_ids)
+            attributes[:instructor_ids] =
+              process_raw_lesson_supervision_instructor_ids_for_create(
+                attributes[:instructor_ids])
+          end
+        end
+      end
+
+      def process_raw_lesson_supervision_instructor_ids_for_create(
+            submitted_ids = params['lesson_supervision']['instructor_ids'])
+        submitted_ids.nil? ? [] : submitted_ids.map(&:to_i)
+      end
+
   end
   include AttributesFromParamsForCreate
 
   module AttributesFromParamsForUpdate
+    LESSON_SUPERVISION_ATTRIBUTE_NAMES = Set[:comment]
+    LESSON_SUPERVISION_ATTRIBUTE_NAMES_FROM_STRINGS =
+      LESSON_SUPERVISION_ATTRIBUTE_NAMES.reduce({}) { |h, attr_name|
+        h[attr_name.to_s] = attr_name
+        h
+      }
+
     private
-      # TODO: implement
+
+      def lesson_supervision_attribute_name_from_params_key_for_update(params_key)
+        LESSON_SUPERVISION_ATTRIBUTE_NAMES_FROM_STRINGS[params_key]
+      end
+
+      def process_raw_lesson_supervision_attributes_for_update(
+            submitted_attributes = params['lesson_supervision'])
+        attributes_in_array = submitted_attributes.map { |key, value|
+          [lesson_supervision_attribute_name_from_params_key_for_update(key), value]
+        }.select { |attr_name, _|
+          attr_name
+        }.map { |attr_name, value|
+          [attr_name, value == '' ? nil : value]
+        }
+        Hash[attributes_in_array]
+      end
+
   end
   include AttributesFromParamsForUpdate
 end

@@ -268,25 +268,26 @@ class Admin::UsersController < Admin::AdminController
         USER_ATTRIBUTE_NAMES_FROM_STRINGS[params_key]
       end
 
-      def process_raw_user_attributes_for_create(submitted_attributes = params['user'])
-        array = submitted_attributes.map { |key, value|
+      def process_raw_user_attributes_for_create(
+            submitted_attributes = params['user'])
+        attributes_in_array = submitted_attributes.map { |key, value|
           [user_attribute_name_from_params_key_for_create(key), value]
         }.select { |attr_name, _|
           attr_name
         }.map { |attr_name, value|
-          if value == '' then value = nil end
-          [attr_name, value]
+          [attr_name, value == '' ? nil : value]
         }
 
-        Hash[array].tap do |hash|
-          if hash.key?(:safe_ip_ids)
-            hash[:safe_ip_ids] =
-              process_raw_user_safe_ip_ids_for_create(hash[:safe_ip_ids])
+        Hash[attributes_in_array].tap do |attributes|
+          if attributes.key?(:safe_ip_ids)
+            attributes[:safe_ip_ids] =
+              process_raw_user_safe_ip_ids_for_create(attributes[:safe_ip_ids])
           end
         end
       end
 
-      def process_raw_user_safe_ip_ids_for_create(submitted_ids = params['user']['safe_ip_ids'])
+      def process_raw_user_safe_ip_ids_for_create(
+            submitted_ids = params['user']['safe_ip_ids'])
         submitted_ids.nil? ? [] : submitted_ids.map(&:to_i)
       end
 
@@ -332,25 +333,26 @@ class Admin::UsersController < Admin::AdminController
         end
       end
 
-      def process_raw_user_attributes_for_update(submitted_attributes = params['user'])
-        array = submitted_attributes.map { |key, value|
+      def process_raw_user_attributes_for_update(
+            submitted_attributes = params['user'])
+        attributes_in_array = submitted_attributes.map { |key, value|
           [user_attribute_name_from_params_key_for_update(key), value]
         }.select { |attr_name, _|
           attr_name
         }.map { |attr_name, value|
-          if value == '' then value = nil end
-          [attr_name, value]
+          [attr_name, value == '' ? nil : value]
         }
 
-        Hash[array].tap do |hash|
-          if hash.key?(:safe_ip_ids)
-            hash[:safe_ip_ids] =
-              process_raw_user_safe_ip_ids_for_update(hash[:safe_ip_ids])
+        Hash[attributes_in_array].tap do |attributes|
+          if attributes.key?(:safe_ip_ids)
+            attributes[:safe_ip_ids] =
+              process_raw_user_safe_ip_ids_for_update(attributes[:safe_ip_ids])
           end
         end
       end
 
-      def process_raw_user_safe_ip_ids_for_update(submitted_ids = params['user']['safe_ip_ids'])
+      def process_raw_user_safe_ip_ids_for_update(
+            submitted_ids = params['user']['safe_ip_ids'])
         submitted_ids.nil? ? [] : submitted_ids.map(&:to_i)
       end
 
