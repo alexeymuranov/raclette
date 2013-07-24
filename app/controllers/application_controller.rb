@@ -25,15 +25,15 @@ class ApplicationController < ActionController::Base
     end
 
     def paginate(collection, options = {})
-      per_page = options[:per_page] || params[:per_page]
+      per_page = options[:per_page] || params['per_page']
       per_page = per_page ? per_page.to_i : 25
       per_page = 1000 if per_page.to_i > 1000
-      page = options[:page] || params[:page]
+      page = options[:page] || params['page']
       page = page ? page.to_i : 1
       collection.page(page).per(per_page)
     end
 
-    def do_filtering(collection_scope, values          = params[:filter],
+    def do_filtering(collection_scope, values          = params['filter'],
                                        attribute_names = @attribute_names)
       if values
         @filter = FriendlyRelationFilter.new(collection_scope.klass)
@@ -49,7 +49,7 @@ class ApplicationController < ActionController::Base
       end
     end
 
-    def sort(collection_scope, options = params[:sort],
+    def sort(collection_scope, options = params['sort'],
                                default_column    = nil,
                                default_direction = 'ASC')
       @sorting_direction =

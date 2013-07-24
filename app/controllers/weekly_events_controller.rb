@@ -38,7 +38,7 @@ class WeeklyEventsController < ManagerController
     @filtered_weekly_events_count = @weekly_events.count
 
     # Sort:
-    sort_params = (params[:sort] && params[:sort][:weekly_events]) || {}
+    sort_params = (params['sort'] && params['sort']['weekly_events']) || {}
     @weekly_events = sort(@weekly_events, sort_params, :end_on)
 
     respond_to do |requested_format|
@@ -96,7 +96,7 @@ class WeeklyEventsController < ManagerController
     @filtered_events_count = @events.count
 
     # Sort:
-    sort_params = (params[:sort] && params[:sort][:events]) || {}
+    sort_params = (params['sort'] && params['sort']['events']) || {}
     @events = sort(@events, sort_params, :date)
 
     # Paginate:
