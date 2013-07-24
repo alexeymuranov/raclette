@@ -51,22 +51,25 @@ module FormsMarkupHelper
   # Based on http://davidsulc.com/blog/2011/05/01/self-marking-required-fields-in-rails-3/
   class CustomFormBuilder < ActionView::Helpers::FormBuilder
 
-    def date_field(method, options = {})
-      ActionView::Helpers::InstanceTag.new(
-        @object_name, method, @template, options.delete(:object)
-      ).to_input_field_tag('date', options)
+    def date_field(method, options = {}) # XXX: untested
+      ActionView::Helpers::Tags::TextField.new(@object_name, method, self, options.merge('type' => 'date')).render
+      # ActionView::Helpers::InstanceTag.new(
+      #   @object_name, method, @template, options.delete(:object)
+      # ).to_input_field_tag('date', options)
     end
 
-    def local_time_field(method, options = {})
-      ActionView::Helpers::InstanceTag.new(
-        @object_name, method, @template, options.delete(:object)
-      ).to_input_field_tag('time-local', options)
+    def local_time_field(method, options = {}) # XXX: untested
+      ActionView::Helpers::Tags::TextField.new(@object_name, method, self, options.merge('type' => 'time-local')).render
+      # ActionView::Helpers::InstanceTag.new(
+      #   @object_name, method, @template, options.delete(:object)
+      # ).to_input_field_tag('time-local', options)
     end
 
-    def local_datetime_field(method, options = {})
-      ActionView::Helpers::InstanceTag.new(
-        @object_name, method, @template, options.delete(:object)
-      ).to_input_field_tag('datetime-local', options)
+    def local_datetime_field(method, options = {}) # XXX: untested
+      ActionView::Helpers::Tags::TextField.new(@object_name, method, self, options.merge('type' => 'datetime-local')).render
+      # ActionView::Helpers::InstanceTag.new(
+      #   @object_name, method, @template, options.delete(:object)
+      # ).to_input_field_tag('datetime-local', options)
     end
 
     def label(method, content_or_options = nil, options = {}, &block)
