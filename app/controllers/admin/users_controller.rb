@@ -260,31 +260,32 @@ class Admin::UsersController < AdminController
                                 :password,              # virtual attribute
                                 :password_confirmation  # virtual attribute
                               ]
-    USER_ATTRIBUTE_NAMES_FROM_STRINGS = {}.tap do |h|
-      USER_ATTRIBUTE_NAMES.each do |attr_name|
+    USER_ATTRIBUTE_NAMES_FROM_STRINGS =
+      USER_ATTRIBUTE_NAMES.reduce({}) { |h, attr_name|
         h[attr_name.to_s] = attr_name
-      end
-    end
+        h
+      }
 
     private
 
-      def user_attribute_names_for_create
-        USER_ATTRIBUTE_NAMES
+      def user_attribute_name_from_params_key_for_create(params_key)
+        USER_ATTRIBUTE_NAMES_FROM_STRINGS[params_key]
       end
 
       def process_raw_user_attributes_for_create(submitted_attributes = params['user'])
-        allowed_attribute_names = user_attribute_names_for_create
-        {}.tap do |attributes|
-          submitted_attributes.each_pair do |k, v|
-            attr_name = USER_ATTRIBUTE_NAMES_FROM_STRINGS[k]
-            if allowed_attribute_names.include?(attr_name)
-              attributes[attr_name] = v == '' ? nil : v
-            end
-          end
-          if submitted_attributes.key?('safe_ip_ids')
-            attributes[:safe_ip_ids] =
-              process_raw_user_safe_ip_ids_for_create(
-                submitted_attributes['safe_ip_ids'])
+        array = submitted_attributes.map { |key, value|
+          [user_attribute_name_from_params_key_for_create(key), value]
+        }.select { |attr_name, _|
+          attr_name
+        }.map { |attr_name, value|
+          if value == '' then value = nil end
+          [attr_name, value]
+        }
+
+        Hash[array].tap do |hash|
+          if hash.key?(:safe_ip_ids)
+            hash[:safe_ip_ids] =
+              process_raw_user_safe_ip_ids_for_create(hash[:safe_ip_ids])
           end
         end
       end
@@ -310,35 +311,45 @@ class Admin::UsersController < AdminController
                                 :new_password,              # virtual attribute
                                 :new_password_confirmation  # virtual attribute
                               ]
-    USER_ATTRIBUTE_NAMES_FROM_STRINGS = {}.tap do |h|
-      USER_ATTRIBUTE_NAMES.each do |attr_name|
+    EXCLUDED_CURRENT_USER_ATTRIBUTE_NAMES =
+      Set[:account_deactivated, :admin]
+    EXCLUDED_NON_CURRENT_USER_ATTRIBUTE_NAMES =
+      Set[:new_password, :new_password_confirmation]
+    USER_ATTRIBUTE_NAMES_FROM_STRINGS =
+      USER_ATTRIBUTE_NAMES.reduce({}) { |h, attr_name|
         h[attr_name.to_s] = attr_name
-      end
-    end
+        h
+      }
 
     private
 
-      def user_attribute_names_for_update
+      def user_attribute_name_from_params_key_for_update(params_key)
+        attribute_name = USER_ATTRIBUTE_NAMES_FROM_STRINGS[params_key]
         if @user == current_user
-          USER_ATTRIBUTE_NAMES - [:account_deactivated, :admin]
+          unless EXCLUDED_CURRENT_USER_ATTRIBUTE_NAMES.include?(attribute_name)
+            attribute_name
+          end
         else
-          USER_ATTRIBUTE_NAMES - [:new_password, :new_password_confirmation]
+          unless EXCLUDED_NON_CURRENT_USER_ATTRIBUTE_NAMES.include?(attribute_name)
+            attribute_name
+          end
         end
       end
 
       def process_raw_user_attributes_for_update(submitted_attributes = params['user'])
-        allowed_attribute_names = user_attribute_names_for_update
-        {}.tap do |attributes|
-          submitted_attributes.each_pair do |k, v|
-            attr_name = USER_ATTRIBUTE_NAMES_FROM_STRINGS[k]
-            if allowed_attribute_names.include?(attr_name)
-              attributes[attr_name] = v == '' ? nil : v
-            end
-          end
-          if submitted_attributes.key?('safe_ip_ids')
-            attributes[:safe_ip_ids] =
-              process_raw_user_safe_ip_ids_for_update(
-                submitted_attributes['safe_ip_ids'])
+        array = submitted_attributes.map { |key, value|
+          [user_attribute_name_from_params_key_for_update(key), value]
+        }.select { |attr_name, _|
+          attr_name
+        }.map { |attr_name, value|
+          if value == '' then value = nil end
+          [attr_name, value]
+        }
+
+        Hash[array].tap do |hash|
+          if hash.key?(:safe_ip_ids)
+            hash[:safe_ip_ids] =
+              process_raw_user_safe_ip_ids_for_update(hash[:safe_ip_ids])
           end
         end
       end

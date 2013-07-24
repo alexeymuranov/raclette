@@ -234,55 +234,61 @@ class InstructorsController < ManagerController
                                              :last_name,
                                              :nickname_or_other,
                                              :email ]
-    INSTRUCTOR_ATTRIBUTE_NAMES_FROM_STRINGS = {}.tap do |h|
-      INSTRUCTOR_ATTRIBUTE_NAMES.each do |attr_name|
+    INSTRUCTOR_ATTRIBUTE_NAMES_FROM_STRINGS =
+      INSTRUCTOR_ATTRIBUTE_NAMES.reduce({}) { |h, attr_name|
         h[attr_name.to_s] = attr_name
-      end
-    end
-    INSTRUCTOR_PERSON_ATTRIBUTE_NAMES_FROM_STRINGS = {}.tap do |h|
-      INSTRUCTOR_PERSON_ATTRIBUTE_NAMES.each do |attr_name|
+        h
+      }
+    INSTRUCTOR_PERSON_ATTRIBUTE_NAMES_FROM_STRINGS =
+      INSTRUCTOR_PERSON_ATTRIBUTE_NAMES.reduce({}) { |h, attr_name|
         h[attr_name.to_s] = attr_name
-      end
-    end
+        h
+      }
 
     private
 
-      def instructor_attribute_names_for_create
-        INSTRUCTOR_ATTRIBUTE_NAMES
+      def instructor_attribute_name_from_params_key_for_create(params_key)
+        INSTRUCTOR_ATTRIBUTE_NAMES_FROM_STRINGS[params_key]
       end
 
-      def instructor_person_attribute_names_for_create
-        INSTRUCTOR_PERSON_ATTRIBUTE_NAMES
+      def instructor_person_attribute_name_from_params_key_for_create(params_key)
+        INSTRUCTOR_PERSON_ATTRIBUTE_NAMES_FROM_STRINGS[params_key]
       end
 
       def process_raw_instructor_attributes_for_create(submitted_attributes = params['instructor'])
-        allowed_attribute_names = instructor_attribute_names_for_create
-        {}.tap do |attributes|
-          submitted_attributes.each_pair do |k, v|
-            attr_name = INSTRUCTOR_ATTRIBUTE_NAMES_FROM_STRINGS[k]
-            if allowed_attribute_names.include?(attr_name)
-              attributes[attr_name] = v == '' ? nil : v
-            end
-          end
-          if submitted_attributes.key?('person_attributes')
-            attributes[:person_attributes] =
+        array = submitted_attributes.map { |key, value|
+          [instructor_attribute_name_from_params_key_for_create(key), value]
+        }.select { |attr_name, _|
+          attr_name
+        }.map { |attr_name, value|
+          if value == '' then value = nil end
+          [attr_name, value]
+        }
+
+        Hash[array].tap do |hash|
+          submitted_person_attributes =
+            submitted_attributes['person_attributes']
+          if submitted_person_attributes
+            hash[:person_attributes] =
               process_raw_instructor_person_attributes_for_create(
-                submitted_attributes['person_attributes'])
+                submitted_person_attributes)
           end
         end
       end
 
       def process_raw_instructor_person_attributes_for_create(submitted_attributes = params['instructor']['person_attributes'])
-        allowed_attribute_names = instructor_person_attribute_names_for_create
-        {}.tap do |attributes|
-          submitted_attributes.each_pair do |k, v|
-            attr_name = INSTRUCTOR_PERSON_ATTRIBUTE_NAMES_FROM_STRINGS[k]
-            if allowed_attribute_names.include?(attr_name)
-              attributes[attr_name] = v == '' ? nil : v
-            end
-          end
-          if attributes.key?(:nickname_or_other)
-            attributes[:nickname_or_other] ||= ''
+        array = submitted_attributes.map { |key, value|
+          [instructor_person_attribute_name_from_params_key_for_create(key), value]
+        }.select { |attr_name, _|
+          attr_name
+        }.map { |attr_name, value|
+          if value == '' then value = nil end
+          [attr_name, value]
+        }
+
+        Hash[array].tap do |hash|
+          if hash.key?(:nickname_or_other)
+            hash[:nickname_or_other] ||= ''
           end
         end
       end
@@ -299,55 +305,61 @@ class InstructorsController < ManagerController
                                              :last_name,
                                              :nickname_or_other,
                                              :email ]
-    INSTRUCTOR_ATTRIBUTE_NAMES_FROM_STRINGS = {}.tap do |h|
-      INSTRUCTOR_ATTRIBUTE_NAMES.each do |attr_name|
+    INSTRUCTOR_ATTRIBUTE_NAMES_FROM_STRINGS =
+      INSTRUCTOR_ATTRIBUTE_NAMES.reduce({}) { |h, attr_name|
         h[attr_name.to_s] = attr_name
-      end
-    end
-    INSTRUCTOR_PERSON_ATTRIBUTE_NAMES_FROM_STRINGS = {}.tap do |h|
-      INSTRUCTOR_PERSON_ATTRIBUTE_NAMES.each do |attr_name|
+        h
+      }
+    INSTRUCTOR_PERSON_ATTRIBUTE_NAMES_FROM_STRINGS =
+      INSTRUCTOR_PERSON_ATTRIBUTE_NAMES.reduce({}) { |h, attr_name|
         h[attr_name.to_s] = attr_name
-      end
-    end
+        h
+      }
 
     private
 
-      def instructor_attribute_names_for_update
-        INSTRUCTOR_ATTRIBUTE_NAMES
+      def instructor_attribute_name_from_params_key_for_update(params_key)
+        INSTRUCTOR_ATTRIBUTE_NAMES_FROM_STRINGS[params_key]
       end
 
-      def instructor_person_attribute_names_for_update
-        INSTRUCTOR_PERSON_ATTRIBUTE_NAMES
+      def instructor_person_attribute_name_from_params_key_for_update(params_key)
+        INSTRUCTOR_PERSON_ATTRIBUTE_NAMES_FROM_STRINGS[params_key]
       end
 
       def process_raw_instructor_attributes_for_update(submitted_attributes = params['instructor'])
-        allowed_attribute_names = instructor_attribute_names_for_update
-        {}.tap do |attributes|
-          submitted_attributes.each_pair do |k, v|
-            attr_name = INSTRUCTOR_ATTRIBUTE_NAMES_FROM_STRINGS[k]
-            if allowed_attribute_names.include?(attr_name)
-              attributes[attr_name] = v == '' ? nil : v
-            end
-          end
-          if submitted_attributes.key?('person_attributes')
-            attributes[:person_attributes] =
+        array = submitted_attributes.map { |key, value|
+          [instructor_attribute_name_from_params_key_for_update(key), value]
+        }.select { |attr_name, _|
+          attr_name
+        }.map { |attr_name, value|
+          if value == '' then value = nil end
+          [attr_name, value]
+        }
+
+        Hash[array].tap do |hash|
+          submitted_person_attributes =
+            submitted_attributes['person_attributes']
+          if submitted_person_attributes
+            hash[:person_attributes] =
               process_raw_instructor_person_attributes_for_update(
-                submitted_attributes['person_attributes'])
+                submitted_person_attributes)
           end
         end
       end
 
       def process_raw_instructor_person_attributes_for_update(submitted_attributes = params['instructor']['person_attributes'])
-        allowed_attribute_names = instructor_person_attribute_names_for_update
-        {}.tap do |attributes|
-          submitted_attributes.each_pair do |k, v|
-            attr_name = INSTRUCTOR_PERSON_ATTRIBUTE_NAMES_FROM_STRINGS[k]
-            if allowed_attribute_names.include?(attr_name)
-              attributes[attr_name] = v == '' ? nil : v
-            end
-          end
-          if attributes.key?(:nickname_or_other)
-            attributes[:nickname_or_other] ||= ''
+        array = submitted_attributes.map { |key, value|
+          [instructor_person_attribute_name_from_params_key_for_update(key), value]
+        }.select { |attr_name, _|
+          attr_name
+        }.map { |attr_name, value|
+          if value == '' then value = nil end
+          [attr_name, value]
+        }
+
+        Hash[array].tap do |hash|
+          if hash.key?(:nickname_or_other)
+            hash[:nickname_or_other] ||= ''
           end
         end
       end

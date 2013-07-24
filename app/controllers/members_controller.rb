@@ -256,55 +256,61 @@ class MembersController < SecretaryController
                                          :last_name,
                                          :nickname_or_other,
                                          :email ]
-    MEMBER_ATTRIBUTE_NAMES_FROM_STRINGS = {}.tap do |h|
-      MEMBER_ATTRIBUTE_NAMES.each do |attr_name|
+    MEMBER_ATTRIBUTE_NAMES_FROM_STRINGS =
+      MEMBER_ATTRIBUTE_NAMES.reduce({}) { |h, attr_name|
         h[attr_name.to_s] = attr_name
-      end
-    end
-    MEMBER_PERSON_ATTRIBUTE_NAMES_FROM_STRINGS = {}.tap do |h|
-      MEMBER_PERSON_ATTRIBUTE_NAMES.each do |attr_name|
+        h
+      }
+    MEMBER_PERSON_ATTRIBUTE_NAMES_FROM_STRINGS =
+      MEMBER_PERSON_ATTRIBUTE_NAMES.reduce({}) { |h, attr_name|
         h[attr_name.to_s] = attr_name
-      end
-    end
+        h
+      }
 
     private
 
-      def member_attribute_names_for_create
-        MEMBER_ATTRIBUTE_NAMES
+      def member_attribute_name_from_params_key_for_create(params_key)
+        MEMBER_ATTRIBUTE_NAMES_FROM_STRINGS[params_key]
       end
 
-      def member_person_attribute_names_for_create
-        MEMBER_PERSON_ATTRIBUTE_NAMES
+      def member_person_attribute_name_from_params_key_for_create(params_key)
+        MEMBER_PERSON_ATTRIBUTE_NAMES_FROM_STRINGS[params_key]
       end
 
       def process_raw_member_attributes_for_create(submitted_attributes = params['member'])
-        allowed_attribute_names = member_attribute_names_for_create
-        {}.tap do |attributes|
-          submitted_attributes.each_pair do |k, v|
-            attr_name = MEMBER_ATTRIBUTE_NAMES_FROM_STRINGS[k]
-            if allowed_attribute_names.include?(attr_name)
-              attributes[attr_name] = v == '' ? nil : v
-            end
-          end
-          if submitted_attributes.key?('person_attributes')
-            attributes[:person_attributes] =
+        array = submitted_attributes.map { |key, value|
+          [member_attribute_name_from_params_key_for_create(key), value]
+        }.select { |attr_name, _|
+          attr_name
+        }.map { |attr_name, value|
+          if value == '' then value = nil end
+          [attr_name, value]
+        }
+
+        Hash[array].tap do |hash|
+          submitted_person_attributes =
+            submitted_attributes['person_attributes']
+          if submitted_person_attributes
+            hash[:person_attributes] =
               process_raw_member_person_attributes_for_create(
-                submitted_attributes['person_attributes'])
+                submitted_person_attributes)
           end
         end
       end
 
       def process_raw_member_person_attributes_for_create(submitted_attributes = params['member']['person_attributes'])
-        allowed_attribute_names = member_person_attribute_names_for_create
-        {}.tap do |attributes|
-          submitted_attributes.each_pair do |k, v|
-            attr_name = MEMBER_PERSON_ATTRIBUTE_NAMES_FROM_STRINGS[k]
-            if allowed_attribute_names.include?(attr_name)
-              attributes[attr_name] = v == '' ? nil : v
-            end
-          end
-          if attributes.key?(:nickname_or_other)
-            attributes[:nickname_or_other] ||= ''
+        array = submitted_attributes.map { |key, value|
+          [member_person_attribute_name_from_params_key_for_create(key), value]
+        }.select { |attr_name, _|
+          attr_name
+        }.map { |attr_name, value|
+          if value == '' then value = nil end
+          [attr_name, value]
+        }
+
+        Hash[array].tap do |hash|
+          if hash.key?(:nickname_or_other)
+            hash[:nickname_or_other] ||= ''
           end
         end
       end
@@ -321,55 +327,61 @@ class MembersController < SecretaryController
                                          :last_name,
                                          :nickname_or_other,
                                          :email ]
-    MEMBER_ATTRIBUTE_NAMES_FROM_STRINGS = {}.tap do |h|
-      MEMBER_ATTRIBUTE_NAMES.each do |attr_name|
+    MEMBER_ATTRIBUTE_NAMES_FROM_STRINGS =
+      MEMBER_ATTRIBUTE_NAMES.reduce({}) { |h, attr_name|
         h[attr_name.to_s] = attr_name
-      end
-    end
-    MEMBER_PERSON_ATTRIBUTE_NAMES_FROM_STRINGS = {}.tap do |h|
-      MEMBER_PERSON_ATTRIBUTE_NAMES.each do |attr_name|
+        h
+      }
+    MEMBER_PERSON_ATTRIBUTE_NAMES_FROM_STRINGS =
+      MEMBER_PERSON_ATTRIBUTE_NAMES.reduce({}) { |h, attr_name|
         h[attr_name.to_s] = attr_name
-      end
-    end
+        h
+      }
 
     private
 
-      def member_attribute_names_for_update
-        MEMBER_ATTRIBUTE_NAMES
+      def member_attribute_name_from_params_key_for_update(params_key)
+        MEMBER_ATTRIBUTE_NAMES_FROM_STRINGS[params_key]
       end
 
-      def member_person_attribute_names_for_update
-        MEMBER_PERSON_ATTRIBUTE_NAMES
+      def member_person_attribute_name_from_params_key_for_update(params_key)
+        MEMBER_PERSON_ATTRIBUTE_NAMES_FROM_STRINGS[params_key]
       end
 
       def process_raw_member_attributes_for_update(submitted_attributes = params['member'])
-        allowed_attribute_names = member_attribute_names_for_update
-        {}.tap do |attributes|
-          submitted_attributes.each_pair do |k, v|
-            attr_name = MEMBER_ATTRIBUTE_NAMES_FROM_STRINGS[k]
-            if allowed_attribute_names.include?(attr_name)
-              attributes[attr_name] = v == '' ? nil : v
-            end
-          end
-          if submitted_attributes.key?('person_attributes')
-            attributes[:person_attributes] =
+        array = submitted_attributes.map { |key, value|
+          [member_attribute_name_from_params_key_for_update(key), value]
+        }.select { |attr_name, _|
+          attr_name
+        }.map { |attr_name, value|
+          if value == '' then value = nil end
+          [attr_name, value]
+        }
+
+        Hash[array].tap do |hash|
+          submitted_person_attributes =
+            submitted_attributes['person_attributes']
+          if submitted_person_attributes
+            hash[:person_attributes] =
               process_raw_member_person_attributes_for_update(
-                submitted_attributes['person_attributes'])
+                submitted_person_attributes)
           end
         end
       end
 
       def process_raw_member_person_attributes_for_update(submitted_attributes = params['member']['person_attributes'])
-        allowed_attribute_names = member_person_attribute_names_for_update
-        {}.tap do |attributes|
-          submitted_attributes.each_pair do |k, v|
-            attr_name = MEMBER_PERSON_ATTRIBUTE_NAMES_FROM_STRINGS[k]
-            if allowed_attribute_names.include?(attr_name)
-              attributes[attr_name] = v == '' ? nil : v
-            end
-          end
-          if attributes.key?(:nickname_or_other)
-            attributes[:nickname_or_other] ||= ''
+        array = submitted_attributes.map { |key, value|
+          [member_person_attribute_name_from_params_key_for_update(key), value]
+        }.select { |attr_name, _|
+          attr_name
+        }.map { |attr_name, value|
+          if value == '' then value = nil end
+          [attr_name, value]
+        }
+
+        Hash[array].tap do |hash|
+          if hash.key?(:nickname_or_other)
+            hash[:nickname_or_other] ||= ''
           end
         end
       end
