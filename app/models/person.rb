@@ -107,8 +107,7 @@ class Person < ActiveRecord::Base
   scope :members, lambda { joins(:member) }
 
   scope :non_members, lambda {
-    joins("LEFT JOIN members ON people.id = members.person_id").
-    where("members.person_id IS NULL")
+    includes(:member).where(:members => {:person_id => nil})
   }
 
   # Public instance methods
