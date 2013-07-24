@@ -1,7 +1,5 @@
 ## encoding: UTF-8
 
-# TODO: implement params processing.
-
 class Admin::KnownIPsController < AdminController
 
   def index
@@ -48,7 +46,8 @@ class Admin::KnownIPsController < AdminController
   end
 
   def create
-    @known_ip = KnownIP.new(params[:known_ip])
+    attributes = process_raw_known_ip_attributes_for_create
+    @known_ip = KnownIP.new(attributes)
 
     if @known_ip.save
       flash[:success] = t('flash.admin.known_i_ps.create.success',
@@ -64,7 +63,9 @@ class Admin::KnownIPsController < AdminController
   def update
     @known_ip = KnownIP.find(params['id'])
 
-    if @known_ip.update_attributes(params[:known_ip])
+    attributes = process_raw_known_ip_attributes_for_update
+
+    if @known_ip.update_attributes(attributes)
       flash[:notice] =  t('flash.admin.known_i_ps.update.success',
                           :ip => @known_ip.ip)
       redirect_to :action => :show, :id => @known_ip
@@ -101,14 +102,60 @@ class Admin::KnownIPsController < AdminController
     end
 
   module AttributesFromParamsForCreate
+    KNOWN_IP_ATTRIBUTE_NAMES = Set[:ip, :description]
+    KNOWN_IP_ATTRIBUTE_NAMES_FROM_STRINGS =
+      KNOWN_IP_ATTRIBUTE_NAMES.reduce({}) { |h, attr_name|
+        h[attr_name.to_s] = attr_name
+        h
+      }
+
     private
-      # TODO: implement
+
+      def known_ip_attribute_name_from_params_key_for_create(params_key)
+        KNOWN_IP_ATTRIBUTE_NAMES_FROM_STRINGS[params_key]
+      end
+
+      def process_raw_known_ip_attributes_for_create(submitted_attributes = params['known_ip'])
+        result_as_array = submitted_attributes.map { |key, value|
+          [known_ip_attribute_name_from_params_key_for_create(key), value]
+        }.select { |attr_name, _|
+          attr_name
+        }.map { |attr_name, value|
+          if value == '' then value = nil end
+          [attr_name, value]
+        }
+        Hash[result_as_array]
+      end
+
   end
   include AttributesFromParamsForCreate
 
   module AttributesFromParamsForUpdate
+    KNOWN_IP_ATTRIBUTE_NAMES = Set[:description]
+    KNOWN_IP_ATTRIBUTE_NAMES_FROM_STRINGS =
+      KNOWN_IP_ATTRIBUTE_NAMES.reduce({}) { |h, attr_name|
+        h[attr_name.to_s] = attr_name
+        h
+      }
+
     private
-      # TODO: implement
+
+      def known_ip_attribute_name_from_params_key_for_update(params_key)
+        KNOWN_IP_ATTRIBUTE_NAMES_FROM_STRINGS[params_key]
+      end
+
+      def process_raw_known_ip_attributes_for_update(submitted_attributes = params['known_ip'])
+        result_as_array = submitted_attributes.map { |key, value|
+          [known_ip_attribute_name_from_params_key_for_update(key), value]
+        }.select { |attr_name, _|
+          attr_name
+        }.map { |attr_name, value|
+          if value == '' then value = nil end
+          [attr_name, value]
+        }
+        Hash[result_as_array]
+      end
+
   end
   include AttributesFromParamsForUpdate
 end
