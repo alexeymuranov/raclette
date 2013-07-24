@@ -20,6 +20,14 @@ class PersonTest < ActiveSupport::TestCase
       @person.save!
     end
   end
+
+  test "scopes must scope" do
+    assert_equal Person.count, Person.members.count + Person.non_members.count
+    assert_difference('Person.non_members.count', 1) do
+      @person.member.delete
+    end
+    assert_equal Person.count, Person.members.count + Person.non_members.count
+  end
 end
 
 # == Schema Information
