@@ -29,7 +29,8 @@ class RegisterControllerTest < ActionController::TestCase
   end
 
   test "should get new_guest_transaction" do
-    get :new_guest_transaction
+    get :new_guest_transaction,
+        { 'guest' => { 'first_name' => 'X', 'last_name' => 'Yz' } }
     assert_response :success
   end
 
