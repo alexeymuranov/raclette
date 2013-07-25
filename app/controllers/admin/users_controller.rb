@@ -183,11 +183,7 @@ class Admin::UsersController < AdminController
 
     attributes = process_raw_user_attributes_for_update
 
-    unless @user == current_user
-      params.delete('change_password')
-    end
-
-    if params['change_password']
+    if @user == current_user && params['change_password']
       unless @user.has_password?(params['current_password'])
         flash.now[:error] = t('flash.admin.users.update.wrong_password')
 
