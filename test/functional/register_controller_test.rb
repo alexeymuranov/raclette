@@ -49,7 +49,7 @@ class RegisterControllerTest < ActionController::TestCase
         post :create_member_entry,
              { :member_id   => @member.to_param,
                :event_entry =>
-                 { :event_id  => @event.to_param } }
+                 { :event_id => @event.to_param } }
       end
     end
 
@@ -61,7 +61,7 @@ class RegisterControllerTest < ActionController::TestCase
       assert_difference('EventEntry.count') do
         post :create_guest_entry,
              { :guest       => { :first_name => 'X', :last_name  => 'Yz' },
-               :event_entry => { :event_id  => @event.to_param } }
+               :event_entry => { :event_id => @event.to_param } }
       end
     end
 
@@ -71,7 +71,7 @@ class RegisterControllerTest < ActionController::TestCase
   test "should create anonymous_event_entry" do
     assert_difference('EventEntry.count') do
       post :create_anonymous_entry,
-           { :event_entry => { :event_id  => @event.to_param } }
+           { :event_entry => { :event_id => @event.to_param } }
     end
 
     assert_redirected_to register_choose_person_path
@@ -84,7 +84,7 @@ class RegisterControllerTest < ActionController::TestCase
         post :create_member_ticket_purchase,
              { :member_id        => @member.to_param,
                :tickets_purchase =>
-                 { :ticket_book_id  => selected_ticket_book.to_param } }
+                 { :ticket_book_id => selected_ticket_book.to_param } }
         @member.reload
       end
     end

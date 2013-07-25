@@ -155,7 +155,8 @@ class EventsController < SecretaryController
   private
 
     def render_new_properly
-      @attribute_names = [ :title, :event_type,
+      @attribute_names = [ :title,
+                           :event_type,
                            :date,
                            :start_time,
                            :end_time,
@@ -171,7 +172,8 @@ class EventsController < SecretaryController
     end
 
     def render_edit_properly
-      @attribute_names = [ :title, :event_type,
+      @attribute_names = [ :title,
+                           :event_type,
                            :date,
                            :start_time,
                            :end_time,
