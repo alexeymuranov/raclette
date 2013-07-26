@@ -33,7 +33,7 @@ class Admin::SafeUserIPsControllerTest < ActionController::TestCase
         expected_difference = 1
       end
 
-      params_hash = { :safe_user_ids_for_known_ips =>
+      params_hash = { 'safe_user_ids_for_known_ips' =>
                         { @known_ip.to_param =>
                             new_safe_user_ids_for_known_ip } }
 
