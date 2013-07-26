@@ -103,6 +103,13 @@ class Membership < ActiveRecord::Base
                              :type_title      => :string,
                              :title           => :string
 
+  # Public class methods
+  #
+  def self.build_by_activity_period_id_and_membership_type_id(a_p_id, m_t_id)
+    new(:activity_period_id => a_p_id,
+        :membership_type_id => m_t_id)
+  end
+
   # Public instance methods
   # Non-SQL virtual attributes
   #
