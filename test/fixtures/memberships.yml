@@ -17,14 +17,6 @@ two:
   members_count: 9
 
 three:
-  membership_type: two
-  activity_period: two
-  initial_price: 9.99
-  current_price: 9.99
-  tickets_count_limit: 1
-  members_count: 0
-
-four:
   membership_type: one
   activity_period: two
   initial_price: 9.99

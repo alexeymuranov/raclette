@@ -19,7 +19,8 @@ class MembershipsControllerTest < ActionController::TestCase
   end
 
   test "should get new" do
-    get :new
+    get :new, { 'activity_period_id' => activity_periods(:two).to_param,
+                'membership_type_id' => membership_types(:two).to_param }
     assert_response :success
   end
 
