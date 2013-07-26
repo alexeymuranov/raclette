@@ -2,7 +2,7 @@
 
 # TODO: implement params processing.
 
-class Admin::SafeUserIPsController < AdminController
+class Admin::SafeUserIPsController < Admin::AdminController
 
   def index
     @users = User.default_order

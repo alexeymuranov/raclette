@@ -1,6 +1,6 @@
 ## encoding: UTF-8
 
-class Admin::UsersController < AdminController
+class Admin::UsersController < Admin::AdminController
 
   USER_ATTRIBUTE_NAMES_FOR_HTML_INDEX = [ :username,
                                           :full_name,

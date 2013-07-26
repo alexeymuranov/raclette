@@ -1,6 +1,6 @@
 ## encoding: UTF-8
 
-class AdminController < ApplicationController
+class Admin::AdminController < ApplicationController
 
   before_filter :require_admin_login
 

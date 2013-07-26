@@ -1,6 +1,6 @@
 ## encoding: UTF-8
 
-class Admin::KnownIPsController < AdminController
+class Admin::KnownIPsController < Admin::AdminController
 
   def index
     @attribute_names = [:ip, :description]
