@@ -61,7 +61,7 @@ class RegisterController < ApplicationController # FIXME
 
     if @member.save
       flash[:success] = t('flash.actions.create.success',
-                          :resource_name => MemberEntry.model_name.human )
+                          :resource_name => MemberEntry.model_name.human)
       redirect_to :action => :choose_person
     else
       flash.now[:error] = t('flash.actions.other.failure')
